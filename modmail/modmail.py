@@ -81,14 +81,12 @@ class Modmail(commands.Cog):
     async def setmodmailguild(self, ctx: commands.Context):
         """Set the server for modmail configuration to the guild where the command is run."""
         guild = ctx.guild
-        global_config = await self.config.user(ctx.author).global_user()
         
-        # Ensure that 'user_guild_mapping' is a dictionary
-        if 'user_guild_mapping' not in global_config:
-            global_config['user_guild_mapping'] = {}
+        # Ensure that the user_guild_mapping is initialized
+        global_config = await self.config.user(ctx.author).global_user.get_raw('user_guild_mapping', default={})
         
-        global_config['user_guild_mapping'][str(ctx.author.id)] = guild.id
-        await self.config.user(ctx.author).global_user.set(global_config)
+        global_config[str(ctx.author.id)] = guild.id
+        await self.config.user(ctx.author).global_user.set_raw('user_guild_mapping', value=global_config)
         
         await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
 
@@ -151,13 +149,10 @@ class Modmail(commands.Cog):
                 return None
 
             selected_guild = guilds[guild_index]
-            global_config = await self.config.user(user).global_user()
+            global_config = await self.config.user(user).global_user.get_raw('user_guild_mapping', default={})
             
-            if 'user_guild_mapping' not in global_config:
-                global_config['user_guild_mapping'] = {}
-            
-            global_config['user_guild_mapping'][str(user.id)] = selected_guild.id
-            await self.config.user(user).global_user.set(global_config)
+            global_config[str(user.id)] = selected_guild.id
+            await self.config.user(user).global_user.set_raw('user_guild_mapping', value=global_config)
             
             await user.send(f"Modmail server set to {selected_guild.name} (ID: {selected_guild.id})")
             return selected_guild.id
