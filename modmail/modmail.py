@@ -1,9 +1,8 @@
-from redbot.core import commands
-from redbot.core.bot import Config, Red
+from redbot.core import commands, Config
+from redbot.core.bot import Red
 import discord
 import logging
 import datetime
-from discord.ext import commands as Commands
 
 from .thread import Thread
 
@@ -12,9 +11,9 @@ class Modmail(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.guild_id = 1214280683170693200
+        self.guild_id = 525413739407867904
         self.config = Config.get_conf(self, identifier=2480948239048209)
-        self.logger = logging.getLogger('red.revolt.modmail')
+        self.logger = logging.getLogger('red.mahjesticcogs.modmail')
 
     def get_thread_from_json(self, json: dict):
         return Thread(json['member_id'], json['messages'], json['created_at'])
@@ -34,12 +33,14 @@ class Modmail(commands.Cog):
         return None
 
     @commands.command()
-    async def threads(self, ctx: Commands.Context):
+    async def threads(self, ctx: commands.Context):
         threads = await self.config.guild_from_id(self.guild_id).threads()
         embed = discord.Embed(title="ModMail Threads")
         for thread_json in threads:
             thread = self.get_thread_from_json(thread_json)
-            # embed.add_field(name=f"{member.name} ({member_id})", value="Thread")
+            member = self.bot.get_user(thread.member_id)
+            if member:
+                embed.add_field(name=f"{member.name} ({member.id})", value="Thread")
         await ctx.channel.send(embed=embed)
 
     @commands.Cog.listener()
