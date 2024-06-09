@@ -200,8 +200,6 @@ class Modmail(commands.Cog):
                     embed = discord.Embed(title="New ModMail Message", description=message.content, timestamp=message.created_at)
                     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
                     await mod_channel.send(embed=embed)
-        else:
-            await self.bot.process_commands(message)  # Process commands in guild messages
 
     async def create_modmail_channel(self, guild_id: int, user: discord.User, message: discord.Message):
         guild = self.bot.get_guild(guild_id)
