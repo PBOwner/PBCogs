@@ -1,4 +1,4 @@
-from .modmail import Modmail
+from .modmail import ModMail
 
 async def setup(bot):
-    await bot.add_cog(Modmail(bot))
+    await bot.add_cog(ModMail(bot))
