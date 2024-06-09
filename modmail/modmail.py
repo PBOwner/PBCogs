@@ -29,7 +29,7 @@ class Modmail(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=14562456134563561345)  # Use a unique identifier
 
-        default_guild_settings = {
+        default_guild = {
             "modmail_role": None,  # Default value for modmail_role
             "mod_channel_id": None,
             "modmail_category_id": None,
