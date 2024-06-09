@@ -1,7 +1,4 @@
-import discord
-from discord.ext import commands
-from .modmail import ModMail
+from .modmail import Modmail
 
-async def setup(bot):
-    await bot.add_cog(ModMail(bot))
-    print("ModMail cog loaded successfully!")
+def setup(bot):
+    bot.add_cog(Modmail(bot))
