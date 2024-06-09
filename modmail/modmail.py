@@ -25,13 +25,11 @@ class Thread:
         return cls(data['member_id'], data['messages'], data['created_at'], data['thread_number'])
 
 class Modmail(commands.Cog):
-    """Simple modmail cog"""
-
-    def __init__(self, bot: Red):
+    def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier=2480948239048209, force_registration=True)
-        self.logger = logging.getLogger('red.modmail')
-        default_guild = {
+        self.config = Config.get_conf(self, identifier=14562456134563561345)  # Use a unique identifier
+
+        default_guild_settings = {
             "modmail_role": None,  # Default value for modmail_role
             "mod_channel_id": None,
             "modmail_category_id": None,
@@ -82,6 +80,40 @@ class Modmail(commands.Cog):
 
         return commands.check(predicate)
 
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if message.guild is None:  # Check if the message is from a DM
+            if message.author.bot:
+                return
+
+            guild_id = await self.get_guild_id_for_modmail(message.author.id)
+            if not guild_id:
+                guild_id = await self.prompt_user_for_guild(message.author)
+
+            if not guild_id:
+                return
+
+            user_thread = await self.get_user_thread(guild_id, message.author)
+            if not user_thread:
+                await self.create_user_thread(guild_id, message.author, message)
+                await self.create_modmail_channel(guild_id, message.author, message)
+                await message.add_reaction("✅")
+                await message.channel.send(embed=discord.Embed(title="Thread Created", description="A staff member will be with you shortly."))
+            else:
+                await message.add_reaction("✅")
+                user_thread.messages.append(message.id)
+                async with self.config.guild_from_id(guild_id).threads() as threads:
+                    for i, thread in enumerate(threads):
+                        if thread['member_id'] == message.author.id:
+                            threads[i] = user_thread.json()
+                            break
+
+                mod_channel_id = await self.config.guild_from_id(guild_id).mod_channel_id()
+                mod_channel = self.bot.get_channel(mod_channel_id)
+                if mod_channel:
+                    embed = discord.Embed(title="New ModMail Message", description=message.content, timestamp=message.created_at)
+                    embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
+                    await mod_channel.send(embed=embed)
 
     @commands.guild_only()
     @commands.command()
@@ -175,41 +207,6 @@ class Modmail(commands.Cog):
                 await ctx.send("Category not found. Please provide a valid category name or ID.")
         else:
             await ctx.send("This command can only be used in a modmail thread channel.")
-
-    @commands.Cog.listener()
-    async def on_message(self, message: discord.Message):
-        if message.guild is None:  # Check if the message is from a DM
-            if message.author.bot:
-                return
-
-            guild_id = await self.get_guild_id_for_modmail(message.author.id)
-            if not guild_id:
-                guild_id = await self.prompt_user_for_guild(message.author)
-
-            if not guild_id:
-                return
-
-            user_thread = await self.get_user_thread(guild_id, message.author)
-            if not user_thread:
-                await self.create_user_thread(guild_id, message.author, message)
-                await self.create_modmail_channel(guild_id, message.author, message)
-                await message.add_reaction("✅")
-                await message.channel.send(embed=discord.Embed(title="Thread Created", description="A staff member will be with you shortly."))
-            else:
-                await message.add_reaction("✅")
-                user_thread.messages.append(message.id)
-                async with self.config.guild_from_id(guild_id).threads() as threads:
-                    for i, thread in enumerate(threads):
-                        if thread['member_id'] == message.author.id:
-                            threads[i] = user_thread.json()
-                            break
-
-                mod_channel_id = await self.config.guild_from_id(guild_id).mod_channel_id()
-                mod_channel = self.bot.get_channel(mod_channel_id)
-                if mod_channel:
-                    embed = discord.Embed(title="New ModMail Message", description=message.content, timestamp=message.created_at)
-                    embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-                    await mod_channel.send(embed=embed)
 
     async def create_modmail_channel(self, guild_id: int, user: discord.User, message: discord.Message):
         guild = self.bot.get_guild(guild_id)
