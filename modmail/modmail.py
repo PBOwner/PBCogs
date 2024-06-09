@@ -31,6 +31,7 @@ class Modmail(commands.Cog):
         self.logger = logging.getLogger('red.modmail')
         default_guild = {
             "mod_channel_id": None,
+            "modmail_category_id": None,
             "threads": []
         }
         self.config.register_guild(**default_guild)
@@ -76,6 +77,14 @@ class Modmail(commands.Cog):
         await self.config.guild(ctx.guild).mod_channel_id.set(channel.id)
         await ctx.send(f"Modmail channel set to {channel.mention}")
 
+    @commands.guild_only()
+    @commands.admin_or_permissions(manage_guild=True)
+    @commands.command()
+    async def setmodmailcategory(self, ctx: commands.Context, category: discord.CategoryChannel):
+        """Set the category where modmail channels will be created."""
+        await self.config.guild(ctx.guild).modmail_category_id.set(category.id)
+        await ctx.send(f"Modmail category set to {category.name}")
+
     @commands.admin_or_permissions(manage_guild=True)
     @commands.command()
     async def setmodmailguild(self, ctx: commands.Context):
@@ -113,6 +122,7 @@ class Modmail(commands.Cog):
         user_thread = await self.get_user_thread(guild_id, message.author)
         if not user_thread:
             await self.create_user_thread(guild_id, message.author, message)
+            await self.create_modmail_channel(guild_id, message.author, message)
             await message.add_reaction("✅")
             await message.channel.send(embed=discord.Embed(title="Thread Created", description="A staff member will be with you shortly."))
         else:
@@ -130,6 +140,23 @@ class Modmail(commands.Cog):
                 embed = discord.Embed(title="New ModMail Message", description=message.content, timestamp=message.created_at)
                 embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
                 await mod_channel.send(embed=embed)
+
+    async def create_modmail_channel(self, guild_id: int, user: discord.User, message: discord.Message):
+        guild = self.bot.get_guild(guild_id)
+        category_id = await self.config.guild(guild).modmail_category_id()
+        if category_id:
+            category = discord.utils.get(guild.categories, id=category_id)
+            if category:
+                channel_name = f"modmail-{user.name}-{user.discriminator}"
+                overwrites = {
+                    guild.default_role: discord.PermissionOverwrite(read_messages=False),
+                    user: discord.PermissionOverwrite(read_messages=True, send_messages=True)
+                }
+                channel = await category.create_text_channel(channel_name, overwrites=overwrites)
+                await channel.send(embed=discord.Embed(title="ModMail Thread", description=f"Thread created for {user.mention}"))
+                embed = discord.Embed(title="New ModMail Thread", description=f"Thread created for {user.mention}\n{message.content}")
+                embed.set_author(name=user.name, icon_url=user.avatar_url)
+                await channel.send(embed=embed)
 
     async def get_guild_id_for_modmail(self, user_id: int):
         global_config = await self.config.user_from_id(user_id).global_user()
