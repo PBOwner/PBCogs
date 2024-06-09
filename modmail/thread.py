@@ -6,5 +6,3 @@ class Thread:
 
     def json(self):
         return {"member_id": self.member_id, "messages": self.messages, "created_at": self.created_at}
-    
-     
