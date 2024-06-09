@@ -81,7 +81,7 @@ class Modmail(commands.Cog):
     async def setmodmailguild(self, ctx: commands.Context):
         """Set the server for modmail configuration to the guild where the command is run."""
         guild = ctx.guild
-    
+        
         # Ensure that the user_guild_mapping is initialized
         user_guild_mapping = await self.config.user(ctx.author).user_guild_mapping()
         if user_guild_mapping is None:
@@ -89,7 +89,7 @@ class Modmail(commands.Cog):
 
         user_guild_mapping[str(ctx.author.id)] = guild.id
         await self.config.user(ctx.author).user_guild_mapping.set(user_guild_mapping)
-    
+        
         await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
 
     @commands.Cog.listener()
@@ -151,10 +151,11 @@ class Modmail(commands.Cog):
                 return None
 
             selected_guild = guilds[guild_index]
-            global_config = await self.config.user(user).global_user.get_raw('user_guild_mapping', default={})
+            global_config = await self.config.user(user).global_user()
             
-            global_config[str(user.id)] = selected_guild.id
-            await self.config.user(user).global_user.set_raw('user_guild_mapping', value=global_config)
+            user_guild_mapping = global_config.get('user_guild_mapping', {})
+            user_guild_mapping[str(user.id)] = selected_guild.id
+            await self.config.user(user).global_user.set_raw('user_guild_mapping', value=user_guild_mapping)
             
             await user.send(f"Modmail server set to {selected_guild.name} (ID: {selected_guild.id})")
             return selected_guild.id
@@ -162,3 +163,6 @@ class Modmail(commands.Cog):
         except asyncio.TimeoutError:
             await user.send("You took too long to respond. Please try the command again.")
             return None
+
+def setup(bot: Red):
+    bot.add_cog(Modmail(bot))
