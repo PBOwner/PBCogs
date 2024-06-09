@@ -12,9 +12,9 @@ class Modmail(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.guild_id = 525413739407867904
+        self.guild_id = 1214280683170693200
         self.config = Config.get_conf(self, identifier=2480948239048209)
-        self.logger = logging.getLogger('red.mahjesticcogs.modmail')
+        self.logger = logging.getLogger('red.revolt.modmail')
 
     def get_thread_from_json(self, json: dict):
         return Thread(json['member_id'], json['messages'], json['created_at'])
