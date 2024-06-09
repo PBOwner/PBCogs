@@ -81,8 +81,15 @@ class Modmail(commands.Cog):
     async def setmodmailguild(self, ctx: commands.Context):
         """Set the server for modmail configuration to the guild where the command is run."""
         guild = ctx.guild
-        async with self.config.global_user() as global_config:
-            global_config['user_guild_mapping'][str(ctx.author.id)] = guild.id
+        global_config = await self.config.user(ctx.author).global_user()
+        
+        # Ensure that 'user_guild_mapping' is a dictionary
+        if 'user_guild_mapping' not in global_config:
+            global_config['user_guild_mapping'] = {}
+        
+        global_config['user_guild_mapping'][str(ctx.author.id)] = guild.id
+        await self.config.user(ctx.author).global_user.set(global_config)
+        
         await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
 
     @commands.Cog.listener()
@@ -125,8 +132,8 @@ class Modmail(commands.Cog):
                 await mod_channel.send(embed=embed)
 
     async def get_guild_id_for_modmail(self, user_id: int):
-        async with self.config.global_user() as global_config:
-            return global_config['user_guild_mapping'].get(str(user_id))
+        global_config = await self.config.user_from_id(user_id).global_user()
+        return global_config.get('user_guild_mapping', {}).get(str(user_id))
 
     async def prompt_user_for_guild(self, user: discord.User):
         guilds = [guild for guild in self.bot.guilds if guild.get_member(user.id) is not None]
@@ -144,8 +151,14 @@ class Modmail(commands.Cog):
                 return None
 
             selected_guild = guilds[guild_index]
-            async with self.config.global_user() as global_config:
-                global_config['user_guild_mapping'][str(user.id)] = selected_guild.id
+            global_config = await self.config.user(user).global_user()
+            
+            if 'user_guild_mapping' not in global_config:
+                global_config['user_guild_mapping'] = {}
+            
+            global_config['user_guild_mapping'][str(user.id)] = selected_guild.id
+            await self.config.user(user).global_user.set(global_config)
+            
             await user.send(f"Modmail server set to {selected_guild.name} (ID: {selected_guild.id})")
             return selected_guild.id
 
@@ -153,5 +166,5 @@ class Modmail(commands.Cog):
             await user.send("You took too long to respond. Please try the command again.")
             return None
 
-def setup(bot: Red):
-    bot.add_cog(Modmail(bot))
+async def setup(bot: Red):
+   await bot.add_cog(Modmail(bot))
