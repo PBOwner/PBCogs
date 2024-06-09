@@ -32,6 +32,7 @@ class Modmail(commands.Cog):
         self.config = Config.get_conf(self, identifier=2480948239048209, force_registration=True)
         self.logger = logging.getLogger('red.modmail')
         default_guild = {
+            "modmail_role": None,  # Default value for modmail_role
             "mod_channel_id": None,
             "modmail_category_id": None,
             "channel_name_format": "modmail-{username}-{userid}",
