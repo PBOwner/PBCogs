@@ -6,21 +6,23 @@ import datetime
 import asyncio
 
 class Thread:
-    def __init__(self, member_id: int, messages: list, created_at: int):
+    def __init__(self, member_id: int, messages: list, created_at: int, thread_number: int):
         self.member_id = member_id
         self.messages = messages
         self.created_at = created_at
+        self.thread_number = thread_number
 
     def json(self):
         return {
             "member_id": self.member_id,
             "messages": self.messages,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "thread_number": self.thread_number
         }
 
     @classmethod
     def from_json(cls, data: dict):
-        return cls(data['member_id'], data['messages'], data['created_at'])
+        return cls(data['member_id'], data['messages'], data['created_at'], data['thread_number'])
 
 class Modmail(commands.Cog):
     """Simple modmail cog"""
@@ -32,7 +34,10 @@ class Modmail(commands.Cog):
         default_guild = {
             "mod_channel_id": None,
             "modmail_category_id": None,
-            "threads": []
+            "channel_name_format": "modmail-{username}-{userid}",
+            "modmail_role_id": None,
+            "threads": [],
+            "thread_count": 0
         }
         self.config.register_guild(**default_guild)
         default_global = {
@@ -45,7 +50,10 @@ class Modmail(commands.Cog):
 
     async def create_user_thread(self, guild_id: int, member: discord.Member, initial_message: discord.Message):
         async with self.config.guild_from_id(guild_id).threads() as threads:
-            thread = Thread(member.id, [initial_message.id], int(datetime.datetime.utcnow().timestamp()))
+            async with self.config.guild_from_id(guild_id).thread_count() as thread_count:
+                thread_count += 1
+                thread_number = thread_count
+            thread = Thread(member.id, [initial_message.id], int(datetime.datetime.utcnow().timestamp()), thread_number)
             threads.append(thread.json())
 
     async def get_user_thread(self, guild_id: int, member: discord.Member):
@@ -55,8 +63,52 @@ class Modmail(commands.Cog):
                 return Thread.from_json(thread)
         return None
 
+    def has_modmail_role():
+        async def predicate(ctx: commands.Context):
+            modmail_role_id = await ctx.bot.get_cog('Modmail').config.guild(ctx.guild).modmail_role_id()
+            if modmail_role_id:
+                role = discord.utils.get(ctx.guild.roles, id=modmail_role_id)
+                if role in ctx.author.roles:
+                    return True
+            return False
+        return commands.check(predicate)
+
     @commands.guild_only()
     @commands.command()
+    @commands.is_owner()
+    async def setmodchannel(self, ctx: commands.Context, channel: discord.TextChannel):
+        """Set the modmail channel where notifications will be sent."""
+        await self.config.guild(ctx.guild).mod_channel_id.set(channel.id)
+        await ctx.send(f"Modmail channel set to {channel.mention}")
+
+    @commands.guild_only()
+    @commands.command()
+    @commands.is_owner()
+    async def setmodmailguild(self, ctx: commands.Context):
+        """Set the server for modmail configuration to the guild where the command is run."""
+        guild = ctx.guild
+
+        # Ensure that the user_guild_mapping is initialized
+        user_guild_mapping = await self.config.user(ctx.author).user_guild_mapping()
+        if user_guild_mapping is None:
+            user_guild_mapping = {}
+
+        user_guild_mapping[str(ctx.author.id)] = guild.id
+        await self.config.user(ctx.author).user_guild_mapping.set(user_guild_mapping)
+
+        await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
+
+    @commands.guild_only()
+    @commands.command()
+    @commands.is_owner()
+    async def setmodmailrole(self, ctx: commands.Context, role: discord.Role):
+        """Set the modmail role which can run modmail commands."""
+        await self.config.guild(ctx.guild).modmail_role_id.set(role.id)
+        await ctx.send(f"Modmail role set to {role.name}")
+
+    @commands.guild_only()
+    @commands.command()
+    @has_modmail_role()
     async def threads(self, ctx: commands.Context):
         """Show all current modmail threads."""
         guild_id = ctx.guild.id
@@ -66,40 +118,53 @@ class Modmail(commands.Cog):
             thread = Thread.from_json(thread_json)
             member = self.bot.get_user(thread.member_id)
             if member:
-                embed.add_field(name=f"{member.name} ({member.id})", value=f"Created at: {datetime.datetime.fromtimestamp(thread.created_at)}")
+                embed.add_field(name=f"{member.name} ({member.id})", value=f"Created at: {datetime.datetime.fromtimestamp(thread.created_at)}\nThread number: {thread.thread_number}")
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.admin_or_permissions(manage_guild=True)
     @commands.command()
-    async def setmodchannel(self, ctx: commands.Context, channel: discord.TextChannel):
-        """Set the modmail channel where notifications will be sent."""
-        await self.config.guild(ctx.guild).mod_channel_id.set(channel.id)
-        await ctx.send(f"Modmail channel set to {channel.mention}")
-
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_guild=True)
-    @commands.command()
+    @has_modmail_role()
     async def setmodmailcategory(self, ctx: commands.Context, category: discord.CategoryChannel):
         """Set the category where modmail channels will be created."""
         await self.config.guild(ctx.guild).modmail_category_id.set(category.id)
         await ctx.send(f"Modmail category set to {category.name}")
 
-    @commands.admin_or_permissions(manage_guild=True)
+    @commands.guild_only()
     @commands.command()
-    async def setmodmailguild(self, ctx: commands.Context):
-        """Set the server for modmail configuration to the guild where the command is run."""
-        guild = ctx.guild
-        
-        # Ensure that the user_guild_mapping is initialized
-        user_guild_mapping = await self.config.user(ctx.author).user_guild_mapping()
-        if user_guild_mapping is None:
-            user_guild_mapping = {}
+    @has_modmail_role()
+    async def setformat(self, ctx: commands.Context, *, format: str):
+        """Set the format for modmail channel names."""
+        await self.config.guild(ctx.guild).channel_name_format.set(format)
+        await ctx.send(f"Modmail channel name format set to `{format}`")
 
-        user_guild_mapping[str(ctx.author.id)] = guild.id
-        await self.config.user(ctx.author).user_guild_mapping.set(user_guild_mapping)
-        
-        await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
+    @commands.guild_only()
+    @commands.command()
+    @has_modmail_role()
+    async def rename(self, ctx: commands.Context, *, new_name: str):
+        """Rename the modmail thread channel."""
+        thread = await self.get_thread_by_channel(ctx.guild.id, ctx.channel.id)
+        if thread:
+            await ctx.channel.edit(name=new_name)
+            await ctx.send(f"Modmail channel name changed to `{new_name}`")
+        else:
+            await ctx.send("This command can only be used in a modmail thread channel.")
+
+    @commands.guild_only()
+    @commands.command()
+    @has_modmail_role()
+    async def move(self, ctx: commands.Context, *, category_name_or_id: str):
+        """Move the modmail thread channel to a different category."""
+        thread = await self.get_thread_by_channel(ctx.guild.id, ctx.channel.id)
+        if thread:
+            category = discord.utils.get(ctx.guild.categories, name=category_name_or_id) or \
+                       discord.utils.get(ctx.guild.categories, id=int(category_name_or_id))
+            if category:
+                await ctx.channel.edit(category=category)
+                await ctx.send(f"Modmail channel moved to `{category.name}` category")
+            else:
+                await ctx.send("Category not found. Please provide a valid category name or ID.")
+        else:
+            await ctx.send("This command can only be used in a modmail thread channel.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -118,7 +183,7 @@ class Modmail(commands.Cog):
         threads = await self.config.guild_from_id(guild_id).threads()
         if not threads:
             await self.init_threads(guild_id)
-        
+
         user_thread = await self.get_user_thread(guild_id, message.author)
         if not user_thread:
             await self.create_user_thread(guild_id, message.author, message)
@@ -147,16 +212,31 @@ class Modmail(commands.Cog):
         if category_id:
             category = discord.utils.get(guild.categories, id=category_id)
             if category:
-                channel_name = f"modmail-{user.name}-{user.discriminator}"
-                overwrites = {
-                    guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                    user: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-                }
-                channel = await category.create_text_channel(channel_name, overwrites=overwrites)
-                await channel.send(embed=discord.Embed(title="ModMail Thread", description=f"Thread created for {user.mention}"))
-                embed = discord.Embed(title="New ModMail Thread", description=f"Thread created for {user.mention}\n{message.content}")
-                embed.set_author(name=user.name, icon_url=user.avatar_url)
-                await channel.send(embed=embed)
+                format = await self.config.guild(guild).channel_name_format()
+                thread_number = await self.get_thread_number(guild_id, user.id)
+                channel_name = format.format(
+                    username=user.name,
+                    userid=user.id,
+                    threadnumber=thread_number,
+                    shortdate=datetime.datetime.utcnow().strftime("%Y%m%d")
+                )
+                channel = await guild.create_text_channel(name=channel_name, category=category)
+                await channel.send(embed=discord.Embed(title="New ModMail Thread", description=f"User: {user.name} ({user.id})"))
+                return channel
+
+    async def get_thread_number(self, guild_id: int, user_id: int):
+        threads = await self.config.guild_from_id(guild_id).threads()
+        for thread in threads:
+            if thread['member_id'] == user_id:
+                return thread['thread_number']
+        return 0
+
+    async def get_thread_by_channel(self, guild_id: int, channel_id: int):
+        threads = await self.config.guild_from_id(guild_id).threads()
+        for thread in threads:
+            if thread['channel_id'] == channel_id:
+                return thread
+        return None
 
     async def get_guild_id_for_modmail(self, user_id: int):
         global_config = await self.config.user_from_id(user_id).global_user()
@@ -179,11 +259,11 @@ class Modmail(commands.Cog):
 
             selected_guild = guilds[guild_index]
             global_config = await self.config.user(user).global_user()
-            
+
             user_guild_mapping = global_config.get('user_guild_mapping', {})
             user_guild_mapping[str(user.id)] = selected_guild.id
             await self.config.user(user).global_user.set_raw('user_guild_mapping', value=user_guild_mapping)
-            
+
             await user.send(f"Modmail server set to {selected_guild.name} (ID: {selected_guild.id})")
             return selected_guild.id
 
