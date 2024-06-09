@@ -64,14 +64,23 @@ class Modmail(commands.Cog):
         return None
 
     def has_modmail_role():
-        async def predicate(ctx: commands.Context):
-            modmail_role_id = await ctx.bot.get_cog('Modmail').config.guild(ctx.guild).modmail_role_id()
-            if modmail_role_id:
-                role = discord.utils.get(ctx.guild.roles, id=modmail_role_id)
-                if role in ctx.author.roles:
-                    return True
-            return False
+        async def predicate(ctx):
+            if ctx.guild is None:
+                return False
+
+            modmail_role_id = await ctx.cog.config.guild(ctx.guild).modmail_role()
+            modmail_role = ctx.guild.get_role(modmail_role_id)
+
+            if modmail_role is None:
+                return False
+
+            if ctx.command.cog_name == "Modmail":
+                return modmail_role in ctx.author.roles
+
+            return True
+
         return commands.check(predicate)
+
 
     @commands.guild_only()
     @commands.command()
