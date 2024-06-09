@@ -79,28 +79,11 @@ class Modmail(commands.Cog):
     @commands.admin_or_permissions(manage_guild=True)
     @commands.command()
     async def setmodmailguild(self, ctx: commands.Context):
-        """Set the server for modmail configuration."""
-        guilds = self.bot.guilds
-        guild_list = "\n".join([f"{i+1}. {guild.name} (ID: {guild.id})" for i, guild in enumerate(guilds)])
-        await ctx.author.send(f"Which server is this for? Please reply with the number:\n{guild_list}")
-
-        def check(m):
-            return m.author == ctx.author and isinstance(m.channel, discord.DMChannel) and m.content.isdigit()
-
-        try:
-            msg = await self.bot.wait_for('message', check=check, timeout=60)
-            guild_index = int(msg.content) - 1
-            if guild_index < 0 or guild_index >= len(guilds):
-                await ctx.author.send("Invalid number. Please try the command again.")
-                return
-
-            selected_guild = guilds[guild_index]
-            async with self.config.global_user() as global_config:
-                global_config['user_guild_mapping'][str(ctx.author.id)] = selected_guild.id
-            await ctx.author.send(f"Modmail server set to {selected_guild.name} (ID: {selected_guild.id})")
-
-        except asyncio.TimeoutError:
-            await ctx.author.send("You took too long to respond. Please try the command again.")
+        """Set the server for modmail configuration to the guild where the command is run."""
+        guild = ctx.guild
+        async with self.config.global_user() as global_config:
+            global_config['user_guild_mapping'][str(ctx.author.id)] = guild.id
+        await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
