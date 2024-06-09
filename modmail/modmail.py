@@ -79,16 +79,18 @@ class Modmail(commands.Cog):
     @commands.admin_or_permissions(manage_guild=True)
     @commands.command()
     async def setmodmailguild(self, ctx: commands.Context):
-        """Set the server for modmail configuration to the guild where the command is run."""
-        guild = ctx.guild
-        
-        # Ensure that the user_guild_mapping is initialized
-        global_config = await self.config.user(ctx.author).global_user.get_raw('user_guild_mapping', default={})
-        
-        global_config[str(ctx.author.id)] = guild.id
-        await self.config.user(ctx.author).global_user.set_raw('user_guild_mapping', value=global_config)
-        
-        await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
+       """Set the server for modmail configuration to the guild where the command is run."""
+       guild = ctx.guild
+    
+    # Ensure that the user_guild_mapping is initialized
+       user_guild_mapping = await self.config.user(ctx.author).global_user.user_guild_mapping()
+       if not user_guild_mapping:
+           user_guild_mapping = {}
+
+       user_guild_mapping[str(ctx.author.id)] = guild.id
+       await self.config.user(ctx.author).global_user.user_guild_mapping.set(user_guild_mapping)
+    
+       await ctx.send(f"Modmail server set to {guild.name} (ID: {guild.id})")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
