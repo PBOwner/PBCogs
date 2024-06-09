@@ -160,6 +160,3 @@ class Modmail(commands.Cog):
         except asyncio.TimeoutError:
             await user.send("You took too long to respond. Please try the command again.")
             return None
-
-async def setup(bot: Red):
-   await bot.add_cog(Modmail(bot))
