@@ -1,44 +1,62 @@
+from redbot.core import commands
+from redbot.core.bot import Config, Red
 import discord
-import asyncio
-from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext
+import logging
+import datetime
+from discord.ext import commands as Commands
 
-class ModMail(commands.Cog):
-    def __init__(self, bot):
+from .thread import Thread
+
+class Modmail(commands.Cog):
+    """Simple modmail cog"""
+
+    def __init__(self, bot: Red):
         self.bot = bot
-        self.slash = SlashCommand(bot, sync_commands=True)
-        self.mails_channel = None
+        self.guild_id = 525413739407867904
+        self.config = Config.get_conf(self, identifier=2480948239048209)
+        self.logger = logging.getLogger('red.mahjesticcogs.modmail')
 
-    @slash.slash(name="setup", description="Set up modmail channel", guild_ids=[1234567890])
-    @has_permissions(administrator=True)
-    async def setup_slash(self, ctx: SlashContext):
-        await ctx.trigger_typing()
-        await asyncio.sleep(2)
-        channel = discord.utils.get(ctx.guild.channels, name=config.mails_channel_name)
-        if channel is None:
-            guild = ctx.guild
-            overwrites = {
-                guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                guild.me: discord.PermissionOverwrite(read_messages=True)
-            }
-            try:
-                self.mails_channel = await guild.create_text_channel(config.mails_channel_name, overwrites=overwrites)
-            except:
-                print("couldn't create a mod-logs channel, maybe it exists")
+    def get_thread_from_json(self, json: dict):
+        return Thread(json['member_id'], json['messages'], json['created_at'])
 
-    @slash.slash(name="reply", description="Reply to modmail", guild_ids=[1234567890])
-    async def reply_slash(self, ctx: SlashContext, id: int = 0, *, msg: str = "moderator is replying..."):
-        user = self.bot.get_user(id)
-        if user is not None:
-            embed_reply = discord.Embed(
-                title='Reply from Moderator',
-                description=msg,
-                color=discord.Color.blue()
-            )
-            await user.send(embed=embed_reply)
+    async def init_threads(self):
+        await self.config.guild_from_id(self.guild_id).threads.set([])
 
+    async def create_user_thread(self, member: discord.Member, initial_message: discord.Message, created_at: datetime.datetime):
+        async with self.config.guild_from_id(self.guild_id).threads() as threads:
+            threads.append(Thread(member.id, [initial_message.id], int(datetime.datetime.utcnow().timestamp())).json())
 
+    async def get_user_thread(self, member: discord.Member):
+        threads = await self.config.guild_from_id(self.guild_id).threads()
+        for thread in threads:
+            if thread['member_id'] == member.id:
+                return thread
+        return None
 
-def setup(bot):
-    bot.add_cog(ModMail(bot))
+    @commands.command()
+    async def threads(self, ctx: Commands.Context):
+        threads = await self.config.guild_from_id(self.guild_id).threads()
+        embed = discord.Embed(title="ModMail Threads")
+        for thread_json in threads:
+            thread = self.get_thread_from_json(thread_json)
+            # embed.add_field(name=f"{member.name} ({member_id})", value="Thread")
+        await ctx.channel.send(embed=embed)
 
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        if message.guild is not None:
+            return
+        if message.author.bot:
+            return
+
+        threads = await self.config.guild_from_id(self.guild_id).threads()
+        if not threads:
+            await self.init_threads()
+        
+        user_thread = await self.get_user_thread(message.author)
+        if not user_thread:
+            await self.create_user_thread(message.author, message, datetime.datetime.now())
+            await message.add_reaction("✅")
+            await message.channel.send(embed=discord.Embed(title="Thread Created", description="A staff member will be with you shortly."))
+        else:
+            await message.add_reaction("✅")
