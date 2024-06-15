@@ -55,7 +55,7 @@ class StaffManager(commands.Cog):
     @commands.guild_only()
     @commands.admin_or_permissions(kick_members=True)
     @commands.command()
-    async def blacklist(self, ctx, member: discord.Member, reason: str, proof: str):
+    async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a user by kicking them from the server with a reason and proof."""
         await member.kick(reason=reason)
         await self.send_update(ctx.guild, f"{member.id} was blacklisted from {ctx.guild.name} for {reason} with {proof}")
