@@ -1,6 +1,5 @@
 import discord
-from discord.ext import commands
-from redbot.core import Config, checks
+from redbot.core import Config, checks, commands
 
 class StaffManager(commands.Cog):
     """Staff Manager cog for managing staff roles and blacklisting users."""
