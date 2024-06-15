@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from redbot.core import Config, checks, commands
 
 class StaffManager(commands.Cog):
     """Cog for managing staff members in a Discord server."""
