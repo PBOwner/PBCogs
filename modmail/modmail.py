@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from redbot.core import Config
 import asyncio
+from redbot.core import commands
 
 class Modmail(commands.Cog):
     def __init__(self, bot):
