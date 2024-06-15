@@ -2,7 +2,7 @@ import discord
 from redbot.core import Config, checks, commands
 
 class StaffManager(commands.Cog):
-    """Staff Manager cog for managing staff roles and blacklisting users."""
+    """Cog for managing staff members in a Discord server."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -12,65 +12,80 @@ class StaffManager(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_roles=True)
+    async def send_embed(self, ctx, user, new_role, old_role=None, reason=None, proof=None):
+        """Helper function to send an embed to the configured channel."""
+        channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+        if not channel_id:
+            await ctx.send("Staff updates channel is not set. Use `setstaffupdates` to set it.")
+            return
+
+        channel = self.bot.get_channel(channel_id)
+        if not channel:
+            await ctx.send("Configured staff updates channel not found.")
+            return
+
+        embed = discord.Embed(title="Staff Update", color=discord.Color.blue())
+        embed.add_field(name="Username", value=user.name, inline=False)
+        embed.add_field(name="User ID", value=user.id, inline=False)
+        embed.add_field(name="Position", value=new_role, inline=False)
+        if old_role:
+            embed.add_field(name="Old Position", value=old_role, inline=False)
+        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+        if reason:
+            embed.add_field(name="Reason", value=reason, inline=False)
+        if proof:
+            embed.add_field(name="Proof", value=proof, inline=False)
+
+        await channel.send(embed=embed)
+
     @commands.command()
+    @checks.admin_or_permissions(manage_roles=True)
     async def setstaffupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff updates."""
         await self.config.guild(ctx.guild).staff_updates_channel.set(channel.id)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_roles=True)
     @commands.command()
-    async def fire(self, ctx, member: discord.Member, role: discord.Role):
-        """Fire a staff member by removing a role."""
-        await member.remove_roles(role)
-        await self.send_update(ctx.guild, f"{member.mention} was fired from the role {role.name}")
+    @checks.admin_or_permissions(manage_roles=True)
+    async def hire(self, ctx, user: discord.Member, new_role: discord.Role):
+        """Hire a new staff member."""
+        await user.add_roles(new_role)
+        await self.send_embed(ctx, user, new_role.name)
+        await ctx.send(f"{user.mention} has been hired as {new_role.name}")
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_roles=True)
     @commands.command()
-    async def hire(self, ctx, member: discord.Member, role: discord.Role):
-        """Hire a staff member by adding a role."""
-        await member.add_roles(role)
-        await self.send_update(ctx.guild, f"{member.mention} was hired for the role {role.name}")
+    @checks.admin_or_permissions(manage_roles=True)
+    async def fire(self, ctx, user: discord.Member, new_role: discord.Role):
+        """Fire a staff member."""
+        await user.remove_roles(new_role)
+        await self.send_embed(ctx, user, new_role.name)
+        await ctx.send(f"{user.mention} has been fired from {new_role.name}")
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_roles=True)
     @commands.command()
-    async def demote(self, ctx, member: discord.Member, role: discord.Role):
-        """Demote a staff member by removing a role."""
-        await member.remove_roles(role)
-        await self.send_update(ctx.guild, f"{member.mention} was demoted from the role {role.name}")
+    @checks.admin_or_permissions(manage_roles=True)
+    async def promote(self, ctx, user: discord.Member, new_role: discord.Role, old_role: discord.Role):
+        """Promote a staff member."""
+        await user.add_roles(new_role)
+        await user.remove_roles(old_role)
+        await self.send_embed(ctx, user, new_role.name, old_role.name)
+        await ctx.send(f"{user.mention} has been promoted to {new_role.name}")
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(manage_roles=True)
     @commands.command()
-    async def promote(self, ctx, member: discord.Member, role: discord.Role):
-        """Promote a staff member by adding a role."""
-        await member.add_roles(role)
-        await self.send_update(ctx.guild, f"{member.mention} was promoted to the role {role.name}")
+    @checks.admin_or_permissions(manage_roles=True)
+    async def demote(self, ctx, user: discord.Member, new_role: discord.Role, old_role: discord.Role):
+        """Demote a staff member."""
+        await user.add_roles(new_role)
+        await user.remove_roles(old_role)
+        await self.send_embed(ctx, user, new_role.name, old_role.name)
+        await ctx.send(f"{user.mention} has been demoted to {new_role.name}")
 
-    @commands.guild_only()
-    @commands.admin_or_permissions(kick_members=True)
     @commands.command()
-    async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
-        """Blacklist a user by kicking them from the server with a reason and proof."""
-        await member.kick(reason=reason)
-        await self.send_update(ctx.guild, f"{member.id} was blacklisted from {ctx.guild.name} for {reason} with {proof}")
-
-    async def send_update(self, guild, message):
-        """Send a staff update message to the configured channel."""
-        channel_id = await self.config.guild(guild).staff_updates_channel()
-        if channel_id:
-            channel = guild.get_channel(channel_id)
-            if channel:
-                await channel.send(message)
-            else:
-                print(f"Channel ID {channel_id} not found in guild {guild.name}")
-        else:
-            print(f"No staff updates channel set for guild {guild.name}")
+    @checks.admin_or_permissions(kick_members=True)
+    async def staffblacklist(self, ctx, user: discord.Member, reason: str, proof: str):
+        """Blacklist a staff member."""
+        await user.kick(reason=reason)
+        await self.send_embed(ctx, user, "Blacklisted", reason=reason, proof=proof)
+        await ctx.send(f"{user.mention} has been blacklisted for {reason}")
 
 def setup(bot):
     bot.add_cog(StaffManager(bot))
