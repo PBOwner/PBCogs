@@ -64,22 +64,17 @@ class StaffManager(commands.Cog):
         await ctx.send(f"{member.name} has been promoted from {old_position} to {new_position}.")
 
     @commands.command()
-    @checks.admin_or_permissions(kick_members=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
-        channel_id = await self.config.guild(ctx.guild).blacklist_channel()
-        if channel_id is None:
-            await ctx.send("Blacklist channel is not set. Use `setblacklistchannel` to set it.")
-            return
-        
-        channel = self.bot.get_channel(channel_id)
-        if channel is None:
-            await ctx.send("Blacklist channel not found.")
-            return
-
         await member.kick(reason=reason)
-        await channel.send(f"{member.id} was blacklisted from {ctx.guild.name} for {reason} with {proof}.")
-        await ctx.send(f"{member.name} has been blacklisted for {reason}.")
+        embed = discord.Embed(title="Staff Blacklisted", color=discord.Color.dark_red())
+        embed.add_field(name="Username", value=member.name, inline=False)
+        embed.add_field(name="User ID", value=member.id, inline=False)
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Proof", value=proof, inline=False)
+        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+        await self.blacklist_channel.send(embed=embed)
+        await ctx.send(f"{member.id} was blacklisted from {ctx.guild.name} for {reason} with {proof}")
 
     @commands.command()
     @checks.admin_or_permissions(manage_channels=True)
