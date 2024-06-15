@@ -59,7 +59,7 @@ class StaffManager(commands.Cog):
 
     @commands.command()
     @checks.admin_or_permissions(manage_roles=True)
-    async def blacklist(self, ctx, member: discord.Member, *, reason: str):
+    async def staffblacklist(self, ctx, member: discord.Member, *, reason: str):
         """
         Blacklists a member from the server and sends a message to a configurable channel.
         """
