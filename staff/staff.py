@@ -66,6 +66,15 @@ class StaffManager(commands.Cog):
     @commands.command()
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
+        channel_id = await self.config.guild(ctx.guild).blacklist_channel()
+        if channel_id is None:
+            await ctx.send("Blacklist channel is not set. Use `setblacklistchannel` to set it.")
+            return
+
+        channel = self.bot.get_channel(channel_id)
+        if channel is None:
+            await ctx.send("Blacklist channel not found.")
+            return
         await member.kick(reason=reason)
         embed = discord.Embed(title="Staff Blacklisted", color=discord.Color.dark_red())
         embed.add_field(name="Username", value=member.name, inline=False)
