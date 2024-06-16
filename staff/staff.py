@@ -162,7 +162,7 @@ class StaffManager(commands.Cog):
         await self.staff_updates_channel.send(embed=embed)
 
     @staff.command(name="blacklist")
-    @commands.has_permissions(kick_members=True)
+    @commands.has_permissions(ban_members=True)
     async def staff_blacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
         await member.ban(reason=reason)
