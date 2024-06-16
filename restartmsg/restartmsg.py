@@ -1,6 +1,7 @@
+import os
 from redbot.core import commands
 
-class RestartMsg(commands.Cog):
+class RestartCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -15,7 +16,10 @@ class RestartMsg(commands.Cog):
             except Exception as e:
                 print(f"Failed to send message to {owner}: {e}")
 
-        await ctx.send("Restart message sent to all guild owners.")
+        await ctx.send("Restart message sent to all guild owners. Restarting bot...")
+
+        # Restart the bot process
+        os.execv(sys.executable, ['python'] + sys.argv)
 
 def setup(bot):
     bot.add_cog(RestartMsg(bot))
