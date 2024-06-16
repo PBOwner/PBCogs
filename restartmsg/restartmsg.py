@@ -1,7 +1,7 @@
 import os
 from redbot.core import commands
 
-class RestartCog(commands.Cog):
+class RestartMsg(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
