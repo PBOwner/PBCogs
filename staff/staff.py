@@ -9,27 +9,23 @@ class StaffManager(commands.Cog):
         self.staff_updates_channel = None
         self.blacklist_channel = None
 
-    @commands.group()
-    async def staff(self, ctx):
-        """Staff management commands."""
-
-    @staff.command(name="setupdates")
+    @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def staff_setupdates(self, ctx, channel: discord.TextChannel):
+    async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
         self.staff_updates_channel = channel
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
-    @staff.command(name="setblacklist")
+    @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def staff_setblacklist(self, ctx, channel: discord.TextChannel):
+    async def setblacklist(self, ctx, channel: discord.TextChannel):
         """Set the channel for blacklist messages."""
         self.blacklist_channel = channel
         await ctx.send(f"Blacklist channel set to {channel.mention}")
 
-    @staff.command(name="fire")
+    @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def staff_fire(self, ctx, member: discord.Member, role: discord.Role):
+    async def fire(self, ctx, member: discord.Member, role: discord.Role):
         """Fire a staff member."""
         await member.remove_roles(role)
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
@@ -39,9 +35,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
 
-    @staff.command(name="hire")
+    @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def staff_hire(self, ctx, member: discord.Member, role: discord.Role):
+    async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
         await member.add_roles(role)
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
@@ -51,9 +47,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
 
-    @staff.command(name="demote")
+    @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def staff_demote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
+    async def demote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Demote a staff member."""
         await member.remove_roles(old_role)
         await member.add_roles(new_role)
@@ -65,23 +61,23 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
 
-    @staff.command(name="promote")
+    @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def staff_promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
+    async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Promote a staff member."""
         await member.remove_roles(old_role)
         await member.add_roles(new_role)
         embed = discord.Embed(title="Staff Promoted", color=discord.Color.blue())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="New Position", value=new_role.name, inline=False)
+        embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
 
-    @staff.command(name="blacklist")
+    @command.command(name="blacklist")
     @commands.has_permissions(ban_members=True)
-    async def staff_blacklist(self, ctx, member: discord.Member, reason: str, proof: str):
+    async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
         # Send a DM to the member before banning them
         try:
