@@ -98,8 +98,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Reason", value=reason, inline=False)
         embed.add_field(name="Proof", value=proof, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        embed.add_field(name="Appeal", value=f"To appeal, contact {ctx.guild.owner.mention}")
+        embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
         await self.blacklist_channel.send(embed=embed)
 
 def setup(bot):
