@@ -75,7 +75,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
 
-    @commands.command(name="blacklist")
+    @commands.command(name="staffblacklist")
     @commands.has_permissions(ban_members=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
