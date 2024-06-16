@@ -74,7 +74,7 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Promoted", color=discord.Color.blue())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=new_role.name, inline=False)
+        embed.add_field(name="New Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
@@ -98,7 +98,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Reason", value=reason, inline=False)
         embed.add_field(name="Proof", value=proof, inline=False)
-        embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+        embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url_as(format='png'))
         await self.blacklist_channel.send(embed=embed)
 
 def setup(bot):
