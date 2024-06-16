@@ -85,7 +85,7 @@ class StaffManager(commands.Cog):
         """Blacklist a staff member."""
         # Send a DM to the member before banning them
         try:
-            await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact {ctx.guild.owner} or the Support team.")
+            await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact {ctx.guild.owner.mention} or the Support team.")
         except discord.Forbidden:
             await ctx.send(f"Failed to send a DM to {member.name}. They will still be blacklisted.")
     
