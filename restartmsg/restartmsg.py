@@ -7,6 +7,7 @@ class RestartMsg(commands.Cog):
     @commands.command(name='warnrestart')
     @commands.is_owner()
     async def warnrestart(self, ctx, *, message: str):
+        """Send a message to all Server Owners."""
         for guild in self.bot.guilds:
             owner = guild.owner
             try:
