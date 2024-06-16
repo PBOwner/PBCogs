@@ -12,8 +12,6 @@ class StaffManager(commands.Cog):
     @commands.group()
     async def staff(self, ctx):
         """Staff management commands."""
-        if ctx.invoked_subcommand is None:
-            await ctx.send("Invalid staff command. Use `/staff help` for a list of commands.")
 
     @staff.command(name="setupdates")
     @commands.has_permissions(manage_channels=True)
@@ -85,12 +83,16 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def staff_blacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
-    try:
-        await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact the guild owner or the staff team.")
-    except discord.Forbidden:
-        await ctx.send(f"Failed to send a DM to {member.name}. They will still be blacklisted.")
-
+        # Send a DM to the member before banning them
+        try:
+            await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact the guild owner or the staff team.")
+        except discord.Forbidden:
+            await ctx.send(f"Failed to send a DM to {member.name}. They will still be blacklisted.")
+    
+        # Ban the member
         await member.ban(reason=reason)
+    
+        # Send an embed message to the blacklist_channel
         embed = discord.Embed(title="Staff Blacklisted", color=discord.Color.dark_red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
