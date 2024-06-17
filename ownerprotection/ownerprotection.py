@@ -35,7 +35,7 @@ class OwnerProtection(commands.Cog):
 
     @commands.group()
     @commands.is_owner()
-    async def ownerprotect(self, ctx: commands.Context):
+    async def owner(self, ctx: commands.Context):
         """Group command for owner protection settings."""
         pass
 
