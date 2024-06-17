@@ -14,26 +14,30 @@ class StaffManager(commands.Cog):
             await ctx.send("Oops, you forgot to set the Blacklist channel! Make sure you set it with `[p]setblacklist`.")
         else:
             await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
+        
+    @commands.command()
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        await self.config.staff_updates_channel.set(channel)
+        await self.config.staff_updates_channel.set(channel.id)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setblacklist(self, ctx, channel: discord.TextChannel):
         """Set the channel for blacklist messages."""
-        await self.config.blacklist_channel.set(channel)
+        await self.config.blacklist_channel.set(channel.id)
         await ctx.send(f"Blacklist channel set to {channel.mention}")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        """Handle command errors."""
         if isinstance(error, commands.CheckFailure):
             await self.send_channel_not_set_message(ctx, ctx.command.name)
 
     async def channel_is_set(ctx):
+        """Check if the required channels are set."""
         staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
         blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
         if staff_updates_channel is None or blacklist_channel is None:
