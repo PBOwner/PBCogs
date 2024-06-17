@@ -139,21 +139,13 @@ class StaffManager(commands.Cog):
         else:
             await self.send_channel_not_set_message(ctx, "promote")
 
-# Define the check function outside the class
-async def channel_is_set(ctx):
-    """Check if the required channels are set."""
-    staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
-    blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
-    if staff_updates_channel is None or blacklist_channel is None:
-        return False
-    return True
-
-
     @commands.command()
-    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
+        if not await self.channel_is_set(ctx):
+            await self.send_channel_not_set_message(ctx, "demote")
+            return
         # Send a DM to the member before banning them
         try:
             await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact {ctx.guild.owner.mention} or the Support team.")
@@ -174,6 +166,15 @@ async def channel_is_set(ctx):
             await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "staffblacklist")
+
+# Define the check function outside the class
+async def channel_is_set(ctx):
+    """Check if the required channels are set."""
+    staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
+    blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+    if staff_updates_channel is None or blacklist_channel is None:
+        return False
+    return True
 
 def setup(bot):
     bot.add_cog(StaffManager(bot))
