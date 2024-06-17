@@ -36,6 +36,15 @@ class StaffManager(commands.Cog):
         if isinstance(error, commands.CheckFailure):
             await self.send_channel_not_set_message(ctx, ctx.command.name)
 
+    async def channel_is_set(ctx):
+        """Check if the required channels are set."""
+        staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
+        blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+        if staff_updates_channel is None or blacklist_channel is None:
+            return False
+        return True
+
+
     @commands.command()
     @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
