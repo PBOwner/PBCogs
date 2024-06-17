@@ -6,22 +6,34 @@ class StaffManager(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.staff_updates_channel = None
-        self.blacklist_channel = None
+        self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
+        self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
+
+    async def send_channel_reminder(self, ctx, reminder_message):
+        await ctx.send(reminder_message)
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        self.staff_updates_channel = channel
+        self.config.staff_updates_channel.set(channel)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setblacklist(self, ctx, channel: discord.TextChannel):
         """Set the channel for blacklist messages."""
-        self.blacklist_channel = channel
+        self.config.blacklist_channel.set(channel)
         await ctx.send(f"Blacklist channel set to {channel.mention}")
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            if ctx.command:
+                if ctx.command.name in ["fire", "hire", "demote", "promote"]:
+                    await self.send_channel_reminder(ctx, "Embed not sent. Make sure you set the Staff Updates channel with ,setupdates")
+                elif ctx.command.name == "staffblacklist":
+                    await self.send_channel_reminder(ctx, "Don't forget to set the blacklist channel with ,setblacklist")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -31,9 +43,8 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=role.name, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        await self.staff_updates_channel.send(embed=embed)
+        if self.config.staff_updates_channel:
+            await self.config.staff_updates_channel.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -43,9 +54,8 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=role.name, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        await self.staff_updates_channel.send(embed=embed)
+        if self.config.staff_updates_channel:
+            await self.config.staff_updates_channel.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -58,8 +68,8 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        await self.staff_updates_channel.send(embed=embed)
+        if self.config.staff_updates_channel:
+            await self.config.staff_updates_channel.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -72,8 +82,8 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        await self.staff_updates_channel.send(embed=embed)
+        if self.config.staff_updates_channel:
+            await self.config.staff_updates_channel.send(embed=embed)
 
     @commands.command(name="staffblacklist")
     @commands.has_permissions(ban_members=True)
@@ -84,17 +94,18 @@ class StaffManager(commands.Cog):
             await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact {ctx.guild.owner.mention} or the Support team.")
         except discord.Forbidden:
             await ctx.send(f"Failed to send a DM to {member.name}. They will still be blacklisted.")
-    
+
         # Ban the member
         await member.ban(reason=reason)
-    
+
         # Send an embed message to the blacklist_channel
         embed = discord.Embed(title="Staff Blacklisted", color=discord.Color.dark_red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Reason", value=reason, inline=False)
         embed.add_field(name="Proof", value=proof, inline=False)
-        await self.blacklist_channel.send(embed=embed)
+        if self.config.blacklist_channel:
+            await self.config.blacklist_channel.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(StaffManager(bot))
