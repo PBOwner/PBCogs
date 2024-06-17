@@ -28,11 +28,21 @@ class StaffManager(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            if ctx.command:
-                await self.send_channel_reminder(ctx, ctx.command.name)
+        if isinstance(error, commands.CheckFailure):
+            await self.send_channel_not_set_message(ctx)
+
+    async def channel_is_set(ctx):
+        staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
+        blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+        if staff_updates_channel is None or blacklist_channel is None:
+            return False
+        return True
+
+    async def not_bot_owner(ctx):
+        return ctx.author != ctx.bot.owner
 
     @commands.command()
+    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def fire(self, ctx, member: discord.Member, role: discord.Role):
         """Fire a staff member."""
@@ -47,6 +57,7 @@ class StaffManager(commands.Cog):
             await self.send_channel_reminder(ctx, "fire")
 
     @commands.command()
+    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
@@ -61,6 +72,7 @@ class StaffManager(commands.Cog):
             await self.send_channel_reminder(ctx, "hire")
 
     @commands.command()
+    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def demote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Demote a staff member."""
@@ -78,6 +90,7 @@ class StaffManager(commands.Cog):
             await self.send_channel_reminder(ctx, "demote")
 
     @commands.command()
+    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Promote a staff member."""
@@ -95,6 +108,8 @@ class StaffManager(commands.Cog):
             await self.send_channel_reminder(ctx, "promote")
 
     @commands.command(name="staffblacklist")
+    @commands.check(channel_is_set)
+    @commands.check(not_bot_owner)
     @commands.has_permissions(ban_members=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
