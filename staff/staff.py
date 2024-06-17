@@ -30,6 +30,20 @@ class StaffManager(commands.Cog):
         await self.config.blacklist_channel.set(channel.id)
         await ctx.send(f"Blacklist channel set to {channel.mention}")
 
+    @commands.command()
+    @commands.has_permissions(manage_channels=True)
+    async def unsetupdates(self, ctx):
+        """Unset the staff updates channel."""
+        await self.config.staff_updates_channel.set(None)
+        await ctx.send("Staff updates channel has been unset.")
+
+    @commands.command()
+    @commands.has_permissions(manage_channels=True)
+    async def unsetblacklist(self, ctx):
+        """Unset the blacklist channel."""
+        await self.config.blacklist_channel.set(None)
+        await ctx.send("Blacklist channel has been unset.")
+
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         """Handle command errors."""
