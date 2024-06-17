@@ -50,20 +50,23 @@ class StaffManager(commands.Cog):
         if isinstance(error, commands.CheckFailure):
             await self.send_channel_not_set_message(ctx, ctx.command.name)
 
-    async def channel_is_set(ctx):
+    async def channel_is_set(self, ctx):
         """Check if the required channels are set."""
-        staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
-        blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+        staff_updates_channel = await self.config.staff_updates_channel()
+        blacklist_channel = await self.config.blacklist_channel()
         if staff_updates_channel is None or blacklist_channel is None:
             return False
         return True
 
 
     @commands.command()
-    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def fire(self, ctx, member: discord.Member, role: discord.Role):
         """Fire a staff member."""
+        if not await self.channel_is_set(ctx):
+            await self.send_channel_not_set_message(ctx, "fire")
+            return
+
         await member.remove_roles(role)
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
@@ -76,10 +79,13 @@ class StaffManager(commands.Cog):
             await self.send_channel_not_set_message(ctx, "fire")
 
     @commands.command()
-    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
+        if not await self.channel_is_set(ctx):
+            await self.send_channel_not_set_message(ctx, "hire")
+            return
+
         await member.add_roles(role)
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
@@ -92,10 +98,13 @@ class StaffManager(commands.Cog):
             await self.send_channel_not_set_message(ctx, "hire")
 
     @commands.command()
-    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def demote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Demote a staff member."""
+        if not await self.channel_is_set(ctx):
+            await self.send_channel_not_set_message(ctx, "demote")
+            return
+
         await member.remove_roles(old_role)
         await member.add_roles(new_role)
         embed = discord.Embed(title="Staff Demoted", color=discord.Color.orange())
@@ -118,10 +127,13 @@ async def channel_is_set(ctx):
     return True
 
     @commands.command()
-    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
         """Promote a staff member."""
+        if not await self.channel_is_set(ctx):
+            await self.send_channel_not_set_message(ctx, "promote")
+            return
+
         await member.remove_roles(old_role)
         await member.add_roles(new_role)
         embed = discord.Embed(title="Staff Promoted", color=discord.Color.blue())
@@ -129,11 +141,13 @@ async def channel_is_set(ctx):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        channel = await self.config.staff_updates_channel()
+        channel_id = await self.config.staff_updates_channel()
+        channel = self.bot.get_channel(channel_id)
         if channel:
             await channel.send(embed=embed)
         else:
-            await self.send_channel_reminder(ctx, "promote")
+            await self.send_channel_not_set_message(ctx, "promote")
+
 
     @commands.command()
     @commands.check(channel_is_set)
