@@ -117,15 +117,6 @@ class StaffManager(commands.Cog):
         else:
             await self.send_channel_not_set_message(ctx, "demote")
 
-# Define the check function outside the class
-async def channel_is_set(ctx):
-    """Check if the required channels are set."""
-    staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
-    blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
-    if staff_updates_channel is None or blacklist_channel is None:
-        return False
-    return True
-
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
@@ -147,6 +138,15 @@ async def channel_is_set(ctx):
             await channel.send(embed=embed)
         else:
             await self.send_channel_not_set_message(ctx, "promote")
+
+# Define the check function outside the class
+async def channel_is_set(ctx):
+    """Check if the required channels are set."""
+    staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
+    blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+    if staff_updates_channel is None or blacklist_channel is None:
+        return False
+    return True
 
 
     @commands.command()
