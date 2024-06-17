@@ -31,7 +31,7 @@ class StaffManager(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
-            await self.send_channel_not_set_message(ctx)
+            await self.send_channel_not_set_message(ctx, ctx.command.name)
 
     async def channel_is_set(ctx):
         staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
