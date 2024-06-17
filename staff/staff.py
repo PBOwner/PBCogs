@@ -9,9 +9,11 @@ class StaffManager(commands.Cog):
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
         self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
 
-    async def send_channel_not_set_message(self, ctx):
-        await ctx.send("Oops, you forgot to set the channels! Make sure you set the `Staff Updates` channel with `[p]setupdate <channel>` and the `Blacklist Channel` with `[p]setblacklist <channel>`.")
-
+    async def send_channel_not_set_message(self, ctx, command_name):
+        if command_name == "staffblacklist":
+            await ctx.send("Oops, you forgot to set the Blacklist channel! Make sure you set it with `[p]setblacklist`.")
+        else:
+            await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
