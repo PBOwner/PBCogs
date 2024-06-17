@@ -1,5 +1,5 @@
 import discord
-from redbot.core import Config, checks, commands
+from redbot.core import Config, commands
 
 class StaffManager(commands.Cog):
     """Cog for managing staff members in a Discord server."""
@@ -9,8 +9,8 @@ class StaffManager(commands.Cog):
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
         self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
 
-    async def send_channel_reminder(self, ctx, command_name):
-        await ctx.send(f"Oops, you forgot to set the channel for {command_name}! Make sure you do!")
+    async def send_channel_not_set_message(self, ctx):
+        await ctx.send("Oops, you forgot to set the channels! Make sure you set both the Staff Updates and Blacklist channels.")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -107,10 +107,10 @@ class StaffManager(commands.Cog):
         else:
             await self.send_channel_reminder(ctx, "promote")
 
-    @commands.command(name="staffblacklist")
+    @commands.command()
     @commands.check(channel_is_set)
     @commands.check(not_bot_owner)
-    @commands.has_permissions(ban_members=True)
+    @commands.has_permissions(manage_roles=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
         # Send a DM to the member before banning them
