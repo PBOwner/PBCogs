@@ -9,8 +9,8 @@ class StaffManager(commands.Cog):
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
         self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
 
-    async def send_channel_reminder(self, ctx, reminder_message):
-        await ctx.send(reminder_message)
+    async def send_channel_reminder(self, ctx, command_name):
+        await ctx.send(f"Oops, you forgot to set the channel for {command_name}! Make sure you do!")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -30,10 +30,7 @@ class StaffManager(commands.Cog):
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             if ctx.command:
-                if ctx.command.name in ["fire", "hire", "demote", "promote"]:
-                    await self.send_channel_reminder(ctx, "Embed not sent. Make sure you set the Staff Updates channel with ,setupdates")
-                elif ctx.command.name == "staffblacklist":
-                    await self.send_channel_reminder(ctx, "Don't forget to set the blacklist channel with ,setblacklist")
+                await self.send_channel_reminder(ctx, ctx.command.name)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
