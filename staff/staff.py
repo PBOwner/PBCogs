@@ -10,12 +10,12 @@ class StaffManager(commands.Cog):
         self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
 
     async def send_channel_not_set_message(self, ctx, command_name):
+        """Send a message indicating that the required channel is not set."""
         if command_name == "staffblacklist":
             await ctx.send("Oops, you forgot to set the Blacklist channel! Make sure you set it with `[p]setblacklist`.")
         else:
             await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
         
-    @commands.command()
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
@@ -36,14 +36,6 @@ class StaffManager(commands.Cog):
         if isinstance(error, commands.CheckFailure):
             await self.send_channel_not_set_message(ctx, ctx.command.name)
 
-    async def channel_is_set(ctx):
-        """Check if the required channels are set."""
-        staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
-        blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
-        if staff_updates_channel is None or blacklist_channel is None:
-            return False
-        return True
-
     @commands.command()
     @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
@@ -53,11 +45,12 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        channel = await self.config.staff_updates_channel()
+        channel_id = await self.config.staff_updates_channel()
+        channel = self.bot.get_channel(channel_id)
         if channel:
             await channel.send(embed=embed)
         else:
-            await self.send_channel_reminder(ctx, "fire")
+            await self.send_channel_not_set_message(ctx, "fire")
 
     @commands.command()
     @commands.check(channel_is_set)
@@ -68,11 +61,12 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        channel = await self.config.staff_updates_channel()
+        channel_id = await self.config.staff_updates_channel()
+        channel = self.bot.get_channel(channel_id)
         if channel:
             await channel.send(embed=embed)
         else:
-            await self.send_channel_reminder(ctx, "hire")
+            await self.send_channel_not_set_message(ctx, "hire")
 
     @commands.command()
     @commands.check(channel_is_set)
@@ -84,13 +78,21 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Demoted", color=discord.Color.orange())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=new_role.name, inline=False)
-        embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        channel = await self.config.staff_updates_channel()
+        channel_id = await self.config.staff_updates_channel()
+        channel = self.bot.get_channel(channel_id)
         if channel:
             await channel.send(embed=embed)
         else:
-            await self.send_channel_reminder(ctx, "demote")
+            await self.send_channel_not_set_message(ctx, "demote")
+
+# Define the check function outside the class
+async def channel_is_set(ctx):
+    """Check if the required channels are set."""
+    staff_updates_channel = await ctx.bot.get_cog("StaffManager").config.staff_updates_channel()
+    blacklist_channel = await ctx.bot.get_cog("StaffManager").config.blacklist_channel()
+    if staff_updates_channel is None or blacklist_channel is None:
+        return False
+    return True
 
     @commands.command()
     @commands.check(channel_is_set)
