@@ -16,14 +16,14 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        self.config.staff_updates_channel.set(channel)
+        await self.config.staff_updates_channel.set(channel)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setblacklist(self, ctx, channel: discord.TextChannel):
         """Set the channel for blacklist messages."""
-        self.config.blacklist_channel.set(channel)
+        await self.config.blacklist_channel.set(channel)
         await ctx.send(f"Blacklist channel set to {channel.mention}")
 
     @commands.Cog.listener()
@@ -40,8 +40,9 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        if self.config.staff_updates_channel:
-            await self.config.staff_updates_channel.send(embed=embed)
+        channel = await self.config.staff_updates_channel()
+        if channel:
+            await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "fire")
 
@@ -53,8 +54,9 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        if self.config.staff_updates_channel:
-            await self.config.staff_updates_channel.send(embed=embed)
+        channel = await self.config.staff_updates_channel()
+        if channel:
+            await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "hire")
 
@@ -69,8 +71,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        if self.config.staff_updates_channel:
-            await self.config.staff_updates_channel.send(embed=embed)
+        channel = await self.config.staff_updates_channel()
+        if channel:
+            await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "demote")
 
@@ -85,8 +88,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        if self.config.staff_updates_channel:
-            await self.config.staff_updates_channel.send(embed=embed)
+        channel = await self.config.staff_updates_channel()
+        if channel:
+            await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "promote")
 
@@ -109,8 +113,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Reason", value=reason, inline=False)
         embed.add_field(name="Proof", value=proof, inline=False)
-        if self.config.blacklist_channel:
-            await self.config.blacklist_channel.send(embed=embed)
+        channel = await self.config.blacklist_channel()
+        if channel:
+            await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "staffblacklist")
 
