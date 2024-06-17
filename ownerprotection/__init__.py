@@ -1,3 +1,5 @@
+from redbot.core.bot import Red
+
 from .ownerprotection import OwnerProtection
 
 async def setup(bot):
