@@ -140,6 +140,7 @@ class StaffManager(commands.Cog):
             await self.send_channel_not_set_message(ctx, "promote")
 
     @commands.command()
+    @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
