@@ -38,9 +38,6 @@ class StaffManager(commands.Cog):
             return False
         return True
 
-    async def not_bot_owner(ctx):
-        return ctx.author != ctx.bot.owner
-
     @commands.command()
     @commands.check(channel_is_set)
     @commands.has_permissions(manage_roles=True)
@@ -109,7 +106,6 @@ class StaffManager(commands.Cog):
 
     @commands.command()
     @commands.check(channel_is_set)
-    @commands.check(not_bot_owner)
     @commands.has_permissions(manage_roles=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
