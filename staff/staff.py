@@ -140,12 +140,12 @@ class StaffManager(commands.Cog):
             await self.send_channel_not_set_message(ctx, "promote")
 
     @commands.command()
-    @commands.check(channel_is_set)
+    @commands.check(lambda ctx: ctx.bot.get_cog("StaffManager").channel_is_set(ctx))
     @commands.has_permissions(manage_roles=True)
     async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str):
         """Blacklist a staff member."""
         if not await self.channel_is_set(ctx):
-            await self.send_channel_not_set_message(ctx, "demote")
+            await self.send_channel_not_set_message(ctx, "staffblacklist")
             return
         # Send a DM to the member before banning them
         try:
@@ -162,11 +162,12 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Reason", value=reason, inline=False)
         embed.add_field(name="Proof", value=proof, inline=False)
-        channel = await self.config.blacklist_channel()
+        channel_id = await self.config.blacklist_channel()
+        channel = self.bot.get_channel(channel_id)
         if channel:
             await channel.send(embed=embed)
         else:
-            await self.send_channel_reminder(ctx, "staffblacklist")
+            await self.send_channel_not_set_message(ctx, "staffblacklist")
 
 # Define the check function outside the class
 async def channel_is_set(ctx):
