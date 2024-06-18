@@ -45,7 +45,7 @@ class Xenon(commands.Cog):
         for role in guild.roles:
             roles.append({
                 'name': role.name,
-                'permissions': role.permissions.value,
+                'permissions': role.permissions.value,  # Convert permissions to integer
                 'position': role.position,
                 'color': role.color.value,
                 'hoist': role.hoist,
@@ -86,7 +86,7 @@ class Xenon(commands.Cog):
         for role_data in template.roles:
             role = await guild.create_role(
                 name=role_data['name'],
-                permissions=discord.Permissions(role_data['permissions']),
+                permissions=discord.Permissions(role_data['permissions']),  # Convert integer to Permissions
                 color=discord.Color(role_data['color']),
                 hoist=role_data['hoist'],
                 mentionable=role_data['mentionable']
