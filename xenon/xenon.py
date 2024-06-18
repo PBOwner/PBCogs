@@ -19,7 +19,17 @@ class Xenon(commands.Cog):
         if not os.path.exists(self.template_dir):
             os.makedirs(self.template_dir)
 
+class TemplateBot(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.template_dir = 'templates'
+        self.trusted_users = set()
+
+    def is_owner_or_trusted(ctx):
+        return ctx.author == ctx.guild.owner or ctx.author.id in ctx.cog.trusted_users
+
     @commands.command()
+    @commands.check(is_owner_or_trusted)
     async def savet(self, ctx):
         """Saves the current server's structure as a template."""
         guild = ctx.guild
@@ -52,7 +62,12 @@ class Xenon(commands.Cog):
                 'mentionable': role.mentionable
             })
 
-        template = ServerTemplate(channels, roles)
+        # Save additional guild settings
+        verification_level = guild.verification_level
+        explicit_content_filter = guild.explicit_content_filter
+        default_notifications = guild.default_notifications
+
+        template = ServerTemplate(channels, roles, verification_level, explicit_content_filter, default_notifications)
         template_id = str(uuid.uuid4())
         
         # Use custom JSON encoder
@@ -62,106 +77,116 @@ class Xenon(commands.Cog):
         await ctx.send(f'Template saved with ID: {template_id}')
 
     @commands.command()
-    async def loadt(self, ctx, template_id: str):
-        """Loads a template and applies it to the current server.
+    @commands.has_permissions(administrator=True)
+    async def addtrusted(self, ctx, user: commands.MemberConverter):
+        """Adds a trusted user who can run the savet and loadt commands."""
+        self.trusted_users.add(user.id)
+        await ctx.send(f'{user.mention} has been added as a trusted user.')
 
-        This command will delete all existing channels and roles on the server
-        and recreate them based on the specified template.
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def remtrusted(self, ctx, user: commands.MemberConverter):
+        """Removes a trusted user."""
+        self.trusted_users.discard(user.id)
+        await ctx.send(f'{user.mention} has been removed from trusted users.')
 
-        Parameters
-        ----------
-        template_id : str
-            The ID of the template to load.
-        """
-        guild = ctx.guild
+    @commands.command()
+    @commands.check(is_owner_or_trusted)
+    async def loadt(self, ctx, template_id):
+    """Loads a template and applies it to the current server.
 
-        # Check if the user has the required permissions
-        if not ctx.author.guild_permissions.manage_guild:
-            await ctx.send("You need the 'Manage Server' permission to use this command.")
-            return
+    This command will delete all existing channels and roles on the server
+    and recreate them based on the specified template.
 
-        # Load template
+    Parameters
+    ----------
+    template_id : str
+        The ID of the template to load.
+    """
+    guild = ctx.guild
+
+    # Load template
+    try:
+        with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
+            template_data = json.load(f)
+    except FileNotFoundError:
+        await ctx.send('Template not found.')
+        return
+
+    template = ServerTemplate(**template_data)
+
+    # Disable community features if enabled
+    if 'COMMUNITY' in guild.features:
         try:
-            with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
-                template_data = json.load(f)
-        except FileNotFoundError:
-            await ctx.send('Template not found.')
+            # Set verification level to the same as the template
+            await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
+            # Set explicit content filter to the same as the template
+            await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+            # Set default notifications to the same as the template
+            await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to disable community features: {str(e)}")
             return
 
-        # Disable community features if enabled
-        if 'COMMUNITY' in guild.features:
+    # Clear existing channels and roles
+    for channel in list(guild.channels):
+        try:
+            await channel.delete()
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
+
+    for role in list(guild.roles):
+        if role != guild.default_role and not role.managed:
             try:
-                # **Fix:** Set verification level to None first, then disable explicit content filter
-                await guild.edit(verification_level=discord.VerificationLevel.none)
-                await guild.edit(explicit_content_filter=discord.ContentFilter.disabled)
-                await guild.edit(default_notifications=discord.NotificationLevel.all_messages)
+                await role.delete()
             except discord.HTTPException as e:
-                await ctx.send(f"Failed to disable community features: {str(e)}")
-                return
+                await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
 
-        # Clear existing channels and roles
-        for channel in list(guild.channels):
-            try:
-                await channel.delete()
-            except discord.HTTPException as e:
-                await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
+    # Create roles
+    role_map = {}
+    for role_data in template.roles:
+        role = await guild.create_role(
+            name=role_data['name'],
+            permissions=discord.Permissions(role_data['permissions']),
+            color=discord.Color(role_data['color']),
+            hoist=role_data['hoist'],
+            mentionable=role_data['mentionable']
+        )
+        role_map[role_data['name']] = role
 
-        for role in list(guild.roles):
-            if role != guild.default_role and not role.managed:
-                try:
-                    await role.delete()
-                except discord.HTTPException as e:
-                    await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
-
-        template = ServerTemplate(**template_data)
-
-        # Create roles
-        role_map = {}
-        for role_data in template.roles:
-            role = await guild.create_role(
-                name=role_data['name'],
-                permissions=discord.Permissions(role_data['permissions']),  # Convert integer to Permissions
-                color=discord.Color(role_data['color']),
-                hoist=role_data['hoist'],
-                mentionable=role_data['mentionable']
-            )
-            role_map[role_data['name']] = role
-
-        # Create channels
-        for channel_data in template.channels:
-            overwrites = {}
-            for role_id, perm in channel_data['permissions'].items():
-                role = role_map.get(role_id)
-                if role:
-                    overwrites[role] = discord.PermissionOverwrite.from_pair(
-                        discord.Permissions(perm['allow']),
-                        discord.Permissions(perm['deny'])
-                    )
-            if channel_data['type'] == 'text':
-                await guild.create_text_channel(
-                    name=channel_data['name'],
-                    position=channel_data['position'],
-                    overwrites=overwrites
+    # Create channels
+    for channel_data in template.channels:
+        overwrites = {}
+        for role_id, perm in channel_data['permissions'].items():
+            role = role_map.get(role_id)
+            if role:
+                overwrites[role] = discord.PermissionOverwrite.from_pair(
+                    discord.Permissions(perm['allow']),
+                    discord.Permissions(perm['deny'])
                 )
-            elif channel_data['type'] == 'voice':
-                await guild.create_voice_channel(
-                    name=channel_data['name'],
-                    position=channel_data['position'],
-                    overwrites=overwrites
-                )
+        channel_type = discord.ChannelType[channel_data['type']]
+        await guild.create_channel(
+            name=channel_data['name'],
+            type=channel_type,
+            position=channel_data['position'],
+            overwrites=overwrites
+        )
 
-        # Re-enable community features if they were originally enabled
-        if 'COMMUNITY' in guild.features:
-            try:
-                # **Fix:** Set verification level to low first, then set explicit content filter
-                await guild.edit(verification_level=discord.VerificationLevel.low)
-                await guild.edit(explicit_content_filter=discord.ContentFilter.no_role)
-                await guild.edit(default_notifications=discord.NotificationLevel.only_mentions)
-            except discord.HTTPException as e:
-                await ctx.send(f"Failed to re-enable community features: {str(e)}")
-                return
+    # Re-enable community features if they were originally enabled
+    if 'COMMUNITY' in guild.features:
+        try:
+            # Set verification level to the same as the template
+            await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
+            # Set explicit content filter to the same as the template
+            await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+            # Set default notifications to the same as the template
+            await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to re-enable community features: {str(e)}")
+            return
 
-        await ctx.send('Template applied successfully.')
+    await ctx.send('Template applied successfully.')
+    
     @commands.command()
     async def listt(self, ctx):
         """Lists all saved templates."""
