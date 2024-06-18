@@ -142,36 +142,34 @@ class TemplateBot(commands.Cog):
                 except discord.HTTPException as e:
                     await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
 
-    # Create roles
-       role_map = {}
-       for role_data in template.roles:
-           role = await guild.create_role(
-               name=role_data['name'],
-               permissions=discord.Permissions(role_data['permissions']),
-               color=discord.Color(role_data['color']),
-               hoist=role_data['hoist'],
-               mentionable=role_data['mentionable']
-           )
-           role_map[role_data['name']] = role
+        # Create roles
+        role_map = {}
+        for role_data in template.roles:
+            role = await guild.create_role(
+                name=role_data['name'],
+                permissions=discord.Permissions(role_data['permissions']),
+                color=discord.Color(role_data['color']),
+                hoist=role_data['hoist'],
+                mentionable=role_data['mentionable']
+            )
+            role_map[role_data['name']] = role
 
-       # Create channels
-       for channel_data in template.channels:
-           overwrites = {}
-           for role_id, perm in channel_data['permissions'].items():
-               role = role_map.get(role_id)
-               if role:
-                   overwrites[role] = discord.PermissionOverwrite.from_pair(
-                       discord.Permissions(perm['allow']),
-                       discord.Permissions(perm['deny'])
-                   )
-           channel_type = discord.ChannelType[channel_data['type']]
-           await guild.create_channel(
-               name=channel_data['name'],
-               type=channel_type,
-               position=channel_data['position'],
-               overwrites=overwrites
-           )
-
+        # Create channels
+        for channel_data in template.channels:
+            overwrites = {}
+            for role_id, perm in channel_data['permissions'].items():
+                role = discord.utils.get(guild.roles, id=int(role_id))
+                if role:
+                    overwrites[role] = discord.PermissionOverwrite(
+                        read_messages=perm['read_messages'],
+                        send_messages=perm['send_messages']
+                    )
+            await guild.create_text_channel(
+                name=channel_data['name'],
+                overwrites=overwrites,
+                position=channel_data['position']
+            )
+            
        # Re-enable community features if they were originally enabled
        if 'COMMUNITY' in guild.features:
            try:
