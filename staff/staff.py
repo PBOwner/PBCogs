@@ -31,22 +31,21 @@ class StaffManager(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def hire(self, ctx, member: discord.Member, role: discord.Role):
-        """Hire a new staff member."""
-        await member.add_roles(role)
-        embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
+    async def fire(self, ctx, member: discord.Member, role: discord.Role):
+        """Fire a staff member."""
+        await member.remove_roles(role)
+        embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
-
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def fire(self, ctx, member: discord.Member, role: discord.Role):
-        """Fire a staff member."""
-        await member.remove_roles(role)
-        embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
+    async def hire(self, ctx, member: discord.Member, role: discord.Role):
+        """Hire a new staff member."""
+        await member.add_roles(role)
+        embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=role.name, inline=False)
