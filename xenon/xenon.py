@@ -170,20 +170,20 @@ class TemplateBot(commands.Cog):
                 position=channel_data['position']
             )
             
-       # Re-enable community features if they were originally enabled
-       if 'COMMUNITY' in guild.features:
-           try:
-               # Set verification level to the same as the template
-               await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
-               # Set explicit content filter to the same as the template
-               await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
-               # Set default notifications to the same as the template
-               await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
-           except discord.HTTPException as e:
-               await ctx.send(f"Failed to re-enable community features: {str(e)}")
-               return
+        # Re-enable community features if they were originally enabled
+        if 'COMMUNITY' in guild.features:
+            try:
+                # Set verification level to the same as the template
+                await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
+                # Set explicit content filter to the same as the template
+                await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+                # Set default notifications to the same as the template
+                await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to re-enable community features: {str(e)}")
+                return
 
-       await ctx.send('Template applied successfully.')
+        await ctx.send('Template applied successfully.')
     
     @commands.command()
     async def listt(self, ctx):
