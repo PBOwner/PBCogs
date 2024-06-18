@@ -6,11 +6,11 @@ class StaffManager(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
         self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
-    @commands.command()
+        
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        await self.config.staff_updates_channel.set(channel)
+        await self.config.staff_updates_channel.set(channel.id)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
