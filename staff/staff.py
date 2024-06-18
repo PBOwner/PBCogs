@@ -6,6 +6,8 @@ class StaffManager(commands.Cog):
         self.bot = bot
         self.staff_updates_channel = None
         self.blacklist_channel = None
+        self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
+        self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
         
     @commands.command()
     @commands.has_permissions(manage_channels=True)
