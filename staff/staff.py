@@ -16,7 +16,7 @@ class StaffManager(commands.Cog):
         else:
             await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
         
-    async def channel_is_set(self, ctx):
+    async def channel_is_set(self):
         """Check if the required channels are set."""
         staff_updates_channel = await self.config.staff_updates_channel()
         blacklist_channel = await self.config.blacklist_channel()
@@ -92,7 +92,7 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
-        if not await self.channel_is_set(ctx):
+        if not await self.channels_are_set():
             await self.send_channel_not_set_message(ctx, "hire")
             return
 
