@@ -23,12 +23,12 @@ def is_owner_or_trusted(ctx):
     return ctx.author.id in ctx.cog.trusted_users or ctx.bot.is_owner(ctx.author)
 
 class ServerTemplate:
-    def __init__(self, channels, roles, verification_level, explicit_content_filter, default_notifications):
-        self.channels = channels
-        self.roles = roles
+    def __init__(self, verification_level, explicit_content_filter, default_notifications, roles, channels):
         self.verification_level = verification_level
         self.explicit_content_filter = explicit_content_filter
         self.default_notifications = default_notifications
+        self.roles = roles
+        self.channels = channels
 
 class Xenon(commands.Cog):
     """Cog for saving and loading server templates."""
@@ -127,6 +127,11 @@ class Xenon(commands.Cog):
             return
 
         template = ServerTemplate(**template_data)
+
+        # Validate template data
+        if not isinstance(template.verification_level, str):
+            await ctx.send('Invalid template: verification_level must be a string.')
+            return
 
         # Disable community features if enabled
         if 'COMMUNITY' in guild.features:
