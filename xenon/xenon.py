@@ -24,6 +24,15 @@ def is_owner_or_trusted(ctx):
 
 class ServerTemplate:
     def __init__(self, verification_level, explicit_content_filter, default_notifications, roles, channels):
+        """
+        Initialize a ServerTemplate instance.
+
+        :param verification_level: The verification level of the server.
+        :param explicit_content_filter: The explicit content filter level of the server.
+        :param default_notifications: The default notification settings of the server.
+        :param roles: A list of roles in the server.
+        :param channels: A list of channels in the server.
+        """
         self.verification_level = verification_level
         self.explicit_content_filter = explicit_content_filter
         self.default_notifications = default_notifications
@@ -80,7 +89,15 @@ class Xenon(commands.Cog):
         explicit_content_filter = guild.explicit_content_filter
         default_notifications = guild.default_notifications
 
-        template = ServerTemplate(channels, roles, verification_level, explicit_content_filter, default_notifications)
+        # Create the ServerTemplate instance with the correct order of parameters
+        template = ServerTemplate(
+            verification_level=verification_level,
+            explicit_content_filter=explicit_content_filter,
+            default_notifications=default_notifications,
+            roles=roles,
+            channels=channels
+        )
+        
         template_id = str(uuid.uuid4())
         
         # Use custom JSON encoder
@@ -88,6 +105,7 @@ class Xenon(commands.Cog):
             json.dump(template.__dict__, f, cls=CustomJSONEncoder)
 
         await ctx.send(f'Template saved with ID: {template_id}')
+
 
     @commands.command()
     @commands.has_permissions(administrator=True)
