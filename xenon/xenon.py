@@ -61,63 +61,91 @@ class Xenon(commands.Cog):
 
         await ctx.send(f'Template saved with ID: {template_id}')
 
-    @commands.command()
-    async def loadt(self, ctx, template_id: str):
-        """Loads a template and applies it to the current server."""
-        guild = ctx.guild
+@commands.command()
+async def loadt(self, ctx, template_id: str):
+    """Loads a template and applies it to the current server."""
+    guild = ctx.guild
 
-        # Load template
+    # Check if the user has the required permissions
+    if not ctx.author.guild_permissions.manage_guild:
+        await ctx.send("You need the 'Manage Server' permission to use this command.")
+        return
+
+    # Load template
+    try:
+        with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
+            template_data = json.load(f)
+    except FileNotFoundError:
+        await ctx.send('Template not found.')
+        return
+
+    # Disable community features if enabled
+    if guild.features and 'COMMUNITY' in guild.features:
+        await guild.edit(verification_level=discord.VerificationLevel.none, 
+                         default_notifications=discord.NotificationLevel.all_messages, 
+                         explicit_content_filter=discord.ContentFilter.disabled, 
+                         features=[])
+
+    # Clear existing channels and roles
+    for channel in list(guild.channels):
         try:
-            with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
-                template_data = json.load(f)
-        except FileNotFoundError:
-            await ctx.send('Template not found.')
-            return
-
-        template = ServerTemplate(**template_data)
-
-        # Clear existing channels and roles
-        for channel in guild.channels:
             await channel.delete()
-        for role in guild.roles:
-            if role != guild.default_role:
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
+
+    for role in list(guild.roles):
+        if role != guild.default_role and not role.managed:
+            try:
                 await role.delete()
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
 
-        # Create roles
-        role_map = {}
-        for role_data in template.roles:
-            role = await guild.create_role(
-                name=role_data['name'],
-                permissions=discord.Permissions(role_data['permissions']),  # Convert integer to Permissions
-                color=discord.Color(role_data['color']),
-                hoist=role_data['hoist'],
-                mentionable=role_data['mentionable']
+    template = ServerTemplate(**template_data)
+
+    # Create roles
+    role_map = {}
+    for role_data in template.roles:
+        role = await guild.create_role(
+            name=role_data['name'],
+            permissions=discord.Permissions(role_data['permissions']),  # Convert integer to Permissions
+            color=discord.Color(role_data['color']),
+            hoist=role_data['hoist'],
+            mentionable=role_data['mentionable']
+        )
+        role_map[role_data['name']] = role
+
+    # Create channels
+    for channel_data in template.channels:
+        overwrites = {}
+        for role_id, perm in channel_t_data['permissions'].items():
+            role = role_map.get(role_id)
+            if role:
+                overwrites[role] = discord.PermissionOverwrite.from_pair(
+                    discord.Permissions(perm['read_messages']),
+                    discord.Permissions(perm['send_messages'])
+                )
+        if channel_data['type'] == 'text':
+            await guild.create_text_channel(
+                name=channel_data['name'],
+                position=channel_data['position'],
+                overwrites=overwrites
             )
-            role_map[role_data['name']] = role
+        elif channel_data['type'] == 'voice':
+            await guild.create_voice_channel(
+                name=channel_data['name'],
+                position=channel_data['position'],
+                overwrites=overwrites
+            )
 
-        # Create channels
-        for channel_data in template.channels:
-            overwrites = {}
-            for role_id, perm in channel_data['permissions'].items():
-                role = discord.utils.get(guild.roles, id=int(role_id))
-                overwrites[role] = discord.PermissionOverwrite(
-                    read_messages=perm['read_messages'],
-                    send_messages=perm['send_messages']
-                )
-            if channel_data['type'] == 'text':
-                await guild.create_text_channel(
-                    name=channel_data['name'],
-                    position=channel_data['position'],
-                    overwrites=overwrites
-                )
-            elif channel_data['type'] == 'voice':
-                await guild.create_voice_channel(
-                    name=channel_data['name'],
-                    position=channel_data['position'],
-                    overwrites=overwrites
-                )
+    # Re-enable community features if they were originally enabled
+    if 'COMMUNITY' in guild.features:
+        await guild.edit(verification_level=discord.VerificationLevel.low, 
+                         default_notifications=discord.NotificationLevel.only_mentions, 
+                         explicit_content_filter=discord.ContentFilter.no_role, 
+                         features=['COMMUNITY'])
 
-        await ctx.send('Template applied successfully.')
+    await ctx.send('Template applied successfully.')
+
 
     @commands.command()
     async def listt(self, ctx):
