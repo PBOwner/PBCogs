@@ -128,6 +128,9 @@ class Xenon(commands.Cog):
 
         template = ServerTemplate(**template_data)
 
+        # Debugging statement to check the type of verification_level
+        print(f"Loaded verification_level: {template.verification_level} (type: {type(template.verification_level)})")
+
         # Validate template data
         if not isinstance(template.verification_level, str):
             await ctx.send('Invalid template: verification_level must be a string.')
@@ -199,9 +202,7 @@ class Xenon(commands.Cog):
             try:
                 # Set verification level to the same as the template
                 await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
-                # Set explicit content filter to the same as the template
                 await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
-                # Set default notifications to the same as the template
                 await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to re-enable community features: {str(e)}")
