@@ -103,49 +103,49 @@ class Xenon(commands.Cog):
         self.trusted_users.discard(user.id)
         await ctx.send(f'{user.mention} has been removed from trusted users.')
 
-@commands.command()
-@commands.check(is_owner_or_trusted)
-async def loadt(self, ctx, template_id):
-    """Loads a template and applies it to the current server.
+    @commands.command()
+    @commands.check(is_owner_or_trusted)
+    async def loadt(self, ctx, template_id):
+        """Loads a template and applies it to the current server.
 
-    This command will delete all existing channels and roles on the server
-    and recreate them based on the specified template.
+        This command will delete all existing channels and roles on the server
+        and recreate them based on the specified template.
 
-    Parameters
-    ----------
-    template_id : str
-        The ID of the template to load.
-    """
-    guild = ctx.guild
+        Parameters
+        ----------
+        template_id : str
+            The ID of the template to load.
+        """
+        guild = ctx.guild
 
-    # Load template
-    try:
-        with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
-            template_data = json.load(f)
-    except FileNotFoundError:
-        await ctx.send('Template not found.')
-        return
-
-    template = ServerTemplate(**template_data)
-
-    # Disable community features if enabled
-    if 'COMMUNITY' in guild.features:
+        # Load template
         try:
-            # Convert verification level string to enum value
-            verification_level = discord.VerificationLevel[template.verification_level.upper()]
-            await guild.edit(verification_level=verification_level)
-
-            # Set explicit content filter to the same as the template
-            await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
-
-            # Set default notifications to the same as the template
-            await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to disable community features: {str(e)}")
+            with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
+                template_data = json.load(f)
+        except FileNotFoundError:
+            await ctx.send('Template not found.')
             return
-        except KeyError:
-            await ctx.send(f"Invalid verification level in template: {template.verification_level}")
-            return
+
+        template = ServerTemplate(**template_data)
+
+        # Disable community features if enabled
+        if 'COMMUNITY' in guild.features:
+            try:
+                # Convert verification level string to enum value
+                verification_level = discord.VerificationLevel[template.verification_level.upper()]
+                await guild.edit(verification_level=verification_level)
+
+                # Set explicit content filter to the same as the template
+                await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+
+                # Set default notifications to the same as the template
+                await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to disable community features: {str(e)}")
+                return
+            except KeyError:
+                await ctx.send(f"Invalid verification level in template: {template.verification_level}")
+                return
 
         # Clear existing channels and roles
         for channel in list(guild.channels):
