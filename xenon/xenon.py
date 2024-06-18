@@ -135,57 +135,57 @@ class TemplateBot(commands.Cog):
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
 
-    for role in list(guild.roles):
-        if role != guild.default_role and not role.managed:
-            try:
-                await role.delete()
-            except discord.HTTPException as e:
-                await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
+       for role in list(guild.roles):
+           if role != guild.default_role and not role.managed:
+               try:
+                   await role.delete()
+               except discord.HTTPException as e:
+                   await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
 
     # Create roles
-    role_map = {}
-    for role_data in template.roles:
-        role = await guild.create_role(
-            name=role_data['name'],
-            permissions=discord.Permissions(role_data['permissions']),
-            color=discord.Color(role_data['color']),
-            hoist=role_data['hoist'],
-            mentionable=role_data['mentionable']
-        )
-        role_map[role_data['name']] = role
+       role_map = {}
+       for role_data in template.roles:
+           role = await guild.create_role(
+               name=role_data['name'],
+               permissions=discord.Permissions(role_data['permissions']),
+               color=discord.Color(role_data['color']),
+               hoist=role_data['hoist'],
+               mentionable=role_data['mentionable']
+           )
+           role_map[role_data['name']] = role
 
-    # Create channels
-    for channel_data in template.channels:
-        overwrites = {}
-        for role_id, perm in channel_data['permissions'].items():
-            role = role_map.get(role_id)
-            if role:
-                overwrites[role] = discord.PermissionOverwrite.from_pair(
-                    discord.Permissions(perm['allow']),
-                    discord.Permissions(perm['deny'])
-                )
-        channel_type = discord.ChannelType[channel_data['type']]
-        await guild.create_channel(
-            name=channel_data['name'],
-            type=channel_type,
-            position=channel_data['position'],
-            overwrites=overwrites
-        )
+       # Create channels
+       for channel_data in template.channels:
+           overwrites = {}
+           for role_id, perm in channel_data['permissions'].items():
+               role = role_map.get(role_id)
+               if role:
+                   overwrites[role] = discord.PermissionOverwrite.from_pair(
+                       discord.Permissions(perm['allow']),
+                       discord.Permissions(perm['deny'])
+                   )
+           channel_type = discord.ChannelType[channel_data['type']]
+           await guild.create_channel(
+               name=channel_data['name'],
+               type=channel_type,
+               position=channel_data['position'],
+               overwrites=overwrites
+           )
 
-    # Re-enable community features if they were originally enabled
-    if 'COMMUNITY' in guild.features:
-        try:
-            # Set verification level to the same as the template
-            await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
-            # Set explicit content filter to the same as the template
-            await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
-            # Set default notifications to the same as the template
-            await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to re-enable community features: {str(e)}")
-            return
+       # Re-enable community features if they were originally enabled
+       if 'COMMUNITY' in guild.features:
+           try:
+               # Set verification level to the same as the template
+               await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
+               # Set explicit content filter to the same as the template
+               await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+               # Set default notifications to the same as the template
+               await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+           except discord.HTTPException as e:
+               await ctx.send(f"Failed to re-enable community features: {str(e)}")
+               return
 
-    await ctx.send('Template applied successfully.')
+       await ctx.send('Template applied successfully.')
     
     @commands.command()
     async def listt(self, ctx):
