@@ -158,7 +158,7 @@ class Xenon(commands.Cog):
         if 'COMMUNITY' in guild.features:
             try:
                 # Convert verification level string to enum value
-                verification_level = discord.VerificationLevel[template.verification_level.upper()]
+                verification_level = discord.VerificationLevel(template.verification_level)
                 await guild.edit(verification_level=verification_level)
 
                 # Set explicit content filter to the same as the template
