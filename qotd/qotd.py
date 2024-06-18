@@ -29,9 +29,8 @@ class QOTD(commands.Cog):
             response = requests.get(self.api_endpoint, headers=headers)
             if response.status_code == 200:
                 question_data = response.json()
-                if question_data:
-                    question = question_data[0].get("question")  # Assuming the API returns a list of questions
-                    return question
+                question = question_data[0].get("question")  # Assuming the API returns a list of questions
+                return question
         return "No question available today. Check back tomorrow!"
 
     async def post_question_of_the_day(self):
@@ -39,20 +38,17 @@ class QOTD(commands.Cog):
         Posts the question of the day to the designated channel.
         """
         for guild_id, channel in self.question_channels.items():
-            if channel and isinstance(channel, discord.TextChannel):
+            if channel:
                 try:
                     question = self.get_random_question()
-                    embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
-                    embed.add_field(name="Question", value=question)
-                    embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
-                    message = await channel.send(embed=embed)  # Ensure channel is a discord.TextChannel
-                    await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
+                    if question:
+                        embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
+                        embed.add_field(name="Question", value=question)
+                        embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
+                        message = await channel.send(embed=embed)  # Ensure channel is a discord.TextChannel
+                        await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
                 except AttributeError as e:
                     print(f"Error sending message to channel: {e}")
-                except discord.Forbidden:
-                    print(f"Bot does not have permission to send messages in channel {channel.id}.")
-                except discord.HTTPException as e:
-                    print(f"Failed to send message: {e}")
             else:
                 print(f"No valid channel set for guild ID {guild_id}.")
 
