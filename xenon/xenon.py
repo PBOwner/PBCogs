@@ -16,7 +16,7 @@ class Xenon(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def save_template(self, ctx):
+    async def savet(self, ctx):
         """Saves the current server's structure as a template."""
         guild = ctx.guild
         channels = []
@@ -50,7 +50,7 @@ class Xenon(commands.Cog):
         await ctx.send(f'Template saved with ID: {template_id}')
 
     @commands.command()
-    async def load_template(self, ctx, template_id: str):
+    async def loadt(self, ctx, template_id: str):
         """Loads a template and applies it to the current server."""
         guild = ctx.guild
 
