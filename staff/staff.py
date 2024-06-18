@@ -35,8 +35,8 @@ class StaffManager(commands.Cog):
             return
 
     # Set the new channel
-    await self.config.staff_updates_channel.set(channel.id)
-    await ctx.send(f"Staff updates channel set to {channel.mention}")
+        await self.config.staff_updates_channel.set(channel.id)
+        await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
