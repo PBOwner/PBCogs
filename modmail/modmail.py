@@ -8,11 +8,15 @@ class Modmail(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Unique identifier for the config
-        default_guild = {
-            "modmail_channel_id": None,
-            "snippets": {}
+    default_guild = {
+        "modmail_channel_id": None,
+        "modmail_category_id": None,
+        "snippets": {}
+}
+self.config.register_guild(**default_guild)
         }
         self.config.register_guild(**default_guild)
+        
     
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -29,11 +33,30 @@ class Modmail(commands.Cog):
     @commands.command()
     async def set_modmail_channel(self, ctx, channel: discord.TextChannel):
         """Set the modmail channel for receiving messages."""
-        await self.config.guild(ctx.guild).modmail_channel_id.set(channel.id)
-        await ctx.send(f"Modmail channel set to {channel.mention}.")
+        modmail_category_id = await self.config.guild(ctx.guild).modmail_category_id()
+        if modmail_category_id:
+            category = ctx.guild.get_channel(modmail_category_id)
+            if category:
+                overwrites = {
+                    ctx.guild.default_role: discord.PermissionOverwrite(read_messages=False),
+                    ctx.guild.me: discord.PermissionOverwrite(read_messages=True)
+                }
+                new_channel = await category.create_text_channel(name=channel.name, overwrites=overwrites)
+                await self.config.guild(ctx.guild).modmail_channel_id.set(new_channel.id)
+                await ctx.send(f"Modmail channel set to {new_channel.mention}.")
+            else:
+                await ctx.send("Modmail category is not set or invalid.")
+        else:
+            await ctx.send("Modmail category is not set. Please set a modmail category first.")
+        
+    @commands.command()
+    async def setmmcategory(self, ctx, category: discord.CategoryChannel):
+        """Set the modmail category for creating channels."""
+        await self.config.guild(ctx.guild).modmail_category_id.set(category.id)
+        await ctx.send(f"Modmail category set to {category.name}.")
     
     @commands.command()
-    async def modmail_reply(self, ctx, *, reply):
+    async def mmreply(self, ctx, *, reply):
         """Reply to a modmail message."""
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
