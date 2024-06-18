@@ -103,37 +103,37 @@ class TemplateBot(commands.Cog):
         template_id : str
             The ID of the template to load.
         """
-    guild = ctx.guild
+        guild = ctx.guild
 
-    # Load template
-    try:
-        with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
-            template_data = json.load(f)
-    except FileNotFoundError:
-        await ctx.send('Template not found.')
-        return
-
-    template = ServerTemplate(**template_data)
-
-    # Disable community features if enabled
-    if 'COMMUNITY' in guild.features:
+        # Load template
         try:
-            # Set verification level to the same as the template
-            await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
-            # Set explicit content filter to the same as the template
-            await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
-            # Set default notifications to the same as the template
-            await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to disable community features: {str(e)}")
+            with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
+                template_data = json.load(f)
+        except FileNotFoundError:
+            await ctx.send('Template not found.')
             return
 
-    # Clear existing channels and roles
-    for channel in list(guild.channels):
-        try:
-            await channel.delete()
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
+        template = ServerTemplate(**template_data)
+
+        # Disable community features if enabled
+        if 'COMMUNITY' in guild.features:
+            try:
+                # Set verification level to the same as the template
+                await guild.edit(verification_level=discord.VerificationLevel(template.verification_level))
+                # Set explicit content filter to the same as the template
+                await guild.edit(explicit_content_filter=discord.ContentFilter(template.explicit_content_filter))
+                # Set default notifications to the same as the template
+                await guild.edit(default_notifications=discord.NotificationLevel(template.default_notifications))
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to disable community features: {str(e)}")
+                return
+
+        # Clear existing channels and roles
+        for channel in list(guild.channels):
+            try:
+                await channel.delete()  # Move the 'await' statement inside the function
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
 
     for role in list(guild.roles):
         if role != guild.default_role and not role.managed:
