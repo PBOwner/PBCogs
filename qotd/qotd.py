@@ -39,12 +39,18 @@ class QOTD(commands.Cog):
         """
         for guild_id, channel in self.question_channels.items():
             if channel:
-                question = self.get_random_question()
-                embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
-                embed.add_field(name="Question", value=question)
-                embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
-                message = await channel.send(embed=embed)
-                await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
+                try:
+                    question = self.get_random_question()
+                    embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
+                    embed.add_field(name="Question", value=question)
+                    embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
+                    message = await channel.send(embed=embed)  # Ensure channel is a discord.TextChannel
+                    await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
+                except AttributeError as e:
+                    print(f"Error sending message to channel: {e}")
+            else:
+                print(f"No valid channel set for guild ID {guild_id}.")
+
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
