@@ -31,12 +31,12 @@ class StaffManager(commands.Cog):
         # Check if the channel is already set
         current_channel_id = await self.config.staff_updates_channel()
         if current_channel_id == channel.id:
-            await ctx.send(f"The Staff updates channel is already set to {channel.mention})"
+            await ctx.send(f"The Staff updates channel is already set to {channel.mention}")
             return
 
     # Set the new channel
     await self.config.staff_updates_channel.set(channel.id)
-    await ctx.send(f"Staff updates channel set to {channel.mention})"
+    await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
