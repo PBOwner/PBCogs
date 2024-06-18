@@ -135,12 +135,12 @@ class TemplateBot(commands.Cog):
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to delete channel {channel.name}: {str(e)}")
 
-       for role in list(guild.roles):
-           if role != guild.default_role and not role.managed:
-               try:
-                   await role.delete()
-               except discord.HTTPException as e:
-                   await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
+        for role in list(guild.roles):
+            if role != guild.default_role and not role.managed:
+                try:
+                    await role.delete()
+                except discord.HTTPException as e:
+                    await ctx.send(f"Failed to delete role {role.name}: {str(e)}")
 
     # Create roles
        role_map = {}
