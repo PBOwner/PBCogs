@@ -28,18 +28,24 @@ class Xenon(commands.Cog):
 
         # Save channels
         for channel in guild.channels:
+            permissions = {}
+            for role, perm in channel.overwrites.items():
+                permissions[str(role.id)] = {
+                    'read_messages': perm.pair()[0],
+                    'send_messages': perm.pair()[1]
+                }
             channels.append({
                 'name': channel.name,
                 'type': str(channel.type),
                 'position': channel.position,
-                'permissions': {str(role.id): perm.pair() for role, perm in channel.overwrites.items()}
+                'permissions': permissions
             })
 
         # Save roles
         for role in guild.roles:
             roles.append({
                 'name': role.name,
-                'permissions': role.permissions.value,  # Convert Permissions to integer
+                'permissions': role.permissions.value,
                 'position': role.position,
                 'color': role.color.value,
                 'hoist': role.hoist,
@@ -80,19 +86,21 @@ class Xenon(commands.Cog):
         for role_data in template.roles:
             role = await guild.create_role(
                 name=role_data['name'],
-                permissions=discord.Permissions(role_data['permissions']),  # Create Permissions from integer
+                permissions=discord.Permissions(role_data['permissions']),
                 color=discord.Color(role_data['color']),
                 hoist=role_data['hoist'],
                 mentionable=role_data['mentionable']
-           )
+            )
             role_map[role_data['name']] = role
 
         # Create channels
         for channel_data in template.channels:
-            overwrites = {
-                role_map[role_name]: discord.PermissionOverwrite(**dict(zip(['read_messages', 'send_messages'], perm)))
-                for role_name, perm in channel_data['permissions'].items()
-            }
+            overwrites = {}
+            for role_name, perm in channel_data['permissions'].items():
+                overwrites[role_map[role_name]] = discord.PermissionOverwrite(
+                    read_messages=perm['read_messages'],
+                    send_messages=perm['send_messages']
+                )
             if channel_data['type'] == 'text':
                 await guild.create_text_channel(
                     name=channel_data['name'],
