@@ -14,7 +14,7 @@ class Modmail(commands.Cog):
         "snippets": {}
 }
 self.config.register_guild(**default_guild)
-    }
+
         self.config.register_guild(**default_guild)
         
     
