@@ -18,11 +18,6 @@ class Xenon(commands.Cog):
         # Ensure the templates directory exists
         if not os.path.exists(self.template_dir):
             os.makedirs(self.template_dir)
-
-class TemplateBot(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self.template_dir = 'templates'
         self.trusted_users = set()
 
     def is_owner_or_trusted(ctx):
