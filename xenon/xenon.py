@@ -54,8 +54,10 @@ class Xenon(commands.Cog):
 
         template = ServerTemplate(channels, roles)
         template_id = str(uuid.uuid4())
+        
+        # Use custom JSON encoder
         with open(f'{self.template_dir}/{template_id}.json', 'w') as f:
-            json.dump(template.__dict__, f)
+            json.dump(template.__dict__, f, cls=CustomJSONEncoder)
 
         await ctx.send(f'Template saved with ID: {template_id}')
 
@@ -96,8 +98,8 @@ class Xenon(commands.Cog):
         # Create channels
         for channel_data in template.channels:
             overwrites = {}
-            for role_name, perm in channel_data['permissions'].items():
-                role = role_map[role_name]
+            for role_id, perm in channel_data['permissions'].items():
+                role = discord.utils.get(guild.roles, id=int(role_id))
                 overwrites[role] = discord.PermissionOverwrite(
                     read_messages=perm['read_messages'],
                     send_messages=perm['send_messages']
@@ -131,6 +133,13 @@ class Xenon(commands.Cog):
             embed.add_field(name=template_id, value=f"Template ID: {template_id}", inline=False)
 
         await ctx.send(embed=embed)
+
+class CustomJSONEncoder(json.JSONEncoder):
+    """Custom JSON Encoder to handle discord.Permissions objects."""
+    def default(self, obj):
+        if isinstance(obj, discord.Permissions):
+            return obj.value
+        return super().default(obj)
 
 def setup(bot):
     bot.add_cog(Xenon(bot))
