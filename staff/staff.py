@@ -4,8 +4,8 @@ class StaffManager(commands.Cog):
     """Cog for managing staff members in a Discord server."""
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
-        self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
+        self.staff_updates_channel = None
+        self.blacklist_channel = None
         
     @commands.command()
     @commands.has_permissions(manage_channels=True)
