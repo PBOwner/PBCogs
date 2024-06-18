@@ -19,7 +19,7 @@ class Modmail(commands.Cog):
         if message.author == self.bot.user:
             return
         
-        if not message.guild:
+        if message.guild is None:
             modmail_channel_id = await self.config.guild(message.guild).modmail_channel_id()
             if modmail_channel_id:
                 modmail_channel = self.bot.get_channel(modmail_channel_id)
@@ -38,7 +38,7 @@ class Modmail(commands.Cog):
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
             modmail_channel = self.bot.get_channel(modmail_channel_id)
-            if modmail_channel and ctx.channel.id != modmail_channel_id:
+            if modmail_channel and ctx.channel.id == modmail_channel_id:
                 await modmail_channel.send(f"**{ctx.author}**: {reply}")
                 await ctx.send("Your reply has been sent.")
             else:
@@ -52,7 +52,7 @@ class Modmail(commands.Cog):
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
             modmail_channel = self.bot.get_channel(modmail_channel_id)
-            if modmail_channel and ctx.channel.id == modmail_channel_id:
+            if modmail_channel and ctx.channel.id != modmail_channel_id:
                 embed = discord.Embed(description=reply, color=0x00ff00)
                 await ctx.send("Your anonymous reply has been sent.")
                 await ctx.author.send(embed=embed)
@@ -102,7 +102,7 @@ class Modmail(commands.Cog):
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
             modmail_channel = self.bot.get_channel(modmail_channel_id)
-            if modmail_channel and ctx.channel.id == modmail_channel_id:
+            if modmail_channel and ctx.channel.id != modmail_channel_id:
                 await ctx.send(f"The modmail thread will be closed in {time_until_close} seconds with reason: {reason}")
                 await asyncio.sleep(time_until_close)
                 await modmail_channel.send(f"The modmail thread has been closed. Reason: {reason}")
@@ -113,12 +113,12 @@ class Modmail(commands.Cog):
             await ctx.send("Modmail channel is not set. Please set a modmail channel first.")
     
     @commands.command()
-    async def rename_thread(self, ctx, new_name):
+    async def renamet(self, ctx, new_name):
         """Rename the modmail thread."""
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
             modmail_channel = self.bot.get_channel(modmail_channel_id)
-            if modmail_channel and ctx.channel.id == modmail_channel_id:
+            if modmail_channel and ctx.channel.id != modmail_channel_id:
                 await modmail_channel.edit(name=new_name)
                 await ctx.send(f"The modmail thread has been renamed to '{new_name}'.")
             else:
@@ -127,12 +127,12 @@ class Modmail(commands.Cog):
             await ctx.send("Modmail channel is not set. Please set a modmail channel first.")
     
     @commands.command()
-    async def move_thread(self, ctx, category: discord.CategoryChannel):
+    async def movet(self, ctx, category: discord.CategoryChannel):
         """Move the modmail thread to a different category."""
         modmail_channel_id = await self.config.guild(ctx.guild).modmail_channel_id()
         if modmail_channel_id:
             modmail_channel = self.bot.get_channel(modmail_channel_id)
-            if modmail_channel and ctx.channel.id == modmail_channel_id:
+            if modmail_channel and ctx.channel.id != modmail_channel_id:
                 await modmail_channel.edit(category=category)
                 await ctx.send(f"The modmail thread has been moved to the category '{category}'.")
             else:
