@@ -37,7 +37,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        await self.staff_updates_channel.send(embed=embed))
+        await self.staff_updates_channel.send(embed=embed)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
