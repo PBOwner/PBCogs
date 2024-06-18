@@ -63,7 +63,16 @@ class Xenon(commands.Cog):
 
     @commands.command()
     async def loadt(self, ctx, template_id: str):
-        """Loads a template and applies it to the current server."""
+        """Loads a template and applies it to the current server.
+
+        This command will delete all existing channels and roles on the server
+        and recreate them based on the specified template.
+
+        Parameters
+        ----------
+        template_id : str
+            The ID of the template to load.
+        """
         guild = ctx.guild
 
         # Check if the user has the required permissions
@@ -80,12 +89,11 @@ class Xenon(commands.Cog):
             return
 
         # Disable community features if enabled
-        if guild.features and 'COMMUNITY' in guild.features:
+        if 'COMMUNITY' in guild.features:
             try:
                 await guild.edit(verification_level=discord.VerificationLevel.none, 
                                  default_notifications=discord.NotificationLevel.all_messages, 
-                                 explicit_content_filter=discord.ContentFilter.disabled, 
-                                 features=[])
+                                 explicit_content_filter=discord.ContentFilter.disabled)
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to disable community features: {str(e)}")
                 return
@@ -146,8 +154,7 @@ class Xenon(commands.Cog):
             try:
                 await guild.edit(verification_level=discord.VerificationLevel.low, 
                                  default_notifications=discord.NotificationLevel.only_mentions, 
-                                 explicit_content_filter=discord.ContentFilter.no_role, 
-                                 features=['COMMUNITY'])
+                                 explicit_content_filter=discord.ContentFilter.no_role)
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to re-enable community features: {str(e)}")
                 return
