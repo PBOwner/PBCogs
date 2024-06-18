@@ -14,6 +14,10 @@ class Xenon(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.template_dir = 'templates'
+        # Ensure the templates directory exists
+        if not os.path.exists(self.template_dir):
+            os.makedirs(self.template_dir)
 
     @commands.command()
     async def savet(self, ctx):
@@ -44,7 +48,7 @@ class Xenon(commands.Cog):
 
         template = ServerTemplate(channels, roles)
         template_id = str(uuid.uuid4())
-        with open(f'templates/{template_id}.json', 'w') as f:
+        with open(f'{self.template_dir}/{template_id}.json', 'w') as f:
             json.dump(template.__dict__, f)
 
         await ctx.send(f'Template saved with ID: {template_id}')
@@ -56,7 +60,7 @@ class Xenon(commands.Cog):
 
         # Load template
         try:
-            with open(f'templates/{template_id}.json', 'r') as f:
+            with open(f'{self.template_dir}/{template_id}.json', 'r') as f:
                 template_data = json.load(f)
         except FileNotFoundError:
             await ctx.send('Template not found.')
@@ -103,6 +107,21 @@ class Xenon(commands.Cog):
                 )
 
         await ctx.send('Template applied successfully.')
+
+    @commands.command()
+    async def listt(self, ctx):
+        """Lists all saved templates."""
+        template_files = os.listdir(self.template_dir)
+        if not template_files:
+            await ctx.send('No templates found.')
+            return
+
+        embed = discord.Embed(title="Saved Templates", color=discord.Color.blue())
+        for template_file in template_files:
+            template_id = template_file.split('.')[0]
+            embed.add_field(name=template_id, value=f"Template ID: {template_id}", inline=False)
+
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Xenon(bot))
