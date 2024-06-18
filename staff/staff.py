@@ -28,8 +28,15 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        await self.config.staff_updates_channel.set(channel.id)
-        await ctx.send(f"Staff updates channel set to {channel.mention}")
+        # Check if the channel is already set
+        current_channel_id = await self.config.staff_updates_channel()
+        if current_channel_id == channel.id:
+            await ctx.send(f"The Staff updates channel is already set to {channel.mention}")
+            return
+
+    # Set the new channel
+    await self.config.staff_updates_channel.set(channel.id)
+    await ctx.send(f"Staff updates channel set to {channel.mention}"
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -90,7 +97,7 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
-        if not await self.channel_is_set(ctx):
+        if not await self.channel_is_set():
             await self.send_channel_not_set_message(ctx, "hire")
             return
 
