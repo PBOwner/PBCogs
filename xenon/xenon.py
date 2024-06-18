@@ -91,11 +91,9 @@ class Xenon(commands.Cog):
         # Disable community features if enabled
         if 'COMMUNITY' in guild.features:
             try:
-                # Set verification level to None first
+                # **Fix:** Set verification level to None first, then disable explicit content filter
                 await guild.edit(verification_level=discord.VerificationLevel.none)
-                # Then disable explicit content filter
                 await guild.edit(explicit_content_filter=discord.ContentFilter.disabled)
-                # Finally, set default notifications
                 await guild.edit(default_notifications=discord.NotificationLevel.all_messages)
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to disable community features: {str(e)}")
@@ -155,11 +153,9 @@ class Xenon(commands.Cog):
         # Re-enable community features if they were originally enabled
         if 'COMMUNITY' in guild.features:
             try:
-                # Set verification level to low first
+                # **Fix:** Set verification level to low first, then set explicit content filter
                 await guild.edit(verification_level=discord.VerificationLevel.low)
-                # Then set explicit content filter
                 await guild.edit(explicit_content_filter=discord.ContentFilter.no_role)
-                # Finally, set default notifications
                 await guild.edit(default_notifications=discord.NotificationLevel.only_mentions)
             except discord.HTTPException as e:
                 await ctx.send(f"Failed to re-enable community features: {str(e)}")
