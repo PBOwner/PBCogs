@@ -66,9 +66,9 @@ class Xenon(commands.Cog):
         """Loads a template and applies it to the current server."""
         guild = ctx.guild
 
-        # Check if the user has the required permissions
-        if not ctx.author.guild_permissions.manage_guild:
-            await ctx.send("You need the 'Manage Server' permission to use this command.")
+        # Check if the user is the server owner
+        if ctx.author.id != guild.owner_id:
+            await ctx.send("Only the server owner can use this command.")
             return
 
         # Load template
@@ -83,8 +83,7 @@ class Xenon(commands.Cog):
         if guild.features and 'COMMUNITY' in guild.features:
             await guild.edit(verification_level=discord.VerificationLevel.none, 
                              default_notifications=discord.NotificationLevel.all_messages, 
-                             explicit_content_filter=discord.ContentFilter.disabled, 
-                             features=[])
+                             explicit_content_filter=discord.ContentFilter.disabled)
 
         # Clear existing channels and roles
         for channel in list(guild.channels):
@@ -117,7 +116,7 @@ class Xenon(commands.Cog):
         # Create channels
         for channel_data in template.channels:
             overwrites = {}
-            for role_id, perm in channel_t_data['permissions'].items():
+            for role_id, perm in channel_data['permissions'].items():
                 role = role_map.get(role_id)
                 if role:
                     overwrites[role] = discord.PermissionOverwrite.from_pair(
@@ -141,11 +140,9 @@ class Xenon(commands.Cog):
         if 'COMMUNITY' in guild.features:
             await guild.edit(verification_level=discord.VerificationLevel.low, 
                              default_notifications=discord.NotificationLevel.only_mentions, 
-                             explicit_content_filter=discord.ContentFilter.no_role, 
-                             features=['COMMUNITY'])
+                             explicit_content_filter=discord.ContentFilter.no_role)
 
-        await ctx.send('Template applied successfully.')
-    
+        await ctx.send('Template applied successfully.')    
 
     @commands.command()
     async def listt(self, ctx):
