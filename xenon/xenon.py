@@ -95,14 +95,14 @@ class TemplateBot(commands.Cog):
     async def loadt(self, ctx, template_id):
         """Loads a template and applies it to the current server.
 
-    This command will delete all existing channels and roles on the server
-    and recreate them based on the specified template.
+        This command will delete all existing channels and roles on the server
+        and recreate them based on the specified template.
 
-    Parameters
-    ----------
-    template_id : str
-        The ID of the template to load.
-    """
+        Parameters
+        ----------
+        template_id : str
+            The ID of the template to load.
+        """
     guild = ctx.guild
 
     # Load template
