@@ -7,7 +7,7 @@ class QOTD(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.scheduler = AsyncIOScheduler()
-        self.scheduler.add_job(self.post_question_of_the_day, 'cron', hour=6)  # Schedule the job to run daily at 12:00 AM
+        self.scheduler.add_job(self.post_question_of_the_day, 'cron', hour=6)  # Schedule the job to run daily at 6:00 AM
         self.scheduler.start()
         self.question_channel = None
 
@@ -23,7 +23,7 @@ class QOTD(commands.Cog):
     async def post_question_of_the_day(self):
         if self.question_channel:
             question = self.get_random_question()
-            embed = discord.Embed(title="🌟 Question of the Day", color=0x00f0ff)
+            embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
             embed.add_field(name="Question", value=question)
             embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
             message = await self.question_channel.send(embed=embed)
@@ -42,8 +42,8 @@ class QOTD(commands.Cog):
         await ctx.message.delete()
         await ctx.send(f"Question of the Day channel set to {channel.mention}", delete_after=5)
 
-    @set_question_channel.error
-    async def set_question_channel_error(self, ctx, error):
+    @setqotdchannel.error
+    async def setqotdchannel_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please mention a text channel to set as the question channel.", delete_after=5)
 
