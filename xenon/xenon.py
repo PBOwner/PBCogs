@@ -10,68 +10,36 @@ class CustomJSONEncoder(json.JSONEncoder):
         if isinstance(obj, discord.Permissions):
             return obj.value
         return super().default(obj)
+        
+# Custom JSON Encoder might be needed to handle complex objects
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, discord.Permissions):
+            return obj.value
+        return json.JSONEncoder.default(self, obj)
 
-class Xenon:
-    """Represents a server template."""
+# Helper function to check if a user is the owner or a trusted user
+def is_owner_or_trusted(ctx):
+    return ctx.author.id in ctx.cog.trusted_users or ctx.bot.is_owner(ctx.author)
+
+class ServerTemplate:
+    def __init__(self, channels, roles, verification_level, explicit_content_filter, default_notifications):
+        self.channels = channels
+        self.roles = roles
+        self.verification_level = verification_level
+        self.explicit_content_filter = explicit_content_filter
+        self.default_notifications = default_notifications
+
+class Xenon(commands.Cog):
+    """Cog for saving and loading server templates."""
+    
     def __init__(self, bot):
-        """Initializes the ServerTemplate class."""
         self.bot = bot
         self.template_dir = 'templates'
         # Ensure the templates directory exists
         if not os.path.exists(self.template_dir):
             os.makedirs(self.template_dir)
-        self.trusted_users = set()
-
-    def save_template(self, guild, template_id):
-        """Saves the current server's structure as a template."""
-        channels = []
-        roles = []
-
-        # Save channels
-        for channel in guild.channels:
-            permissions = {}
-            for role, perm in channel.overwrites.items():
-                permissions[str(role.id)] = {
-                    'read_messages': perm.pair()[0],
-                    'send_messages': perm.pair()[1]
-                }
-            channels.append({
-                'name': channel.name,
-                'type': str(channel.type),
-                'position': channel.position,
-                'permissions': permissions
-            })
-
-        # Save roles
-        for role in guild.roles:
-            roles.append({
-                'name': role.name,
-                'permissions': role.permissions.value,  # Convert permissions to integer
-                'position': role.position,
-                'color': role.color.value,
-                'hoist': role.hoist,
-                'mentionable': role.mentionable
-            })
-
-        # Save additional guild settings
-        verification_level = guild.verification_level
-        explicit_content_filter = guild.explicit_content_filter
-        default_notifications = guild.default_notifications
-
-        template_data = {
-            'channels': channels,
-            'roles': roles,
-            'verification_level': verification_level,
-            'explicit_content_filter': explicit_content_filter,
-            'default_notifications': default_notifications
-        }
-
-        # Use custom JSON encoder
-        with open(f'{self.template_dir}/{template_id}.json', 'w') as f:
-            json.dump(template_data, f, cls=CustomJSONEncoder)
-
-    def is_owner_or_trusted(ctx):
-        return ctx.author == ctx.guild.owner or ctx.author.id in ctx.cog.trusted_users
+        self.trusted_users = set()  # This should be populated appropriately
 
     @commands.command()
     @commands.check(is_owner_or_trusted)
