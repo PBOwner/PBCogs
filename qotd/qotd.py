@@ -29,8 +29,9 @@ class QOTD(commands.Cog):
             response = requests.get(self.api_endpoint, headers=headers)
             if response.status_code == 200:
                 question_data = response.json()
-                question = question_data[0].get("question")  # Assuming the API returns a list of questions
-                return question
+                if question_data:
+                    question = question_data[0].get("question")  # Assuming the API returns a list of questions
+                    return question
         return "No question available today. Check back tomorrow!"
 
     async def post_question_of_the_day(self):
@@ -38,7 +39,7 @@ class QOTD(commands.Cog):
         Posts the question of the day to the designated channel.
         """
         for guild_id, channel in self.question_channels.items():
-            if channel:
+            if channel and isinstance(channel, discord.TextChannel):
                 try:
                     question = self.get_random_question()
                     embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
@@ -48,9 +49,12 @@ class QOTD(commands.Cog):
                     await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
                 except AttributeError as e:
                     print(f"Error sending message to channel: {e}")
+                except discord.Forbidden:
+                    print(f"Bot does not have permission to send messages in channel {channel.id}.")
+                except discord.HTTPException as e:
+                    print(f"Failed to send message: {e}")
             else:
                 print(f"No valid channel set for guild ID {guild_id}.")
-
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
