@@ -12,11 +12,7 @@ class Modmail(commands.Cog):
         "modmail_channel_id": None,
         "modmail_category_id": None,
         "snippets": {}
-}
-self.config.register_guild(**default_guild)
-
-        self.config.register_guild(**default_guild)
-        
+}     
     
     @commands.Cog.listener()
     async def on_message(self, message):
