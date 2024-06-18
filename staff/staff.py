@@ -63,10 +63,6 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
         channel = await self.config.staff_updates_channel()
-        if channel:
-            await channel.send(embed=embed)
-        else:
-            await self.send_channel_reminder(ctx, "demote")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
