@@ -16,6 +16,14 @@ class StaffManager(commands.Cog):
         else:
             await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
         
+    async def channel_is_set(self):
+        """Check if the required channels are set."""
+        staff_updates_channel = await self.config.staff_updates_channel()
+        blacklist_channel = await self.config.blacklist_channel()
+        if staff_updates_channel is None or blacklist_channel is None:
+            return False
+        return True
+        
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
