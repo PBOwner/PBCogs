@@ -40,6 +40,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Position", value=role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
+        
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
@@ -63,8 +64,9 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        channel = await self.config.staff_updates_channel()
-
+        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+        await self.staff_updates_channel.send(embed=embed)
+        
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
@@ -76,11 +78,8 @@ class StaffManager(commands.Cog):
         embed.add_field(name="User ID", value=member.id, inline=False)
         embed.add_field(name="Position", value=new_role.name, inline=False)
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        channel = await self.config.staff_updates_channel()
-        if channel:
-            await channel.send(embed=embed)
-        else:
-            await self.send_channel_reminder(ctx, "promote")
+        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+        await self.staff_updates_channel.send(embed=embed)
 
     @commands.command(name="staffblacklist")
     @commands.has_permissions(ban_members=True)
