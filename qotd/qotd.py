@@ -10,6 +10,7 @@ class QOTD(commands.Cog):
         self.scheduler.add_job(self.post_question_of_the_day, 'cron', hour=6)  # Schedule the job to run daily at 6:00 AM
         self.scheduler.start()
         self.question_channel = None
+        self.api_endpoint = "https://api.example.com/questions"  # Replace with your actual API endpoint
 
     def get_random_question(self):
         if self.api_endpoint:
