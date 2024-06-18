@@ -66,9 +66,9 @@ class Xenon(commands.Cog):
         """Loads a template and applies it to the current server."""
         guild = ctx.guild
 
-        # Check if the user is the server owner
-        if ctx.author.id != guild.owner_id:
-            await ctx.send("Only the server owner can use this command.")
+        # Check if the user has the required permissions
+        if not ctx.author.guild_permissions.manage_guild:
+            await ctx.send("You need the 'Manage Server' permission to use this command.")
             return
 
         # Load template
@@ -81,9 +81,14 @@ class Xenon(commands.Cog):
 
         # Disable community features if enabled
         if guild.features and 'COMMUNITY' in guild.features:
-            await guild.edit(verification_level=discord.VerificationLevel.none, 
-                             default_notifications=discord.NotificationLevel.all_messages, 
-                             explicit_content_filter=discord.ContentFilter.disabled)
+            try:
+                await guild.edit(verification_level=discord.VerificationLevel.none, 
+                                 default_notifications=discord.NotificationLevel.all_messages, 
+                                 explicit_content_filter=discord.ContentFilter.disabled, 
+                                 features=[])
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to disable community features: {str(e)}")
+                return
 
         # Clear existing channels and roles
         for channel in list(guild.channels):
@@ -120,8 +125,8 @@ class Xenon(commands.Cog):
                 role = role_map.get(role_id)
                 if role:
                     overwrites[role] = discord.PermissionOverwrite.from_pair(
-                        discord.Permissions(perm['read_messages']),
-                        discord.Permissions(perm['send_messages'])
+                        discord.Permissions(perm['allow']),
+                        discord.Permissions(perm['deny'])
                     )
             if channel_data['type'] == 'text':
                 await guild.create_text_channel(
@@ -138,11 +143,16 @@ class Xenon(commands.Cog):
 
         # Re-enable community features if they were originally enabled
         if 'COMMUNITY' in guild.features:
-            await guild.edit(verification_level=discord.VerificationLevel.low, 
-                             default_notifications=discord.NotificationLevel.only_mentions, 
-                             explicit_content_filter=discord.ContentFilter.no_role)
+            try:
+                await guild.edit(verification_level=discord.VerificationLevel.low, 
+                                 default_notifications=discord.NotificationLevel.only_mentions, 
+                                 explicit_content_filter=discord.ContentFilter.no_role, 
+                                 features=['COMMUNITY'])
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to re-enable community features: {str(e)}")
+                return
 
-        await ctx.send('Template applied successfully.')    
+        await ctx.send('Template applied successfully.')
 
     @commands.command()
     async def listt(self, ctx):
