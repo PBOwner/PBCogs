@@ -23,8 +23,11 @@ class QOTD(commands.Cog):
     async def post_question_of_the_day(self):
         if self.question_channel:
             question = self.get_random_question()
-            embed = discord.Embed(title="🌟 Question of the Day", description=question, color=0x00f0ff)
-            await self.question_channel.send(embed=embed)
+            embed = discord.Embed(title="🌟 Question of the Day", color=0x00f0ff)
+            embed.add_field(name="Question", value=question)
+            embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
+            message = await self.question_channel.send(embed=embed)
+            await message.create_thread(name="QOTD Answers", message="Welcome to the thread for answering today's Question of the Day!")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
