@@ -93,7 +93,7 @@ class TemplateBot(commands.Cog):
     @commands.command()
     @commands.check(is_owner_or_trusted)
     async def loadt(self, ctx, template_id):
-    """Loads a template and applies it to the current server.
+        """Loads a template and applies it to the current server.
 
     This command will delete all existing channels and roles on the server
     and recreate them based on the specified template.
