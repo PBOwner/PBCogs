@@ -85,9 +85,9 @@ class Xenon(commands.Cog):
             })
 
         # Save additional guild settings
-        verification_level = str(guild.verification_level)  # Convert verification level to string
-        explicit_content_filter = guild.explicit_content_filter
-        default_notifications = guild.default_notifications
+        verification_level = guild.verification_level.value  # Save verification level as integer
+        explicit_content_filter = guild.explicit_content_filter.value  # Save explicit content filter as integer
+        default_notifications = guild.default_notifications.value  # Save default notifications as integer
 
         # Create the ServerTemplate instance with the correct order of parameters
         template = ServerTemplate(
@@ -150,8 +150,8 @@ class Xenon(commands.Cog):
         print(f"Loaded verification_level: {template.verification_level} (type: {type(template.verification_level)})")
 
         # Validate template data
-        if not isinstance(template.verification_level, str):
-            await ctx.send('Invalid template: verification_level must be a string.')
+        if not isinstance(template.verification_level, int):
+            await ctx.send('Invalid template: verification_level must be a integer.')
             return
 
         # Disable community features if enabled
