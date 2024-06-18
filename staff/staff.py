@@ -35,11 +35,10 @@ class StaffManager(commands.Cog):
         embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        channel = await self.config.staff_updates_channel()
-        if channel:
-            await channel.send(embed=embed)
-        else:
-            await self.send_channel_reminder(ctx, "hire")
+        embed.add_field(name="Position", value=role.name, inline=False)
+        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+        await self.staff_updates_channel.send(embed=embed))
+
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def fire(self, ctx, member: discord.Member, role: discord.Role):
