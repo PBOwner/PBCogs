@@ -76,7 +76,7 @@ class Xenon(commands.Cog):
             })
 
         # Save additional guild settings
-        verification_level = guild.verification_level
+        verification_level = str(guild.verification_level)  # Convert verification level to string
         explicit_content_filter = guild.explicit_content_filter
         default_notifications = guild.default_notifications
 
