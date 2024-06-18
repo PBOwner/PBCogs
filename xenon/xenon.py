@@ -11,7 +11,7 @@ class CustomJSONEncoder(json.JSONEncoder):
             return obj.value
         return super().default(obj)
 
-class ServerTemplate:
+class Xenon:
     """Represents a server template."""
     def __init__(self, bot):
         """Initializes the ServerTemplate class."""
@@ -69,12 +69,6 @@ class ServerTemplate:
         # Use custom JSON encoder
         with open(f'{self.template_dir}/{template_id}.json', 'w') as f:
             json.dump(template_data, f, cls=CustomJSONEncoder)
-
-class ServerTemplates(commands.Cog):
-    """Cog for saving and loading server templates."""
-    def __init__(self, bot):
-        self.bot = bot
-        self.server_template = ServerTemplate(bot)
 
     def is_owner_or_trusted(ctx):
         return ctx.author == ctx.guild.owner or ctx.author.id in ctx.cog.trusted_users
