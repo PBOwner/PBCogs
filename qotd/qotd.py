@@ -13,7 +13,7 @@ class QOTD(commands.Cog):
         self.scheduler = AsyncIOScheduler()
         self.scheduler.add_job(self.post_question_of_the_day, 'cron', hour=6)  # Schedule the job to run daily at 6:00 AM
         self.scheduler.start()
-        self.question_channel = None
+        self.question_channels = {}  # Dictionary to store question channels per server
         self.api_endpoint = "https://quizapi.io/api/v1/questions"  # QuizAPI endpoint
         self.api_key = None
 
@@ -29,7 +29,7 @@ class QOTD(commands.Cog):
             response = requests.get(self.api_endpoint, headers=headers)
             if response.status_code == 200:
                 question_data = response.json()
-                question = question_data.get("question")
+                question = question_data[0].get("question")  # Assuming the API returns a list of questions
                 return question
         return "No question available today. Check back tomorrow!"
 
@@ -37,13 +37,14 @@ class QOTD(commands.Cog):
         """
         Posts the question of the day to the designated channel.
         """
-        if self.question_channel:
-            question = self.get_random_question()
-            embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
-            embed.add_field(name="Question", value=question)
-            embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
-            message = await self.question_channel.send(embed=embed)
-            await message.create_thread(name="QOTD Answers", message="Welcome to the thread for answering today's Question of the Day!")
+        for guild_id, channel in self.question_channels.items():
+            if channel:
+                question = self.get_random_question()
+                embed = discord.Embed(title="Question of the Day", color=0x00f0ff)
+                embed.add_field(name="Question", value=question)
+                embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
+                message = await channel.send(embed=embed)
+                await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -68,7 +69,7 @@ class QOTD(commands.Cog):
             ctx (commands.Context): The context of the command.
             channel (discord.TextChannel): The channel to post the question to.
         """
-        self.question_channel = channel
+        self.question_channels[ctx.guild.id] = channel
         await ctx.message.delete()
         await ctx.send(f"Question of the Day channel set to {channel.mention}", delete_after=5)
 
@@ -86,7 +87,7 @@ class QOTD(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def setqotapikey(self, ctx, api_key: str):
+    async def setqotdapi(self, ctx, api_key: str):
         """
         Sets the API key for the QuizAPI.
 
