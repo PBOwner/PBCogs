@@ -11,12 +11,7 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
-        # Check if the channel is already set
-        if await self.config.channel_is_set(ctx):
-            await ctx.send(f"The Staff updates channel is already set to {channel.mention}")
-            return
-        # Set the new channel
-        await self.config.staff_updates_channel.set(channel.id)
+        self.staff_updates_channel = channel
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
