@@ -97,7 +97,8 @@ class Xenon(commands.Cog):
         for channel_data in template.channels:
             overwrites = {}
             for role_name, perm in channel_data['permissions'].items():
-                overwrites[role_map[role_name]] = discord.PermissionOverwrite(
+                role = role_map[role_name]
+                overwrites[role] = discord.PermissionOverwrite(
                     read_messages=perm['read_messages'],
                     send_messages=perm['send_messages']
                 )
