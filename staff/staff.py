@@ -73,6 +73,9 @@ class StaffManager(commands.Cog):
             return False
         return True
 
+    async def send_channel_not_set_message(self, ctx, command_name):
+        """Send a message indicating that a required channel is not set."""
+        await ctx.send(f"The required channel for the `{command_name}` command is not set. Please set it first.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -97,7 +100,7 @@ class StaffManager(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
         """Hire a new staff member."""
-        if not await self.channel_is_set():
+        if not await self.channel_is_set(ctx):
             await self.send_channel_not_set_message(ctx, "hire")
             return
 
@@ -131,28 +134,6 @@ class StaffManager(commands.Cog):
             await channel.send(embed=embed)
         else:
             await self.send_channel_not_set_message(ctx, "demote")
-
-    @commands.command()
-    @commands.has_permissions(manage_roles=True)
-    async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
-        """Promote a staff member."""
-        if not await self.channel_is_set(ctx):
-            await self.send_channel_not_set_message(ctx, "promote")
-            return
-
-        await member.remove_roles(old_role)
-        await member.add_roles(new_role)
-        embed = discord.Embed(title="Staff Promoted", color=discord.Color.blue())
-        embed.add_field(name="Username", value=member.name, inline=False)
-        embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=new_role.name, inline=False)
-        embed.add_field(name="Old Position", value=old_role.name, inline=False)
-        channel_id = await self.config.staff_updates_channel()
-        channel = self.bot.get_channel(channel_id)
-        if channel:
-            await channel.send(embed=embed)
-        else:
-            await self.send_channel_not_set_message(ctx, "promote")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
