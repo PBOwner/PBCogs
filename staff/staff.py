@@ -16,7 +16,7 @@ class StaffManager(commands.Cog):
         else:
             await ctx.send("Oops, you forgot to set the Staff Updates channel! Make sure you set it with `[p]setupdates`.")
         
-    async def channel_is_set(self):
+    async def channel_is_set(self, ctx):
         """Check if the required channels are set."""
         staff_updates_channel = await self.config.staff_updates_channel()
         blacklist_channel = await self.config.blacklist_channel()
@@ -64,14 +64,6 @@ class StaffManager(commands.Cog):
         """Handle command errors."""
         if isinstance(error, commands.CheckFailure):
             await self.send_channel_not_set_message(ctx, ctx.command.name)
-
-    async def channel_is_set(self, ctx):
-        """Check if the required channels are set."""
-        staff_updates_channel = await self.config.staff_updates_channel()
-        blacklist_channel = await self.config.blacklist_channel()
-        if staff_updates_channel is None or blacklist_channel is None:
-            return False
-        return True
 
     async def send_channel_not_set_message(self, ctx, command_name):
         """Send a message indicating that a required channel is not set."""
