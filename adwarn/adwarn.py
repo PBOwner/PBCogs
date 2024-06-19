@@ -10,17 +10,24 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, user: discord.Member, channel: discord.TextChannel, *, reason: str):
-        """Warn a user and send an embed to a specified channel."""
-        # Create the embed message
-        embed = discord.Embed(title="You were warned!", color=discord.Color.red())
-        embed.add_field(name="User", value=user.mention, inline=True)
-        embed.add_field(name="In", value=channel.mention, inline=True)
-        embed.add_field(name="Reason", value=reason, inline=False)
+    async def adwarn(self, ctx, user: discord.Member, *, reason: str):
+        """Warn a user and send an embed to the default warning channel."""
+        channel_id = await self.config.guild(ctx.guild).warn_channel()
+        if channel_id:
+            channel = self.bot.get_channel(channel_id)
+            if channel:
+                # Create the embed message
+                embed = discord.Embed(title="You were warned!", color=discord.Color.red())
+                embed.add_field(name="User", value=user.mention, inline=True)
+                embed.add_field(name="Reason", value=reason, inline=False)
 
-        # Send the embed to the specified channel
-        await channel.send(embed=embed)
-        await ctx.send(f"{user.mention} has been warned for: {reason}")
+                # Send the embed to the specified channel
+                await channel.send(embed=embed)
+                await ctx.send(f"{user.mention} has been warned for: {reason}")
+            else:
+                await ctx.send("Warning channel not found. Please set it again using `[p]warnset channel`.")
+        else:
+            await ctx.send("No warning channel has been set. Please set it using `[p]warnset channel`.")
 
     @commands.group()
     @commands.guild_only()
