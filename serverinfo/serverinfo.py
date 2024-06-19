@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 import discord
 from discord.ext import commands
 from redbot.core import commands
@@ -10,39 +9,43 @@ class ServerInfo(commands.Cog):
 
     @commands.command()
     async def serverinfo(self, ctx, guild_id: str):
-        """Fetches server information from discordlookup.com and displays it in an embed."""
+        """Fetches server information using the Discord API and displays it in an embed."""
         try:
-            # Fetch the webpage content
-            url = f'https://discordlookup.com/guild/{guild_id}'
-            response = requests.get(url)
+            # Replace with your bot token
+            BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'
+
+            # Define the endpoint URL
+            url = f'https://discord.com/api/v10/guilds/{guild_id}'
+
+            # Set up the headers with the bot token
+            headers = {
+                'Authorization': f'Bot {BOT_TOKEN}',
+                'Content-Type': 'application/json'
+            }
+
+            # Make the request to the Discord API
+            response = requests.get(url, headers=headers)
+
+            # Check if the request was successful
             if response.status_code != 200:
-                await ctx.send("Failed to fetch data from discordlookup.com.")
+                await ctx.send(f"Failed to fetch data from Discord API: {response.status_code}")
                 return
 
-            # Parse the webpage content
-            soup = BeautifulSoup(response.content, 'html.parser')
+            guild_info = response.json()
 
-            # Debug: Print the HTML content
-            print(soup.prettify())
+            # Extract the necessary information
+            guild_name = guild_info.get('name', 'Unknown')
+            guild_owner_id = guild_info.get('owner_id', 'Unknown')
+            member_count = guild_info.get('approximate_member_count', 'Unknown')
+            description = guild_info.get('description', 'No Description')
+            icon_hash = guild_info.get('icon', None)
+            icon_url = f"https://cdn.discordapp.com/icons/{guild_id}/{icon_hash}.png" if icon_hash else None
 
-            # Extract the necessary information with checks
-            guild_name = soup.find('h1', {'class': 'title'})
-            guild_name = guild_name.text.strip() if guild_name else "Unknown"
-
-            guild_owner = soup.find('span', {'class': 'owner'})
-            guild_owner = guild_owner.text.strip() if guild_owner else "Unknown"
-
-            member_count = soup.find('span', {'class': 'members'})
-            member_count = member_count.text.strip() if member_count else "Unknown"
-
-            online_count = soup.find('span', {'class': 'online'})
-            online_count = online_count.text.strip() if online_count else "Unknown"
-
-            description = soup.find('div', {'class': 'description'})
-            description = description.text.strip() if description else "No Description"
-
-            icon_url = soup.find('img', {'class': 'guild-icon'})
-            icon_url = icon_url['src'] if icon_url else None
+            # Fetch owner username
+            owner_url = f'https://discord.com/api/v10/users/{guild_owner_id}'
+            owner_response = requests.get(owner_url, headers=headers)
+            owner_info = owner_response.json()
+            guild_owner = owner_info.get('username', 'Unknown')
 
             # Create an embed with the extracted information
             embed = discord.Embed(title=f"Server Info: {guild_name}", color=discord.Color.blue())
@@ -51,7 +54,6 @@ class ServerInfo(commands.Cog):
             embed.add_field(name="Owner", value=guild_owner, inline=False)
             embed.add_field(name="Description", value=description, inline=False)
             embed.add_field(name="Member Count", value=member_count, inline=True)
-            embed.add_field(name="Online Members", value=online_count, inline=True)
             embed.add_field(name="Guild ID", value=guild_id, inline=True)
 
             await ctx.send(embed=embed)
