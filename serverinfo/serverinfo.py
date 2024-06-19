@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from redbot.core import commands
 
 class ServerInfo(commands.Cog):
     def __init__(self, bot):
@@ -15,22 +14,14 @@ class ServerInfo(commands.Cog):
             invite = await self.bot.fetch_invite(invite_code)
 
             guild = invite.guild
-            guild_id = guild.id
+            owner = guild.owner
+            banner_url = guild.banner_url if guild.banner_url else "No Banner"
+            description = guild.description if guild.description else "No Description"
+            member_count = guild.approximate_member_count
+            online_count = guild.approximate_presence_count
 
-            # Fetch the full guild object if the bot is a member of the guild
-            full_guild = self.bot.get_guild(guild_id)
-            if not full_guild:
-                await ctx.send("The bot is not a member of the server or cannot access the server details.")
-                return
-
-            owner = full_guild.owner
-            banner_url = full_guild.banner_url if full_guild.banner_url else "No Banner"
-            description = full_guild.description if full_guild.description else "No Description"
-            member_count = full_guild.member_count
-            online_count = len([member for member in full_guild.members if member.status != discord.Status.offline])
-
-            embed = discord.Embed(title=f"Server Info: {full_guild.name}", color=discord.Color.blue())
-            embed.set_thumbnail(url=full_guild.icon_url)
+            embed = discord.Embed(title=f"Server Info: {guild.name}", color=discord.Color.blue())
+            embed.set_thumbnail(url=guild.icon_url)
             embed.add_field(name="Owner Name", value=owner.name, inline=False)
             embed.add_field(name="Owner ID", value=owner.id, inline=False)
             embed.add_field(name="Owner Username", value=str(owner), inline=False)
