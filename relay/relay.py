@@ -8,9 +8,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from twilio.rest import Client
 
-class ConfigModal(discord.ui.Modal):
+class EmailConfigModal(discord.ui.Modal):
     def __init__(self, cog: commands.Cog):
-        super().__init__(title="Set Configuration")
+        super().__init__(title="Set Email Configuration")
         self.cog = cog
 
         self.add_item(discord.ui.InputText(label="SMTP Server", placeholder="smtp.example.com"))
@@ -19,6 +19,27 @@ class ConfigModal(discord.ui.Modal):
         self.add_item(discord.ui.InputText(label="Email Password", placeholder="password", style=discord.InputTextStyle.password))
         self.add_item(discord.ui.InputText(label="IMAP Server", placeholder="imap.example.com"))
         self.add_item(discord.ui.InputText(label="IMAP Port", placeholder="993"))
+
+    async def callback(self, interaction: discord.Interaction):
+        values = [item.value for item in self.children]
+        keys = ["smtp_server", "smtp_port", "email_address", "email_password", "imap_server", "imap_port"]
+        config_data = dict(zip(keys, values))
+
+        for key, value in config_data.items():
+            await self.cog.config.set_raw(key, value=value)
+
+        embed = discord.Embed(
+            title="Email Configuration Set",
+            description="Email configuration has been set successfully.",
+            color=discord.Color.green()
+        )
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+class TwilioConfigModal(discord.ui.Modal):
+    def __init__(self, cog: commands.Cog):
+        super().__init__(title="Set Twilio Configuration")
+        self.cog = cog
+
         self.add_item(discord.ui.InputText(label="Twilio Account SID", placeholder="Your Twilio Account SID"))
         self.add_item(discord.ui.InputText(label="Twilio Auth Token", placeholder="Your Twilio Auth Token", style=discord.InputTextStyle.password))
         self.add_item(discord.ui.InputText(label="Twilio Phone Number", placeholder="+1234567890"))
@@ -26,30 +47,35 @@ class ConfigModal(discord.ui.Modal):
 
     async def callback(self, interaction: discord.Interaction):
         values = [item.value for item in self.children]
-        keys = [
-            "smtp_server", "smtp_port", "email_address", "email_password",
-            "imap_server", "imap_port", "twilio_account_sid", "twilio_auth_token",
-            "twilio_phone_number", "user_phone_number"
-        ]
+        keys = ["twilio_account_sid", "twilio_auth_token", "twilio_phone_number", "user_phone_number"]
         config_data = dict(zip(keys, values))
 
         for key, value in config_data.items():
             await self.cog.config.set_raw(key, value=value)
 
         embed = discord.Embed(
-            title="Configuration Set",
-            description="Configuration has been set successfully.",
+            title="Twilio Configuration Set",
+            description="Twilio configuration has been set successfully.",
             color=discord.Color.green()
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-class ConfigButton(discord.ui.Button):
+class EmailConfigButton(discord.ui.Button):
     def __init__(self, cog: commands.Cog):
-        super().__init__(label="Set Configuration", style=discord.ButtonStyle.primary)
+        super().__init__(label="Set Email Configuration", style=discord.ButtonStyle.primary)
         self.cog = cog
 
     async def callback(self, interaction: discord.Interaction):
-        modal = ConfigModal(self.cog)
+        modal = EmailConfigModal(self.cog)
+        await interaction.response.send_modal(modal)
+
+class TwilioConfigButton(discord.ui.Button):
+    def __init__(self, cog: commands.Cog):
+        super().__init__(label="Set Twilio Configuration", style=discord.ButtonStyle.primary)
+        self.cog = cog
+
+    async def callback(self, interaction: discord.Interaction):
+        modal = TwilioConfigModal(self.cog)
         await interaction.response.send_modal(modal)
 
 class Relay(commands.Cog):
@@ -216,10 +242,11 @@ class Relay(commands.Cog):
         Opens a modal to set the configuration values for email and Twilio settings.
         """
         view = discord.ui.View()
-        view.add_item(ConfigButton(self))
+        view.add_item(EmailConfigButton(self))
+        view.add_item(TwilioConfigButton(self))
         embed = discord.Embed(
             title="Set Configuration",
-            description="Click the button below to set the configuration values.",
+            description="Click the buttons below to set the configuration values.",
             color=discord.Color.blue()
         )
         await ctx.send(embed=embed, view=view)
