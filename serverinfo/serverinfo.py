@@ -27,7 +27,10 @@ class ServerInfo(commands.Cog):
             response = requests.get(url, headers=headers)
 
             # Check if the request was successful
-            if response.status_code != 200:
+            if response.status_code == 404:
+                await ctx.send("Guild not found. Please ensure the guild ID is correct and the bot has access to it.")
+                return
+            elif response.status_code != 200:
                 await ctx.send(f"Failed to fetch data from Discord API: {response.status_code}")
                 return
 
