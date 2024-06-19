@@ -2,7 +2,7 @@ import discord
 from redbot.core import Config, commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n
-from redbot.core.utils.chat_formatting import pagify
+from redbot.core.utils.chat_formatting import pagify, box
 
 _ = Translator("GCC", __file__)
 
@@ -108,6 +108,19 @@ class GCC(commands.Cog):
         await self.config.commands.set(commands)
         self._remove_command(name)
         await ctx.send(_("Global custom command `{}` deleted successfully.").format(name))
+
+    @gcc.command(name="list")
+    async def gcc_list(self, ctx: commands.Context):
+        """List all global custom commands."""
+        commands = await self.config.commands()
+        if not commands:
+            await ctx.send(_("There are no global custom commands."))
+            return
+
+        descriptions = [f"**{name}**: {data['description']}" for name, data in commands.items()]
+        description = "\n".join(descriptions)
+        for page in pagify(description):
+            await ctx.send(page)
 
     @commands.Cog.listener()
     async def on_message_without_command(self, message: discord.Message):
