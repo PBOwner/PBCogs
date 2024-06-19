@@ -22,6 +22,9 @@ class ServerInfo(commands.Cog):
             # Parse the webpage content
             soup = BeautifulSoup(response.content, 'html.parser')
 
+            # Debug: Print the HTML content
+            print(soup.prettify())
+
             # Extract the necessary information with checks
             guild_name = soup.find('h1', {'class': 'title'})
             guild_name = guild_name.text.strip() if guild_name else "Unknown"
@@ -54,3 +57,6 @@ class ServerInfo(commands.Cog):
             await ctx.send(embed=embed)
         except Exception as e:
             await ctx.send(f"An error occurred while fetching the server information: {str(e)}")
+
+def setup(bot):
+    bot.add_cog(ServerInfo(bot))
