@@ -2,7 +2,7 @@ import discord
 from redbot.core import Config, commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n
-from redbot.core.utils.chat_formatting import pagify, box
+from redbot.core.utils.chat_formatting import pagify
 
 _ = Translator("GCC", __file__)
 
@@ -30,6 +30,7 @@ class GCC(commands.Cog):
                 await ctx.send(page)
 
         command = commands.Command(name=name, callback=command_callback, help=description)
+        command.cog = self
         self.bot.add_command(command)
 
     def _remove_command(self, name: str):
