@@ -26,12 +26,14 @@ class NoFuckYou(commands.Cog):
                 await message.channel.send(response)
             except Exception as e:
                 print(f"Failed to send message: {e}")
+                print(f"Channel: {message.channel}, Message: {message.content}")
 
             random_gif = random.choice(self.fuck_you_gifs)
             try:
                 await message.channel.send(random_gif)
             except Exception as e:
                 print(f"Failed to send GIF: {e}")
+                print(f"Channel: {message.channel}, Message: {message.content}")
 
 def setup(bot):
     bot.add_cog(NoFuckYou(bot))
