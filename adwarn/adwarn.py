@@ -10,20 +10,21 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, user: discord.Member, *, reason: str):
+    async def adwarn(self, ctx, user: discord.Member, channel: discord.TextChannel, *, reason: str):
         """Warn a user and send an embed to the default warning channel."""
-        channel_id = await self.config.guild(ctx.guild).warn_channel()
-        if channel_id:
-            channel = self.bot.get_channel(channel_id)
-            if channel:
+        warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
+        if warn_channel_id:
+            warn_channel = self.bot.get_channel(warn_channel_id)
+            if warn_channel:
                 # Create the embed message
                 embed = discord.Embed(title="You were warned!", color=discord.Color.red())
                 embed.add_field(name="User", value=user.mention, inline=True)
+                embed.add_field(name="In", value=channel.mention, inline=True)
                 embed.add_field(name="Reason", value=reason, inline=False)
 
-                # Send the embed to the specified channel
-                await channel.send(embed=embed)
-                await ctx.send(f"{user.mention} has been warned for: {reason}", delete_after=5)  # Optional: delete the confirmation message after 5 seconds
+                # Send the embed to the specified warning channel
+                await warn_channel.send(embed=embed)
+                await ctx.send(f"{user.mention} has been warned for: {reason} in {channel.mention}", delete_after=5)  # Optional: delete the confirmation message after 5 seconds
             else:
                 await ctx.send("Warning channel not found. Please set it again using `[p]warnset channel`.")
         else:
