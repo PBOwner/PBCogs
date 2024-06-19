@@ -23,7 +23,7 @@ class AdWarn(commands.Cog):
 
                 # Send the embed to the specified channel
                 await channel.send(embed=embed)
-                await ctx.send(f"{user.mention} has been warned for: {reason}")
+                await ctx.send(f"{user.mention} has been warned for: {reason}", delete_after=5)  # Optional: delete the confirmation message after 5 seconds
             else:
                 await ctx.send("Warning channel not found. Please set it again using `[p]warnset channel`.")
         else:
