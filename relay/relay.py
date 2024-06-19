@@ -7,7 +7,6 @@ import email
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from twilio.rest import Client
-import asyncio
 
 class ConfigModal(discord.ui.Modal):
     def __init__(self, cog: commands.Cog):
@@ -43,6 +42,15 @@ class ConfigModal(discord.ui.Modal):
             color=discord.Color.green()
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
+
+class ConfigButton(discord.ui.Button):
+    def __init__(self, cog: commands.Cog):
+        super().__init__(label="Set Configuration", style=discord.ButtonStyle.primary)
+        self.cog = cog
+
+    async def callback(self, interaction: discord.Interaction):
+        modal = ConfigModal(self.cog)
+        await interaction.response.send_modal(modal)
 
 class Relay(commands.Cog):
     def __init__(self, bot: Red):
@@ -207,7 +215,14 @@ class Relay(commands.Cog):
 
         Opens a modal to set the configuration values for email and Twilio settings.
         """
-        await ctx.send_modal(ConfigModal(self))
+        view = discord.ui.View()
+        view.add_item(ConfigButton(self))
+        embed = discord.Embed(
+            title="Set Configuration",
+            description="Click the button below to set the configuration values.",
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed, view=view)
 
 def setup(bot: Red):
     bot.add_cog(Relay(bot))
