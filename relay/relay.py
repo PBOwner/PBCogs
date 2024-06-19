@@ -8,29 +8,50 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from twilio.rest import Client
 
-class EmailConfigModal(discord.ui.Modal):
+class SMTPConfigModal(discord.ui.Modal):
     def __init__(self, cog: commands.Cog):
-        super().__init__(title="Set Email Configuration")
+        super().__init__(title="Set SMTP Configuration")
         self.cog = cog
 
         self.add_item(discord.ui.InputText(label="SMTP Server", placeholder="smtp.example.com"))
         self.add_item(discord.ui.InputText(label="SMTP Port", placeholder="587"))
         self.add_item(discord.ui.InputText(label="Email Address", placeholder="example@example.com"))
         self.add_item(discord.ui.InputText(label="Email Password", placeholder="password", style=discord.InputTextStyle.password))
-        self.add_item(discord.ui.InputText(label="IMAP Server", placeholder="imap.example.com"))
-        self.add_item(discord.ui.InputText(label="IMAP Port", placeholder="993"))
 
     async def callback(self, interaction: discord.Interaction):
         values = [item.value for item in self.children]
-        keys = ["smtp_server", "smtp_port", "email_address", "email_password", "imap_server", "imap_port"]
+        keys = ["smtp_server", "smtp_port", "email_address", "email_password"]
         config_data = dict(zip(keys, values))
 
         for key, value in config_data.items():
             await self.cog.config.set_raw(key, value=value)
 
         embed = discord.Embed(
-            title="Email Configuration Set",
-            description="Email configuration has been set successfully.",
+            title="SMTP Configuration Set",
+            description="SMTP configuration has been set successfully.",
+            color=discord.Color.green()
+        )
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+class IMAPConfigModal(discord.ui.Modal):
+    def __init__(self, cog: commands.Cog):
+        super().__init__(title="Set IMAP Configuration")
+        self.cog = cog
+
+        self.add_item(discord.ui.InputText(label="IMAP Server", placeholder="imap.example.com"))
+        self.add_item(discord.ui.InputText(label="IMAP Port", placeholder="993"))
+
+    async def callback(self, interaction: discord.Interaction):
+        values = [item.value for item in self.children]
+        keys = ["imap_server", "imap_port"]
+        config_data = dict(zip(keys, values))
+
+        for key, value in config_data.items():
+            await self.cog.config.set_raw(key, value=value)
+
+        embed = discord.Embed(
+            title="IMAP Configuration Set",
+            description="IMAP configuration has been set successfully.",
             color=discord.Color.green()
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -60,13 +81,22 @@ class TwilioConfigModal(discord.ui.Modal):
         )
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-class EmailConfigButton(discord.ui.Button):
+class SMTPConfigButton(discord.ui.Button):
     def __init__(self, cog: commands.Cog):
-        super().__init__(label="Set Email Configuration", style=discord.ButtonStyle.primary)
+        super().__init__(label="Set SMTP Configuration", style=discord.ButtonStyle.primary)
         self.cog = cog
 
     async def callback(self, interaction: discord.Interaction):
-        modal = EmailConfigModal(self.cog)
+        modal = SMTPConfigModal(self.cog)
+        await interaction.response.send_modal(modal)
+
+class IMAPConfigButton(discord.ui.Button):
+    def __init__(self, cog: commands.Cog):
+        super().__init__(label="Set IMAP Configuration", style=discord.ButtonStyle.primary)
+        self.cog = cog
+
+    async def callback(self, interaction: discord.Interaction):
+        modal = IMAPConfigModal(self.cog)
         await interaction.response.send_modal(modal)
 
 class TwilioConfigButton(discord.ui.Button):
@@ -242,7 +272,8 @@ class Relay(commands.Cog):
         Opens a modal to set the configuration values for email and Twilio settings.
         """
         view = discord.ui.View()
-        view.add_item(EmailConfigButton(self))
+        view.add_item(SMTPConfigButton(self))
+        view.add_item(IMAPConfigButton(self))
         view.add_item(TwilioConfigButton(self))
         embed = discord.Embed(
             title="Set Configuration",
