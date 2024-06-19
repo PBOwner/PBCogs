@@ -26,7 +26,7 @@ class NoFuckYou(commands.Cog):
                 if message.channel:
                     await message.channel.send(response)
                 else:
-                    print(f"Channel is None: {message.channel}")
+                    print(f"Channel is None for message: {message.content} by {message.author} in {message.guild}")
             except Exception as e:
                 print(f"Failed to send message: {e}")
                 print(f"Channel: {message.channel}, Message: {message.content}")
@@ -36,7 +36,7 @@ class NoFuckYou(commands.Cog):
                 if message.channel:
                     await message.channel.send(random_gif)
                 else:
-                    print(f"Channel is None: {message.channel}")
+                    print(f"Channel is None for message: {message.content} by {message.author} in {message.guild}")
             except Exception as e:
                 print(f"Failed to send GIF: {e}")
                 print(f"Channel: {message.channel}, Message: {message.content}")
