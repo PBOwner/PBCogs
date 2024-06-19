@@ -11,15 +11,15 @@ class ServerInfo(commands.Cog):
     async def serverinfo(self, ctx, guild_id: str):
         """Fetches server information using the Discord API and displays it in an embed."""
         try:
-            # Replace with your bot token
-            BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'
+            # Get the bot token from the bot instance
+            bot_token = self.bot.http.token
 
             # Define the endpoint URL
             url = f'https://discord.com/api/v10/guilds/{guild_id}'
 
             # Set up the headers with the bot token
             headers = {
-                'Authorization': f'Bot {BOT_TOKEN}',
+                'Authorization': f'Bot {bot_token}',
                 'Content-Type': 'application/json'
             }
 
