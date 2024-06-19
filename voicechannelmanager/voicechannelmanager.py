@@ -17,7 +17,7 @@ class VoiceChannelManager(commands.Cog):
 
     @commands.command()
     @checks.admin_or_permissions(manage_guild=True)
-    async def setdesignatedchannel(self, ctx, channel: discord.VoiceChannel):
+    async def setchannel(self, ctx, channel: discord.VoiceChannel):
         """Set the designated voice channel for creating private voice channels."""
         await self.config.guild(ctx.guild).designated_voice_channel.set(channel.id)
         embed = discord.Embed(
