@@ -20,13 +20,24 @@ class ServerInfo(commands.Cog):
             # Parse the webpage content
             soup = BeautifulSoup(response.content, 'html.parser')
 
-            # Extract the necessary information
-            guild_name = soup.find('h1', {'class': 'title'}).text.strip()
-            guild_owner = soup.find('span', {'class': 'owner'}).text.strip()
-            member_count = soup.find('span', {'class': 'members'}).text.strip()
-            online_count = soup.find('span', {'class': 'online'}).text.strip()
-            description = soup.find('div', {'class': 'description'}).text.strip() if soup.find('div', {'class': 'description'}) else "No Description"
-            icon_url = soup.find('img', {'class': 'guild-icon'})['src'] if soup.find('img', {'class': 'guild-icon'}) else None
+            # Extract the necessary information with checks
+            guild_name = soup.find('h1', {'class': 'title'})
+            guild_name = guild_name.text.strip() if guild_name else "Unknown"
+
+            guild_owner = soup.find('span', {'class': 'owner'})
+            guild_owner = guild_owner.text.strip() if guild_owner else "Unknown"
+
+            member_count = soup.find('span', {'class': 'members'})
+            member_count = member_count.text.strip() if member_count else "Unknown"
+
+            online_count = soup.find('span', {'class': 'online'})
+            online_count = online_count.text.strip() if online_count else "Unknown"
+
+            description = soup.find('div', {'class': 'description'})
+            description = description.text.strip() if description else "No Description"
+
+            icon_url = soup.find('img', {'class': 'guild-icon'})
+            icon_url = icon_url['src'] if icon_url else None
 
             # Create an embed with the extracted information
             embed = discord.Embed(title=f"Server Info: {guild_name}", color=discord.Color.blue())
