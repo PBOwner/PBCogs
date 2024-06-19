@@ -1,4 +1,5 @@
-import discord
+import requests
+from bs4 import BeautifulSoup
 from redbot.core import commands
 
 class ServerInfo(commands.Cog):
@@ -6,36 +7,40 @@ class ServerInfo(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def serverinfo(self, ctx, invite_link: str):
-        """Fetches server information from an invite link and displays it in an embed."""
+    async def serverinfo(self, ctx, guild_id: str):
+        """Fetches server information from discordlookup.com and displays it in an embed."""
         try:
-            # Extract the invite code from the link
-            invite_code = invite_link.split('/')[-1]
-            invite = await self.bot.fetch_invite(invite_code)
+            # Fetch the webpage content
+            url = f'https://discordlookup.com/guild/{guild_id}'
+            response = requests.get(url)
+            if response.status_code != 200:
+                await ctx.send("Failed to fetch data from discordlookup.com.")
+                return
 
-            guild = invite.guild
-            owner = guild.owner
-            banner_url = guild.banner_url if guild.banner_url else "No Banner"
-            description = guild.description if guild.description else "No Description"
-            member_count = guild.approximate_member_count
-            online_count = guild.approximate_presence_count
+            # Parse the webpage content
+            soup = BeautifulSoup(response.content, 'html.parser')
 
-            embed = discord.Embed(title=f"Server Info: {guild.name}", color=discord.Color.blue())
-            embed.set_thumbnail(url=guild.icon_url)
-            embed.add_field(name="Owner Name", value=owner.name, inline=False)
-            embed.add_field(name="Owner ID", value=owner.id, inline=False)
-            embed.add_field(name="Owner Username", value=str(owner), inline=False)
+            # Extract the necessary information
+            guild_name = soup.find('h1', {'class': 'title'}).text.strip()
+            guild_owner = soup.find('span', {'class': 'owner'}).text.strip()
+            member_count = soup.find('span', {'class': 'members'}).text.strip()
+            online_count = soup.find('span', {'class': 'online'}).text.strip()
+            description = soup.find('div', {'class': 'description'}).text.strip() if soup.find('div', {'class': 'description'}) else "No Description"
+            icon_url = soup.find('img', {'class': 'guild-icon'})['src'] if soup.find('img', {'class': 'guild-icon'}) else None
+
+            # Create an embed with the extracted information
+            embed = discord.Embed(title=f"Server Info: {guild_name}", color=discord.Color.blue())
+            if icon_url:
+                embed.set_thumbnail(url=icon_url)
+            embed.add_field(name="Owner", value=guild_owner, inline=False)
             embed.add_field(name="Description", value=description, inline=False)
             embed.add_field(name="Member Count", value=member_count, inline=True)
             embed.add_field(name="Online Members", value=online_count, inline=True)
-            embed.add_field(name="Invite Code", value=invite_code, inline=True)
-            embed.set_image(url=banner_url)
+            embed.add_field(name="Guild ID", value=guild_id, inline=True)
 
             await ctx.send(embed=embed)
-        except discord.NotFound:
-            await ctx.send("Invalid invite link or the invite has expired.")
-        except discord.HTTPException as e:
-            await ctx.send(f"An error occurred while fetching the invite: {str(e)}")
+        except Exception as e:
+            await ctx.send(f"An error occurred while fetching the server information: {str(e)}")
 
 def setup(bot):
     bot.add_cog(ServerInfo(bot))
