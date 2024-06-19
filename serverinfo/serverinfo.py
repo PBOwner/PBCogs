@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import discord
+from discord.ext import commands
 from redbot.core import commands
 
 class ServerInfo(commands.Cog):
@@ -52,6 +54,3 @@ class ServerInfo(commands.Cog):
             await ctx.send(embed=embed)
         except Exception as e:
             await ctx.send(f"An error occurred while fetching the server information: {str(e)}")
-
-def setup(bot):
-    bot.add_cog(ServerInfo(bot))
