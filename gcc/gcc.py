@@ -2,6 +2,7 @@ import discord
 from redbot.core import Config, commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n
+from redbot.core.utils.chat_formatting import pagify
 
 _ = Translator("GCC", __file__)
 
@@ -13,6 +14,23 @@ class GCC(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
         self.config.register_global(commands={})
+        self._register_existing_commands()
+
+    def _register_existing_commands(self):
+        """Register existing global custom commands with the bot."""
+        commands = self.bot.loop.run_until_complete(self.config.commands())
+        for name, data in commands.items():
+            self._create_command(name, data["description"], data["content"])
+
+    def _create_command(self, name: str, description: str, content: str):
+        """Create and register a command with the bot."""
+
+        async def command_callback(ctx: commands.Context):
+            for page in pagify(content):
+                await ctx.send(page)
+
+        command = commands.Command(name=name, callback=command_callback, help=description)
+        self.bot.add_command(command)
 
     @commands.group(name="gcc", invoke_without_command=True)
     @commands.is_owner()
@@ -40,6 +58,7 @@ class GCC(commands.Cog):
             "content": content,
         }
         await self.config.commands.set(commands)
+        self._create_command(name, description, content)
         await ctx.send(_("Global custom command `{}` created successfully.").format(name))
 
     @gcc.command(name="edit")
@@ -63,6 +82,9 @@ class GCC(commands.Cog):
             commands[name]["content"] = content
 
         await self.config.commands.set(commands)
+        if content:
+            self.bot.remove_command(name)
+            self._create_command(name, description, content)
         await ctx.send(_("Global custom command `{}` edited successfully.").format(name))
 
     @gcc.command(name="delete")
@@ -80,20 +102,8 @@ class GCC(commands.Cog):
 
         del commands[name]
         await self.config.commands.set(commands)
+        self.bot.remove_command(name)
         await ctx.send(_("Global custom command `{}` deleted successfully.").format(name))
-
-    @commands.Cog.listener()
-    async def on_message_without_command(self, message: discord.Message):
-        if message.author.bot:
-            return
-
-        ctx = await self.bot.get_context(message)
-        if ctx.valid:
-            return
-
-        commands = await self.config.commands()
-        if message.content in commands:
-            await message.channel.send(commands[message.content]["content"])
 
 def setup(bot: Red):
     bot.add_cog(GCC(bot))
