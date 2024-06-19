@@ -18,15 +18,6 @@ class AdWarn(commands.Cog):
         if warn_channel_id:
             warn_channel = self.bot.get_channel(warn_channel_id)
             if warn_channel:
-                # Create the embed message
-                embed = discord.Embed(title="You were warned!", color=discord.Color.red())
-                embed.add_field(name="User", value=user.mention, inline=True)
-                embed.add_field(name="In", value=channel.mention, inline=True)
-                embed.add_field(name="Reason", value=reason, inline=False)
-
-                # Send the embed to the specified warning channel
-                await warn_channel.send(embed=embed)
-
                 # Store the warning
                 warnings = await self.config.member(user).warnings()
                 warnings.append({
@@ -36,6 +27,16 @@ class AdWarn(commands.Cog):
                     "channel": channel.id
                 })
                 await self.config.member(user).warnings.set(warnings)
+
+                # Create the embed message
+                embed = discord.Embed(title="You were warned!", color=discord.Color.red())
+                embed.add_field(name="User", value=user.mention, inline=True)
+                embed.add_field(name="In", value=channel.mention, inline=True)
+                embed.add_field(name="Reason", value=reason, inline=False)
+                embed.set_footer(text=f"Total warnings: {len(warnings)}")
+
+                # Send the embed to the specified warning channel
+                await warn_channel.send(embed=embed)
             else:
                 await ctx.send("Warning channel not found. Please set it again using `[p]warnset channel`.")
         else:
@@ -59,10 +60,10 @@ class AdWarn(commands.Cog):
                     embed.add_field(name="Warning", value=removed_warning["reason"], inline=False)
                     embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                     embed.add_field(name="Removed Time", value=datetime.utcnow().isoformat(), inline=True)
+                    embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
                     await warn_channel.send(embed=embed)
-                    await ctx.send(f"Warning removed from {user.mention}.", delete_after=5)  # Optional: delete the confirmation message after 5 seconds
                 else:
                     await ctx.send("Warning channel not found. Please set it again using `[p]warnset channel`.")
             else:
