@@ -23,14 +23,20 @@ class NoFuckYou(commands.Cog):
         if self.pattern.search(message.content):
             response = f"No, Fuck you {message.author.mention}!"
             try:
-                await message.channel.send(response)
+                if message.channel:
+                    await message.channel.send(response)
+                else:
+                    print(f"Channel is None: {message.channel}")
             except Exception as e:
                 print(f"Failed to send message: {e}")
                 print(f"Channel: {message.channel}, Message: {message.content}")
 
             random_gif = random.choice(self.fuck_you_gifs)
             try:
-                await message.channel.send(random_gif)
+                if message.channel:
+                    await message.channel.send(random_gif)
+                else:
+                    print(f"Channel is None: {message.channel}")
             except Exception as e:
                 print(f"Failed to send GIF: {e}")
                 print(f"Channel: {message.channel}, Message: {message.content}")
