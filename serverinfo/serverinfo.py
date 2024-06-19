@@ -20,7 +20,8 @@ class ServerInfo(commands.Cog):
             guild_id = guild.id
             member_count = invite.approximate_member_count
             online_count = invite.approximate_presence_count
-            icon_url = guild.icon_url
+            icon_hash = guild.icon
+            icon_url = f"https://cdn.discordapp.com/icons/{guild_id}/{icon_hash}.png" if icon_hash else None
 
             # Create an embed with the extracted information
             embed = discord.Embed(title=f"Server Info: {guild_name}", color=discord.Color.blue())
