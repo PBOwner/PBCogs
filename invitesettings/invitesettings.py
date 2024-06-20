@@ -8,12 +8,11 @@ class InviteSettings(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         default_global = {
-            "admin_invite": None,
-            "main_invite": None,
-            "support_server": None,
-            "admin_message": None,
-            "main_message": None,
-            "support_message": None,
+            "invites": {
+                "main": {"link": None, "message": None, "field_name": "Main"},
+                "admin": {"link": None, "message": None, "field_name": "Admin"},
+                "support": {"link": None, "message": None, "field_name": "Support Server"}
+            }
         }
         self.config.register_global(**default_global)
 
@@ -25,68 +24,67 @@ class InviteSettings(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def invite(self, ctx):
         """Invite management commands."""
-        admin_invite = await self.config.admin_invite()
-        main_invite = await self.config.main_invite()
-        support_server = await self.config.support_server()
-        admin_message = await self.config.admin_message()
-        main_message = await self.config.main_message()
-        support_message = await self.config.support_message()
-
+        invites = await self.config.invites()
         embed = discord.Embed(title="Invite Links and Messages")
-        embed.add_field(name="Main", value=main_message or "Not set", inline=False)
-        embed.add_field(name="Main Invite", value=main_invite or "Not set", inline=False)
-        embed.add_field(name="Admin", value=admin_message or "Not set", inline=False)
-        embed.add_field(name="Admin Invite", value=admin_invite or "Not set", inline=False)
-        embed.add_field(name="Support Server", value=support_message or "Not set", inline=False)
-        embed.add_field(name="Support Server Invite", value=support_server or "Not set", inline=False)
+
+        for key, value in invites.items():
+            field_name = value.get("field_name", key.capitalize())
+            message = value.get("message", "Not set")
+            link = value.get("link", "Not set")
+            embed.add_field(name=field_name, value=message, inline=False)
+            embed.add_field(name=f"{field_name} Invite", value=link, inline=False)
 
         await ctx.send(embed=embed)
 
     @invite.group()
     @commands.is_owner()
     async def set(self, ctx):
-        """Set invite links and messages."""
+        """Set invite links, messages, and field names."""
         if ctx.invoked_subcommand is None:
             await ctx.send_help(ctx.command)
 
-    @set.command(name="admin")
-    async def set_admin_invite(self, ctx, invite: str, *, message: str = None):
-        """Set the admin invite link and optional message."""
-        await self.config.admin_invite.set(invite)
-        await self.config.admin_message.set(message)
-        await ctx.send("Admin invite link and message set.")
+    @set.command(name="invite")
+    async def set_invite(self, ctx, invite_type: str, invite: str, *, message: str = None):
+        """Set an invite link and optional message.
 
-    @set.command(name="main")
-    async def set_main_invite(self, ctx, invite: str, *, message: str = None):
-        """Set the main invite link and optional message."""
-        await self.config.main_invite.set(invite)
-        await self.config.main_message.set(message)
-        await ctx.send("Main invite link and message set.")
+        **Arguments**
+            - `invite_type`: The type of invite (e.g., main, admin, support).
+            - `invite`: The invite link.
+            - `message`: The message for the invite.
+        """
+        async with self.config.invites() as invites:
+            if invite_type not in invites:
+                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
+            invites[invite_type]["link"] = invite
+            invites[invite_type]["message"] = message
+        await ctx.send(f"{invite_type.capitalize()} invite link and message set.")
 
-    @set.command(name="support")
-    async def set_support_server(self, ctx, invite: str, *, message: str = None):
-        """Set the support server invite link and optional message."""
-        await self.config.support_server.set(invite)
-        await self.config.support_message.set(message)
-        await ctx.send("Support server invite link and message set.")
+    @set.command(name="fieldname")
+    async def set_field_name(self, ctx, invite_type: str, *, field_name: str):
+        """Set the field name for an invite type.
+
+        **Arguments**
+            - `invite_type`: The type of invite (e.g., main, admin, support).
+            - `field_name`: The field name to display in the embed.
+        """
+        async with self.config.invites() as invites:
+            if invite_type not in invites:
+                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
+            invites[invite_type]["field_name"] = field_name
+        await ctx.send(f"Field name for {invite_type.capitalize()} invite set to {field_name}.")
 
     @invite.command(name="show")
     async def show_invites(self, ctx):
         """Show all set invites and their messages."""
-        admin_invite = await self.config.admin_invite()
-        main_invite = await self.config.main_invite()
-        support_server = await self.config.support_server()
-        admin_message = await self.config.admin_message()
-        main_message = await self.config.main_message()
-        support_message = await self.config.support_message()
-
+        invites = await self.config.invites()
         embed = discord.Embed(title="Invite Links and Messages")
-        embed.add_field(name="Main", value=main_message or "Not set", inline=False)
-        embed.add_field(name="Main Invite", value=main_invite or "Not set", inline=False)
-        embed.add_field(name="Admin", value=admin_message or "Not set", inline=False)
-        embed.add_field(name="Admin Invite", value=admin_invite or "Not set", inline=False)
-        embed.add_field(name="Support Server", value=support_message or "Not set", inline=False)
-        embed.add_field(name="Support Server Invite", value=support_server or "Not set", inline=False)
+
+        for key, value in invites.items():
+            field_name = value.get("field_name", key.capitalize())
+            message = value.get("message", "Not set")
+            link = value.get("link", "Not set")
+            embed.add_field(name=field_name, value=message, inline=False)
+            embed.add_field(name=f"{field_name} Invite", value=link, inline=False)
 
         await ctx.send(embed=embed)
 
