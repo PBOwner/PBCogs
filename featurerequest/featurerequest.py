@@ -14,7 +14,6 @@ class FeatureRequest(commands.Cog):
         }
         self.config.register_global(**default_global)
 
-    @commands.is_owner()
     @commands.group(aliases=["fr"])
     async def frequest(self, ctx: commands.Context):
         """Base command for feature requests."""
@@ -109,9 +108,9 @@ class FeatureRequest(commands.Cog):
 
     @frequest.command()
     async def status(self, ctx: commands.Context, *, feature: str):
-        """Check the status of your feature request."""
+        """Check the status of a feature request."""
         async with self.config.requests() as requests:
-            request_data = next((req for req in requests.values() if req["feature"] == feature and req["requester_id"] == ctx.author.id), None)
+            request_data = next((req for req in requests.values() if req["feature"] == feature), None)
             if not request_data:
                 await ctx.send(f"No feature request found with feature: {feature}")
                 return
@@ -119,7 +118,7 @@ class FeatureRequest(commands.Cog):
             status = request_data["status"]
             await ctx.author.send(embed=discord.Embed(
                 title="Feature Request Status",
-                description=f"Your request status is: **{status.capitalize()}**",
+                description=f"The request status is: **{status.capitalize()}**",
                 color=discord.Color.blue()
             ))
 
@@ -129,6 +128,3 @@ class FeatureRequest(commands.Cog):
         """Set the channel for feature requests."""
         await self.config.request_channel.set(channel.id)
         await ctx.send(f"Request channel set to: {channel.mention}")
-
-def setup(bot: Red):
-    bot.add_cog(FeatureRequest(bot))
