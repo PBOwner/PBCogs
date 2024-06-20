@@ -52,7 +52,7 @@ class FeatureRequest(commands.Cog):
         async with self.config.requests() as requests:
             requests[message.id] = request_data
 
-    async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color):
+    async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color, reason: str = None):
         async with self.config.requests() as requests:
             request_data = next((req for req in requests.values() if req["feature"] == feature), None)
             if not request_data:
@@ -62,10 +62,13 @@ class FeatureRequest(commands.Cog):
             request_data["status"] = status
             requester = self.bot.get_user(request_data["requester_id"])
             if requester:
+                description = f"Your feature request of `{feature}` was {status}."
+                if reason:
+                    description += f"\n\n**Reason:** {reason}"
                 try:
                     await requester.send(embed=discord.Embed(
                         title=f"Feature Request {status.capitalize()}",
-                        description=f"Your feature request of `{feature}` was {status}.",
+                        description=description,
                         color=color
                     ))
                 except discord.Forbidden:
@@ -88,21 +91,21 @@ class FeatureRequest(commands.Cog):
 
     @frequest.command()
     @commands.is_owner()
-    async def accept(self, ctx: commands.Context, *, feature: str):
+    async def accept(self, ctx: commands.Context, feature: str, *, reason: str = None):
         """Accept a feature request."""
-        await self.update_status(ctx, feature, "accepted", discord.Color.green())
+        await self.update_status(ctx, feature, "accepted", discord.Color.green(), reason)
 
     @frequest.command()
     @commands.is_owner()
-    async def deny(self, ctx: commands.Context, *, feature: str):
+    async def deny(self, ctx: commands.Context, feature: str, *, reason: str = None):
         """Deny a feature request."""
-        await self.update_status(ctx, feature, "denied", discord.Color.red())
+        await self.update_status(ctx, feature, "denied", discord.Color.red(), reason)
 
     @frequest.command()
     @commands.is_owner()
-    async def consider(self, ctx: commands.Context, *, feature: str):
+    async def consider(self, ctx: commands.Context, feature: str, *, reason: str = None):
         """Consider a feature request."""
-        await self.update_status(ctx, feature, "considering", discord.Color.blue())
+        await self.update_status(ctx, feature, "considering", discord.Color.blue(), reason)
 
     @frequest.command()
     async def status(self, ctx: commands.Context, *, feature: str):
