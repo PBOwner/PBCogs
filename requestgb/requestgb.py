@@ -9,25 +9,36 @@ class RequestGB(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890, force_registration=True)
         default_global = {
-            "requests": {}
+            "requests": {},
+            "notification_channel": None,
+            "last_request_id": 0
         }
         self.config.register_global(**default_global)
+
+    @commands.is_owner()
+    @commands.command()
+    async def setnotificationchannel(self, ctx, channel: discord.TextChannel):
+        """Set the channel for global ban notifications."""
+        await self.config.notification_channel.set(channel.id)
+        await ctx.send(f"Notification channel set to {channel.mention}")
 
     @commands.command()
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
-        guild_id = 1249747738992836628
-        channel_id = 1251044901706006539
-        guild = self.bot.get_guild(guild_id)
-        if not guild:
-            await ctx.send("Specified guild not found.")
-            return
-        channel = guild.get_channel(channel_id)
-        if not channel:
-            await ctx.send("Specified channel not found.")
+        notification_channel_id = await self.config.notification_channel()
+        if not notification_channel_id:
+            await ctx.send("Notification channel is not set. Please set it using the setnotificationchannel command.")
             return
 
-        request_id = len(await self.config.requests()) + 1
+        notification_channel = self.bot.get_channel(notification_channel_id)
+        if not notification_channel:
+            await ctx.send("Notification channel not found. Please set it again using the setnotificationchannel command.")
+            return
+
+        async with self.config.last_request_id() as last_request_id:
+            request_id = last_request_id + 1
+            await self.config.last_request_id.set(request_id)
+
         request = {
             "requester": ctx.author.id,
             "user_id": user_id,
@@ -37,11 +48,19 @@ class RequestGB(commands.Cog):
         async with self.config.requests() as requests:
             requests[request_id] = request
 
+        embed = discord.Embed(
+            title="Global Ban Request",
+            description=f"{ctx.author} has requested that user with ID {user_id} be global banned.",
+            color=discord.Color.red()
+        )
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.set_footer(text=f"Request ID: {request_id}")
+
         try:
-            await channel.send(f"{ctx.author} has requested that user with ID {user_id} be global banned for the reason: {reason}")
-            await ctx.send(f"Global ban request for user ID {user_id} has been sent to the specified channel.")
+            await notification_channel.send(embed=embed)
+            await ctx.send(f"Global ban request for user ID {user_id} has been sent to the notification channel.")
         except discord.Forbidden:
-            await ctx.send("Could not send a message to the specified channel. Please ensure the bot has permission to send messages in the channel.")
+            await ctx.send("Could not send a message to the notification channel. Please ensure the bot has permission to send messages in the channel.")
 
     @commands.is_owner()
     @commands.command()
