@@ -4,7 +4,7 @@ from redbot.core.bot import Red
 from typing import List, Dict
 
 class AFK(commands.Cog):
-    """AFK Cog for FuturoBot"""
+    """AFK Cog for Red-DiscordBot"""
 
     def __init__(self, bot: Red):
         self.bot = bot
@@ -12,7 +12,7 @@ class AFK(commands.Cog):
 
         default_global = {}
         default_guild = {"nickname_template": None}
-        default_user = {"afk": False, "reason": None, "embed_color": None, "mentions": []}
+        default_user = {"afk": False, "reason": None, "embed_color": None, "mentions": [], "original_nickname": None}
 
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
@@ -24,6 +24,9 @@ class AFK(commands.Cog):
         await self.config.user(ctx.author).afk.set(True)
         await self.config.user(ctx.author).reason.set(reason)
         await self.config.user(ctx.author).mentions.set([])  # Clear previous mentions
+
+        original_nickname = ctx.author.display_name
+        await self.config.user(ctx.author).original_nickname.set(original_nickname)
 
         nickname_template = await self.config.guild(ctx.guild).nickname_template()
         if nickname_template:
@@ -73,12 +76,14 @@ class AFK(commands.Cog):
 
             await self.config.user(message.author).mentions.set([])  # Clear mentions after handling
 
-            try:
-                await message.author.edit(nick=None)
-            except discord.Forbidden:
-                pass
-            except discord.HTTPException:
-                pass
+            original_nickname = await self.config.user(message.author).original_nickname()
+            if original_nickname:
+                try:
+                    await message.author.edit(nick=original_nickname)
+                except discord.Forbidden:
+                    pass
+                except discord.HTTPException:
+                    pass
 
         for mention in message.mentions:
             if mention == message.author:
