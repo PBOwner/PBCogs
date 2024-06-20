@@ -35,13 +35,15 @@ class FeatureRequest(commands.Cog):
             await ctx.send("Request channel not found. Please ask the bot owner to set it again using the frchannel command.")
             return
 
-        request_id = len(await self.config.requests()) + 1
-        request_data = {
-            "requester_id": ctx.author.id,
-            "feature": feature,
-            "status": "pending",
-            "message_id": None
-        }
+        async with self.config.requests() as requests:
+            request_id = len(requests) + 1
+            request_data = {
+                "requester_id": ctx.author.id,
+                "feature": feature,
+                "status": "pending",
+                "message_id": None
+            }
+            requests[request_id] = request_data
 
         embed = discord.Embed(
             title="Feature Request",
