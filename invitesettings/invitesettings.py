@@ -9,9 +9,9 @@ class InviteSettings(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         default_global = {
             "invites": {
-                "main": {"link": None, "field_name": "Main"},
-                "admin": {"link": None, "field_name": "Admin"},
-                "support": {"link": None, "field_name": "Support Server"}
+                "main": {"link": None, "name": "Main", "field_name": "Main"},
+                "admin": {"link": None, "name": "Admin", "field_name": "Admin"},
+                "support": {"link": None, "name": "Support Server", "field_name": "Support Server"}
             },
             "embed_color": None,
         }
@@ -31,7 +31,7 @@ class InviteSettings(commands.Cog):
     @invite.group(invoke_without_command=True)
     @commands.is_owner()
     async def set(self, ctx):
-        """Set invite links, field names, and embed color."""
+        """Set invite links, names, and embed color."""
         if ctx.invoked_subcommand is None:
             await ctx.send_help(ctx.command)
 
@@ -50,9 +50,26 @@ class InviteSettings(commands.Cog):
             if invite_type not in invites:
                 return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
             invites[invite_type]["link"] = invite_link
-            invites[invite_type]["field_name"] = name
+            invites[invite_type]["name"] = name
 
         await ctx.send(f"{name} invite link set.")
+
+    @set.command(name="fieldname")
+    async def set_field_name(self, ctx, invite_type: str, field_name: str):
+        """Set the field name for an invite type.
+
+        **Arguments**
+            - `invite_type`: The type of invite (e.g., main, admin, support).
+            - `field_name`: The field name to display in the embed.
+        """
+        invite_type = invite_type.lower()
+
+        async with self.config.invites() as invites:
+            if invite_type not in invites:
+                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
+            invites[invite_type]["field_name"] = field_name
+
+        await ctx.send(f"Field name for {invite_type.capitalize()} invite set to {field_name}.")
 
     @set.command(name="color")
     async def set_color(self, ctx, color: discord.Color):
@@ -76,9 +93,10 @@ class InviteSettings(commands.Cog):
         view = discord.ui.View()
 
         for key, value in invites.items():
-            field_name = value.get("field_name", key.capitalize())
+            name = value.get("name", key.capitalize())
             link = value.get("link", "Not set")
-            embed.add_field(name=field_name, value=f"[{field_name}]({link})", inline=False)
+            field_name = value.get("field_name", key.capitalize())
+            embed.add_field(name=field_name, value=f"[{name}]({link})", inline=False)
             if link != "Not set":
                 view.add_item(discord.ui.Button(style=discord.ButtonStyle.link, label=field_name, url=link))
 
