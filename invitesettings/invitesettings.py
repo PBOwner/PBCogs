@@ -24,9 +24,8 @@ class InviteSettings(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def invite(self, ctx):
-        """Invite management commands."""
-        if ctx.invoked_subcommand is None:
-            await self.show_invites(ctx)
+        """Show all set invites or manage invite links."""
+        await self.show_invites(ctx)
 
     @invite.group(invoke_without_command=True)
     @commands.is_owner()
@@ -81,7 +80,6 @@ class InviteSettings(commands.Cog):
         await self.config.embed_color.set(color.value)
         await ctx.send("Embed color set.")
 
-    @invite.command(name="show")
     async def show_invites(self, ctx):
         """Show all set invites."""
         invites = await self.config.invites()
@@ -99,6 +97,28 @@ class InviteSettings(commands.Cog):
             embed.add_field(name=field_name, value=f"[{name}]({link})", inline=False)
             if link != "Not set":
                 view.add_item(discord.ui.Button(style=discord.ButtonStyle.link, label=field_name, url=link))
+
+        await ctx.send(embed=embed, view=view)
+
+    @commands.command()
+    async def support(self, ctx):
+        """Send an embed with a support server invite link button."""
+        invites = await self.config.invites()
+        support_invite = invites.get("support", {}).get("link", None)
+
+        if not support_invite:
+            await ctx.send("The support invite link has not been set by the bot owner.")
+            return
+
+        embed = discord.Embed(
+            title="Support",
+            description="Click the button below to join our support server!",
+            color=discord.Color.blue()
+        )
+
+        view = discord.ui.View()
+        button = discord.ui.Button(label="Join Support Server", url=support_invite)
+        view.add_item(button)
 
         await ctx.send(embed=embed, view=view)
 
