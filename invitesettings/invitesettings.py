@@ -9,8 +9,8 @@ class InviteSettings(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         default_global = {
             "invites": {
-                "main": {"link": None, "message": None, "field_name": "Non-Admin Invite"},
-                "admin": {"link": None, "message": None, "field_name": "Admin Invite"},
+                "main": {"link": None, "message": None, "field_name": "Main"},
+                "admin": {"link": None, "message": None, "field_name": "Admin"},
                 "support": {"link": None, "message": None, "field_name": "Support Server"}
             }
         }
@@ -24,17 +24,8 @@ class InviteSettings(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def invite(self, ctx):
         """Invite management commands."""
-        invites = await self.config.invites()
-        embed = discord.Embed(title="Invite Links and Messages")
-
-        for key, value in invites.items():
-            field_name = value.get("field_name", key.capitalize())
-            message = value.get("message", "Not set")
-            link = value.get("link", "Not set")
-            embed.add_field(name=field_name, value=message, inline=False)
-            embed.add_field(name=f"{field_name} Invite", value=link, inline=False)
-
-        await ctx.send(embed=embed)
+        if ctx.invoked_subcommand is None:
+            await self.show_invites(ctx)
 
     @invite.group()
     @commands.is_owner()
