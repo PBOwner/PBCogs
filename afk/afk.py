@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from typing import List, Dict
+import asyncio
 
 class AFK(commands.Cog):
     """AFK Cog for Red-DiscordBot"""
@@ -59,6 +60,21 @@ class AFK(commands.Cog):
             else:
                 embed = discord.Embed(title="AFK Mentions", description="No pings were sent during your AFK.", color=await self.get_embed_color(message.author))
 
+            original_nicknames = await self.config.user(message.author).original_nicknames()
+            for guild_id, original_nickname in original_nicknames.items():
+                guild = self.bot.get_guild(int(guild_id))
+                if guild:
+                    member = guild.get_member(message.author.id)
+                    if member:
+                        try:
+                            await member.edit(nick=original_nickname)
+                        except discord.Forbidden:
+                            pass
+                        except discord.HTTPException:
+                            pass
+
+            await self.config.user(message.author).original_nicknames.set({})
+
             await message.channel.send(embed=await self.create_embed(message.author, f"Welcome back, {message.author.mention}! I've removed your AFK status."))
 
             # Ask the user if they want to see the mentions
@@ -76,21 +92,6 @@ class AFK(commands.Cog):
                 await message.channel.send("Request timed out. Mentions request deleted.")
 
             await self.config.user(message.author).mentions.set([])  # Clear mentions after handling
-
-            original_nicknames = await self.config.user(message.author).original_nicknames()
-            for guild_id, original_nickname in original_nicknames.items():
-                guild = self.bot.get_guild(int(guild_id))
-                if guild:
-                    member = guild.get_member(message.author.id)
-                    if member:
-                        try:
-                            await member.edit(nick=original_nickname)
-                        except discord.Forbidden:
-                            pass
-                        except discord.HTTPException:
-                            pass
-
-            await self.config.user(message.author).original_nicknames.set({})
 
         for mention in message.mentions:
             if mention == message.author:
