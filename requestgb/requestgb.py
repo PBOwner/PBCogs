@@ -1,4 +1,4 @@
-import discord
+    import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 import asyncio
@@ -32,7 +32,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def setlogchannel(self, ctx, channel: discord.TextChannel):
+    async def setlogging(self, ctx, channel: discord.TextChannel):
         """Set the log channel for global ban approvals."""
         async with self.config.log_channels() as log_channels:
             log_channels[str(ctx.guild.id)] = channel.id
