@@ -11,7 +11,7 @@ class AFK(commands.Cog):
 
         default_global = {}
         default_guild = {"nickname_template": None}
-        default_member = {"afk": False, "reason": None}
+        default_member = {"afk": False, "reason": None, "embed_color": None}
 
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
@@ -29,11 +29,11 @@ class AFK(commands.Cog):
             try:
                 await ctx.author.edit(nick=new_nickname)
             except discord.Forbidden:
-                await ctx.send("I don't have permission to change your nickname.")
+                await ctx.send(embed=self.create_embed(ctx.author, "I don't have permission to change your nickname."))
             except discord.HTTPException:
-                await ctx.send("Failed to change your nickname.")
+                await ctx.send(embed=self.create_embed(ctx.author, "Failed to change your nickname."))
 
-        await ctx.send(f"{ctx.author.mention} is now AFK. Reason: {reason}")
+        await ctx.send(embed=self.create_embed(ctx.author, f"{ctx.author.mention} is now AFK. Reason: {reason}"))
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -52,7 +52,7 @@ class AFK(commands.Cog):
             except discord.HTTPException:
                 pass
 
-            await message.channel.send(f"Welcome back, {message.author.mention}! I've removed your AFK status.")
+            await message.channel.send(embed=self.create_embed(message.author, f"Welcome back, {message.author.mention}! I've removed your AFK status."))
 
         for mention in message.mentions:
             if mention == message.author:
@@ -60,7 +60,7 @@ class AFK(commands.Cog):
             mention_afk = await self.config.member(mention).afk()
             if mention_afk:
                 reason = await self.config.member(mention).reason()
-                embed = discord.Embed(title="Pss. hey.", description=f"{mention.mention} is AFK! Their reason is: {reason}!")
+                embed = discord.Embed(title="Pss. hey.", description=f"{mention.mention} is AFK! Their reason is: {reason}!", color=await self.get_embed_color(mention))
                 await message.channel.send(embed=embed)
 
     @commands.admin_or_permissions(manage_guild=True)
@@ -69,9 +69,27 @@ class AFK(commands.Cog):
         """Set a custom nickname template for AFK users. Use {displayname} as a placeholder for the user's display name."""
         await self.config.guild(ctx.guild).nickname_template.set(template)
         if template:
-            await ctx.send(f"AFK nickname template set to: {template}")
+            await ctx.send(embed=self.create_embed(ctx.author, f"AFK nickname template set to: {template}"))
         else:
-            await ctx.send("AFK nickname template has been cleared.")
+            await ctx.send(embed=self.create_embed(ctx.author, "AFK nickname template has been cleared."))
+
+    @commands.command()
+    async def setafkcolor(self, ctx, color: discord.Color):
+        """Set the embed color for AFK messages."""
+        await self.config.member(ctx.author).embed_color.set(color.value)
+        await ctx.send(embed=self.create_embed(ctx.author, f"AFK embed color set to: {color}"))
+
+    async def get_embed_color(self, user: discord.Member):
+        color_value = await self.config.member(user).embed_color()
+        if color_value:
+            return discord.Color(color_value)
+        else:
+            return discord.Color.default()
+
+    def create_embed(self, user: discord.Member, description: str):
+        color = await self.get_embed_color(user)
+        embed = discord.Embed(description=description, color=color)
+        return embed
 
 def setup(bot: Red):
     bot.add_cog(AFK(bot))
