@@ -103,7 +103,10 @@ class PresenceFetcher(commands.Cog):
     async def fetch_presence(self, ctx, predicate):
         """Helper method to fetch and display presence information based on a predicate."""
         try:
-            members = [member async for member in ctx.guild.fetch_members(limit=None)]
+            members = []
+            async for member in ctx.guild.fetch_members(limit=None):
+                members.append(member)
+
             embed = discord.Embed(
                 title=f"Presence Information for Members in {ctx.guild.name}",
                 color=discord.Color.green()
