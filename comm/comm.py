@@ -45,31 +45,29 @@ class Comm(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.guild:
-            return  # Ignore messages sent in guilds
+        if message.author.bot:
+            return  # Ignore bot messages
 
-        async with self.config.all_guilds() as all_guilds:
-            for guild_id, data in all_guilds.items():
-                linked_channels = data.get("linked_channels", {})
-                if message.author.id in linked_channels:
-                    channel_id = linked_channels[message.author.id]
-                    channel = self.bot.get_channel(channel_id)
-                    if channel:
-                        await channel.send(f"**DM from {message.author}**: {message.content}")
-                    break
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
         if not message.guild:
-            return  # Ignore DMs
-
-        async with self.config.guild(message.guild).linked_channels() as linked_channels:
-            for user_id, channel_id in linked_channels.items():
-                if message.channel.id == channel_id:
-                    user = self.bot.get_user(user_id)
-                    if user:
-                        await user.send(f"**Message from {message.guild.name} #{message.channel.name}**: {message.content}")
-                    break
+            # Message sent in DMs
+            async with self.config.all_guilds() as all_guilds:
+                for guild_id, data in all_guilds.items():
+                    linked_channels = data.get("linked_channels", {})
+                    if message.author.id in linked_channels:
+                        channel_id = linked_channels[message.author.id]
+                        channel = self.bot.get_channel(channel_id)
+                        if channel:
+                            await channel.send(f"**DM from {message.author}**: {message.content}")
+                        break
+        else:
+            # Message sent in a guild
+            async with self.config.guild(message.guild).linked_channels() as linked_channels:
+                for user_id, channel_id in linked_channels.items():
+                    if message.channel.id == channel_id:
+                        user = self.bot.get_user(user_id)
+                        if user:
+                            await user.send(f"**Message from {message.guild.name} #{message.channel.name}**: {message.content}")
+                        break
 
 def setup(bot):
     bot.add_cog(Comm(bot))
