@@ -1,5 +1,6 @@
 import discord
 from redbot.core import commands, Config
+import re
 
 class InviteSettings(commands.Cog):
     """Manage invites."""
@@ -36,32 +37,26 @@ class InviteSettings(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @set.command(name="invite")
-    async def set_invite(self, ctx, invite_type: str, invite: str):
-        """Set an invite link.
+    async def set_invite(self, ctx, *, markdown: str):
+        """Set an invite link using markdown format.
 
         **Arguments**
-            - `invite_type`: The type of invite (e.g., main, admin, support).
-            - `invite`: The invite link.
+            - `markdown`: The markdown format [name](invite).
         """
+        match = re.match(r'\[(.*?)\]\((.*?)\)', markdown)
+        if not match:
+            return await ctx.send("Invalid format. Please use the markdown format [name](invite).")
+
+        name, invite = match.groups()
+        invite_type = name.lower()
+
         async with self.config.invites() as invites:
             if invite_type not in invites:
-                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
+                return await ctx.send("Invalid invite name. Valid names are: main, admin, support.")
             invites[invite_type]["link"] = invite
-        await ctx.send(f"{invite_type.capitalize()} invite link set.")
+            invites[invite_type]["field_name"] = name
 
-    @set.command(name="fieldname")
-    async def set_field_name(self, ctx, invite_type: str, *, field_name: str):
-        """Set the field name for an invite type.
-
-        **Arguments**
-            - `invite_type`: The type of invite (e.g., main, admin, support).
-            - `field_name`: The field name to display in the embed.
-        """
-        async with self.config.invites() as invites:
-            if invite_type not in invites:
-                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
-            invites[invite_type]["field_name"] = field_name
-        await ctx.send(f"Field name for {invite_type.capitalize()} invite set to {field_name}.")
+        await ctx.send(f"{name} invite link set.")
 
     @set.command(name="color")
     async def set_color(self, ctx, color: discord.Color):
@@ -87,7 +82,7 @@ class InviteSettings(commands.Cog):
         for key, value in invites.items():
             field_name = value.get("field_name", key.capitalize())
             link = value.get("link", "Not set")
-            embed.add_field(name=field_name, value=link, inline=False)
+            embed.add_field(name=field_name, value=f"[{field_name}]({link})", inline=False)
             if link != "Not set":
                 view.add_item(discord.ui.Button(style=discord.ButtonStyle.link, label=field_name, url=link))
 
