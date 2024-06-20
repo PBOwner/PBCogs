@@ -11,9 +11,11 @@ class BotJoinMessage(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567891, force_registration=True)
         default_global = {
             "title": "Welcome!",
-            "fields": []
+            "fields": [],
+            "color": discord.Color.blue().value
         }
         self.config.register_global(**default_global)
+        self.current_embed_message = None
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild: discord.Guild):
@@ -21,10 +23,11 @@ class BotJoinMessage(commands.Cog):
         if owner:
             title = await self.config.title()
             fields = await self.config.fields()
+            color = discord.Color(await self.config.color())
 
             embed = discord.Embed(
                 title=title,
-                color=discord.Color.blue()
+                color=color
             )
             for field in fields:
                 embed.add_field(name=field["name"], value=field["value"], inline=field["inline"])
@@ -45,6 +48,7 @@ class BotJoinMessage(commands.Cog):
         """Set the title of the bot join message."""
         await self.config.title.set(title)
         await ctx.send(f"Title set to: {title}")
+        await self._update_current_embed(ctx)
 
     @botjoinmessage.command()
     async def addfield(self, ctx: commands.Context, name: str, value: str, inline: Optional[bool] = True):
@@ -52,6 +56,7 @@ class BotJoinMessage(commands.Cog):
         async with self.config.fields() as fields:
             fields.append({"name": name, "value": value, "inline": inline})
         await ctx.send(f"Field added: {name} - {value}")
+        await self._update_current_embed(ctx)
 
     @botjoinmessage.command()
     async def editfield(self, ctx: commands.Context, index: int, name: Optional[str] = None, value: Optional[str] = None, inline: Optional[bool] = None):
@@ -65,6 +70,7 @@ class BotJoinMessage(commands.Cog):
                 if inline is not None:
                     fields[index]["inline"] = inline
                 await ctx.send(f"Field {index} edited.")
+                await self._update_current_embed(ctx)
             else:
                 await ctx.send(f"Field at index {index} does not exist.")
 
@@ -75,6 +81,7 @@ class BotJoinMessage(commands.Cog):
             if 0 <= index < len(fields):
                 fields.pop(index)
                 await ctx.send(f"Field {index} removed.")
+                await self._update_current_embed(ctx)
             else:
                 await ctx.send(f"Field at index {index} does not exist.")
 
@@ -92,6 +99,50 @@ class BotJoinMessage(commands.Cog):
             await ctx.send(embed=embed)
         else:
             await ctx.send("No fields set.")
+
+    @botjoinmessage.command()
+    async def setcolor(self, ctx: commands.Context, color: discord.Color):
+        """Set the color of the bot join message."""
+        await self.config.color.set(color.value)
+        await ctx.send(f"Color set to: {color}")
+        await self._update_current_embed(ctx)
+
+    @botjoinmessage.command()
+    async def preview(self, ctx: commands.Context):
+        """Preview the current bot join message."""
+        title = await self.config.title()
+        fields = await self.config.fields()
+        color = discord.Color(await self.config.color())
+
+        embed = discord.Embed(
+            title=title,
+            color=color
+        )
+        for field in fields:
+            embed.add_field(name=field["name"], value=field["value"], inline=field["inline"])
+
+        self.current_embed_message = await ctx.send(embed=embed)
+
+    async def _update_current_embed(self, ctx: commands.Context):
+        """Update the current embed message with the latest configuration."""
+        if self.current_embed_message:
+            title = await self.config.title()
+            fields = await self.config.fields()
+            color = discord.Color(await self.config.color())
+
+            embed = discord.Embed(
+                title=title,
+                color=color
+            )
+            for field in fields:
+                embed.add_field(name=field["name"], value=field["value"], inline=field["inline"])
+
+            try:
+                await self.current_embed_message.edit(embed=embed)
+            except discord.NotFound:
+                self.current_embed_message = None
+            except discord.Forbidden:
+                await ctx.send("I don't have permission to edit the message.")
 
 def setup(bot: Red):
     bot.add_cog(BotJoinMessage(bot))
