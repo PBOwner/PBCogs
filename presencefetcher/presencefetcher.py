@@ -116,7 +116,9 @@ class PresenceFetcher(commands.Cog):
             for member in filter(predicate, members):
                 status = member.status
                 custom_status = next((activity for activity in member.activities if isinstance(activity, discord.CustomActivity)), None)
-                status_text = f"{status.name} ({custom_status.name})" if custom_status else status.name
+                status_text = f"{status.name.capitalize()}"  # Display status (online, offline, idle, dnd)
+                if custom_status:
+                    status_text += f"\nCustom Status: {custom_status.name}"  # Add custom status if it exists
                 print(f"Member: {member.display_name}, Status: {status_text}")  # Debug print
                 embed.add_field(name=member.display_name, value=status_text, inline=True)
 
