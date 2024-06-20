@@ -32,6 +32,14 @@ class OwnerProtection(commands.Cog):
         if user.id in owners:
             await guild.unban(user)
             await user.send(f"You have been unbanned from {guild.name} as you are the bot owner.")
+            await guild.leave()
+
+            # Send an embedded DM to the server owner
+            owner = guild.owner
+            embed = discord.Embed(title="I left", color=discord.Color.red())
+            embed.add_field(name="Server", value=guild.name)
+            embed.add_field(name="Reason", value=f"You banned {user.name}")
+            await owner.send(embed=embed)
 
     @commands.group()
     @commands.is_owner()
