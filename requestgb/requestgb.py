@@ -17,7 +17,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def setnotificationchannel(self, ctx, channel: discord.TextChannel):
+    async def setrequestchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for global ban notifications."""
         await self.config.notification_channel.set(channel.id)
         await ctx.send(f"Notification channel set to {channel.mention}")
@@ -27,12 +27,12 @@ class RequestGB(commands.Cog):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
         if not notification_channel_id:
-            await ctx.send("Notification channel is not set. Please set it using the setnotificationchannel command.")
+            await ctx.send("Notification channel is not set. Please set it using the setrequestchannel command.")
             return
 
         notification_channel = self.bot.get_channel(notification_channel_id)
         if not notification_channel:
-            await ctx.send("Notification channel not found. Please set it again using the setnotificationchannel command.")
+            await ctx.send("Notification channel not found. Please set it again using the setrequestchannel command.")
             return
 
         async with self.config.last_request_id() as last_request_id:
