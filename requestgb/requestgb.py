@@ -26,7 +26,10 @@ class RequestGB(commands.Cog):
         }
         async with self.config.requests() as requests:
             requests[request_id] = request
-        await bot_owner.send(f"{ctx.author} has requested that user with ID {user_id} be global banned for the reason: {reason}")
+        try:
+            await bot_owner.send(f"{ctx.author} has requested that user with ID {user_id} be global banned for the reason: {reason}")
+        except discord.Forbidden:
+            await ctx.send("Could not send a DM to the bot owner. Please ensure the bot owner has DMs enabled.")
         await ctx.send(f"Global ban request for user ID {user_id} has been sent to the bot owner.")
 
     @commands.is_owner()
