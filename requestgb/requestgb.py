@@ -59,7 +59,7 @@ class RequestGB(commands.Cog):
             "requester": ctx.author.id,
             "user_id": user_id,
             "reason": reason,
-            "status": "pending",
+            "status": "Pending",
             "message_id": None
         }
         async with self.config.requests() as requests:
@@ -111,7 +111,7 @@ class RequestGB(commands.Cog):
     async def approvereq(self, ctx, user_id: int):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
-            request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
+            request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "Pending"), None)
             if not request:
                 embed = discord.Embed(
                     title="Error",
@@ -156,7 +156,7 @@ class RequestGB(commands.Cog):
                         await ctx.send(embed=embed)
                         continue
 
-                request["status"] = "approved"
+                request["status"] = "Approved"
                 requester = self.bot.get_user(request["requester"])
                 if requester:
                     try:
@@ -214,7 +214,7 @@ class RequestGB(commands.Cog):
     async def denyreq(self, ctx, user_id: int):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
-            request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
+            request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "Pending"), None)
             if not request:
                 embed = discord.Embed(
                     title="Error",
@@ -225,7 +225,7 @@ class RequestGB(commands.Cog):
                 return
 
             reason = request["reason"]
-            request["status"] = "denied"
+            request["status"] = "Denied"
             requester = self.bot.get_user(request["requester"])
             user = self.bot.get_user(request["user_id"])
             if not user:
