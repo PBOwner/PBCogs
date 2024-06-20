@@ -9,7 +9,6 @@ class Comm(commands.Cog):
         self.config.register_guild(**default_guild)
 
     @commands.group()
-    @commands.guild_only()
     async def comm(self, ctx):
         """Group command for managing private communication channels."""
         if ctx.invoked_subcommand is None:
@@ -23,7 +22,8 @@ class Comm(commands.Cog):
             await ctx.send("Invalid channel ID.")
             return
 
-        async with self.config.guild(ctx.guild).linked_channels() as linked_channels:
+        guild = channel.guild
+        async with self.config.guild(guild).linked_channels() as linked_channels:
             linked_channels[ctx.author.id] = channel_id
 
         await ctx.send(f"Private communication channel opened with {channel.mention}.")
@@ -31,12 +31,17 @@ class Comm(commands.Cog):
     @comm.command(name="close")
     async def comm_close(self, ctx):
         """Close the private communication channel."""
-        async with self.config.guild(ctx.guild).linked_channels() as linked_channels:
-            if ctx.author.id in linked_channels:
-                del linked_channels[ctx.author.id]
-                await ctx.send("Private communication channel closed.")
-            else:
-                await ctx.send("No private communication channel to close.")
+        guilds = self.bot.guilds
+        found = False
+        for guild in guilds:
+            async with self.config.guild(guild).linked_channels() as linked_channels:
+                if ctx.author.id in linked_channels:
+                    del linked_channels[ctx.author.id]
+                    await ctx.send("Private communication channel closed.")
+                    found = True
+                    break
+        if not found:
+            await ctx.send("No private communication channel to close.")
 
     @commands.Cog.listener()
     async def on_message(self, message):
