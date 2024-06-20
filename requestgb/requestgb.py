@@ -16,7 +16,17 @@ class RequestGB(commands.Cog):
     @commands.command()
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
-        bot_owner = (await self.bot.application_info()).owner
+        guild_id = 1249747738992836628
+        channel_id = 1251044901706006539
+        guild = self.bot.get_guild(guild_id)
+        if not guild:
+            await ctx.send("Specified guild not found.")
+            return
+        channel = guild.get_channel(channel_id)
+        if not channel:
+            await ctx.send("Specified channel not found.")
+            return
+
         request_id = len(await self.config.requests()) + 1
         request = {
             "requester": ctx.author.id,
@@ -26,11 +36,12 @@ class RequestGB(commands.Cog):
         }
         async with self.config.requests() as requests:
             requests[request_id] = request
+
         try:
-            await bot_owner.send(f"{ctx.author} has requested that user with ID {user_id} be global banned for the reason: {reason}")
+            await channel.send(f"{ctx.author} has requested that user with ID {user_id} be global banned for the reason: {reason}")
+            await ctx.send(f"Global ban request for user ID {user_id} has been sent to the specified channel.")
         except discord.Forbidden:
-            await ctx.send("Could not send a DM to the bot owner. Please ensure the bot owner has DMs enabled.")
-        await ctx.send(f"Global ban request for user ID {user_id} has been sent to the bot owner.")
+            await ctx.send("Could not send a message to the specified channel. Please ensure the bot has permission to send messages in the channel.")
 
     @commands.is_owner()
     @commands.command()
