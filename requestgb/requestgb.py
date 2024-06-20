@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 import asyncio
+from datetime import datetime
 
 class RequestGB(commands.Cog):
     """Cog for handling global ban requests."""
@@ -12,6 +13,7 @@ class RequestGB(commands.Cog):
         default_global = {
             "requests": {},
             "notification_channel": None,
+            "log_channels": {},
             "last_request_id": 0
         }
         self.config.register_global(**default_global)
@@ -24,6 +26,19 @@ class RequestGB(commands.Cog):
         embed = discord.Embed(
             title="Notification Channel Set",
             description=f"Notification channel set to {channel.mention}",
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+
+    @commands.is_owner()
+    @commands.command()
+    async def setlogchannel(self, ctx, channel: discord.TextChannel):
+        """Set the log channel for global ban approvals."""
+        async with self.config.log_channels() as log_channels:
+            log_channels[str(ctx.guild.id)] = channel.id
+        embed = discord.Embed(
+            title="Log Channel Set",
+            description=f"Log channel set to {channel.mention} for this server.",
             color=discord.Color.green()
         )
         await ctx.send(embed=embed)
@@ -194,6 +209,22 @@ class RequestGB(commands.Cog):
                             color=discord.Color.red()
                         )
                         await ctx.send(embed=embed)
+
+                # Log the global ban in the log channels
+                log_channels = await self.config.log_channels()
+                for guild_id, channel_id in log_channels.items():
+                    log_channel = self.bot.get_channel(channel_id)
+                    if log_channel:
+                        embed = discord.Embed(
+                            title="New Globally Banned Member",
+                            color=discord.Color.red(),
+                            timestamp=datetime.utcnow()
+                        )
+                        embed.add_field(name="User", value=f"{user.display_name} ({user.id})", inline=False)
+                        embed.add_field(name="Approved By", value=ctx.author.mention, inline=False)
+                        embed.add_field(name="Reason", value=reason, inline=False)
+                        embed.set_footer(text=f"Guild: {self.bot.get_guild(int(guild_id)).name}")
+                        await log_channel.send(embed=embed)
 
                 embed = discord.Embed(
                     title="Approved",
