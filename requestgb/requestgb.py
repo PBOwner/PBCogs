@@ -156,7 +156,7 @@ class RequestGB(commands.Cog):
                         message = await notification_channel.fetch_message(request["message_id"])
                         embed = discord.Embed(
                             title="Global Ban Request: Approved",
-                            description=f"{ctx.author} has requested that user with ID {request['user_id']} be global banned.",
+                            description=f"{request['requester']} has requested that user with ID {request['user_id']} be global banned.",
                             color=discord.Color(0x008800)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
@@ -226,7 +226,7 @@ class RequestGB(commands.Cog):
                     message = await notification_channel.fetch_message(request["message_id"])
                     embed = discord.Embed(
                         title="Global Ban Request: Denied",
-                        description=f"{ctx.author} has requested that user with ID {request['user_id']} be global banned.",
+                        description=f"{request['requester']} has requested that user with ID {request['user_id']} be global banned.",
                         color=discord.Color(0xff0000)
                     )
                     embed.add_field(name="Reason", value=request["reason"], inline=False)
