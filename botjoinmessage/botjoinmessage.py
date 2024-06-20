@@ -38,7 +38,7 @@ class BotJoinMessage(commands.Cog):
                 pass
 
     @commands.is_owner()
-    @commands.group()
+    @commands.group(aliases=["bjm"])
     async def botjoinmessage(self, ctx: commands.Context):
         """Commands to configure the bot join message."""
         pass
