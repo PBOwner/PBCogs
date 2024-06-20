@@ -27,7 +27,7 @@ class InviteSettings(commands.Cog):
         if ctx.invoked_subcommand is None:
             await self.show_invites(ctx)
 
-    @invite.group()
+    @invite.group(invoke_without_command=True)
     @commands.is_owner()
     async def set(self, ctx):
         """Set invite links, messages, and field names."""
