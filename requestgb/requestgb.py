@@ -64,9 +64,11 @@ class RequestGB(commands.Cog):
         async with self.config.requests() as requests:
             requests[request_id] = request
 
+        user = self.bot.get_user(user_id)
+
         embed = discord.Embed(
             title="Global Ban Request",
-            description=f"{ctx.author} has requested that user with ID {user_id} be global banned.",
+            description=f"{ctx.author} has requested that user {user.display_name} ({user.id}) be globally banned.",
             color=discord.Color(0x00f0ff)
         )
         embed.add_field(name="Reason", value=reason, inline=True)
@@ -80,7 +82,7 @@ class RequestGB(commands.Cog):
 
             embed = discord.Embed(
                 title="Request Sent",
-                description=f"Global ban request for user ID {user_id} has been sent to the notification channel.",
+                description=f"Global ban request for user {user.display_name} ({user.id}) has been sent to the notification channel.",
                 color=discord.Color.green()
             )
             await ctx.send(embed=embed)
@@ -94,7 +96,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def approvereq(self, ctx, user_id: int):
+    async def approvereq(self, ctx, user_id: int, *, reason: str):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
             request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
@@ -111,11 +113,11 @@ class RequestGB(commands.Cog):
             if user:
                 for guild in self.bot.guilds:
                     try:
-                        await guild.ban(user, reason=request["reason"])
+                        await guild.ban(user, reason=reason)
                     except discord.Forbidden:
                         embed = discord.Embed(
                             title="Error",
-                            description=f"Failed to ban {user} in {guild.name} due to insufficient permissions.",
+                            description=f"Failed to ban {user.display_name} ({user.id}) in {guild.name} due to insufficient permissions.",
                             color=discord.Color.red()
                         )
                         await ctx.send(embed=embed)
@@ -123,7 +125,7 @@ class RequestGB(commands.Cog):
                     except discord.HTTPException as e:
                         embed = discord.Embed(
                             title="Error",
-                            description=f"Failed to ban {user} in {guild.name} due to an HTTP error: {e}",
+                            description=f"Failed to ban {user.display_name} ({user.id}) in {guild.name} due to an HTTP error: {e}",
                             color=discord.Color.red()
                         )
                         await ctx.send(embed=embed)
@@ -135,7 +137,7 @@ class RequestGB(commands.Cog):
                     try:
                         await requester.send(embed=discord.Embed(
                             title="Request Approved",
-                            description=f"Your request for {request['user_id']} was approved.",
+                            description=f"Your request to globally ban {user.display_name} ({user.id}) was approved for {reason}.",
                             color=discord.Color.green()
                         ))
                     except discord.Forbidden:
@@ -147,7 +149,7 @@ class RequestGB(commands.Cog):
                         message = await notification_channel.fetch_message(request["message_id"])
                         embed = discord.Embed(
                             title="Global Ban Request",
-                            description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
+                            description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
                             color=discord.Color(0x008800)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=True)
@@ -163,7 +165,7 @@ class RequestGB(commands.Cog):
 
                 embed = discord.Embed(
                     title="Approved",
-                    description=f"User {user} has been banned from all servers.",
+                    description=f"User {user.display_name} ({user.id}) has been banned from all servers.",
                     color=discord.Color.green()
                 )
                 await ctx.send(embed=embed)
@@ -177,7 +179,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def denyreq(self, ctx, user_id: int):
+    async def denyreq(self, ctx, user_id: int, *, reason: str):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
             request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
@@ -192,11 +194,12 @@ class RequestGB(commands.Cog):
 
             request["status"] = "denied"
             requester = self.bot.get_user(request["requester"])
+            user = self.bot.get_user(request["user_id"])
             if requester:
                 try:
                     await requester.send(embed=discord.Embed(
                         title="Request Denied",
-                        description=f"Your request for {request['user_id']} was denied.",
+                        description=f"Your request to globally ban {user.display_name} ({user.id}) was denied for {reason}.",
                         color=discord.Color.red()
                     ))
                 except discord.Forbidden:
@@ -209,7 +212,7 @@ class RequestGB(commands.Cog):
                         message = await notification_channel.fetch_message(request["message_id"])
                         embed = discord.Embed(
                             title="Global Ban Request",
-                            description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
+                            description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
                             color=discord.Color(0xff0000)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=True)
@@ -232,7 +235,7 @@ class RequestGB(commands.Cog):
 
             embed = discord.Embed(
                 title="Denied",
-                description=f"Request for user ID {user_id} has been denied.",
+                description=f"Request for user {user.display_name} ({user.id}) has been denied.",
                 color=discord.Color.red()
             )
             await ctx.send(embed=embed)
