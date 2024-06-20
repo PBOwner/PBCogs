@@ -35,15 +35,12 @@ class FeatureRequest(commands.Cog):
             await ctx.send("Request channel not found. Please ask the bot owner to set it again using the frchannel command.")
             return
 
-        request_id = len(await self.config.requests()) + 1
         request_data = {
             "requester_id": ctx.author.id,
             "feature": feature,
-            "status": "pending"
+            "status": "pending",
+            "message_id": None
         }
-
-        async with self.config.requests() as requests:
-            requests[request_id] = request_data
 
         embed = discord.Embed(
             title="Feature Request",
@@ -53,21 +50,26 @@ class FeatureRequest(commands.Cog):
         embed.add_field(name="Feature", value=feature, inline=False)
         embed.add_field(name="Status", value="Pending", inline=False)
 
-        await request_channel.send(embed=embed)
+        message = await request_channel.send(embed=embed)
+        request_data["message_id"] = message.id
+
+        async with self.config.requests() as requests:
+            requests[message.id] = request_data
+
         await ctx.send("Your feature request has been submitted.")
 
     @commands.is_owner()
     @commands.command()
-    async def acceptfr(self, ctx: commands.Context, request_id: int):
+    async def acceptfr(self, ctx: commands.Context, message_id: int):
         """Accept a feature request."""
         async with self.config.requests() as requests:
-            request_data = requests.get(request_id)
+            request_data = requests.get(message_id)
             if not request_data:
-                await ctx.send(f"No feature request found with ID: {request_id}")
+                await ctx.send(f"No feature request found with message ID: {message_id}")
                 return
 
             if request_data["status"] != "pending":
-                await ctx.send(f"Feature request {request_id} has already been processed.")
+                await ctx.send(f"Feature request with message ID {message_id} has already been processed.")
                 return
 
             request_data["status"] = "accepted"
@@ -76,26 +78,43 @@ class FeatureRequest(commands.Cog):
                 try:
                     await requester.send(embed=discord.Embed(
                         title="Feature Request Accepted",
-                        description=f"Your feature request has been accepted.",
+                        description=f"Your feature request of `{request_data['feature']}` was accepted.",
                         color=discord.Color.green()
                     ))
                 except discord.Forbidden:
                     pass
 
-            await ctx.send(f"Feature request {request_id} has been accepted.")
+            request_channel = self.bot.get_channel(await self.config.request_channel())
+            if request_channel:
+                try:
+                    message = await request_channel.fetch_message(message_id)
+                    embed = discord.Embed(
+                        title="Feature Request",
+                        description=f"Feature requested by {requester.mention}",
+                        color=discord.Color.green()
+                    )
+                    embed.add_field(name="Feature", value=request_data["feature"], inline=False)
+                    embed.add_field(name="Status", value="Accepted", inline=False)
+                    await message.edit(embed=embed)
+                except discord.NotFound:
+                    await ctx.send(f"Message with ID {message_id} not found in the request channel.")
+                except discord.Forbidden:
+                    await ctx.send("I don't have permission to edit the message in the request channel.")
+
+            await ctx.send(f"Feature request with message ID {message_id} has been accepted.")
 
     @commands.is_owner()
     @commands.command()
-    async def denyfr(self, ctx: commands.Context, request_id: int):
+    async def denyfr(self, ctx: commands.Context, message_id: int):
         """Deny a feature request."""
         async with self.config.requests() as requests:
-            request_data = requests.get(request_id)
+            request_data = requests.get(message_id)
             if not request_data:
-                await ctx.send(f"No feature request found with ID: {request_id}")
+                await ctx.send(f"No feature request found with message ID: {message_id}")
                 return
 
             if request_data["status"] != "pending":
-                await ctx.send(f"Feature request {request_id} has already been processed.")
+                await ctx.send(f"Feature request with message ID {message_id} has already been processed.")
                 return
 
             request_data["status"] = "denied"
@@ -104,13 +123,30 @@ class FeatureRequest(commands.Cog):
                 try:
                     await requester.send(embed=discord.Embed(
                         title="Feature Request Denied",
-                        description=f"Your feature request has been denied.",
+                        description=f"Your feature request of `{request_data['feature']}` was denied.",
                         color=discord.Color.red()
                     ))
                 except discord.Forbidden:
                     pass
 
-            await ctx.send(f"Feature request {request_id} has been denied.")
+            request_channel = self.bot.get_channel(await self.config.request_channel())
+            if request_channel:
+                try:
+                    message = await request_channel.fetch_message(message_id)
+                    embed = discord.Embed(
+                        title="Feature Request",
+                        description=f"Feature requested by {requester.mention}",
+                        color=discord.Color.red()
+                    )
+                    embed.add_field(name="Feature", value=request_data["feature"], inline=False)
+                    embed.add_field(name="Status", value="Denied", inline=False)
+                    await message.edit(embed=embed)
+                except discord.NotFound:
+                    await ctx.send(f"Message with ID {message_id} not found in the request channel.")
+                except discord.Forbidden:
+                    await ctx.send("I don't have permission to edit the message in the request channel.")
+
+            await ctx.send(f"Feature request with message ID {message_id} has been denied.")
 
 def setup(bot: Red):
     bot.add_cog(FeatureRequest(bot))
