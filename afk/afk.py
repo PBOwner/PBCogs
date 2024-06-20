@@ -4,7 +4,7 @@ from redbot.core.bot import Red
 from typing import List, Dict
 
 class AFK(commands.Cog):
-    """AFK Cog for Red-DiscordBot"""
+    """AFK Cog for FuturoBot"""
 
     def __init__(self, bot: Red):
         self.bot = bot
@@ -55,7 +55,7 @@ class AFK(commands.Cog):
             else:
                 embed = discord.Embed(title="AFK Mentions", description="No pings were sent during your AFK.", color=await self.get_embed_color(message.author))
 
-            await message.author.send(embed=embed)
+            await message.channel.send(embed=embed)
             await self.config.user(message.author).mentions.set([])  # Clear mentions after sending
 
             try:
@@ -73,14 +73,14 @@ class AFK(commands.Cog):
             mention_afk = await self.config.user(mention).afk()
             if mention_afk:
                 reason = await self.config.user(mention).reason()
-                embed = discord.Embed(title=f"Psst. Hey, {message.author.mention}", color=await self.get_embed_color(mention))
+                embed = discord.Embed(title=f"Psst. Hey, {message.author.name}", color=await self.get_embed_color(mention))
                 embed.add_field(name="User", value=mention.mention, inline=False)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 await message.channel.send(embed=embed)
 
                 # Save the mention details
                 mentions = await self.config.user(mention).mentions()
-                mentions.append({"author": message.author.mention, "link": message.jump_url})
+                mentions.append({"author": message.author.name, "link": message.jump_url})
                 await self.config.user(mention).mentions.set(mentions)
 
     @commands.admin_or_permissions(manage_guild=True)
