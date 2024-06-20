@@ -80,7 +80,7 @@ class InviteSettings(commands.Cog):
         embed_color = await self.config.embed_color()
 
         embed = discord.Embed(title="Invite Links", color=embed_color or discord.Color.default())
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
 
         view = discord.ui.View()
 
