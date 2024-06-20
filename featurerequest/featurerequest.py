@@ -22,15 +22,16 @@ class FeatureRequest(commands.Cog):
 
     @frequest.command()
     async def submit(self, ctx: commands.Context, *, feature: str):
-        """Request a new feature for bot.name."""
+        """Request a new feature for {bot_name}."""
+        bot_name = self.bot.user.name
         request_channel_id = await self.config.request_channel()
         if not request_channel_id:
-            await ctx.send("Request channel is not set. Please ask the bot owner to set it using the frequest channel command.")
+            await ctx.send(f"Request channel is not set. Please ask the bot owner to set it using the `{bot_name} frequest channel` command.")
             return
 
         request_channel = self.bot.get_channel(request_channel_id)
         if not request_channel:
-            await ctx.send("Request channel not found. Please ask the bot owner to set it again using the frequest channel command.")
+            await ctx.send(f"Request channel not found. Please ask the bot owner to set it again using the `{bot_name} frequest channel` command.")
             return
 
         embed = discord.Embed(
@@ -142,6 +143,3 @@ class FeatureRequest(commands.Cog):
         """Set the channel for feature requests."""
         await self.config.request_channel.set(channel.id)
         await ctx.send(f"Request channel set to: {channel.mention}")
-
-def setup(bot: Red):
-    bot.add_cog(FeatureRequest(bot))
