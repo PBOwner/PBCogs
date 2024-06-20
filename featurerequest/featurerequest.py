@@ -23,8 +23,8 @@ class FeatureRequest(commands.Cog):
         await ctx.send(f"Request channel set to: {channel.mention}")
 
     @commands.command()
-    async def request(self, ctx: commands.Context, *, feature: str):
-        """Submit a feature request."""
+    async def frequest(self, ctx: commands.Context, *, feature: str):
+        """Request a new feature for bot.name."""
         request_channel_id = await self.config.request_channel()
         if not request_channel_id:
             await ctx.send("Request channel is not set. Please ask the bot owner to set it using the frchannel command.")
