@@ -8,8 +8,14 @@ class Comm(commands.Cog):
         default_guild = {"linked_channels": {}}
         self.config.register_guild(**default_guild)
 
+    @commands.group()
     @commands.guild_only()
-    @commands.command(name="comm_open")
+    async def comm(self, ctx):
+        """Group command for managing private communication channels."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send_help(ctx.command)
+
+    @comm.command(name="open")
     async def comm_open(self, ctx, channel_id: int):
         """Open a private communication channel between your DMs and a server channel."""
         channel = self.bot.get_channel(channel_id)
@@ -22,8 +28,7 @@ class Comm(commands.Cog):
 
         await ctx.send(f"Private communication channel opened with {channel.mention}.")
 
-    @commands.guild_only()
-    @commands.command(name="comm_close")
+    @comm.command(name="close")
     async def comm_close(self, ctx):
         """Close the private communication channel."""
         async with self.config.guild(ctx.guild).linked_channels() as linked_channels:
