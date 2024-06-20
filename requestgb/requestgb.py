@@ -100,7 +100,7 @@ class RequestGB(commands.Cog):
             if request_id not in requests:
                 embed = discord.Embed(
                     title="Error",
-                    description="Invalid request ID.",
+                    description=f"Invalid request ID: {request_id}",
                     color=discord.Color.red()
                 )
                 await ctx.send(embed=embed)
@@ -156,7 +156,7 @@ class RequestGB(commands.Cog):
                         message = await notification_channel.fetch_message(request["message_id"])
                         embed = discord.Embed(
                             title="Global Ban Request: Approved",
-                            description=f"{request['requester']} has requested that user with ID {request['user_id']} be global banned.",
+                            description=f"{self.bot.get_user(request['requester'])} has requested that user with ID {request['user_id']} be global banned.",
                             color=discord.Color(0x008800)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
@@ -192,7 +192,7 @@ class RequestGB(commands.Cog):
             if request_id not in requests:
                 embed = discord.Embed(
                     title="Error",
-                    description="Invalid request ID.",
+                    description=f"Invalid request ID: {request_id}",
                     color=discord.Color.red()
                 )
                 await ctx.send(embed=embed)
@@ -226,7 +226,7 @@ class RequestGB(commands.Cog):
                     message = await notification_channel.fetch_message(request["message_id"])
                     embed = discord.Embed(
                         title="Global Ban Request: Denied",
-                        description=f"{request['requester']} has requested that user with ID {request['user_id']} be global banned.",
+                        description=f"{self.bot.get_user(request['requester'])} has requested that user with ID {request['user_id']} be global banned.",
                         color=discord.Color(0xff0000)
                     )
                     embed.add_field(name="Reason", value=request["reason"], inline=False)
