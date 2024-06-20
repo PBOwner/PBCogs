@@ -187,6 +187,13 @@ class RequestGB(commands.Cog):
                             color=discord.Color.red()
                         )
                         await ctx.send(embed=embed)
+                    except discord.NotFound:
+                        embed = discord.Embed(
+                            title="Error",
+                            description="Notification message not found.",
+                            color=discord.Color.red()
+                        )
+                        await ctx.send(embed=embed)
 
                 embed = discord.Embed(
                     title="Approved",
@@ -259,6 +266,13 @@ class RequestGB(commands.Cog):
                     embed = discord.Embed(
                         title="Error",
                         description="Could not edit the message in the notification channel.",
+                        color=discord.Color.red()
+                    )
+                    await ctx.send(embed=embed)
+                except discord.NotFound:
+                    embed = discord.Embed(
+                        title="Error",
+                        description="Notification message not found.",
                         color=discord.Color.red()
                     )
                     await ctx.send(embed=embed)
