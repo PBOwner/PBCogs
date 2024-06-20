@@ -45,20 +45,21 @@ class RoleManager(commands.Cog):
         # Handle activity roles
         activity_roles = await self.config.guild(guild).activity_roles()
         for activity in after.activities:
-            role_id = activity_roles.get(activity.name)
-            if role_id:
-                role = guild.get_role(role_id)
-                if role:
-                    await after.add_roles(role, reason="Activity role assignment")
-                    if log_channel:
-                        embed = discord.Embed(
-                            title="Activity Role Assigned",
-                            description=f"{after.mention} has been given the role {role.mention} for activity {activity.name}.",
-                            color=discord.Color.blue(),
-                            timestamp=datetime.now(timezone.utc)
-                        )
-                        await log_channel.send(embed=embed)
-                    await self.update_role_list_embed(guild)
+            if isinstance(activity, discord.Game):
+                role_id = activity_roles.get("Playing a game")
+                if role_id:
+                    role = guild.get_role(role_id)
+                    if role:
+                        await after.add_roles(role, reason="Activity role assignment (Playing a game)")
+                        if log_channel:
+                            embed = discord.Embed(
+                                title="Activity Role Assigned",
+                                description=f"{after.mention} has been given the role {role.mention} for playing a game.",
+                                color=discord.Color.blue(),
+                                timestamp=datetime.now(timezone.utc)
+                            )
+                            await log_channel.send(embed=embed)
+                        await self.update_role_list_embed(guild)
 
     async def update_role_list_embed(self, guild: discord.Guild):
         """Update the role assignment embed in the role list channel."""
@@ -85,7 +86,7 @@ class RoleManager(commands.Cog):
         }
 
         activity_fields = {
-            "Gamer": []
+            "Playing a game": []
         }
 
         for member in guild.members:
@@ -97,8 +98,8 @@ class RoleManager(commands.Cog):
             for activity_name, role_id in activity_roles.items():
                 role = guild.get_role(role_id)
                 for activity in member.activities:
-                    if activity.name == activity_name and role in member.roles:
-                        activity_fields["Gamer"].append(member.mention)
+                    if isinstance(activity, discord.Game) and activity_name == "Playing a game" and role in member.roles:
+                        activity_fields["Playing a game"].append(member.mention)
 
         for status, members in status_fields.items():
             embed.add_field(name=status, value=", ".join(members) if members else "None", inline=False)
@@ -117,7 +118,7 @@ class RoleManager(commands.Cog):
             message = await role_list_channel.send(embed=embed)
             await self.config.guild(guild).embed_message_id.set(message.id)
 
-    @commands.group()
+    @commands.group(name="rolemanager", aliases=["pm"])
     @commands.guild_only()
     @commands.admin()
     async def rolemanager(self, ctx: commands.Context):
@@ -125,29 +126,29 @@ class RoleManager(commands.Cog):
         pass
 
     @rolemanager.command()
-    async def setstatusrole(self, ctx: commands.Context, status: str, role: discord.Role):
-        """Set a role to be assigned for a specific member status."""
-        async with self.config.guild(ctx.guild).status_roles() as status_roles:
-            status_roles[status.lower()] = role.id
-        embed = discord.Embed(
-            title="Status Role Set",
-            description=f"Role {role.mention} will be assigned to members with status {status}.",
-            color=discord.Color.green()
-        )
-        await ctx.send(embed=embed)
-        await self.update_role_list_embed(ctx.guild)
-
-    @rolemanager.command()
-    async def setactivityrole(self, ctx: commands.Context, activity: str, role: discord.Role):
-        """Set a role to be assigned for a specific member activity."""
-        async with self.config.guild(ctx.guild).activity_roles() as activity_roles:
-            activity_roles[activity] = role.id
-        embed = discord.Embed(
-            title="Activity Role Set",
-            description=f"Role {role.mention} will be assigned to members with activity {activity}.",
-            color=discord.Color.blue()
-        )
-        await ctx.send(embed=embed)
+    async def setrole(self, ctx: commands.Context, type: str, role: discord.Role):
+        """Set a role to be assigned for a specific member status or activity."""
+        type = type.lower()
+        if type in ["online", "offline", "idle", "dnd"]:
+            async with self.config.guild(ctx.guild).status_roles() as status_roles:
+                status_roles[type] = role.id
+            embed = discord.Embed(
+                title="Status Role Set",
+                description=f"Role {role.mention} will be assigned to members with status {type}.",
+                color=discord.Color.green()
+            )
+            await ctx.send(embed=embed)
+        elif type == "playing a game":
+            async with self.config.guild(ctx.guild).activity_roles() as activity_roles:
+                activity_roles[type] = role.id
+            embed = discord.Embed(
+                title="Activity Role Set",
+                description=f"Role {role.mention} will be assigned to members with activity {type}.",
+                color=discord.Color.blue()
+            )
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send("Invalid type. Please specify one of: online, offline, idle, dnd, playing a game.")
         await self.update_role_list_embed(ctx.guild)
 
     @rolemanager.command()
@@ -174,31 +175,31 @@ class RoleManager(commands.Cog):
         await self.update_role_list_embed(ctx.guild)
 
     @rolemanager.command()
-    async def clearstatusrole(self, ctx: commands.Context, status: str):
-        """Clear the role assigned for a specific member status."""
-        async with self.config.guild(ctx.guild).status_roles() as status_roles:
-            if status.lower() in status_roles:
-                del status_roles[status.lower()]
-        embed = discord.Embed(
-            title="Status Role Cleared",
-            description=f"Role assignment for status {status} has been cleared.",
-            color=discord.Color.orange()
-        )
-        await ctx.send(embed=embed)
-        await self.update_role_list_embed(ctx.guild)
-
-    @rolemanager.command()
-    async def clearactivityrole(self, ctx: commands.Context, activity: str):
-        """Clear the role assigned for a specific member activity."""
-        async with self.config.guild(ctx.guild).activity_roles() as activity_roles:
-            if activity in activity_roles:
-                del activity_roles[activity]
-        embed = discord.Embed(
-            title="Activity Role Cleared",
-            description=f"Role assignment for activity {activity} has been cleared.",
-            color=discord.Color.orange()
-        )
-        await ctx.send(embed=embed)
+    async def clearrole(self, ctx: commands.Context, type: str):
+        """Clear the role assigned for a specific member status or activity."""
+        type = type.lower()
+        if type in ["online", "offline", "idle", "dnd"]:
+            async with self.config.guild(ctx.guild).status_roles() as status_roles:
+                if type in status_roles:
+                    del status_roles[type]
+            embed = discord.Embed(
+                title="Status Role Cleared",
+                description=f"Role assignment for status {type} has been cleared.",
+                color=discord.Color.orange()
+            )
+            await ctx.send(embed=embed)
+        elif type == "playing a game":
+            async with self.config.guild(ctx.guild).activity_roles() as activity_roles:
+                if type in activity_roles:
+                    del activity_roles[type]
+            embed = discord.Embed(
+                title="Activity Role Cleared",
+                description=f"Role assignment for activity {type} has been cleared.",
+                color=discord.Color.orange()
+            )
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send("Invalid type. Please specify one of: online, offline, idle, dnd, playing a game.")
         await self.update_role_list_embed(ctx.guild)
 
     @rolemanager.command()
