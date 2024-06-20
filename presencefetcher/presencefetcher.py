@@ -20,11 +20,6 @@ class PresenceFetcher(commands.Cog):
         await ctx.send_help(ctx.command)
 
     @fetch.command()
-    async def users(self, ctx):
-        """Fetch and display the presence information for all users (excluding bots) in the server."""
-        await self.fetch_presence(ctx, lambda member: not member.bot)
-
-    @fetch.command()
     async def bots(self, ctx):
         """Fetch and display the presence information for all bots in the server."""
         await self.fetch_presence(ctx, lambda member: member.bot)
@@ -113,9 +108,18 @@ class PresenceFetcher(commands.Cog):
             )
 
             for member in filter(predicate, members):
-                status_type = member.status.name.capitalize()  # Display status (Online, Offline, Idle, Dnd)
-                if status_type.lower() == 'dnd':
-                    status_type = 'DND'
+                # Dynamically change the status display based on the user's status
+                if member.status == discord.Status.online:
+                    status_type = "Online"
+                elif member.status == discord.Status.offline:
+                    status_type = "Offline"
+                elif member.status == discord.Status.idle:
+                    status_type = "Idle"
+                elif member.status == discord.Status.dnd:
+                    status_type = "Do Not Disturb"
+                else:
+                    status_type = member.status.name.capitalize()
+
                 custom_status = next((activity for activity in member.activities if isinstance(activity, discord.CustomActivity)), None)
                 status_text = status_type
                 if custom_status:
