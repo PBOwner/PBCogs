@@ -1,6 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
+import asyncio
 
 class RequestGB(commands.Cog):
     """Cog for handling global ban requests."""
@@ -65,6 +66,17 @@ class RequestGB(commands.Cog):
             requests[request_id] = request
 
         user = self.bot.get_user(user_id)
+        if not user:
+            try:
+                user = await self.bot.fetch_user(user_id)
+            except discord.NotFound:
+                embed = discord.Embed(
+                    title="Error",
+                    description=f"User with ID {user_id} not found.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=embed)
+                return
 
         embed = discord.Embed(
             title="Global Ban Request",
@@ -110,6 +122,18 @@ class RequestGB(commands.Cog):
                 return
 
             user = self.bot.get_user(request["user_id"])
+            if not user:
+                try:
+                    user = await self.bot.fetch_user(request["user_id"])
+                except discord.NotFound:
+                    embed = discord.Embed(
+                        title="Error",
+                        description=f"User with ID {request['user_id']} not found.",
+                        color=discord.Color.red()
+                    )
+                    await ctx.send(embed=embed)
+                    return
+
             if user:
                 for guild in self.bot.guilds:
                     try:
@@ -195,6 +219,18 @@ class RequestGB(commands.Cog):
             request["status"] = "denied"
             requester = self.bot.get_user(request["requester"])
             user = self.bot.get_user(request["user_id"])
+            if not user:
+                try:
+                    user = await self.bot.fetch_user(request["user_id"])
+                except discord.NotFound:
+                    embed = discord.Embed(
+                        title="Error",
+                        description=f"User with ID {request['user_id']} not found.",
+                        color=discord.Color.red()
+                    )
+                    await ctx.send(embed=embed)
+                    return
+
             if requester:
                 try:
                     await requester.send(embed=discord.Embed(
