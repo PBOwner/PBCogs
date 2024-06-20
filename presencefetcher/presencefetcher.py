@@ -116,7 +116,7 @@ class PresenceFetcher(commands.Cog):
             for member in filter(predicate, members):
                 status = member.status
                 custom_status = next((activity for activity in member.activities if isinstance(activity, discord.CustomActivity)), None)
-                status_text = f"{status} ({custom_status.name})" if custom_status else str(status)
+                status_text = f"{status.name} ({custom_status.name})" if custom_status else status.name
                 print(f"Member: {member.display_name}, Status: {status_text}")  # Debug print
                 embed.add_field(name=member.display_name, value=status_text, inline=True)
 
