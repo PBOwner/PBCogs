@@ -204,20 +204,28 @@ class RequestGB(commands.Cog):
 
             notification_channel = self.bot.get_channel(await self.config.notification_channel())
             if notification_channel:
-                try:
-                    message = await notification_channel.fetch_message(request["message_id"])
-                    embed = discord.Embed(
-                        title="Global Ban Request",
-                        description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
-                        color=discord.Color(0xff0000)
-                    )
-                    embed.add_field(name="Reason", value=request["reason"], inline=True)
-                    embed.add_field(name="Status", value="Denied", inline=True)
-                    await message.edit(embed=embed)
-                except discord.Forbidden:
+                if "message_id" in request and request["message_id"]:
+                    try:
+                        message = await notification_channel.fetch_message(request["message_id"])
+                        embed = discord.Embed(
+                            title="Global Ban Request",
+                            description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
+                            color=discord.Color(0xff0000)
+                        )
+                        embed.add_field(name="Reason", value=request["reason"], inline=True)
+                        embed.add_field(name="Status", value="Denied", inline=True)
+                        await message.edit(embed=embed)
+                    except discord.Forbidden:
+                        embed = discord.Embed(
+                            title="Error",
+                            description="Could not edit the message in the notification channel.",
+                            color=discord.Color.red()
+                        )
+                        await ctx.send(embed=embed)
+                else:
                     embed = discord.Embed(
                         title="Error",
-                        description="Could not edit the message in the notification channel.",
+                        description="Message ID not found in the request. Cannot update the notification message.",
                         color=discord.Color.red()
                     )
                     await ctx.send(embed=embed)
