@@ -89,17 +89,29 @@ class RoleManager(commands.Cog):
             "Playing a game": []
         }
 
+        seen_members = set()
+
         for member in guild.members:
+            if member.id in seen_members:
+                continue
+
             for status, role_id in status_roles.items():
                 role = guild.get_role(role_id)
                 if role in member.roles:
                     status_fields[status.capitalize()].append(member.mention)
+                    seen_members.add(member.id)
+                    break
+
+            if member.id in seen_members:
+                continue
 
             for activity_name, role_id in activity_roles.items():
                 role = guild.get_role(role_id)
                 for activity in member.activities:
                     if isinstance(activity, discord.Game) and activity_name == "Playing a game" and role in member.roles:
                         activity_fields["Playing a game"].append(member.mention)
+                        seen_members.add(member.id)
+                        break
 
         for status, members in status_fields.items():
             embed.add_field(name=status, value=", ".join(members) if members else "None", inline=False)
