@@ -9,8 +9,8 @@ class InviteSettings(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         default_global = {
             "invites": {
-                "main": {"link": None, "message": None, "field_name": "Main"},
-                "admin": {"link": None, "message": None, "field_name": "Admin"},
+                "main": {"link": None, "message": None, "field_name": "Non-Admin Invite"},
+                "admin": {"link": None, "message": None, "field_name": "Admin Invite"},
                 "support": {"link": None, "message": None, "field_name": "Support Server"}
             }
         }
