@@ -65,11 +65,12 @@ class RequestGB(commands.Cog):
             requests[request_id] = request
 
         embed = discord.Embed(
-            title="Global Ban Request: Pending",
+            title="Global Ban Request",
             description=f"{ctx.author} has requested that user with ID {user_id} be global banned.",
             color=discord.Color(0x00f0ff)
         )
         embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Status", value="Pending", inline=True)
         embed.set_footer(text=f"Request ID: {request_id}")
 
         try:
@@ -142,11 +143,12 @@ class RequestGB(commands.Cog):
 
                         request["status"] = "approved"
                         embed = discord.Embed(
-                            title="Global Ban Request: Approved",
+                            title="Global Ban Request",
                             description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
                             color=discord.Color(0x008800)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
+                        embed.add_field(name="Status", value="Approved", inline=True)
                         embed.set_footer(text=f"Request ID: {request_id}")
                         await message.edit(embed=embed)
                         await message.clear_reactions()
@@ -165,11 +167,12 @@ class RequestGB(commands.Cog):
                         # Deny the request
                         request["status"] = "denied"
                         embed = discord.Embed(
-                            title="Global Ban Request: Denied",
+                            title="Global Ban Request",
                             description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
                             color=discord.Color(0xff0000)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
+                        embed.add_field(name="Status", value="Denied", inline=True)
                         embed.set_footer(text=f"Request ID: {request_id}")
                         await message.edit(embed=embed)
                         await message.clear_reactions()
