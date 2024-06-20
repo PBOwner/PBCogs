@@ -22,11 +22,25 @@ class InviteSettings(commands.Cog):
         if existing_invite:
             self.bot.remove_command(existing_invite.name)
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     async def invite(self, ctx):
         """Invite management commands."""
-        if ctx.invoked_subcommand is None:
-            await ctx.send_help(ctx.command)
+        admin_invite = await self.config.admin_invite()
+        main_invite = await self.config.main_invite()
+        support_server = await self.config.support_server()
+        admin_message = await self.config.admin_message()
+        main_message = await self.config.main_message()
+        support_message = await self.config.support_message()
+
+        embed = discord.Embed(title="Invite Links and Messages")
+        embed.add_field(name="Main", value=main_message or "Not set", inline=False)
+        embed.add_field(name="Main Invite", value=main_invite or "Not set", inline=False)
+        embed.add_field(name="Admin", value=admin_message or "Not set", inline=False)
+        embed.add_field(name="Admin Invite", value=admin_invite or "Not set", inline=False)
+        embed.add_field(name="Support Server", value=support_message or "Not set", inline=False)
+        embed.add_field(name="Support Server Invite", value=support_server or "Not set", inline=False)
+
+        await ctx.send(embed=embed)
 
     @invite.group()
     @commands.is_owner()
@@ -67,11 +81,14 @@ class InviteSettings(commands.Cog):
         support_message = await self.config.support_message()
 
         embed = discord.Embed(title="Invite Links and Messages")
-        embed.add_field(name="Admin Message", value=admin_message or "Not set", inline=False)
-        embed.add_field(name="Admin Invite", value=admin_invite or "Not set", inline=False)
-        embed.add_field(name="Main Message", value=main_message or "Not set", inline=False)
+        embed.add_field(name="Main", value=main_message or "Not set", inline=False)
         embed.add_field(name="Main Invite", value=main_invite or "Not set", inline=False)
-        embed.add_field(name="Support Message", value=support_message or "Not set", inline=False)
-        embed.add_field(name="Support Server", value=support_server or "Not set", inline=False)
+        embed.add_field(name="Admin", value=admin_message or "Not set", inline=False)
+        embed.add_field(name="Admin Invite", value=admin_invite or "Not set", inline=False)
+        embed.add_field(name="Support Server", value=support_message or "Not set", inline=False)
+        embed.add_field(name="Support Server Invite", value=support_server or "Not set", inline=False)
 
         await ctx.send(embed=embed)
+
+def setup(bot):
+    bot.add_cog(InviteSettings(bot))
