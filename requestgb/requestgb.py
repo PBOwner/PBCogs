@@ -16,13 +16,8 @@ class RequestGB(commands.Cog):
         }
         self.config.register_global(**default_global)
 
-    @commands.group(name="requestgb", aliases=["reqgb"], invoke_without_command=True)
-    async def requestgb(self, ctx):
-        """Base command for global ban requests."""
-        await ctx.send_help(ctx.command)
-
-    @requestgb.command()
     @commands.is_owner()
+    @commands.command()
     async def setrequestchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for global ban notifications."""
         await self.config.notification_channel.set(channel.id)
@@ -33,7 +28,7 @@ class RequestGB(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @requestgb.command()
+    @commands.command(aliases=["reqgb", "rgb"])
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
@@ -111,8 +106,8 @@ class RequestGB(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-    @requestgb.command()
     @commands.is_owner()
+    @commands.command()
     async def approvereq(self, ctx, user_id: int, *, reason: str):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
@@ -206,8 +201,8 @@ class RequestGB(commands.Cog):
                 )
                 await ctx.send(embed=embed)
 
-    @requestgb.command()
     @commands.is_owner()
+    @commands.command()
     async def denyreq(self, ctx, user_id: int, *, reason: str):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
