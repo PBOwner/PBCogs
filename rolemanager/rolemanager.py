@@ -77,18 +77,34 @@ class RoleManager(commands.Cog):
             color=discord.Color.blue()
         )
 
-        if status_roles:
-            status_roles_desc = "\n".join([f"{status}: <@&{role_id}>" for status, role_id in status_roles.items()])
-        else:
-            status_roles_desc = "No status roles set."
+        status_fields = {
+            "Online": [],
+            "Offline": [],
+            "Idle": [],
+            "dnd": []
+        }
 
-        if activity_roles:
-            activity_roles_desc = "\n".join([f"{activity}: <@&{role_id}>" for activity, role_id in activity_roles.items()])
-        else:
-            activity_roles_desc = "No activity roles set."
+        activity_fields = {
+            "Gamer": []
+        }
 
-        embed.add_field(name="Status Roles", value=status_roles_desc, inline=False)
-        embed.add_field(name="Activity Roles", value=activity_roles_desc, inline=False)
+        for member in guild.members:
+            for status, role_id in status_roles.items():
+                role = guild.get_role(role_id)
+                if role in member.roles:
+                    status_fields[status.capitalize()].append(member.mention)
+
+            for activity_name, role_id in activity_roles.items():
+                role = guild.get_role(role_id)
+                for activity in member.activities:
+                    if activity.name == activity_name and role in member.roles:
+                        activity_fields["Gamer"].append(member.mention)
+
+        for status, members in status_fields.items():
+            embed.add_field(name=status, value=", ".join(members) if members else "None", inline=False)
+
+        for activity, members in activity_fields.items():
+            embed.add_field(name=activity, value=", ".join(members) if members else "None", inline=False)
 
         if embed_message_id:
             try:
@@ -112,7 +128,7 @@ class RoleManager(commands.Cog):
     async def setstatusrole(self, ctx: commands.Context, status: str, role: discord.Role):
         """Set a role to be assigned for a specific member status."""
         async with self.config.guild(ctx.guild).status_roles() as status_roles:
-            status_roles[status] = role.id
+            status_roles[status.lower()] = role.id
         embed = discord.Embed(
             title="Status Role Set",
             description=f"Role {role.mention} will be assigned to members with status {status}.",
@@ -161,8 +177,8 @@ class RoleManager(commands.Cog):
     async def clearstatusrole(self, ctx: commands.Context, status: str):
         """Clear the role assigned for a specific member status."""
         async with self.config.guild(ctx.guild).status_roles() as status_roles:
-            if status in status_roles:
-                del status_roles[status]
+            if status.lower() in status_roles:
+                del status_roles[status.lower()]
         embed = discord.Embed(
             title="Status Role Cleared",
             description=f"Role assignment for status {status} has been cleared.",
