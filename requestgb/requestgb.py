@@ -211,7 +211,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def denyreq(self, ctx, user_id: int):
+    async def denyreq(self, ctx, user_id: int, *, deny_reason: str = None):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
             request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "Pending"), None)
@@ -224,7 +224,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
                 return
 
-            reason = request["reason"]
+            original_reason = request["reason"]
             request["status"] = "Denied"
             requester = self.bot.get_user(request["requester"])
             user = self.bot.get_user(request["user_id"])
@@ -242,9 +242,12 @@ class RequestGB(commands.Cog):
 
             if requester:
                 try:
+                    deny_message = f"Your request to globally ban {user.display_name} ({user.id}) was denied."
+                    if deny_reason:
+                        deny_message += f" Reason: {deny_reason}"
                     await requester.send(embed=discord.Embed(
                         title="Request Denied",
-                        description=f"Your request to globally ban {user.display_name} ({user.id}) was denied for {reason}.",
+                        description=deny_message,
                         color=discord.Color.red()
                     ))
                 except discord.Forbidden:
@@ -259,8 +262,10 @@ class RequestGB(commands.Cog):
                         description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
                         color=discord.Color(0xff0000)
                     )
-                    embed.add_field(name="Reason", value=request["reason"], inline=True)
+                    embed.add_field(name="Reason", value=original_reason, inline=True)
                     embed.add_field(name="Status", value="Denied", inline=True)
+                    if deny_reason:
+                        embed.add_field(name="Deny Reason", value=deny_reason, inline=True)
                     await message.edit(embed=embed)
                 except discord.Forbidden:
                     embed = discord.Embed(
