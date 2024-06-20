@@ -108,7 +108,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def approvereq(self, ctx, user_id: int, *, reason: str):
+    async def approvereq(self, ctx, user_id: int):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
             request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
@@ -121,6 +121,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
                 return
 
+            reason = request["reason"]
             user = self.bot.get_user(request["user_id"])
             if not user:
                 try:
@@ -203,7 +204,7 @@ class RequestGB(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def denyreq(self, ctx, user_id: int, *, reason: str):
+    async def denyreq(self, ctx, user_id: int):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
             request = next((req for req in requests.values() if req["user_id"] == user_id and req["status"] == "pending"), None)
@@ -216,6 +217,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
                 return
 
+            reason = request["reason"]
             request["status"] = "denied"
             requester = self.bot.get_user(request["requester"])
             user = self.bot.get_user(request["user_id"])
