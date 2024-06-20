@@ -63,6 +63,25 @@ class PresenceFetcher(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @fetch.command()
+    async def allusers(self, ctx):
+        """Fetch and display the statuses of all users in the server."""
+        members = ctx.guild.members
+        embed = discord.Embed(
+            title=f"Statuses of All Users in {ctx.guild.name}",
+            color=discord.Color.green()
+        )
+
+        for member in members:
+            status_type = self.get_status_type(member.status)
+            custom_status = next((activity for activity in member.activities if isinstance(activity, discord.CustomActivity)), None)
+            status_text = status_type
+            if custom_status:
+                status_text += f"\nCustom Status: {custom_status.name}"
+            embed.add_field(name=member.display_name, value=status_text, inline=True)
+
+        await ctx.send(embed=embed)
+
     def get_status_type(self, status):
         """Helper method to get the status type as a string."""
         if status == discord.Status.online:
