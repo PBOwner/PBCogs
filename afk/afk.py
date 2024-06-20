@@ -20,8 +20,8 @@ class AFK(commands.Cog):
     @commands.command()
     async def afk(self, ctx, *, reason: str = "No reason provided"):
         """Set your AFK status with an optional reason."""
-        await self.config.member(ctx.author).afk.set(True)
-        await self.config.member(ctx.author).reason.set(reason)
+        await self.config.user(ctx.author).afk.set(True)
+        await self.config.user(ctx.author).reason.set(reason)
 
         nickname_template = await self.config.guild(ctx.guild).nickname_template()
         if nickname_template:
@@ -40,10 +40,10 @@ class AFK(commands.Cog):
         if message.author.bot:
             return
 
-        author_afk = await self.config.member(message.author).afk()
+        author_afk = await self.config.user(message.author).afk()
         if author_afk:
-            await self.config.member(message.author).afk.set(False)
-            await self.config.member(message.author).reason.set(None)
+            await self.config.user(message.author).afk.set(False)
+            await self.config.user(message.author).reason.set(None)
 
             try:
                 await message.author.edit(nick=None)
@@ -57,9 +57,9 @@ class AFK(commands.Cog):
         for mention in message.mentions:
             if mention == message.author:
                 continue
-            mention_afk = await self.config.member(mention).afk()
+            mention_afk = await self.config.user(mention).afk()
             if mention_afk:
-                reason = await self.config.member(mention).reason()
+                reason = await self.config.user(mention).reason()
                 embed = discord.Embed(title=f"Psst. Hey, {message.author.mention}", color=await self.get_embed_color(mention))
                 embed.add_field(name="User", value=mention.mention, inline=False)
                 embed.add_field(name="Reason", value=reason, inline=False)
@@ -78,17 +78,17 @@ class AFK(commands.Cog):
     @commands.command()
     async def setafkcolor(self, ctx, color: discord.Color):
         """Set the embed color for AFK messages."""
-        await self.config.member(ctx.author).embed_color.set(color.value)
+        await self.config.user(ctx.author).embed_color.set(color.value)
         await ctx.send(embed=await self.create_embed(ctx.author, f"AFK embed color set to: {color}"))
 
-    async def get_embed_color(self, user: discord.Member):
-        color_value = await self.config.member(user).embed_color()
+    async def get_embed_color(self, user: discord.User):
+        color_value = await self.config.user(user).embed_color()
         if color_value:
             return discord.Color(color_value)
         else:
             return discord.Color.default()
 
-    async def create_embed(self, user: discord.Member, description: str):
+    async def create_embed(self, user: discord.User, description: str):
         color = await self.get_embed_color(user)
         embed = discord.Embed(description=description, color=color)
         return embed
