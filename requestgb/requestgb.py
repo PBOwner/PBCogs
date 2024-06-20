@@ -1,4 +1,4 @@
-    import discord
+import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 import asyncio
