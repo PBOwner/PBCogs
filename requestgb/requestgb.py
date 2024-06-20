@@ -149,10 +149,15 @@ class RequestGB(commands.Cog):
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
                         embed.set_footer(text=f"Request ID: {request_id}")
                         await message.edit(embed=embed)
+                        await message.clear_reactions()
 
                         if requester:
                             try:
-                                await requester.send("Globalban was approved.")
+                                await requester.send(embed=discord.Embed(
+                                    title="Request Approved",
+                                    description=f"Your request for {request['user_id']} was approved.",
+                                    color=discord.Color.green()
+                                ))
                             except discord.Forbidden:
                                 pass
 
@@ -167,10 +172,15 @@ class RequestGB(commands.Cog):
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
                         embed.set_footer(text=f"Request ID: {request_id}")
                         await message.edit(embed=embed)
+                        await message.clear_reactions()
 
                         if requester:
                             try:
-                                await requester.send("Globalban was denied.")
+                                await requester.send(embed=discord.Embed(
+                                    title="Request Denied",
+                                    description=f"Your request for {request['user_id']} was denied.",
+                                    color=discord.Color.red()
+                                ))
                             except discord.Forbidden:
                                 pass
 
