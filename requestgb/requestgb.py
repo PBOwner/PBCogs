@@ -14,12 +14,18 @@ class RequestGB(commands.Cog):
             "requests": {},
             "notification_channel": None,
             "log_channels": {},
-            "last_request_id": 0
+            "last_request_id": 0,
+            "trusted_users": []
         }
         self.config.register_global(**default_global)
 
     @commands.is_owner()
-    @commands.command()
+    @commands.group()
+    async def requestgb(self, ctx):
+        """Group for global ban request commands."""
+        pass
+
+    @requestgb.command()
     async def setrequestchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for global ban notifications."""
         await self.config.notification_channel.set(channel.id)
@@ -30,8 +36,7 @@ class RequestGB(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.is_owner()
-    @commands.command()
+    @requestgb.command()
     async def setlogging(self, ctx, channel: discord.TextChannel):
         """Set the log channel for global ban approvals."""
         async with self.config.log_channels() as log_channels:
@@ -43,7 +48,26 @@ class RequestGB(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["reqgb", "rgb"])
+    @requestgb.command()
+    async def addtrusted(self, ctx, user: discord.User):
+        """Add a trusted user who can approve/deny global ban requests."""
+        async with self.config.trusted_users() as trusted_users:
+            if user.id not in trusted_users:
+                trusted_users.append(user.id)
+                embed = discord.Embed(
+                    title="Trusted User Added",
+                    description=f"{user.mention} has been added as a trusted user.",
+                    color=discord.Color.green()
+                )
+            else:
+                embed = discord.Embed(
+                    title="Error",
+                    description=f"{user.mention} is already a trusted user.",
+                    color=discord.Color.red()
+                )
+        await ctx.send(embed=embed)
+
+    @requestgb.command(aliases=["reqgb", "rgb"])
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
@@ -101,28 +125,44 @@ class RequestGB(commands.Cog):
         embed.add_field(name="Reason", value=reason, inline=True)
         embed.add_field(name="Status", value="Pending", inline=True)
 
-        try:
-            message = await notification_channel.send(embed=embed)
-            request["message_id"] = message.id
-            async with self.config.requests() as requests:
-                requests[request_id] = request
+        async def handle_auto_approval():
+            def check(m):
+                return m.author == ctx.author and m.channel == ctx.channel and m.content.lower() in ["approve", "deny"]
 
-            embed = discord.Embed(
-                title="Request Sent",
-                description=f"Global ban request for user {user.display_name} ({user.id}) has been sent to the notification channel.",
-                color=discord.Color.green()
-            )
-            await ctx.send(embed=embed)
-        except discord.Forbidden:
-            embed = discord.Embed(
-                title="Error",
-                description="Could not send a message to the notification channel. Please ensure the bot has permission to send messages in the channel.",
-                color=discord.Color.red()
-            )
-            await ctx.send(embed=embed)
+            await ctx.send(f"Do you want to `Approve` or `Deny` the global ban request for {user.display_name} ({user.id})?")
+            try:
+                response = await self.bot.wait_for("message", check=check, timeout=60.0)
+                if response.content.lower() == "approve":
+                    await self.approvereq(ctx, user_id)
+                elif response.content.lower() == "deny":
+                    await self.denyreq(ctx, user_id)
+            except asyncio.TimeoutError:
+                await ctx.send("No response received. The request will remain pending.")
 
-    @commands.is_owner()
-    @commands.command()
+        if await self.bot.is_owner(ctx.author) or ctx.author.id in await self.config.trusted_users():
+            await handle_auto_approval()
+        else:
+            try:
+                message = await notification_channel.send(embed=embed)
+                request["message_id"] = message.id
+                async with self.config.requests() as requests:
+                    requests[request_id] = request
+
+                embed = discord.Embed(
+                    title="Request Sent",
+                    description=f"Global ban request for user {user.display_name} ({user.id}) has been sent to the notification channel.",
+                    color=discord.Color.green()
+                )
+                await ctx.send(embed=embed)
+            except discord.Forbidden:
+                embed = discord.Embed(
+                    title="Error",
+                    description="Could not send a message to the notification channel. Please ensure the bot has permission to send messages in the channel.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=embed)
+
+    @requestgb.command()
     async def approvereq(self, ctx, user_id: int):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
@@ -240,8 +280,7 @@ class RequestGB(commands.Cog):
                 )
                 await ctx.send(embed=embed)
 
-    @commands.is_owner()
-    @commands.command()
+    @requestgb.command()
     async def denyreq(self, ctx, user_id: int, *, deny_reason: str = None):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
