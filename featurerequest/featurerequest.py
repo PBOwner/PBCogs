@@ -1,7 +1,6 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
-from typing import Optional
 
 class FeatureRequest(commands.Cog):
     """Cog to handle feature requests."""
