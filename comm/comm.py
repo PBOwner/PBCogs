@@ -48,7 +48,7 @@ class Comm(commands.Cog):
         if message.author.bot:
             return  # Ignore bot messages
 
-        if not message.guild:
+        if isinstance(message.channel, discord.DMChannel):
             # Message sent in DMs
             async with self.config.all_guilds() as all_guilds:
                 for guild_id, data in all_guilds.items():
