@@ -79,9 +79,9 @@ class RoleManager(commands.Cog):
         )
 
         status_fields = {
-            "Online": [],
-            "Offline": [],
-            "Idle": [],
+            "online": [],
+            "offline": [],
+            "idle": [],
             "dnd": []
         }
 
@@ -98,7 +98,7 @@ class RoleManager(commands.Cog):
             for status, role_id in status_roles.items():
                 role = guild.get_role(role_id)
                 if role in member.roles:
-                    status_fields[status.capitalize()].append(member.mention)
+                    status_fields[status].append(member.mention)
                     seen_members.add(member.id)
                     break
 
@@ -114,7 +114,7 @@ class RoleManager(commands.Cog):
                         break
 
         for status, members in status_fields.items():
-            embed.add_field(name=status, value=", ".join(members) if members else "None", inline=False)
+            embed.add_field(name=status.capitalize(), value=", ".join(members) if members else "None", inline=False)
 
         for activity, members in activity_fields.items():
             embed.add_field(name=activity, value=", ".join(members) if members else "None", inline=False)
