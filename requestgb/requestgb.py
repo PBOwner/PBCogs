@@ -53,7 +53,10 @@ class RequestGB(commands.Cog):
                 request["status"] = "approved"
                 requester = self.bot.get_user(request["requester"])
                 if requester:
-                    await requester.send("Globalban was approved.")
+                    try:
+                        await requester.send("Globalban was approved.")
+                    except discord.Forbidden:
+                        await ctx.send("Could not send a DM to the requester to inform them of the approval.")
                 await ctx.send(f"User {user} has been banned from all servers.")
             else:
                 await ctx.send("User not found.")
@@ -73,7 +76,10 @@ class RequestGB(commands.Cog):
             request["status"] = "denied"
             requester = self.bot.get_user(request["requester"])
             if requester:
-                await requester.send("Globalban was denied.")
+                try:
+                    await requester.send("Globalban was denied.")
+                except discord.Forbidden:
+                    await ctx.send("Could not send a DM to the requester to inform them of the denial.")
             await ctx.send(f"Request {request_id} has been denied.")
 
 def setup(bot: Red):
