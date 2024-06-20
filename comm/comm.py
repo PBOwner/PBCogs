@@ -15,7 +15,7 @@ class Comm(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @comm.command(name="open")
-    async def comm_open(self, ctx, channel_id: int):
+    async def open(self, ctx, channel_id: int):
         """Open a private communication channel between your DMs and a server channel."""
         channel = self.bot.get_channel(channel_id)
         if not channel:
@@ -29,7 +29,7 @@ class Comm(commands.Cog):
         await ctx.send(f"Private communication channel opened with {channel.mention}.")
 
     @comm.command(name="close")
-    async def comm_close(self, ctx):
+    async def close(self, ctx):
         """Close the private communication channel."""
         guilds = self.bot.guilds
         found = False
@@ -60,7 +60,7 @@ class Comm(commands.Cog):
                             await channel.send(f"**DM from {message.author}**: {message.content}")
                         break
         else:
-            # Message sent in a guild
+            # Message sent in a guild channel
             async with self.config.guild(message.guild).linked_channels() as linked_channels:
                 for user_id, channel_id in linked_channels.items():
                     if message.channel.id == channel_id:
