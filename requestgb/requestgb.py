@@ -74,6 +74,8 @@ class RequestGB(commands.Cog):
 
         try:
             message = await notification_channel.send(embed=embed)
+            await message.add_reaction("✅")  # Approve
+            await message.add_reaction("❌")  # Deny
             request["message_id"] = message.id
             async with self.config.requests() as requests:
                 requests[request_id] = request
@@ -92,160 +94,87 @@ class RequestGB(commands.Cog):
             )
             await ctx.send(embed=embed)
 
-    @commands.is_owner()
-    @commands.command()
-    async def approvereq(self, ctx, request_id: int):
-        """Approve a global ban request."""
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
+        """Handle reactions to approve or deny global ban requests."""
+        if payload.user_id == self.bot.user.id:
+            return
+
+        notification_channel_id = await self.config.notification_channel()
+        if payload.channel_id != notification_channel_id:
+            return
+
+        guild = self.bot.get_guild(payload.guild_id)
+        if not guild:
+            return
+
+        channel = guild.get_channel(payload.channel_id)
+        if not channel:
+            return
+
+        message = await channel.fetch_message(payload.message_id)
+        if not message:
+            return
+
+        emoji = str(payload.emoji)
+        if emoji not in ["✅", "❌"]:
+            return
+
         async with self.config.requests() as requests:
-            if request_id not in requests:
-                embed = discord.Embed(
-                    title="Error",
-                    description=f"Invalid request ID: {request_id}",
-                    color=discord.Color.red()
-                )
-                await ctx.send(embed=embed)
-                return
-            request = requests[request_id]
-            if request["status"] != "pending":
-                embed = discord.Embed(
-                    title="Error",
-                    description="This request has already been processed.",
-                    color=discord.Color.red()
-                )
-                await ctx.send(embed=embed)
-                return
+            for request_id, request in requests.items():
+                if request["message_id"] == payload.message_id:
+                    if request["status"] != "pending":
+                        return
 
-            user = self.bot.get_user(request["user_id"])
-            if user:
-                for guild in self.bot.guilds:
-                    try:
-                        await guild.ban(user, reason=request["reason"])
-                    except discord.Forbidden:
-                        embed = discord.Embed(
-                            title="Error",
-                            description=f"Failed to ban {user} in {guild.name} due to insufficient permissions.",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
-                        continue
-                    except discord.HTTPException as e:
-                        embed = discord.Embed(
-                            title="Error",
-                            description=f"Failed to ban {user} in {guild.name} due to an HTTP error: {e}",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
-                        continue
+                    user = self.bot.get_user(request["user_id"])
+                    requester = self.bot.get_user(request["requester"])
 
-                request["status"] = "approved"
-                requester = self.bot.get_user(request["requester"])
-                if requester:
-                    try:
-                        await requester.send("Globalban was approved.")
-                    except discord.Forbidden:
-                        embed = discord.Embed(
-                            title="Error",
-                            description="Could not send a DM to the requester to inform them of the approval.",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
+                    if emoji == "✅":
+                        # Approve the request
+                        if user:
+                            for guild in self.bot.guilds:
+                                try:
+                                    await guild.ban(user, reason=request["reason"])
+                                except discord.Forbidden:
+                                    continue
+                                except discord.HTTPException:
+                                    continue
 
-                notification_channel = self.bot.get_channel(await self.config.notification_channel())
-                if notification_channel:
-                    try:
-                        message = await notification_channel.fetch_message(request["message_id"])
+                        request["status"] = "approved"
                         embed = discord.Embed(
                             title="Global Ban Request: Approved",
-                            description=f"{self.bot.get_user(request['requester'])} has requested that user with ID {request['user_id']} be global banned.",
+                            description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
                             color=discord.Color(0x008800)
                         )
                         embed.add_field(name="Reason", value=request["reason"], inline=False)
                         embed.set_footer(text=f"Request ID: {request_id}")
                         await message.edit(embed=embed)
-                    except discord.Forbidden:
+
+                        if requester:
+                            try:
+                                await requester.send("Globalban was approved.")
+                            except discord.Forbidden:
+                                pass
+
+                    elif emoji == "❌":
+                        # Deny the request
+                        request["status"] = "denied"
                         embed = discord.Embed(
-                            title="Error",
-                            description="Could not edit the message in the notification channel.",
-                            color=discord.Color.red()
+                            title="Global Ban Request: Denied",
+                            description=f"{requester} has requested that user with ID {request['user_id']} be global banned.",
+                            color=discord.Color(0xff0000)
                         )
-                        await ctx.send(embed=embed)
+                        embed.add_field(name="Reason", value=request["reason"], inline=False)
+                        embed.set_footer(text=f"Request ID: {request_id}")
+                        await message.edit(embed=embed)
 
-                embed = discord.Embed(
-                    title="Approved",
-                    description=f"User {user} has been banned from all servers.",
-                    color=discord.Color.green()
-                )
-                await ctx.send(embed=embed)
-            else:
-                embed = discord.Embed(
-                    title="Error",
-                    description="User not found.",
-                    color=discord.Color.red()
-                )
-                await ctx.send(embed=embed)
+                        if requester:
+                            try:
+                                await requester.send("Globalban was denied.")
+                            except discord.Forbidden:
+                                pass
 
-    @commands.is_owner()
-    @commands.command()
-    async def denyreq(self, ctx, request_id: int):
-        """Deny a global ban request."""
-        async with self.config.requests() as requests:
-            if request_id not in requests:
-                embed = discord.Embed(
-                    title="Error",
-                    description=f"Invalid request ID: {request_id}",
-                    color=discord.Color.red()
-                )
-                await ctx.send(embed=embed)
-                return
-            request = requests[request_id]
-            if request["status"] != "pending":
-                embed = discord.Embed(
-                    title="Error",
-                    description="This request has already been processed.",
-                    color=discord.Color.red()
-                )
-                await ctx.send(embed=embed)
-                return
-
-            request["status"] = "denied"
-            requester = self.bot.get_user(request["requester"])
-            if requester:
-                try:
-                    await requester.send("Globalban was denied.")
-                except discord.Forbidden:
-                    embed = discord.Embed(
-                        title="Error",
-                        description="Could not send a DM to the requester to inform them of the denial.",
-                        color=discord.Color.red()
-                    )
-                    await ctx.send(embed=embed)
-
-            notification_channel = self.bot.get_channel(await self.config.notification_channel())
-            if notification_channel:
-                try:
-                    message = await notification_channel.fetch_message(request["message_id"])
-                    embed = discord.Embed(
-                        title="Global Ban Request: Denied",
-                        description=f"{self.bot.get_user(request['requester'])} has requested that user with ID {request['user_id']} be global banned.",
-                        color=discord.Color(0xff0000)
-                    )
-                    embed.add_field(name="Reason", value=request["reason"], inline=False)
-                    embed.set_footer(text=f"Request ID: {request_id}")
-                    await message.edit(embed=embed)
-                except discord.Forbidden:
-                    embed = discord.Embed(
-                        title="Error",
-                        description="Could not edit the message in the notification channel.",
-                        color=discord.Color.red()
-                    )
-                    await ctx.send(embed=embed)
-
-            embed = discord.Embed(
-                title="Denied",
-                description=f"Request {request_id} has been denied.",
-                color=discord.Color.red()
-            )
-            await ctx.send(embed=embed)
+                    break
 
 def setup(bot: Red):
     bot.add_cog(RequestGB(bot))
