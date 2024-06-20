@@ -27,7 +27,7 @@ class RoleManager(commands.Cog):
         # Handle status roles
         status_roles = await self.config.guild(guild).status_roles()
         if before.status != after.status:
-            role_id = status_roles.get(str(after.status))
+            role_id = status_roles.get(after.status.name.lower())
             if role_id:
                 role = guild.get_role(role_id)
                 if role:
@@ -46,7 +46,7 @@ class RoleManager(commands.Cog):
         activity_roles = await self.config.guild(guild).activity_roles()
         for activity in after.activities:
             if isinstance(activity, discord.Game):
-                role_id = activity_roles.get("Playing a game")
+                role_id = activity_roles.get("playing a game")
                 if role_id:
                     role = guild.get_role(role_id)
                     if role:
@@ -86,7 +86,7 @@ class RoleManager(commands.Cog):
         }
 
         activity_fields = {
-            "Playing a game": []
+            "playing a game": []
         }
 
         seen_members = set()
@@ -108,8 +108,8 @@ class RoleManager(commands.Cog):
             for activity_name, role_id in activity_roles.items():
                 role = guild.get_role(role_id)
                 for activity in member.activities:
-                    if isinstance(activity, discord.Game) and activity_name == "Playing a game" and role in member.roles:
-                        activity_fields["Playing a game"].append(member.mention)
+                    if isinstance(activity, discord.Game) and activity_name == "playing a game" and role in member.roles:
+                        activity_fields["playing a game"].append(member.mention)
                         seen_members.add(member.id)
                         break
 
@@ -117,7 +117,7 @@ class RoleManager(commands.Cog):
             embed.add_field(name=status.capitalize(), value=", ".join(members) if members else "None", inline=False)
 
         for activity, members in activity_fields.items():
-            embed.add_field(name=activity, value=", ".join(members) if members else "None", inline=False)
+            embed.add_field(name=activity.capitalize(), value=", ".join(members) if members else "None", inline=False)
 
         if embed_message_id:
             try:
