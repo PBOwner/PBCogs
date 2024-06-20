@@ -80,6 +80,7 @@ class FeatureRequest(commands.Cog):
                     message = await request_channel.fetch_message(request_data["message_id"])
                     embed = message.embeds[0]
                     embed.set_field_at(1, name="Status", value="Accepted", inline=False)
+                    embed.color = discord.Color.green()
                     await message.edit(embed=embed)
                 except discord.NotFound:
                     await ctx.send(f"Message with ID {request_data['message_id']} not found in the request channel.")
@@ -116,6 +117,7 @@ class FeatureRequest(commands.Cog):
                     message = await request_channel.fetch_message(request_data["message_id"])
                     embed = message.embeds[0]
                     embed.set_field_at(1, name="Status", value="Denied", inline=False)
+                    embed.color = discord.Color.red()
                     await message.edit(embed=embed)
                 except discord.NotFound:
                     await ctx.send(f"Message with ID {request_data['message_id']} not found in the request channel.")
@@ -123,6 +125,43 @@ class FeatureRequest(commands.Cog):
                     await ctx.send("I don't have permission to edit the message in the request channel.")
 
             await ctx.send(f"Feature request with feature `{feature}` has been denied.")
+
+    @frequest.command()
+    @commands.is_owner()
+    async def consider(self, ctx: commands.Context, *, feature: str):
+        """Consider a feature request."""
+        async with self.config.requests() as requests:
+            request_data = next((req for req in requests.values() if req["feature"] == feature and req["status"] == "pending"), None)
+            if not request_data:
+                await ctx.send(f"No pending feature request found with feature: {feature}")
+                return
+
+            request_data["status"] = "considering"
+            requester = self.bot.get_user(request_data["requester_id"])
+            if requester:
+                try:
+                    await requester.send(embed=discord.Embed(
+                        title="Feature Request Considering",
+                        description=f"Your feature request of `{feature}` is being considered.",
+                        color=discord.Color.blue()
+                    ))
+                except discord.Forbidden:
+                    pass
+
+            request_channel = self.bot.get_channel(await self.config.request_channel())
+            if request_channel:
+                try:
+                    message = await request_channel.fetch_message(request_data["message_id"])
+                    embed = message.embeds[0]
+                    embed.set_field_at(1, name="Status", value="Considering", inline=False)
+                    embed.color = discord.Color.blue()
+                    await message.edit(embed=embed)
+                except discord.NotFound:
+                    await ctx.send(f"Message with ID {request_data['message_id']} not found in the request channel.")
+                except discord.Forbidden:
+                    await ctx.send("I don't have permission to edit the message in the request channel.")
+
+            await ctx.send(f"Feature request with feature `{feature}` is being considered.")
 
     @frequest.command()
     async def status(self, ctx: commands.Context, *, feature: str):
@@ -139,6 +178,13 @@ class FeatureRequest(commands.Cog):
                 description=f"Your request status is: **{status.capitalize()}**",
                 color=discord.Color.blue()
             ))
+
+    @frequest.command()
+    @commands.is_owner()
+    async def channel(self, ctx: commands.Context, channel: discord.TextChannel):
+        """Set the channel for feature requests."""
+        await self.config.request_channel.set(channel.id)
+        await ctx.send(f"Request channel set to: {channel.mention}")
 
 def setup(bot: Red):
     bot.add_cog(FeatureRequest(bot))
