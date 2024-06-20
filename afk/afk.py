@@ -51,12 +51,27 @@ class AFK(commands.Cog):
             if mentions:
                 embed = discord.Embed(title="AFK Mentions", color=await self.get_embed_color(message.author))
                 for mention in mentions:
-                    embed.add_field(name=f"Mentioned by {mention['author']}", value=f"[Jump to message]({mention['link']})", inline=False)
+                    embed.add_field(name=f"Mentioned by {mention['author']}", value=f"[Jump to message]({mention['link']})\nContent: {mention['content']}", inline=False)
             else:
                 embed = discord.Embed(title="AFK Mentions", description="No pings were sent during your AFK.", color=await self.get_embed_color(message.author))
 
-            await message.channel.send(embed=embed)
-            await self.config.user(message.author).mentions.set([])  # Clear mentions after sending
+            await message.channel.send(embed=await self.create_embed(message.author, f"Welcome back, {message.author.mention}! I've removed your AFK status."))
+
+            # Ask the user if they want to see the mentions
+            await message.channel.send(f"{message.author.mention}, do you want to see the mentions you received while AFK? Type `yes` or `no`.")
+            try:
+                def check(m):
+                    return m.author == message.author and m.channel == message.channel and m.content.lower() in ["yes", "no"]
+
+                reply = await self.bot.wait_for("message", check=check, timeout=30.0)
+                if reply.content.lower() == "yes":
+                    await message.channel.send(embed=embed)
+                else:
+                    await message.channel.send("Mentions request deleted.")
+            except asyncio.TimeoutError:
+                await message.channel.send("Request timed out. Mentions request deleted.")
+
+            await self.config.user(message.author).mentions.set([])  # Clear mentions after handling
 
             try:
                 await message.author.edit(nick=None)
@@ -64,8 +79,6 @@ class AFK(commands.Cog):
                 pass
             except discord.HTTPException:
                 pass
-
-            await message.channel.send(embed=await self.create_embed(message.author, f"Welcome back, {message.author.mention}! I've removed your AFK status."))
 
         for mention in message.mentions:
             if mention == message.author:
@@ -80,7 +93,7 @@ class AFK(commands.Cog):
 
                 # Save the mention details
                 mentions = await self.config.user(mention).mentions()
-                mentions.append({"author": message.author.name, "link": message.jump_url})
+                mentions.append({"author": message.author.name, "link": message.jump_url, "content": message.content})
                 await self.config.user(mention).mentions.set(mentions)
 
     @commands.admin_or_permissions(manage_guild=True)
