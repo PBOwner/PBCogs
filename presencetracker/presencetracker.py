@@ -3,18 +3,19 @@ from redbot.core import commands, Config
 from redbot.core.bot import Red
 
 class PresenceTracker(commands.Cog):
-    """Cog to track user presence updates."""
+    """Cog to track user presence updates with detailed activity logging and management."""
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier=1234567893, force_registration=True)
+        self.config = Config.get_conf(self, identifier=1234567895, force_registration=True)
         default_guild = {
             "log_channel": None,
+            "tracked_games": [],
             "ignored_users": []
         }
         self.config.register_guild(**default_guild)
 
-    @commands.group()
+    @commands.group(aliases=["pt"])
     async def presence(self, ctx: commands.Context):
         """Base command for presence tracking."""
         pass
@@ -27,6 +28,28 @@ class PresenceTracker(commands.Cog):
         await ctx.send(f"Log channel set to {channel.mention}")
 
     @presence.command()
+    @commands.has_permissions(manage_guild=True)
+    async def addgame(self, ctx: commands.Context, *, game_name: str):
+        """Add a game to the tracking list."""
+        async with self.config.guild(ctx.guild).tracked_games() as tracked_games:
+            if game_name not in tracked_games:
+                tracked_games.append(game_name)
+                await ctx.send(f"Game '{game_name}' added to the tracking list.")
+            else:
+                await ctx.send(f"Game '{game_name}' is already being tracked.")
+
+    @presence.command()
+    @commands.has_permissions(manage_guild=True)
+    async def removegame(self, ctx: commands.Context, *, game_name: str):
+        """Remove a game from the tracking list."""
+        async with self.config.guild(ctx.guild).tracked_games() as tracked_games:
+            if game_name in tracked_games:
+                tracked_games.remove(game_name)
+                await ctx.send(f"Game '{game_name}' removed from the tracking list.")
+            else:
+                await ctx.send(f"Game '{game_name}' is not being tracked.")
+
+    @presence.command()
     async def ignore(self, ctx: commands.Context):
         """Opt-out from being tracked."""
         async with self.config.guild(ctx.guild).ignored_users() as ignored_users:
@@ -36,6 +59,49 @@ class PresenceTracker(commands.Cog):
             else:
                 ignored_users.append(ctx.author.id)
                 await ctx.send("You have been added to the tracking ignore list.")
+
+    @presence.command()
+    async def mystatus(self, ctx: commands.Context):
+        """Check your current status and activities."""
+        member = ctx.author
+        await self.send_status_embed(ctx, member)
+
+    @presence.command()
+    async def userstatus(self, ctx: commands.Context, member: discord.Member):
+        """Check the status and activities of another user."""
+        await self.send_status_embed(ctx, member)
+
+    @presence.command()
+    async def listgames(self, ctx: commands.Context):
+        """List all currently tracked games."""
+        tracked_games = await self.config.guild(ctx.guild).tracked_games()
+        if not tracked_games:
+            await ctx.send("No games are currently being tracked.")
+        else:
+            await ctx.send(f"Currently tracked games: {', '.join(tracked_games)}")
+
+    async def send_status_embed(self, ctx: commands.Context, member: discord.Member):
+        embed = discord.Embed(
+            title=f"{member.display_name}'s Status",
+            description=f"Status: {str(member.status).capitalize()}",
+            color=discord.Color.blue()
+        )
+        if member.activities:
+            activities = []
+            for activity in member.activities:
+                if isinstance(activity, discord.Game):
+                    activities.append(f"Playing: {activity.name}")
+                elif isinstance(activity, discord.Streaming):
+                    activities.append(f"Streaming: {activity.name} (URL: {activity.url})")
+                elif isinstance(activity, discord.Spotify):
+                    activities.append(f"Listening to: {activity.title} by {', '.join(activity.artists)}")
+                elif isinstance(activity, discord.Activity):
+                    activities.append(f"Activity: {activity.name}")
+            embed.add_field(name="Activities", value="\n".join(activities), inline=False)
+        else:
+            embed.add_field(name="Activities", value="No current activities", inline=False)
+        embed.set_footer(text=f"User ID: {member.id}")
+        await ctx.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_presence_update(self, before: discord.Member, after: discord.Member):
