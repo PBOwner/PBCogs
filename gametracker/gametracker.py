@@ -10,7 +10,8 @@ class GameTracker(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567894, force_registration=True)
         default_guild = {
             "log_channel": None,
-            "tracked_games": []
+            "tracked_games": [],
+            "ignored_users": []
         }
         self.config.register_guild(**default_guild)
 
@@ -48,6 +49,17 @@ class GameTracker(commands.Cog):
             else:
                 await ctx.send(f"Game '{game_name}' is not being tracked.")
 
+    @gametracker.command()
+    async def ignore(self, ctx: commands.Context):
+        """Opt-out from being tracked."""
+        async with self.config.guild(ctx.guild).ignored_users() as ignored_users:
+            if ctx.author.id in ignored_users:
+                ignored_users.remove(ctx.author.id)
+                await ctx.send("You have been removed from the tracking ignore list.")
+            else:
+                ignored_users.append(ctx.author.id)
+                await ctx.send("You have been added to the tracking ignore list.")
+
     @commands.Cog.listener()
     async def on_presence_update(self, before: discord.Member, after: discord.Member):
         log_channel_id = await self.config.guild(after.guild).log_channel()
@@ -56,6 +68,10 @@ class GameTracker(commands.Cog):
 
         log_channel = after.guild.get_channel(log_channel_id)
         if not log_channel:
+            return
+
+        ignored_users = await self.config.guild(after.guild).ignored_users()
+        if after.id in ignored_users:
             return
 
         tracked_games = await self.config.guild(after.guild).tracked_games()
