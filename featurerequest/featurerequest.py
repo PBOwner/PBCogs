@@ -22,16 +22,15 @@ class FeatureRequest(commands.Cog):
 
     @frequest.command()
     async def submit(self, ctx: commands.Context, *, feature: str):
-        """Request a new feature for {bot_name}."""
-        bot_name = self.bot.user.name
+        """Request a new feature for the bot."""
         request_channel_id = await self.config.request_channel()
         if not request_channel_id:
-            await ctx.send(f"Request channel is not set. Please ask the bot owner to set it using the `{bot_name} frequest channel` command.")
+            await ctx.send("Request channel is not set. Please ask the bot owner to set it using the frequest channel command.")
             return
 
         request_channel = self.bot.get_channel(request_channel_id)
         if not request_channel:
-            await ctx.send(f"Request channel not found. Please ask the bot owner to set it again using the `{bot_name} frequest channel` command.")
+            await ctx.send("Request channel not found. Please ask the bot owner to set it again using the frequest channel command.")
             return
 
         embed = discord.Embed(
@@ -52,8 +51,6 @@ class FeatureRequest(commands.Cog):
 
         async with self.config.requests() as requests:
             requests[message.id] = request_data
-
-        await ctx.send(f"Your feature request has been submitted with Message ID: {message.id}")
 
     @frequest.command()
     @commands.is_owner()
@@ -81,13 +78,8 @@ class FeatureRequest(commands.Cog):
             if request_channel:
                 try:
                     message = await request_channel.fetch_message(request_data["message_id"])
-                    embed = discord.Embed(
-                        title="Feature Request",
-                        description=f"Feature requested by {requester.mention}",
-                        color=discord.Color.green()
-                    )
-                    embed.add_field(name="Feature", value=feature, inline=False)
-                    embed.add_field(name="Status", value="Accepted", inline=False)
+                    embed = message.embeds[0]
+                    embed.set_field_at(1, name="Status", value="Accepted", inline=False)
                     await message.edit(embed=embed)
                 except discord.NotFound:
                     await ctx.send(f"Message with ID {request_data['message_id']} not found in the request channel.")
@@ -122,13 +114,8 @@ class FeatureRequest(commands.Cog):
             if request_channel:
                 try:
                     message = await request_channel.fetch_message(request_data["message_id"])
-                    embed = discord.Embed(
-                        title="Feature Request",
-                        description=f"Feature requested by {requester.mention}",
-                        color=discord.Color.red()
-                    )
-                    embed.add_field(name="Feature", value=feature, inline=False)
-                    embed.add_field(name="Status", value="Denied", inline=False)
+                    embed = message.embeds[0]
+                    embed.set_field_at(1, name="Status", value="Denied", inline=False)
                     await message.edit(embed=embed)
                 except discord.NotFound:
                     await ctx.send(f"Message with ID {request_data['message_id']} not found in the request channel.")
@@ -138,8 +125,20 @@ class FeatureRequest(commands.Cog):
             await ctx.send(f"Feature request with feature `{feature}` has been denied.")
 
     @frequest.command()
-    @commands.is_owner()
-    async def channel(self, ctx: commands.Context, channel: discord.TextChannel):
-        """Set the channel for feature requests."""
-        await self.config.request_channel.set(channel.id)
-        await ctx.send(f"Request channel set to: {channel.mention}")
+    async def status(self, ctx: commands.Context, *, feature: str):
+        """Check the status of your feature request."""
+        async with self.config.requests() as requests:
+            request_data = next((req for req in requests.values() if req["feature"] == feature and req["requester_id"] == ctx.author.id), None)
+            if not request_data:
+                await ctx.send(f"No feature request found with feature: {feature}")
+                return
+
+            status = request_data["status"]
+            await ctx.author.send(embed=discord.Embed(
+                title="Feature Request Status",
+                description=f"Your request status is: **{status.capitalize()}**",
+                color=discord.Color.blue()
+            ))
+
+def setup(bot: Red):
+    bot.add_cog(FeatureRequest(bot))
