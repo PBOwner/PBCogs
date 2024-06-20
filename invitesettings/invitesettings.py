@@ -1,6 +1,5 @@
 import discord
 from redbot.core import commands, Config
-import re
 
 class InviteSettings(commands.Cog):
     """Manage invites."""
@@ -37,23 +36,20 @@ class InviteSettings(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @set.command(name="invite")
-    async def set_invite(self, ctx, *, markdown: str):
-        """Set an invite link using markdown format.
+    async def set_invite(self, ctx, invite_type: str, name: str, invite_link: str):
+        """Set an invite link.
 
         **Arguments**
-            - `markdown`: The markdown format [name](invite).
+            - `invite_type`: The type of invite (e.g., main, admin, support).
+            - `name`: The display name for the invite.
+            - `invite_link`: The invite link.
         """
-        match = re.match(r'\[(.*?)\]\((.*?)\)', markdown)
-        if not match:
-            return await ctx.send("Invalid format. Please use the markdown format [name](invite).")
-
-        name, invite = match.groups()
-        invite_type = name.lower()
+        invite_type = invite_type.lower()
 
         async with self.config.invites() as invites:
             if invite_type not in invites:
-                return await ctx.send("Invalid invite name. Valid names are: main, admin, support.")
-            invites[invite_type]["link"] = invite
+                return await ctx.send("Invalid invite type. Valid types are: main, admin, support.")
+            invites[invite_type]["link"] = invite_link
             invites[invite_type]["field_name"] = name
 
         await ctx.send(f"{name} invite link set.")
