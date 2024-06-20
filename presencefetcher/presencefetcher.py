@@ -57,7 +57,8 @@ class PresenceFetcher(commands.Cog):
             for change in changes:
                 timestamp = datetime.fromisoformat(change["timestamp"])
                 status = change["status"]
-                embed.add_field(name=timestamp.strftime("%Y-%m-%d %H:%M:%S"), value=status, inline=False)
+                custom_status = change.get("custom_status", "No custom status")
+                embed.add_field(name=timestamp.strftime("%Y-%m-%d %H:%M:%S"), value=f"Status: {status}\nCustom Status: {custom_status}", inline=False)
         else:
             embed.description = "No past statuses recorded."
 
@@ -97,14 +98,16 @@ class PresenceFetcher(commands.Cog):
 
     @commands.Cog.listener()
     async def on_presence_update(self, before: discord.Member, after: discord.Member):
-        if before.status != after.status:
+        if before.status != after.status or before.activities != after.activities:
             guild = after.guild
             if guild:
                 async with self.config.guild(guild).presence_changes() as presence_changes:
                     changes = presence_changes.get(str(after.id), [])
+                    custom_status = next((activity for activity in after.activities if isinstance(activity, discord.CustomActivity)), None)
                     changes.append({
                         "timestamp": datetime.utcnow().isoformat(),
-                        "status": self.get_status_type(after.status)
+                        "status": self.get_status_type(after.status),
+                        "custom_status": custom_status.name if custom_status else "No custom status"
                     })
                     # Keep only the changes from the last 100 days
                     changes = [change for change in changes if datetime.fromisoformat(change["timestamp"]) > datetime.utcnow() - timedelta(days=100)]
