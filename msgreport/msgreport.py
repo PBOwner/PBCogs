@@ -11,7 +11,7 @@ class MsgReport(commands.Cog):
         self.config.register_guild(**default_guild)
 
     @commands.command()
-    @commands.has_permissions(delete_messages=True)
+    @commands.has_permissions(manage_messages=True)
     async def setreportchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel where reports will be sent."""
         await self.config.guild(ctx.guild).report_channel.set(channel.id)
