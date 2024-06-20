@@ -12,7 +12,8 @@ class InviteSettings(commands.Cog):
                 "main": {"link": None, "field_name": "Main"},
                 "admin": {"link": None, "field_name": "Admin"},
                 "support": {"link": None, "field_name": "Support Server"}
-            }
+            },
+            "embed_color": None,
         }
         self.config.register_global(**default_global)
 
@@ -30,7 +31,7 @@ class InviteSettings(commands.Cog):
     @invite.group(invoke_without_command=True)
     @commands.is_owner()
     async def set(self, ctx):
-        """Set invite links and field names."""
+        """Set invite links, field names, and embed color."""
         if ctx.invoked_subcommand is None:
             await ctx.send_help(ctx.command)
 
@@ -62,18 +63,35 @@ class InviteSettings(commands.Cog):
             invites[invite_type]["field_name"] = field_name
         await ctx.send(f"Field name for {invite_type.capitalize()} invite set to {field_name}.")
 
+    @set.command(name="color")
+    async def set_color(self, ctx, color: discord.Color):
+        """Set the embed color.
+
+        **Arguments**
+            - `color`: The color for the embed.
+        """
+        await self.config.embed_color.set(color.value)
+        await ctx.send("Embed color set.")
+
     @invite.command(name="show")
     async def show_invites(self, ctx):
         """Show all set invites."""
         invites = await self.config.invites()
-        embed = discord.Embed(title="Invite Links")
+        embed_color = await self.config.embed_color()
+
+        embed = discord.Embed(title="Invite Links", color=embed_color or discord.Color.default())
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+
+        view = discord.ui.View()
 
         for key, value in invites.items():
             field_name = value.get("field_name", key.capitalize())
             link = value.get("link", "Not set")
             embed.add_field(name=field_name, value=link, inline=False)
+            if link != "Not set":
+                view.add_item(discord.ui.Button(style=discord.ButtonStyle.link, label=field_name, url=link))
 
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed, view=view)
 
 def setup(bot):
     bot.add_cog(InviteSettings(bot))
