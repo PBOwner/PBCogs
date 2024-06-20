@@ -43,6 +43,8 @@ class ImgurUploader(commands.Cog):
             await message.channel.send("Imgur client ID is not set. Please set it using the `imguruploader setclientid` command.")
             return
 
+        image_urls = []
+
         for attachment in message.attachments:
             if attachment.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif', 'bmp')):
                 async with aiohttp.ClientSession() as session:
@@ -59,8 +61,22 @@ class ImgurUploader(commands.Cog):
                             return
                         imgur_response = await resp.json()
 
-                imgur_link = imgur_response["data"]["link"]
-                await message.channel.send(f"Image uploaded to Imgur: {imgur_link}")
+                image_urls.append(imgur_response["data"]["id"])
+
+        if not image_urls:
+            return
+
+        async with aiohttp.ClientSession() as session:
+            headers = {"Authorization": f"Client-ID {imgur_client_id}"}
+            data = {"ids": ",".join(image_urls)}
+            async with session.post("https://api.imgur.com/3/album", headers=headers, data=data) as resp:
+                if resp.status != 200:
+                    await message.channel.send("Failed to create album on Imgur.")
+                    return
+                album_response = await resp.json()
+
+        album_link = f"https://imgur.com/a/{album_response['data']['id']}"
+        await message.channel.send(f"Album created on Imgur: {album_link}")
 
 def setup(bot):
     bot.add_cog(ImgurUploader(bot))
