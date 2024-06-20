@@ -35,9 +35,9 @@ class RequestGB(commands.Cog):
             await ctx.send("Notification channel not found. Please set it again using the setrequestchannel command.")
             return
 
-        async with self.config.last_request_id() as last_request_id:
-            request_id = last_request_id + 1
-            await self.config.last_request_id.set(request_id)
+        last_request_id = await self.config.last_request_id()
+        request_id = last_request_id + 1
+        await self.config.last_request_id.set(request_id)
 
         request = {
             "requester": ctx.author.id,
