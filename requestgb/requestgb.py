@@ -16,8 +16,13 @@ class RequestGB(commands.Cog):
         }
         self.config.register_global(**default_global)
 
+    @commands.group(name="requestgb", aliases=["reqgb"], invoke_without_command=True)
+    async def requestgb(self, ctx):
+        """Base command for global ban requests."""
+        await ctx.send_help(ctx.command)
+
+    @requestgb.command()
     @commands.is_owner()
-    @commands.command()
     async def setrequestchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for global ban notifications."""
         await self.config.notification_channel.set(channel.id)
@@ -28,7 +33,7 @@ class RequestGB(commands.Cog):
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @requestgb.command()
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
@@ -106,8 +111,8 @@ class RequestGB(commands.Cog):
             )
             await ctx.send(embed=embed)
 
+    @requestgb.command()
     @commands.is_owner()
-    @commands.command()
     async def approvereq(self, ctx, user_id: int, *, reason: str):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
@@ -168,7 +173,7 @@ class RequestGB(commands.Cog):
                         pass
 
                 notification_channel = self.bot.get_channel(await self.config.notification_channel())
-                if notification_channel:
+                if notification_channel and request["message_id"]:
                     try:
                         message = await notification_channel.fetch_message(request["message_id"])
                         embed = discord.Embed(
@@ -201,8 +206,8 @@ class RequestGB(commands.Cog):
                 )
                 await ctx.send(embed=embed)
 
+    @requestgb.command()
     @commands.is_owner()
-    @commands.command()
     async def denyreq(self, ctx, user_id: int, *, reason: str):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
@@ -242,32 +247,31 @@ class RequestGB(commands.Cog):
                     pass
 
             notification_channel = self.bot.get_channel(await self.config.notification_channel())
-            if notification_channel:
-                if "message_id" in request and request["message_id"]:
-                    try:
-                        message = await notification_channel.fetch_message(request["message_id"])
-                        embed = discord.Embed(
-                            title="Global Ban Request",
-                            description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
-                            color=discord.Color(0xff0000)
-                        )
-                        embed.add_field(name="Reason", value=request["reason"], inline=True)
-                        embed.add_field(name="Status", value="Denied", inline=True)
-                        await message.edit(embed=embed)
-                    except discord.Forbidden:
-                        embed = discord.Embed(
-                            title="Error",
-                            description="Could not edit the message in the notification channel.",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
-                else:
+            if notification_channel and request["message_id"]:
+                try:
+                    message = await notification_channel.fetch_message(request["message_id"])
+                    embed = discord.Embed(
+                        title="Global Ban Request",
+                        description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
+                        color=discord.Color(0xff0000)
+                    )
+                    embed.add_field(name="Reason", value=request["reason"], inline=True)
+                    embed.add_field(name="Status", value="Denied", inline=True)
+                    await message.edit(embed=embed)
+                except discord.Forbidden:
                     embed = discord.Embed(
                         title="Error",
-                        description="Message ID not found in the request. Cannot update the notification message.",
+                        description="Could not edit the message in the notification channel.",
                         color=discord.Color.red()
                     )
                     await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    title="Error",
+                    description="Message ID not found in the request. Cannot update the notification message.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=embed)
 
             embed = discord.Embed(
                 title="Denied",
