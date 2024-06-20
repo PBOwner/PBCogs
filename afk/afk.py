@@ -11,11 +11,11 @@ class AFK(commands.Cog):
 
         default_global = {}
         default_guild = {"nickname_template": None}
-        default_member = {"afk": False, "reason": None, "embed_color": None}
+        default_user = {"afk": False, "reason": None, "embed_color": None}
 
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
-        self.config.register_member(**default_member)
+        self.config.register_user(**default_user)
 
     @commands.command()
     async def afk(self, ctx, *, reason: str = "No reason provided"):
