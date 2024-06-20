@@ -27,7 +27,7 @@ class RoleManager(commands.Cog):
         # Handle status roles
         status_roles = await self.config.guild(guild).status_roles()
         if before.status != after.status:
-            role_id = status_roles.get(after.status.name.lower())
+            role_id = status_roles.get(str(after.status))
             if role_id:
                 role = guild.get_role(role_id)
                 if role:
@@ -95,15 +95,16 @@ class RoleManager(commands.Cog):
             if member.id in seen_members:
                 continue
 
-            for status, role_id in status_roles.items():
-                role = guild.get_role(role_id)
-                if role in member.roles:
-                    status_fields[status].append(member.mention)
-                    seen_members.add(member.id)
-                    break
+            member_status = str(member.status)
 
-            if member.id in seen_members:
-                continue
+            if member_status in status_fields:
+                role_id = status_roles.get(member_status)
+                if role_id:
+                    role = guild.get_role(role_id)
+                    if role in member.roles:
+                        status_fields[member_status].append(member.mention)
+                        seen_members.add(member.id)
+                        continue
 
             for activity_name, role_id in activity_roles.items():
                 role = guild.get_role(role_id)
