@@ -1,6 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
+from typing import List, Dict
 
 class AFK(commands.Cog):
     """AFK Cog for Red-DiscordBot"""
@@ -11,7 +12,7 @@ class AFK(commands.Cog):
 
         default_global = {}
         default_guild = {"nickname_template": None}
-        default_user = {"afk": False, "reason": None, "embed_color": None}
+        default_user = {"afk": False, "reason": None, "embed_color": None, "mentions": []}
 
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
@@ -22,6 +23,7 @@ class AFK(commands.Cog):
         """Set your AFK status with an optional reason."""
         await self.config.user(ctx.author).afk.set(True)
         await self.config.user(ctx.author).reason.set(reason)
+        await self.config.user(ctx.author).mentions.set([])  # Clear previous mentions
 
         nickname_template = await self.config.guild(ctx.guild).nickname_template()
         if nickname_template:
@@ -45,6 +47,17 @@ class AFK(commands.Cog):
             await self.config.user(message.author).afk.set(False)
             await self.config.user(message.author).reason.set(None)
 
+            mentions = await self.config.user(message.author).mentions()
+            if mentions:
+                embed = discord.Embed(title="AFK Mentions", color=await self.get_embed_color(message.author))
+                for mention in mentions:
+                    embed.add_field(name=f"Mentioned by {mention['author']}", value=f"[Jump to message]({mention['link']})", inline=False)
+            else:
+                embed = discord.Embed(title="AFK Mentions", description="No pings were sent during your AFK.", color=await self.get_embed_color(message.author))
+
+            await message.author.send(embed=embed)
+            await self.config.user(message.author).mentions.set([])  # Clear mentions after sending
+
             try:
                 await message.author.edit(nick=None)
             except discord.Forbidden:
@@ -64,6 +77,11 @@ class AFK(commands.Cog):
                 embed.add_field(name="User", value=mention.mention, inline=False)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 await message.channel.send(embed=embed)
+
+                # Save the mention details
+                mentions = await self.config.user(mention).mentions()
+                mentions.append({"author": message.author.mention, "link": message.jump_url})
+                await self.config.user(mention).mentions.set(mentions)
 
     @commands.admin_or_permissions(manage_guild=True)
     @commands.command()
