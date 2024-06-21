@@ -22,12 +22,11 @@ class AutoPost(commands.Cog):
         self.update_stats.cancel()
         self.bot.loop.create_task(self.session.close())
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     @checks.is_owner()
     async def autopost(self, ctx):
         """Group command for managing auto-posting to bot listing sites."""
-        if ctx.invoked_subcommand is None:
-            await ctx.send_help(ctx.command)
+        await ctx.send_help(ctx.command)
 
     @autopost.command(name="settopgg")
     async def set_topgg_token(self, ctx, token: str):
