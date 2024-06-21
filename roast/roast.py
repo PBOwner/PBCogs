@@ -1,6 +1,7 @@
 import aiohttp
 import random
 from redbot.core import commands
+import discord
 
 class Roast(commands.Cog):
     """Cog for delivering roasts using a combination of predefined messages and a public API."""
@@ -25,8 +26,8 @@ class Roast(commands.Cog):
         self.bot.loop.create_task(self.session.close())
 
     @commands.command()
-    async def roast(self, ctx, user: commands.MemberConverter = None):
-        """Deliver a roast to a user or yourself if no user is mentioned."""
+    async def roast(self, ctx, user: discord.User = None):
+        """Deliver a roast to a user or yourself if no user is mentioned or provided."""
         if user is None:
             user = ctx.author
 
