@@ -1,47 +1,54 @@
 import discord
 from redbot.core import commands, Config
+from discord.ext import tasks
 
 class Comm(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier=1234567890)  # Unique identifier
-        default_guild = {"linked_channels": {}}
-        self.config.register_guild(**default_guild)
+        self.config = Config.get_conf(self, identifier=1234567891)  # Unique identifier
+        default_global = {"active_conversations": {}, "pending_requests": {}}
+        self.config.register_global(**default_global)
+        self.cleanup_pending_requests.start()
+
+    def cog_unload(self):
+        self.cleanup_pending_requests.cancel()
 
     @commands.group()
-    async def comm(self, ctx):
-        """Group command for managing private communication channels."""
+    async def pm(self, ctx):
+        """Group command for managing private communications."""
         if ctx.invoked_subcommand is None:
             await ctx.send_help(ctx.command)
 
-    @comm.command(name="open")
-    async def open(self, ctx, channel_id: int):
-        """Open a private communication channel between your DMs and a server channel."""
-        channel = self.bot.get_channel(channel_id)
-        if not channel:
-            await ctx.send("Invalid channel ID.")
+    @pm.command(name="start")
+    async def start(self, ctx, user: discord.User):
+        """Start a private communication with another user."""
+        if user == ctx.author:
+            await ctx.send("You cannot start a private communication with yourself.")
             return
 
-        guild = channel.guild
-        async with self.config.guild(guild).linked_channels() as linked_channels:
-            linked_channels[ctx.author.id] = channel_id
+        async with self.config.pending_requests() as pending_requests:
+            if user.id in pending_requests:
+                await ctx.send("This user already has a pending request.")
+                return
 
-        await ctx.send(f"Private communication channel opened with {channel.mention}.")
+            pending_requests[user.id] = ctx.author.id
 
-    @comm.command(name="close")
-    async def close(self, ctx):
-        """Close the private communication channel."""
-        guilds = self.bot.guilds
-        found = False
-        for guild in guilds:
-            async with self.config.guild(guild).linked_channels() as linked_channels:
-                if ctx.author.id in linked_channels:
-                    del linked_channels[ctx.author.id]
-                    await ctx.send("Private communication channel closed.")
-                    found = True
-                    break
-        if not found:
-            await ctx.send("No private communication channel to close.")
+        await ctx.send(f"Private communication request sent to {user.name}.")
+        await user.send(f"{ctx.author.name} has requested to open communications with you. Do you accept? (yes/no)")
+
+    @pm.command(name="stop")
+    async def stop(self, ctx):
+        """Stop the private communication."""
+        async with self.config.active_conversations() as active_conversations:
+            if ctx.author.id in active_conversations:
+                other_user_id = active_conversations[ctx.author.id]
+                other_user = self.bot.get_user(other_user_id)
+                del active_conversations[ctx.author.id]
+                del active_conversations[other_user_id]
+                await ctx.send("Private communication stopped.")
+                await other_user.send(f"{ctx.author.name} has stopped the private communication.")
+            else:
+                await ctx.send("You have no active private communications.")
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -49,25 +56,47 @@ class Comm(commands.Cog):
             return  # Ignore bot messages
 
         if isinstance(message.channel, discord.DMChannel):
-            # Message sent in DMs
-            async with self.config.all_guilds() as all_guilds:
-                for guild_id, data in all_guilds.items():
-                    linked_channels = data.get("linked_channels", {})
-                    if message.author.id in linked_channels:
-                        channel_id = linked_channels[message.author.id]
-                        channel = self.bot.get_channel(channel_id)
-                        if channel:
-                            await channel.send(f"**DM from {message.author}**: {message.content}")
-                        break
-        else:
-            # Message sent in a guild channel
-            async with self.config.guild(message.guild).linked_channels() as linked_channels:
-                for user_id, channel_id in linked_channels.items():
-                    if message.channel.id == channel_id:
-                        user = self.bot.get_user(user_id)
-                        if user:
-                            await user.send(f"**Message from {message.guild.name} #{message.channel.name}**: {message.content}")
-                        break
+            async with self.config.pending_requests() as pending_requests:
+                if message.author.id in pending_requests:
+                    requester_id = pending_requests[message.author.id]
+                    if message.content.lower() == "yes":
+                        async with self.config.active_conversations() as active_conversations:
+                            active_conversations[message.author.id] = requester_id
+                            active_conversations[requester_id] = message.author.id
+                        requester = self.bot.get_user(requester_id)
+                        await message.author.send(f"Private communication started with {requester.name}.")
+                        await requester.send(f"{message.author.name} has accepted your private communication request.")
+                        del pending_requests[message.author.id]
+                    elif message.content.lower() == "no":
+                        requester = self.bot.get_user(requester_id)
+                        await message.author.send("Private communication request denied.")
+                        await requester.send(f"{message.author.name} has denied your private communication request.")
+                        del pending_requests[message.author.id]
+                    return
+
+            async with self.config.active_conversations() as active_conversations:
+                if message.author.id in active_conversations:
+                    other_user_id = active_conversations[message.author.id]
+                    other_user = self.bot.get_user(other_user_id)
+                    if other_user:
+                        await other_user.send(f"**Private message from {message.author.name}**: {message.content}")
+
+    @tasks.loop(minutes=10)
+    async def cleanup_pending_requests(self):
+        async with self.config.pending_requests() as pending_requests:
+            to_remove = []
+            for user_id, requester_id in pending_requests.items():
+                user = self.bot.get_user(user_id)
+                requester = self.bot.get_user(requester_id)
+                if user and requester:
+                    try:
+                        await user.send("Your private communication request has expired.")
+                        await requester.send("Your private communication request has expired.")
+                    except discord.Forbidden:
+                        pass
+                to_remove.append(user_id)
+            for user_id in to_remove:
+                del pending_requests[user_id]
 
 def setup(bot):
     bot.add_cog(Comm(bot))
