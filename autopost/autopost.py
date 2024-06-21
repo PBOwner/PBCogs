@@ -1,5 +1,6 @@
 import aiohttp
 from redbot.core import commands, Config, checks
+from discord.ext import tasks
 
 class AutoPost(commands.Cog):
     def __init__(self, bot):
@@ -27,19 +28,37 @@ class AutoPost(commands.Cog):
 
     @autopost.command(name="settopgg")
     async def set_topgg_token(self, ctx, token: str):
-        """Set the top.gg API token."""
+        """Set the top.gg API token.
+
+        Example usage:
+        [p]autopost settopgg <your_topgg_token>
+
+        Replace <your_topgg_token> with the actual API token you obtained from top.gg.
+        """
         await self.config.topgg_token.set(token)
         await ctx.send("top.gg token has been set.")
 
     @autopost.command(name="setdbl")
     async def set_dbl_token(self, ctx, token: str):
-        """Set the discordbotlist.com API token."""
+        """Set the discordbotlist.com API token.
+
+        Example usage:
+        [p]autopost setdbl <your_dbl_token>
+
+        Replace <your_dbl_token> with the actual API token you obtained from discordbotlist.com.
+        """
         await self.config.dbl_token.set(token)
         await ctx.send("discordbotlist.com token has been set.")
 
     @autopost.command(name="setinterval")
     async def set_update_interval(self, ctx, interval: int):
-        """Set the update interval in seconds."""
+        """Set the update interval in seconds.
+
+        Example usage:
+        [p]autopost setinterval <interval_in_seconds>
+
+        Replace <interval_in_seconds> with the desired interval in seconds.
+        """
         await self.config.update_interval.set(interval)
         self.update_stats.change_interval(seconds=interval)
         await ctx.send(f"Update interval has been set to {interval} seconds.")
