@@ -1,6 +1,9 @@
 import aiohttp
 from redbot.core import commands, Config, checks
 from discord.ext import tasks
+import logging
+
+log = logging.getLogger("red.autopost")
 
 class AutoPost(commands.Cog):
     def __init__(self, bot):
@@ -37,6 +40,7 @@ class AutoPost(commands.Cog):
         """
         await self.config.topgg_token.set(token)
         await ctx.send("top.gg token has been set.")
+        log.info(f"top.gg token set by {ctx.author.name}")
 
     @autopost.command(name="setdbl")
     async def set_dbl_token(self, ctx, token: str):
@@ -49,6 +53,7 @@ class AutoPost(commands.Cog):
         """
         await self.config.dbl_token.set(token)
         await ctx.send("discordbotlist.com token has been set.")
+        log.info(f"discordbotlist.com token set by {ctx.author.name}")
 
     @autopost.command(name="setinterval")
     async def set_update_interval(self, ctx, interval: int):
@@ -62,6 +67,7 @@ class AutoPost(commands.Cog):
         await self.config.update_interval.set(interval)
         self.update_stats.change_interval(seconds=interval)
         await ctx.send(f"Update interval has been set to {interval} seconds.")
+        log.info(f"Update interval set to {interval} seconds by {ctx.author.name}")
 
     @tasks.loop(seconds=1800)
     async def update_stats(self):
@@ -83,18 +89,18 @@ class AutoPost(commands.Cog):
         payload = {"server_count": guild_count}
         async with self.session.post(url, json=payload, headers=headers) as response:
             if response.status == 200:
-                print("Successfully posted stats to top.gg")
+                log.info("Successfully posted stats to top.gg")
             else:
-                print(f"Failed to post stats to top.gg: {response.status}")
+                log.error(f"Failed to post stats to top.gg: {response.status}")
 
     async def post_to_dbl(self, guild_count, headers):
         url = f"https://discordbotlist.com/api/v1/bots/{self.bot.user.id}/stats"
         payload = {"guilds": guild_count}
         async with self.session.post(url, json=payload, headers=headers) as response:
             if response.status == 200:
-                print("Successfully posted stats to discordbotlist.com")
+                log.info("Successfully posted stats to discordbotlist.com")
             else:
-                print(f"Failed to post stats to discordbotlist.com: {response.status}")
+                log.error(f"Failed to post stats to discordbotlist.com: {response.status}")
 
 def setup(bot):
     bot.add_cog(AutoPost(bot))
