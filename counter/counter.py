@@ -17,16 +17,9 @@ class Counter(commands.Cog):
             "command_usage": {},
         }
         self.config.register_guild(**default_guild)
-        self.color_index = 0
-        self.colors = [0xFF0000, 0xFFA500, 0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]  # Red, Orange, Yellow, Green, Blue, Purple
-
-    def get_next_color(self):
-        color = self.colors[self.color_index]
-        self.color_index = (self.color_index + 1) % len(self.colors)
-        return color
 
     def get_random_color(self):
-        return random.choice(self.colors)
+        return random.randint(0, 0xFFFFFF)
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
@@ -56,7 +49,7 @@ class Counter(commands.Cog):
         """Display the total number of users who can use the bot"""
         total_users = sum(len(guild.members) for guild in self.bot.guilds)
 
-        embed = discord.Embed(title="Total Users", color=self.get_next_color())
+        embed = discord.Embed(title="Total Users", color=self.get_random_color())
         embed.add_field(name="Total Users", value=total_users, inline=True)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
@@ -67,7 +60,7 @@ class Counter(commands.Cog):
         """Display the total servers"""
         server_count = len(self.bot.guilds)
 
-        embed = discord.Embed(title="Total Servers", color=self.get_next_color())
+        embed = discord.Embed(title="Total Servers", color=self.get_random_color())
         embed.add_field(name="Total Servers", value=server_count, inline=True)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
@@ -78,7 +71,7 @@ class Counter(commands.Cog):
         """Display the total number of commands and subcommands the bot has"""
         total_commands = sum(1 for _ in self.bot.walk_commands())
 
-        embed = discord.Embed(title="Total Commands", color=self.get_next_color())
+        embed = discord.Embed(title="Total Commands", color=self.get_random_color())
         embed.add_field(name="Total Commands", value=total_commands, inline=True)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
@@ -89,7 +82,7 @@ class Counter(commands.Cog):
         """Display the total cogs"""
         cog_count = len(self.bot.cogs)
 
-        embed = discord.Embed(title="Total Cogs", color=self.get_next_color())
+        embed = discord.Embed(title="Total Cogs", color=self.get_random_color())
         embed.add_field(name="Total Cogs", value=cog_count, inline=True)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
@@ -113,7 +106,7 @@ class Counter(commands.Cog):
         sorted_commands = sorted(user_commands.items(), key=lambda item: item[1], reverse=True)[:10]
         user_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
 
-        embed = discord.Embed(title="Top 10 Commands", color=self.get_next_color())
+        embed = discord.Embed(title="Top 10 Commands", color=self.get_random_color())
         embed.add_field(name=f"Top 10 Commands used by user ID {user_id}", value=user_stats, inline=False)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
@@ -131,9 +124,9 @@ class Counter(commands.Cog):
                     user_command_counts[user_id] = 0
                 user_command_counts[user_id] += count
 
-        top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)[:5]
+        top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)
 
-        embed = discord.Embed(title="Top Users", color=self.get_next_color())
+        embed = discord.Embed(title="Top Users", color=self.get_random_color())
         for user_id, _ in top_users:
             user = ctx.guild.get_member(user_id)
             if user:
