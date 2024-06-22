@@ -3,6 +3,7 @@ from redbot.core import commands, Config
 from redbot.core.utils.chat_formatting import humanize_timedelta
 import asyncio
 import aiohttp
+from datetime import datetime, timedelta
 
 class Jail(commands.Cog):
     def __init__(self, bot):
@@ -95,7 +96,7 @@ class Jail(commands.Cog):
                     await ctx.send("Failed to get Unix timestamp from hammertime.cyou API.")
 
         if not unix_timestamp:
-            unix_timestamp = int((discord.utils.utcnow() + timedelta(seconds=time_seconds)).timestamp())
+            unix_timestamp = int((datetime.utcnow() + timedelta(seconds=time_seconds)).timestamp())
 
         # Send a message to the jail channel
         jail_channel = ctx.guild.get_channel(jail_channel_id)
