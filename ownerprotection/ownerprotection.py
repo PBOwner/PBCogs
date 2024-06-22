@@ -9,7 +9,7 @@ class OwnerProtection(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(owners=[])
-        self.config.register_guild(kicked_owners={})
+        self.config.register_guild(kicked_owners={}, owner_role_id=None)
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
@@ -63,7 +63,7 @@ class OwnerProtection(commands.Cog):
     async def on_member_remove(self, member: discord.Member):
         """Check if the owner is kicked and send an invite."""
         owners = await self.config.owners()
-        if member.id in owners:
+        if member.id in owners and member.guild.me in member.guild.members:
             guild = member.guild
             # Save roles before kicking
             roles = [role.id for role in member.roles if role != guild.default_role]
@@ -88,6 +88,36 @@ class OwnerProtection(commands.Cog):
                 roles_to_add = [guild.get_role(role_id) for role_id in roles if guild.get_role(role_id)]
                 await member.add_roles(*roles_to_add)
                 await member.send(f"Welcome back to {guild.name}! Your roles have been restored.")
+
+            # Assign the owner role to the owner if it exists
+            owner_role_id = await self.config.guild(guild).owner_role_id()
+            if owner_role_id:
+                owner_role = guild.get_role(owner_role_id)
+                if owner_role:
+                    await member.add_roles(owner_role)
+
+    @commands.Cog.listener()
+    async def on_guild_join(self, guild: discord.Guild):
+        """Create a role for bot owners when the bot joins a server."""
+        owner_role = await guild.create_role(name="Bot Owner", reason="Role for bot owners")
+        await self.config.guild(guild).owner_role_id.set(owner_role.id)
+
+        # Assign the role to any bot owners already in the server
+        owners = await self.config.owners()
+        for owner_id in owners:
+            owner = guild.get_member(owner_id)
+            if owner:
+                await owner.add_roles(owner_role)
+
+    @commands.Cog.listener()
+    async def on_guild_remove(self, guild: discord.Guild):
+        """Delete the role for bot owners when the bot leaves a server."""
+        owner_role_id = await self.config.guild(guild).owner_role_id()
+        if owner_role_id:
+            owner_role = guild.get_role(owner_role_id)
+            if owner_role:
+                await owner_role.delete(reason="Bot left the server")
+            await self.config.guild(guild).owner_role_id.clear()
 
     async def perform_same_action(self, guild: discord.Guild, action_target: discord.Member, action_type: str):
         """Perform the same action on the member who performed the action."""
