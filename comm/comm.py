@@ -2,8 +2,7 @@ import discord
 import os
 from redbot.core import commands, Config
 import asyncio
-from dateutil.relativedelta import relativedelta
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Comm(commands.Cog):
     def __init__(self, bot):
@@ -147,12 +146,11 @@ class Comm(commands.Cog):
                 await ctx.send(embed=embed)
 
         ban_duration = self.parse_duration(duration)
-        ban_end = asyncio.get_event_loop().time() + ban_duration
-        banned_users[user.id] = ban_end
+        ban_end = datetime.now() + timedelta(seconds=ban_duration)
+        banned_users[user.id] = ban_end.timestamp()
         await self.config.active_sessions.set(active_sessions)
         await self.config.banned_users.set(banned_users)
-        ban_end_datetime = datetime.fromtimestamp(ban_end)
-        ban_end_link = f"https://hammertime.cyou/#{int(ban_end_datetime.timestamp())}"
+        ban_end_link = f"https://hammertime.cyou/#{int(ban_end.timestamp())}"
         embed = discord.Embed(title="User Banned", description=f"{user.display_name} has been banned for '{reason}' until {ban_end_link}.")
         await ctx.send(embed=embed)
         await user.send(embed=embed)
@@ -226,15 +224,33 @@ class Comm(commands.Cog):
 
     @usercomm.command(name="listusers")
     @commands.is_owner()
-    async def usercomm_listusers(self, ctx):
-        """List all users and their IDs."""
+    async def usercomm_listusers(self, ctx, name: str):
+        """List all users and their IDs currently connected to a specific usercomm network."""
         if not await self.usercomm(ctx):
             return
+        active_sessions = await self.config.active_sessions()
         user_names = await self.config.user_names()
-        users_list = "\n".join([f"{user_id}: {name}" for user_id, name in user_names.items()])
+
+        if name not in active_sessions:
+            await ctx.send("No session found with this name.")
+            return
+
+        users_list = "\n".join([f"{user_id}: {user_names.get(user_id, 'Unknown')}" for user_id in active_sessions[name]["users"]])
         if not users_list:
             users_list = "No users found."
-        await ctx.send(f"```\nUsers and their IDs:\n{users_list}\n```")
+        await ctx.send(f"```\nUsers in '{name}' and their IDs:\n{users_list}\n```")
+
+    @usercomm.command(name="listcomms")
+    @commands.is_owner()
+    async def usercomm_listcomms(self, ctx):
+        """List all existing usercomm networks."""
+        if not await self.usercomm(ctx):
+            return
+        active_sessions = await self.config.active_sessions()
+        comms_list = "\n".join(active_sessions.keys())
+        if not comms_list:
+            comms_list = "No usercomm networks found."
+        await ctx.send(f"```\nExisting usercomm networks:\n{comms_list}\n```")
 
     @commands.group()
     async def dmcomm(self, ctx):
@@ -398,26 +414,6 @@ class Comm(commands.Cog):
                                 if msg.content == f"**{message.guild.name} - {message.author.display_name}:** {message.content}":
                                     await msg.delete()
                                     break
-
-    def parse_duration(self, duration: str) -> int:
-        """Parse a duration string and return the total duration in seconds."""
-        units = {
-            'y': 'years',
-            'mo': 'months',
-            'w': 'weeks',
-            'd': 'days',
-            'h': 'hours',
-            'm': 'minutes',
-            's': 'seconds'
-        }
-        total_seconds = 0
-        for unit, name in units.items():
-            if unit in duration:
-                amount = int(duration.split(unit)[0])
-                duration = duration.split(unit)[1]
-                delta = relativedelta(**{name: amount})
-                total_seconds += int((datetime.now() + delta - datetime.now()).total_seconds())
-        return total_seconds
 
 def setup(bot):
     bot.add_cog(Comm(bot))
