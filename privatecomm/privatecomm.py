@@ -17,14 +17,7 @@ class PrivateComm(commands.Cog):
         for user_id in linked_users:
             relay_user = self.bot.get_user(user_id)
             if relay_user and relay_user != user:
-                await relay_user.send(f"***The comms are shifting...** {user.name}: {message}*")
-
-    def get_highest_role(self, member):
-        """Get the highest role of a member, excluding @everyone."""
-        roles = [role for role in member.roles if role.name != "@everyone"]
-        if roles:
-            return max(roles, key=lambda role: role.position).name
-        return "No Role"
+                await relay_user.send(f"***The comms are shifting...** {user.display_name}: {message}*")
 
     @commands.group(aliases=['pc'])
     async def privatecomm(self, ctx):
@@ -33,12 +26,15 @@ class PrivateComm(commands.Cog):
 
     @privatecomm.command(name="create")
     async def privatecomm_create(self, ctx, user: discord.User):
-        """Create a private comm from DM to the channel it originated from."""
+        """Create a private comm from a channel to the user's DM."""
+        if isinstance(ctx.channel, discord.DMChannel):
+            return await ctx.send("This command can only be used in a server channel.")
+
         private_comms = await self.config.private_comms()
         if ctx.channel.id not in private_comms:
             private_comms[ctx.channel.id] = {"channel_id": ctx.channel.id, "users": [ctx.author.id, user.id]}
             await self.config.private_comms.set(private_comms)
-            await ctx.send(f"Private comm created between {ctx.author.display_name} and {user.display_name}.")
+            await ctx.send(f"Private comm created between this channel and {user.display_name}'s DM.")
         else:
             await ctx.send("A private comm already exists for this channel.")
 
@@ -83,8 +79,6 @@ class PrivateComm(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if not isinstance(message.channel, discord.DMChannel):
-            return
         if message.author.bot:
             return
 
@@ -99,8 +93,7 @@ class PrivateComm(commands.Cog):
         for comm_id, comm_data in private_comms.items():
             users = comm_data["users"]
             if message.author.id in users:
-                display_name = message.author.display_name if message.author.display_name else message.author.name
-                highest_role = self.get_highest_role(message.author)
+                display_name = message.author.display_name
 
                 for user_id in users:
                     if user_id != message.author.id:
@@ -108,19 +101,16 @@ class PrivateComm(commands.Cog):
                         if user:
                             if message.attachments:
                                 for attachment in message.attachments:
-                                    await user.send(f"**{highest_role} - {display_name}:** {message.content}")
+                                    await user.send(f"**{display_name}:** {message.content}")
                                     await attachment.save(f"temp_{attachment.filename}")
                                     with open(f"temp_{attachment.filename}", "rb") as file:
                                         await user.send(file=discord.File(file))
                                     os.remove(f"temp_{attachment.filename}")
                             else:
-                                await user.send(f"**{highest_role} - {display_name}:** {message.content}")
+                                await user.send(f"**{display_name}:** {message.content}")
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
-        if not isinstance(message.channel, discord.DMChannel):
-            return
-
         private_comms = await self.config.private_comms()
 
         # Check if the message is in a private comm
@@ -132,8 +122,7 @@ class PrivateComm(commands.Cog):
                         user = self.bot.get_user(user_id)
                         if user:
                             async for msg in user.history(limit=100):
-                                highest_role = self.get_highest_role(message.author)
-                                if msg.content == f"**{highest_role} - {message.author.display_name}:** {message.content}":
+                                if msg.content == f"**{message.author.display_name}:** {message.content}":
                                     await msg.delete()
                                     break
 
