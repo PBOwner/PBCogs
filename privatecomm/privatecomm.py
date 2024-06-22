@@ -32,46 +32,54 @@ class PrivateComm(commands.Cog):
         pass
 
     @privatecomm.command(name="create")
-    async def privatecomm_create(self, ctx, name: str, password: str):
-        """Create a private comm with a name and password."""
+    async def privatecomm_create(self, ctx, user: discord.User):
+        """Create a private comm from DM to the channel it originated from."""
         private_comms = await self.config.private_comms()
-        if name not in private_comms:
-            private_comms[name] = {"password": password, "users": [ctx.author.id]}
+        if ctx.channel.id not in private_comms:
+            private_comms[ctx.channel.id] = {"channel_id": ctx.channel.id, "users": [ctx.author.id, user.id]}
             await self.config.private_comms.set(private_comms)
-            await ctx.send(f"Private comm `{name}` created with the provided password.")
+            await ctx.send(f"Private comm created between {ctx.author.display_name} and {user.display_name}.")
         else:
-            await ctx.send("A private comm with this name already exists.")
+            await ctx.send("A private comm already exists for this channel.")
 
     @privatecomm.command(name="join")
-    async def privatecomm_join(self, ctx, name: str, password: str):
-        """Join an existing private comm with the correct name and password."""
+    async def privatecomm_join(self, ctx, user: discord.User):
+        """Join an existing private comm."""
         private_comms = await self.config.private_comms()
-        if name in private_comms:
-            if private_comms[name]["password"] == password:
-                if ctx.author.id not in private_comms[name]["users"]:
-                    private_comms[name]["users"].append(ctx.author.id)
-                    await self.config.private_comms.set(private_comms)
-                    await ctx.send(f"You have joined the private comm `{name}`.")
-                    await self.send_status_message(f"A faint signal was picked up from {ctx.author.name}, connection has been established.", ctx.author, name)
-                else:
-                    await ctx.send("You are already part of the private comm.")
+        if ctx.channel.id in private_comms:
+            if user.id not in private_comms[ctx.channel.id]["users"]:
+                private_comms[ctx.channel.id]["users"].append(user.id)
+                await self.config.private_comms.set(private_comms)
+                await ctx.send(f"{user.display_name} has joined the private comm.")
+                await self.send_status_message(f"{user.display_name} has joined the comm.", user, ctx.channel.id)
             else:
-                await ctx.send("Incorrect password for the private comm.")
+                await ctx.send(f"{user.display_name} is already part of the private comm.")
         else:
-            await ctx.send("No private comm found with this name.")
+            await ctx.send("No private comm found for this channel.")
 
     @privatecomm.command(name="leave")
-    async def privatecomm_leave(self, ctx, name: str):
+    async def privatecomm_leave(self, ctx):
         """Leave a private comm."""
         private_comms = await self.config.private_comms()
-        if name in private_comms and ctx.author.id in private_comms[name]["users"]:
-            private_comms[name]["users"].remove(ctx.author.id)
-            if not private_comms[name]["users"]:
-                del private_comms[name]
+        if ctx.channel.id in private_comms and ctx.author.id in private_comms[ctx.channel.id]["users"]:
+            private_comms[ctx.channel.id]["users"].remove(ctx.author.id)
+            if not private_comms[ctx.channel.id]["users"]:
+                del private_comms[ctx.channel.id]
             await self.config.private_comms.set(private_comms)
-            await ctx.send(f"You have left the private comm `{name}`.")
+            await ctx.send(f"{ctx.author.display_name} has left the private comm.")
         else:
-            await ctx.send("You are not part of the private comm with this name.")
+            await ctx.send("You are not part of a private comm in this channel.")
+
+    @privatecomm.command(name="delete")
+    async def privatecomm_delete(self, ctx):
+        """Delete a private comm."""
+        private_comms = await self.config.private_comms()
+        if ctx.channel.id in private_comms:
+            del private_comms[ctx.channel.id]
+            await self.config.private_comms.set(private_comms)
+            await ctx.send("The private comm has been deleted.")
+        else:
+            await ctx.send("No private comm found for this channel.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -88,7 +96,7 @@ class PrivateComm(commands.Cog):
         private_comms = await self.config.private_comms()
 
         # Check if the message is in a private comm
-        for name, comm_data in private_comms.items():
+        for comm_id, comm_data in private_comms.items():
             users = comm_data["users"]
             if message.author.id in users:
                 display_name = message.author.display_name if message.author.display_name else message.author.name
@@ -116,7 +124,7 @@ class PrivateComm(commands.Cog):
         private_comms = await self.config.private_comms()
 
         # Check if the message is in a private comm
-        for name, comm_data in private_comms.items():
+        for comm_id, comm_data in private_comms.items():
             users = comm_data["users"]
             if message.author.id in users:
                 for user_id in users:
