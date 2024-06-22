@@ -34,11 +34,10 @@ class Counter(commands.Cog):
 
             guild_data["command_usage"][ctx.command.name]["users"][ctx.author.id] += 1
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     async def counter(self, ctx):
         """Group command for counting statistics"""
-        if ctx.invoked_subcommand is None:
-            await ctx.send_help(ctx.command)
+        await ctx.send_help(ctx.command)
 
     @counter.command()
     async def users(self, ctx):
@@ -101,6 +100,28 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
         embed.add_field(name=f"Commands used by user ID {user_id}", value=user_stats, inline=False)
+
+        await ctx.send(embed=embed)
+
+    @counter.command()
+    async def allcommands(self, ctx):
+        """Display all commands the bot has"""
+        all_commands = [command.name for command in self.bot.commands]
+
+        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed.add_field(name="All Commands", value=", ".join(all_commands), inline=False)
+
+        await ctx.send(embed=embed)
+
+    @counter.command()
+    async def allusers(self, ctx):
+        """Display all unique users using the bot"""
+        guild_data = await self.config.guild(ctx.guild).all()
+        unique_users = guild_data["unique_users"]
+
+        user_mentions = [f"<@{user_id}>" for user_id in unique_users]
+        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed.add_field(name="All Unique Users", value=", ".join(user_mentions), inline=False)
 
         await ctx.send(embed=embed)
 
