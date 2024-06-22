@@ -61,7 +61,8 @@ class Comm(commands.Cog):
 
         if ctx.author.id in banned_users and banned_users[ctx.author.id] > asyncio.get_event_loop().time():
             ban_end = datetime.fromtimestamp(banned_users[ctx.author.id])
-            await ctx.send(f"You are banned from joining usercomm networks until {ban_end}.")
+            ban_end_link = f"https://hammertime.cyou/#{int(ban_end.timestamp())}"
+            await ctx.send(f"You are banned from joining usercomm networks until {ban_end_link}.")
             return
 
         current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
@@ -138,7 +139,8 @@ class Comm(commands.Cog):
         await self.config.active_sessions.set(active_sessions)
         await self.config.banned_users.set(banned_users)
         ban_end_datetime = datetime.fromtimestamp(ban_end)
-        embed = discord.Embed(title="User Banned", description=f"{user.display_name} has been banned for '{reason}' until {ban_end_datetime}.")
+        ban_end_link = f"https://hammertime.cyou/#{int(ban_end_datetime.timestamp())}"
+        embed = discord.Embed(title="User Banned", description=f"{user.display_name} has been banned for '{reason}' until {ban_end_link}.")
         await ctx.send(embed=embed)
         await user.send(embed=embed)
 
@@ -209,84 +211,7 @@ class Comm(commands.Cog):
         users_list = "\n".join([f"{user_id}: {name}" for user_id, name in user_names.items()])
         if not users_list:
             users_list = "No users found."
-        embed = discord.Embed(title="Users and IDs", description=f"{users_list}")
-        await ctx.send(embed=embed)
-
-    @commands.group()
-    async def dmcomm(self, ctx):
-        """Manage direct communications with specific users."""
-        pass
-
-    @dmcomm.command(name="open")
-    async def dmcomm_open(self, ctx, user_id: int):
-        """Open a direct communication with a specific user."""
-        user = self.bot.get_user(user_id)
-        if not user:
-            await ctx.send("User not found.")
-            return
-
-        active_sessions = await self.config.active_sessions()
-        previous_sessions = await self.config.previous_sessions()
-        session_key = f"{ctx.author.id}-{user_id}"
-
-        if session_key in active_sessions:
-            await ctx.send("You already have an active session with this user.")
-            return
-
-        # Ask the target user for confirmation
-        def check(m):
-            return m.author.id == user_id and m.channel == user.dm_channel and m.content.lower() in ["yes", "no"]
-
-        await user.send(f"{ctx.author.mention} wants to open a communication line with you. Do you accept this transmission? Yes or No?")
-
-        try:
-            response = await self.bot.wait_for('message', check=check, timeout=60.0)
-            if response.content.lower() == "yes":
-                # Save and close all existing usercomms for the target user
-                previous_sessions[user_id] = []
-                for session_name, session_info in active_sessions.items():
-                    if user_id in session_info["users"]:
-                        session_info["users"].remove(user_id)
-                        await user.send(f"You have been removed from the usercomm network '{session_name}'.")
-
-                active_sessions[session_key] = {"users": [ctx.author.id, user_id]}
-                await self.config.active_sessions.set(active_sessions)
-                await self.config.previous_sessions.set(previous_sessions)
-                await ctx.send(f"Communication line opened with {user.mention}.")
-                await user.send(f"{ctx.author.mention} has opened a communication line with you.")
-            else:
-                await ctx.send(f"{user.mention} has denied the communication request.")
-        except asyncio.TimeoutError:
-            await ctx.send(f"{user.mention} did not respond to the communication request in time.")
-
-    @dmcomm.command(name="close")
-    async def dmcomm_close(self, ctx):
-        """Close the direct communication with a specific user."""
-        active_sessions = await self.config.active_sessions()
-        previous_sessions = await self.config.previous_sessions()
-        session_keys_to_remove = []
-
-        for session_key, session_info in active_sessions.items():
-            if ctx.author.id in session_info["users"]:
-                session_keys_to_remove.append(session_key)
-                other_user_id = session_info["users"][1] if session_info["users"][0] == ctx.author.id else session_info["users"][0]
-                other_user = self.bot.get_user(other_user_id)
-                if other_user:
-                    await other_user.send(f"{ctx.author.mention} has closed the communication line with you.")
-
-                # Reestablish previous usercomms for the other user
-                if other_user_id in previous_sessions:
-                    for session_name in previous_sessions[other_user_id]:
-                        active_sessions[session_name]["users"].append(other_user_id)
-                        await other_user.send(f"You have been re-added to the usercomm network '{session_name}'.")
-                    del previous_sessions[other_user_id]
-
-        for session_key in session_keys_to_remove:
-            del active_sessions[session_key]
-
-        await self.config.active_sessions.set(active_sessions)
-        await self.config.previous_sessions.set(previous_sessions)
-        await ctx.send("All direct communication lines have been closed.")
+        await ctx.send(f"```\nUsers and their IDs:\n{users_list}\n```")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -300,17 +225,16 @@ class Comm(commands.Cog):
 
         if message.guild:
             # Handle server messages for direct communication
-            for session_key, session_info in active_sessions.items():
-                if '-' in session_key:
-                    user1_id, user2_id = map(int, session_key.split('-'))
-                    if message.author.id in (user1_id, user2_id):
-                        other_user_id = user1_id if message.author.id == user2_id else user2_id
-                        other_user = self.bot.get_user(other_user_id)
-                        if other_user:
-                            display_name = user_names.get(message.author.id, message.author.display_name)
-                            if message.author.id in trusted_users:
-                                display_name += " - Moderator"
-                            await other_user.send(f"**{display_name}:** {message.content}")
+            for session_name, session_info in active_sessions.items():
+                if message.author.id in session_info["users"]:
+                    display_name = user_names.get(message.author.id, message.author.display_name)
+                    if message.author.id in trusted_users:
+                        display_name += " - Moderator"
+                    for user_id in session_info["users"]:
+                        if user_id != message.author.id:
+                            user = self.bot.get_user(user_id)
+                            if user:
+                                await user.send(f"**{display_name}:** {message.content}")
             return
 
         if message.author.id in linked_users:
@@ -345,6 +269,7 @@ class Comm(commands.Cog):
             return
 
         linked_users = await self.config.linked_users()
+        active_sessions = await self.config.active_sessions()
         user_names = await self.config.user_names()
         trusted_users = await self.config.trusted_users()
 
