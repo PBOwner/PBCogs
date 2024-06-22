@@ -8,7 +8,8 @@ class Comm(commands.Cog):
         self.config = Config.get_conf(self, identifier="comm", force_registration=True)
         self.config.register_global(
             linked_channels_list=[],
-            user_display_names={}
+            user_display_names={},
+            trusted_users=[]
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
@@ -69,6 +70,45 @@ class Comm(commands.Cog):
         user_display_names[ctx.author.id] = new_name
         await self.config.user_display_names.set(user_display_names)
         await ctx.send(f"Your display name has been changed to {new_name}.")
+
+    @usercomm.command(name="addtrusted")
+    @commands.is_owner()
+    async def usercomm_addtrusted(self, ctx, user: discord.User):
+        """Add a trusted user who can forcibly remove users from the Communications channel."""
+        trusted_users = await self.config.trusted_users()
+        if user.id not in trusted_users:
+            trusted_users.append(user.id)
+            await self.config.trusted_users.set(trusted_users)
+            await ctx.send(f"{user.name} has been added as a trusted user.")
+        else:
+            await ctx.send(f"{user.name} is already a trusted user.")
+
+    @usercomm.command(name="removetrusted")
+    @commands.is_owner()
+    async def usercomm_removetrusted(self, ctx, user: discord.User):
+        """Remove a trusted user."""
+        trusted_users = await self.config.trusted_users()
+        if user.id in trusted_users:
+            trusted_users.remove(user.id)
+            await self.config.trusted_users.set(trusted_users)
+            await ctx.send(f"{user.name} has been removed from trusted users.")
+        else:
+            await ctx.send(f"{user.name} is not a trusted user.")
+
+    @usercomm.command(name="remove")
+    async def usercomm_remove(self, ctx, user: discord.User):
+        """Forcibly remove a user from the Communications channel."""
+        trusted_users = await self.config.trusted_users()
+        if ctx.author.id not in trusted_users:
+            return await ctx.send("You do not have permission to use this command.")
+        linked_channels = await self.config.linked_channels_list()
+        if user.dm_channel.id in linked_channels:
+            linked_channels.remove(user.dm_channel.id)
+            await self.config.linked_channels_list.set(linked_channels)
+            await ctx.send(f"{user.name} has been forcibly removed from the Communications channel.")
+            await self.send_status_message(f"{user.name} has been forcibly removed from the Communications channel by {ctx.author.name}.", ctx.channel, "User Removed")
+        else:
+            await ctx.send(f"{user.name} is not part of the Communications channel.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
