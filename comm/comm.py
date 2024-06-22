@@ -22,12 +22,7 @@ class Comm(commands.Cog):
                 await relay_channel.send(embed=embed)
 
     def get_display_name(self, user: discord.User):
-        """Get the display name with role suffix if applicable."""
-        if user.id in self.bot.owner_ids:
-            return f"{user.display_name} - Owner"
-        trusted_users = self.bot.get_cog("Comm").config.trusted_users()
-        if user.id in trusted_users:
-            return f"{user.display_name} - Moderator"
+        """Get the display name of the user."""
         return user.display_name
 
     @commands.group(aliases=['uc'])
