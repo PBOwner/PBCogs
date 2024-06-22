@@ -26,9 +26,9 @@ class RestartMsg(commands.Cog):
                         await owner.send(embed=embed)
                         await ctx.send(embed=discord.Embed(title="Message Sent", description=f"Test message sent to the owner of `{guild.name}`.", color=discord.Color.green()))
                     except Exception as e:
-                        await ctx.send(embed=discord.Embed(title="Error", description=f"Failed to send message to {owner}: {e}", color=discord.Color.red()))
+                        await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Failed to send message to {owner}: {e}", color=discord.Color.red()))
             else:
-                await ctx.send(embed=discord.Embed(title="Error", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
             return
 
         for guild in self.bot.guilds:
@@ -66,9 +66,9 @@ class RestartMsg(commands.Cog):
                 embed.add_field(name="Server Owner ID", value=owner.id, inline=False)
                 await ctx.send(embed=embed)
             else:
-                await ctx.send(embed=discord.Embed(title="Error", description=f"Owner of server with ID {guild_id} is already ignored.", color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Owner of server with ID {guild_id} is already ignored.", color=discord.Color.red()))
         else:
-            await ctx.send(embed=discord.Embed(title="Error", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
+            await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
 
     @commands.command(name='unignoreowner')
     @commands.is_owner()
@@ -88,9 +88,9 @@ class RestartMsg(commands.Cog):
                 embed.add_field(name="Server Owner ID", value=owner.id, inline=False)
                 await ctx.send(embed=embed)
             else:
-                await ctx.send(embed=discord.Embed(title="Error", description=f"Owner of server with ID {guild_id} is not in the ignore list.", color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Owner of server with ID {guild_id} is not in the ignore list.", color=discord.Color.red()))
         else:
-            await ctx.send(embed=discord.Embed(title="Error", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
+            await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
 
 def setup(bot):
     bot.add_cog(RestartMsg(bot))
