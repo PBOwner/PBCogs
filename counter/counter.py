@@ -61,13 +61,11 @@ class Counter(commands.Cog):
 
     @counter.command()
     async def commands(self, ctx):
-        """Display all commands and subcommands the bot has"""
-        all_commands = []
-        for command in self.bot.walk_commands():
-            all_commands.append(command.qualified_name)
+        """Display the total number of commands and subcommands the bot has"""
+        total_commands = sum(1 for _ in self.bot.walk_commands())
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
-        embed.add_field(name="All Commands", value=", ".join(all_commands), inline=False)
+        embed.add_field(name="Total Commands", value=total_commands, inline=False)
 
         await ctx.send(embed=embed)
 
