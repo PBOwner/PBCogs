@@ -1,14 +1,17 @@
 import discord
 from redbot.core import Config, checks, commands
+
 class StaffManager(commands.Cog):
     """Cog for managing staff members in a Discord server."""
     def __init__(self, bot):
         self.bot = bot
         self.staff_updates_channel = None
         self.blacklist_channel = None
+        self.loa_requests_channel = None
+        self.loa_role = None
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
-        self.config.register_global(staff_updates_channel=None, blacklist_channel=None)
-        
+        self.config.register_global(staff_updates_channel=None, blacklist_channel=None, loa_requests_channel=None, loa_role=None, loa_requests={})
+
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
@@ -40,7 +43,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Position", value=role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
-        
+
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def hire(self, ctx, member: discord.Member, role: discord.Role):
@@ -66,7 +69,7 @@ class StaffManager(commands.Cog):
         embed.add_field(name="Old Position", value=old_role.name, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         await self.staff_updates_channel.send(embed=embed)
-        
+
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
@@ -103,6 +106,108 @@ class StaffManager(commands.Cog):
             await channel.send(embed=embed)
         else:
             await self.send_channel_reminder(ctx, "staffblacklist")
+
+    @commands.group()
+    @commands.has_permissions(manage_roles=True)
+    async def loa(self, ctx):
+        """Group command for managing leave of absence requests."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send("Invalid subcommand passed. Use `loa request`, `loa approve`, `loa deny`, `loa channel`, or `loa role`.")
+
+    @loa.command()
+    @commands.has_permissions(manage_channels=True)
+    async def channel(self, ctx, channel: discord.TextChannel):
+        """Set the channel for LOA request messages."""
+        self.loa_requests_channel = channel
+        await self.config.loa_requests_channel.set(channel.id)
+        await ctx.send(f"LOA requests channel set to {channel.mention}")
+
+    @loa.command()
+    @commands.has_permissions(manage_roles=True)
+    async def role(self, ctx, role: discord.Role):
+        """Set the role to be assigned during LOA."""
+        self.loa_role = role
+        await self.config.loa_role.set(role.id)
+        await ctx.send(f"LOA role set to {role.name}")
+
+    @loa.command()
+    async def request(self, ctx, duration: str, reason: str):
+        """Request a leave of absence."""
+        loa_requests = await self.config.loa_requests()
+        user_id = ctx.author.id
+        loa_requests[user_id] = {
+            "user": ctx.author.id,
+            "duration": duration,
+            "reason": reason,
+            "approved_by": None
+        }
+        await self.config.loa_requests.set(loa_requests)
+
+        loa_requests_channel_id = await self.config.loa_requests_channel()
+        loa_requests_channel = self.bot.get_channel(loa_requests_channel_id)
+        if loa_requests_channel:
+            embed = discord.Embed(title="LOA Request", color=discord.Color.yellow())
+            embed.add_field(name="User", value=ctx.author.name, inline=False)
+            embed.add_field(name="Reason", value=reason, inline=False)
+            embed.add_field(name="Duration", value=duration, inline=False)
+            embed.add_field(name="User ID", value=ctx.author.id, inline=False)
+            embed.set_footer(text="Do `loa approve <user_id>` or `loa deny <user_id>`")
+            await loa_requests_channel.send(embed=embed)
+
+        await ctx.send(f"Leave of Absence request submitted for {duration} due to {reason}.")
+
+    @loa.command()
+    async def approve(self, ctx, user_id: int):
+        """Approve a leave of absence request."""
+        loa_requests = await self.config.loa_requests()
+        if user_id in loa_requests and loa_requests[user_id]["approved_by"] is None:
+            loa_requests[user_id]["approved_by"] = ctx.author.id
+            await self.config.loa_requests.set(loa_requests)
+            user = self.bot.get_user(loa_requests[user_id]["user"])
+            loa_role_id = await self.config.loa_role()
+            loa_role = ctx.guild.get_role(loa_role_id)
+            if loa_role:
+                await user.add_roles(loa_role)
+            embed = discord.Embed(title="Leave of Absence", color=discord.Color.green())
+            embed.add_field(name="User", value=user.name, inline=False)
+            embed.add_field(name="Duration", value=loa_requests[user_id]["duration"], inline=False)
+            embed.add_field(name="Reason", value=loa_requests[user_id]["reason"], inline=False)
+            embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
+            await self.staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Leave of Absence request for {user.name} approved.")
+        else:
+            await ctx.send(f"Leave of Absence request for user ID {user_id} not found or already approved.")
+
+    @loa.command()
+    async def deny(self, ctx, user_id: int):
+        """Deny a leave of absence request."""
+        loa_requests = await self.config.loa_requests()
+        if user_id in loa_requests:
+            del loa_requests[user_id]
+            await self.config.loa_requests.set(loa_requests)
+            await ctx.send(f"Leave of Absence request for user ID {user_id} denied and removed.")
+        else:
+            await ctx.send(f"Leave of Absence request for user ID {user_id} not found.")
+
+    @loa.command()
+    async def end(self, ctx, user_id: int):
+        """End a leave of absence."""
+        loa_requests = await self.config.loa_requests()
+        if user_id in loa_requests and loa_requests[user_id]["approved_by"] is not None:
+            user = self.bot.get_user(loa_requests[user_id]["user"])
+            loa_role_id = await self.config.loa_role()
+            loa_role = ctx.guild.get_role(loa_role_id)
+            if loa_role:
+                await user.remove_roles(loa_role)
+            del loa_requests[user_id]
+            await self.config.loa_requests.set(loa_requests)
+            embed = discord.Embed(title="Leave of Absence Ended", color=discord.Color.red())
+            embed.add_field(name="User", value=user.name, inline=False)
+            embed.add_field(name="User ID", value=user.id, inline=False)
+            await self.staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Leave of Absence for {user.name} has ended.")
+        else:
+            await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
 
 def setup(bot):
     bot.add_cog(StaffManager(bot))
