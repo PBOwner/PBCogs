@@ -42,13 +42,15 @@ class Jail(commands.Cog):
                     await chan.set_permissions(jail_role, read_messages=False, send_messages=False)
             except discord.Forbidden:
                 await ctx.send(f"Failed to update permissions for {chan.name}. Missing permissions: Manage Channels.")
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to update permissions for {chan.name}. HTTPException: {e}")
 
         await ctx.send(f"Jail channel set to {channel.name} and permissions updated.")
 
     @commands.command()
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
-    async def jail(self, ctx, user: discord.Member, time: str):
+    async def jail(self, ctx, user: discord.Member, time: str, *, reason: str = "Breaking rules or under investigation"):
         """Jail a user for a specified time."""
         jail_role_id = await self.config.guild(ctx.guild).jail_role()
         jail_channel_id = await self.config.guild(ctx.guild).jail_channel()
@@ -77,6 +79,17 @@ class Jail(commands.Cog):
         except discord.Forbidden:
             await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
             return
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to jail the user. HTTPException: {e}")
+            return
+
+        # Send a message to the jail channel
+        jail_channel = ctx.guild.get_channel(jail_channel_id)
+        embed = discord.Embed(title="You were jailed", description="Because you were breaking rules, or are under investigation", color=discord.Color.red())
+        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Time Remaining", value=humanize_timedelta(seconds=time_seconds), inline=False)
+        jail_message = await jail_channel.send(embed=embed)
+        await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "jail_message_id", value=jail_message.id)
 
         await ctx.send(f"{user.mention} has been jailed for {humanize_timedelta(seconds=time_seconds)}.")
 
@@ -111,6 +124,26 @@ class Jail(commands.Cog):
         except discord.Forbidden:
             await guild.system_channel.send(f"Failed to free {user.mention}. Missing permissions: Manage Roles.")
             return
+        except discord.HTTPException as e:
+            await guild.system_channel.send(f"Failed to free {user.mention}. HTTPException: {e}")
+            return
+
+        # Remove the jail message
+        jail_channel_id = await self.config.guild(guild).jail_channel()
+        if jail_channel_id:
+            jail_channel = guild.get_channel(jail_channel_id)
+            if jail_channel:
+                jail_message_id = await self.config.guild(guild).jailed_users.get_raw(user.id, "jail_message_id", default=None)
+                if jail_message_id:
+                    try:
+                        jail_message = await jail_channel.fetch_message(jail_message_id)
+                        await jail_message.delete()
+                    except discord.NotFound:
+                        pass
+                    except discord.Forbidden:
+                        await guild.system_channel.send(f"Failed to delete jail message for {user.mention}. Missing permissions: Manage Messages.")
+                    except discord.HTTPException as e:
+                        await guild.system_channel.send(f"Failed to delete jail message for {user.mention}. HTTPException: {e}")
 
         # Remove user from jailed users list
         await self.config.guild(guild).jailed_users.clear_raw(user.id)
