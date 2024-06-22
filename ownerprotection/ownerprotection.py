@@ -1,6 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
+from discord.utils import utcnow
 
 class OwnerProtection(commands.Cog):
     """A cog to protect the bot owner(s) from being muted, timed out, kicked, or banned."""
@@ -150,7 +151,7 @@ class OwnerProtection(commands.Cog):
                 elif action_type == "mute":
                     await entry.user.edit(mute=True, deafen=True, reason=f"Muted the bot owner {action_target}.")
                 elif action_type == "timeout":
-                    await entry.user.edit(timed_out_until=discord.utils.utcnow() + discord.timedelta(minutes=10), reason=f"Timed out the bot owner {action_target}.")
+                    await entry.user.edit(timed_out_until=utcnow() + discord.timedelta(minutes=10), reason=f"Timed out the bot owner {action_target}.")
                 break
 
     async def create_invite(self, guild: discord.Guild):
