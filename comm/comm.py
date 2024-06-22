@@ -14,8 +14,7 @@ class Comm(commands.Cog):
 
     async def send_status_message(self, message, channel, title):
         linked_channels = await self.config.linked_channels_list()
-        guild = channel.guild if channel.guild else "DM"
-        embed = discord.Embed(title=title, description=f"{guild}: {message}")
+        embed = discord.Embed(title=title, description=f"DM: {message}")
         for channel_id in linked_channels:
             relay_channel = self.bot.get_channel(channel_id)
             if relay_channel and relay_channel != channel:
@@ -24,42 +23,46 @@ class Comm(commands.Cog):
     @commands.group(aliases=['uc'])
     async def usercomm(self, ctx):
         """Manage usercomm connections."""
+        if not isinstance(ctx.channel, discord.DMChannel):
+            return await ctx.send("This command can only be used in DMs.")
         pass
 
     @usercomm.command(name="open")
     async def usercomm_open(self, ctx):
-        """Link the current channel to the usercomm network."""
+        """Link the current DM to the usercomm network."""
+        if not isinstance(ctx.channel, discord.DMChannel):
+            return await ctx.send("This command can only be used in DMs.")
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id not in linked_channels:
             linked_channels.append(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This channel has joined the usercomm network.")
+            embed = discord.Embed(title="Success!", description="This DM has joined the usercomm network.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"A signal was picked up from {ctx.channel.mention}, connection has been established.", ctx.channel, "Success!")
+            await self.send_status_message(f"A signal was picked up from this DM, connection has been established.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This channel is already part of the usercomm network.")
+            embed = discord.Embed(title="Error", description="This DM is already part of the usercomm network.")
             await ctx.send(embed=embed)
 
     @usercomm.command(name="close")
     async def usercomm_close(self, ctx):
-        """Unlink the current channel from the usercomm network."""
+        """Unlink the current DM from the usercomm network."""
+        if not isinstance(ctx.channel, discord.DMChannel):
+            return await ctx.send("This command can only be used in DMs.")
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id in linked_channels:
             linked_channels.remove(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This channel has been severed from the usercomm network.")
+            embed = discord.Embed(title="Success!", description="This DM has been severed from the usercomm network.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"The signal from {ctx.channel.mention} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
+            await self.send_status_message(f"The signal from this DM has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This channel is not part of the usercomm network.")
+            embed = discord.Embed(title="Error", description="This DM is not part of the usercomm network.")
             await ctx.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.author.bot or not message.channel.permissions_for(message.guild.me).send_messages:
+        if message.author.bot or not isinstance(message.channel, discord.DMChannel):
             return
-        if isinstance(message.channel, discord.TextChannel) and message.content.startswith(commands.when_mentioned(self.bot, message)[0]):
-            return  # Ignore bot commands
 
         # Check if the message is a bot command
         ctx = await self.bot.get_context(message)
@@ -69,19 +72,16 @@ class Comm(commands.Cog):
         linked_channels = await self.config.linked_channels_list()
 
         if message.channel.id in linked_channels:
-            display_name = message.author.name  # Use the author's username instead of display name
+            display_name = message.author.name
 
             # Store the message reference
-            self.message_references[message.id] = (message.author.id, message.guild.id if message.guild else None)
+            self.message_references[message.id] = (message.author.id, None)
 
             # Relay the message to other linked channels
             content = message.content
 
-            # Remove @everyone and @here mentions
-            content = content.replace("@everyone", "").replace("@here", "")
-
             # Handle emojis
-            content = self.replace_emojis_with_urls(message.guild, content)
+            content = self.replace_emojis_with_urls(None, content)
 
             for channel_id in linked_channels:
                 if channel_id != message.channel.id:
@@ -89,31 +89,28 @@ class Comm(commands.Cog):
                     if channel:
                         if message.attachments:
                             for attachment in message.attachments:
-                                relay_message = await channel.send(f"**{message.guild.name if message.guild else 'DM'} - {display_name}:** {content}")
+                                relay_message = await channel.send(f"**DM - {display_name}:** {content}")
                                 await attachment.save(f"temp_{attachment.filename}")
                                 with open(f"temp_{attachment.filename}", "rb") as file:
                                     await channel.send(file=discord.File(file))
                                 os.remove(f"temp_{attachment.filename}")
                         else:
-                            relay_message = await channel.send(f"**{message.guild.name if message.guild else 'DM'} - {display_name}:** {content}")
+                            relay_message = await channel.send(f"**DM - {display_name}:** {content}")
                         self.relayed_messages[(message.id, channel_id)] = relay_message.id
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
-        if after.author.bot:
+        if after.author.bot or not isinstance(after.channel, discord.DMChannel):
             return
 
         linked_channels = await self.config.linked_channels_list()
 
         if after.channel.id in linked_channels:
-            display_name = after.author.name  # Use the author's username instead of display name
+            display_name = after.author.name
             content = after.content
 
-            # Remove @everyone and @here mentions
-            content = content.replace("@everyone", "").replace("@here", "")
-
             # Handle emojis
-            content = self.replace_emojis_with_urls(after.guild, content)
+            content = self.replace_emojis_with_urls(None, content)
 
             for channel_id in linked_channels:
                 if channel_id != after.channel.id:
@@ -123,12 +120,12 @@ class Comm(commands.Cog):
                             relay_message_id = self.relayed_messages[(before.id, channel_id)]
                             relay_message = await channel.fetch_message(relay_message_id)
                             await relay_message.delete()
-                            new_relay_message = await channel.send(f"**{after.guild.name if after.guild else 'DM'} - {display_name} (edited):** {content}")
+                            new_relay_message = await channel.send(f"**DM - {display_name} (edited):** {content}")
                             self.relayed_messages[(after.id, channel_id)] = new_relay_message.id
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
-        if message.author.bot:
+        if message.author.bot or not isinstance(message.channel, discord.DMChannel):
             return
 
         linked_channels = await self.config.linked_channels_list()
