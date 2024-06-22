@@ -35,10 +35,13 @@ class Jail(commands.Cog):
             return
 
         for chan in ctx.guild.channels:
-            if chan == channel:
-                await chan.set_permissions(jail_role, read_messages=True, send_messages=True)
-            else:
-                await chan.set_permissions(jail_role, read_messages=False, send_messages=False)
+            try:
+                if chan == channel:
+                    await chan.set_permissions(jail_role, read_messages=True, send_messages=True)
+                else:
+                    await chan.set_permissions(jail_role, read_messages=False, send_messages=False)
+            except discord.Forbidden:
+                await ctx.send(f"Failed to update permissions for {chan.name}. Missing permissions: Manage Channels.")
 
         await ctx.send(f"Jail channel set to {channel.name} and permissions updated.")
 
@@ -68,8 +71,12 @@ class Jail(commands.Cog):
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, value=original_roles)
 
         # Remove all roles and add jail role
-        await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
-        await user.add_roles(jail_role)
+        try:
+            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
+            await user.add_roles(jail_role)
+        except discord.Forbidden:
+            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
+            return
 
         await ctx.send(f"{user.mention} has been jailed for {humanize_timedelta(seconds=time_seconds)}.")
 
@@ -96,10 +103,14 @@ class Jail(commands.Cog):
             return
 
         # Remove jail role and restore original roles
-        await user.remove_roles(jail_role)
-        original_roles = await self.config.guild(guild).jailed_users.get_raw(user.id, default=[])
-        roles = [guild.get_role(role_id) for role_id in original_roles if guild.get_role(role_id)]
-        await user.add_roles(*roles)
+        try:
+            await user.remove_roles(jail_role)
+            original_roles = await self.config.guild(guild).jailed_users.get_raw(user.id, default=[])
+            roles = [guild.get_role(role_id) for role_id in original_roles if guild.get_role(role_id)]
+            await user.add_roles(*roles)
+        except discord.Forbidden:
+            await guild.system_channel.send(f"Failed to free {user.mention}. Missing permissions: Manage Roles.")
+            return
 
         # Remove user from jailed users list
         await self.config.guild(guild).jailed_users.clear_raw(user.id)
