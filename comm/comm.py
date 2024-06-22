@@ -74,26 +74,11 @@ class Comm(commands.Cog):
             # Store the message reference
             self.message_references[message.id] = (message.author.id, message.guild.id if message.guild else None)
 
-            # Relay the message to other linked channels, removing mentions
+            # Relay the message to other linked channels
             content = message.content
 
             # Remove @everyone and @here mentions
             content = content.replace("@everyone", "").replace("@here", "")
-
-            # Handle mentions
-            mentioned_users = message.mentions
-            if mentioned_users:
-                for user in mentioned_users:
-                    content = content.replace(f"<@{user.id}>", '')  # Remove the mention
-                    embed = discord.Embed(title="You were mentioned!")
-                    embed.add_field(name="Who", value=message.author.mention, inline=False)
-                    embed.add_field(name="Where", value=f"{message.channel.mention} in {message.guild.name if message.guild else 'DM'}", inline=False)
-                    embed.add_field(name="When", value=message.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
-                    await user.send(embed=embed)
-
-            # If there's no content left after removing mentions
-            if not content.strip():
-                content = "User Mentioned Blocked"
 
             # Handle emojis
             content = self.replace_emojis_with_urls(message.guild, content)
@@ -126,21 +111,6 @@ class Comm(commands.Cog):
 
             # Remove @everyone and @here mentions
             content = content.replace("@everyone", "").replace("@here", "")
-
-            # Handle mentions
-            mentioned_users = after.mentions
-            if mentioned_users:
-                for user in mentioned_users:
-                    content = content.replace(f"<@{user.id}>", '')  # Remove the mention
-                    embed = discord.Embed(title="You were mentioned!")
-                    embed.add_field(name="Who", value=after.author.mention, inline=False)
-                    embed.add_field(name="Where", value=f"{after.channel.mention} in {after.guild.name if after.guild else 'DM'}", inline=False)
-                    embed.add_field(name="When", value=after.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
-                    await user.send(embed=embed)
-
-            # If there's no content left after removing mentions
-            if not content.strip():
-                content = "User Mentioned Blocked"
 
             # Handle emojis
             content = self.replace_emojis_with_urls(after.guild, content)
