@@ -63,11 +63,8 @@ class Counter(commands.Cog):
     async def commands(self, ctx):
         """Display all commands and subcommands the bot has"""
         all_commands = []
-        for command in self.bot.commands.values():
-            all_commands.append(command.name)
-            if isinstance(command, commands.Group):
-                for subcommand in command.commands.values():
-                    all_commands.append(f"{command.name} {subcommand.name}")
+        for command in self.bot.walk_commands():
+            all_commands.append(command.qualified_name)
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
         embed.add_field(name="All Commands", value=", ".join(all_commands), inline=False)
@@ -87,7 +84,7 @@ class Counter(commands.Cog):
     @counter.command()
     @is_owner()
     async def totalcommands(self, ctx, user_id: int):
-        """Display the commands used by a specific user ID"""
+        """Display the top 10 commands used by a specific user ID"""
         guild_data = await self.config.guild(ctx.guild).all()
         user_commands = {}
 
@@ -99,11 +96,11 @@ class Counter(commands.Cog):
             await ctx.send(f"No commands found for user ID {user_id}.")
             return
 
-        sorted_commands = sorted(user_commands.items(), key=lambda item: item[1], reverse=True)
+        sorted_commands = sorted(user_commands.items(), key=lambda item: item[1], reverse=True)[:10]
         user_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
-        embed.add_field(name=f"Commands used by user ID {user_id}", value=user_stats, inline=False)
+        embed.add_field(name=f"Top 10 Commands used by user ID {user_id}", value=user_stats, inline=False)
 
         await ctx.send(embed=embed)
 
