@@ -11,25 +11,11 @@ class RestartMsg(commands.Cog):
 
     @commands.command(name='warnrestart')
     @commands.is_owner()
-    async def warnrestart(self, ctx, message: str, guild_id: int = None):
-        """Send a message to all Server Owners, except those in the ignore list. If guild_id is provided, only send to that server owner for testing."""
+    async def warnrestart(self, ctx, *, message: str):
+        """Send a message to all Server Owners, except those in the ignore list, and restart the bot."""
         embed = discord.Embed(title="Incoming Restart", description=message, color=discord.Color.red())
         ignore_servers = await self.config.ignore_servers()
         owners_notified = set()  # To track which owners have been notified
-
-        if guild_id:
-            guild = self.bot.get_guild(guild_id)
-            if guild:
-                owner = guild.owner
-                if owner:
-                    try:
-                        await owner.send(embed=embed)
-                        await ctx.send(embed=discord.Embed(title="Message Sent", description=f"Test message sent to the owner of `{guild.name}`.", color=discord.Color.green()))
-                    except Exception as e:
-                        await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Failed to send message to {owner}: {e}", color=discord.Color.red()))
-            else:
-                await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
-            return
 
         for guild in self.bot.guilds:
             if guild.id in ignore_servers:
@@ -47,6 +33,25 @@ class RestartMsg(commands.Cog):
 
         # Restart the bot process
         os.execv(sys.executable, [sys.executable] + sys.argv)
+
+    @commands.command(name='testmsg')
+    @commands.is_owner()
+    async def testmsg(self, ctx, guild_id: int, *, message: str):
+        """Send a test message to a specific Server Owner without restarting the bot."""
+        embed = discord.Embed(title="Testing a Restart Warning", description=message, color=discord.Color.red())
+        embed.add_field(name="Owner", value=ctx.author.mention, inline=False)
+
+        guild = self.bot.get_guild(guild_id)
+        if guild:
+            owner = guild.owner
+            if owner:
+                try:
+                    await owner.send(embed=embed)
+                    await ctx.send(embed=discord.Embed(title="Message Sent", description=f"Test message sent to the owner of `{guild.name}`.", color=discord.Color.green()))
+                except Exception as e:
+                    await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Failed to send message to {owner}: {e}", color=discord.Color.red()))
+        else:
+            await ctx.send(embed=discord.Embed(title="ErRoR 404", description=f"Guild with ID {guild_id} not found.", color=discord.Color.red()))
 
     @commands.command(name='ignoreowner')
     @commands.is_owner()
