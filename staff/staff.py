@@ -9,8 +9,9 @@ class StaffManager(commands.Cog):
         self.blacklist_channel = None
         self.loa_requests_channel = None
         self.loa_role = None
+        self.resignation_requests_channel = None
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
-        self.config.register_global(staff_updates_channel=None, blacklist_channel=None, loa_requests_channel=None, loa_role=None, loa_requests={}, resignation_requests={})
+        self.config.register_global(staff_updates_channel=None, blacklist_channel=None, loa_requests_channel=None, loa_role=None, resignation_requests_channel=None, loa_requests={}, resignation_requests={})
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -215,7 +216,7 @@ class StaffManager(commands.Cog):
     async def resign(self, ctx):
         """Group command for managing resignation requests."""
         if ctx.invoked_subcommand is None:
-            await ctx.send("Invalid subcommand passed. Use `resign request`, `resign accept`, or `resign deny`.")
+            await ctx.send("Invalid subcommand passed. Use `resign request`, `resign accept`, `resign deny`, or `resign channel`.")
 
     @resign.command()
     async def request(self, ctx, reason: str):
@@ -229,15 +230,15 @@ class StaffManager(commands.Cog):
         }
         await self.config.resignation_requests.set(resignation_requests)
 
-        staff_updates_channel_id = await self.config.staff_updates_channel()
-        staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-        if staff_updates_channel:
+        resignation_requests_channel_id = await self.config.resignation_requests_channel()
+        resignation_requests_channel = self.bot.get_channel(resignation_requests_channel_id)
+        if resignation_requests_channel:
             embed = discord.Embed(title="Resignation Request", color=discord.Color.yellow())
             embed.add_field(name="User", value=ctx.author.name, inline=False)
             embed.add_field(name="Reason", value=reason, inline=False)
             embed.add_field(name="User ID", value=ctx.author.id, inline=False)
             embed.set_footer(text="Do `resign accept <user_id>` or `resign deny <user_id>`")
-            await staff_updates_channel.send(embed=embed)
+            await resignation_requests_channel.send(embed=embed)
 
         await ctx.send(f"Resignation request submitted due to {reason}.")
 
@@ -271,3 +272,14 @@ class StaffManager(commands.Cog):
             await ctx.send(f"Resignation request for user ID {user_id} denied and removed.")
         else:
             await ctx.send(f"Resignation request for user ID {user_id} not found.")
+
+    @resign.command()
+    @commands.has_permissions(manage_channels=True)
+    async def channel(self, ctx, channel: discord.TextChannel):
+        """Set the channel for resignation request messages."""
+        self.resignation_requests_channel = channel
+        await self.config.resignation_requests_channel.set(channel.id)
+        await ctx.send(f"Resignation requests channel set to {channel.mention}")
+
+def setup(bot):
+    bot.add_cog(StaffManager(bot))
