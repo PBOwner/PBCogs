@@ -3,7 +3,7 @@ import discord
 from redbot.core.bot import Red
 from redbot.core.commands import is_owner
 
-class Counter(commands.Cog):
+class Counter(commands.cog):
     """A cog to track various statistics for Red-DiscordBot"""
 
     def __init__(self, bot: Red):
@@ -17,7 +17,7 @@ class Counter(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_command(self, ctx):
         async with self.config.guild(ctx.guild).all() as guild_data:
             guild_data["command_count"] += 1
@@ -75,8 +75,8 @@ class Counter(commands.Cog):
         """Display the total cogs"""
         cog_count = len(self.bot.cogs)
 
-        embed = discord.Embed(title="Total Cogs", color=discord.Color.green())
-        embed.add_field(name="Total Cogs", value=cog_count, inline=True)
+        embed = discord.Embed(title="Total cogs", color=discord.Color.green())
+        embed.add_field(name="Total cogs", value=cog_count, inline=True)
 
         await ctx.send(embed=embed)
 
@@ -144,7 +144,7 @@ class Counter(commands.Cog):
                     embed.add_field(name="Total Users", value=total_users, inline=True)
                     embed.add_field(name="Total Servers", value=server_count, inline=True)
                     embed.add_field(name="Total Commands", value=total_commands, inline=True)
-                    embed.add_field(name="Total Cogs", value=cog_count, inline=True)
+                    embed.add_field(name="Total cogs", value=cog_count, inline=True)
                     embed.add_field(name="Top 5 Users", value=top_users_stats, inline=False)
 
                     message = None
@@ -158,27 +158,27 @@ class Counter(commands.Cog):
                     else:
                         await channel.send(embed=embed)
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_ready(self):
         await self.update_dynamic_embed()
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_guild_join(self, guild):
         await self.update_dynamic_embed()
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_guild_remove(self, guild):
         await self.update_dynamic_embed()
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_member_join(self, member):
         await self.update_dynamic_embed()
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_member_remove(self, member):
         await self.update_dynamic_embed()
 
-    @commands.Cog.listener()
+    @commands.cog.listener()
     async def on_command_completion(self, ctx):
         await self.update_dynamic_embed()
 
