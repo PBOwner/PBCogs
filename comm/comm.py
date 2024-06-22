@@ -5,7 +5,7 @@ from redbot.core import commands, Config
 class Comm(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier="comm", force_registration=True)
+        self.config = Config.get_conf(self, identifier="usercomm", force_registration=True)
         self.config.register_global(
             linked_users=[],
             global_blacklist=[],
@@ -22,34 +22,34 @@ class Comm(commands.Cog):
             if relay_user and relay_user != user:
                 await relay_user.send(embed=embed)
 
-    @commands.group(aliases=['comm'])
-    async def comm(self, ctx):
-        """Manage comm connections."""
+    @commands.group(aliases=['uc'])
+    async def usercomm(self, ctx):
+        """Manage usercomm connections."""
         pass
 
-    @comm.command(name="open")
-    async def comm_open(self, ctx):
-        """Link the current user to the comm network."""
+    @usercomm.command(name="open")
+    async def usercomm_open(self, ctx):
+        """Link the current user to the usercomm network."""
         linked_users = await self.config.linked_users()
         if ctx.author.id not in linked_users:
             linked_users.append(ctx.author.id)
             await self.config.linked_users.set(linked_users)
-            await ctx.send("You have joined the comm network.")
-            await self.send_status_message(f"{ctx.author.mention} has joined the comm.", ctx.author, "User Joined")
+            await ctx.send("You have joined the usercomm network.")
+            await self.send_status_message(f"{ctx.author.mention} has joined the usercomm.", ctx.author, "User Joined")
         else:
-            await ctx.send("You are already part of the comm.")
+            await ctx.send("You are already part of the usercomm.")
 
-    @comm.command(name="close")
-    async def comm_close(self, ctx):
-        """Unlink the current user from the comm network."""
+    @usercomm.command(name="close")
+    async def usercomm_close(self, ctx):
+        """Unlink the current user from the usercomm network."""
         linked_users = await self.config.linked_users()
         if ctx.author.id in linked_users:
             linked_users.remove(ctx.author.id)
             await self.config.linked_users.set(linked_users)
-            await ctx.send("You have left the comm network.")
-            await self.send_status_message(f"{ctx.author.mention} has left the comm.", ctx.author, "User Left")
+            await ctx.send("You have left the usercomm network.")
+            await self.send_status_message(f"{ctx.author.mention} has left the usercomm.", ctx.author, "User Left")
         else:
-            await ctx.send("You are not part of the comm.")
+            await ctx.send("You are not part of the usercomm.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -155,7 +155,7 @@ class Comm(commands.Cog):
 
         linked_users = await self.config.linked_users()
 
-        # Check if the message is in a comm channel
+        # Check if the message is in a usercomm channel
         if message.author.id in linked_users:
             for user_id in linked_users:
                 if user_id != message.author.id:
@@ -172,57 +172,57 @@ class Comm(commands.Cog):
                     content = content.replace(str(emoji), str(emoji.url))
         return content
 
-    @comm.command(name="globalblacklist")
-    async def comm_globalblacklist(self, ctx, user: discord.User):
-        """Prevent specific members from sending messages through the comm globally."""
+    @usercomm.command(name="globalblacklist")
+    async def usercomm_globalblacklist(self, ctx, user: discord.User):
+        """Prevent specific members from sending messages through the usercomm globally."""
         if await self.bot.is_owner(ctx.author):
             global_blacklist = await self.config.global_blacklist()
             if user.id not in global_blacklist:
                 global_blacklist.append(user.id)
                 await self.config.global_blacklist.set(global_blacklist)
-                await ctx.send(f"{user.display_name} has been added to the global comm blacklist.")
+                await ctx.send(f"{user.display_name} has been added to the global usercomm blacklist.")
             else:
-                await ctx.send(f"{user.display_name} is already in the global comm blacklist.")
+                await ctx.send(f"{user.display_name} is already in the global usercomm blacklist.")
         else:
             await ctx.send("You must be the bot owner to use this command.")
 
-    @comm.command(name="unglobalblacklist")
-    async def comm_unglobalblacklist(self, ctx, user: discord.User):
-        """Command to remove a user from the global comm blacklist (Bot Owner Only)."""
+    @usercomm.command(name="unglobalblacklist")
+    async def usercomm_unglobalblacklist(self, ctx, user: discord.User):
+        """Command to remove a user from the global usercomm blacklist (Bot Owner Only)."""
         if await self.bot.is_owner(ctx.author):
             global_blacklist = await self.config.global_blacklist()
             if user.id in global_blacklist:
                 global_blacklist.remove(user.id)
                 await self.config.global_blacklist.set(global_blacklist)
-                await ctx.send(f"{user.display_name} has been removed from the global comm blacklist.")
+                await ctx.send(f"{user.display_name} has been removed from the global usercomm blacklist.")
             else:
-                await ctx.send(f"{user.display_name} is not in the global comm blacklist.")
+                await ctx.send(f"{user.display_name} is not in the global usercomm blacklist.")
         else:
             await ctx.send("You must be the bot owner to use this command.")
 
-    @comm.command(name="addwordfilter")
-    async def comm_addwordfilter(self, ctx, *, word: str):
-        """Add a word to the comm word filter."""
+    @usercomm.command(name="addwordfilter")
+    async def usercomm_addwordfilter(self, ctx, *, word: str):
+        """Add a word to the usercomm word filter."""
         if await self.bot.is_owner(ctx.author):
             word_filters = await self.config.word_filters()
             if word not in word_filters:
                 word_filters.append(word)
                 await self.config.word_filters.set(word_filters)
-                await ctx.send(f"`{word}` has been added to the comm word filter.")
+                await ctx.send(f"`{word}` has been added to the usercomm word filter.")
             else:
-                await ctx.send(f"`{word}` is already in the comm word filter.")
+                await ctx.send(f"`{word}` is already in the usercomm word filter.")
 
-    @comm.command(name="removewordfilter")
-    async def comm_removewordfilter(self, ctx, *, word: str):
-        """Remove a word from the comm word filter."""
+    @usercomm.command(name="removewordfilter")
+    async def usercomm_removewordfilter(self, ctx, *, word: str):
+        """Remove a word from the usercomm word filter."""
         if await self.bot.is_owner(ctx.author):
             word_filters = await self.config.word_filters()
             if word in word_filters:
                 word_filters.remove(word)
                 await self.config.word_filters.set(word_filters)
-                await ctx.send(f"`{word}` has been removed from the comm word filter.")
+                await ctx.send(f"`{word}` has been removed from the usercomm word filter.")
             else:
-                await ctx.send(f"`{word}` is not in the comm word filter.")
+                await ctx.send(f"`{word}` is not in the usercomm word filter.")
 
 def setup(bot):
     bot.add_cog(Comm(bot))
