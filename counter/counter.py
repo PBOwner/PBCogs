@@ -41,12 +41,11 @@ class Counter(commands.Cog):
 
     @counter.command()
     async def users(self, ctx):
-        """Display the total number of unique users"""
-        guild_data = await self.config.guild(ctx.guild).all()
-        unique_users_count = len(guild_data["unique_users"])
+        """Display the total number of users who can use the bot"""
+        total_users = sum(len(guild.members) for guild in self.bot.guilds)
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
-        embed.add_field(name="Total Unique Users", value=unique_users_count, inline=False)
+        embed.add_field(name="Total Users", value=total_users, inline=False)
 
         await ctx.send(embed=embed)
 
@@ -62,11 +61,16 @@ class Counter(commands.Cog):
 
     @counter.command()
     async def commands(self, ctx):
-        """Display the total number of commands the bot has"""
-        total_commands = len(self.bot.commands)
+        """Display all commands and subcommands the bot has"""
+        all_commands = []
+        for command in self.bot.commands.values():
+            all_commands.append(command.name)
+            if isinstance(command, commands.Group):
+                for subcommand in command.commands.values():
+                    all_commands.append(f"{command.name} {subcommand.name}")
 
         embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
-        embed.add_field(name="Total Commands", value=total_commands, inline=False)
+        embed.add_field(name="All Commands", value=", ".join(all_commands), inline=False)
 
         await ctx.send(embed=embed)
 
