@@ -67,7 +67,7 @@ class RequestGB(commands.Cog):
                 )
         await ctx.send(embed=embed)
 
-    @requestgb.command(aliases=["reqgb", "rgb"])
+    @commands.command(aliases=["reqgb", "rgb"])
     async def reqglobalban(self, ctx, user_id: int, *, reason: str):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
