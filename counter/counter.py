@@ -13,6 +13,7 @@ class Counter(commands.Cog):
             "command_count": 0,
             "unique_users": [],
             "command_usage": {},
+            "channel_id": None,
         }
         self.config.register_guild(**default_guild)
 
@@ -44,7 +45,7 @@ class Counter(commands.Cog):
         """Display the total number of users who can use the bot"""
         total_users = sum(len(guild.members) for guild in self.bot.guilds)
 
-        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed = discord.Embed(title="Total Users", color=discord.Color.green())
         embed.add_field(name="Total Users", value=total_users, inline=False)
 
         await ctx.send(embed=embed)
@@ -54,7 +55,7 @@ class Counter(commands.Cog):
         """Display the total servers"""
         server_count = len(self.bot.guilds)
 
-        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed = discord.Embed(title="Total Servers", color=discord.Color.green())
         embed.add_field(name="Total Servers", value=server_count, inline=False)
 
         await ctx.send(embed=embed)
@@ -64,7 +65,7 @@ class Counter(commands.Cog):
         """Display the total number of commands and subcommands the bot has"""
         total_commands = sum(1 for _ in self.bot.walk_commands())
 
-        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed = discord.Embed(title="Total Commands", color=discord.Color.green())
         embed.add_field(name="Total Commands", value=total_commands, inline=False)
 
         await ctx.send(embed=embed)
@@ -74,7 +75,7 @@ class Counter(commands.Cog):
         """Display the total cogs"""
         cog_count = len(self.bot.cogs)
 
-        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed = discord.Embed(title="Total Cogs", color=discord.Color.green())
         embed.add_field(name="Total Cogs", value=cog_count, inline=False)
 
         await ctx.send(embed=embed)
@@ -97,10 +98,70 @@ class Counter(commands.Cog):
         sorted_commands = sorted(user_commands.items(), key=lambda item: item[1], reverse=True)[:10]
         user_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
 
-        embed = discord.Embed(title="Here's your requested count", color=discord.Color.green())
+        embed = discord.Embed(title="Top 10 Commands", color=discord.Color.green())
         embed.add_field(name=f"Top 10 Commands used by user ID {user_id}", value=user_stats, inline=False)
 
         await ctx.send(embed=embed)
+
+    @counter.command()
+    @commands.guild_only()
+    @commands.admin_or_permissions(manage_guild=True)
+    async def setchannel(self, ctx, channel: discord.TextChannel):
+        """Set the channel for dynamically updating statistics"""
+        await self.config.guild(ctx.guild).channel_id.set(channel.id)
+        await ctx.send(f"Channel set to {channel.mention} for dynamic statistics.")
+
+    async def update_dynamic_embed(self):
+        for guild in self.bot.guilds:
+            channel_id = await self.config.guild(guild).channel_id()
+            if channel_id:
+                channel = self.bot.get_channel(channel_id)
+                if channel:
+                    total_users = sum(len(guild.members) for guild in self.bot.guilds)
+                    server_count = len(self.bot.guilds)
+                    total_commands = sum(1 for _ in self.bot.walk_commands())
+                    cog_count = len(self.bot.cogs)
+
+                    embed = discord.Embed(title="Dynamic Statistics", color=discord.Color.green())
+                    embed.add_field(name="Total Users", value=total_users, inline=False)
+                    embed.add_field(name="Total Servers", value=server_count, inline=False)
+                    embed.add_field(name="Total Commands", value=total_commands, inline=False)
+                    embed.add_field(name="Total Cogs", value=cog_count, inline=False)
+
+                    message = None
+                    async for msg in channel.history(limit=10):
+                        if msg.author == self.bot.user and msg.embeds and msg.embeds[0].title == "Dynamic Statistics":
+                            message = msg
+                            break
+
+                    if message:
+                        await message.edit(embed=embed)
+                    else:
+                        await channel.send(embed=embed)
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.update_dynamic_embed()
+
+    @commands.Cog.listener()
+    async def on_guild_join(self, guild):
+        await self.update_dynamic_embed()
+
+    @commands.Cog.listener()
+    async def on_guild_remove(self, guild):
+        await self.update_dynamic_embed()
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        await self.update_dynamic_embed()
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        await self.update_dynamic_embed()
+
+    @commands.Cog.listener()
+    async def on_command_completion(self, ctx):
+        await self.update_dynamic_embed()
 
 def setup(bot):
     bot.add_cog(Counter(bot))
