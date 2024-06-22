@@ -1,328 +1,184 @@
 import discord
 import os
 from redbot.core import commands, Config
-import asyncio
-from datetime import datetime, timedelta
 
 class Comm(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier="usercomm", force_registration=True)
+        self.config = Config.get_conf(self, identifier="comm", force_registration=True)
         self.config.register_global(
-            linked_users=[],
-            active_sessions={},
-            previous_sessions={},
-            user_names={},
-            merged_sessions={},
-            trusted_users=[],
-            banned_users={}
+            linked_channels_list=[]
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
 
-    async def send_status_message(self, message, user, title):
-        linked_users = await self.config.linked_users()
-        for user_id in linked_users:
-            relay_user = self.bot.get_user(user_id)
-            if relay_user and relay_user != user:
-                await relay_user.send(f"{title}: {message}")
+    async def send_status_message(self, message, channel, title):
+        linked_channels = await self.config.linked_channels_list()
+        guild = channel.guild if channel.guild else "DM"
+        embed = discord.Embed(title=title, description=f"{guild}: {message}")
+        for channel_id in linked_channels:
+            relay_channel = self.bot.get_channel(channel_id)
+            if relay_channel and relay_channel != channel:
+                await relay_channel.send(embed=embed)
 
-    @commands.group(aliases=['uc'])
-    async def usercomm(self, ctx):
-        """Manage usercomm connections."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return False
-        return True
+    @commands.group(aliases=['comm'])
+    async def comm(self, ctx):
+        """Manage comm connections."""
+        pass
 
-    @usercomm.command(name="create")
-    async def usercomm_create(self, ctx, name: str, password: str = None):
-        """Create a usercomm network with a name and optional password."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-        if name in active_sessions:
-            await ctx.send("A session with this name already exists.")
-            return
-        active_sessions[name] = {"password": password, "users": []}
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"Usercomm network '{name}' created successfully.")
-
-    @usercomm.command(name="join")
-    async def usercomm_join(self, ctx, name: str, password: str = None):
-        """Join an existing usercomm network with a name and optional password."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-        banned_users = await self.config.banned_users()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if active_sessions[name]["password"] and active_sessions[name]["password"] != password:
-            await ctx.send("Incorrect password.")
-            return
-
-        if ctx.author.id in banned_users and banned_users[ctx.author.id] > asyncio.get_event_loop().time():
-            ban_end = datetime.fromtimestamp(banned_users[ctx.author.id])
-            ban_end_timestamp = f"<t:{int(ban_end.timestamp())}:R>"
-            await ctx.send(f"You are banned from joining usercomm networks until {ban_end_timestamp}.")
-            return
-
-        current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
-
-        if current_sessions:
-            current_session_name = current_sessions[0]
-            await ctx.send(f"You are currently in the usercomm network '{current_session_name}'. Do you want to leave it and join '{name}'? (Yes/No)")
-
-            def check(m):
-                return m.author.id == ctx.author.id and m.channel == ctx.channel and m.content.lower() in ["yes", "no"]
-
-            try:
-                response = await self.bot.wait_for('message', check=check, timeout=60.0)
-                if response.content.lower() == "yes":
-                    active_sessions[current_session_name]["users"].remove(ctx.author.id)
-                    await ctx.send(f"You have left the usercomm network '{current_session_name}' and joined '{name}'.")
-                else:
-                    await ctx.send(f"You have decided to stay in the usercomm network '{current_session_name}'.")
-                    return
-            except asyncio.TimeoutError:
-                await ctx.send("You did not respond in time. Please try again.")
-                return
-
-        if ctx.author.id in active_sessions[name]["users"]:
-            await ctx.send("You are already part of this session.")
-            return
-        active_sessions[name]["users"].append(ctx.author.id)
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"You have joined the usercomm network '{name}'.")
-
-    @usercomm.command(name="leave")
-    async def usercomm_leave(self, ctx, name: str):
-        """Leave an existing usercomm network with a name."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if ctx.author.id not in active_sessions[name]["users"]:
-            await ctx.send("You are not part of this session.")
-            return
-        active_sessions[name]["users"].remove(ctx.author.id)
-
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"You have left the usercomm network '{name}'.")
-
-    @usercomm.command(name="changename")
-    async def usercomm_changename(self, ctx, new_name: str):
-        """Change your display name in the usercomm network."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        user_names = await self.config.user_names()
-        user_names[str(ctx.author.id)] = new_name
-        await self.config.user_names.set(user_names)
-        await ctx.send(f"Your display name has been changed to '{new_name}'.")
-
-    @usercomm.command(name="remove")
-    @commands.is_owner()
-    async def usercomm_remove(self, ctx, user: discord.User, reason: str, duration: int = 300):
-        """Remove a user from the usercomm and ban them for a specified duration (in seconds)."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-        banned_users = await self.config.banned_users()
-
-        for session_name, session_info in active_sessions.items():
-            if user.id in session_info["users"]:
-                session_info["users"].remove(user.id)
-                await ctx.send(f"{user.display_name} has been removed from the usercomm network '{session_name}' for '{reason}'.")
-
-        ban_end = datetime.now() + timedelta(seconds=duration)
-        banned_users[str(user.id)] = ban_end.timestamp()
-        await self.config.active_sessions.set(active_sessions)
-        await self.config.banned_users.set(banned_users)
-        ban_end_timestamp = f"<t:{int(ban_end.timestamp())}:R>"
-        await ctx.send(f"{user.display_name} has been banned for '{reason}' until {ban_end_timestamp}.")
-        await user.send(f"You have been banned for '{reason}' until {ban_end_timestamp}.")
-
-    @usercomm.command(name="unban")
-    @commands.is_owner()
-    async def usercomm_unban(self, ctx, user: discord.User):
-        """Unban a user from the usercomm."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        banned_users = await self.config.banned_users()
-
-        if str(user.id) not in banned_users:
-            await ctx.send(f"{user.display_name} is not banned.")
-            return
-
-        del banned_users[str(user.id)]
-        await self.config.banned_users.set(banned_users)
-        await ctx.send(f"{user.display_name} has been unbanned from the usercomm network.")
-        await user.send(f"You have been unbanned from the usercomm network.")
-
-    @usercomm.command(name="trust")
-    @commands.is_owner()
-    async def usercomm_trust(self, ctx, user: discord.User):
-        """Add a trusted user who can remove other users from the usercomm."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        trusted_users = await self.config.trusted_users()
-        if user.id not in trusted_users:
-            trusted_users.append(user.id)
-            await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been added as a trusted user.")
+    @comm.command(name="open")
+    async def comm_open(self, ctx):
+        """Link the current channel to the comm network."""
+        linked_channels = await self.config.linked_channels_list()
+        if ctx.channel.id not in linked_channels:
+            linked_channels.append(ctx.channel.id)
+            await self.config.linked_channels_list.set(linked_channels)
+            embed = discord.Embed(title="Success!", description="This channel has joined the comm network.")
+            await ctx.send(embed=embed)
+            await self.send_status_message(f"A signal was picked up from {ctx.channel.mention}, connection has been established.", ctx.channel, "Success!")
         else:
-            await ctx.send(f"{user.display_name} is already a trusted user.")
+            embed = discord.Embed(title="Error", description="This channel is already part of the comm network.")
+            await ctx.send(embed=embed)
 
-    @usercomm.command(name="untrust")
-    @commands.is_owner()
-    async def usercomm_untrust(self, ctx, user: discord.User):
-        """Remove a trusted user."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        trusted_users = await self.config.trusted_users()
-        if user.id in trusted_users:
-            trusted_users.remove(user.id)
-            await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been removed as a trusted user.")
+    @comm.command(name="close")
+    async def comm_close(self, ctx):
+        """Unlink the current channel from the comm network."""
+        linked_channels = await self.config.linked_channels_list()
+        if ctx.channel.id in linked_channels:
+            linked_channels.remove(ctx.channel.id)
+            await self.config.linked_channels_list.set(linked_channels)
+            embed = discord.Embed(title="Success!", description="This channel has been severed from the comm network.")
+            await ctx.send(embed=embed)
+            await self.send_status_message(f"The signal from {ctx.channel.mention} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
         else:
-            await ctx.send(f"{user.display_name} is not a trusted user.")
-
-    @usercomm.command(name="add")
-    @commands.is_owner()
-    async def usercomm_add(self, ctx, user: discord.User, name: str):
-        """Manually add a user back to a usercomm network."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if user.id in active_sessions[name]["users"]:
-            await ctx.send(f"{user.display_name} is already part of this session.")
-            return
-        active_sessions[name]["users"].append(user.id)
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"{user.display_name} has been added to the usercomm network '{name}'.")
-
-    @usercomm.command(name="listusers")
-    @commands.is_owner()
-    async def usercomm_listusers(self, ctx, name: str):
-        """List all users and their IDs currently connected to a specific usercomm network."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-        user_names = await self.config.user_names()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-
-        users_list = "\n".join([f"{user_id}: {user_names.get(str(user_id), 'Unknown')}" for user_id in active_sessions[name]["users"]])
-        if not users_list:
-            users_list = "No users found."
-        await ctx.send(f"Users in '{name}' and their IDs:\n{users_list}")
-
-    @usercomm.command(name="listcomms")
-    @commands.is_owner()
-    async def usercomm_listcomms(self, ctx):
-        """List all existing usercomm networks."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-        comms_list = "\n".join(active_sessions.keys())
-        if not comms_list:
-            comms_list = "No usercomm networks found."
-        await ctx.send(f"Existing usercomm networks:\n{comms_list}")
-
-    @usercomm.command(name="delete")
-    @commands.is_owner()
-    async def usercomm_delete(self, ctx, name: str):
-        """Forcefully delete an existing usercomm network."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return
-        active_sessions = await self.config.active_sessions()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-
-        del active_sessions[name]
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"The usercomm network '{name}' has been forcefully deleted.")
+            embed = discord.Embed(title="Error", description="This channel is not part of the comm network.")
+            await ctx.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.author.bot:
+        if message.author.bot or not message.channel.permissions_for(message.guild.me).send_messages:
             return
+        if isinstance(message.channel, discord.TextChannel) and message.content.startswith(commands.when_mentioned(self.bot, message)[0]):
+            return  # Ignore bot commands
 
-        active_sessions = await self.config.active_sessions()
-        user_names = await self.config.user_names()
-        trusted_users = await self.config.trusted_users()
+        # Check if the message is a bot command
+        ctx = await self.bot.get_context(message)
+        if ctx.valid:
+            return  # Ignore bot commands
 
-        if not isinstance(message.channel, discord.DMChannel):
-            return
+        linked_channels = await self.config.linked_channels_list()
 
-        # Relay messages to other users in the same usercomm network
-        for session_name, session_info in active_sessions.items():
-            if message.author.id in session_info["users"]:
-                display_name = user_names.get(str(message.author.id), message.author.display_name)
-                if message.author.id in trusted_users:
-                    display_name += " - Moderator"
-                for user_id in session_info["users"]:
-                    if user_id != message.author.id:
-                        user = self.bot.get_user(user_id)
-                        if user:
-                            if message.attachments:
-                                for attachment in message.attachments:
-                                    await user.send(f"**{display_name}:** {message.content}")
-                                    await attachment.save(f"temp_{attachment.filename}")
-                                    with open(f"temp_{attachment.filename}", "rb") as file:
-                                        await user.send(file=discord.File(file))
-                                    os.remove(f"temp_{attachment.filename}")
-                            else:
-                                await user.send(f"**{display_name}:** {message.content}")
+        if message.channel.id in linked_channels:
+            display_name = message.author.name  # Use the author's username instead of display name
+
+            # Store the message reference
+            self.message_references[message.id] = (message.author.id, message.guild.id if message.guild else None)
+
+            # Relay the message to other linked channels, removing mentions
+            content = message.content
+
+            # Remove @everyone and @here mentions
+            content = content.replace("@everyone", "").replace("@here", "")
+
+            # Handle mentions
+            mentioned_users = message.mentions
+            if mentioned_users:
+                for user in mentioned_users:
+                    content = content.replace(f"<@{user.id}>", '')  # Remove the mention
+                    embed = discord.Embed(title="You were mentioned!")
+                    embed.add_field(name="Who", value=message.author.mention, inline=False)
+                    embed.add_field(name="Where", value=f"{message.channel.mention} in {message.guild.name if message.guild else 'DM'}", inline=False)
+                    embed.add_field(name="When", value=message.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
+                    await user.send(embed=embed)
+
+            # If there's no content left after removing mentions
+            if not content.strip():
+                content = "User Mentioned Blocked"
+
+            # Handle emojis
+            content = self.replace_emojis_with_urls(message.guild, content)
+
+            for channel_id in linked_channels:
+                if channel_id != message.channel.id:
+                    channel = self.bot.get_channel(channel_id)
+                    if channel:
+                        if message.attachments:
+                            for attachment in message.attachments:
+                                relay_message = await channel.send(f"**{message.guild.name if message.guild else 'DM'} - {display_name}:** {content}")
+                                await attachment.save(f"temp_{attachment.filename}")
+                                with open(f"temp_{attachment.filename}", "rb") as file:
+                                    await channel.send(file=discord.File(file))
+                                os.remove(f"temp_{attachment.filename}")
+                        else:
+                            relay_message = await channel.send(f"**{message.guild.name if message.guild else 'DM'} - {display_name}:** {content}")
+                        self.relayed_messages[(message.id, channel_id)] = relay_message.id
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
         if after.author.bot:
             return
 
-        active_sessions = await self.config.active_sessions()
-        user_names = await self.config.user_names()
-        trusted_users = await self.config.trusted_users()
+        linked_channels = await self.config.linked_channels_list()
 
-        if not isinstance(after.channel, discord.DMChannel):
+        if after.channel.id in linked_channels:
+            display_name = after.author.name  # Use the author's username instead of display name
+            content = after.content
+
+            # Remove @everyone and @here mentions
+            content = content.replace("@everyone", "").replace("@here", "")
+
+            # Handle mentions
+            mentioned_users = after.mentions
+            if mentioned_users:
+                for user in mentioned_users:
+                    content = content.replace(f"<@{user.id}>", '')  # Remove the mention
+                    embed = discord.Embed(title="You were mentioned!")
+                    embed.add_field(name="Who", value=after.author.mention, inline=False)
+                    embed.add_field(name="Where", value=f"{after.channel.mention} in {after.guild.name if after.guild else 'DM'}", inline=False)
+                    embed.add_field(name="When", value=after.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
+                    await user.send(embed=embed)
+
+            # If there's no content left after removing mentions
+            if not content.strip():
+                content = "User Mentioned Blocked"
+
+            # Handle emojis
+            content = self.replace_emojis_with_urls(after.guild, content)
+
+            for channel_id in linked_channels:
+                if channel_id != after.channel.id:
+                    channel = self.bot.get_channel(channel_id)
+                    if channel:
+                        if (before.id, channel_id) in self.relayed_messages:
+                            relay_message_id = self.relayed_messages[(before.id, channel_id)]
+                            relay_message = await channel.fetch_message(relay_message_id)
+                            await relay_message.delete()
+                            new_relay_message = await channel.send(f"**{after.guild.name if after.guild else 'DM'} - {display_name} (edited):** {content}")
+                            self.relayed_messages[(after.id, channel_id)] = new_relay_message.id
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message: discord.Message):
+        if message.author.bot:
             return
 
-        # Relay edited messages to other users in the same usercomm network
-        for session_name, session_info in active_sessions.items():
-            if after.author.id in session_info["users"]:
-                display_name = user_names.get(str(after.author.id), after.author.display_name)
-                if after.author.id in trusted_users:
-                    display_name += " - Moderator"
-                for user_id in session_info["users"]:
-                    if user_id != after.author.id:
-                        user = self.bot.get_user(user_id)
-                        if user:
-                            await user.send(f"**{display_name} (edited):** {after.content}")
+        linked_channels = await self.config.linked_channels_list()
+
+        # Check if the message is in a comm channel
+        if message.channel.id in linked_channels:
+            for channel_id in linked_channels:
+                if channel_id != message.channel.id:
+                    channel = self.bot.get_channel(channel_id)
+                    if channel and (message.id, channel_id) in self.relayed_messages:
+                        relay_message_id = self.relayed_messages[(message.id, channel_id)]
+                        relay_message = await channel.fetch_message(relay_message_id)
+                        await relay_message.delete()
+
+    def replace_emojis_with_urls(self, guild, content):
+        if guild:
+            for emoji in guild.emojis:
+                if str(emoji) in content:
+                    content = content.replace(str(emoji), str(emoji.url))
+        return content
 
 def setup(bot):
     bot.add_cog(Comm(bot))
