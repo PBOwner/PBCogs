@@ -114,24 +114,26 @@ class Counter(commands.Cog):
 
     @count.command()
     async def topusers(self, ctx):
-        """Display the top users and each command they ran"""
-        guild_data = await self.config.guild(ctx.guild).all()
+        """Display the top users globally and each command they ran"""
+        all_guild_data = await self.config.all_guilds()
         user_command_counts = {}
 
-        for command_name, usage_data in guild_data["command_usage"].items():
-            for user_id, count in usage_data["users"].items():
-                if user_id not in user_command_counts:
-                    user_command_counts[user_id] = 0
-                user_command_counts[user_id] += count
+        for guild_id, guild_data in all_guild_data.items():
+            for command_name, usage_data in guild_data["command_usage"].items():
+                for user_id, count in usage_data["users"].items():
+                    if user_id not in user_command_counts:
+                        user_command_counts[user_id] = 0
+                    user_command_counts[user_id] += count
 
         top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)
 
         embed = discord.Embed(title="Top Users", color=self.get_random_color())
         for user_id, _ in top_users:
-            user = ctx.guild.get_member(user_id)
+            user = self.bot.get_user(user_id)
             if user:
                 user_commands = [
                     f"{cmd}: {usage_data['users'][user_id]}"
+                    for guild_data in all_guild_data.values()
                     for cmd, usage_data in guild_data["command_usage"].items()
                     if user_id in usage_data["users"]
                 ]
