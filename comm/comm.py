@@ -21,6 +21,15 @@ class Comm(commands.Cog):
             if relay_channel and relay_channel != channel:
                 await relay_channel.send(embed=embed)
 
+    def get_display_name(self, user: discord.User):
+        """Get the display name with role suffix if applicable."""
+        if user.id in self.bot.owner_ids:
+            return f"{user.display_name} - Owner"
+        trusted_users = self.bot.get_cog("Comm").config.trusted_users()
+        if user.id in trusted_users:
+            return f"{user.display_name} - Moderator"
+        return user.display_name
+
     @commands.group(aliases=['uc'])
     async def usercomm(self, ctx):
         """Manage usercomm connections."""
@@ -39,7 +48,7 @@ class Comm(commands.Cog):
             await self.config.linked_channels_list.set(linked_channels)
             embed = discord.Embed(title="Success!", description="You have joined the Communications channel.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"{ctx.author.display_name} has joined the Communications channel.", ctx.channel, "Success!")
+            await self.send_status_message(f"{self.get_display_name(ctx.author)} has joined the Communications channel.", ctx.channel, "Success!")
         else:
             embed = discord.Embed(title="Error", description="You are already part of the Communications channel.")
             await ctx.send(embed=embed)
@@ -55,7 +64,7 @@ class Comm(commands.Cog):
             await self.config.linked_channels_list.set(linked_channels)
             embed = discord.Embed(title="Success!", description="You have been severed from the Communications channel.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"The signal from {ctx.author.display_name} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
+            await self.send_status_message(f"The signal from {self.get_display_name(ctx.author)} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
         else:
             embed = discord.Embed(title="Error", description="You are not part of the Communications channel.")
             await ctx.send(embed=embed)
@@ -68,9 +77,9 @@ class Comm(commands.Cog):
         if user.id not in trusted_users:
             trusted_users.append(user.id)
             await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been added as a trusted user.")
+            await ctx.send(f"{self.get_display_name(user)} has been added as a trusted user.")
         else:
-            await ctx.send(f"{user.display_name} is already a trusted user.")
+            await ctx.send(f"{self.get_display_name(user)} is already a trusted user.")
 
     @usercomm.command(name="removetrusted")
     @commands.is_owner()
@@ -80,9 +89,9 @@ class Comm(commands.Cog):
         if user.id in trusted_users:
             trusted_users.remove(user.id)
             await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been removed from trusted users.")
+            await ctx.send(f"{self.get_display_name(user)} has been removed from trusted users.")
         else:
-            await ctx.send(f"{user.display_name} is not a trusted user.")
+            await ctx.send(f"{self.get_display_name(user)} is not a trusted user.")
 
     @usercomm.command(name="remove")
     async def usercomm_remove(self, ctx, user: discord.User):
@@ -94,10 +103,10 @@ class Comm(commands.Cog):
         if user.dm_channel.id in linked_channels:
             linked_channels.remove(user.dm_channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            await ctx.send(f"{user.display_name} has been forcibly removed from the Communications channel.")
-            await self.send_status_message(f"{user.display_name} has been forcibly removed from the Communications channel by {ctx.author.display_name}.", ctx.channel, "User Removed")
+            await ctx.send(f"{self.get_display_name(user)} has been forcibly removed from the Communications channel.")
+            await self.send_status_message(f"{self.get_display_name(user)} has been forcibly removed from the Communications channel by {self.get_display_name(ctx.author)}.", ctx.channel, "User Removed")
         else:
-            await ctx.send(f"{user.display_name} is not part of the Communications channel.")
+            await ctx.send(f"{self.get_display_name(user)} is not part of the Communications channel.")
 
     @usercomm.command(name="list")
     async def usercomm_list(self, ctx):
@@ -107,7 +116,7 @@ class Comm(commands.Cog):
         for channel_id in linked_channels:
             channel = self.bot.get_channel(channel_id)
             if channel and channel.recipient:
-                user_list.append(f"{channel.recipient.display_name} (ID: {channel.recipient.id})")
+                user_list.append(f"{self.get_display_name(channel.recipient)} (ID: {channel.recipient.id})")
         if user_list:
             embed = discord.Embed(title="Connected Users", description="\n".join(user_list))
         else:
@@ -127,7 +136,7 @@ class Comm(commands.Cog):
         linked_channels = await self.config.linked_channels_list()
 
         if message.channel.id in linked_channels:
-            display_name = message.author.display_name
+            display_name = self.get_display_name(message.author)
 
             # Store the message reference
             self.message_references[message.id] = (message.author.id, None)
@@ -161,7 +170,7 @@ class Comm(commands.Cog):
         linked_channels = await self.config.linked_channels_list()
 
         if after.channel.id in linked_channels:
-            display_name = after.author.display_name
+            display_name = self.get_display_name(after.author)
             content = after.content
 
             # Handle emojis
