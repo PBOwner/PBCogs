@@ -13,7 +13,6 @@ class Counter(commands.Cog):
             "command_count": 0,
             "unique_users": [],
             "command_usage": {},
-            "channel_id": None,
         }
         self.config.register_guild(**default_guild)
 
@@ -71,6 +70,16 @@ class Counter(commands.Cog):
         await ctx.send(embed=embed)
 
     @counter.command()
+    async def cogs(self, ctx):
+        """Display the total cogs"""
+        cog_count = len(self.bot.cogs)
+
+        embed = discord.Embed(title="Total Cogs", color=discord.Color.green())
+        embed.add_field(name="Total Cogs", value=cog_count, inline=True)
+
+        await ctx.send(embed=embed)
+
+    @counter.command()
     @is_owner()
     async def totalcommands(self, ctx, user_id: int):
         """Display the top 10 commands used by a specific user ID"""
@@ -92,83 +101,6 @@ class Counter(commands.Cog):
         embed.add_field(name=f"Top 10 Commands used by user ID {user_id}", value=user_stats, inline=False)
 
         await ctx.send(embed=embed)
-
-    @counter.command()
-    async def setchannel(self, ctx, channel: discord.TextChannel):
-        """Set the channel for dynamically updating statistics"""
-        if not ctx.guild:
-            await ctx.send("This command can only be used in a server.")
-            return
-
-        if not ctx.author.guild_permissions.manage_guild:
-            await ctx.send("You do not have the required permissions to use this command.")
-            return
-
-        await self.config.guild(ctx.guild).channel_id.set(channel.id)
-        await ctx.send(f"Channel set to {channel.mention} for dynamic statistics.")
-
-    async def update_dynamic_embed(self):
-        for guild in self.bot.guilds:
-            channel_id = await self.config.guild(guild).channel_id()
-            if channel_id:
-                channel = self.bot.get_channel(channel_id)
-                if channel:
-                    total_users = sum(len(guild.members) for guild in self.bot.guilds)
-                    server_count = len(self.bot.guilds)
-                    total_commands = sum(1 for _ in self.bot.walk_commands())
-
-                    # Calculate top 5 users with the most commands run
-                    user_command_counts = {}
-                    for usage_data in (await self.config.all_guilds()).values():
-                        for command_name, data in usage_data["command_usage"].items():
-                            for user_id, count in data["users"].items():
-                                if user_id not in user_command_counts:
-                                    user_command_counts[user_id] = 0
-                                user_command_counts[user_id] += count
-
-                    top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)[:5]
-                    top_users_stats = "\n".join([f"<@{user_id}>: {count}" for user_id, count in top_users])
-
-                    embed = discord.Embed(title="Bot Stats", color=discord.Color.green())
-                    embed.add_field(name="Total Users", value=total_users, inline=True)
-                    embed.add_field(name="Total Servers", value=server_count, inline=True)
-                    embed.add_field(name="Total Commands", value=total_commands, inline=True)
-                    embed.add_field(name="Top 5 Users", value=top_users_stats, inline=False)
-
-                    message = None
-                    async for msg in channel.history(limit=10):
-                        if msg.author == self.bot.user and msg.embeds and msg.embeds[0].title == "Bot Stats":
-                            message = msg
-                            break
-
-                    if message:
-                        await message.edit(embed=embed)
-                    else:
-                        await channel.send(embed=embed)
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        await self.update_dynamic_embed()
-
-    @commands.Cog.listener()
-    async def on_guild_join(self, guild):
-        await self.update_dynamic_embed()
-
-    @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
-        await self.update_dynamic_embed()
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        await self.update_dynamic_embed()
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        await self.update_dynamic_embed()
-
-    @commands.Cog.listener()
-    async def on_command_completion(self, ctx):
-        await self.update_dynamic_embed()
 
 def setup(bot):
     bot.add_cog(Counter(bot))
