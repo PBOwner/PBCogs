@@ -2,7 +2,7 @@ from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
 from redbot.core.commands import is_owner
-from redbot.core.commands import cog as Cog
+from redbot.core.commands import Cog as cog
 class Counter(commands.Cog):
     """A cog to track various statistics for Red-DiscordBot"""
 
