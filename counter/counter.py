@@ -1,3 +1,4 @@
+import random
 from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
@@ -17,12 +18,15 @@ class Counter(commands.Cog):
         }
         self.config.register_guild(**default_guild)
         self.color_index = 0
-        self.colors = [0xff00ff, 0x0000ff, 0x00ff00]
+        self.colors = [0xFF0000, 0xFFA500, 0xFFFF00, 0x00FF00, 0x0000FF, 0x800080]  # Red, Orange, Yellow, Green, Blue, Purple
 
     def get_next_color(self):
         color = self.colors[self.color_index]
         self.color_index = (self.color_index + 1) % len(self.colors)
         return color
+
+    def get_random_color(self):
+        return random.choice(self.colors)
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
@@ -42,12 +46,12 @@ class Counter(commands.Cog):
 
             guild_data["command_usage"][ctx.command.name]["users"][ctx.author.id] += 1
 
-    @commands.group(invoke_without_command=True)
-    async def counter(self, ctx):
+    @commands.group(name="count", invoke_without_command=True)
+    async def count(self, ctx):
         """Group command for counting statistics"""
         await ctx.send_help(ctx.command)
 
-    @counter.command()
+    @count.command()
     async def users(self, ctx):
         """Display the total number of users who can use the bot"""
         total_users = sum(len(guild.members) for guild in self.bot.guilds)
@@ -58,7 +62,7 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @counter.command()
+    @count.command()
     async def servers(self, ctx):
         """Display the total servers"""
         server_count = len(self.bot.guilds)
@@ -69,7 +73,7 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @counter.command()
+    @count.command()
     async def commands(self, ctx):
         """Display the total number of commands and subcommands the bot has"""
         total_commands = sum(1 for _ in self.bot.walk_commands())
@@ -80,7 +84,7 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @counter.command()
+    @count.command()
     async def cogs(self, ctx):
         """Display the total cogs"""
         cog_count = len(self.bot.cogs)
@@ -91,7 +95,7 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @counter.command()
+    @count.command()
     @is_owner()
     async def totalcommands(self, ctx, user_id: int):
         """Display the top 10 commands used by a specific user ID"""
@@ -115,9 +119,9 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @counter.command()
+    @count.command()
     async def topusers(self, ctx):
-        """Display the top 5 users and each command they ran"""
+        """Display the top users and each command they ran"""
         guild_data = await self.config.guild(ctx.guild).all()
         user_command_counts = {}
 
@@ -129,7 +133,7 @@ class Counter(commands.Cog):
 
         top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)[:5]
 
-        embed = discord.Embed(title="Top 5 Users", color=self.get_next_color())
+        embed = discord.Embed(title="Top Users", color=self.get_next_color())
         for user_id, _ in top_users:
             user = ctx.guild.get_member(user_id)
             if user:
@@ -140,6 +144,25 @@ class Counter(commands.Cog):
                 ]
                 user_stats = "\n".join(user_commands)
                 embed.add_field(name=user.display_name, value=user_stats, inline=False)
+
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
+
+        await ctx.send(embed=embed)
+
+    @count.command()
+    @is_owner()
+    async def stats(self, ctx):
+        """Display all statistics in one embed with a random color"""
+        total_users = sum(len(guild.members) for guild in self.bot.guilds)
+        server_count = len(self.bot.guilds)
+        total_commands = sum(1 for _ in self.bot.walk_commands())
+        cog_count = len(self.bot.cogs)
+
+        embed = discord.Embed(title="Bot Statistics", color=self.get_random_color())
+        embed.add_field(name="Total Users", value=total_users, inline=True)
+        embed.add_field(name="Total Servers", value=server_count, inline=True)
+        embed.add_field(name="Total Commands", value=total_commands, inline=True)
+        embed.add_field(name="Total Cogs", value=cog_count, inline=True)
 
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
