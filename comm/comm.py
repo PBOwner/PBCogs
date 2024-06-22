@@ -12,7 +12,9 @@ class Comm(commands.Cog):
             active_sessions={},
             previous_sessions={},
             user_names={},
-            merged_sessions={}
+            merged_sessions={},
+            trusted_users=[],
+            banned_users={}
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
@@ -46,12 +48,17 @@ class Comm(commands.Cog):
         """Join an existing usercomm network with a name and optional password."""
         active_sessions = await self.config.active_sessions()
         merged_sessions = await self.config.merged_sessions()
+        banned_users = await self.config.banned_users()
 
         if name not in active_sessions:
             await ctx.send("No session found with this name.")
             return
         if active_sessions[name]["password"] and active_sessions[name]["password"] != password:
             await ctx.send("Incorrect password.")
+            return
+
+        if ctx.author.id in banned_users and banned_users[ctx.author.id] > asyncio.get_event_loop().time():
+            await ctx.send(f"You are banned from joining usercomm networks for {int(banned_users[ctx.author.id] - asyncio.get_event_loop().time())} more seconds.")
             return
 
         current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
@@ -117,6 +124,47 @@ class Comm(commands.Cog):
         user_names[ctx.author.id] = new_name
         await self.config.user_names.set(user_names)
         await ctx.send(f"Your display name has been changed to '{new_name}'.")
+
+    @usercomm.command(name="remove")
+    @commands.is_owner()
+    async def usercomm_remove(self, ctx, user: discord.User, reason: str):
+        """Remove a user from the usercomm and ban them for 300 seconds."""
+        active_sessions = await self.config.active_sessions()
+        banned_users = await self.config.banned_users()
+
+        for session_name, session_info in active_sessions.items():
+            if user.id in session_info["users"]:
+                session_info["users"].remove(user.id)
+                await ctx.send(f"{user.display_name} has been removed from the usercomm network '{session_name}' for '{reason}'.")
+
+        banned_users[user.id] = asyncio.get_event_loop().time() + 300
+        await self.config.active_sessions.set(active_sessions)
+        await self.config.banned_users.set(banned_users)
+        await user.send(f"You have been removed from the usercomm network for '{reason}' and banned for 300 seconds.")
+
+    @usercomm.command(name="addtrusted")
+    @commands.is_owner()
+    async def usercomm_addtrusted(self, ctx, user: discord.User):
+        """Add a trusted user who can remove other users from the usercomm."""
+        trusted_users = await self.config.trusted_users()
+        if user.id not in trusted_users:
+            trusted_users.append(user.id)
+            await self.config.trusted_users.set(trusted_users)
+            await ctx.send(f"{user.display_name} has been added as a trusted user.")
+        else:
+            await ctx.send(f"{user.display_name} is already a trusted user.")
+
+    @usercomm.command(name="removetrusted")
+    @commands.is_owner()
+    async def usercomm_removetrusted(self, ctx, user: discord.User):
+        """Remove a trusted user."""
+        trusted_users = await self.config.trusted_users()
+        if user.id in trusted_users:
+            trusted_users.remove(user.id)
+            await self.config.trusted_users.set(trusted_users)
+            await ctx.send(f"{user.display_name} has been removed as a trusted user.")
+        else:
+            await ctx.send(f"{user.display_name} is not a trusted user.")
 
     @commands.group()
     async def dmcomm(self, ctx):
@@ -204,6 +252,7 @@ class Comm(commands.Cog):
         active_sessions = await self.config.active_sessions()
         user_names = await self.config.user_names()
         merged_sessions = await self.config.merged_sessions()
+        trusted_users = await self.config.trusted_users()
 
         if message.guild:
             # Handle server messages for direct communication
@@ -215,11 +264,15 @@ class Comm(commands.Cog):
                         other_user = self.bot.get_user(other_user_id)
                         if other_user:
                             display_name = user_names.get(message.author.id, message.author.display_name)
+                            if message.author.id in trusted_users:
+                                display_name += " - Moderator"
                             await other_user.send(f"**{display_name}:** {message.content}")
             return
 
         if message.author.id in linked_users:
             display_name = user_names.get(message.author.id, message.author.display_name)
+            if message.author.id in trusted_users:
+                display_name += " - Moderator"
 
             # Relay the message to other linked users
             content = message.content
@@ -257,9 +310,12 @@ class Comm(commands.Cog):
         linked_users = await self.config.linked_users()
         user_names = await self.config.user_names()
         merged_sessions = await self.config.merged_sessions()
+        trusted_users = await self.config.trusted_users()
 
         if after.author.id in linked_users:
             display_name = user_names.get(after.author.id, after.author.display_name)
+            if after.author.id in trusted_users:
+                display_name += " - Moderator"
             content = after.content
 
             # Handle emojis
