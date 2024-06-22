@@ -90,23 +90,7 @@ class PrivateComm(commands.Cog):
         private_comms = await self.config.private_comms()
 
         # Check if the message is in a private comm
-        if isinstance(message.channel, discord.DMChannel):
-            for comm_id, comm_data in private_comms.items():
-                if message.author.id == comm_data.get("dm_user_id"):
-                    channel = self.bot.get_channel(comm_data["channel_id"])
-                    if channel:
-                        display_name = message.author.display_name
-                        if message.attachments:
-                            for attachment in message.attachments:
-                                await channel.send(f"**{display_name}:** {message.content}")
-                                await attachment.save(f"temp_{attachment.filename}")
-                                with open(f"temp_{attachment.filename}", "rb") as file:
-                                    await channel.send(file=discord.File(file))
-                                os.remove(f"temp_{attachment.filename}")
-                        else:
-                            await channel.send(f"**{display_name}:** {message.content}")
-
-        elif isinstance(message.channel, discord.TextChannel):
+        if isinstance(message.channel, discord.TextChannel):
             if message.channel.id in private_comms:
                 comm_data = private_comms[message.channel.id]
                 dm_user_id = comm_data["dm_user_id"]
@@ -123,22 +107,28 @@ class PrivateComm(commands.Cog):
                     else:
                         await user.send(f"**{display_name}:** {message.content}")
 
+        elif isinstance(message.channel, discord.DMChannel):
+            for comm_id, comm_data in private_comms.items():
+                if message.author.id == comm_data.get("dm_user_id"):
+                    channel = self.bot.get_channel(comm_data["channel_id"])
+                    if channel:
+                        display_name = message.author.display_name
+                        if message.attachments:
+                            for attachment in message.attachments:
+                                await channel.send(f"**{display_name}:** {message.content}")
+                                await attachment.save(f"temp_{attachment.filename}")
+                                with open(f"temp_{attachment.filename}", "rb") as file:
+                                    await channel.send(file=discord.File(file))
+                                os.remove(f"temp_{attachment.filename}")
+                        else:
+                            await channel.send(f"**{display_name}:** {message.content}")
+
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
         private_comms = await self.config.private_comms()
 
         # Check if the message is in a private comm
-        if isinstance(message.channel, discord.DMChannel):
-            for comm_id, comm_data in private_comms.items():
-                if message.author.id == comm_data.get("dm_user_id"):
-                    channel = self.bot.get_channel(comm_data["channel_id"])
-                    if channel:
-                        async for msg in channel.history(limit=100):
-                            if msg.content == f"**{message.author.display_name}:** {message.content}":
-                                await msg.delete()
-                                break
-
-        elif isinstance(message.channel, discord.TextChannel):
+        if isinstance(message.channel, discord.TextChannel):
             if message.channel.id in private_comms:
                 comm_data = private_comms[message.channel.id]
                 dm_user_id = comm_data["dm_user_id"]
@@ -148,6 +138,16 @@ class PrivateComm(commands.Cog):
                         if msg.content == f"**{message.author.display_name}:** {message.content}":
                             await msg.delete()
                             break
+
+        elif isinstance(message.channel, discord.DMChannel):
+            for comm_id, comm_data in private_comms.items():
+                if message.author.id == comm_data.get("dm_user_id"):
+                    channel = self.bot.get_channel(comm_data["channel_id"])
+                    if channel:
+                        async for msg in channel.history(limit=100):
+                            if msg.content == f"**{message.author.display_name}:** {message.content}":
+                                await msg.delete()
+                                break
 
 def setup(bot):
     bot.add_cog(PrivateComm(bot))
