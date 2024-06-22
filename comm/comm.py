@@ -12,7 +12,6 @@ class Comm(commands.Cog):
             active_sessions={},
             previous_sessions={},
             user_names={},
-            merged_sessions={},
             trusted_users=[],
             banned_users={}
         )  # Initialize the configuration
@@ -47,7 +46,6 @@ class Comm(commands.Cog):
     async def usercomm_join(self, ctx, name: str, password: str = None):
         """Join an existing usercomm network with a name and optional password."""
         active_sessions = await self.config.active_sessions()
-        merged_sessions = await self.config.merged_sessions()
         banned_users = await self.config.banned_users()
 
         if name not in active_sessions:
@@ -65,21 +63,19 @@ class Comm(commands.Cog):
 
         if current_sessions:
             current_session_name = current_sessions[0]
-            await ctx.send(f"You are currently in the usercomm network '{current_session_name}'. Do you want to leave it or merge it with '{name}'? (Leave/Merge)")
+            await ctx.send(f"You are currently in the usercomm network '{current_session_name}'. Do you want to leave it and join '{name}'? (Yes/No)")
 
             def check(m):
-                return m.author.id == ctx.author.id and m.channel == ctx.channel and m.content.lower() in ["leave", "merge"]
+                return m.author.id == ctx.author.id and m.channel == ctx.channel and m.content.lower() in ["yes", "no"]
 
             try:
                 response = await self.bot.wait_for('message', check=check, timeout=60.0)
-                if response.content.lower() == "leave":
+                if response.content.lower() == "yes":
                     active_sessions[current_session_name]["users"].remove(ctx.author.id)
                     await ctx.send(f"You have left the usercomm network '{current_session_name}' and joined '{name}'.")
-                elif response.content.lower() == "merge":
-                    if ctx.author.id not in merged_sessions:
-                        merged_sessions[ctx.author.id] = []
-                    merged_sessions[ctx.author.id].append(current_session_name)
-                    await ctx.send(f"You have merged the usercomm networks '{current_session_name}' and '{name}'. Your replies will be sent to both.")
+                else:
+                    await ctx.send("You chose not to join the new usercomm network.")
+                    return
             except asyncio.TimeoutError:
                 await ctx.send("You did not respond in time. Please try again.")
                 return
@@ -89,14 +85,21 @@ class Comm(commands.Cog):
             return
         active_sessions[name]["users"].append(ctx.author.id)
         await self.config.active_sessions.set(active_sessions)
-        await self.config.merged_sessions.set(merged_sessions)
+
+        # Send an embed message to all users in the usercomm network
+        embed = discord.Embed(title="User Joined", description=f"{ctx.author.display_name} has joined the conversation.")
+        for user_id in active_sessions[name]["users"]:
+            if user_id != ctx.author.id:
+                user = self.bot.get_user(user_id)
+                if user:
+                    await user.send(embed=embed)
+
         await ctx.send(f"You have joined the usercomm network '{name}'.")
 
     @usercomm.command(name="leave")
     async def usercomm_leave(self, ctx, name: str):
         """Leave an existing usercomm network with a name."""
         active_sessions = await self.config.active_sessions()
-        merged_sessions = await self.config.merged_sessions()
 
         if name not in active_sessions:
             await ctx.send("No session found with this name.")
@@ -106,15 +109,7 @@ class Comm(commands.Cog):
             return
         active_sessions[name]["users"].remove(ctx.author.id)
 
-        # Remove from merged sessions if applicable
-        if ctx.author.id in merged_sessions:
-            if name in merged_sessions[ctx.author.id]:
-                merged_sessions[ctx.author.id].remove(name)
-                if not merged_sessions[ctx.author.id]:
-                    del merged_sessions[ctx.author.id]
-
         await self.config.active_sessions.set(active_sessions)
-        await self.config.merged_sessions.set(merged_sessions)
         await ctx.send(f"You have left the usercomm network '{name}'.")
 
     @usercomm.command(name="changename")
@@ -251,7 +246,6 @@ class Comm(commands.Cog):
         linked_users = await self.config.linked_users()
         active_sessions = await self.config.active_sessions()
         user_names = await self.config.user_names()
-        merged_sessions = await self.config.merged_sessions()
         trusted_users = await self.config.trusted_users()
 
         if message.guild:
@@ -281,10 +275,7 @@ class Comm(commands.Cog):
             if message.guild:
                 content = self.replace_emojis_with_urls(message.guild, content)
 
-            if message.author.id in merged_sessions:
-                sessions_to_relay = merged_sessions[message.author.id]
-            else:
-                sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if message.author.id in session_info["users"]]
+            sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if message.author.id in session_info["users"]]
 
             for session_name in sessions_to_relay:
                 for user_id in active_sessions[session_name]["users"]:
@@ -309,7 +300,6 @@ class Comm(commands.Cog):
 
         linked_users = await self.config.linked_users()
         user_names = await self.config.user_names()
-        merged_sessions = await self.config.merged_sessions()
         trusted_users = await self.config.trusted_users()
 
         if after.author.id in linked_users:
@@ -322,10 +312,7 @@ class Comm(commands.Cog):
             if after.guild:
                 content = self.replace_emojis_with_urls(after.guild, content)
 
-            if after.author.id in merged_sessions:
-                sessions_to_relay = merged_sessions[after.author.id]
-            else:
-                sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if after.author.id in session_info["users"]]
+            sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if after.author.id in session_info["users"]]
 
             for session_name in sessions_to_relay:
                 for user_id in active_sessions[session_name]["users"]:
