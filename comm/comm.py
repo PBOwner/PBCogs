@@ -14,7 +14,7 @@ class Comm(commands.Cog):
 
     async def send_status_message(self, message, channel, title):
         linked_channels = await self.config.linked_channels_list()
-        embed = discord.Embed(title=title, description=f"DM: {message}")
+        embed = discord.Embed(title=title, description=f"{message}")
         for channel_id in linked_channels:
             relay_channel = self.bot.get_channel(channel_id)
             if relay_channel and relay_channel != channel:
@@ -38,7 +38,7 @@ class Comm(commands.Cog):
             await self.config.linked_channels_list.set(linked_channels)
             embed = discord.Embed(title="Success!", description="This DM has joined the usercomm network.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"A signal was picked up from this DM, connection has been established.", ctx.channel, "Success!")
+            await self.send_status_message(f"{ctx.author.name} has joined the Communications channel.", ctx.channel, "Success!")
         else:
             embed = discord.Embed(title="Error", description="This DM is already part of the usercomm network.")
             await ctx.send(embed=embed)
@@ -89,13 +89,13 @@ class Comm(commands.Cog):
                     if channel:
                         if message.attachments:
                             for attachment in message.attachments:
-                                relay_message = await channel.send(f"**DM - {display_name}:** {content}")
+                                relay_message = await channel.send(f"**{display_name}:** {content}")
                                 await attachment.save(f"temp_{attachment.filename}")
                                 with open(f"temp_{attachment.filename}", "rb") as file:
                                     await channel.send(file=discord.File(file))
                                 os.remove(f"temp_{attachment.filename}")
                         else:
-                            relay_message = await channel.send(f"**DM - {display_name}:** {content}")
+                            relay_message = await channel.send(f"**{display_name}:** {content}")
                         self.relayed_messages[(message.id, channel_id)] = relay_message.id
 
     @commands.Cog.listener()
@@ -120,7 +120,7 @@ class Comm(commands.Cog):
                             relay_message_id = self.relayed_messages[(before.id, channel_id)]
                             relay_message = await channel.fetch_message(relay_message_id)
                             await relay_message.delete()
-                            new_relay_message = await channel.send(f"**DM - {display_name} (edited):** {content}")
+                            new_relay_message = await channel.send(f"**{display_name} (edited):** {content}")
                             self.relayed_messages[(after.id, channel_id)] = new_relay_message.id
 
     @commands.Cog.listener()
