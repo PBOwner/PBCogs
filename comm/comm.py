@@ -39,7 +39,8 @@ class Comm(commands.Cog):
     @usercomm.command(name="create")
     async def usercomm_create(self, ctx, name: str, password: str = None):
         """Create a usercomm network with a name and optional password."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
         if name in active_sessions:
@@ -53,7 +54,8 @@ class Comm(commands.Cog):
     @usercomm.command(name="join")
     async def usercomm_join(self, ctx, name: str, password: str = None):
         """Join an existing usercomm network with a name and optional password."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
         banned_users = await self.config.banned_users()
@@ -103,7 +105,8 @@ class Comm(commands.Cog):
     @usercomm.command(name="leave")
     async def usercomm_leave(self, ctx, name: str):
         """Leave an existing usercomm network with a name."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
 
@@ -122,7 +125,8 @@ class Comm(commands.Cog):
     @usercomm.command(name="changename")
     async def usercomm_changename(self, ctx, new_name: str):
         """Change your display name in the usercomm network."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         user_names = await self.config.user_names()
         user_names[str(ctx.author.id)] = new_name
@@ -134,7 +138,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_remove(self, ctx, user: discord.User, reason: str, duration: int = 300):
         """Remove a user from the usercomm and ban them for a specified duration (in seconds)."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
         banned_users = await self.config.banned_users()
@@ -161,7 +166,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_unban(self, ctx, user: discord.User):
         """Unban a user from the usercomm."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         banned_users = await self.config.banned_users()
 
@@ -179,7 +185,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_trust(self, ctx, user: discord.User):
         """Add a trusted user who can remove other users from the usercomm."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         trusted_users = await self.config.trusted_users()
         if user.id not in trusted_users:
@@ -194,7 +201,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_untrust(self, ctx, user: discord.User):
         """Remove a trusted user."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         trusted_users = await self.config.trusted_users()
         if user.id in trusted_users:
@@ -209,7 +217,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_add(self, ctx, user: discord.User, name: str):
         """Manually add a user back to a usercomm network."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
 
@@ -228,7 +237,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_listusers(self, ctx, name: str):
         """List all users and their IDs currently connected to a specific usercomm network."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
         user_names = await self.config.user_names()
@@ -246,7 +256,8 @@ class Comm(commands.Cog):
     @commands.is_owner()
     async def usercomm_listcomms(self, ctx):
         """List all existing usercomm networks."""
-        if not await self.usercomm(ctx):
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
             return
         active_sessions = await self.config.active_sessions()
         comms_list = "\n".join(active_sessions.keys())
