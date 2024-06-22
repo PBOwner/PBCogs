@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.utils.chat_formatting import humanize_timedelta
 import asyncio
+import aiohttp
 
 class Jail(commands.Cog):
     def __init__(self, bot):
@@ -83,12 +84,19 @@ class Jail(commands.Cog):
             await ctx.send(f"Failed to jail the user. HTTPException: {e}")
             return
 
+        # Get Unix timestamp for the time remaining using hammertime.cyou API
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'https://hammertime.cyou/api/v1/{time_seconds}s') as response:
+                if response.status == 200:
+                    data = await response.json()
+                    unix_timestamp = data['unix']
+
         # Send a message to the jail channel
         jail_channel = ctx.guild.get_channel(jail_channel_id)
         embed = discord.Embed(title="You were jailed", description="Because you were breaking rules, or are under investigation", color=discord.Color.red())
         embed.add_field(name="Reason", value=reason, inline=False)
-        embed.add_field(name="Time Remaining", value=humanize_timedelta(seconds=time_seconds), inline=False)
-        jail_message = await jail_channel.send(embed=embed)
+        embed.add_field(name="Time Remaining", value=f"<t:{unix_timestamp}:R>", inline=False)
+        jail_message = await jail_channel.send(content=user.mention, embed=embed)
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "jail_message_id", value=jail_message.id)
 
         await ctx.send(f"{user.mention} has been jailed for {humanize_timedelta(seconds=time_seconds)}.")
