@@ -10,7 +10,9 @@ class Comm(commands.Cog):
         self.config.register_global(
             linked_users=[],
             active_sessions={},
-            previous_sessions={}
+            previous_sessions={},
+            user_names={},
+            merged_sessions={}
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
@@ -43,6 +45,8 @@ class Comm(commands.Cog):
     async def usercomm_join(self, ctx, name: str, password: str = None):
         """Join an existing usercomm network with a name and optional password."""
         active_sessions = await self.config.active_sessions()
+        merged_sessions = await self.config.merged_sessions()
+
         if name not in active_sessions:
             await ctx.send("No session found with this name.")
             return
@@ -50,23 +54,43 @@ class Comm(commands.Cog):
             await ctx.send("Incorrect password.")
             return
 
-        # Leave any existing usercomm
-        for session_name, session_info in active_sessions.items():
-            if ctx.author.id in session_info["users"]:
-                session_info["users"].remove(ctx.author.id)
-                await ctx.send(f"You have left the usercomm network '{session_name}'.")
+        current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
+
+        if current_sessions:
+            current_session_name = current_sessions[0]
+            await ctx.send(f"You are currently in the usercomm network '{current_session_name}'. Do you want to leave it or merge it with '{name}'? (Leave/Merge)")
+
+            def check(m):
+                return m.author.id == ctx.author.id and m.channel == ctx.channel and m.content.lower() in ["leave", "merge"]
+
+            try:
+                response = await self.bot.wait_for('message', check=check, timeout=60.0)
+                if response.content.lower() == "leave":
+                    active_sessions[current_session_name]["users"].remove(ctx.author.id)
+                    await ctx.send(f"You have left the usercomm network '{current_session_name}' and joined '{name}'.")
+                elif response.content.lower() == "merge":
+                    if ctx.author.id not in merged_sessions:
+                        merged_sessions[ctx.author.id] = []
+                    merged_sessions[ctx.author.id].append(current_session_name)
+                    await ctx.send(f"You have merged the usercomm networks '{current_session_name}' and '{name}'. Your replies will be sent to both.")
+            except asyncio.TimeoutError:
+                await ctx.send("You did not respond in time. Please try again.")
+                return
 
         if ctx.author.id in active_sessions[name]["users"]:
             await ctx.send("You are already part of this session.")
             return
         active_sessions[name]["users"].append(ctx.author.id)
         await self.config.active_sessions.set(active_sessions)
+        await self.config.merged_sessions.set(merged_sessions)
         await ctx.send(f"You have joined the usercomm network '{name}'.")
 
     @usercomm.command(name="leave")
     async def usercomm_leave(self, ctx, name: str):
         """Leave an existing usercomm network with a name."""
         active_sessions = await self.config.active_sessions()
+        merged_sessions = await self.config.merged_sessions()
+
         if name not in active_sessions:
             await ctx.send("No session found with this name.")
             return
@@ -74,22 +98,25 @@ class Comm(commands.Cog):
             await ctx.send("You are not part of this session.")
             return
         active_sessions[name]["users"].remove(ctx.author.id)
+
+        # Remove from merged sessions if applicable
+        if ctx.author.id in merged_sessions:
+            if name in merged_sessions[ctx.author.id]:
+                merged_sessions[ctx.author.id].remove(name)
+                if not merged_sessions[ctx.author.id]:
+                    del merged_sessions[ctx.author.id]
+
         await self.config.active_sessions.set(active_sessions)
+        await self.config.merged_sessions.set(merged_sessions)
         await ctx.send(f"You have left the usercomm network '{name}'.")
 
     @usercomm.command(name="changename")
     async def usercomm_changename(self, ctx, new_name: str):
         """Change your display name in the usercomm network."""
-        # This command assumes that the user is already part of a usercomm network
-        active_sessions = await self.config.active_sessions()
-        for session_name, session_info in active_sessions.items():
-            if ctx.author.id in session_info["users"]:
-                session_info["users"].remove(ctx.author.id)
-                session_info["users"].append({"id": ctx.author.id, "name": new_name})
-                await self.config.active_sessions.set(active_sessions)
-                await ctx.send(f"Your display name has been changed to '{new_name}' in the usercomm network '{session_name}'.")
-                return
-        await ctx.send("You are not part of any usercomm network.")
+        user_names = await self.config.user_names()
+        user_names[ctx.author.id] = new_name
+        await self.config.user_names.set(user_names)
+        await ctx.send(f"Your display name has been changed to '{new_name}'.")
 
     @commands.group()
     async def dmcomm(self, ctx):
@@ -175,6 +202,8 @@ class Comm(commands.Cog):
 
         linked_users = await self.config.linked_users()
         active_sessions = await self.config.active_sessions()
+        user_names = await self.config.user_names()
+        merged_sessions = await self.config.merged_sessions()
 
         if message.guild:
             # Handle server messages for direct communication
@@ -185,11 +214,12 @@ class Comm(commands.Cog):
                         other_user_id = user1_id if message.author.id == user2_id else user2_id
                         other_user = self.bot.get_user(other_user_id)
                         if other_user:
-                            await other_user.send(f"**{message.author.display_name}:** {message.content}")
+                            display_name = user_names.get(message.author.id, message.author.display_name)
+                            await other_user.send(f"**{display_name}:** {message.content}")
             return
 
         if message.author.id in linked_users:
-            display_name = message.author.display_name if message.author.display_name else message.author.name
+            display_name = user_names.get(message.author.id, message.author.display_name)
 
             # Relay the message to other linked users
             content = message.content
@@ -198,20 +228,26 @@ class Comm(commands.Cog):
             if message.guild:
                 content = self.replace_emojis_with_urls(message.guild, content)
 
-            for user_id in linked_users:
-                if user_id != message.author.id:
-                    user = self.bot.get_user(user_id)
-                    if user:
-                        if message.attachments:
-                            for attachment in message.attachments:
+            if message.author.id in merged_sessions:
+                sessions_to_relay = merged_sessions[message.author.id]
+            else:
+                sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if message.author.id in session_info["users"]]
+
+            for session_name in sessions_to_relay:
+                for user_id in active_sessions[session_name]["users"]:
+                    if user_id != message.author.id:
+                        user = self.bot.get_user(user_id)
+                        if user:
+                            if message.attachments:
+                                for attachment in message.attachments:
+                                    relay_message = await user.send(f"**{display_name}:** {content}")
+                                    await attachment.save(f"temp_{attachment.filename}")
+                                    with open(f"temp_{attachment.filename}", "rb") as file:
+                                        await user.send(file=discord.File(file))
+                                    os.remove(f"temp_{attachment.filename}")
+                            else:
                                 relay_message = await user.send(f"**{display_name}:** {content}")
-                                await attachment.save(f"temp_{attachment.filename}")
-                                with open(f"temp_{attachment.filename}", "rb") as file:
-                                    await user.send(file=discord.File(file))
-                                os.remove(f"temp_{attachment.filename}")
-                        else:
-                            relay_message = await user.send(f"**{display_name}:** {content}")
-                        self.relayed_messages[(message.id, user_id)] = relay_message.id
+                            self.relayed_messages[(message.id, user_id)] = relay_message.id
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
@@ -219,25 +255,33 @@ class Comm(commands.Cog):
             return
 
         linked_users = await self.config.linked_users()
+        user_names = await self.config.user_names()
+        merged_sessions = await self.config.merged_sessions()
 
         if after.author.id in linked_users:
-            display_name = after.author.display_name if after.author.display_name else after.author.name
+            display_name = user_names.get(after.author.id, after.author.display_name)
             content = after.content
 
             # Handle emojis
             if after.guild:
                 content = self.replace_emojis_with_urls(after.guild, content)
 
-            for user_id in linked_users:
-                if user_id != after.author.id:
-                    user = self.bot.get_user(user_id)
-                    if user:
-                        if (before.id, user_id) in self.relayed_messages:
-                            relay_message_id = self.relayed_messages[(before.id, user_id)]
-                            relay_message = await user.fetch_message(relay_message_id)
-                            await relay_message.delete()
-                            new_relay_message = await user.send(f"**{display_name} (edited):** {content}")
-                            self.relayed_messages[(after.id, user_id)] = new_relay_message.id
+            if after.author.id in merged_sessions:
+                sessions_to_relay = merged_sessions[after.author.id]
+            else:
+                sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if after.author.id in session_info["users"]]
+
+            for session_name in sessions_to_relay:
+                for user_id in active_sessions[session_name]["users"]:
+                    if user_id != after.author.id:
+                        user = self.bot.get_user(user_id)
+                        if user:
+                            if (before.id, user_id) in self.relayed_messages:
+                                relay_message_id = self.relayed_messages[(before.id, user_id)]
+                                relay_message = await user.fetch_message(relay_message_id)
+                                await relay_message.delete()
+                                new_relay_message = await user.send(f"**{display_name} (edited):** {content}")
+                                self.relayed_messages[(after.id, user_id)] = new_relay_message.id
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
