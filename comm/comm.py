@@ -21,37 +21,37 @@ class Comm(commands.Cog):
             if relay_channel and relay_channel != channel:
                 await relay_channel.send(embed=embed)
 
-    @commands.group(aliases=['comm'])
-    async def comm(self, ctx):
-        """Manage comm connections."""
+    @commands.group(aliases=['uc'])
+    async def usercomm(self, ctx):
+        """Manage usercomm connections."""
         pass
 
-    @comm.command(name="open")
-    async def comm_open(self, ctx):
-        """Link the current channel to the comm network."""
+    @usercomm.command(name="open")
+    async def usercomm_open(self, ctx):
+        """Link the current channel to the usercomm network."""
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id not in linked_channels:
             linked_channels.append(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This channel has joined the comm network.")
+            embed = discord.Embed(title="Success!", description="This channel has joined the usercomm network.")
             await ctx.send(embed=embed)
             await self.send_status_message(f"A signal was picked up from {ctx.channel.mention}, connection has been established.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This channel is already part of the comm network.")
+            embed = discord.Embed(title="Error", description="This channel is already part of the usercomm network.")
             await ctx.send(embed=embed)
 
-    @comm.command(name="close")
-    async def comm_close(self, ctx):
-        """Unlink the current channel from the comm network."""
+    @usercomm.command(name="close")
+    async def usercomm_close(self, ctx):
+        """Unlink the current channel from the usercomm network."""
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id in linked_channels:
             linked_channels.remove(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This channel has been severed from the comm network.")
+            embed = discord.Embed(title="Success!", description="This channel has been severed from the usercomm network.")
             await ctx.send(embed=embed)
             await self.send_status_message(f"The signal from {ctx.channel.mention} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This channel is not part of the comm network.")
+            embed = discord.Embed(title="Error", description="This channel is not part of the usercomm network.")
             await ctx.send(embed=embed)
 
     @commands.Cog.listener()
@@ -163,7 +163,7 @@ class Comm(commands.Cog):
 
         linked_channels = await self.config.linked_channels_list()
 
-        # Check if the message is in a comm channel
+        # Check if the message is in a usercomm channel
         if message.channel.id in linked_channels:
             for channel_id in linked_channels:
                 if channel_id != message.channel.id:
