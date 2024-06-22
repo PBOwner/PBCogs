@@ -85,11 +85,17 @@ class Jail(commands.Cog):
             return
 
         # Get Unix timestamp for the time remaining using hammertime.cyou API
+        unix_timestamp = None
         async with aiohttp.ClientSession() as session:
             async with session.get(f'https://hammertime.cyou/api/v1/{time_seconds}s') as response:
                 if response.status == 200:
                     data = await response.json()
                     unix_timestamp = data['unix']
+                else:
+                    await ctx.send("Failed to get Unix timestamp from hammertime.cyou API.")
+
+        if not unix_timestamp:
+            unix_timestamp = int((discord.utils.utcnow() + timedelta(seconds=time_seconds)).timestamp())
 
         # Send a message to the jail channel
         jail_channel = ctx.guild.get_channel(jail_channel_id)
