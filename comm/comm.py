@@ -59,6 +59,10 @@ class Comm(commands.Cog):
             await ctx.send(f"You are banned from joining usercomm networks for {int(banned_users[ctx.author.id] - asyncio.get_event_loop().time())} more seconds.")
             return
 
+        if ctx.author.id in active_sessions[name]["users"]:
+            await ctx.send("You are already part of this session.")
+            return
+
         current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
 
         if current_sessions:
@@ -80,9 +84,6 @@ class Comm(commands.Cog):
                 await ctx.send("You did not respond in time. Please try again.")
                 return
 
-        if ctx.author.id in active_sessions[name]["users"]:
-            await ctx.send("You are already part of this session.")
-            return
         active_sessions[name]["users"].append(ctx.author.id)
         await self.config.active_sessions.set(active_sessions)
 
@@ -122,7 +123,7 @@ class Comm(commands.Cog):
 
     @usercomm.command(name="remove")
     @commands.is_owner()
-    async def usercomm_remove(self, ctx, user: discord.User, reason: str):
+    async def usercomm_remove(self, ctx, user: discord.User, *, reason: str):
         """Remove a user from the usercomm and ban them for 300 seconds."""
         active_sessions = await self.config.active_sessions()
         banned_users = await self.config.banned_users()
