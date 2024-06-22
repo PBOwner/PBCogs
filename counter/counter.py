@@ -1,6 +1,7 @@
 from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
+from redbot.core.commands import is_owner
 
 class Counter(commands.Cog):
     """A cog to track various statistics for Red-DiscordBot"""
@@ -81,7 +82,7 @@ class Counter(commands.Cog):
         await ctx.send(embed=embed)
 
     @counter.command()
-    @commands.is_owner()
+    @is_owner()
     async def totalcommands(self, ctx, user_id: int):
         """Display the commands used by a specific user ID"""
         guild_data = await self.config.guild(ctx.guild).all()
