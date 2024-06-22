@@ -10,20 +10,21 @@ class StaffManager(commands.Cog):
         self.loa_requests_channel = None
         self.loa_role = None
         self.config = Config.get_conf(self, identifier="staffmanager", force_registration=True)
-        self.config.register_global(staff_updates_channel=None, blacklist_channel=None, loa_requests_channel=None, loa_role=None, loa_requests={})
+        self.config.register_global(staff_updates_channel=None, blacklist_channel=None, loa_requests_channel=None, loa_role=None, loa_requests={}, resignation_requests={})
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
         """Set the channel for staff update messages."""
         self.staff_updates_channel = channel
+        await self.config.staff_updates_channel.set(channel.id)
         await ctx.send(f"Staff updates channel set to {channel.mention}")
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setblacklist(self, ctx, channel: discord.TextChannel):
         """Set the channel for blacklist messages."""
-        await self.config.blacklist_channel.set(channel)
+        await self.config.blacklist_channel.set(channel.id)
         await ctx.send(f"Blacklist channel set to {channel.mention}")
 
     @commands.Cog.listener()
@@ -209,5 +210,64 @@ class StaffManager(commands.Cog):
         else:
             await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
 
-def setup(bot):
-    bot.add_cog(StaffManager(bot))
+    @commands.group()
+    @commands.has_permissions(manage_roles=True)
+    async def resign(self, ctx):
+        """Group command for managing resignation requests."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send("Invalid subcommand passed. Use `resign request`, `resign accept`, or `resign deny`.")
+
+    @resign.command()
+    async def request(self, ctx, reason: str):
+        """Request a resignation."""
+        resignation_requests = await self.config.resignation_requests()
+        user_id = ctx.author.id
+        resignation_requests[user_id] = {
+            "user": ctx.author.id,
+            "reason": reason,
+            "approved_by": None
+        }
+        await self.config.resignation_requests.set(resignation_requests)
+
+        staff_updates_channel_id = await self.config.staff_updates_channel()
+        staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+        if staff_updates_channel:
+            embed = discord.Embed(title="Resignation Request", color=discord.Color.yellow())
+            embed.add_field(name="User", value=ctx.author.name, inline=False)
+            embed.add_field(name="Reason", value=reason, inline=False)
+            embed.add_field(name="User ID", value=ctx.author.id, inline=False)
+            embed.set_footer(text="Do `resign accept <user_id>` or `resign deny <user_id>`")
+            await staff_updates_channel.send(embed=embed)
+
+        await ctx.send(f"Resignation request submitted due to {reason}.")
+
+    @resign.command()
+    async def accept(self, ctx, user_id: int):
+        """Accept a resignation request."""
+        resignation_requests = await self.config.resignation_requests()
+        if user_id in resignation_requests and resignation_requests[user_id]["approved_by"] is None:
+            resignation_requests[user_id]["approved_by"] = ctx.author.id
+            await self.config.resignation_requests.set(resignation_requests)
+            user = self.bot.get_user(resignation_requests[user_id]["user"])
+            embed = discord.Embed(title="Staff Member Resigned", color=discord.Color.red())
+            embed.add_field(name="Former Staff", value=user.name, inline=False)
+            embed.add_field(name="Reason", value=resignation_requests[user_id]["reason"], inline=False)
+            embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
+            staff_updates_channel_id = await self.config.staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Resignation request for {user.name} accepted.")
+        else:
+            await ctx.send(f"Resignation request for user ID {user_id} not found or already accepted.")
+
+    @resign.command()
+    async def deny(self, ctx, user_id: int):
+        """Deny a resignation request."""
+        resignation_requests = await self.config.resignation_requests()
+        if user_id in resignation_requests:
+            del resignation_requests[user_id]
+            await self.config.resignation_requests.set(resignation_requests)
+            await ctx.send(f"Resignation request for user ID {user_id} denied and removed.")
+        else:
+            await ctx.send(f"Resignation request for user ID {user_id} not found.")
