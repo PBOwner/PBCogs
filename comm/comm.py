@@ -2,6 +2,8 @@ import discord
 import os
 from redbot.core import commands, Config
 import asyncio
+from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 class Comm(commands.Cog):
     def __init__(self, bot):
@@ -41,7 +43,8 @@ class Comm(commands.Cog):
             return
         active_sessions[name] = {"password": password, "users": []}
         await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"Usercomm network '{name}' created successfully.")
+        embed = discord.Embed(title="Usercomm Network Created", description=f"Usercomm network '{name}' created successfully.")
+        await ctx.send(embed=embed)
 
     @usercomm.command(name="join")
     async def usercomm_join(self, ctx, name: str, password: str = None):
@@ -57,7 +60,8 @@ class Comm(commands.Cog):
             return
 
         if ctx.author.id in banned_users and banned_users[ctx.author.id] > asyncio.get_event_loop().time():
-            await ctx.send(f"You are banned from joining usercomm networks for {int(banned_users[ctx.author.id] - asyncio.get_event_loop().time())} more seconds.")
+            ban_end = datetime.fromtimestamp(banned_users[ctx.author.id])
+            await ctx.send(f"You are banned from joining usercomm networks until {ban_end}.")
             return
 
         current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
@@ -86,7 +90,8 @@ class Comm(commands.Cog):
             return
         active_sessions[name]["users"].append(ctx.author.id)
         await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"You have joined the usercomm network '{name}'.")
+        embed = discord.Embed(title="Usercomm Network Joined", description=f"You have joined the usercomm network '{name}'.")
+        await ctx.send(embed=embed)
 
     @usercomm.command(name="leave")
     async def usercomm_leave(self, ctx, name: str):
@@ -102,7 +107,8 @@ class Comm(commands.Cog):
         active_sessions[name]["users"].remove(ctx.author.id)
 
         await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"You have left the usercomm network '{name}'.")
+        embed = discord.Embed(title="Usercomm Network Left", description=f"You have left the usercomm network '{name}'.")
+        await ctx.send(embed=embed)
 
     @usercomm.command(name="changename")
     async def usercomm_changename(self, ctx, new_name: str):
@@ -110,24 +116,47 @@ class Comm(commands.Cog):
         user_names = await self.config.user_names()
         user_names[ctx.author.id] = new_name
         await self.config.user_names.set(user_names)
-        await ctx.send(f"Your display name has been changed to '{new_name}'.")
+        embed = discord.Embed(title="Display Name Changed", description=f"Your display name has been changed to '{new_name}'.")
+        await ctx.send(embed=embed)
 
     @usercomm.command(name="remove")
     @commands.is_owner()
-    async def usercomm_remove(self, ctx, user: discord.User, reason: str):
-        """Remove a user from the usercomm and ban them for 300 seconds."""
+    async def usercomm_remove(self, ctx, user: discord.User, reason: str, duration: str = "5m"):
+        """Remove a user from the usercomm and ban them for a specified duration."""
         active_sessions = await self.config.active_sessions()
         banned_users = await self.config.banned_users()
 
         for session_name, session_info in active_sessions.items():
             if user.id in session_info["users"]:
                 session_info["users"].remove(user.id)
-                await ctx.send(f"{user.display_name} has been removed from the usercomm network '{session_name}' for '{reason}'.")
+                embed = discord.Embed(title="User Removed", description=f"{user.display_name} has been removed from the usercomm network '{session_name}' for '{reason}'.")
+                await ctx.send(embed=embed)
 
-        banned_users[user.id] = asyncio.get_event_loop().time() + 300
+        ban_duration = self.parse_duration(duration)
+        ban_end = asyncio.get_event_loop().time() + ban_duration
+        banned_users[user.id] = ban_end
         await self.config.active_sessions.set(active_sessions)
         await self.config.banned_users.set(banned_users)
-        await user.send(f"You have been removed from the usercomm network for '{reason}' and banned for 300 seconds.")
+        ban_end_datetime = datetime.fromtimestamp(ban_end)
+        embed = discord.Embed(title="User Banned", description=f"{user.display_name} has been banned for '{reason}' until {ban_end_datetime}.")
+        await ctx.send(embed=embed)
+        await user.send(embed=embed)
+
+    @usercomm.command(name="unban")
+    @commands.is_owner()
+    async def usercomm_unban(self, ctx, user: discord.User):
+        """Unban a user from the usercomm."""
+        banned_users = await self.config.banned_users()
+
+        if user.id not in banned_users:
+            await ctx.send(f"{user.display_name} is not banned.")
+            return
+
+        del banned_users[user.id]
+        await self.config.banned_users.set(banned_users)
+        embed = discord.Embed(title="User Unbanned", description=f"{user.display_name} has been unbanned from the usercomm network.")
+        await ctx.send(embed=embed)
+        await user.send(embed=embed)
 
     @usercomm.command(name="addtrusted")
     @commands.is_owner()
@@ -137,7 +166,8 @@ class Comm(commands.Cog):
         if user.id not in trusted_users:
             trusted_users.append(user.id)
             await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been added as a trusted user.")
+            embed = discord.Embed(title="Trusted User Added", description=f"{user.display_name} has been added as a trusted user.")
+            await ctx.send(embed=embed)
         else:
             await ctx.send(f"{user.display_name} is already a trusted user.")
 
@@ -149,9 +179,38 @@ class Comm(commands.Cog):
         if user.id in trusted_users:
             trusted_users.remove(user.id)
             await self.config.trusted_users.set(trusted_users)
-            await ctx.send(f"{user.display_name} has been removed as a trusted user.")
+            embed = discord.Embed(title="Trusted User Removed", description=f"{user.display_name} has been removed as a trusted user.")
+            await ctx.send(embed=embed)
         else:
             await ctx.send(f"{user.display_name} is not a trusted user.")
+
+    @usercomm.command(name="add")
+    @commands.is_owner()
+    async def usercomm_add(self, ctx, user: discord.User, name: str):
+        """Manually add a user back to a usercomm network."""
+        active_sessions = await self.config.active_sessions()
+
+        if name not in active_sessions:
+            await ctx.send("No session found with this name.")
+            return
+        if user.id in active_sessions[name]["users"]:
+            await ctx.send(f"{user.display_name} is already part of this session.")
+            return
+        active_sessions[name]["users"].append(user.id)
+        await self.config.active_sessions.set(active_sessions)
+        embed = discord.Embed(title="User Added", description=f"{user.display_name} has been added to the usercomm network '{name}'.")
+        await ctx.send(embed=embed)
+
+    @usercomm.command(name="listusers")
+    @commands.is_owner()
+    async def usercomm_listusers(self, ctx):
+        """List all users and their IDs."""
+        user_names = await self.config.user_names()
+        users_list = "\n".join([f"{user_id}: {name}" for user_id, name in user_names.items()])
+        if not users_list:
+            users_list = "No users found."
+        embed = discord.Embed(title="Users and IDs", description=f"{users_list}")
+        await ctx.send(embed=embed)
 
     @commands.group()
     async def dmcomm(self, ctx):
@@ -188,7 +247,6 @@ class Comm(commands.Cog):
                 for session_name, session_info in active_sessions.items():
                     if user_id in session_info["users"]:
                         session_info["users"].remove(user_id)
-                        previous_sessions[user_id].append(session_name)
                         await user.send(f"You have been removed from the usercomm network '{session_name}'.")
 
                 active_sessions[session_key] = {"users": [ctx.author.id, user_id]}
@@ -326,6 +384,26 @@ class Comm(commands.Cog):
                         relay_message_id = self.relayed_messages[(message.id, user_id)]
                         relay_message = await user.fetch_message(relay_message_id)
                         await relay_message.delete()
+
+    def parse_duration(self, duration: str) -> int:
+        """Parse a duration string and return the total duration in seconds."""
+        units = {
+            'y': 'years',
+            'mo': 'months',
+            'w': 'weeks',
+            'd': 'days',
+            'h': 'hours',
+            'm': 'minutes',
+            's': 'seconds'
+        }
+        total_seconds = 0
+        for unit, name in units.items():
+            if unit in duration:
+                amount = int(duration.split(unit)[0])
+                duration = duration.split(unit)[1]
+                delta = relativedelta(**{name: amount})
+                total_seconds += int((datetime.now() + delta - datetime.now()).total_seconds())
+        return total_seconds
 
 def setup(bot):
     bot.add_cog(Comm(bot))
