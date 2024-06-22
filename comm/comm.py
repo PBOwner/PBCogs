@@ -7,7 +7,8 @@ class Comm(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier="comm", force_registration=True)
         self.config.register_global(
-            linked_channels_list=[]
+            linked_channels_list=[],
+            user_display_names={}
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
@@ -29,35 +30,45 @@ class Comm(commands.Cog):
 
     @usercomm.command(name="open")
     async def usercomm_open(self, ctx):
-        """Link the current DM to the usercomm network."""
+        """Link the current DM to the Communications channel."""
         if not isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send("This command can only be used in DMs.")
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id not in linked_channels:
             linked_channels.append(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This DM has joined the usercomm network.")
+            embed = discord.Embed(title="Success!", description="You have joined the Communications channel.")
             await ctx.send(embed=embed)
             await self.send_status_message(f"{ctx.author.name} has joined the Communications channel.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This DM is already part of the usercomm network.")
+            embed = discord.Embed(title="Error", description="You are already part of the Communications channel.")
             await ctx.send(embed=embed)
 
     @usercomm.command(name="close")
     async def usercomm_close(self, ctx):
-        """Unlink the current DM from the usercomm network."""
+        """Unlink the current DM from the Communications channel."""
         if not isinstance(ctx.channel, discord.DMChannel):
             return await ctx.send("This command can only be used in DMs.")
         linked_channels = await self.config.linked_channels_list()
         if ctx.channel.id in linked_channels:
             linked_channels.remove(ctx.channel.id)
             await self.config.linked_channels_list.set(linked_channels)
-            embed = discord.Embed(title="Success!", description="This DM has been severed from the usercomm network.")
+            embed = discord.Embed(title="Success!", description="You have been severed from the Communications channel.")
             await ctx.send(embed=embed)
-            await self.send_status_message(f"The signal from this DM has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
+            await self.send_status_message(f"The signal from {ctx.author.name} has become too faint to be picked up, the connection was lost.", ctx.channel, "Success!")
         else:
-            embed = discord.Embed(title="Error", description="This DM is not part of the usercomm network.")
+            embed = discord.Embed(title="Error", description="You are not part of the Communications channel.")
             await ctx.send(embed=embed)
+
+    @usercomm.command(name="setname")
+    async def usercomm_setname(self, ctx, *, new_name: str):
+        """Set a new display name for yourself in the Communications channel."""
+        if not isinstance(ctx.channel, discord.DMChannel):
+            return await ctx.send("This command can only be used in DMs.")
+        user_display_names = await self.config.user_display_names()
+        user_display_names[ctx.author.id] = new_name
+        await self.config.user_display_names.set(user_display_names)
+        await ctx.send(f"Your display name has been changed to {new_name}.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -70,10 +81,10 @@ class Comm(commands.Cog):
             return  # Ignore bot commands
 
         linked_channels = await self.config.linked_channels_list()
+        user_display_names = await self.config.user_display_names()
+        display_name = user_display_names.get(message.author.id, message.author.name)
 
         if message.channel.id in linked_channels:
-            display_name = message.author.name
-
             # Store the message reference
             self.message_references[message.id] = (message.author.id, None)
 
@@ -104,9 +115,10 @@ class Comm(commands.Cog):
             return
 
         linked_channels = await self.config.linked_channels_list()
+        user_display_names = await self.config.user_display_names()
+        display_name = user_display_names.get(after.author.id, after.author.name)
 
         if after.channel.id in linked_channels:
-            display_name = after.author.name
             content = after.content
 
             # Handle emojis
@@ -130,7 +142,7 @@ class Comm(commands.Cog):
 
         linked_channels = await self.config.linked_channels_list()
 
-        # Check if the message is in a usercomm channel
+        # Check if the message is in a Communications channel
         if message.channel.id in linked_channels:
             for channel_id in linked_channels:
                 if channel_id != message.channel.id:
