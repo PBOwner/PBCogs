@@ -1,6 +1,7 @@
 import discord
 import os
 from redbot.core import commands, Config
+import asyncio
 
 class Comm(commands.Cog):
     def __init__(self, bot):
@@ -8,7 +9,8 @@ class Comm(commands.Cog):
         self.config = Config.get_conf(self, identifier="usercomm", force_registration=True)
         self.config.register_global(
             linked_users=[],
-            active_sessions={}
+            active_sessions={},
+            previous_sessions={}
         )  # Initialize the configuration
         self.message_references = {}  # Store message references
         self.relayed_messages = {}  # Store relayed messages
@@ -90,7 +92,12 @@ class Comm(commands.Cog):
         await ctx.send("You are not part of any usercomm network.")
 
     @commands.group()
-    async def dmcomm(self, ctx, user_id: int):
+    async def dmcomm(self, ctx):
+        """Manage direct communications with specific users."""
+        pass
+
+    @dmcomm.command(name="open")
+    async def dmcomm_open(self, ctx, user_id: int):
         """Open a direct communication with a specific user."""
         user = self.bot.get_user(user_id)
         if not user:
@@ -98,36 +105,68 @@ class Comm(commands.Cog):
             return
 
         active_sessions = await self.config.active_sessions()
+        previous_sessions = await self.config.previous_sessions()
         session_key = f"{ctx.author.id}-{user_id}"
 
         if session_key in active_sessions:
             await ctx.send("You already have an active session with this user.")
             return
 
-        active_sessions[session_key] = {"users": [ctx.author.id, user_id]}
-        await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"Communication line opened with {user.mention}.")
-        await user.send(f"{ctx.author.mention} has opened a communication line with you.")
+        # Ask the target user for confirmation
+        def check(m):
+            return m.author.id == user_id and m.channel == user.dm_channel and m.content.lower() in ["yes", "no"]
+
+        await user.send(f"{ctx.author.mention} wants to open a communication line with you. Do you accept this transmission? Yes or No?")
+
+        try:
+            response = await self.bot.wait_for('message', check=check, timeout=60.0)
+            if response.content.lower() == "yes":
+                # Save and close all existing usercomms for the target user
+                previous_sessions[user_id] = []
+                for session_name, session_info in active_sessions.items():
+                    if user_id in session_info["users"]:
+                        session_info["users"].remove(user_id)
+                        previous_sessions[user_id].append(session_name)
+                        await user.send(f"You have been removed from the usercomm network '{session_name}'.")
+
+                active_sessions[session_key] = {"users": [ctx.author.id, user_id]}
+                await self.config.active_sessions.set(active_sessions)
+                await self.config.previous_sessions.set(previous_sessions)
+                await ctx.send(f"Communication line opened with {user.mention}.")
+                await user.send(f"{ctx.author.mention} has opened a communication line with you.")
+            else:
+                await ctx.send(f"{user.mention} has denied the communication request.")
+        except asyncio.TimeoutError:
+            await ctx.send(f"{user.mention} did not respond to the communication request in time.")
 
     @dmcomm.command(name="close")
-    async def dmcomm_close(self, ctx, user_id: int):
+    async def dmcomm_close(self, ctx):
         """Close the direct communication with a specific user."""
-        user = self.bot.get_user(user_id)
-        if not user:
-            await ctx.send("User not found.")
-            return
-
         active_sessions = await self.config.active_sessions()
-        session_key = f"{ctx.author.id}-{user_id}"
+        previous_sessions = await self.config.previous_sessions()
+        session_keys_to_remove = []
 
-        if session_key not in active_sessions:
-            await ctx.send("You do not have an active session with this user.")
-            return
+        for session_key, session_info in active_sessions.items():
+            if ctx.author.id in session_info["users"]:
+                session_keys_to_remove.append(session_key)
+                other_user_id = session_info["users"][1] if session_info["users"][0] == ctx.author.id else session_info["users"][0]
+                other_user = self.bot.get_user(other_user_id)
+                if other_user:
+                    await other_user.send(f"{ctx.author.mention} has closed the communication line with you.")
 
-        del active_sessions[session_key]
+                # Reestablish previous usercomms for the other user
+                if other_user_id in previous_sessions:
+                    for session_name in previous_sessions[other_user_id]:
+                        active_sessions[session_name]["users"].append(other_user_id)
+                        await other_user.send(f"You have been re-added to the usercomm network '{session_name}'.")
+                    del previous_sessions[other_user_id]
+
+        for session_key in session_keys_to_remove:
+            del active_sessions[session_key]
+
         await self.config.active_sessions.set(active_sessions)
-        await ctx.send(f"Communication line closed with {user.mention}.")
-        await user.send(f"{ctx.author.mention} has closed the communication line with you.")
+        await self.config.previous_sessions.set(previous_sessions)
+        await ctx.send("All direct communication lines have been closed.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
