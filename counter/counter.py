@@ -3,7 +3,7 @@ import discord
 from redbot.core.bot import Red
 from redbot.core.commands import is_owner
 
-class Counter(commands.Cog):
+class Counter(commands.cog):
     """A cog to track various statistics for Red-DiscordBot"""
 
     def __init__(self, bot: Red):
