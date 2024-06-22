@@ -90,27 +90,22 @@ class PrivateWormHole(commands.Cog):
         if message.author.id in global_blacklist:
             return  # Author is globally blacklisted
 
-        if any(word in message.content for word in word_filters):
-            await message.channel.send("That word is not allowed.")
-            await message.delete()
-            return  # Message contains a filtered word, notify user and delete it
-
-        if message.channel.is_nsfw():
-            await message.channel.send("NSFW content is not allowed in the wormhole.")
-            await message.delete()
-            return  # Delete NSFW messages
-
-        if "@everyone" in message.content or "@here" in message.content:
-            await message.channel.send("`@everyone` and `@here` pings are not allowed.")
-            await message.delete()
-            return  # Message contains prohibited pings, notify user and delete it
-
-        display_name = message.author.display_name if message.author.display_name else message.author.name
-
         # Check if the message is in a private wormhole channel
         for name, wormhole_data in private_wormholes.items():
             channels = wormhole_data["channels"]
             if message.channel.id in channels:
+                if any(word in message.content for word in word_filters):
+                    await message.channel.send("That word is not allowed.")
+                    await message.delete()
+                    return  # Message contains a filtered word, notify user and delete it
+
+                if message.channel.is_nsfw():
+                    await message.channel.send("NSFW content is not allowed in the wormhole.")
+                    await message.delete()
+                    return  # Delete NSFW messages
+
+                display_name = message.author.display_name if message.author.display_name else message.author.name
+
                 for channel_id in channels:
                     if channel_id != message.channel.id:
                         channel = self.bot.get_channel(channel_id)
@@ -184,8 +179,6 @@ class PrivateWormHole(commands.Cog):
                 await ctx.send(f"`{word}` has been added to the private wormhole word filter.")
             else:
                 await ctx.send(f"`{word}` is already in the private wormhole word filter.")
-        else:
-            await ctx.send("You must be the bot owner to use this command.")
 
     @privatewormhole.command(name="removewordfilter")
     async def privatewormhole_removewordfilter(self, ctx, *, word: str):
@@ -198,8 +191,6 @@ class PrivateWormHole(commands.Cog):
                 await ctx.send(f"`{word}` has been removed from the private wormhole word filter.")
             else:
                 await ctx.send(f"`{word}` is not in the private wormhole word filter.")
-        else:
-            await ctx.send("You must be the bot owner to use this command.")
 
 def setup(bot):
     bot.add_cog(PrivateWormHole(bot))
