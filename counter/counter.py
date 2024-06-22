@@ -89,26 +89,25 @@ class Counter(commands.Cog):
         await ctx.send(embed=embed)
 
     @count.command()
-    async def total(self, ctx, user: discord.User):
-        """Display the top 10 commands used by a specific user"""
+    async def total(self, ctx):
+        """Display the top 10 commands used globally"""
         all_guild_data = await self.config.all_guilds()
-        user_commands = {}
+        global_command_usage = {}
 
         for guild_data in all_guild_data.values():
             for command_name, usage_data in guild_data["command_usage"].items():
-                if user.id in usage_data["users"]:
-                    if command_name not in user_commands:
-                        user_commands[command_name] = 0
-                    user_commands[command_name] += usage_data["users"][user.id]
+                if command_name not in global_command_usage:
+                    global_command_usage[command_name] = 0
+                global_command_usage[command_name] += usage_data["count"]
 
-        if not user_commands:
-            await ctx.send(f"No commands found for user {user.display_name}.")
+        if not global_command_usage:
+            await ctx.send("No commands found.")
             return
 
-        sorted_commands = sorted(user_commands.items(), key=lambda item: item[1], reverse=True)[:10]
+        sorted_commands = sorted(global_command_usage.items(), key=lambda item: item[1], reverse=True)[:10]
         command_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
 
-        embed = discord.Embed(title=f"Top 10 Commands used by {user.display_name}", color=self.get_random_color())
+        embed = discord.Embed(title="Top 10 Commands Globally", color=self.get_random_color())
         embed.add_field(name="Command Usage", value=command_stats, inline=False)
         embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
