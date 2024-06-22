@@ -46,7 +46,7 @@ class Counter(commands.Cog):
         total_users = sum(len(guild.members) for guild in self.bot.guilds)
 
         embed = discord.Embed(title="Total Users", color=discord.Color.green())
-        embed.add_field(name="Total Users", value=total_users, inline=False)
+        embed.add_field(name="Total Users", value=total_users, inline=True)
 
         await ctx.send(embed=embed)
 
@@ -56,7 +56,7 @@ class Counter(commands.Cog):
         server_count = len(self.bot.guilds)
 
         embed = discord.Embed(title="Total Servers", color=discord.Color.green())
-        embed.add_field(name="Total Servers", value=server_count, inline=False)
+        embed.add_field(name="Total Servers", value=server_count, inline=True)
 
         await ctx.send(embed=embed)
 
@@ -66,7 +66,7 @@ class Counter(commands.Cog):
         total_commands = sum(1 for _ in self.bot.walk_commands())
 
         embed = discord.Embed(title="Total Commands", color=discord.Color.green())
-        embed.add_field(name="Total Commands", value=total_commands, inline=False)
+        embed.add_field(name="Total Commands", value=total_commands, inline=True)
 
         await ctx.send(embed=embed)
 
@@ -76,7 +76,7 @@ class Counter(commands.Cog):
         cog_count = len(self.bot.cogs)
 
         embed = discord.Embed(title="Total Cogs", color=discord.Color.green())
-        embed.add_field(name="Total Cogs", value=cog_count, inline=False)
+        embed.add_field(name="Total Cogs", value=cog_count, inline=True)
 
         await ctx.send(embed=embed)
 
@@ -104,11 +104,14 @@ class Counter(commands.Cog):
         await ctx.send(embed=embed)
 
     @counter.command()
-    @commands.admin_or_permissions(manage_guild=True)
     async def setchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for dynamically updating statistics"""
         if not ctx.guild:
             await ctx.send("This command can only be used in a server.")
+            return
+
+        if not ctx.author.guild_permissions.manage_guild:
+            await ctx.send("You do not have the required permissions to use this command.")
             return
 
         await self.config.guild(ctx.guild).channel_id.set(channel.id)
@@ -138,10 +141,10 @@ class Counter(commands.Cog):
                     top_users_stats = "\n".join([f"<@{user_id}>: {count}" for user_id, count in top_users])
 
                     embed = discord.Embed(title="Bot Stats", color=discord.Color.green())
-                    embed.add_field(name="Total Users", value=total_users, inline=False)
-                    embed.add_field(name="Total Servers", value=server_count, inline=False)
-                    embed.add_field(name="Total Commands", value=total_commands, inline=False)
-                    embed.add_field(name="Total Cogs", value=cog_count, inline=False)
+                    embed.add_field(name="Total Users", value=total_users, inline=True)
+                    embed.add_field(name="Total Servers", value=server_count, inline=True)
+                    embed.add_field(name="Total Commands", value=total_commands, inline=True)
+                    embed.add_field(name="Total Cogs", value=cog_count, inline=True)
                     embed.add_field(name="Top 5 Users", value=top_users_stats, inline=False)
 
                     message = None
