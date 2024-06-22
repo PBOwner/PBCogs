@@ -108,5 +108,35 @@ class Counter(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @counter.command()
+    async def topusers(self, ctx):
+        """Display the top 5 users and each command they ran"""
+        guild_data = await self.config.guild(ctx.guild).all()
+        user_command_counts = {}
+
+        for command_name, usage_data in guild_data["command_usage"].items():
+            for user_id, count in usage_data["users"].items():
+                if user_id not in user_command_counts:
+                    user_command_counts[user_id] = 0
+                user_command_counts[user_id] += count
+
+        top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)[:5]
+
+        embed = discord.Embed(title="Top 5 Users", color=discord.Color.blue())
+        for user_id, count in top_users:
+            user = ctx.guild.get_member(user_id)
+            if user:
+                user_commands = [
+                    f"{cmd}: {usage_data['users'][user_id]}"
+                    for cmd, usage_data in guild_data["command_usage"].items()
+                    if user_id in usage_data["users"]
+                ]
+                user_stats = "\n".join(user_commands)
+                embed.add_field(name=user.display_name, value=user_stats, inline=False)
+
+        embed.set_footer(text=f"Command run at {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")
+
+        await ctx.send(embed=embed)
+
 def setup(bot):
     bot.add_cog(Counter(bot))
