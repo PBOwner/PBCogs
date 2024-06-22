@@ -54,7 +54,7 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Total Users", color=self.get_next_color())
         embed.add_field(name="Total Users", value=total_users, inline=True)
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
@@ -65,7 +65,7 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Total Servers", color=self.get_next_color())
         embed.add_field(name="Total Servers", value=server_count, inline=True)
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
@@ -76,7 +76,7 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Total Commands", color=self.get_next_color())
         embed.add_field(name="Total Commands", value=total_commands, inline=True)
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
@@ -87,7 +87,7 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Total Cogs", color=self.get_next_color())
         embed.add_field(name="Total Cogs", value=cog_count, inline=True)
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
@@ -111,7 +111,7 @@ class Counter(commands.Cog):
 
         embed = discord.Embed(title="Top 10 Commands", color=self.get_next_color())
         embed.add_field(name=f"Top 10 Commands used by user ID {user_id}", value=user_stats, inline=False)
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
@@ -129,7 +129,7 @@ class Counter(commands.Cog):
 
         top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)[:5]
 
-        embed = discord.Embed(title="Top 5 Users", color=discord.Color.blue())
+        embed = discord.Embed(title="Top 5 Users", color=self.get_next_color())
         for user_id, _ in top_users:
             user = ctx.guild.get_member(user_id)
             if user:
@@ -141,7 +141,7 @@ class Counter(commands.Cog):
                 user_stats = "\n".join(user_commands)
                 embed.add_field(name=user.display_name, value=user_stats, inline=False)
 
-        embed.set_footer(text=f"Command run at <t:{int(datetime.utcnow().timestamp())}:F>")
+        embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
 
         await ctx.send(embed=embed)
 
