@@ -1,423 +1,197 @@
+
 import discord
 import os
 from redbot.core import commands, Config
-import asyncio
-from dateutil.relativedelta import relativedelta
-from datetime import datetime
 
-class Comm(commands.Cog):
+class PrivateWormHole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier="usercomm", force_registration=True)
+        self.config = Config.get_conf(self, identifier="private_wormhole", force_registration=True)
         self.config.register_global(
-            linked_users=[],
-            active_sessions={},
-            previous_sessions={},
-            user_names={},
-            merged_sessions={},
-            trusted_users=[],
-            banned_users={}
+            private_wormholes={},
+            global_blacklist=[],
+            word_filters=[]
         )  # Initialize the configuration
-        self.message_references = {}  # Store message references
-        self.relayed_messages = {}  # Store relayed messages
 
-    async def send_status_message(self, message, user, title):
-        linked_users = await self.config.linked_users()
-        embed = discord.Embed(title=title, description=message)
-        for user_id in linked_users:
-            relay_user = self.bot.get_user(user_id)
-            if relay_user and relay_user != user:
-                await relay_user.send(embed=embed)
+    async def send_status_message(self, message, channel, wormhole_key):
+        wormhole_data = await self.config.private_wormholes.get_raw(wormhole_key, default={})
+        linked_channels = wormhole_data.get("channels", [])
 
-    @commands.group(aliases=['uc'])
-    async def usercomm(self, ctx):
-        """Manage usercomm connections."""
-        if ctx.guild is not None:
-            await ctx.send("This command can only be used in DMs.")
-            return False
-        return True
-
-    @usercomm.command(name="create")
-    async def usercomm_create(self, ctx, name: str, password: str = None):
-        """Create a usercomm network with a name and optional password."""
-        if not await self.usercomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-        if name in active_sessions:
-            await ctx.send("A session with this name already exists.")
-            return
-        active_sessions[name] = {"password": password, "users": []}
-        await self.config.active_sessions.set(active_sessions)
-        embed = discord.Embed(title="Usercomm Network Created", description=f"Usercomm network '{name}' created successfully.")
-        await ctx.send(embed=embed)
-
-    @usercomm.command(name="join")
-    async def usercomm_join(self, ctx, name: str, password: str = None):
-        """Join an existing usercomm network with a name and optional password."""
-        if not await self.usercomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-        banned_users = await self.config.banned_users()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if active_sessions[name]["password"] and active_sessions[name]["password"] != password:
-            await ctx.send("Incorrect password.")
-            return
-
-        if ctx.author.id in banned_users and banned_users[ctx.author.id] > asyncio.get_event_loop().time():
-            ban_end = datetime.fromtimestamp(banned_users[ctx.author.id])
-            ban_end_link = f"https://hammertime.cyou/#{int(ban_end.timestamp())}"
-            await ctx.send(f"You are banned from joining usercomm networks until {ban_end_link}.")
-            return
-
-        current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
-
-        if current_sessions:
-            current_session_name = current_sessions[0]
-            await ctx.send(f"You are currently in the usercomm network '{current_session_name}'. Do you want to leave it and join '{name}'? (Yes/No)")
-
-            def check(m):
-                return m.author.id == ctx.author.id and m.channel == ctx.channel and m.content.lower() in ["yes", "no"]
-
-            try:
-                response = await self.bot.wait_for('message', check=check, timeout=60.0)
-                if response.content.lower() == "yes":
-                    active_sessions[current_session_name]["users"].remove(ctx.author.id)
-                    await ctx.send(f"You have left the usercomm network '{current_session_name}' and joined '{name}'.")
-                else:
-                    await ctx.send(f"You have decided to stay in the usercomm network '{current_session_name}'.")
-                    return
-            except asyncio.TimeoutError:
-                await ctx.send("You did not respond in time. Please try again.")
-                return
-
-        if ctx.author.id in active_sessions[name]["users"]:
-            await ctx.send("You are already part of this session.")
-            return
-        active_sessions[name]["users"].append(ctx.author.id)
-        await self.config.active_sessions.set(active_sessions)
-        embed = discord.Embed(title="Usercomm Network Joined", description=f"You have joined the usercomm network '{name}'.")
-        await ctx.send(embed=embed)
-
-    @usercomm.command(name="leave")
-    async def usercomm_leave(self, ctx, name: str):
-        """Leave an existing usercomm network with a name."""
-        if not await self.usercomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if ctx.author.id not in active_sessions[name]["users"]:
-            await ctx.send("You are not part of this session.")
-            return
-        active_sessions[name]["users"].remove(ctx.author.id)
-
-        await self.config.active_sessions.set(active_sessions)
-        embed = discord.Embed(title="Usercomm Network Left", description=f"You have left the usercomm network '{name}'.")
-        await ctx.send(embed=embed)
-
-    @usercomm.command(name="changename")
-    async def usercomm_changename(self, ctx, new_name: str):
-        """Change your display name in the usercomm network."""
-        if not await self.usercomm(ctx):
-            return
-        user_names = await self.config.user_names()
-        user_names[ctx.author.id] = new_name
-        await self.config.user_names.set(user_names)
-        embed = discord.Embed(title="Display Name Changed", description=f"Your display name has been changed to '{new_name}'.")
-        await ctx.send(embed=embed)
-
-    @usercomm.command(name="remove")
-    @commands.is_owner()
-    async def usercomm_remove(self, ctx, user: discord.User, reason: str, duration: str = "5m"):
-        """Remove a user from the usercomm and ban them for a specified duration."""
-        if not await self.usercomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-        banned_users = await self.config.banned_users()
-
-        for session_name, session_info in active_sessions.items():
-            if user.id in session_info["users"]:
-                session_info["users"].remove(user.id)
-                embed = discord.Embed(title="User Removed", description=f"{user.display_name} has been removed from the usercomm network '{session_name}' for '{reason}'.")
-                await ctx.send(embed=embed)
-
-        ban_duration = self.parse_duration(duration)
-        ban_end = asyncio.get_event_loop().time() + ban_duration
-        banned_users[user.id] = ban_end
-        await self.config.active_sessions.set(active_sessions)
-        await self.config.banned_users.set(banned_users)
-        ban_end_datetime = datetime.fromtimestamp(ban_end)
-        ban_end_link = f"https://hammertime.cyou/#{int(ban_end_datetime.timestamp())}"
-        embed = discord.Embed(title="User Banned", description=f"{user.display_name} has been banned for '{reason}' until {ban_end_link}.")
-        await ctx.send(embed=embed)
-        await user.send(embed=embed)
-
-    @usercomm.command(name="unban")
-    @commands.is_owner()
-    async def usercomm_unban(self, ctx, user: discord.User):
-        """Unban a user from the usercomm."""
-        if not await self.usercomm(ctx):
-            return
-        banned_users = await self.config.banned_users()
-
-        if user.id not in banned_users:
-            await ctx.send(f"{user.display_name} is not banned.")
-            return
-
-        del banned_users[user.id]
-        await self.config.banned_users.set(banned_users)
-        embed = discord.Embed(title="User Unbanned", description=f"{user.display_name} has been unbanned from the usercomm network.")
-        await ctx.send(embed=embed)
-        await user.send(embed=embed)
-
-    @usercomm.command(name="addtrusted")
-    @commands.is_owner()
-    async def usercomm_addtrusted(self, ctx, user: discord.User):
-        """Add a trusted user who can remove other users from the usercomm."""
-        if not await self.usercomm(ctx):
-            return
-        trusted_users = await self.config.trusted_users()
-        if user.id not in trusted_users:
-            trusted_users.append(user.id)
-            await self.config.trusted_users.set(trusted_users)
-            embed = discord.Embed(title="Trusted User Added", description=f"{user.display_name} has been added as a trusted user.")
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send(f"{user.display_name} is already a trusted user.")
-
-    @usercomm.command(name="removetrusted")
-    @commands.is_owner()
-    async def usercomm_removetrusted(self, ctx, user: discord.User):
-        """Remove a trusted user."""
-        if not await self.usercomm(ctx):
-            return
-        trusted_users = await self.config.trusted_users()
-        if user.id in trusted_users:
-            trusted_users.remove(user.id)
-            await self.config.trusted_users.set(trusted_users)
-            embed = discord.Embed(title="Trusted User Removed", description=f"{user.display_name} has been removed as a trusted user.")
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send(f"{user.display_name} is not a trusted user.")
-
-    @usercomm.command(name="add")
-    @commands.is_owner()
-    async def usercomm_add(self, ctx, user: discord.User, name: str):
-        """Manually add a user back to a usercomm network."""
-        if not await self.usercomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-
-        if name not in active_sessions:
-            await ctx.send("No session found with this name.")
-            return
-        if user.id in active_sessions[name]["users"]:
-            await ctx.send(f"{user.display_name} is already part of this session.")
-            return
-        active_sessions[name]["users"].append(user.id)
-        await self.config.active_sessions.set(active_sessions)
-        embed = discord.Embed(title="User Added", description=f"{user.display_name} has been added to the usercomm network '{name}'.")
-        await ctx.send(embed=embed)
-
-    @usercomm.command(name="listusers")
-    @commands.is_owner()
-    async def usercomm_listusers(self, ctx):
-        """List all users and their IDs."""
-        if not await self.usercomm(ctx):
-            return
-        user_names = await self.config.user_names()
-        users_list = "\n".join([f"{user_id}: {name}" for user_id, name in user_names.items()])
-        if not users_list:
-            users_list = "No users found."
-        await ctx.send(f"```\nUsers and their IDs:\n{users_list}\n```")
+        guild = channel.guild
+        for channel_id in linked_channels:
+            relay_channel = self.bot.get_channel(channel_id)
+            if relay_channel and relay_channel != channel:
+                await relay_channel.send(f"***The wormhole is shifting...** {guild.name}: {message}*")
 
     @commands.group()
-    async def dmcomm(self, ctx):
-        """Manage direct communications with specific users."""
-        if ctx.guild is None:
-            await ctx.send("This command can only be used in servers.")
-            return False
-        return True
+    async def privatewormhole(self, ctx):
+        """Manage private wormhole connections."""
+        pass
 
-    @dmcomm.command(name="open")
-    async def dmcomm_open(self, ctx, user_id: int):
-        """Open a direct communication with a specific user."""
-        if not await self.dmcomm(ctx):
-            return
-        user = self.bot.get_user(user_id)
-        if not user:
-            await ctx.send("User not found.")
-            return
+    @privatewormhole.command(name="create")
+    async def privatewormhole_create(self, ctx, name: str, password: str):
+        """Create a private wormhole with a name and password."""
+        private_wormholes = await self.config.private_wormholes()
+        if name not in private_wormholes:
+            private_wormholes[name] = {"password": password, "channels": [ctx.channel.id]}
+            await self.config.private_wormholes.set(private_wormholes)
+            await ctx.send(f"Private wormhole `{name}` created with the provided password.")
+        else:
+            await ctx.send("A private wormhole with this name already exists.")
 
-        active_sessions = await self.config.active_sessions()
-        previous_sessions = await self.config.previous_sessions()
-        session_key = f"{ctx.author.id}-{user_id}"
-
-        if session_key in active_sessions:
-            await ctx.send("You already have an active session with this user.")
-            return
-
-        # Ask the target user for confirmation
-        def check(m):
-            return m.author.id == user_id and m.channel == user.dm_channel and m.content.lower() in ["yes", "no"]
-
-        await user.send(f"{ctx.author.mention} wants to open a communication line with you. Do you accept this transmission? Yes or No?")
-
-        try:
-            response = await self.bot.wait_for('message', check=check, timeout=60.0)
-            if response.content.lower() == "yes":
-                # Save and close all existing usercomms for the target user
-                previous_sessions[user_id] = []
-                for session_name, session_info in active_sessions.items():
-                    if user_id in session_info["users"]:
-                        session_info["users"].remove(user_id)
-                        previous_sessions[user_id].append(session_name)
-                        await user.send(f"You have been removed from the usercomm network '{session_name}'.")
-
-                active_sessions[session_key] = {"users": [ctx.author.id, user_id]}
-                await self.config.active_sessions.set(active_sessions)
-                await self.config.previous_sessions.set(previous_sessions)
-                await ctx.send(f"Communication line opened with {user.mention}.")
-                await user.send(f"{ctx.author.mention} has opened a communication line with you.")
+    @privatewormhole.command(name="join")
+    async def privatewormhole_join(self, ctx, name: str, password: str):
+        """Join an existing private wormhole with the correct name and password."""
+        private_wormholes = await self.config.private_wormholes()
+        if name in private_wormholes:
+            if private_wormholes[name]["password"] == password:
+                if ctx.channel.id not in private_wormholes[name]["channels"]:
+                    private_wormholes[name]["channels"].append(ctx.channel.id)
+                    await self.config.private_wormholes.set(private_wormholes)
+                    await ctx.send(f"This channel has joined the private wormhole `{name}`.")
+                    await self.send_status_message(f"A faint signal was picked up from {ctx.channel.mention}, connection has been established.", ctx.channel, name)
+                else:
+                    await ctx.send("This channel is already part of the private wormhole.")
             else:
-                await ctx.send(f"{user.mention} has denied the communication request.")
-        except asyncio.TimeoutError:
-            await ctx.send(f"{user.mention} did not respond to the communication request in time.")
+                await ctx.send("Incorrect password for the private wormhole.")
+        else:
+            await ctx.send("No private wormhole found with this name.")
 
-    @dmcomm.command(name="close")
-    async def dmcomm_close(self, ctx):
-        """Close the direct communication with a specific user."""
-        if not await self.dmcomm(ctx):
-            return
-        active_sessions = await self.config.active_sessions()
-        previous_sessions = await self.config.previous_sessions()
-        session_keys_to_remove = []
-
-        for session_key, session_info in active_sessions.items():
-            if ctx.author.id in session_info["users"]:
-                session_keys_to_remove.append(session_key)
-                other_user_id = session_info["users"][1] if session_info["users"][0] == ctx.author.id else session_info["users"][0]
-                other_user = self.bot.get_user(other_user_id)
-                if other_user:
-                    await other_user.send(f"{ctx.author.mention} has closed the communication line with you.")
-
-                # Reestablish previous usercomms for the other user
-                if other_user_id in previous_sessions:
-                    for session_name in previous_sessions[other_user_id]:
-                        active_sessions[session_name]["users"].append(other_user_id)
-                        await other_user.send(f"You have been re-added to the usercomm network '{session_name}'.")
-                    del previous_sessions[other_user_id]
-
-        for session_key in session_keys_to_remove:
-            del active_sessions[session_key]
-
-        await self.config.active_sessions.set(active_sessions)
-        await self.config.previous_sessions.set(previous_sessions)
-        await ctx.send("All direct communication lines have been closed.")
+    @privatewormhole.command(name="leave")
+    async def privatewormhole_leave(self, ctx, name: str):
+        """Leave a private wormhole."""
+        private_wormholes = await self.config.private_wormholes()
+        if name in private_wormholes and ctx.channel.id in private_wormholes[name]["channels"]:
+            private_wormholes[name]["channels"].remove(ctx.channel.id)
+            if not private_wormholes[name]["channels"]:
+                del private_wormholes[name]
+            await self.config.private_wormholes.set(private_wormholes)
+            await ctx.send(f"This channel has left the private wormhole `{name}`.")
+        else:
+            await ctx.send("This channel is not part of the private wormhole with this name.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if message.author.bot:
+        if not message.guild:  # Don't allow in DMs
             return
-
-        active_sessions = await self.config.active_sessions()
-        user_names = await self.config.user_names()
-        trusted_users = await self.config.trusted_users()
-
-        if message.guild:
-            # Handle server messages for direct communication
-            for session_name, session_info in active_sessions.items():
-                if message.author.id in session_info["users"]:
-                    display_name = user_names.get(message.author.id, message.author.display_name)
-                    if message.author.id in trusted_users:
-                        display_name += " - Moderator"
-                    for user_id in session_info["users"]:
-                        if user_id != message.author.id:
-                            user = self.bot.get_user(user_id)
-                            if user:
-                                if message.attachments:
-                                    for attachment in message.attachments:
-                                        await user.send(f"**{message.guild.name} - {display_name}:** {message.content}")
-                                        await attachment.save(f"temp_{attachment.filename}")
-                                        with open(f"temp_{attachment.filename}", "rb") as file:
-                                            await user.send(file=discord.File(file))
-                                        os.remove(f"temp_{attachment.filename}")
-                                else:
-                                    await user.send(f"**{message.guild.name} - {display_name}:** {message.content}")
+        if message.author.bot or not message.channel.permissions_for(message.guild.me).send_messages:
             return
+        if isinstance(message.channel, discord.TextChannel) and message.content.startswith(commands.when_mentioned(self.bot, message)[0]):
+            return  # Ignore bot commands
 
-    @commands.Cog.listener()
-    async def on_message_edit(self, before: discord.Message, after: discord.Message):
-        if after.author.bot:
-            return
+        # Check if the message is a bot command
+        ctx = await self.bot.get_context(message)
+        if ctx.valid:
+            return  # Ignore bot commands
 
-        active_sessions = await self.config.active_sessions()
-        user_names = await self.config.user_names()
-        trusted_users = await self.config.trusted_users()
+        global_blacklist = await self.config.global_blacklist()
+        word_filters = await self.config.word_filters()
+        private_wormholes = await self.config.private_wormholes()
 
-        if after.author.id in active_sessions:
-            display_name = user_names.get(after.author.id, after.author.display_name)
-            if after.author.id in trusted_users:
-                display_name += " - Moderator"
-            content = after.content
+        if message.author.id in global_blacklist:
+            return  # Author is globally blacklisted
 
-            sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if after.author.id in session_info["users"]]
+        # Check if the message is in a private wormhole channel
+        for name, wormhole_data in private_wormholes.items():
+            channels = wormhole_data["channels"]
+            if message.channel.id in channels:
+                if any(word in message.content for word in word_filters):
+                    await message.channel.send("That word is not allowed.")
+                    await message.delete()
+                    return  # Message contains a filtered word, notify user and delete it
 
-            for session_name in sessions_to_relay:
-                for user_id in active_sessions[session_name]["users"]:
-                    if user_id != after.author.id:
-                        user = self.bot.get_user(user_id)
-                        if user:
-                            if (before.id, user_id) in self.relayed_messages:
-                                relay_message_id = self.relayed_messages[(before.id, user_id)]
-                                relay_message = await user.fetch_message(relay_message_id)
-                                await relay_message.delete()
-                                new_relay_message = await user.send(f"**{display_name} (edited):** {content}")
-                                self.relayed_messages[(after.id, user_id)] = new_relay_message.id
+                if message.channel.is_nsfw():
+                    await message.channel.send("NSFW content is not allowed in the wormhole.")
+                    await message.delete()
+                    return  # Delete NSFW messages
+
+                display_name = message.author.display_name if message.author.display_name else message.author.name
+
+                for channel_id in channels:
+                    if channel_id != message.channel.id:
+                        channel = self.bot.get_channel(channel_id)
+                        if channel:
+                            if message.attachments:
+                                for attachment in message.attachments:
+                                    await channel.send(f"**{message.guild.name} - {display_name}:** {message.content}")
+                                    await attachment.save(f"temp_{attachment.filename}")
+                                    with open(f"temp_{attachment.filename}", "rb") as file:
+                                        await channel.send(file=discord.File(file))
+                                    os.remove(f"temp_{attachment.filename}")
+                            else:
+                                await channel.send(f"**{message.guild.name} - {display_name}:** {message.content}")
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
-        if message.author.bot:
+        if not message.guild:
             return
 
-        active_sessions = await self.config.active_sessions()
+        private_wormholes = await self.config.private_wormholes()
 
-        # Check if the message is in a usercomm channel
-        for session_name, session_info in active_sessions.items():
-            if message.channel.id in session_info["users"]:
-                for user_id in session_info["users"]:
-                    if user_id != message.author.id:
-                        user = self.bot.get_user(user_id)
-                        if user:
-                            async for msg in user.history(limit=100):
+        # Check if the message is in a private wormhole channel
+        for name, wormhole_data in private_wormholes.items():
+            channels = wormhole_data["channels"]
+            if message.channel.id in channels:
+                for channel_id in channels:
+                    if channel_id != message.channel.id:
+                        channel = self.bot.get_channel(channel_id)
+                        if channel:
+                            async for msg in channel.history(limit=100):
                                 if msg.content == f"**{message.guild.name} - {message.author.display_name}:** {message.content}":
                                     await msg.delete()
                                     break
 
-    def parse_duration(self, duration: str) -> int:
-        """Parse a duration string and return the total duration in seconds."""
-        units = {
-            'y': 'years',
-            'mo': 'months',
-            'w': 'weeks',
-            'd': 'days',
-            'h': 'hours',
-            'm': 'minutes',
-            's': 'seconds'
-        }
-        total_seconds = 0
-        for unit, name in units.items():
-            if unit in duration:
-                amount = int(duration.split(unit)[0])
-                duration = duration.split(unit)[1]
-                delta = relativedelta(**{name: amount})
-                total_seconds += int((datetime.now() + delta - datetime.now()).total_seconds())
-        return total_seconds
+    @privatewormhole.command(name="globalblacklist")
+    async def privatewormhole_globalblacklist(self, ctx, user: discord.User):
+        """Prevent specific members from sending messages through the private wormhole globally."""
+        if await self.bot.is_owner(ctx.author):
+            global_blacklist = await self.config.global_blacklist()
+            if user.id not in global_blacklist:
+                global_blacklist.append(user.id)
+                await self.config.global_blacklist.set(global_blacklist)
+                await ctx.send(f"{user.display_name} has been added to the global private wormhole blacklist.")
+            else:
+                await ctx.send(f"{user.display_name} is already in the global private wormhole blacklist.")
+        else:
+            await ctx.send("You must be the bot owner to use this command.")
+
+    @privatewormhole.command(name="unglobalblacklist")
+    async def privatewormhole_unglobalblacklist(self, ctx, user: discord.User):
+        """Command to remove a user from the global private wormhole blacklist (Bot Owner Only)."""
+        if await self.bot.is_owner(ctx.author):
+            global_blacklist = await self.config.global_blacklist()
+            if user.id in global_blacklist:
+                global_blacklist.remove(user.id)
+                await self.config.global_blacklist.set(global_blacklist)
+                await ctx.send(f"{user.display_name} has been removed from the global private wormhole blacklist.")
+            else:
+                await ctx.send(f"{user.display_name} is not in the global private wormhole blacklist.")
+        else:
+            await ctx.send("You must be the bot owner to use this command.")
+
+    @privatewormhole.command(name="addwordfilter")
+    async def privatewormhole_addwordfilter(self, ctx, *, word: str):
+        """Add a word to the private wormhole word filter."""
+        if await self.bot.is_owner(ctx.author):
+            word_filters = await self.config.word_filters()
+            if word not in word_filters:
+                word_filters.append(word)
+                await self.config.word_filters.set(word_filters)
+                await ctx.send(f"`{word}` has been added to the private wormhole word filter.")
+            else:
+                await ctx.send(f"`{word}` is already in the private wormhole word filter.")
+
+    @privatewormhole.command(name="removewordfilter")
+    async def privatewormhole_removewordfilter(self, ctx, *, word: str):
+        """Remove a word from the private wormhole word filter."""
+        if await self.bot.is_owner(ctx.author):
+            word_filters = await self.config.word_filters()
+            if word in word_filters:
+                word_filters.remove(word)
+                await self.config.word_filters.set(word_filters)
+                await ctx.send(f"`{word}` has been removed from the private wormhole word filter.")
+            else:
+                await ctx.send(f"`{word}` is not in the private wormhole word filter.")
 
 def setup(bot):
-    bot.add_cog(Comm(bot))
+    bot.add_cog(PrivateWormHole(bot))
