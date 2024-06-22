@@ -20,10 +20,13 @@ class RequestGB(commands.Cog):
         self.config.register_global(**default_global)
 
     @commands.is_owner()
-    @commands.group()
-    async def requestgb(self, ctx):
+    @commands.group(aliases=["reqgb", "rgb"])
+    async def requestgb(self, ctx, user_id: int = None, *, proof: str = None):
         """Group for global ban request commands."""
-        pass
+        if user_id and proof:
+            await self.reqglobalban(ctx, user_id, proof)
+        else:
+            await ctx.send_help(ctx.command)
 
     @requestgb.command()
     async def setrequestchannel(self, ctx, channel: discord.TextChannel):
@@ -67,8 +70,7 @@ class RequestGB(commands.Cog):
                 )
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["reqgb", "rgb"])
-    async def reqglobalban(self, ctx, user_id: int, *, reason: str):
+    async def reqglobalban(self, ctx, user_id: int, proof: str):
         """Request a global ban for a user."""
         notification_channel_id = await self.config.notification_channel()
         if not notification_channel_id:
@@ -97,7 +99,7 @@ class RequestGB(commands.Cog):
         request = {
             "requester": ctx.author.id,
             "user_id": user_id,
-            "reason": reason,
+            "proof": proof,
             "status": "Pending",
             "message_id": None
         }
@@ -122,7 +124,7 @@ class RequestGB(commands.Cog):
             description=f"{ctx.author} has requested that user {user.display_name} ({user.id}) be globally banned.",
             color=discord.Color(0x00f0ff)
         )
-        embed.add_field(name="Reason", value=reason, inline=True)
+        embed.add_field(name="Proof", value=proof, inline=True)
         embed.add_field(name="Status", value="Pending", inline=True)
 
         async def handle_auto_approval():
@@ -176,7 +178,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
                 return
 
-            reason = request["reason"]
+            proof = request["proof"]
             user = self.bot.get_user(request["user_id"])
             if not user:
                 try:
@@ -193,7 +195,7 @@ class RequestGB(commands.Cog):
             if user:
                 for guild in self.bot.guilds:
                     try:
-                        await guild.ban(user, reason=reason)
+                        await guild.ban(user, reason=proof)
                     except discord.Forbidden:
                         embed = discord.Embed(
                             title="Error",
@@ -217,7 +219,7 @@ class RequestGB(commands.Cog):
                     try:
                         await requester.send(embed=discord.Embed(
                             title="Request Approved",
-                            description=f"Your request to globally ban {user.display_name} ({user.id}) was approved for {reason}.",
+                            description=f"Your request to globally ban {user.display_name} ({user.id}) was approved for {proof}.",
                             color=discord.Color.green()
                         ))
                     except discord.Forbidden:
@@ -232,7 +234,7 @@ class RequestGB(commands.Cog):
                             description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
                             color=discord.Color(0x008800)
                         )
-                        embed.add_field(name="Reason", value=request["reason"], inline=True)
+                        embed.add_field(name="Proof", value=request["proof"], inline=True)
                         embed.add_field(name="Status", value="Approved", inline=True)
                         await message.edit(embed=embed)
                     except discord.Forbidden:
@@ -262,7 +264,7 @@ class RequestGB(commands.Cog):
                         )
                         embed.add_field(name="User", value=f"{user.display_name} ({user.id})", inline=False)
                         embed.add_field(name="Approved By", value=ctx.author.mention, inline=False)
-                        embed.add_field(name="Reason", value=reason, inline=False)
+                        embed.add_field(name="Proof", value=proof, inline=False)
                         embed.set_footer(text=f"Guild: {self.bot.get_guild(int(guild_id)).name}")
                         await log_channel.send(embed=embed)
 
@@ -294,7 +296,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
                 return
 
-            original_reason = request["reason"]
+            original_proof = request["proof"]
             request["status"] = "Denied"
             requester = self.bot.get_user(request["requester"])
             user = self.bot.get_user(request["user_id"])
@@ -332,7 +334,7 @@ class RequestGB(commands.Cog):
                         description=f"{requester} has requested that user {user.display_name} ({user.id}) be globally banned.",
                         color=discord.Color(0xff0000)
                     )
-                    embed.add_field(name="Reason", value=original_reason, inline=True)
+                    embed.add_field(name="Proof", value=original_proof, inline=True)
                     embed.add_field(name="Status", value="Denied", inline=True)
                     if deny_reason:
                         embed.add_field(name="Deny Reason", value=deny_reason, inline=True)
@@ -365,6 +367,3 @@ class RequestGB(commands.Cog):
                 color=discord.Color.red()
             )
             await ctx.send(embed=embed)
-
-def setup(bot: Red):
-    bot.add_cog(RequestGB(bot))
