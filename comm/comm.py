@@ -12,6 +12,7 @@ class Comm(commands.Cog):
             active_sessions={},
             previous_sessions={},
             user_names={},
+            merged_sessions={},
             trusted_users=[],
             banned_users={}
         )  # Initialize the configuration
@@ -59,10 +60,6 @@ class Comm(commands.Cog):
             await ctx.send(f"You are banned from joining usercomm networks for {int(banned_users[ctx.author.id] - asyncio.get_event_loop().time())} more seconds.")
             return
 
-        if ctx.author.id in active_sessions[name]["users"]:
-            await ctx.send("You are already part of this session.")
-            return
-
         current_sessions = [session_name for session_name, session_info in active_sessions.items() if ctx.author.id in session_info["users"]]
 
         if current_sessions:
@@ -78,23 +75,17 @@ class Comm(commands.Cog):
                     active_sessions[current_session_name]["users"].remove(ctx.author.id)
                     await ctx.send(f"You have left the usercomm network '{current_session_name}' and joined '{name}'.")
                 else:
-                    await ctx.send("You chose not to join the new usercomm network.")
+                    await ctx.send(f"You have decided to stay in the usercomm network '{current_session_name}'.")
                     return
             except asyncio.TimeoutError:
                 await ctx.send("You did not respond in time. Please try again.")
                 return
 
+        if ctx.author.id in active_sessions[name]["users"]:
+            await ctx.send("You are already part of this session.")
+            return
         active_sessions[name]["users"].append(ctx.author.id)
         await self.config.active_sessions.set(active_sessions)
-
-        # Send an embed message to all users in the usercomm network
-        embed = discord.Embed(title="User Joined", description=f"{ctx.author.display_name} has joined the conversation.")
-        for user_id in active_sessions[name]["users"]:
-            if user_id != ctx.author.id:
-                user = self.bot.get_user(user_id)
-                if user:
-                    await user.send(embed=embed)
-
         await ctx.send(f"You have joined the usercomm network '{name}'.")
 
     @usercomm.command(name="leave")
@@ -123,7 +114,7 @@ class Comm(commands.Cog):
 
     @usercomm.command(name="remove")
     @commands.is_owner()
-    async def usercomm_remove(self, ctx, user: discord.User, *, reason: str):
+    async def usercomm_remove(self, ctx, user: discord.User, reason: str):
         """Remove a user from the usercomm and ban them for 300 seconds."""
         active_sessions = await self.config.active_sessions()
         banned_users = await self.config.banned_users()
@@ -272,10 +263,6 @@ class Comm(commands.Cog):
             # Relay the message to other linked users
             content = message.content
 
-            # Handle emojis
-            if message.guild:
-                content = self.replace_emojis_with_urls(message.guild, content)
-
             sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if message.author.id in session_info["users"]]
 
             for session_name in sessions_to_relay:
@@ -309,10 +296,6 @@ class Comm(commands.Cog):
                 display_name += " - Moderator"
             content = after.content
 
-            # Handle emojis
-            if after.guild:
-                content = self.replace_emojis_with_urls(after.guild, content)
-
             sessions_to_relay = [session_name for session_name, session_info in active_sessions.items() if after.author.id in session_info["users"]]
 
             for session_name in sessions_to_relay:
@@ -343,13 +326,6 @@ class Comm(commands.Cog):
                         relay_message_id = self.relayed_messages[(message.id, user_id)]
                         relay_message = await user.fetch_message(relay_message_id)
                         await relay_message.delete()
-
-    def replace_emojis_with_urls(self, guild, content):
-        if guild:
-            for emoji in guild.emojis:
-                if str(emoji) in content:
-                    content = content.replace(str(emoji), str(emoji.url))
-        return content
 
 def setup(bot):
     bot.add_cog(Comm(bot))
