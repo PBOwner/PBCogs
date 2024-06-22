@@ -2,7 +2,6 @@ from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
 from redbot.core.commands import is_owner
-from redbot.core.commands.converter import CogConverter
 
 class Counter(commands.Cog):
     """A cog to track various statistics for Red-DiscordBot"""
@@ -72,16 +71,6 @@ class Counter(commands.Cog):
         await ctx.send(embed=embed)
 
     @counter.command()
-    async def cogs(self, ctx):
-        """Display the total cogs"""
-        cog_count = len(self.bot.cogs)
-
-        embed = discord.Embed(title="Total Cogs", color=discord.Color.green())
-        embed.add_field(name="Total Cogs", value=cog_count, inline=True)
-
-        await ctx.send(embed=embed)
-
-    @counter.command()
     @is_owner()
     async def totalcommands(self, ctx, user_id: int):
         """Display the top 10 commands used by a specific user ID"""
@@ -127,7 +116,6 @@ class Counter(commands.Cog):
                     total_users = sum(len(guild.members) for guild in self.bot.guilds)
                     server_count = len(self.bot.guilds)
                     total_commands = sum(1 for _ in self.bot.walk_commands())
-                    cog_count = len(self.bot.cogs)
 
                     # Calculate top 5 users with the most commands run
                     user_command_counts = {}
@@ -145,7 +133,6 @@ class Counter(commands.Cog):
                     embed.add_field(name="Total Users", value=total_users, inline=True)
                     embed.add_field(name="Total Servers", value=server_count, inline=True)
                     embed.add_field(name="Total Commands", value=total_commands, inline=True)
-                    embed.add_field(name="Total Cogs", value=cog_count, inline=True)
                     embed.add_field(name="Top 5 Users", value=top_users_stats, inline=False)
 
                     message = None
