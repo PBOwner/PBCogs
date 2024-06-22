@@ -251,6 +251,23 @@ class Comm(commands.Cog):
             comms_list = "No usercomm networks found."
         await ctx.send(f"Existing usercomm networks:\n{comms_list}")
 
+    @usercomm.command(name="delete")
+    @commands.is_owner()
+    async def usercomm_delete(self, ctx, name: str):
+        """Forcefully delete an existing usercomm network."""
+        if ctx.guild is not None:
+            await ctx.send("This command can only be used in DMs.")
+            return
+        active_sessions = await self.config.active_sessions()
+
+        if name not in active_sessions:
+            await ctx.send("No session found with this name.")
+            return
+
+        del active_sessions[name]
+        await self.config.active_sessions.set(active_sessions)
+        await ctx.send(f"The usercomm network '{name}' has been forcefully deleted.")
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         if message.author.bot:
