@@ -59,14 +59,10 @@ class AffiliatedServers(commands.Cog):
         if not self.affiliated_servers:
             return  # No affiliated servers to send
 
-        parent_embed = discord.Embed(
-            title="Affiliated Servers",
-            description="The servers listed below are affiliated with FuturoBot",
-            color=discord.Color.blue()
-        )
+        initial_message = "The servers listed below are affiliated with FuturoBot"
 
         try:
-            await member.send(embed=parent_embed)
+            await member.send(initial_message)
             for server in self.affiliated_servers:
                 embed = discord.Embed(
                     title=server["name"],
