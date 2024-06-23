@@ -54,8 +54,8 @@ class AffiliatedServers(commands.Cog):
         await ctx.send("All affiliated servers have been cleared.")
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild: discord.Guild):
-        """Event listener that triggers when the bot joins a server."""
+    async def on_member_join(self, member: discord.Member):
+        """Event listener that triggers when a new member joins a server."""
         if not self.affiliated_servers:
             return  # No affiliated servers to send
 
@@ -65,20 +65,18 @@ class AffiliatedServers(commands.Cog):
             color=discord.Color.blue()
         )
 
-        owner = guild.owner
-        if owner:
-            try:
-                await owner.send(embed=parent_embed)
-                for server in self.affiliated_servers:
-                    embed = discord.Embed(
-                        title=server["name"],
-                        description=server["message"],
-                        color=discord.Color.green()
-                    )
-                    embed.add_field(name="Invite", value=server["invite"])
-                    await owner.send(embed=embed)
-            except discord.Forbidden:
-                print(f"Could not send DM to the owner of the guild: {guild.name}")
+        try:
+            await member.send(embed=parent_embed)
+            for server in self.affiliated_servers:
+                embed = discord.Embed(
+                    title=server["name"],
+                    description=server["message"],
+                    color=discord.Color.green()
+                )
+                embed.add_field(name="Invite", value=server["invite"])
+                await member.send(embed=embed)
+        except discord.Forbidden:
+            print(f"Could not send DM to the new member: {member.name}")
 
 def setup(bot):
     bot.add_cog(AffiliatedServers(bot))
