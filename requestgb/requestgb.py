@@ -20,7 +20,6 @@ class RequestGB(commands.Cog):
         }
         self.config.register_global(**default_global)
 
-    @commands.is_owner()
     @commands.group(aliases=["reqgb", "rgb"], invoke_without_command=True)
     async def requestgb(self, ctx, user_id: int = None, *, proof: str = None):
         """Group for global ban request commands."""
@@ -30,6 +29,7 @@ class RequestGB(commands.Cog):
             await ctx.send_help(ctx.command)
 
     @requestgb.command(name="setreq")
+    @commands.is_owner()
     async def set_request_channel(self, ctx, channel: discord.TextChannel):
         """Set the channel for global ban notifications."""
         await self.config.notification_channel.set(channel.id)
@@ -41,6 +41,7 @@ class RequestGB(commands.Cog):
         await ctx.send(embed=embed)
 
     @requestgb.command(name="setlog")
+    @commands.guildowner()
     async def set_log_channel(self, ctx, channel: discord.TextChannel):
         """Set the log channel for global ban approvals."""
         async with self.config.log_channels() as log_channels:
@@ -53,6 +54,7 @@ class RequestGB(commands.Cog):
         await ctx.send(embed=embed)
 
     @requestgb.command(name="addtrusted")
+    @commands.is_owner()
     async def add_trusted_user(self, ctx, user: discord.User):
         """Add a trusted user who can approve/deny global ban requests."""
         async with self.config.trusted_users() as trusted_users:
@@ -72,7 +74,7 @@ class RequestGB(commands.Cog):
         await ctx.send(embed=embed)
 
     @requestgb.command(name="optout")
-    @commands.guildowner_or_permissions(administrator=True)
+    @commands.guildowner()
     async def opt_out(self, ctx):
         """Opt-out the server from the global ban feature."""
         async with self.config.opted_out_guilds() as opted_out_guilds:
@@ -92,7 +94,7 @@ class RequestGB(commands.Cog):
         await ctx.send(embed=embed)
 
     @requestgb.command(name="optin")
-    @commands.guildowner_or_permissions(administrator=True)
+    @commands.guildowner()
     async def opt_in(self, ctx):
         """Opt-in the server to the global ban feature."""
         async with self.config.opted_out_guilds() as opted_out_guilds:
@@ -206,6 +208,7 @@ class RequestGB(commands.Cog):
                 await ctx.send(embed=embed)
 
     @requestgb.command(name="approve")
+    @commands.is_owner()
     async def approve(self, ctx, user_id: int):
         """Approve a global ban request."""
         async with self.config.requests() as requests:
@@ -319,6 +322,7 @@ class RequestGB(commands.Cog):
             await ctx.send(embed=embed)
 
     @requestgb.command(name="deny")
+    @commands.is_owner()
     async def deny(self, ctx, user_id: int, *, deny_reason: str = None):
         """Deny a global ban request."""
         async with self.config.requests() as requests:
