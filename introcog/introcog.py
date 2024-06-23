@@ -30,6 +30,21 @@ class IntroCog(commands.Cog):
         await self.config.user(ctx.author).fields.set(user_data)
         await ctx.send("Your introduction has been set!")
 
+    @intro.command(name="preview")
+    async def intro_preview(self, ctx):
+        """Preview your introduction."""
+        color = await self.config.user(ctx.author).color()
+        fields = await self.config.user(ctx.author).fields()
+        if not color or not fields:
+            await ctx.send("You need to set your introduction first using the `intro set` command.")
+            return
+
+        embed = discord.Embed(color=color, title=f"{ctx.author.display_name}'s Introduction")
+        for field_name, field_value in fields.items():
+            embed.add_field(name=field_name.capitalize(), value=field_value, inline=False)
+
+        await ctx.send(embed=embed)
+
     @intro.command(name="send")
     async def intro_send(self, ctx):
         """Send your introduction to the configured channel."""
