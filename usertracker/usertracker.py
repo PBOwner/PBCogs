@@ -51,15 +51,23 @@ class UserTracker(commands.Cog):
         join_times = [(datetime.datetime.fromisoformat(j[0]), j[1]) for j in joins]
         leave_times = [(datetime.datetime.fromisoformat(l[0]), l[1]) for l in leaves]
 
-        join_leave_info = []
+        join_leave_info = {}
         for join_time, guild_id in join_times:
+            guild = self.bot.get_guild(guild_id)
+            guild_name = guild.name if guild else "Unknown Guild"
             leave_time = next((l[0] for l in leave_times if l[1] == guild_id and l[0] > join_time), None)
+            day_of_week = join_time.strftime('%A')
+            if day_of_week not in join_leave_info:
+                join_leave_info[day_of_week] = []
             if leave_time:
-                join_leave_info.append(f"Guild ID: {guild_id} - Joined: {join_time}, Left: {leave_time}")
+                join_leave_info[day_of_week].append(f"Guild: {guild_name} - Joined: {join_time}, Left: {leave_time}")
             else:
-                join_leave_info.append(f"Guild ID: {guild_id} - Joined: {join_time}, Still in server")
+                join_leave_info[day_of_week].append(f"Guild: {guild_name} - Joined: {join_time}, Still in server")
 
-        embed = discord.Embed(title=f"Join/Leave Log for User ID: {user_id}", description="\n".join(join_leave_info))
+        embed = discord.Embed(title=f"Join/Leave Log for User ID: {user_id}")
+        for day, events in join_leave_info.items():
+            embed.add_field(name=day, value="\n".join(events), inline=False)
+
         await ctx.send(embed=embed)
 
 def setup(bot: Red):
