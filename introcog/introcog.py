@@ -10,8 +10,13 @@ class IntroCog(commands.Cog):
             "fields": [],
             "intro_channel": None
         }
+        default_user = {
+            "color": None,
+            "fields": {},
+            "last_intro_message_id": None
+        }
         self.config.register_guild(**default_guild)
-        self.config.register_user(color=None, fields={})
+        self.config.register_user(**default_user)
 
     @commands.guild_only()
     @commands.group()
@@ -19,16 +24,66 @@ class IntroCog(commands.Cog):
         """Manage your introduction."""
         pass
 
-    @intro.command(name="set")
-    async def intro_set(self, ctx, color: discord.Color, *, fields: str):
-        """Set your introduction.
-
-        Example: [p]intro set #ff0000 name: John Doe, age: 25, hobby: Gaming
-        """
-        user_data = {field.split(":")[0].strip(): field.split(":")[1].strip() for field in fields.split(",")}
+    @intro.command(name="setcolor")
+    async def intro_setcolor(self, ctx, color: discord.Color):
+        """Set the color for your introduction embed."""
         await self.config.user(ctx.author).color.set(color.value)
-        await self.config.user(ctx.author).fields.set(user_data)
-        await ctx.send("Your introduction has been set!")
+        await ctx.send(f"Your introduction color has been set to {color}!")
+
+    @intro.command(name="addvalue")
+    async def intro_addvalue(self, ctx, field_name: str, *, field_value: str):
+        """Add a field value to your introduction.
+
+        Example: [p]intro addvalue name John Doe
+        """
+        fields = await self.config.user(ctx.author).fields()
+        fields[field_name] = field_value
+        await self.config.user(ctx.author).fields.set(fields)
+        await ctx.send(f"Field `{field_name}` has been set to `{field_value}` in your introduction.")
+
+    @intro.command(name="removevalue")
+    async def intro_removevalue(self, ctx, field_name: str):
+        """Remove a field value from your introduction."""
+        fields = await self.config.user(ctx.author).fields()
+        if field_name in fields:
+            del fields[field_name]
+            await self.config.user(ctx.author).fields.set(fields)
+            await ctx.send(f"Field `{field_name}` has been removed from your introduction.")
+        else:
+            await ctx.send(f"Field `{field_name}` does not exist in your introduction.")
+
+    @intro.command(name="editvalue")
+    async def intro_editvalue(self, ctx, field_name: str, *, field_value: str):
+        """Edit a field value in your introduction.
+
+        Example: [p]intro editvalue name Jane Doe
+        """
+        fields = await self.config.user(ctx.author).fields()
+        if field_name in fields:
+            fields[field_name] = field_value
+            await self.config.user(ctx.author).fields.set(fields)
+            await ctx.send(f"Field `{field_name}` has been updated to `{field_value}` in your introduction.")
+        else:
+            await ctx.send(f"Field `{field_name}` does not exist in your introduction. Use `intro addvalue` to add it first.")
+
+    @intro.command(name="viewfields")
+    async def intro_viewfields(self, ctx):
+        """View the fields available for your introduction in this server."""
+        fields = await self.config.guild(ctx.guild).fields()
+        if not fields:
+            await ctx.send("No fields have been added to the introduction form for this server.")
+            return
+
+        embed = discord.Embed(
+            title="Available Fields for Introduction",
+            description="The following fields are available for your introduction in this server:",
+            color=discord.Color.blue()
+        )
+
+        for field in fields:
+            embed.add_field(name=field.capitalize(), value=f"Use `[p]intro addvalue {field} <value>` to set this field.", inline=False)
+
+        await ctx.send(embed=embed)
 
     @intro.command(name="preview")
     async def intro_preview(self, ctx):
@@ -36,7 +91,7 @@ class IntroCog(commands.Cog):
         color = await self.config.user(ctx.author).color()
         fields = await self.config.user(ctx.author).fields()
         if not color or not fields:
-            await ctx.send("You need to set your introduction first using the `intro set` command.")
+            await ctx.send("You need to set your introduction color and fields first.")
             return
 
         embed = discord.Embed(color=color, title=f"{ctx.author.display_name}'s Introduction")
@@ -51,7 +106,7 @@ class IntroCog(commands.Cog):
         color = await self.config.user(ctx.author).color()
         fields = await self.config.user(ctx.author).fields()
         if not color or not fields:
-            await ctx.send("You need to set your introduction first using the `intro set` command.")
+            await ctx.send("You need to set your introduction color and fields first.")
             return
 
         embed = discord.Embed(color=color, title=f"{ctx.author.display_name}'s Introduction")
@@ -62,7 +117,16 @@ class IntroCog(commands.Cog):
         if intro_channel_id:
             intro_channel = self.bot.get_channel(intro_channel_id)
             if intro_channel:
-                await intro_channel.send(f"{ctx.author.mention}", embed=embed)
+                last_intro_message_id = await self.config.user(ctx.author).last_intro_message_id()
+                if last_intro_message_id:
+                    try:
+                        last_intro_message = await intro_channel.fetch_message(last_intro_message_id)
+                        await last_intro_message.delete()
+                    except discord.NotFound:
+                        pass
+
+                new_intro_message = await intro_channel.send(f"{ctx.author.mention}", embed=embed)
+                await self.config.user(ctx.author).last_intro_message_id.set(new_intro_message.id)
                 await ctx.send("Your introduction has been sent!")
             else:
                 await ctx.send("The configured introduction channel does not exist.")
