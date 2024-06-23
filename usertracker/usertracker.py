@@ -15,6 +15,7 @@ class UserTracker(commands.Cog):
         await self.bot.wait_until_ready()
         async with aiosqlite.connect("user_tracker.db") as db:
             await db.execute("CREATE TABLE IF NOT EXISTS joins (user_id INTEGER, join_time TEXT, guild_id INTEGER)")
+            await db.execute("CREATE TABLE IF NOT EXISTS leaves (user_id INTEGER, leave_time TEXT, guild_id INTEGER)")
             for guild in self.bot.guilds:
                 for member in guild.members:
                     async with db.execute("SELECT 1 FROM joins WHERE user_id = ? AND guild_id = ?", (member.id, guild.id)) as cursor:
@@ -25,12 +26,14 @@ class UserTracker(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         async with aiosqlite.connect("user_tracker.db") as db:
+            await db.execute("CREATE TABLE IF NOT EXISTS joins (user_id INTEGER, join_time TEXT, guild_id INTEGER)")
             await db.execute("INSERT INTO joins (user_id, join_time, guild_id) VALUES (?, ?, ?)", (member.id, datetime.datetime.utcnow().isoformat(), member.guild.id))
             await db.commit()
 
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
         async with aiosqlite.connect("user_tracker.db") as db:
+            await db.execute("CREATE TABLE IF NOT EXISTS leaves (user_id INTEGER, leave_time TEXT, guild_id INTEGER)")
             await db.execute("INSERT INTO leaves (user_id, leave_time, guild_id) VALUES (?, ?, ?)", (member.id, datetime.datetime.utcnow().isoformat(), member.guild.id))
             await db.commit()
 
@@ -38,6 +41,8 @@ class UserTracker(commands.Cog):
     async def userlog(self, ctx, user_id: int):
         """Fetch join/leave log for a user by user ID."""
         async with aiosqlite.connect("user_tracker.db") as db:
+            await db.execute("CREATE TABLE IF NOT EXISTS joins (user_id INTEGER, join_time TEXT, guild_id INTEGER)")
+            await db.execute("CREATE TABLE IF NOT EXISTS leaves (user_id INTEGER, leave_time TEXT, guild_id INTEGER)")
             async with db.execute("SELECT join_time, guild_id FROM joins WHERE user_id = ?", (user_id,)) as cursor:
                 joins = await cursor.fetchall()
             async with db.execute("SELECT leave_time, guild_id FROM leaves WHERE user_id = ?", (user_id,)) as cursor:
