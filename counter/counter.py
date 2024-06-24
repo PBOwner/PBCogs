@@ -100,7 +100,7 @@ class Counter(commands.Cog):
             f"Mod Commands: {len(mod_commands)}\n"
             f"Admin Commands: {len(admin_commands)}\n"
             f"Guild Owner Commands: {len(owner_commands)}\n"
-            f"Bot Owner Commands: {len(bot_owner_commands)}"
+            f"Bot Owner Commands: {total_commands}"
         )
 
         if ctx.guild is None:
@@ -114,7 +114,7 @@ class Counter(commands.Cog):
             embed.add_field(name="Mod Commands", value=len(mod_commands), inline=False)
             embed.add_field(name="Admin Commands", value=len(admin_commands), inline=False)
             embed.add_field(name="Guild Owner Commands", value=len(owner_commands), inline=False)
-            embed.add_field(name="Bot Owner Commands", value=len(bot_owner_commands), inline=False)
+            embed.add_field(name="Bot Owner Commands", value=total_commands, inline=False)
             await ctx.send(embed=embed)
 
     @count.group(name="list")
@@ -205,3 +205,6 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
             await ctx.send(embed=embed)
+
+def setup(bot):
+    bot.add_cog(Counter(bot))
