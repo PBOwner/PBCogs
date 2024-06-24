@@ -2,6 +2,7 @@ import random
 from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
+from redbot.core.commands import is_owner
 
 class Counter(commands.Cog):
     """A cog to track various statistics for Red-DiscordBot"""
