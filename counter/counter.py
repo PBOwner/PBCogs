@@ -5,7 +5,7 @@ from redbot.core.bot import Red
 from redbot.core.commands import is_owner
 
 class Counter(commands.Cog):
-    """A cog to track various statistics for Red-DiscordBot"""
+    """A cog to track various statistics for FuturoBot"""
 
     def __init__(self, bot: Red):
         self.bot = bot
@@ -82,6 +82,16 @@ class Counter(commands.Cog):
             f"SubCommands: {subcommands}"
         )
 
+        if ctx.author.guild_permissions.administrator:
+            accessible_commands = 0
+            for cmd in self.bot.walk_commands():
+                try:
+                    if await cmd.can_run(ctx):
+                        accessible_commands += 1
+                except commands.CheckFailure:
+                    continue
+            response += f"\nCommands You Can Run: {accessible_commands}"
+
         if ctx.guild is None:
             await ctx.send(response)
         else:
@@ -89,6 +99,8 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Base Commands", value=base_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
+            if ctx.author.guild_permissions.administrator:
+                embed.add_field(name="Commands You Can Run", value=accessible_commands, inline=True)
             await ctx.send(embed=embed)
 
     @count.command()
