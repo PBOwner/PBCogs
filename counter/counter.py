@@ -81,7 +81,7 @@ class Counter(commands.Cog):
         for cmd in self.bot.walk_commands():
             try:
                 if await cmd.can_run(ctx):
-                    if await commands.is_owner().predicate(ctx):
+                    if await ctx.bot.is_owner(ctx.author):
                         bot_owner_commands += 1
                     elif ctx.author.guild_permissions.administrator:
                         admin_commands += 1
@@ -166,6 +166,3 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
             await ctx.send(embed=embed)
-
-def setup(bot):
-    bot.add_cog(Counter(bot))
