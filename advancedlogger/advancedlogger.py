@@ -51,36 +51,11 @@ class AdvancedLogger(commands.Cog):
                 embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
                 await log_channel.send(embed=embed)
 
-    @commands.group(invoke_without_command=True)
+    @commands.group()
     @commands.admin_or_permissions(manage_guild=True)
     async def logging(self, ctx):
         """Manage logging settings for various events in the server."""
-        embed = discord.Embed(title="Logging Commands", color=discord.Color.blue())
-        embed.add_field(name="Set Logging Channel",
-                        value="`[p]logging setchannel <log_type> <channel>`\n"
-                              "Set a specific channel for logging events of a particular type.\n"
-                              "**Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout\n"
-                              "**Example**: `[p]logging setchannel member #member-log`",
-                        inline=False)
-        embed.add_field(name="Remove Logging Channel",
-                        value="`[p]logging removechannel <log_type>`\n"
-                              "Remove the logging channel for a specific log type.\n"
-                              "**Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout\n"
-                              "**Example**: `[p]logging removechannel member`",
-                        inline=False)
-        embed.add_field(name="Set Global Logging Channel (Bot Owner Only)",
-                        value="`[p]logging setglobalchannel <log_type> <channel>`\n"
-                              "Set a global channel for logging commands and errors.\n"
-                              "**Valid log types**: command, error\n"
-                              "**Example**: `[p]logging setglobalchannel command #command-log`",
-                        inline=False)
-        embed.add_field(name="Remove Global Logging Channel (Bot Owner Only)",
-                        value="`[p]logging removeglobalchannel <log_type>`\n"
-                              "Remove the global logging channel for commands and errors.\n"
-                              "**Valid log types**: command, error\n"
-                              "**Example**: `[p]logging removeglobalchannel command`",
-                        inline=False)
-        await ctx.send(embed=embed)
+        pass
 
     @logging.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
