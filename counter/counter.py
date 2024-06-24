@@ -3,7 +3,6 @@ from redbot.core import commands, Config
 import discord
 from redbot.core.bot import Red
 from redbot.core.commands import is_owner
-from datetime import datetime
 
 class Counter(commands.Cog):
     """A cog to track various statistics for Red-DiscordBot"""
@@ -17,6 +16,13 @@ class Counter(commands.Cog):
             "command_usage": {},
         }
         self.config.register_guild(**default_guild)
+        self.config.register_global(
+            user_commands=0,
+            mod_commands=0,
+            admin_commands=0,
+            owner_commands=0,
+            bot_owner_commands=0
+        )
 
     def get_random_color(self):
         return random.randint(0, 0xFFFFFF)
@@ -39,6 +45,34 @@ class Counter(commands.Cog):
 
             guild_data["command_usage"][ctx.command.name]["users"][ctx.author.id] += 1
 
+        if await self.bot.is_owner(ctx.author):
+            async with self.config.bot_owner_commands() as count:
+                count += 1
+        elif ctx.author.guild_permissions.administrator:
+            async with self.config.admin_commands() as count:
+                count += 1
+            async with self.config.mod_commands() as count:
+                count += 1
+            async with self.config.user_commands() as count:
+                count += 1
+        elif ctx.author.guild_permissions.manage_guild:
+            async with self.config.mod_commands() as count:
+                count += 1
+            async with self.config.user_commands() as count:
+                count += 1
+        elif ctx.author.id == ctx.guild.owner_id:
+            async with self.config.owner_commands() as count:
+                count += 1
+            async with self.config.admin_commands() as count:
+                count += 1
+            async with self.config.mod_commands() as count:
+                count += 1
+            async with self.config.user_commands() as count:
+                count += 1
+        else:
+            async with self.config.user_commands() as count:
+                count += 1
+
     @commands.group(name="count", invoke_without_command=True)
     async def count(self, ctx):
         """Group command for counting statistics"""
@@ -48,28 +82,26 @@ class Counter(commands.Cog):
     async def users(self, ctx):
         """Display the total number of users who can use the bot"""
         total_users = sum(len(guild.members) for guild in self.bot.guilds)
-        response = f"Total Users: {total_users}\nTime ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        response = f"Total Users: {total_users}"
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
             embed = discord.Embed(title="Total Users", color=self.get_random_color())
             embed.add_field(name="Total Users", value=total_users, inline=True)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
     @count.command()
     async def servers(self, ctx):
         """Display the total servers"""
         server_count = len(self.bot.guilds)
-        response = f"Total Servers: {server_count}\nTime ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        response = f"Total Servers: {server_count}"
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
             embed = discord.Embed(title="Total Servers", color=self.get_random_color())
             embed.add_field(name="Total Servers", value=server_count, inline=True)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
     @count.command(name="commands")
@@ -79,11 +111,21 @@ class Counter(commands.Cog):
         top_commands = sum(1 for cmd in self.bot.commands)
         subcommands = total_commands - top_commands
 
+        user_commands = await self.config.user_commands()
+        mod_commands = await self.config.mod_commands()
+        admin_commands = await self.config.admin_commands()
+        owner_commands = await self.config.owner_commands()
+        bot_owner_commands = await self.config.bot_owner_commands()
+
         response = (
             f"Total Commands: {total_commands}\n"
             f"Top-Level Commands: {top_commands}\n"
             f"SubCommands: {subcommands}\n"
-            f"Time ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+            f"User Commands: {user_commands}\n"
+            f"Mod Commands: {mod_commands}\n"
+            f"Admin Commands: {admin_commands}\n"
+            f"Guild Owner Commands: {owner_commands}\n"
+            f"Bot Owner Commands: {bot_owner_commands}"
         )
 
         if ctx.guild is None:
@@ -91,23 +133,26 @@ class Counter(commands.Cog):
         else:
             embed = discord.Embed(title="Total Commands", color=self.get_random_color())
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
-            embed.add_field(name="Base Commands", value=top_commands, inline=True)
+            embed.add_field(name="Top-Level Commands", value=top_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
+            embed.add_field(name="User Commands", value=user_commands, inline=True)
+            embed.add_field(name="Mod Commands", value=mod_commands, inline=True)
+            embed.add_field(name="Admin Commands", value=admin_commands, inline=True)
+            embed.add_field(name="Guild Owner Commands", value=owner_commands, inline=True)
+            embed.add_field(name="Bot Owner Commands", value=bot_owner_commands, inline=True)
             await ctx.send(embed=embed)
 
     @count.command()
     async def cogs(self, ctx):
         """Display the total cogs"""
         cog_count = len(self.bot.cogs)
-        response = f"Total Cogs: {cog_count}\nTime ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        response = f"Total Cogs: {cog_count}"
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
             embed = discord.Embed(title="Total Cogs", color=self.get_random_color())
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
     @count.command()
@@ -128,60 +173,13 @@ class Counter(commands.Cog):
 
         sorted_commands = sorted(global_command_usage.items(), key=lambda item: item[1], reverse=True)[:10]
         command_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
-        response = f"Top 10 Commands Globally:\n{command_stats}\nTime ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        response = f"Top 10 Commands Globally:\n{command_stats}"
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
             embed = discord.Embed(title="Top 10 Commands Globally", color=self.get_random_color())
             embed.add_field(name="Command Usage", value=command_stats, inline=False)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
-            await ctx.send(embed=embed)
-
-    @count.command()
-    async def topusers(self, ctx):
-        """Display the top users globally and each command they ran"""
-        all_guild_data = await self.config.all_guilds()
-        user_command_counts = {}
-
-        for guild_data in all_guild_data.values():
-            for command_name, usage_data in guild_data["command_usage"].items():
-                for user_id, count in usage_data["users"].items():
-                    if user_id not in user_command_counts:
-                        user_command_counts[user_id] = 0
-                    user_command_counts[user_id] += count
-
-        top_users = sorted(user_command_counts.items(), key=lambda item: item[1], reverse=True)
-
-        if ctx.guild is None:
-            response = "Top Users:\n"
-            for user_id, _ in top_users:
-                user = self.bot.get_user(user_id)
-                if user:
-                    user_commands = [
-                        f"{cmd}: {usage_data['users'][user_id]}"
-                        for guild_data in all_guild_data.values()
-                        for cmd, usage_data in guild_data["command_usage"].items()
-                        if user_id in usage_data["users"]
-                    ]
-                    user_stats = "\n".join(user_commands)
-                    response += f"{user.display_name}:\n{user_stats}\n"
-            response += f"Time ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
-            await ctx.send(response)
-        else:
-            embed = discord.Embed(title="Top Users", color=self.get_random_color())
-            for user_id, _ in top_users:
-                user = self.bot.get_user(user_id)
-                if user:
-                    user_commands = [
-                        f"{cmd}: {usage_data['users'][user_id]}"
-                        for guild_data in all_guild_data.values()
-                        for cmd, usage_data in guild_data["command_usage"].items()
-                        if user_id in usage_data["users"]
-                    ]
-                    user_stats = "\n".join(user_commands)
-                    embed.add_field(name=user.display_name, value=user_stats, inline=False)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
     @count.command()
@@ -198,8 +196,7 @@ class Counter(commands.Cog):
             f"Total Users: {total_users}\n"
             f"Total Servers: {server_count}\n"
             f"Total Commands: {total_commands}\n"
-            f"Total Cogs: {cog_count}\n"
-            f"Time ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+            f"Total Cogs: {cog_count}"
         )
 
         if ctx.guild is None:
@@ -210,7 +207,6 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Servers", value=server_count, inline=True)
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
-            embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
 def setup(bot):
