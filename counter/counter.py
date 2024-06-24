@@ -72,17 +72,27 @@ class Counter(commands.Cog):
             embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
-    @count.command()
-    async def commands(self, ctx):
+    @count.command(name="commands")
+    async def count_commands(self, ctx):
         """Display the total number of commands and subcommands the bot has"""
         total_commands = sum(1 for _ in self.bot.walk_commands())
-        response = f"Total Commands: {total_commands}\nTime ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        group_commands = sum(1 for cmd in self.bot.commands if isinstance(cmd, commands.Group))
+        subcommands = total_commands - group_commands
+
+        response = (
+            f"Total Commands: {total_commands}\n"
+            f"Group Commands: {group_commands}\n"
+            f"SubCommands: {subcommands}\n"
+            f"Time ran at: <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
             embed = discord.Embed(title="Total Commands", color=self.get_random_color())
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
+            embed.add_field(name="Group Commands", value=group_commands, inline=True)
+            embed.add_field(name="SubCommands", value=subcommands, inline=True)
             embed.add_field(name="Time ran at", value=f"<t:{int(datetime.utcnow().timestamp())}:F>", inline=False)
             await ctx.send(embed=embed)
 
