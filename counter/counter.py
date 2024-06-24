@@ -16,13 +16,6 @@ class Counter(commands.Cog):
             "command_usage": {},
         }
         self.config.register_guild(**default_guild)
-        self.config.register_global(
-            user_commands=0,
-            mod_commands=0,
-            admin_commands=0,
-            owner_commands=0,
-            bot_owner_commands=0
-        )
 
     def get_random_color(self):
         return random.randint(0, 0xFFFFFF)
@@ -44,34 +37,6 @@ class Counter(commands.Cog):
                 guild_data["command_usage"][ctx.command.name]["users"][ctx.author.id] = 0
 
             guild_data["command_usage"][ctx.command.name]["users"][ctx.author.id] += 1
-
-        if await self.bot.is_owner(ctx.author):
-            async with self.config.bot_owner_commands() as count:
-                count += 1
-        elif ctx.author.guild_permissions.administrator:
-            async with self.config.admin_commands() as count:
-                count += 1
-            async with self.config.mod_commands() as count:
-                count += 1
-            async with self.config.user_commands() as count:
-                count += 1
-        elif ctx.author.guild_permissions.manage_guild:
-            async with self.config.mod_commands() as count:
-                count += 1
-            async with self.config.user_commands() as count:
-                count += 1
-        elif ctx.author.id == ctx.guild.owner_id:
-            async with self.config.owner_commands() as count:
-                count += 1
-            async with self.config.admin_commands() as count:
-                count += 1
-            async with self.config.mod_commands() as count:
-                count += 1
-            async with self.config.user_commands() as count:
-                count += 1
-        else:
-            async with self.config.user_commands() as count:
-                count += 1
 
     @commands.group(name="count", invoke_without_command=True)
     async def count(self, ctx):
@@ -111,21 +76,31 @@ class Counter(commands.Cog):
         top_commands = sum(1 for cmd in self.bot.commands)
         subcommands = total_commands - top_commands
 
-        user_commands = await self.config.user_commands()
-        mod_commands = await self.config.mod_commands()
-        admin_commands = await self.config.admin_commands()
-        owner_commands = await self.config.owner_commands()
-        bot_owner_commands = await self.config.bot_owner_commands()
+        user_commands = []
+        mod_commands = []
+        admin_commands = []
+        owner_commands = []
+        bot_owner_commands = []
+
+        for cmd in self.bot.walk_commands():
+            if not cmd.hidden:
+                user_commands.append(cmd.name)
+                if cmd.requires.mod_or_permissions():
+                    mod_commands.append(cmd.name)
+                if cmd.requires.admin_or_permissions():
+                    admin_commands.append(cmd.name)
+                if cmd.requires.is_owner():
+                    bot_owner_commands.append(cmd.name)
 
         response = (
             f"Total Commands: {total_commands}\n"
             f"Top-Level Commands: {top_commands}\n"
             f"SubCommands: {subcommands}\n"
-            f"User Commands: {user_commands}\n"
-            f"Mod Commands: {mod_commands}\n"
-            f"Admin Commands: {admin_commands}\n"
-            f"Guild Owner Commands: {owner_commands}\n"
-            f"Bot Owner Commands: {bot_owner_commands}"
+            f"User Commands: {', '.join(user_commands)}\n"
+            f"Mod Commands: {', '.join(mod_commands)}\n"
+            f"Admin Commands: {', '.join(admin_commands)}\n"
+            f"Guild Owner Commands: {', '.join(owner_commands)}\n"
+            f"Bot Owner Commands: {', '.join(bot_owner_commands)}"
         )
 
         if ctx.guild is None:
@@ -135,11 +110,11 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Top-Level Commands", value=top_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            embed.add_field(name="User Commands", value=user_commands, inline=True)
-            embed.add_field(name="Mod Commands", value=mod_commands, inline=True)
-            embed.add_field(name="Admin Commands", value=admin_commands, inline=True)
-            embed.add_field(name="Guild Owner Commands", value=owner_commands, inline=True)
-            embed.add_field(name="Bot Owner Commands", value=bot_owner_commands, inline=True)
+            embed.add_field(name="User Commands", value=', '.join(user_commands), inline=False)
+            embed.add_field(name="Mod Commands", value=', '.join(mod_commands), inline=False)
+            embed.add_field(name="Admin Commands", value=', '.join(admin_commands), inline=False)
+            embed.add_field(name="Guild Owner Commands", value=', '.join(owner_commands), inline=False)
+            embed.add_field(name="Bot Owner Commands", value=', '.join(bot_owner_commands), inline=False)
             await ctx.send(embed=embed)
 
     @count.command()
