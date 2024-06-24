@@ -85,9 +85,9 @@ class Counter(commands.Cog):
         for cmd in self.bot.walk_commands():
             if not cmd.hidden:
                 user_commands.append(cmd.name)
-                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)]):
+                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_messages=True)]):
                     mod_commands.append(cmd.name)
-                if any(perm in cmd.checks for perm in [commands.has_permissions(administrator=True)]):
+                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)]):
                     admin_commands.append(cmd.name)
                 if any(perm in cmd.checks for perm in [commands.is_owner()]):
                     bot_owner_commands.append(cmd.name)
@@ -116,41 +116,6 @@ class Counter(commands.Cog):
             embed.add_field(name="Guild Owner Commands", value=len(owner_commands), inline=False)
             embed.add_field(name="Bot Owner Commands", value=total_commands, inline=False)
             await ctx.send(embed=embed)
-
-    @count.group(name="list")
-    async def list(self, ctx):
-        """Group command for listing commands by permission level"""
-        await ctx.send_help(ctx.command)
-
-    @list.command(name="user")
-    async def list_user_commands(self, ctx):
-        """List all user commands"""
-        user_commands = [cmd.name for cmd in self.bot.walk_commands() if not cmd.hidden]
-        await ctx.send(f"User Commands: {', '.join(user_commands)}")
-
-    @list.command(name="mod")
-    async def list_mod_commands(self, ctx):
-        """List all mod commands"""
-        mod_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)])]
-        await ctx.send(f"Mod Commands: {', '.join(mod_commands)}")
-
-    @list.command(name="admin")
-    async def list_admin_commands(self, ctx):
-        """List all admin commands"""
-        admin_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.has_permissions(administrator=True)])]
-        await ctx.send(f"Admin Commands: {', '.join(admin_commands)}")
-
-    @list.command(name="owner")
-    async def list_owner_commands(self, ctx):
-        """List all guild owner commands"""
-        owner_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.is_owner()])]
-        await ctx.send(f"Guild Owner Commands: {', '.join(owner_commands)}")
-
-    @list.command(name="botowner")
-    async def list_bot_owner_commands(self, ctx):
-        """List all bot owner commands"""
-        bot_owner_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.is_owner()])]
-        await ctx.send(f"Bot Owner Commands: {', '.join(bot_owner_commands)}")
 
     @count.command()
     async def cogs(self, ctx):
