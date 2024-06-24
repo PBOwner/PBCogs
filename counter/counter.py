@@ -71,7 +71,7 @@ class Counter(commands.Cog):
 
     @count.command(name="commands")
     async def count_commands(self, ctx):
-        """Display the total number of commands and subcommands the bot has"""
+        """Display the total number of commands each permission level can run"""
         total_commands = sum(1 for _ in self.bot.walk_commands())
         top_commands = sum(1 for cmd in self.bot.commands)
         subcommands = total_commands - top_commands
@@ -96,11 +96,11 @@ class Counter(commands.Cog):
             f"Total Commands: {total_commands}\n"
             f"Top-Level Commands: {top_commands}\n"
             f"SubCommands: {subcommands}\n"
-            f"User Commands: {', '.join(user_commands)}\n"
-            f"Mod Commands: {', '.join(mod_commands)}\n"
-            f"Admin Commands: {', '.join(admin_commands)}\n"
-            f"Guild Owner Commands: {', '.join(owner_commands)}\n"
-            f"Bot Owner Commands: {', '.join(bot_owner_commands)}"
+            f"User Commands: {len(user_commands)}\n"
+            f"Mod Commands: {len(mod_commands)}\n"
+            f"Admin Commands: {len(admin_commands)}\n"
+            f"Guild Owner Commands: {len(owner_commands)}\n"
+            f"Bot Owner Commands: {len(bot_owner_commands)}"
         )
 
         if ctx.guild is None:
@@ -110,12 +110,47 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Top-Level Commands", value=top_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            embed.add_field(name="User Commands", value=', '.join(user_commands), inline=False)
-            embed.add_field(name="Mod Commands", value=', '.join(mod_commands), inline=False)
-            embed.add_field(name="Admin Commands", value=', '.join(admin_commands), inline=False)
-            embed.add_field(name="Guild Owner Commands", value=', '.join(owner_commands), inline=False)
-            embed.add_field(name="Bot Owner Commands", value=', '.join(bot_owner_commands), inline=False)
+            embed.add_field(name="User Commands", value=len(user_commands), inline=False)
+            embed.add_field(name="Mod Commands", value=len(mod_commands), inline=False)
+            embed.add_field(name="Admin Commands", value=len(admin_commands), inline=False)
+            embed.add_field(name="Guild Owner Commands", value=len(owner_commands), inline=False)
+            embed.add_field(name="Bot Owner Commands", value=len(bot_owner_commands), inline=False)
             await ctx.send(embed=embed)
+
+    @count.group(name="list")
+    async def list(self, ctx):
+        """Group command for listing commands by permission level"""
+        await ctx.send_help(ctx.command)
+
+    @list.command(name="user")
+    async def list_user_commands(self, ctx):
+        """List all user commands"""
+        user_commands = [cmd.name for cmd in self.bot.walk_commands() if not cmd.hidden]
+        await ctx.send(f"User Commands: {', '.join(user_commands)}")
+
+    @list.command(name="mod")
+    async def list_mod_commands(self, ctx):
+        """List all mod commands"""
+        mod_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)])]
+        await ctx.send(f"Mod Commands: {', '.join(mod_commands)}")
+
+    @list.command(name="admin")
+    async def list_admin_commands(self, ctx):
+        """List all admin commands"""
+        admin_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.has_permissions(administrator=True)])]
+        await ctx.send(f"Admin Commands: {', '.join(admin_commands)}")
+
+    @list.command(name="owner")
+    async def list_owner_commands(self, ctx):
+        """List all guild owner commands"""
+        owner_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.is_owner()])]
+        await ctx.send(f"Guild Owner Commands: {', '.join(owner_commands)}")
+
+    @list.command(name="botowner")
+    async def list_bot_owner_commands(self, ctx):
+        """List all bot owner commands"""
+        bot_owner_commands = [cmd.name for cmd in self.bot.walk_commands() if any(perm in cmd.checks for perm in [commands.is_owner()])]
+        await ctx.send(f"Bot Owner Commands: {', '.join(bot_owner_commands)}")
 
     @count.command()
     async def cogs(self, ctx):
@@ -170,6 +205,3 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
             await ctx.send(embed=embed)
-
-def setup(bot):
-    bot.add_cog(Counter(bot))
