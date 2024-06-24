@@ -71,46 +71,24 @@ class Counter(commands.Cog):
 
     @count.command(name="commands")
     async def count_commands(self, ctx):
-        """Display the total number of commands each permission level can run"""
-        user_commands = 0
-        mod_commands = 0
-        admin_commands = 0
-        owner_commands = 0
-        bot_owner_commands = 0
-
-        for cmd in self.bot.walk_commands():
-            try:
-                if await cmd.can_run(ctx):
-                    if await ctx.bot.is_owner(ctx.author):
-                        bot_owner_commands += 1
-                    elif ctx.author.guild_permissions.administrator:
-                        admin_commands += 1
-                    elif ctx.author.guild_permissions.manage_messages:
-                        mod_commands += 1
-                    elif ctx.guild is not None and ctx.guild.owner_id == ctx.author.id:
-                        owner_commands += 1
-                    else:
-                        user_commands += 1
-            except commands.CheckFailure:
-                continue
+        """Display the total number of commands, base commands, and subcommands"""
+        total_commands = sum(1 for _ in self.bot.walk_commands())
+        base_commands = sum(1 for cmd in self.bot.commands)
+        subcommands = total_commands - base_commands
 
         response = (
-            f"Bot Owner Commands: {bot_owner_commands}\n"
-            f"Admin Commands: {admin_commands}\n"
-            f"Mod Commands: {mod_commands}\n"
-            f"Owner Commands: {owner_commands}\n"
-            f"User Commands: {user_commands}\n"
+            f"Total Commands: {total_commands}\n"
+            f"Base Commands: {base_commands}\n"
+            f"SubCommands: {subcommands}"
         )
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
-            embed = discord.Embed(title="Commands Count by Permission Level", color=self.get_random_color())
-            embed.add_field(name="Bot Owner Commands", value=bot_owner_commands, inline=True)
-            embed.add_field(name="Admin Commands", value=admin_commands, inline=True)
-            embed.add_field(name="Mod Commands", value=mod_commands, inline=True)
-            embed.add_field(name="Owner Commands", value=owner_commands, inline=True)
-            embed.add_field(name="User Commands", value=user_commands, inline=True)
+            embed = discord.Embed(title="Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands", value=total_commands, inline=True)
+            embed.add_field(name="Base Commands", value=base_commands, inline=True)
+            embed.add_field(name="SubCommands", value=subcommands, inline=True)
             await ctx.send(embed=embed)
 
     @count.command()
@@ -166,3 +144,6 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
             await ctx.send(embed=embed)
+
+def setup(bot):
+    bot.add_cog(Counter(bot))
