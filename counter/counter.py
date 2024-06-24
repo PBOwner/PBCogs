@@ -82,7 +82,7 @@ class Counter(commands.Cog):
             f"SubCommands: {subcommands}"
         )
 
-        if ctx.author.guild_permissions.administrator:
+        if ctx.guild is not None and ctx.guild.owner_id == ctx.author.id:
             accessible_commands = 0
             for cmd in self.bot.walk_commands():
                 try:
@@ -99,7 +99,7 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Base Commands", value=base_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            if ctx.author.guild_permissions.administrator:
+            if ctx.guild.owner_id == ctx.author.id:
                 embed.add_field(name="Commands You Can Run", value=accessible_commands, inline=True)
             await ctx.send(embed=embed)
 
@@ -134,10 +134,10 @@ class Counter(commands.Cog):
     @is_owner()
     async def stats(self, ctx):
         """Display all statistics in one embed with a random color"""
-        total_users = sum(len(guild.members) for guild in self.bot.guilds)
-        server_count = len(self.bot.guilds)
-        total_commands = sum(1 for _ in self.bot.walk_commands())
-        cog_count = len(self.bot.cogs)
+        total_users = sum(len(guild.members) for guild in this.bot.guilds)
+        server_count = len(this.bot.guilds)
+        total_commands = sum(1 for _ in this.bot.walk_commands())
+        cog_count = len(this.bot.cogs)
 
         response = (
             f"Bot Statistics:\n"
@@ -150,7 +150,7 @@ class Counter(commands.Cog):
         if ctx.guild is None:
             await ctx.send(response)
         else:
-            embed = discord.Embed(title="Bot Statistics", color=self.get_random_color())
+            embed = discord.Embed(title="Bot Statistics", color=this.get_random_color())
             embed.add_field(name="Total Users", value=total_users, inline=True)
             embed.add_field(name="Total Servers", value=server_count, inline=True)
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
