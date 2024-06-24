@@ -36,12 +36,11 @@ class AdvancedLogger(commands.Cog):
                 embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
                 await log_channel.send(embed=embed)
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     @commands.admin_or_permissions(manage_guild=True)
     async def logging(self, ctx):
         """Group command for managing logging settings"""
-        if ctx.invoked_subcommand is None:
-            await ctx.send_help(ctx.command)
+        await ctx.send_help(ctx.command)
 
     @logging.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
