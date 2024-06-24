@@ -85,11 +85,11 @@ class Counter(commands.Cog):
         for cmd in self.bot.walk_commands():
             if not cmd.hidden:
                 user_commands.append(cmd.name)
-                if cmd.requires.mod_or_permissions():
+                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)]):
                     mod_commands.append(cmd.name)
-                if cmd.requires.admin_or_permissions():
+                if any(perm in cmd.checks for perm in [commands.has_permissions(administrator=True)]):
                     admin_commands.append(cmd.name)
-                if cmd.requires.is_owner():
+                if any(perm in cmd.checks for perm in [commands.is_owner()]):
                     bot_owner_commands.append(cmd.name)
 
         response = (
@@ -132,29 +132,16 @@ class Counter(commands.Cog):
 
     @count.command()
     async def total(self, ctx):
-        """Display the top 10 commands used globally"""
-        all_guild_data = await self.config.all_guilds()
-        global_command_usage = {}
-
-        for guild_data in all_guild_data.values():
-            for command_name, usage_data in guild_data["command_usage"].items():
-                if command_name not in global_command_usage:
-                    global_command_usage[command_name] = 0
-                global_command_usage[command_name] += usage_data["count"]
-
-        if not global_command_usage:
-            await ctx.send("No commands found.")
-            return
-
-        sorted_commands = sorted(global_command_usage.items(), key=lambda item: item[1], reverse=True)[:10]
-        command_stats = "\n".join([f"{cmd}: {count}" for cmd, count in sorted_commands])
-        response = f"Top 10 Commands Globally:\n{command_stats}"
+        """Display the total number of base commands the bot has"""
+        base_commands = [cmd for cmd in self.bot.commands if not isinstance(cmd, commands.Group)]
+        total_base_commands = len(base_commands)
+        response = f"Total Base Commands: {total_base_commands}"
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
-            embed = discord.Embed(title="Top 10 Commands Globally", color=self.get_random_color())
-            embed.add_field(name="Command Usage", value=command_stats, inline=False)
+            embed = discord.Embed(title="Total Base Commands", color=self.get_random_color())
+            embed.add_field(name="Total Base Commands", value=total_base_commands, inline=True)
             await ctx.send(embed=embed)
 
     @count.command()
