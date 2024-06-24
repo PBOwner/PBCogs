@@ -143,7 +143,7 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removeglobalchannel error`
         """
         valid_log_types = ["command", "error"]
-        if log_type not in valid log types:
+        if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid log_types)}")
             return
         await self.config.set_raw(log_type + "_log_channel", value=None)
