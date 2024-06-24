@@ -168,7 +168,7 @@ class Counter(commands.Cog):
     @count.command(name="mod")
     async def count_mod_commands(self, ctx):
         """Display the total number of commands a moderator can run"""
-        if not ctx.author.guild_permissions.manage_messages:
+        if not ctx.author.guild_permissions.manage_messages and not await ctx.bot.is_owner(ctx.author):
             await ctx.send("You do not have the required permissions to run this command.")
             return
 
@@ -192,7 +192,7 @@ class Counter(commands.Cog):
     @count.command(name="admin")
     async def count_admin_commands(self, ctx):
         """Display the total number of commands an admin can run"""
-        if not ctx.author.guild_permissions.administrator:
+        if not ctx.author.guild_permissions.administrator and not await ctx.bot.is_owner(ctx.author):
             await ctx.send("You do not have the required permissions to run this command.")
             return
 
@@ -216,7 +216,7 @@ class Counter(commands.Cog):
     @count.command(name="owner")
     async def count_owner_commands(self, ctx):
         """Display the total number of commands a guild owner can run"""
-        if ctx.guild is None or ctx.guild.owner_id != ctx.author.id:
+        if ctx.guild is None or (ctx.guild.owner_id != ctx.author.id and not await ctx.bot.is_owner(ctx.author)):
             await ctx.send("You do not have the required permissions to run this command.")
             return
 
@@ -251,6 +251,3 @@ class Counter(commands.Cog):
             embed = discord.Embed(title="Bot Owner Command Statistics", color=self.get_random_color())
             embed.add_field(name="Total Commands You Can Run", value=bot_owner_commands, inline=True)
             await ctx.send(embed=embed)
-
-def setup(bot):
-    bot.add_cog(Counter(bot))
