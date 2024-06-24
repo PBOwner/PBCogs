@@ -71,50 +71,37 @@ class Counter(commands.Cog):
 
     @count.command(name="commands")
     async def count_commands(self, ctx):
-        """Display the total number of commands each permission level can run"""
-        total_commands = sum(1 for _ in self.bot.walk_commands())
-        top_commands = sum(1 for cmd in self.bot.commands)
-        subcommands = total_commands - top_commands
-
-        user_commands = []
-        mod_commands = []
-        admin_commands = []
-        owner_commands = []
-        bot_owner_commands = []
+        """Display the total number of commands the user who ran it can use, including total, base, and subcommands"""
+        accessible_commands = 0
+        base_commands = 0
+        subcommands = 0
 
         for cmd in self.bot.walk_commands():
-            if not cmd.hidden:
-                user_commands.append(cmd.name)
-                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_messages=True)]):
-                    mod_commands.append(cmd.name)
-                if any(perm in cmd.checks for perm in [commands.has_permissions(manage_guild=True)]):
-                    admin_commands.append(cmd.name)
-                if any(perm in cmd.checks for perm in [commands.is_owner()]):
-                    bot_owner_commands.append(cmd.name)
+            try:
+                if await cmd.can_run(ctx):
+                    accessible_commands += 1
+                    if isinstance(cmd, commands.Group):
+                        base_commands += 1
+                        subcommands += len(cmd.all_commands)
+                    else:
+                        base_commands += 1
+            except commands.CheckFailure:
+                continue
 
+        total_commands = accessible_commands
         response = (
-            f"Total Commands: {total_commands}\n"
-            f"Top-Level Commands: {top_commands}\n"
-            f"SubCommands: {subcommands}\n"
-            f"User Commands: {len(user_commands)}\n"
-            f"Mod Commands: {len(mod_commands)}\n"
-            f"Admin Commands: {len(admin_commands)}\n"
-            f"Guild Owner Commands: {len(owner_commands)}\n"
-            f"Bot Owner Commands: {total_commands}"
+            f"Total Commands You Can Use: {total_commands}\n"
+            f"Base Commands: {base_commands}\n"
+            f"SubCommands: {subcommands}"
         )
 
         if ctx.guild is None:
             await ctx.send(response)
         else:
-            embed = discord.Embed(title="Total Commands", color=self.get_random_color())
+            embed = discord.Embed(title="Total Commands You Can Use", color=self.get_random_color())
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
-            embed.add_field(name="Top-Level Commands", value=top_commands, inline=True)
+            embed.add_field(name="Base Commands", value=base_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            embed.add_field(name="User Commands", value=len(user_commands), inline=False)
-            embed.add_field(name="Mod Commands", value=len(mod_commands), inline=False)
-            embed.add_field(name="Admin Commands", value=len(admin_commands), inline=False)
-            embed.add_field(name="Guild Owner Commands", value=len(owner_commands), inline=False)
-            embed.add_field(name="Bot Owner Commands", value=total_commands, inline=False)
             await ctx.send(embed=embed)
 
     @count.command()
