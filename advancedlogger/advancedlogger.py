@@ -31,7 +31,7 @@ class AdvancedLogger(commands.Cog):
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
 
-    async def log_event(self, guild: discord.Guild, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue()):
+    async def log_event(self, guild: discord.Guild, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
         if log_type in ["command", "error"]:
             log_channel_id = await self.config.get_raw(log_type + "_log_channel")
         else:
@@ -41,23 +41,27 @@ class AdvancedLogger(commands.Cog):
             log_channel = self.bot.get_channel(log_channel_id)
             if log_channel:
                 embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                if author:
+                    embed.set_thumbnail(url=author.avatar_url)
                 await log_channel.send(embed=embed)
 
-    async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue()):
+    async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
         log_channel_id = await self.config.get_raw(log_type + "_log_channel")
         if log_channel_id:
             log_channel = self.bot.get_channel(log_channel_id)
             if log_channel:
                 embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                if author:
+                    embed.set_thumbnail(url=author.avatar_url)
                 await log_channel.send(embed=embed)
 
     @commands.group()
     @commands.admin_or_permissions(manage_guild=True)
-    async def logger(self, ctx):
+    async def logging(self, ctx):
         """Manage logging settings for various events in the server."""
         pass
 
-    @logger.command()
+    @logging.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
@@ -85,7 +89,7 @@ class AdvancedLogger(commands.Cog):
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=channel.id)
         await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
 
-    @logger.command()
+    @logging.command()
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
@@ -113,16 +117,16 @@ class AdvancedLogger(commands.Cog):
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=None)
         await ctx.send(f"{log_type.capitalize()} logging channel removed")
 
-    @logger.command()
+    @logging.command()
     @commands.is_owner()
-    async def setglobal(self, ctx, log_type: str, channel: discord.TextChannel):
+    async def setglobalchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the global channel for logging commands and errors.
 
         **Valid log types**: command, error
 
         **Example**:
-        `[p]logging setglobal command #command-log`
-        `[p]logging setglobal error #error-log`
+        `[p]logging setglobalchannel command #command-log`
+        `[p]logging setglobalchannel error #error-log`
         """
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
@@ -131,16 +135,16 @@ class AdvancedLogger(commands.Cog):
         await self.config.set_raw(log_type + "_log_channel", value=channel.id)
         await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
 
-    @logger.command()
+    @logging.command()
     @commands.is_owner()
-    async def removeglobal(self, ctx, log_type: str):
+    async def removeglobalchannel(self, ctx, log_type: str):
         """Remove the global logging channel for commands and errors.
 
         **Valid log types**: command, error
 
         **Example**:
-        `[p]logging removeglobal command`
-        `[p]logging removeglobal error`
+        `[p]logging removeglobalchannel command`
+        `[p]logging removeglobalchannel error`
         """
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
@@ -161,7 +165,7 @@ class AdvancedLogger(commands.Cog):
                 f"**After:** {after.content}\n"
                 f"**Author:** {before.author.mention}"
             )
-            await self.log_event(guild, "message", "Message Edited", description, discord.Color.orange())
+            await self.log_event(guild, "message", "Message Edited", description, discord.Color.orange(), before.author)
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
@@ -173,29 +177,29 @@ class AdvancedLogger(commands.Cog):
             f"**Content:** {message.content}\n"
             f"**Author:** {message.author.mention}"
         )
-        await self.log_event(guild, "message", "Message Deleted", description, discord.Color.red())
+        await self.log_event(guild, "message", "Message Deleted", description, discord.Color.red(), message.author)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
         guild = member.guild
         description = f"**Member Joined:** {member.mention} ({member})"
-        await self.log_event(guild, "member", "Member Joined", description, discord.Color.green())
+        await self.log_event(guild, "member", "Member Joined", description, discord.Color.green(), member)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         guild = member.guild
         description = f"**Member Left:** {member.mention} ({member})"
-        await self.log_event(guild, "member", "Member Left", description, discord.Color.red())
+        await self.log_event(guild, "member", "Member Left", description, discord.Color.red(), member)
 
     @commands.Cog.listener()
     async def on_member_ban(self, guild, user):
         description = f"**Member Banned:** {user.mention} ({user})"
-        await self.log_event(guild, "ban", "Member Banned", description, discord.Color.red())
+        await self.log_event(guild, "ban", "Member Banned", description, discord.Color.red(), user)
 
     @commands.Cog.listener()
     async def on_member_unban(self, guild, user):
         description = f"**Member Unbanned:** {user.mention} ({user})"
-        await self.log_event(guild, "ban", "Member Unbanned", description, discord.Color.green())
+        await self.log_event(guild, "ban", "Member Unbanned", description, discord.Color.green(), user)
 
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
@@ -208,7 +212,7 @@ class AdvancedLogger(commands.Cog):
                 description += f"**Roles Added:** {', '.join(role.mention for role in added_roles)}\n"
             if removed_roles:
                 description += f"**Roles Removed:** {', '.join(role.mention for role in removed_roles)}\n"
-            await self.log_event(guild, "role", "Roles Updated", description, discord.Color.blue())
+            await self.log_event(guild, "role", "Roles Updated", description, discord.Color.blue(), before)
 
     @commands.Cog.listener()
     async def on_guild_role_create(self, role):
@@ -261,57 +265,50 @@ class AdvancedLogger(commands.Cog):
             await self.log_event(before, "channel", "Guild Renamed", description, discord.Color.blue())
 
     @commands.Cog.listener()
-    async def on_member_update(self, before, after):
-        if before.bot != after.bot:
-            guild = before.guild
-            description = f"**Bot Status Changed:** {before.mention} ({before}) -> {after.mention} ({after})"
-            await self.log_event(guild, "app", "Bot Status Changed", description, discord.Color.blue())
-
-    @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         guild = member.guild
         if before.channel != after.channel:
             if before.channel is None:
                 description = f"**{member.mention} joined voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Join", description, discord.Color.green())
+                await self.log_event(guild, "voice", "Voice Channel Join", description, discord.Color.green(), member)
             elif after.channel is None:
                 description = f"**{member.mention} left voice channel:** {before.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Leave", description, discord.Color.red())
+                await self.log_event(guild, "voice", "Voice Channel Leave", description, discord.Color.red(), member)
             else:
                 description = f"**{member.mention} switched voice channel:** {before.channel.mention} -> {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Switch", description, discord.Color.blue())
+                await self.log_event(guild, "voice", "Voice Channel Switch", description, discord.Color.blue(), member)
 
         if before.self_mute != after.self_mute:
             if after.self_mute:
                 description = f"**{member.mention} muted themselves in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Self Mute", description, discord.Color.orange())
+                await self.log_event(guild, "voice", "Voice Channel Self Mute", description, discord.Color.orange(), member)
             else:
                 description = f"**{member.mention} unmuted themselves in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Self Unmute", description, discord.Color.green())
+                await self.log_event(guild, "voice", "Voice Channel Self Unmute", description, discord.Color.green(), member)
 
         if before.self_deaf != after.self_deaf:
             if after.self_deaf:
                 description = f"**{member.mention} deafened themselves in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Self Deafen", description, discord.Color.orange())
+                await self.log_event(guild, "voice", "Voice Channel Self Deafen", description, discord.Color.orange(), member)
             else:
                 description = f"**{member.mention} undeafened themselves in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Self Undeafen", description, discord.Color.green())
+                await self.log_event(guild, "voice", "Voice Channel Self Undeafen", description, discord.Color.green(), member)
 
         if before.mute != after.mute:
             if after.mute:
                 description = f"**{member.mention} was server muted in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Server Mute", description, discord.Color.red())
+                await self.log_event(guild, "voice", "Voice Channel Server Mute", description, discord.Color.red(), member)
             else:
                 description = f"**{member.mention} was server unmuted in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Server Unmute", description, discord.Color.green())
+                await self.log_event(guild, "voice", "Voice Channel Server Unmute", description, discord.Color.green(), member)
 
         if before.deaf != after.deaf:
             if after.deaf:
                 description = f"**{member.mention} was server deafened in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Server Deafen", description, discord.Color.red())
+                await self.log_event(guild, "voice", "Voice Channel Server Deafen", description, discord.Color.red(), member)
             else:
                 description = f"**{member.mention} was server undeafened in voice channel:** {after.channel.mention}"
-                await self.log_event(guild, "voice", "Voice Channel Server Undeafen", description, discord.Color.green())
+                await self.log_event(guild, "voice", "Voice Channel Server Undeafen", description, discord.Color.green(), member)
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
@@ -319,7 +316,7 @@ class AdvancedLogger(commands.Cog):
             return
         guild = reaction.message.guild
         description = f"**Reaction Added:** {reaction.emoji}\n**Message:** [Jump to Message]({reaction.message.jump_url})\n**User:** {user.mention}"
-        await self.log_event(guild, "reaction", "Reaction Added", description, discord.Color.green())
+        await self.log_event(guild, "reaction", "Reaction Added", description, discord.Color.green(), user)
 
     @commands.Cog.listener()
     async def on_reaction_remove(self, reaction, user):
@@ -327,7 +324,7 @@ class AdvancedLogger(commands.Cog):
             return
         guild = reaction.message.guild
         description = f"**Reaction Removed:** {reaction.emoji}\n**Message:** [Jump to Message]({reaction.message.jump_url})\n**User:** {user.mention}"
-        await self.log_event(guild, "reaction", "Reaction Removed", description, discord.Color.red())
+        await self.log_event(guild, "reaction", "Reaction Removed", description, discord.Color.red(), user)
 
     @commands.Cog.listener()
     async def on_guild_emojis_update(self, guild, before, after):
@@ -352,27 +349,27 @@ class AdvancedLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_command(self, ctx):
         description = f"**Command Executed:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}"
-        await self.log_global_event("command", "Command Executed", description, discord.Color.purple())
+        await self.log_global_event("command", "Command Executed", description, discord.Color.purple(), ctx.author)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         description = f"**Command Error:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}\n**Error:** {error}"
-        await self.log_global_event("error", "Command Error", description, discord.Color.red())
+        await self.log_global_event("error", "Command Error", description, discord.Color.red(), ctx.author)
 
     @commands.Cog.listener()
     async def on_member_kick(self, guild, user):
         description = f"**Member Kicked:** {user.mention} ({user})"
-        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red())
+        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red(), ctx.author)
 
     @commands.Cog.listener()
     async def on_member_mute(self, guild, user):
         description = f"**Member Muted:** {user.mention} ({user})"
-        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red())
+        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red(), ctx.author)
 
     @commands.Cog.listener()
     async def on_member_timeout(self, guild, user):
         description = f"**Member Timed Out:** {user.mention} ({user})"
-        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red())
+        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red(), ctx.author)
 
 def setup(bot):
     bot.add_cog(AdvancedLogger(bot))
