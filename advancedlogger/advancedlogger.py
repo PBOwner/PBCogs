@@ -53,11 +53,11 @@ class AdvancedLogger(commands.Cog):
 
     @commands.group()
     @commands.admin_or_permissions(manage_guild=True)
-    async def logging(self, ctx):
+    async def logger(self, ctx):
         """Manage logging settings for various events in the server."""
         pass
 
-    @logging.command()
+    @logger.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
@@ -85,7 +85,7 @@ class AdvancedLogger(commands.Cog):
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=channel.id)
         await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
 
-    @logging.command()
+    @logger.command()
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
@@ -113,16 +113,16 @@ class AdvancedLogger(commands.Cog):
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=None)
         await ctx.send(f"{log_type.capitalize()} logging channel removed")
 
-    @logging.command()
+    @logger.command()
     @commands.is_owner()
-    async def setglobalchannel(self, ctx, log_type: str, channel: discord.TextChannel):
+    async def setglobal(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the global channel for logging commands and errors.
 
         **Valid log types**: command, error
 
         **Example**:
-        `[p]logging setglobalchannel command #command-log`
-        `[p]logging setglobalchannel error #error-log`
+        `[p]logging setglobal command #command-log`
+        `[p]logging setglobal error #error-log`
         """
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
@@ -131,41 +131,17 @@ class AdvancedLogger(commands.Cog):
         await self.config.set_raw(log_type + "_log_channel", value=channel.id)
         await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
 
-    @logging.command()
+    @logger.command()
     @commands.is_owner()
-    async def removeglobalchannel(self, ctx, log_type: str):
+    async def removeglobal(self, ctx, log_type: str):
         """Remove the global logging channel for commands and errors.
 
         **Valid log types**: command, error
 
         **Example**:
-        `[p]logging removeglobalchannel command`
-        `[p]logging removeglobalchannel error`
+        `[p]logging removeglobal command`
+        `[p]logging removeglobal error`
         """
-        valid_log_types = ["command", "error"]
-        if log_type not in valid_log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
-            return
-        await self.config.set_raw(log_type + "_log_channel", value=None)
-        await ctx.send(f"{log_type.capitalize()} logging channel removed")
-
-    @logging.command()
-    @commands.is_owner()
-    async def setglobalchannel(self, ctx, log_type: str, channel: discord.TextChannel):
-        """Set the global channel for logging commands and errors
-        Valid log types: command, error"""
-        valid_log_types = ["command", "error"]
-        if log_type not in valid_log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
-            return
-        await self.config.set_raw(log_type + "_log_channel", value=channel.id)
-        await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
-
-    @logging.command()
-    @commands.is_owner()
-    async def removeglobalchannel(self, ctx, log_type: str):
-        """Remove the global logging channel for commands and errors
-        Valid log types: command, error"""
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
