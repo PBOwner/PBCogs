@@ -15,6 +15,9 @@ class Unknown(commands.Cog):
             embed = discord.Embed(title="ErRoR 404", color=discord.Color.red())
             embed.add_field(name="Error", value=f"Sorry, but `{ctx.invoked_with}` is not a valid command. Please use `{prefix}help` to display all commands.", inline=False)
             await ctx.send(f"{ctx.author.mention}", embed=embed)
+        else:
+            # Re-raise the error if it is not a CommandNotFound error
+            raise error
 
 def setup(bot):
     bot.add_cog(Unknown(bot))
