@@ -19,6 +19,10 @@ class AdvancedLogger(commands.Cog):
             "voice_log_channel": None,
             "reaction_log_channel": None,
             "emoji_log_channel": None,
+            "kick_log_channel": None,
+            "ban_log_channel": None,
+            "mute_log_channel": None,
+            "timeout_log_channel": None,
         }
         default_global = {
             "command_log_channel": None,
@@ -44,8 +48,8 @@ class AdvancedLogger(commands.Cog):
     async def logging(self, ctx):
         """Group command for managing logging settings"""
         embed = discord.Embed(title="Logging Commands", color=discord.Color.blue())
-        embed.add_field(name="Set Logging Channel", value="`[p]logging setchannel <log_type> <channel>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji", inline=False)
-        embed.add_field(name="Remove Logging Channel", value="`[p]logging removechannel <log_type>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji", inline=False)
+        embed.add_field(name="Set Logging Channel", value="`[p]logging setchannel <log_type> <channel>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout", inline=False)
+        embed.add_field(name="Remove Logging Channel", value="`[p]logging removechannel <log_type>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout", inline=False)
         embed.add_field(name="Set Global Logging Channel (Bot Owner Only)", value="`[p]logging setglobalchannel <log_type> <channel>`\nValid log types: command, error", inline=False)
         embed.add_field(name="Remove Global Logging Channel (Bot Owner Only)", value="`[p]logging removeglobalchannel <log_type>`\nValid log types: command, error", inline=False)
         await ctx.send(embed=embed)
@@ -53,8 +57,8 @@ class AdvancedLogger(commands.Cog):
     @logging.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events
-        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji"""
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji"]
+        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout"""
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -64,8 +68,8 @@ class AdvancedLogger(commands.Cog):
     @logging.command()
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel
-        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji"""
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji"]
+        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout"""
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -137,12 +141,12 @@ class AdvancedLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_member_ban(self, guild, user):
         description = f"**Member Banned:** {user.mention} ({user})"
-        await self.log_event(guild, "member", "Member Banned", description, discord.Color.red())
+        await self.log_event(guild, "ban", "Member Banned", description, discord.Color.red())
 
     @commands.Cog.listener()
     async def on_member_unban(self, guild, user):
         description = f"**Member Unbanned:** {user.mention} ({user})"
-        await self.log_event(guild, "member", "Member Unbanned", description, discord.Color.green())
+        await self.log_event(guild, "ban", "Member Unbanned", description, discord.Color.green())
 
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
@@ -228,6 +232,38 @@ class AdvancedLogger(commands.Cog):
                 description = f"**{member.mention} switched voice channel:** {before.channel.mention} -> {after.channel.mention}"
                 await self.log_event(guild, "voice", "Voice Channel Switch", description, discord.Color.blue())
 
+        if before.self_mute != after.self_mute:
+            if after.self_mute:
+                description = f"**{member.mention} muted themselves in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Self Mute", description, discord.Color.orange())
+            else:
+                description = f"**{member.mention} unmuted themselves in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Self Unmute", description, discord.Color.green())
+
+        if before.self_deaf != after.self_deaf:
+            if after.self_deaf:
+                description = f"**{member.mention} deafened themselves in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Self Deafen", description, discord.Color.orange())
+            else:
+                description = f"**{member.mention} undeafened themselves in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Self Undeafen", description, discord.Color.green())
+
+        if before.mute != after.mute:
+            if after.mute:
+                description = f"**{member.mention} was server muted in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Server Mute", description, discord.Color.red())
+            else:
+                description = f"**{member.mention} was server unmuted in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Server Unmute", description, discord.Color.green())
+
+        if before.deaf != after.deaf:
+            if after.deaf:
+                description = f"**{member.mention} was server deafened in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Server Deafen", description, discord.Color.red())
+            else:
+                description = f"**{member.mention} was server undeafened in voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Server Undeafen", description, discord.Color.green())
+
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         if user.bot:
@@ -275,6 +311,22 @@ class AdvancedLogger(commands.Cog):
         guild = ctx.guild
         description = f"**Command Error:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}\n**Error:** {error}"
         await self.log_event(guild, "error", "Command Error", description, discord.Color.red())
+
+    # Placeholder for kick/mute/timeout events
+    @commands.Cog.listener()
+    async def on_member_kick(self, guild, user):
+        description = f"**Member Kicked:** {user.mention} ({user})"
+        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_member_mute(self, guild, user):
+        description = f"**Member Muted:** {user.mention} ({user})"
+        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_member_timeout(self, guild, user):
+        description = f"**Member Timed Out:** {user.mention} ({user})"
+        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red())
 
 def setup(bot):
     bot.add_cog(AdvancedLogger(bot))
