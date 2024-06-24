@@ -13,12 +13,14 @@ class GCC(commands.Cog):
         }
         self.config.register_global(**default_global)
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def gcc(self, ctx):
         """Group command for managing custom commands"""
-        if ctx.invoked_subcommand is None:
-            await ctx.send_help(ctx.command)
+        embed = discord.Embed(title="GCC Commands", color=discord.Color.blue())
+        embed.add_field(name="Add Command", value="`gcc add <command_name> <response>`", inline=False)
+        embed.add_field(name="Remove Command", value="`gcc remove <command_name>`", inline=False)
+        await ctx.send(embed=embed)
 
     @gcc.command()
     async def add(self, ctx, name: str, *, response: str):
