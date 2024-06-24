@@ -16,6 +16,9 @@ class AdvancedLogger(commands.Cog):
             "channel_log_channel": None,
             "webhook_log_channel": None,
             "app_log_channel": None,
+            "voice_log_channel": None,
+            "reaction_log_channel": None,
+            "emoji_log_channel": None,
         }
         default_global = {
             "command_log_channel": None,
@@ -40,12 +43,18 @@ class AdvancedLogger(commands.Cog):
     @commands.admin_or_permissions(manage_guild=True)
     async def logging(self, ctx):
         """Group command for managing logging settings"""
-        await ctx.send_help(ctx.command)
+        embed = discord.Embed(title="Logging Commands", color=discord.Color.blue())
+        embed.add_field(name="Set Logging Channel", value="`[p]logging setchannel <log_type> <channel>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji", inline=False)
+        embed.add_field(name="Remove Logging Channel", value="`[p]logging removechannel <log_type>`\nValid log types: member, role, message, channel, webhook, app, voice, reaction, emoji", inline=False)
+        embed.add_field(name="Set Global Logging Channel (Bot Owner Only)", value="`[p]logging setglobalchannel <log_type> <channel>`\nValid log types: command, error", inline=False)
+        embed.add_field(name="Remove Global Logging Channel (Bot Owner Only)", value="`[p]logging removeglobalchannel <log_type>`\nValid log types: command, error", inline=False)
+        await ctx.send(embed=embed)
 
     @logging.command()
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
-        """Set the channel for logging events"""
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app"]
+        """Set the channel for logging events
+        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji"""
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -54,8 +63,9 @@ class AdvancedLogger(commands.Cog):
 
     @logging.command()
     async def removechannel(self, ctx, log_type: str):
-        """Remove the logging channel"""
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app"]
+        """Remove the logging channel
+        Valid log types: member, role, message, channel, webhook, app, voice, reaction, emoji"""
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -65,7 +75,8 @@ class AdvancedLogger(commands.Cog):
     @logging.command()
     @commands.is_owner()
     async def setglobalchannel(self, ctx, log_type: str, channel: discord.TextChannel):
-        """Set the global channel for logging commands and errors"""
+        """Set the global channel for logging commands and errors
+        Valid log types: command, error"""
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
@@ -76,7 +87,8 @@ class AdvancedLogger(commands.Cog):
     @logging.command()
     @commands.is_owner()
     async def removeglobalchannel(self, ctx, log_type: str):
-        """Remove the global logging channel for commands and errors"""
+        """Remove the global logging channel for commands and errors
+        Valid log types: command, error"""
         valid_log_types = ["command", "error"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
@@ -201,6 +213,56 @@ class AdvancedLogger(commands.Cog):
             guild = before.guild
             description = f"**Bot Status Changed:** {before.mention} ({before}) -> {after.mention} ({after})"
             await self.log_event(guild, "app", "Bot Status Changed", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        guild = member.guild
+        if before.channel != after.channel:
+            if before.channel is None:
+                description = f"**{member.mention} joined voice channel:** {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Join", description, discord.Color.green())
+            elif after.channel is None:
+                description = f"**{member.mention} left voice channel:** {before.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Leave", description, discord.Color.red())
+            else:
+                description = f"**{member.mention} switched voice channel:** {before.channel.mention} -> {after.channel.mention}"
+                await self.log_event(guild, "voice", "Voice Channel Switch", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction, user):
+        if user.bot:
+            return
+        guild = reaction.message.guild
+        description = f"**Reaction Added:** {reaction.emoji}\n**Message:** [Jump to Message]({reaction.message.jump_url})\n**User:** {user.mention}"
+        await self.log_event(guild, "reaction", "Reaction Added", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_reaction_remove(self, reaction, user):
+        if user.bot:
+            return
+        guild = reaction.message.guild
+        description = f"**Reaction Removed:** {reaction.emoji}\n**Message:** [Jump to Message]({reaction.message.jump_url})\n**User:** {user.mention}"
+        await self.log_event(guild, "reaction", "Reaction Removed", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_guild_emojis_update(self, guild, before, after):
+        before_emojis = set(before)
+        after_emojis = set(after)
+        added_emojis = after_emojis - before_emojis
+        removed_emojis = before_emojis - after_emojis
+        updated_emojis = {emoji for emoji in before_emojis & after_emojis if emoji.name != next(e.name for e in after if e.id == emoji.id)}
+
+        for emoji in added_emojis:
+            description = f"**Emoji Added:** {emoji} ({emoji.name})"
+            await self.log_event(guild, "emoji", "Emoji Added", description, discord.Color.green())
+
+        for emoji in removed_emojis:
+            description = f"**Emoji Removed:** {emoji} ({emoji.name})"
+            await self.log_event(guild, "emoji", "Emoji Removed", description, discord.Color.red())
+
+        for emoji in updated_emojis:
+            description = f"**Emoji Updated:** {emoji} ({emoji.name})"
+            await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
