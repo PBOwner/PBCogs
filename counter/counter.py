@@ -82,16 +82,6 @@ class Counter(commands.Cog):
             f"SubCommands: {subcommands}"
         )
 
-        if ctx.guild is not None and ctx.guild.owner_id == ctx.author.id:
-            accessible_commands = 0
-            for cmd in self.bot.walk_commands():
-                try:
-                    if await cmd.can_run(ctx):
-                        accessible_commands += 1
-                except commands.CheckFailure:
-                    continue
-            response += f"\nCommands You Can Run: {accessible_commands}"
-
         if ctx.guild is None:
             await ctx.send(response)
         else:
@@ -99,8 +89,6 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Base Commands", value=base_commands, inline=True)
             embed.add_field(name="SubCommands", value=subcommands, inline=True)
-            if ctx.guild.owner_id == ctx.author.id:
-                embed.add_field(name="Commands You Can Run", value=accessible_commands, inline=True)
             await ctx.send(embed=embed)
 
     @count.command()
@@ -134,10 +122,10 @@ class Counter(commands.Cog):
     @is_owner()
     async def stats(self, ctx):
         """Display all statistics in one embed with a random color"""
-        total_users = sum(len(guild.members) for guild in this.bot.guilds)
-        server_count = len(this.bot.guilds)
-        total_commands = sum(1 for _ in this.bot.walk_commands())
-        cog_count = len(this.bot.cogs)
+        total_users = sum(len(guild.members) for guild in self.bot.guilds)
+        server_count = len(self.bot.guilds)
+        total_commands = sum(1 for _ in self.bot.walk_commands())
+        cog_count = len(self.bot.cogs)
 
         response = (
             f"Bot Statistics:\n"
@@ -150,11 +138,118 @@ class Counter(commands.Cog):
         if ctx.guild is None:
             await ctx.send(response)
         else:
-            embed = discord.Embed(title="Bot Statistics", color=this.get_random_color())
+            embed = discord.Embed(title="Bot Statistics", color=self.get_random_color())
             embed.add_field(name="Total Users", value=total_users, inline=True)
             embed.add_field(name="Total Servers", value=server_count, inline=True)
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
+            await ctx.send(embed=embed)
+
+    @count.command(name="user")
+    async def count_user_commands(self, ctx):
+        """Display the total number of commands a user can run"""
+        user_commands = 0
+        for cmd in self.bot.walk_commands():
+            try:
+                if await cmd.can_run(ctx):
+                    user_commands += 1
+            except commands.CheckFailure:
+                continue
+
+        response = f"Total Commands You Can Run: {user_commands}"
+
+        if ctx.guild is None:
+            await ctx.send(response)
+        else:
+            embed = discord.Embed(title="User Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands You Can Run", value=user_commands, inline=True)
+            await ctx.send(embed=embed)
+
+    @count.command(name="mod")
+    async def count_mod_commands(self, ctx):
+        """Display the total number of commands a moderator can run"""
+        if not ctx.author.guild_permissions.manage_messages:
+            await ctx.send("You do not have the required permissions to run this command.")
+            return
+
+        mod_commands = 0
+        for cmd in self.bot.walk_commands():
+            try:
+                if await cmd.can_run(ctx):
+                    mod_commands += 1
+            except commands.CheckFailure:
+                continue
+
+        response = f"Total Commands You Can Run: {mod_commands}"
+
+        if ctx.guild is None:
+            await ctx.send(response)
+        else:
+            embed = discord.Embed(title="Moderator Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands You Can Run", value=mod_commands, inline=True)
+            await ctx.send(embed=embed)
+
+    @count.command(name="admin")
+    async def count_admin_commands(self, ctx):
+        """Display the total number of commands an admin can run"""
+        if not ctx.author.guild_permissions.administrator:
+            await ctx.send("You do not have the required permissions to run this command.")
+            return
+
+        admin_commands = 0
+        for cmd in self.bot.walk_commands():
+            try:
+                if await cmd.can_run(ctx):
+                    admin_commands += 1
+            except commands.CheckFailure:
+                continue
+
+        response = f"Total Commands You Can Run: {admin_commands}"
+
+        if ctx.guild is None:
+            await ctx.send(response)
+        else:
+            embed = discord.Embed(title="Admin Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands You Can Run", value=admin_commands, inline=True)
+            await ctx.send(embed=embed)
+
+    @count.command(name="owner")
+    async def count_owner_commands(self, ctx):
+        """Display the total number of commands a guild owner can run"""
+        if ctx.guild is None or ctx.guild.owner_id != ctx.author.id:
+            await ctx.send("You do not have the required permissions to run this command.")
+            return
+
+        owner_commands = 0
+        for cmd in self.bot.walk_commands():
+            try:
+                if await cmd.can_run(ctx):
+                    owner_commands += 1
+            except commands.CheckFailure:
+                continue
+
+        response = f"Total Commands You Can Run: {owner_commands}"
+
+        if ctx.guild is None:
+            await ctx.send(response)
+        else:
+            embed = discord.Embed(title="Owner Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands You Can Run", value=owner_commands, inline=True)
+            await ctx.send(embed=embed)
+
+    @count.command(name="botowner")
+    @is_owner()
+    async def count_botowner_commands(self, ctx):
+        """Display the total number of commands the bot owner can run"""
+        bot_owner_commands = sum(1 for _ in self.bot.walk_commands())
+
+        response = f"Total Commands You Can Run: {bot_owner_commands}"
+
+        if ctx.guild is None:
+            await ctx.send(response)
+        else:
+            embed = discord.Embed(title="Bot Owner Command Statistics", color=self.get_random_color())
+            embed.add_field(name="Total Commands You Can Run", value=bot_owner_commands, inline=True)
             await ctx.send(embed=embed)
 
 def setup(bot):
