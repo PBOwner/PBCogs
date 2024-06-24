@@ -43,6 +43,14 @@ class AdvancedLogger(commands.Cog):
                 embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
                 await log_channel.send(embed=embed)
 
+    async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue()):
+        log_channel_id = await self.config.get_raw(log_type + "_log_channel")
+        if log_channel_id:
+            log_channel = self.bot.get_channel(log_channel_id)
+            if log_channel:
+                embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                await log_channel.send(embed=embed)
+
     @commands.group(invoke_without_command=True)
     @commands.admin_or_permissions(manage_guild=True)
     async def logging(self, ctx):
@@ -302,17 +310,14 @@ class AdvancedLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
-        guild = ctx.guild
         description = f"**Command Executed:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}"
-        await self.log_event(guild, "command", "Command Executed", description, discord.Color.purple())
+        await self.log_global_event("command", "Command Executed", description, discord.Color.purple())
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        guild = ctx.guild
         description = f"**Command Error:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}\n**Error:** {error}"
-        await self.log_event(guild, "error", "Command Error", description, discord.Color.red())
+        await self.log_global_event("error", "Command Error", description, discord.Color.red())
 
-    # Placeholder for kick/mute/timeout events
     @commands.Cog.listener()
     async def on_member_kick(self, guild, user):
         description = f"**Member Kicked:** {user.mention} ({user})"
