@@ -110,13 +110,16 @@ class AutoDocSite(commands.Cog):
         """
         await set_contextual_locales_from_guild(self.bot, ctx.guild)
         async with ctx.typing():
-            docs_dir = "docs"
+            repo_dir = "/root/PBCogs"  # Replace with the path to your GitHub repository
+            docs_dir = os.path.join(repo_dir, "docs")
+            mkdocs_config_path = os.path.join(repo_dir, "mkdocs.yml")
+
             if os.path.exists(docs_dir):
                 shutil.rmtree(docs_dir)
             os.makedirs(docs_dir)
 
             mkdocs_config = {
-                "site_name": "Bot Documentation",
+                "site_name": "FuturoBot Docs",
                 "theme": {
                     "name": "material"
                 },
@@ -137,16 +140,21 @@ class AutoDocSite(commands.Cog):
                     include_help=True,
                     max_privilege_level="botowner",
                 )
-                filename = f"{docs_dir}/{cog_name}.md"
+                filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
                     f.write(docs)
                 mkdocs_config["nav"].append({cog_name: f"{cog_name}.md"})
 
-            with open("mkdocs.yml", "w", encoding="utf-8") as f:
+            with open(mkdocs_config_path, "w", encoding="utf-8") as f:
                 f.write(yaml.dump(mkdocs_config, default_flow_style=False))
 
-            mkdocs_path = "/root/fb/bin/mkdocs"  # Replace with the actual path to mkdocs
+            # Change to the repository directory
+            os.chdir(repo_dir)
+
+            mkdocs_path = "/root/fb/bin/mkdocs"  # Replace with the actual path to mkdocs if needed
             os.system(f"{mkdocs_path} build")
             os.system(f"{mkdocs_path} gh-deploy")
 
-            await ctx.send("Documentation site has been generated and deployed to GitHub Pages.")
+            # Replace 'your-username' and 'your-repository' with your actual GitHub username and repository name
+            site_url = "https://pbowner.github.io/PBCogs/"
+            await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
