@@ -6,6 +6,7 @@ from typing import List, Literal, Optional, Tuple
 import yaml
 
 import discord
+from discord.ext.commands import Command, Cog
 from redbot.core import commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n, set_contextual_locales_from_guild
@@ -77,7 +78,7 @@ class AutoDocSite(commands.Cog):
         for cmd in cog.walk_commands():
             if cmd.hidden and not include_hidden:
                 continue
-            if cmd.requires_guild_owner and max_privilege_level not in ["guildowner", "botowner"]:
+            if max_privilege_level == "guildowner" and not self.is_guild_owner_command(cmd):
                 continue
             c = CustomCmdFmt(
                 self.bot,
@@ -102,6 +103,13 @@ class AutoDocSite(commands.Cog):
                 continue
             docs += doc
         return docs
+
+    def is_guild_owner_command(self, cmd: Command) -> bool:
+        """Check if a command requires guild owner permissions."""
+        for check in cmd.checks:
+            if check.__name__ == 'is_owner_check':
+                return True
+        return False
 
     def categorize_cog(self, cog: commands.Cog) -> str:
         """Categorize the cog based on its commands."""
