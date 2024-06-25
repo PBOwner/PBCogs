@@ -229,6 +229,10 @@ Thank you for using **FuturoBot**! We hope you enjoy all the features and functi
             os.chdir(repo_dir)
 
             mkdocs_path = "/root/fb/bin/mkdocs"  # Replace with the actual path to mkdocs if needed
+
+            # Pull the latest changes before pushing
+            os.system("git pull origin gh-pages")
+
             os.system(f"{mkdocs_path} build")
             os.system(f"{mkdocs_path} gh-deploy")
 
