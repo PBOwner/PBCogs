@@ -6,5 +6,5 @@ nav:
 site_name: UptimeResponder's Documentation
 site_url: https://docs.prismbot.icu/UptimeResponder/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false

@@ -6,5 +6,5 @@ nav:
 site_name: AltDentifier's Documentation
 site_url: https://docs.prismbot.icu/AltDentifier/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false

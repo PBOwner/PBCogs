@@ -6,5 +6,5 @@ nav:
 site_name: Unbelievaboat's Documentation
 site_url: https://docs.prismbot.icu/Unbelievaboat/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false

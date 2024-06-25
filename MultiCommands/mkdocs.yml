@@ -6,5 +6,5 @@ nav:
 site_name: MultiCommands's Documentation
 site_url: https://docs.prismbot.icu/MultiCommands/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false

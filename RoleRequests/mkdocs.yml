@@ -6,5 +6,5 @@ nav:
 site_name: RoleRequests's Documentation
 site_url: https://docs.prismbot.icu/RoleRequests/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false

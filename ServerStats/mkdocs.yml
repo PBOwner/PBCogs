@@ -6,5 +6,5 @@ nav:
 site_name: ServerStats's Documentation
 site_url: https://docs.prismbot.icu/ServerStats/
 theme:
-  name: material
+  name: windmill-dark
 use_directory_urls: false
