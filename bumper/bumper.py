@@ -7,6 +7,7 @@ import asyncio
 import random
 import string
 import logging
+from datetime import datetime
 
 _ = Translator("Bumper", __file__)
 log = logging.getLogger("red.Bumper")
@@ -167,10 +168,12 @@ class Bumper(commands.Cog):
             await ctx.send(embed=discord.Embed(description="Please configure all bump settings first using the `bumpset` commands.", color=discord.Color.red()))
             return
 
-        now = discord.utils.utcnow()
-        if guild_data["last_bump"] and (now - guild_data["last_bump"]).total_seconds() < 7200:
-            await ctx.send(embed=discord.Embed(description="You can only bump once every 2 hours.", color=discord.Color.red()))
-            return
+        now = datetime.utcnow()
+        if guild_data["last_bump"]:
+            last_bump = datetime.fromisoformat(guild_data["last_bump"])
+            if (now - last_bump).total_seconds() < 7200:
+                await ctx.send(embed=discord.Embed(description="You can only bump once every 2 hours.", color=discord.Color.red()))
+                return
 
         await self.send_bump(ctx.guild)
 
