@@ -130,7 +130,7 @@ Welcome to the official documentation site for **FuturoBot**! This site provides
 
 ## Introduction
 
-**FuturoBot** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **Your Bot Name** is the perfect addition to any server.
+**FuturoBot** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **FuturoBot** is the perfect addition to any server.
 
 ## Getting Started
 
