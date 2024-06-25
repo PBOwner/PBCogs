@@ -87,11 +87,16 @@ class RandomTopic(commands.Cog):
         if channel is None:
             return
 
-        async with self.session.get("https://api.quotable.io/random") as resp:
-            if resp.status != 200:
-                return
-            data = await resp.json()
-            topic = data.get("content")
+        try:
+            async with self.session.get("https://api.quotable.io/random") as resp:
+                if resp.status != 200:
+                    await channel.send("Failed to retrieve a random topic. Please try again later.")
+                    return
+                data = await resp.json()
+                topic = data.get("content")
+        except aiohttp.ClientError as e:
+            await channel.send("There was an error connecting to the random topic service. Please try again later.")
+            return
 
         role_mention = f"<@&{role_id}>" if role_id else ""
         message = (
