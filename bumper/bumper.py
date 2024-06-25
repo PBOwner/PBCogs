@@ -6,8 +6,10 @@ from discord.ext import tasks
 import asyncio
 import random
 import string
+import logging
 
 _ = Translator("Bumper", __file__)
+log = logging.getLogger("red.Bumper")
 
 class Bumper(commands.Cog):
     """
@@ -30,7 +32,8 @@ class Bumper(commands.Cog):
         default_global = {
             "report_channel": None,
             "premium_codes": {},
-            "blacklisted_guilds": []
+            "blacklisted_guilds": [],
+            "trusted_users": []
         }
 
         self.config.register_guild(**default_guild)
@@ -53,28 +56,28 @@ class Bumper(commands.Cog):
     async def channel(self, ctx: commands.Context, channel: discord.TextChannel):
         """Set the bump channel."""
         await self.config.guild(ctx.guild).bump_channel.set(channel.id)
-        await ctx.send(f"Bump channel set to: {channel.mention}")
+        await ctx.send(embed=discord.Embed(description=f"Bump channel set to: {channel.mention}", color=discord.Color.green()))
 
     @bumpset.command()
     async def invite(self, ctx: commands.Context, invite: str):
         """Set the invite link."""
         await self.config.guild(ctx.guild).invite.set(invite)
-        await ctx.send(f"Invite link set to: {invite}")
+        await ctx.send(embed=discord.Embed(description=f"Invite link set to: {invite}", color=discord.Color.green()))
 
     @bumpset.command()
     async def description(self, ctx: commands.Context, *, description: str):
         """Set the server description (max 500 characters)."""
         if len(description) > 500:
-            await ctx.send("Description is too long. Please keep it under 500 characters.")
+            await ctx.send(embed=discord.Embed(description="Description is too long. Please keep it under 500 characters.", color=discord.Color.red()))
             return
         await self.config.guild(ctx.guild).description.set(description)
-        await ctx.send("Description set.")
+        await ctx.send(embed=discord.Embed(description="Description set.", color=discord.Color.green()))
 
     @bumpset.command()
     async def embed_color(self, ctx: commands.Context, color: discord.Color):
         """Set the embed color."""
         await self.config.guild(ctx.guild).embed_color.set(color.value)
-        await ctx.send(f"Embed color set to: {color}")
+        await ctx.send(embed=discord.Embed(description=f"Embed color set to: {color}", color=discord.Color.green()))
 
     @commands.group()
     @commands.is_owner()
@@ -86,7 +89,7 @@ class Bumper(commands.Cog):
     async def report_channel(self, ctx: commands.Context, channel: discord.TextChannel):
         """Set the channel where bump reports are sent."""
         await self.config.report_channel.set(channel.id)
-        await ctx.send(f"Report channel set to: {channel.mention}")
+        await ctx.send(embed=discord.Embed(description=f"Report channel set to: {channel.mention}", color=discord.Color.green()))
 
     @bumpowner.command()
     async def generate_code(self, ctx: commands.Context):
@@ -94,7 +97,7 @@ class Bumper(commands.Cog):
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
         async with self.config.premium_codes() as premium_codes:
             premium_codes[code] = None
-        await ctx.send(f"Generated premium code: {code}")
+        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}", color=discord.Color.green()))
 
     @bumpowner.command()
     async def blacklist(self, ctx: commands.Context, guild_id: int):
@@ -102,9 +105,9 @@ class Bumper(commands.Cog):
         async with self.config.blacklisted_guilds() as blacklisted_guilds:
             if guild_id not in blacklisted_guilds:
                 blacklisted_guilds.append(guild_id)
-                await ctx.send(f"Server with ID {guild_id} has been blacklisted.")
+                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} has been blacklisted.", color=discord.Color.green()))
             else:
-                await ctx.send(f"Server with ID {guild_id} is already blacklisted.")
+                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} is already blacklisted.", color=discord.Color.orange()))
 
     @bumpowner.command()
     async def unblacklist(self, ctx: commands.Context, guild_id: int):
@@ -112,9 +115,29 @@ class Bumper(commands.Cog):
         async with self.config.blacklisted_guilds() as blacklisted_guilds:
             if guild_id in blacklisted_guilds:
                 blacklisted_guilds.remove(guild_id)
-                await ctx.send(f"Server with ID {guild_id} has been unblacklisted.")
+                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} has been unblacklisted.", color=discord.Color.green()))
             else:
-                await ctx.send(f"Server with ID {guild_id} is not blacklisted.")
+                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} is not blacklisted.", color=discord.Color.orange()))
+
+    @bumpowner.command()
+    async def add_trusted(self, ctx: commands.Context, user: discord.User):
+        """Add a trusted user to accept or deny reports."""
+        async with self.config.trusted_users() as trusted_users:
+            if user.id not in trusted_users:
+                trusted_users.append(user.id)
+                await ctx.send(embed=discord.Embed(description=f"User {user.mention} has been added as a trusted user.", color=discord.Color.green()))
+            else:
+                await ctx.send(embed=discord.Embed(description=f"User {user.mention} is already a trusted user.", color=discord.Color.orange()))
+
+    @bumpowner.command()
+    async def remove_trusted(self, ctx: commands.Context, user: discord.User):
+        """Remove a trusted user."""
+        async with self.config.trusted_users() as trusted_users:
+            if user.id in trusted_users:
+                trusted_users.remove(user.id)
+                await ctx.send(embed=discord.Embed(description=f"User {user.mention} has been removed from trusted users.", color=discord.Color.green()))
+            else:
+                await ctx.send(embed=discord.Embed(description=f"User {user.mention} is not a trusted user.", color=discord.Color.orange()))
 
     @commands.command()
     @commands.guild_only()
@@ -124,9 +147,9 @@ class Bumper(commands.Cog):
             if code in premium_codes and premium_codes[code] is None:
                 premium_codes[code] = ctx.guild.id
                 await self.config.guild(ctx.guild).premium.set(True)
-                await ctx.send("Premium code redeemed! Your server now has premium status.")
+                await ctx.send(embed=discord.Embed(description="Premium code redeemed! Your server now has premium status.", color=discord.Color.green()))
             else:
-                await ctx.send("Invalid or already used premium code.")
+                await ctx.send(embed=discord.Embed(description="Invalid or already used premium code.", color=discord.Color.red()))
 
     @commands.command()
     @commands.guild_only()
@@ -136,23 +159,23 @@ class Bumper(commands.Cog):
 
         blacklisted_guilds = await self.config.blacklisted_guilds()
         if ctx.guild.id in blacklisted_guilds:
-            await ctx.send("Your server is blacklisted and cannot bump.")
+            await ctx.send(embed=discord.Embed(description="Your server is blacklisted and cannot bump.", color=discord.Color.red()))
             return
 
         guild_data = await self.config.guild(ctx.guild).all()
         if not guild_data["bump_channel"] or not guild_data["invite"] or not guild_data["description"]:
-            await ctx.send("Please configure all bump settings first using the `bumpset` commands.")
+            await ctx.send(embed=discord.Embed(description="Please configure all bump settings first using the `bumpset` commands.", color=discord.Color.red()))
             return
 
         now = discord.utils.utcnow()
         if guild_data["last_bump"] and (now - guild_data["last_bump"]).total_seconds() < 7200:
-            await ctx.send("You can only bump once every 2 hours.")
+            await ctx.send(embed=discord.Embed(description="You can only bump once every 2 hours.", color=discord.Color.red()))
             return
 
         await self.send_bump(ctx.guild)
 
         await self.config.guild(ctx.guild).last_bump.set(now.isoformat())
-        await ctx.send("Bump message sent to all configured servers.")
+        await ctx.send(embed=discord.Embed(description="Bump message sent to all configured servers.", color=discord.Color.green()))
 
     async def send_bump(self, guild: discord.Guild):
         guild_data = await self.config.guild(guild).all()
@@ -169,12 +192,12 @@ class Bumper(commands.Cog):
         async def report_callback(interaction: discord.Interaction):
             report_channel_id = await self.config.report_channel()
             if not report_channel_id:
-                await interaction.response.send_message("Report channel is not configured.", ephemeral=True)
+                await interaction.response.send_message(embed=discord.Embed(description="Report channel is not configured.", color=discord.Color.red()), ephemeral=True)
                 return
 
             report_channel = self.bot.get_channel(report_channel_id)
             if not report_channel:
-                await interaction.response.send_message("Report channel is not found.", ephemeral=True)
+                await interaction.response.send_message(embed=discord.Embed(description="Report channel is not found.", color=discord.Color.red()), ephemeral=True)
                 return
 
             report_message = await report_channel.send(
@@ -182,14 +205,14 @@ class Bumper(commands.Cog):
                 content=f"Reported by {interaction.user.mention} from {interaction.guild.name}"
             )
             self.reported_bumps[report_message.id] = (guild.id, interaction.message.id)
-            await report_message.add_reaction("✅")
-            await report_message.add_reaction("❌")
-            await interaction.response.send_message("Bump reported.", ephemeral=True)
+            await interaction.response.send_message(embed=discord.Embed(description="Bump reported.", color=discord.Color.green()), ephemeral=True)
 
         report_button.callback = report_callback
 
         view = discord.ui.View()
         view.add_item(report_button)
+
+        log.info(f"Sending bump from {guild.name} to all configured servers.")
 
         for g in self.bot.guilds:
             bump_channel_id = await self.config.guild(g).bump_channel()
@@ -197,54 +220,91 @@ class Bumper(commands.Cog):
                 bump_channel = g.get_channel(bump_channel_id)
                 if bump_channel:
                     await bump_channel.send(embed=embed, view=view)
+                    log.info(f"Bump sent to {g.name} in channel {bump_channel.name}.")
+
+    @commands.group()
+    @commands.is_owner()
+    async def bumprep(self, ctx: commands.Context):
+        """Group command for handling bump reports."""
+        pass
+
+    @bumprep.command()
+    async def accept(self, ctx: commands.Context, report_message_id: int):
+        """Accept a reported bump."""
+        trusted_users = await self.config.trusted_users()
+        if ctx.author.id not in trusted_users and not await self.bot.is_owner(ctx.author):
+            await ctx.send(embed=discord.Embed(description="You are not authorized to accept bump reports.", color=discord.Color.red()))
+            return
+
+        report_channel_id = await self.config.report_channel()
+        report_channel = self.bot.get_channel(report_channel_id)
+        if not report_channel:
+            await ctx.send(embed=discord.Embed(description="Report channel is not configured or found.", color=discord.Color.red()))
+            return
+
+        try:
+            report_message = await report_channel.fetch_message(report_message_id)
+        except discord.NotFound:
+            await ctx.send(embed=discord.Embed(description="Report message not found.", color=discord.Color.red()))
+            return
+
+        guild_id, message_id = self.reported_bumps.pop(report_message_id, (None, None))
+        if not guild_id:
+            await ctx.send(embed=discord.Embed(description="Report not found in the system.", color=discord.Color.red()))
+            return
+
+        guild = self.bot.get_guild(guild_id)
+        if not guild:
+            await ctx.send(embed=discord.Embed(description="Guild not found.", color=discord.Color.red()))
+            return
+
+        bump_channel_id = await self.config.guild(guild).bump_channel()
+        bump_channel = guild.get_channel(bump_channel_id)
+        if not bump_channel:
+            await ctx.send(embed=discord.Embed(description="Bump channel not found.", color=discord.Color.red()))
+            return
+
+        try:
+            bump_message = await bump_channel.fetch_message(message_id)
+            await bump_message.delete()
+            async with self.config.blacklisted_guilds() as blacklisted_guilds:
+                if guild.id not in blacklisted_guilds:
+                    blacklisted_guilds.append(guild.id)
+            await ctx.send(embed=discord.Embed(description=f"Bump from {guild.name} accepted and the server has been blacklisted.", color=discord.Color.green()))
+        except discord.NotFound:
+            await ctx.send(embed=discord.Embed(description="Bump message not found in the bump channel.", color=discord.Color.red()))
+
+        await report_message.delete()
+
+    @bumprep.command()
+    async def deny(self, ctx: commands.Context, report_message_id: int):
+        """Deny a reported bump."""
+        trusted_users = await self.config.trusted_users()
+        if ctx.author.id not in trusted_users and not await self.bot.is_owner(ctx.author):
+            await ctx.send(embed=discord.Embed(description="You are not authorized to deny bump reports.", color=discord.Color.red()))
+            return
+
+        report_channel_id = await self.config.report_channel()
+        report_channel = self.bot.get_channel(report_channel_id)
+        if not report_channel:
+            await ctx.send(embed=discord.Embed(description="Report channel is not configured or found.", color=discord.Color.red()))
+            return
+
+        try:
+            report_message = await report_channel.fetch_message(report_message_id)
+        except discord.NotFound:
+            await ctx.send(embed=discord.Embed(description="Report message not found.", color=discord.Color.red()))
+            return
+
+        self.reported_bumps.pop(report_message_id, None)
+        await ctx.send(embed=discord.Embed(description="Report denied and dismissed.", color=discord.Color.green()))
+
+        await report_message.delete()
 
     @tasks.loop(hours=2)
     async def auto_bump_task(self):
         await self.bot.wait_until_ready()
         for guild in self.bot.guilds:
             if await self.config.guild(guild).premium():
+                log.info(f"Auto bumping for premium guild: {guild.name}")
                 await self.send_bump(guild)
-
-    @commands.Cog.listener()
-    async def on_reaction_add(self, reaction, user):
-        if user.bot:
-            return
-
-        if reaction.message.id not in self.reported_bumps:
-            return
-
-        report_channel_id = await self.config.report_channel()
-        if reaction.message.channel.id != report_channel_id:
-            return
-
-        if reaction.emoji not in ["✅", "❌"]:
-            return
-
-        guild_id, message_id = self.reported_bumps[reaction.message.id]
-        guild = self.bot.get_guild(guild_id)
-        if not guild:
-            return
-
-        bump_channel_id = await self.config.guild(guild).bump_channel()
-        bump_channel = guild.get_channel(bump_channel_id)
-        if not bump_channel:
-            return
-
-        bump_message = await bump_channel.fetch_message(message_id)
-        if not bump_message:
-            return
-
-        if reaction.emoji == "✅":
-            await bump_message.delete()
-            await reaction.message.channel.send(f"Bump from {guild.name} accepted by {user.mention}.")
-        elif reaction.emoji == "❌":
-            async with self.config.blacklisted_guilds() as blacklisted_guilds:
-                if guild.id not in blacklisted_guilds:
-                    blacklisted_guilds.append(guild.id)
-            await bump_message.delete()
-            await reaction.message.channel.send(f"Bump from {guild.name} denied by {user.mention} and the server has been blacklisted.")
-
-        del self.reported_bumps[reaction.message.id]
-
-def setup(bot: Red):
-    bot.add_cog(Bumper(bot))
