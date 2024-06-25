@@ -10,6 +10,7 @@ import discord
 import pandas as pd
 from aiocache import cached
 from discord import app_commands
+from discord.ext.commands import Command, Cog, Group
 from redbot.core import commands
 from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n, set_contextual_locales_from_guild
