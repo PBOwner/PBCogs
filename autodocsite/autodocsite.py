@@ -1,5 +1,6 @@
 import os
 import shutil
+import logging
 from io import BytesIO
 from typing import List, Literal, Optional, Tuple
 import yaml
@@ -125,12 +126,14 @@ class AutoDocSite(commands.Cog):
                 "nav": []
             }
 
+            prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
+
             for cog_name, cog in self.bot.cogs.items():
                 if cog_name in IGNORE:
                     continue
                 docs = self.generate_readme(
                     cog,
-                    prefix="!",
+                    prefix=prefix,
                     replace_botname=True,
                     extended_info=True,
                     include_hidden=False,
