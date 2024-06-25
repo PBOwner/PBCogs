@@ -43,7 +43,7 @@ class AutoDocSite(commands.Cog):
         include_hidden: bool,
         include_help: bool,
         max_privilege_level: str,
-        min_privilage_level: str = "user",
+        min_privilege_level: str = "user",
         embedding_style: bool = False,
     ) -> str:
         docs = ""
@@ -66,7 +66,7 @@ class AutoDocSite(commands.Cog):
                 extended_info,
                 max_privilege_level,
                 embedding_style,
-                min_privilage_level,
+                min_privilege_level,
             )
             doc = c.get_doc()
             if not doc:
@@ -85,7 +85,7 @@ class AutoDocSite(commands.Cog):
                 extended_info,
                 max_privilege_level,
                 embedding_style,
-                min_privilage_level,
+                min_privilege_level,
             )
             doc = c.get_doc()
             if doc is None:
@@ -103,13 +103,34 @@ class AutoDocSite(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def gendocs(self, ctx: commands.Context):
+    async def gendocs(
+        self,
+        ctx: commands.Context,
+        repo_dir: str = "/root/PBCogs",
+        custom_domain: str = "docs.prismbot.icu",
+        site_name: str = "FuturoBot Documentation",
+        site_url: str = None,
+        theme_name: str = "material",
+        use_directory_urls: bool = False,
+        include_hidden: bool = False,
+        include_help: bool = True,
+        max_privilege_level: str = "botowner",
+        min_privilege_level: str = "user",
+        replace_botname: bool = True,
+        extended_info: bool = True,
+        embedding_style: bool = False,
+        invite_link: str = "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
+        support_server: str = "https://discord.gg/9f7WV6V8ud"
+    ):
         """
         Generate a documentation site for every cog in the bot.
         """
         await set_contextual_locales_from_guild(self.bot, ctx.guild)
+
+        if site_url is None:
+            site_url = f"https://{custom_domain}/"
+
         async with ctx.typing():
-            repo_dir = "/root/PBCogs"  # Replace with the path to your GitHub repository
             docs_dir = os.path.join(repo_dir, "docs")
             mkdocs_config_path = os.path.join(repo_dir, "mkdocs.yml")
 
@@ -118,23 +139,26 @@ class AutoDocSite(commands.Cog):
             os.makedirs(docs_dir)
 
             # Create CNAME file for custom domain
-            custom_domain = "docs.prismbot.icu"  # Replace with your custom domain
             with open(os.path.join(docs_dir, "CNAME"), "w") as f:
                 f.write(custom_domain)
 
+            # Get the bot's name and prefix
+            bot_name = self.bot.user.name
+            prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
+
             # Create index.md file
-            index_content = """
+            index_content = f"""
 # Welcome to the Docs
 
-Welcome to the official documentation site for **FuturoBot**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
+Welcome to the official documentation site for **{site_name}**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
 
 ## Introduction
 
-**FuturoBot** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **FuturoBot** is the perfect addition to any server.
+**{site_name}** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **{bot_name}** is the perfect addition to any server.
 
 ## Getting Started
 
-To get started with **FuturoBot**, follow these simple steps:
+To get started with **{site_name}**, follow these simple steps:
 
 1. **Invite the Bot**: Use the invite link to add the bot to your Discord server.
 2. **Set Up Permissions**: Ensure the bot has the necessary permissions to function correctly.
@@ -144,66 +168,64 @@ To get started with **FuturoBot**, follow these simple steps:
 
 ### General Commands
 
-**FuturoBot** offers a variety of general commands to enhance your server experience. These commands include:
+**{site_name}** offers a variety of general commands to enhance your server experience. These commands include:
 
-- `,help`: Displays a list of available commands.
-- `,info bot`: Provides information about the bot.
-- `,ping`: Checks the bot's response time.
+- `{prefix}help`: Displays a list of available commands.
+- `{prefix}info bot`: Provides information about the bot.
+- `{prefix}ping`: Checks the bot's response time.
 
 ### Moderation Commands
 
 Moderation commands help you manage your server effectively. These commands include:
 
-- `,ban [user] [reason]`: Bans a user from the server.
-- `,kick [user] [reason]`: Kicks a user from the server.
-- `,mute [user] [duration]`: Mutes a user for a specified duration.
-- Theres a ton more, just take a look at the different features!
+- `{prefix}ban [user] [reason]`: Bans a user from the server.
+- `{prefix}kick [user] [reason]`: Kicks a user from the server.
+- `{prefix}mute [user] [duration]`: Mutes a user for a specified duration.
+- There's a ton more, just take a look at the different features!
+
 ### Fun Commands
 
 Add some fun to your server with these entertaining commands:
 
-- `,joke`: Tells a random joke.
-- `,slots`: Play some slots, using the bot's currency
-- `,cah`: Play a game of Cards Against Humanity
-- Theres a ton more, just take a look at the different features!
+- `{prefix}joke`: Tells a random joke.
+- `{prefix}slots`: Play some slots, using the bot's currency.
+- `{prefix}cah`: Play a game of Cards Against Humanity.
+- There's a ton more, just take a look at the different features!
 
 ## Configuration
 
-To configure **FuturoBot**, use the following commands:
+To configure **{site_name}**, use the following commands:
 
-- `,prefix [prefix]`: Changes the command prefix.
+- `{prefix}prefix [prefix]`: Changes the command prefix.
 
 ## FAQ
 
 ### How do I invite the bot to my server?
 
-Use the invite link provided [here](https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8) to add the bot to your server.
+Use the invite link provided [here]({invite_link}) to add the bot to your server.
 
 ### How do I report a bug or request a feature?
 
-To report a bug, please join the support server and create a ticket. To request a feature, use `,fr submit <feature>` where `<feature>` is the feature you desire.
-
+To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
 
 ## Support
 
-If you need assistance or have any questions, please join our [Support Server](https://discord.gg/9f7WV6V8ud).
+If you need assistance or have any questions, please join our [Support Server]({support_server}).
 
-Thank you for using **FuturoBot**! We hope you enjoy all the features and functionality it has to offer.
+Thank you for using **{site_name}**! We hope you enjoy all the features and functionality it has to offer.
             """
             with open(os.path.join(docs_dir, "index.md"), "w") as f:
                 f.write(index_content)
 
             mkdocs_config = {
-                "site_name": "FuturoBot Documentation",
-                "site_url": f"https://{custom_domain}/",  # Use your custom domain
+                "site_name": site_name,
+                "site_url": site_url,  # Use your custom domain
                 "theme": {
-                    "name": "material"
+                    "name": theme_name
                 },
-                "use_directory_urls": False,
+                "use_directory_urls": use_directory_urls,
                 "nav": [{"Home": "index.md"}]
             }
-
-            prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
             for cog_name, cog in self.bot.cogs.items():
                 if cog_name in IGNORE:
@@ -211,11 +233,13 @@ Thank you for using **FuturoBot**! We hope you enjoy all the features and functi
                 docs = self.generate_readme(
                     cog,
                     prefix=prefix,
-                    replace_botname=True,
-                    extended_info=True,
-                    include_hidden=False,
-                    include_help=True,
-                    max_privilege_level="guildowner",
+                    replace_botname=replace_botname,
+                    extended_info=extended_info,
+                    include_hidden=include_hidden,
+                    include_help=include_help,
+                    max_privilege_level=max_privilege_level,
+                    min_privilege_level=min_privilege_level,
+                    embedding_style=embedding_style,
                 )
                 filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
@@ -236,5 +260,4 @@ Thank you for using **FuturoBot**! We hope you enjoy all the features and functi
             os.system(f"{mkdocs_path} build")
             os.system(f"{mkdocs_path} gh-deploy")
 
-            site_url = f"https://{custom_domain}/"
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
