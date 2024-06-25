@@ -12,7 +12,8 @@ class UserInstall(commands.Cog):
             client_id=None,
             client_secret=None,
             redirect_uri=None,
-            bot_token=None
+            bot_token=None,
+            venv_python_path=None
         )
 
     @commands.group()
@@ -69,6 +70,18 @@ class UserInstall(commands.Cog):
         await ctx.message.delete()
         await confirmation.delete()
 
+    @oauth.command()
+    async def setvenvpythonpath(self, ctx, venv_python_path: str):
+        """Set the path to the Python interpreter in the virtual environment.
+
+        Example:
+        !oauth setvenvpythonpath /path/to/your/venv/bin/python
+        """
+        await self.config.venv_python_path.set(venv_python_path)
+        confirmation = await ctx.send("Path to the Python interpreter in the virtual environment has been set.")
+        await ctx.message.delete()
+        await confirmation.delete()
+
     @commands.command()
     async def usercount(self, ctx):
         """Get the total count of users who have installed the bot."""
@@ -81,9 +94,11 @@ class UserInstall(commands.Cog):
     @commands.is_owner()
     async def startwebserver(self, ctx):
         """Start the Flask web server."""
+        venv_python_path = await self.config.venv_python_path()
+        if not venv_python_path:
+            await ctx.send("The path to the Python interpreter in the virtual environment is not set. Please set it using the command `!oauth setvenvpythonpath`.")
+            return
         await ctx.send("Starting the web server...")
-        # Replace with the path to the Python interpreter in your venv
-        venv_python_path = "/path/to/your/venv/bin/python"
         subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py"])
         await ctx.send("Web server started.")
 
