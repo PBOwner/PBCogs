@@ -103,6 +103,32 @@ class AutoDocSite(commands.Cog):
             docs += doc
         return docs
 
+    def categorize_cog(self, cog: commands.Cog) -> str:
+        """Categorize the cog based on its commands."""
+        fun_keywords = ["joke", "fun", "laugh", "meme"]
+        mod_keywords = ["ban", "kick", "mute", "mod"]
+        utilities_keywords = ["util", "tool", "info", "help"]
+        automod_keywords = ["automod", "auto"]
+        economy_keywords = ["econ", "money", "bank", "currency"]
+        games_keywords = ["game", "play", "slots", "cah"]
+
+        categories = {
+            "Fun": fun_keywords,
+            "Mod": mod_keywords,
+            "Utilities": utilities_keywords,
+            "Automod": automod_keywords,
+            "Economy": economy_keywords,
+            "Games": games_keywords,
+        }
+
+        command_names = [cmd.name.lower() for cmd in cog.walk_commands()]
+
+        for category, keywords in categories.items():
+            if any(keyword in cmd for cmd in command_names for keyword in keywords):
+                return category
+
+        return "Misc"
+
     @commands.command()
     @commands.is_owner()
     async def gendocs(
@@ -122,7 +148,8 @@ class AutoDocSite(commands.Cog):
         extended_info: bool = True,
         embedding_style: bool = False,
         invite_link: str = "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
-        support_server: str = "https://discord.gg/9f7WV6V8ud"
+        support_server: str = "https://discord.gg/9f7WV6V8ud",
+        max_cogs_per_category: int = 5  # New parameter to limit the number of cogs per category
     ):
         """
         Generate a documentation site for every cog in the bot.
@@ -230,23 +257,12 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 "Misc": []
             }
 
-            # Example categorization, you may need to adjust this based on your actual cogs
-            cog_categories = {
-                "FunCog": "Fun",
-                "ModCog": "Mod",
-                "UtilitiesCog": "Utilities",
-                "AutomodCog": "Automod",
-                "EconomyCog": "Economy",
-                "GamesCog": "Games",
-                # Add more mappings as needed
-            }
-
             prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
             for cog_name, cog in self.bot.cogs.items():
                 if cog_name in IGNORE:
                     continue
-                category = cog_categories.get(cog_name, "Misc")
+                category = self.categorize_cog(cog)
                 docs = self.generate_readme(
                     cog,
                     prefix=prefix,
@@ -273,10 +289,20 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 "nav": [{"Home": "index.md"}]
             }
 
-            # Add categorized cogs to the nav
+            # Add categorized cogs to the nav with a limit on the number of cogs displayed per category
             for category, cogs in categories.items():
                 if cogs:
-                    mkdocs_config["nav"].append({category: cogs})
+                    if len(cogs) > max_cogs_per_category:
+                        # Create a separate page listing all cogs in the category
+                        category_filename = os.path.join(docs_dir, f"{category.lower()}.md")
+                        with open(category_filename, "w", encoding="utf-8") as f:
+                            f.write(f"# {category} Cogs\n\n")
+                            for cog in cogs:
+                                for cog_name, cog_file in cog.items():
+                                    f.write(f"- [{cog_name}]({cog_file})\n")
+                        mkdocs_config["nav"].append({category: cogs[:max_cogs_per_category] + [{f"More {category} Cogs": f"{category.lower()}.md"}]})
+                    else:
+                        mkdocs_config["nav"].append({category: cogs})
 
             with open(mkdocs_config_path, "w", encoding="utf-8") as f:
                 f.write(yaml.dump(mkdocs_config, default_flow_style=False))
