@@ -1,4 +1,5 @@
 import subprocess
+import socket
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 
@@ -13,7 +14,8 @@ class UserInstall(commands.Cog):
             client_secret=None,
             redirect_uri=None,
             bot_token=None,
-            venv_python_path=None
+            venv_python_path=None,
+            webserver_pid=None
         )
 
     @commands.group()
@@ -98,9 +100,37 @@ class UserInstall(commands.Cog):
         if not venv_python_path:
             await ctx.send("The path to the Python interpreter in the virtual environment is not set. Please set it using the command `!oauth setvenvpythonpath`.")
             return
+
+        # Get the host machine's IP address
+        host_ip = socket.gethostbyname(socket.gethostname())
+
         await ctx.send("Starting the web server...")
-        subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py"])
-        await ctx.send("Web server started.")
+        process = subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py", host_ip])
+        await self.config.webserver_pid.set(process.pid)
+        await ctx.send(f"Web server started on {host_ip} with PID {process.pid}.")
+
+    @commands.command()
+    @commands.is_owner()
+    async def stopwebserver(self, ctx):
+        """Stop the Flask web server."""
+        webserver_pid = await self.config.webserver_pid()
+        if not webserver_pid:
+            await ctx.send("Web server is not running.")
+            return
+
+        try:
+            subprocess.Popen(['kill', str(webserver_pid)])
+            await self.config.webserver_pid.set(None)
+            await ctx.send(f"Web server with PID {webserver_pid} has been stopped.")
+        except Exception as e:
+            await ctx.send(f"Failed to stop web server: {e}")
+
+    @commands.command()
+    @commands.is_owner()
+    async def restartwebserver(self, ctx):
+        """Restart the Flask web server."""
+        await self.stopwebserver(ctx)
+        await self.startwebserver(ctx)
 
 def setup(bot: Red):
     bot.add_cog(UserInstall(bot))
