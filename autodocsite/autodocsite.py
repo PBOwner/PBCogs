@@ -215,7 +215,7 @@ Thank you for using **FuturoBot**! We hope you enjoy all the features and functi
                     extended_info=True,
                     include_hidden=False,
                     include_help=True,
-                    max_privilege_level="botowner",
+                    max_privilege_level="guildowner",
                 )
                 filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
