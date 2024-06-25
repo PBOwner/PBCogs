@@ -1,0 +1,6624 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Paginator/">
+      
+      
+        <link rel="next" href="../PermChecker/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+    
+    
+      
+        <title>PartyCrash - FuturoBot Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#partycrash-help" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FuturoBot Docs" class="md-header__button md-logo" aria-label="FuturoBot Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FuturoBot Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PartyCrash
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FuturoBot Docs" class="md-nav__button md-logo" aria-label="FuturoBot Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    FuturoBot Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CogManagerUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CogManagerUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Permissions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Permissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Downloader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AddImage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AddImage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Admin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Admin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdminToggle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AdminToggle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdvancedBlacklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AdvancedBlacklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adventure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adventure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Alias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Alias
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Aliases/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aliases
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AltDentifier/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AltDentifier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AltMarker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AltMarker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AnnounceDaily/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AnnounceDaily
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AnonReporter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AnonReporter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AntiHonde/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AntiHonde
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AntiLinks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AntiLinks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AntiPhishing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AntiPhishing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AntiSpam/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AntiSpam
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ApiTools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ApiTools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Appeal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Appeal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AssistantUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AssistantUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AuthGG/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AuthGG
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoGist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoGist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoMod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoMod
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Availability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Availability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Badges/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Badges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BankEvents/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BankEvents
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BannedCount/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BannedCount
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BanOnLeave/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BanOnLeave
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Battleship/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Battleship
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Birthday/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Birthday
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blinder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blinder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoostUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BoostUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BrainfuckCog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BrainfuckCog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CardsAgainstHumanity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CardsAgainstHumanity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Calendar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Calendar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CaseInsensitive/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CaseInsensitive
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cashdrop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cashdrop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CCRole/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CCRole
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Charlimit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Charlimit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cleverbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cleverbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Clone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CodeSnippets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CodeSnippets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Coffeetools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coffeetools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Color/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Color
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CommandsButtons/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CommandsButtons
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Converters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cooldown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cooldown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CustomCommands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CustomCommands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CustomPing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CustomPing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DblTools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DblTools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DeleteCounter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DeleteCounter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dev
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DevUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dictionary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dictionary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DisboardReminder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DisboardReminder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiscordModals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DiscordModals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiscordSearch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DiscordSearch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DontPingStaff/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DontPingStaff
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DropdownsTexts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DropdownsTexts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DynamicChannelList/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DynamicChannelList
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EasyRules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EasyRules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Economy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Economy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EconomyTrickle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EconomyTrickle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EditablePosts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EditablePosts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Editor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Editor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EmbedCreator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EmbedCreator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EmbedPeek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EmbedPeek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EmbedUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EmbedUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EmojiGrabber/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EmojiGrabber
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Encoding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ErrorHandler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ErrorHandler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EventPoster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EventPoster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExclusiveRoles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ExclusiveRoles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExtendedModLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ExtendedModLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FakeMod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FakeMod
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FIFO/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FIFO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Filter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FirstMessage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FirstMessage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Flags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FollowCog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FollowCog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ForceMention/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ForceMention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Freshmeat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Freshmeat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GHIssues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GHIssues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GistsHandler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GistsHandler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHubCards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHubCards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Giveaways/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Giveaways
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GlobalBan/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GlobalBan
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Gmail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gmail
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GTN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GTN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GuildID/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GuildID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hangman/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hangman
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hellohook/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hellohook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HidePing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HidePing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hider/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hider
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HostInfo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HostInfo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HttpCat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HttpCat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Image/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Image
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImageLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ImageLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImageScanner/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ImageScanner
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfoChannel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InfoChannel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InRole/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InRole
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Inspirobot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspirobot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InstantCommands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InstantCommands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InviteBlocklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InviteBlocklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IsItDown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IsItDown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JoinPing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JoinPing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Jokes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jokes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../KirA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KirA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LastPing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LastPing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LastSeen/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LastSeen
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lenny/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lenny
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LinkQuoter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LinkQuoter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ListMaker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ListMaker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ListPermissions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ListPermissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ListThreads/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ListThreads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadDev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LoadDev
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lock/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lock
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lockdown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lockdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Maintenance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maintenance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Massmove/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Massmove
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MassUnban/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MassUnban
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MemberCount/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MemberCount
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MemberPrefix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MemberPrefix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MentionTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MentionTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Message/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Message
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MessagePinner/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MessagePinner
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Minesweeper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Minesweeper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mod
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ModLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ModLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ModManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ModManager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ModRoles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ModRoles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MsgTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MsgTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mutes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NameChanger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NameChanger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NitroRole/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NitroRole
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoRoleNoInvite/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NoRoleNoInvite
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OnEdit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OnEdit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OnlineStats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OnlineStats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Otherbot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Otherbot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Paginator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paginator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    PartyCrash
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    PartyCrash
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#partycrash" class="md-nav__link">
+    <span class="md-ellipsis">
+      partycrash
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PermChecker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PermChecker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PersonalChannels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PersonalChannels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PhenUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PhenUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pinboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pinboard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PingSite/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PingSite
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pingtime/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pingtime
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PlantTycoon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PlantTycoon
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Poll/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Poll
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prefix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prefix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prunecmd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prunecmd
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyPi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyPi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quarantine/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quarantine
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quiz/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quotes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quotes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ratings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ratings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReactLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ReactLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReactRestrict/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ReactRestrict
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RepoList/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RepoList
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReviewsCog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ReviewsCog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Riddles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Riddles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Rift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleBoards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleBoards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleNotify/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleNotify
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleRequests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleRequests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RolesButtons/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RolesButtons
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleTools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleTools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Say/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Say
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SecretSanta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SecretSanta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SecureInv/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SecureInv
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SelfAssign/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SelfAssign
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SendCards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SendCards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sendhook/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sendhook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Session/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Calculator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Calculator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SimpleSanction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SimpleSanction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Simulator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Skyrim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skyrim
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    eep
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlowMode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SlowMode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Snipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snipe
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Spoilerer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spoilerer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Spotify/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spotify
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Spotifyembed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spotifyembed
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sticky/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sticky
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StickyMember/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    StickyMember
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Streams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Streams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Strikes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strikes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StripeIdentity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    StripeIdentity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../System/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Talk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Talk
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TempRoles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TempRoles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TextEditor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TextEditor
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TheMovieDB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheMovieDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TicketTool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TicketTool
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeoutSelf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TimeoutSelf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Timestamp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timestamp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Timezone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Timezone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trigger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trigger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trivia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trivia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Twenty/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Twenty
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TypeRacer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TypeRacer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UnbanAll/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UnbanAll
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Unbelievaboat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unbelievaboat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdateChecker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UpdateChecker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpgradeChat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UpgradeChat
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UptimeResponder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UptimeResponder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UrlButtons/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UrlButtons
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UrlFetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UrlFetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UselessFacts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UselessFacts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Userinfo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Userinfo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Verifyer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verifyer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ViewPermissions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ViewPermissions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VoiceLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VoiceLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VoiceTools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VoiceTools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VoiceTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VoiceTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Voteout/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Voteout
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Weather/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Weather
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WelcomeCount/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WelcomeCount
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WhosThatPokemon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WhosThatPokemon
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WordScramble/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WordScramble
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WordStats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WordStats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zalgo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zalgo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Warnings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Warnings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlashTags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SlashTags
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Purge/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Purge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BetterModlog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BetterModlog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BanChart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BanChart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ChessGame/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ChessGame
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdateRed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UpdateRed
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioSlash/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AudioSlash
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerStats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ServerStats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Highlight/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Highlight
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GuildLog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GuildLog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Application/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ChannelTimezone/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ChannelTimezone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoNuke/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NoNuke
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ThreadOpener/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ThreadOpener
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GuildStats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GuildStats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StatTrack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    StatTrack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Xenon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Xenon
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modmail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modmail
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LevelUp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LevelUp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COC/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    COC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RandomEmoji/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RandomEmoji
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServerInfo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ServerInfo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NoFuckYou/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NoFuckYou
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdWarn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AdWarn
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoDelete/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoDelete
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QuestionOfTheDay/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QuestionOfTheDay
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CustomHelp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CustomHelp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameRoles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GameRoles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EmojiInfo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EmojiInfo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BotJoinMessage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BotJoinMessage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MsgReport/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MsgReport
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FeatureRequest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FeatureRequest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GameTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloudflare/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloudflare
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleManager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CommandTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CommandTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImgurUploader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ImgurUploader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AFK/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AFK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InviteSettings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    InviteSettings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoPost/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoPost
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Roast/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Roast
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VrtUtils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VrtUtils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoleSync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RoleSync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RestartMsg/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RestartMsg
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OwnerProtection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OwnerProtection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PrivateWormHole/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PrivateWormHole
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Comm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comm
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Jail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jail
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../StaffManager/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    StaffManager
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dashboard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GuildLock/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GuildLock
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BankDecay/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BankDecay
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fluent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fluent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IdeaBoard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IdeaBoard
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Perform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Perform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UserTracker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UserTracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NickNamer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NickNamer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RequestGB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RequestGB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WormHole/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WormHole
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AffiliatedServers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AffiliatedServers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IntroCog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IntroCog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Reminders/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reminders
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Unknown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unknown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GCC/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Counter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoTraceback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoTraceback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DiscordEdit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DiscordEdit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RPS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Counting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Counting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExtendedEconomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ExtendedEconomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdvancedLogger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AdvancedLogger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ClearChannel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ClearChannel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AAA3A_utils/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AAA3A_utils
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RandomTopic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RandomTopic
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BotLogger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BotLogger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MultiCommands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MultiCommands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoDocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoDocs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AutoDocSite/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AutoDocSite
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#partycrash" class="md-nav__link">
+    <span class="md-ellipsis">
+      partycrash
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="partycrash-help">PartyCrash Help</h1>
+<p>Partycrash inspired by v2 Admin by Will<br/>Does not generate invites, only lists existing invites.</p>
+<h3 id="partycrash">partycrash</h3>
+<p><strong>Description:</strong> Lists servers and existing invites for them.</p>
+<p><strong>Usage:</strong> <code>,partycrash</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+    
+  </body>
+</html>
