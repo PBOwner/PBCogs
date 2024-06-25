@@ -23,8 +23,8 @@ class AutoDocSite(commands.Cog):
     Automatically generate a documentation site for every cog in the bot.
     """
 
-    __author__ = "[Rosie](https://github.com/PBOwner)"
-    __version__ = "0.0.1"
+    __author__ = "[YourName](https://github.com/yourgithub)"
+    __version__ = "1.0.0"
 
     def format_help_for_context(self, ctx):
         helpcmd = super().format_help_for_context(ctx)
@@ -152,3 +152,6 @@ class AutoDocSite(commands.Cog):
             os.system("mkdocs gh-deploy")
 
             await ctx.send("Documentation site has been generated and deployed to GitHub Pages.")
+
+def setup(bot: Red):
+    bot.add_cog(AutoDocSite(bot))
