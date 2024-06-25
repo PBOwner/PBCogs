@@ -12,7 +12,7 @@ from redbot.core.i18n import Translator, cog_i18n, set_contextual_locales_from_g
 
 from .formatter import IGNORE, CustomCmdFmt
 
-log = logging.getLogger("red.vrt.autodocs")
+log = logging.getLogger("red.pbowner.autodocsite")
 _ = Translator("AutoDocs", __file__)
 
 
@@ -23,8 +23,8 @@ class AutoDocSite(commands.Cog):
     Automatically generate a documentation site for every cog in the bot.
     """
 
-    __author__ = "[YourName](https://github.com/yourgithub)"
-    __version__ = "1.0.0"
+    __author__ = "[Rosie](https://github.com/PBOwner)"
+    __version__ = "0.0.1"
 
     def format_help_for_context(self, ctx):
         helpcmd = super().format_help_for_context(ctx)
