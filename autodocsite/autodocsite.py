@@ -29,6 +29,9 @@ class AutoDocs(commands.Cog):
     Easily create documentation for any cog in Markdown format.
     """
 
+    __version__ = "0.0.2"  # Define the version of the cog
+    __author__ = "Rosie Val"  # Define the author of the cog
+
     def format_help_for_context(self, ctx):
         helpcmd = super().format_help_for_context(ctx)
         txt = _("{}\nCog Version: {}\nAuthor: {}").format(helpcmd, self.__version__, self.__author__)
