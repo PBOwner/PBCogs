@@ -6,5 +6,5 @@ nav:
 site_name: AutoPost's Documentation
 site_url: https://docs.prismbot.icu/AutoPost/
 theme:
-  name: windmill-dark
+  name: dracula
 use_directory_urls: false

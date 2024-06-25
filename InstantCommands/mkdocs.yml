@@ -6,5 +6,5 @@ nav:
 site_name: InstantCommands's Documentation
 site_url: https://docs.prismbot.icu/InstantCommands/
 theme:
-  name: windmill-dark
+  name: dracula
 use_directory_urls: false

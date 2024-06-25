@@ -6,5 +6,5 @@ nav:
 site_name: AddImage's Documentation
 site_url: https://docs.prismbot.icu/AddImage/
 theme:
-  name: windmill-dark
+  name: dracula
 use_directory_urls: false
