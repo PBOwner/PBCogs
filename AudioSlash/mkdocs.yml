@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- AudioSlash: AudioSlash.md
+site_name: AudioSlash's Documentation
+site_url: https://docs.prismbot.icuAudioSlash/
+theme:
+  name: dracula
+use_directory_urls: true

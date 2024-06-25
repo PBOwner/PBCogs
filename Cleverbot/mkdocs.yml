@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- Cleverbot: Cleverbot.md
+site_name: Cleverbot's Documentation
+site_url: https://docs.prismbot.icuCleverbot/
+theme:
+  name: dracula
+use_directory_urls: true

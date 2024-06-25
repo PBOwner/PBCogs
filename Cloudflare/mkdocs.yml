@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- Cloudflare: Cloudflare.md
+site_name: Cloudflare's Documentation
+site_url: https://docs.prismbot.icuCloudflare/
+theme:
+  name: dracula
+use_directory_urls: true
