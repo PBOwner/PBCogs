@@ -38,7 +38,7 @@ class RandomTopic(commands.Cog):
         Use this command to specify which role should be mentioned whenever a new random topic is generated and sent to the channel.
         """
         await self.config.guild(ctx.guild).role_id.set(role.id)
-        await ctx.send(f"Role set to {role.name}")
+        await ctx.send(f"Role set to {role.name}", allowed_mentions=discord.AllowedMentions(roles=True))
 
     @rt.command()
     async def setchannel(self, ctx, channel: discord.TextChannel):
@@ -112,7 +112,7 @@ class RandomTopic(commands.Cog):
         embed.set_footer(text=message)
 
         if role_mention:
-            await channel.send(role_mention)
+            await channel.send(role_mention, allowed_mentions=discord.AllowedMentions(roles=True))
         await channel.send(embed=embed)
 
     async def scheduled_task(self):
