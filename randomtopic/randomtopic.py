@@ -106,9 +106,10 @@ class RandomTopic(commands.Cog):
 
         embed = discord.Embed(
             title=custom_name,
-            description=f"**Question:** {question}\n\n{message}",
             color=random.randint(0, 0xFFFFFF)
         )
+        embed.add_field(name="Question", value=question, inline=False)
+        embed.set_footer(text=message)
 
         if role_mention:
             await channel.send(role_mention)
