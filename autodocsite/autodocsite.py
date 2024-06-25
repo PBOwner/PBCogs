@@ -395,40 +395,142 @@ class AutoDocSite(commands.Cog):
     def __init__(self, bot: Red, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.bot = bot
+        self.config = {
+            "repo_dir": "/root/PBCogs",
+            "custom_domain": "docs.prismbot.icu",
+            "site_name": "FuturoBot Documentation",
+            "site_url": None,
+            "theme_name": "material",
+            "use_directory_urls": False,
+            "include_hidden": False,
+            "include_help": True,
+            "max_privilege_level": "guildowner",
+            "min_privilege_level": "user",
+            "replace_botname": True,
+            "extended_info": True,
+            "embedding_style": False,
+            "invite_link": "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
+            "support_server": "https://discord.gg/9f7WV6V8ud",
+            "custom_footer": "Created by [Rosie](https://github.com/PBOwner) with <3"
+        }
+
+    @commands.group()
+    @commands.is_owner()
+    async def setsite(self, ctx: commands.Context):
+        """Group command to set site configuration variables."""
+        pass
+
+    @setsite.command()
+    async def repo_dir(self, ctx: commands.Context, *, value: str):
+        """Set the repository directory."""
+        self.config["repo_dir"] = value
+        await ctx.send(f"Repository directory set to: {value}")
+
+    @setsite.command()
+    async def custom_domain(self, ctx: commands.Context, *, value: str):
+        """Set the custom domain."""
+        self.config["custom_domain"] = value
+        await ctx.send(f"Custom domain set to: {value}")
+
+    @setsite.command()
+    async def site_name(self, ctx: commands.Context, *, value: str):
+        """Set the site name."""
+        self.config["site_name"] = value
+        await ctx.send(f"Site name set to: {value}")
+
+    @setsite.command()
+    async def site_url(self, ctx: commands.Context, *, value: str = None):
+        """Set the site URL."""
+        self.config["site_url"] = value
+        await ctx.send(f"Site URL set to: {value}")
+
+    @setsite.command()
+    async def theme_name(self, ctx: commands.Context, *, value: str):
+        """Set the theme name."""
+        self.config["theme_name"] = value
+        await ctx.send(f"Theme name set to: {value}")
+
+    @setsite.command()
+    async def use_directory_urls(self, ctx: commands.Context, value: bool):
+        """Set the use_directory_urls flag."""
+        self.config["use_directory_urls"] = value
+        await ctx.send(f"use_directory_urls set to: {value}")
+
+    @setsite.command()
+    async def include_hidden(self, ctx: commands.Context, value: bool):
+        """Set the include_hidden flag."""
+        self.config["include_hidden"] = value
+        await ctx.send(f"include_hidden set to: {value}")
+
+    @setsite.command()
+    async def include_help(self, ctx: commands.Context, value: bool):
+        """Set the include_help flag."""
+        self.config["include_help"] = value
+        await ctx.send(f"include_help set to: {value}")
+
+    @setsite.command()
+    async def max_privilege_level(self, ctx: commands.Context, *, value: str):
+        """Set the max_privilege_level."""
+        self.config["max_privilege_level"] = value
+        await ctx.send(f"max_privilege_level set to: {value}")
+
+    @setsite.command()
+    async def min_privilege_level(self, ctx: commands.Context, *, value: str):
+        """Set the min_privilege_level."""
+        self.config["min_privilege_level"] = value
+        await ctx.send(f"min_privilege_level set to: {value}")
+
+    @setsite.command()
+    async def replace_botname(self, ctx: commands.Context, value: bool):
+        """Set the replace_botname flag."""
+        self.config["replace_botname"] = value
+        await ctx.send(f"replace_botname set to: {value}")
+
+    @setsite.command()
+    async def extended_info(self, ctx: commands.Context, value: bool):
+        """Set the extended_info flag."""
+        self.config["extended_info"] = value
+        await ctx.send(f"extended_info set to: {value}")
+
+    @setsite.command()
+    async def embedding_style(self, ctx: commands.Context, value: bool):
+        """Set the embedding_style flag."""
+        self.config["embedding_style"] = value
+        await ctx.send(f"embedding_style set to: {value}")
+
+    @setsite.command()
+    async def invite_link(self, ctx: commands.Context, *, value: str):
+        """Set the invite link."""
+        self.config["invite_link"] = value
+        await ctx.send(f"Invite link set to: {value}")
+
+    @setsite.command()
+    async def support_server(self, ctx: commands.Context, *, value: str):
+        """Set the support server link."""
+        self.config["support_server"] = value
+        await ctx.send(f"Support server link set to: {value}")
+
+    @setsite.command()
+    async def custom_footer(self, ctx: commands.Context, *, value: str):
+        """Set the custom footer."""
+        self.config["custom_footer"] = value
+        await ctx.send(f"Custom footer set to: {value}")
 
     @commands.command()
     @commands.is_owner()
-    async def gendocs(
-        self,
-        ctx: commands.Context,
-        repo_dir: str = "/root/PBCogs",
-        custom_domain: str = "docs.prismbot.icu",
-        site_name: str = "FuturoBot Documentation",
-        site_url: str = None,
-        theme_name: str = "material",
-        use_directory_urls: bool = False,
-        include_hidden: bool = False,
-        include_help: bool = True,
-        max_privilege_level: str = "guildowner",
-        min_privilege_level: str = "user",
-        replace_botname: bool = True,
-        extended_info: bool = True,
-        embedding_style: bool = False,
-        invite_link: str = "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
-        support_server: str = "https://discord.gg/9f7WV6V8ud",
-        custom_footer: str = "Created by [Rosie](https://github.com/PBOwner) with <3"
-    ):
+    async def gendocs(self, ctx: commands.Context):
         """
         Generate a documentation site for every cog in the bot.
         """
         await set_contextual_locales_from_guild(self.bot, ctx.guild)
 
+        site_url = self.config["site_url"]
         if site_url is None:
-            site_url = f"https://{custom_domain}/"
+            site_url = f"https://{self.config['custom_domain']}/"
 
         async with ctx.typing():
-            docs_dir = os.path.join(repo_dir, "docs")
-            mkdocs_config_path = os.path.join(repo_dir, "mkdocs.yml")
+            docs_dir = os.path.join(self.config["repo_dir"], "docs")
+            mkdocs_config_path = os.path.join(self.config["repo_dir"], "mkdocs.yml")
 
             if os.path.exists(docs_dir):
                 shutil.rmtree(docs_dir)
@@ -436,7 +538,7 @@ class AutoDocSite(commands.Cog):
 
             # Create CNAME file for custom domain
             with open(os.path.join(docs_dir, "CNAME"), "w") as f:
-                f.write(custom_domain)
+                f.write(self.config["custom_domain"])
 
             # Get the bot's name and prefix
             bot_name = self.bot.user.name
@@ -446,15 +548,15 @@ class AutoDocSite(commands.Cog):
             index_content = f"""
 # Welcome to the Docs
 
-Welcome to the official documentation site for **{site_name}**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
+Welcome to the official documentation site for **{self.config['site_name']}**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
 
 ## Introduction
 
-**{site_name}** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **{bot_name}** is the perfect addition to any server.
+**{self.config['site_name']}** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **{bot_name}** is the perfect addition to any server.
 
 ## Getting Started
 
-To get started with **{site_name}**, follow these simple steps:
+To get started with **{self.config['site_name']}**, follow these simple steps:
 
 1. **Invite the Bot**: Use the invite link to add the bot to your Discord server.
 2. **Set Up Permissions**: Ensure the bot has the necessary permissions to function correctly.
@@ -464,7 +566,7 @@ To get started with **{site_name}**, follow these simple steps:
 
 ### General Commands
 
-**{site_name}** offers a variety of general commands to enhance your server experience. These commands include:
+**{self.config['site_name']}** offers a variety of general commands to enhance your server experience. These commands include:
 
 - `{prefix}help`: Displays a list of available commands.
 - `{prefix}info bot`: Provides information about the bot.
@@ -490,7 +592,7 @@ Add some fun to your server with these entertaining commands:
 
 ## Configuration
 
-To configure **{site_name}**, use the following commands:
+To configure **{self.config['site_name']}**, use the following commands:
 
 - `{prefix}prefix [prefix]`: Changes the command prefix.
 
@@ -498,7 +600,7 @@ To configure **{site_name}**, use the following commands:
 
 ### How do I invite the bot to my server?
 
-Use the invite link provided [here]({invite_link}) to add the bot to your server.
+Use the invite link provided [here]({self.config['invite_link']}) to add the bot to your server.
 
 ### How do I report a bug or request a feature?
 
@@ -506,9 +608,9 @@ To report a bug, please join the support server and create a ticket. To request 
 
 ## Support
 
-If you need assistance or have any questions, please join our [Support Server]({support_server}).
+If you need assistance or have any questions, please join our [Support Server]({self.config['support_server']}).
 
-Thank you for using **{site_name}**! We hope you enjoy all the features and functionality it has to offer.
+Thank you for using **{self.config['site_name']}**! We hope you enjoy all the features and functionality it has to offer.
             """
             with open(os.path.join(docs_dir, "index.md"), "w") as f:
                 f.write(index_content)
@@ -520,13 +622,13 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 docs, _ = self.generate_readme(
                     cog,
                     prefix=prefix,
-                    replace_botname=replace_botname,
-                    extended_info=extended_info,
-                    include_hidden=include_hidden,
-                    include_help=include_help,
-                    max_privilege_level=max_privilege_level,
-                    min_privilege_level=min_privilege_level,
-                    embedding_style=embedding_style,
+                    replace_botname=self.config["replace_botname"],
+                    extended_info=self.config["extended_info"],
+                    include_hidden=self.config["include_hidden"],
+                    include_help=self.config["include_help"],
+                    max_privilege_level=self.config["max_privilege_level"],
+                    min_privilege_level=self.config["min_privilege_level"],
+                    embedding_style=self.config["embedding_style"],
                 )
                 filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
@@ -537,15 +639,15 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 "site_name": f"{self.bot.user.name}'s Documentation",
                 "site_url": site_url,
                 "theme": {
-                    "name": theme_name
+                    "name": self.config["theme_name"]
                 },
-                "use_directory_urls": use_directory_urls,
+                "use_directory_urls": self.config["use_directory_urls"],
                 "nav": [
                     {"Home": "index.md"},
                     {"Cogs": []}
                 ],
                 "extra": {
-                    "footer": custom_footer
+                    "footer": self.config["custom_footer"]
                 }
             }
 
@@ -560,16 +662,15 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                     "site_name": f"{cog_name}'s Documentation",
                     "site_url": f"{site_url}{cog_name}/",
                     "theme": {
-                        "name": theme_name
+                        "name": self.config["theme_name"]
                     },
-                    "use_directory_urls": use_directory_urls,
+                    "use_directory_urls": self.config["use_directory_urls"],
                     "nav": [
                         {"Home": "index.md"},
                         {cog_name: f"{cog_name}.md"}
                     ],
                     "extra": {
-                        "footer": custom_footer
-                    }
+                        "footer": self.config["custom_footer"]}
                 }
 
                 cog_config_path = os.path.join(docs_dir, cog_name, "mkdocs.yml")
@@ -582,7 +683,7 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 f.write(yaml.dump(meta_config, default_flow_style=False))
 
             # Change to the repository directory
-            os.chdir(repo_dir)
+            os.chdir(self.config["repo_dir"])
 
             mkdocs_path = "/root/fb/bin/mkdocs"  # Replace with the actual path to mkdocs if needed
 
@@ -595,7 +696,7 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
 
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
 
-    def generate_command_docs(self, cmd: Command, prefix: str, extended_info: bool) -> str:
+    def generate_command_docs(self, cmd: commands.Command, prefix: str, extended_info: bool) -> str:
         """Generate detailed documentation for a command."""
         doc = f"### {prefix}{cmd.qualified_name}\n\n"
         if cmd.help:
