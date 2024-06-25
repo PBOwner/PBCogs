@@ -24,25 +24,33 @@ class UserInstall(commands.Cog):
     async def setclientid(self, ctx, client_id: str):
         """Set the OAuth2 Client ID."""
         await self.config.client_id.set(client_id)
-        await ctx.send("OAuth2 Client ID has been set.")
+        confirmation = await ctx.send("OAuth2 Client ID has been set.")
+        await ctx.message.delete()
+        await confirmation.delete()
 
     @oauth.command()
     async def setclientsecret(self, ctx, client_secret: str):
         """Set the OAuth2 Client Secret."""
         await self.config.client_secret.set(client_secret)
-        await ctx.send("OAuth2 Client Secret has been set.")
+        confirmation = await ctx.send("OAuth2 Client Secret has been set.")
+        await ctx.message.delete()
+        await confirmation.delete()
 
     @oauth.command()
     async def setredirecturi(self, ctx, redirect_uri: str):
         """Set the OAuth2 Redirect URI."""
         await self.config.redirect_uri.set(redirect_uri)
-        await ctx.send("OAuth2 Redirect URI has been set.")
+        confirmation = await ctx.send("OAuth2 Redirect URI has been set.")
+        await ctx.message.delete()
+        await confirmation.delete()
 
     @oauth.command()
     async def setbottoken(self, ctx, bot_token: str):
         """Set the bot token."""
         await self.config.bot_token.set(bot_token)
-        await ctx.send("Bot token has been set.")
+        confirmation = await ctx.send("Bot token has been set.")
+        await ctx.message.delete()
+        await confirmation.delete()
 
     @commands.command()
     async def usercount(self, ctx):
