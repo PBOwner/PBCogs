@@ -163,7 +163,6 @@ class Bumper(commands.Cog):
             color=guild_data["embed_color"]
         )
         embed.add_field(name="Invite Link", value=guild_data["invite"], inline=False)
-        embed.set_thumbnail(url=guild.icon_url)
 
         report_button = discord.ui.Button(label="Report", style=discord.ButtonStyle.danger)
 
@@ -246,3 +245,6 @@ class Bumper(commands.Cog):
             await reaction.message.channel.send(f"Bump from {guild.name} denied by {user.mention} and the server has been blacklisted.")
 
         del self.reported_bumps[reaction.message.id]
+
+def setup(bot: Red):
+    bot.add_cog(Bumper(bot))
