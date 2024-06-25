@@ -1,4 +1,5 @@
 import os
+import sys
 import asyncio
 from flask import Flask, redirect, request, session
 import requests
@@ -62,4 +63,5 @@ def usercount():
     return f'The total number of users who have installed the bot is: {total_installed_users}'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    host_ip = sys.argv[1] if len(sys.argv) > 1 else '0.0.0.0'
+    app.run(debug=True, host=host_ip)
