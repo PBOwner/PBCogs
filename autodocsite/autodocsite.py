@@ -140,8 +140,6 @@ To get started with **FuturoBot**, follow these simple steps:
 2. **Set Up Permissions**: Ensure the bot has the necessary permissions to function correctly.
 3. **Configure the Bot**: Use the configuration commands to set up the bot according to your preferences.
 
-For detailed instructions, refer to the [Getting Started Guide](getting_started.md).
-
 ## Commands
 
 ### General Commands
@@ -171,7 +169,7 @@ Add some fun to your server with these entertaining commands:
 
 ## Configuration
 
-To configure **Your Bot Name**, use the following commands:
+To configure **FuturoBot**, use the following commands:
 
 - `,prefix [prefix]`: Changes the command prefix.
 
@@ -185,7 +183,6 @@ Use the invite link provided [here](https://discord.com/oauth2/authorize?client_
 
 To report a bug, please join the support server and create a ticket. To request a feature, use `,fr submit <feature>` where `<feature>` is the feature you desire.
 
-For more frequently asked questions, refer to the [FAQ](faq.md) section.
 
 ## Support
 
