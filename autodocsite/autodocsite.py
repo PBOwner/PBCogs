@@ -113,20 +113,13 @@ class AutoDocSite(commands.Cog):
 
     def categorize_cog(self, cog: commands.Cog) -> str:
         """Categorize the cog based on its commands."""
-        fun_keywords = ["joke", "fun", "laugh", "meme"]
-        mod_keywords = ["ban", "kick", "mute", "mod"]
-        utilities_keywords = ["util", "tool", "info", "help"]
-        automod_keywords = ["automod", "auto"]
-        economy_keywords = ["econ", "money", "bank", "currency"]
-        games_keywords = ["game", "play", "slots", "cah"]
-
         categories = {
-            "Fun": fun_keywords,
-            "Mod": mod_keywords,
-            "Utilities": utilities_keywords,
-            "Automod": automod_keywords,
-            "Economy": economy_keywords,
-            "Games": games_keywords,
+            "Fun": ["joke", "fun", "laugh", "meme"],
+            "Mod": ["ban", "kick", "mute", "mod"],
+            "Utilities": ["util", "tool", "info", "help"],
+            "Automod": ["automod", "auto"],
+            "Economy": ["econ", "money", "bank", "currency"],
+            "Games": ["game", "play", "slots", "cah"],
         }
 
         command_names = [cmd.name.lower() for cmd in cog.walk_commands()]
@@ -157,7 +150,21 @@ class AutoDocSite(commands.Cog):
         embedding_style: bool = False,
         invite_link: str = "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
         support_server: str = "https://discord.gg/9f7WV6V8ud",
-        max_cogs_per_category: int = 5  # New parameter to limit the number of cogs per category
+        max_cogs_per_category: int = 5,  # Limit the number of cogs per category
+        fun_command_1: str = "joke",
+        fun_command_2: str = "slots",
+        fun_command_3: str = "cah",
+        faq_message: str = """
+## FAQ
+
+### How do I invite the bot to my server?
+
+Use the invite link provided [here]({invite_link}) to add the bot to your server.
+
+### How do I report a bug or request a feature?
+
+To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
+        """
     ):
         """
         Generate a documentation site for every cog in the bot.
@@ -183,7 +190,7 @@ class AutoDocSite(commands.Cog):
             bot_name = self.bot.user.name
             prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
-            # Create index.md file
+            # Create index.md file with customizable content
             index_content = f"""
 # Welcome to the Docs
 
@@ -224,9 +231,9 @@ Moderation commands help you manage your server effectively. These commands incl
 
 Add some fun to your server with these entertaining commands:
 
-- `{prefix}joke`: Tells a random joke.
-- `{prefix}slots`: Play some slots, using the bot's currency.
-- `{prefix}cah`: Play a game of Cards Against Humanity.
+- `{prefix}{fun_command_1}`: Tells a random joke.
+- `{prefix}{fun_command_2}`: Play some slots, using the bot's currency.
+- `{prefix}{fun_command_3}`: Play a game of Cards Against Humanity.
 - There's a ton more, just take a look at the different features!
 
 ## Configuration
@@ -235,15 +242,7 @@ To configure **{site_name}**, use the following commands:
 
 - `{prefix}prefix [prefix]`: Changes the command prefix.
 
-## FAQ
-
-### How do I invite the bot to my server?
-
-Use the invite link provided [here]({invite_link}) to add the bot to your server.
-
-### How do I report a bug or request a feature?
-
-To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
+{faq_message.format(invite_link=invite_link, prefix=prefix)}
 
 ## Support
 
@@ -327,3 +326,69 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             os.system(f"{mkdocs_path} gh-deploy")
 
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
+
+    def generate_command_docs(self, cmd: Command, prefix: str) -> str:
+        """Generate detailed documentation for a command."""
+        doc = f"### {prefix}{cmd.qualified_name}\n\n"
+        if cmd.help:
+            doc += f"**Description:** {cmd.help}\n\n"
+        if cmd.aliases:
+            doc += f"**Aliases:** {', '.join(cmd.aliases)}\n\n"
+        if cmd.usage:
+            doc += f"**Usage:** {prefix}{cmd.usage}\n\n"
+        if cmd.brief:
+            doc += f"**Brief:** {cmd.brief}\n\n"
+        if cmd.extras:
+            doc += f"**Extras:** {cmd.extras}\n\n"
+        if isinstance(cmd, commands.Group):
+            for subcmd in cmd.commands:
+                doc += self.generate_command_docs(subcmd, prefix)
+        return doc
+
+    def generate_readme(
+        self,
+        cog: commands.Cog,
+        prefix: str,
+        replace_botname: bool,
+        extended_info: bool,
+        include_hidden: bool,
+        include_help: bool,
+        max_privilege_level: str,
+        min_privilege_level: str = "user",
+        embedding_style: bool = False,
+    ) -> str:
+        docs = ""
+        cog_name = cog.qualified_name
+        if include_help:
+            helptxt = _("Help")
+            docs += f"# {cog_name} {helptxt}\n\n"
+            cog_help = cog.help if cog.help else None
+            if not embedding_style and cog_help:
+                cog_help = cog_help.replace("\n", "<br/>")
+            if cog_help:
+                docs += f"{cog_help}\n\n"
+
+        for cmd in cog.walk_app_commands():
+            c = CustomCmdFmt(
+                self.bot,
+                cmd,
+                prefix,
+                replace_botname,
+                extended_info,
+                max_privilege_level,
+                embedding_style,
+                min_privilege_level,
+            )
+            doc = c.get_doc()
+            if not doc:
+                continue
+            docs += doc
+
+        ignored = []
+        for cmd in cog.walk_commands():
+            if cmd.hidden and not include_hidden:
+                continue
+            if max_privilege_level == "guildowner" and not self.is_guild_owner_command(cmd):
+                continue
+            docs += self.generate_command_docs(cmd, prefix)
+        return docs
