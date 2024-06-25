@@ -80,28 +80,7 @@ class AutoDocSite(commands.Cog):
                 continue
             if max_privilege_level == "guildowner" and not self.is_guild_owner_command(cmd):
                 continue
-            c = CustomCmdFmt(
-                self.bot,
-                cmd,
-                prefix,
-                replace_botname,
-                extended_info,
-                max_privilege_level,
-                embedding_style,
-                min_privilege_level,
-            )
-            doc = c.get_doc()
-            if doc is None:
-                ignored.append(cmd.qualified_name)
-            if not doc:
-                continue
-            skip = False
-            for i in ignored:
-                if i in cmd.qualified_name:
-                    skip = True
-            if skip:
-                continue
-            docs += doc
+            docs += self.generate_command_docs(cmd, prefix, extended_info)
         return docs
 
     def is_guild_owner_command(self, cmd: Command) -> bool:
@@ -110,6 +89,28 @@ class AutoDocSite(commands.Cog):
             if check.__name__ == 'is_owner_check':
                 return True
         return False
+
+    def generate_command_docs(self, cmd: Command, prefix: str, extended_info: bool) -> str:
+        """Generate detailed documentation for a command."""
+        doc = f"### {prefix}{cmd.qualified_name}\n\n"
+        if cmd.help:
+            doc += f"**Description:** {cmd.help}\n\n"
+        if cmd.aliases:
+            doc += f"**Aliases:** {', '.join(cmd.aliases)}\n\n"
+        if cmd.usage:
+            doc += f"**Usage:** {prefix}{cmd.usage}\n\n"
+        if cmd.brief:
+            doc += f"**Brief:** {cmd.brief}\n\n"
+        if cmd.extras:
+            doc += f"**Extras:** {cmd.extras}\n\n"
+        if extended_info and cmd.clean_params:
+            doc += "**Parameters:**\n"
+            for param, info in cmd.clean_params.items():
+                doc += f"- **{param}**: {info}\n"
+        if isinstance(cmd, commands.Group):
+            for subcmd in cmd.commands:
+                doc += self.generate_command_docs(subcmd, prefix, extended_info)
+        return doc
 
     @commands.command()
     @commands.is_owner()
@@ -279,7 +280,7 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
 
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
 
-    def generate_command_docs(self, cmd: Command, prefix: str) -> str:
+    def generate_command_docs(self, cmd: Command, prefix: str, extended_info: bool) -> str:
         """Generate detailed documentation for a command."""
         doc = f"### {prefix}{cmd.qualified_name}\n\n"
         if cmd.help:
@@ -292,9 +293,13 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             doc += f"**Brief:** {cmd.brief}\n\n"
         if cmd.extras:
             doc += f"**Extras:** {cmd.extras}\n\n"
+        if extended_info and cmd.clean_params:
+            doc += "**Parameters:**\n"
+            for param, info in cmd.clean_params.items():
+                doc += f"- **{param}**: {info}\n"
         if isinstance(cmd, commands.Group):
             for subcmd in cmd.commands:
-                doc += self.generate_command_docs(subcmd, prefix)
+                doc += self.generate_command_docs(subcmd, prefix, extended_info)
         return doc
 
     def generate_readme(
@@ -342,5 +347,5 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 continue
             if max_privilege_level == "guildowner" and not self.is_guild_owner_command(cmd):
                 continue
-            docs += self.generate_command_docs(cmd, prefix)
+            docs += self.generate_command_docs(cmd, prefix, extended_info)
         return docs
