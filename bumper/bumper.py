@@ -130,7 +130,7 @@ class Bumper(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def bump(self, ctx: commands.Context):
+    async def bumper(self, ctx: commands.Context):
         """Send the bump message to all servers with a configured bump channel."""
         await set_contextual_locales_from_guild(self.bot, ctx.guild)
 
@@ -246,6 +246,3 @@ class Bumper(commands.Cog):
             await reaction.message.channel.send(f"Bump from {guild.name} denied by {user.mention} and the server has been blacklisted.")
 
         del self.reported_bumps[reaction.message.id]
-
-def setup(bot: Red):
-    bot.add_cog(Bumper(bot))
