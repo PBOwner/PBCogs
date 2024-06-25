@@ -12,8 +12,10 @@ class CustomCmdFmt:
         self.min_privilage_level = min_privilage_level
 
     def get_doc(self):
-        # Implement your documentation formatting logic here
         doc = f"### {self.cmd.qualified_name}\n\n"
-        doc += f"**Description:** {self.cmd.help}\n\n"
+        if hasattr(self.cmd, 'help') and self.cmd.help:
+            doc += f"**Description:** {self.cmd.help}\n\n"
+        else:
+            doc += "**Description:** No description provided.\n\n"
         doc += f"**Usage:** `{self.prefix}{self.cmd.qualified_name}`\n\n"
         return doc
