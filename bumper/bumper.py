@@ -171,7 +171,7 @@ class Bumper(commands.Cog):
         now = datetime.now(timezone.utc)
         if guild_data["last_bump"]:
             last_bump = datetime.fromisoformat(guild_data["last_bump"])
-            if (now - last_bump).total_seconds() < 7200:
+            if (now - last_bump).total_seconds() < 7200 and not await self.bot.is_owner(ctx.author):
                 await ctx.send(embed=discord.Embed(description="You can only bump once every 2 hours.", color=discord.Color.red()))
                 return
 
