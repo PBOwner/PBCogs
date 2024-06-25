@@ -130,22 +130,7 @@ class AutoDocSite(commands.Cog):
         extended_info: bool = True,
         embedding_style: bool = False,
         invite_link: str = "https://discord.com/oauth2/authorize?client_id=1230169850446479370&scope=bot+applications.commands&permissions=8",
-        support_server: str = "https://discord.gg/9f7WV6V8ud",
-        max_cogs_per_category: int = 5,  # Limit the number of cogs per category
-        fun_command_1: str = "joke",
-        fun_command_2: str = "slots",
-        fun_command_3: str = "cah",
-        faq_message: str = """
-## FAQ
-
-### How do I invite the bot to my server?
-
-Use the invite link provided [here]({invite_link}) to add the bot to your server.
-
-### How do I report a bug or request a feature?
-
-To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
-        """
+        support_server: str = "https://discord.gg/9f7WV6V8ud"
     ):
         """
         Generate a documentation site for every cog in the bot.
@@ -171,7 +156,7 @@ To report a bug, please join the support server and create a ticket. To request 
             bot_name = self.bot.user.name
             prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
-            # Create index.md file with customizable content
+            # Create index.md file with static content
             index_content = f"""
 # Welcome to the Docs
 
@@ -212,9 +197,9 @@ Moderation commands help you manage your server effectively. These commands incl
 
 Add some fun to your server with these entertaining commands:
 
-- `{prefix}{fun_command_1}`: Tells a random joke.
-- `{prefix}{fun_command_2}`: Play some slots, using the bot's currency.
-- `{prefix}{fun_command_3}`: Play a game of Cards Against Humanity.
+- `{prefix}joke`: Tells a random joke.
+- `{prefix}slots`: Play some slots, using the bot's currency.
+- `{prefix}cah`: Play a game of Cards Against Humanity.
 - There's a ton more, just take a look at the different features!
 
 ## Configuration
@@ -223,7 +208,15 @@ To configure **{site_name}**, use the following commands:
 
 - `{prefix}prefix [prefix]`: Changes the command prefix.
 
-{faq_message.format(invite_link=invite_link, prefix=prefix)}
+## FAQ
+
+### How do I invite the bot to my server?
+
+Use the invite link provided [here]({invite_link}) to add the bot to your server.
+
+### How do I report a bug or request a feature?
+
+To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
 
 ## Support
 
@@ -238,7 +231,10 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             cogs = []
             prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
-            for cog_name, cog in self.bot.cogs.items():
+            # Sort cogs by name
+            sorted_cogs = sorted(self.bot.cogs.items(), key=lambda item: item[0].lower())
+
+            for cog_name, cog in sorted_cogs:
                 if cog_name in IGNORE:
                     continue
                 docs = self.generate_readme(
