@@ -1,4 +1,5 @@
 import os
+import asyncio
 from flask import Flask, redirect, request, session
 import requests
 from redbot.core import Config
@@ -14,18 +15,18 @@ def home():
     return 'Hello, this is the home page.'
 
 @app.route('/login')
-async def login():
-    client_id = await config.client_id()
-    redirect_uri = await config.redirect_uri()
+def login():
+    client_id = asyncio.run(config.client_id())
+    redirect_uri = asyncio.run(config.redirect_uri())
     scope = 'identify'
     discord_login_url = f'https://discord.com/api/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope={scope}'
     return redirect(discord_login_url)
 
 @app.route('/callback')
-async def callback():
-    client_id = await config.client_id()
-    client_secret = await config.client_secret()
-    redirect_uri = await config.redirect_uri()
+def callback():
+    client_id = asyncio.run(config.client_id())
+    client_secret = asyncio.run(config.client_secret())
+    redirect_uri = asyncio.run(config.redirect_uri())
     code = request.args.get('code')
     data = {
         'client_id': client_id,
@@ -49,13 +50,13 @@ async def callback():
     session['user_id'] = user_id
 
     # Mark the user as having installed the bot
-    await config.user_from_id(user_id).installed.set(True)
+    asyncio.run(config.user_from_id(user_id).installed.set(True))
 
     return 'You have successfully logged in and the bot is installed to your profile.'
 
 @app.route('/usercount')
-async def usercount():
-    all_users = await config.all_users()
+def usercount():
+    all_users = asyncio.run(config.all_users())
     installed_users = [user_id for user_id, data in all_users.items() if data['installed']]
     total_installed_users = len(installed_users)
     return f'The total number of users who have installed the bot is: {total_installed_users}'
