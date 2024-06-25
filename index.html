@@ -1,308 +1,694 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="None">
-    
-    <link rel="canonical" href="https://docs.prismbot.icu/">
-    <link rel="shortcut icon" href="./img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>FuturoBot Documentation</title>
-    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="./css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/highlight.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+        <title>FuturoBot</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="./js/jquery-3.2.1.min.js"></script>
-    <script src="./js/bootstrap-3.3.7.min.js"></script>
-    <script src="./js/highlight.pack.js"></script>
-    
-      <script src="./js/elasticlunr.min.js"></script>
-    
-    <base target="_top">
-    <script>
-      var base_url = '.';
-      var is_top_frame = (window === window.parent);
+        <meta name="description" content="None">
+        <link rel="canonical" href="https://docs.prismbot.icu/">
         
-        var pageToc = [
-          {title: "Welcome to the Docs", url: "#_top", children: [
-              {title: "Introduction", url: "#introduction" },
-              {title: "Getting Started", url: "#getting-started" },
-              {title: "Commands", url: "#commands" },
-              {title: "Configuration", url: "#configuration" },
-              {title: "FAQ", url: "#faq" },
-              {title: "Support", url: "#support" },
-          ]},
-        ];
 
-    </script>
-    <script src="./js/base.js"></script>
-      <script src="search/main.js"></script> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="assets/css/mkdocs.min.css">
+
+        
+            <link  rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
 
-<nav class="navbar wm-page-top-frame">
-  <div class="container-fluid wm-top-container">
-    
-    <div class="wm-top-tool pull-right wm-vcenter">
-      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
         
-        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
-          ><i class="fa fa-search" aria-hidden="true"></i></button>
 
-        <div class="input-group input-group-sm wm-top-search">
-          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
-          <span class="input-group-btn" role="search">
+        <div class="drac-text-center">
             
-            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
-            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
-            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </span>
+                <span class="drac-text drac-line-height drac-text-white">FuturoBot</span>
+            
         </div>
-      </form>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href="."
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Home
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#fun-collapse" aria-expanded="false">
+                    Fun
+                </a>
+                <div class="collapse" id="fun-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="Activities/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Activities
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Jokes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Jokes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="TempRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TempRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Perform/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Perform
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#mod-collapse" aria-expanded="false">
+                    Mod
+                </a>
+                <div class="collapse" id="mod-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="Core/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Core
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Adventure/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Adventure
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AutoMod/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoMod
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="BankEvents/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BankEvents
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="BannedCount/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BannedCount
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="BanOnLeave/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BanOnLeave
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DeleteCounter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DeleteCounter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Dev/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Dev
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DevUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DevUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="mod/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            More Mod Cogs
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#utilities-collapse" aria-expanded="false">
+                    Utilities
+                </a>
+                <div class="collapse" id="utilities-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="Downloader/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Downloader
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Alias/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Alias
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Aliases/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Aliases
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="ApiTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ApiTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Birthday/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="CaseInsensitive/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CaseInsensitive
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Cleverbot/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Cleverbot
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="CustomPing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CustomPing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DblTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DblTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="EmbedUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmbedUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="utilities/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            More Utilities Cogs
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#automod-collapse" aria-expanded="false">
+                    Automod
+                </a>
+                <div class="collapse" id="automod-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="AutoGist/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoGist
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DynamicChannelList/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DynamicChannelList
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Events/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Events
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="LastPing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LastPing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="LoadDev/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LoadDev
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NitroRole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="RoleRequests/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleRequests
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Streams/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Streams
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="UpdateChecker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UpdateChecker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AutoPost/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoPost
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#economy-collapse" aria-expanded="false">
+                    Economy
+                </a>
+                <div class="collapse" id="economy-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="EconomyTrickle/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EconomyTrickle
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Unbelievaboat/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Unbelievaboat
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#games-collapse" aria-expanded="false">
+                    Games
+                </a>
+                <div class="collapse" id="games-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="CardsAgainstHumanity/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CardsAgainstHumanity
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="EventPoster/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EventPoster
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Quiz/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Quiz
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Spotify/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Spotify
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="ChessGame/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ChessGame
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="GameRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GameRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="GameTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GameTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="IdeaBoard/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            IdeaBoard
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="drac-box">
+                <a href="."
+                    class="
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#misc-collapse" aria-expanded="false">
+                    Misc
+                </a>
+                <div class="collapse" id="misc-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="CogManagerUI/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CogManagerUI
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Permissions/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Permissions
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AddImage/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AddImage
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Admin/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Admin
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AdminToggle/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdminToggle
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AdvancedBlacklist/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdvancedBlacklist
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AltDentifier/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AltDentifier
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AltMarker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AltMarker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AnnounceDaily/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AnnounceDaily
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AnonReporter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AnonReporter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="misc/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            More Misc Cogs
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!-- endblock -->
     </div>
-
-    
-    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
-      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
-    </div>
-
-    
-    
-
-    
-    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
-      
-      <div class="wm-top-title">
-        FuturoBot Documentation<br>
-        
-      </div>
-    </a>
-  </div>
 </nav>
+        <!-- endblock -->
 
-  <div id="main-content" class="wm-page-top-frame">
-    
-<nav class="wm-toc-pane">
-  
-  <ul class="wm-toctree">
-        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
-</li>
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Fun</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Activities/" class="wm-article-link wm-toc-text">Activities</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Jokes/" class="wm-article-link wm-toc-text">Jokes</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="TempRoles/" class="wm-article-link wm-toc-text">TempRoles</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Perform/" class="wm-article-link wm-toc-text">Perform</a>
-</li>
-  </ul>
-</li>
+        <nav class="divider drac-bg-purple-cyan"></nav>
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Mod</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Core/" class="wm-article-link wm-toc-text">Core</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Adventure/" class="wm-article-link wm-toc-text">Adventure</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AutoMod/" class="wm-article-link wm-toc-text">AutoMod</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="BankEvents/" class="wm-article-link wm-toc-text">BankEvents</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="BannedCount/" class="wm-article-link wm-toc-text">BannedCount</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="BanOnLeave/" class="wm-article-link wm-toc-text">BanOnLeave</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="DeleteCounter/" class="wm-article-link wm-toc-text">DeleteCounter</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Dev/" class="wm-article-link wm-toc-text">Dev</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="DevUtils/" class="wm-article-link wm-toc-text">DevUtils</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="DiscordModals/" class="wm-article-link wm-toc-text">DiscordModals</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="mod/" class="wm-article-link wm-toc-text">More Mod Cogs</a>
-</li>
-  </ul>
-</li>
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Utilities</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Downloader/" class="wm-article-link wm-toc-text">Downloader</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Alias/" class="wm-article-link wm-toc-text">Alias</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Aliases/" class="wm-article-link wm-toc-text">Aliases</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="ApiTools/" class="wm-article-link wm-toc-text">ApiTools</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Birthday/" class="wm-article-link wm-toc-text">Birthday</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="CaseInsensitive/" class="wm-article-link wm-toc-text">CaseInsensitive</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Cleverbot/" class="wm-article-link wm-toc-text">Cleverbot</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="CustomPing/" class="wm-article-link wm-toc-text">CustomPing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="DblTools/" class="wm-article-link wm-toc-text">DblTools</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="EmbedUtils/" class="wm-article-link wm-toc-text">EmbedUtils</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="utilities/" class="wm-article-link wm-toc-text">More Utilities Cogs</a>
-</li>
-  </ul>
-</li>
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Automod</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AutoGist/" class="wm-article-link wm-toc-text">AutoGist</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="DynamicChannelList/" class="wm-article-link wm-toc-text">DynamicChannelList</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Events/" class="wm-article-link wm-toc-text">Events</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="LastPing/" class="wm-article-link wm-toc-text">LastPing</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="LoadDev/" class="wm-article-link wm-toc-text">LoadDev</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="NitroRole/" class="wm-article-link wm-toc-text">NitroRole</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="RoleRequests/" class="wm-article-link wm-toc-text">RoleRequests</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Streams/" class="wm-article-link wm-toc-text">Streams</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="UpdateChecker/" class="wm-article-link wm-toc-text">UpdateChecker</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AutoPost/" class="wm-article-link wm-toc-text">AutoPost</a>
-</li>
-  </ul>
-</li>
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a 
+                        class="btn-preview drac-btn drac-text-white--hover disabled">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="Activities/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Economy</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="EconomyTrickle/" class="wm-article-link wm-toc-text">EconomyTrickle</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Unbelievaboat/" class="wm-article-link wm-toc-text">Unbelievaboat</a>
-</li>
-  </ul>
-</li>
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="./search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Games</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="CardsAgainstHumanity/" class="wm-article-link wm-toc-text">CardsAgainstHumanity</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="EventPoster/" class="wm-article-link wm-toc-text">EventPoster</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Quiz/" class="wm-article-link wm-toc-text">Quiz</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Spotify/" class="wm-article-link wm-toc-text">Spotify</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="ChessGame/" class="wm-article-link wm-toc-text">ChessGame</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="GameRoles/" class="wm-article-link wm-toc-text">GameRoles</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="GameTracker/" class="wm-article-link wm-toc-text">GameTracker</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="IdeaBoard/" class="wm-article-link wm-toc-text">IdeaBoard</a>
-</li>
-  </ul>
-</li>
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Misc</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="CogManagerUI/" class="wm-article-link wm-toc-text">CogManagerUI</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Permissions/" class="wm-article-link wm-toc-text">Permissions</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AddImage/" class="wm-article-link wm-toc-text">AddImage</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="Admin/" class="wm-article-link wm-toc-text">Admin</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AdminToggle/" class="wm-article-link wm-toc-text">AdminToggle</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AdvancedBlacklist/" class="wm-article-link wm-toc-text">AdvancedBlacklist</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AltDentifier/" class="wm-article-link wm-toc-text">AltDentifier</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AltMarker/" class="wm-article-link wm-toc-text">AltMarker</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AnnounceDaily/" class="wm-article-link wm-toc-text">AnnounceDaily</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="AnonReporter/" class="wm-article-link wm-toc-text">AnonReporter</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="misc/" class="wm-article-link wm-toc-text">More Misc Cogs</a>
-</li>
-  </ul>
-</li>
+                </ul>
+            </div>
 
-  </ul>
-</nav>
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
 
-    <div class="wm-content-pane">
-      <iframe class="wm-article" name="article"></iframe>
-    </div>
-  </div>
-
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="Activities/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="Activities/" class="btn btn-xs btn-link">
-        Activities
-      </a>
-    </div>
-    
-  </div>
-
-    
-
-    <h1 id="welcome-to-the-docs">Welcome to the Docs</h1>
-<p>Welcome to the official documentation site for <strong>FuturoBot Documentation</strong>! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.</p>
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="welcome-to-the-docs">Welcome to the Docs</h1>
+<p>Welcome to the official documentation site for <strong>FuturoBot</strong>! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.</p>
 <h2 id="introduction">Introduction</h2>
-<p><strong>FuturoBot Documentation</strong> is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, <strong>FuturoBot</strong> is the perfect addition to any server.</p>
+<p><strong>FuturoBot</strong> is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, <strong>FuturoBot</strong> is the perfect addition to any server.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>To get started with <strong>FuturoBot Documentation</strong>, follow these simple steps:</p>
+<p>To get started with <strong>FuturoBot</strong>, follow these simple steps:</p>
 <ol>
 <li><strong>Invite the Bot</strong>: Use the invite link to add the bot to your Discord server.</li>
 <li><strong>Set Up Permissions</strong>: Ensure the bot has the necessary permissions to function correctly.</li>
@@ -310,7 +696,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ol>
 <h2 id="commands">Commands</h2>
 <h3 id="general-commands">General Commands</h3>
-<p><strong>FuturoBot Documentation</strong> offers a variety of general commands to enhance your server experience. These commands include:</p>
+<p><strong>FuturoBot</strong> offers a variety of general commands to enhance your server experience. These commands include:</p>
 <ul>
 <li><code>,help</code>: Displays a list of available commands.</li>
 <li><code>,info bot</code>: Provides information about the bot.</li>
@@ -333,7 +719,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>There's a ton more, just take a look at the different features!</li>
 </ul>
 <h2 id="configuration">Configuration</h2>
-<p>To configure <strong>FuturoBot Documentation</strong>, use the following commands:</p>
+<p>To configure <strong>FuturoBot</strong>, use the following commands:</p>
 <ul>
 <li><code>,prefix [prefix]</code>: Changes the command prefix.</li>
 </ul>
@@ -344,40 +730,31 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>To report a bug, please join the support server and create a ticket. To request a feature, use <code>,fr submit &lt;feature&gt;</code> where <code>&lt;feature&gt;</code> is the feature you desire.</p>
 <h2 id="support">Support</h2>
 <p>If you need assistance or have any questions, please join our <a href="https://discord.gg/9f7WV6V8ud">Support Server</a>.</p>
-<p>Thank you for using <strong>FuturoBot Documentation</strong>! We hope you enjoy all the features and functionality it has to offer.</p>
+<p>Thank you for using <strong>FuturoBot</strong>! We hope you enjoy all the features and functionality it has to offer.</p></p>
+    </article>
+</section>
+            <!-- endblock -->
 
-  <br>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="Activities/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="Activities/" class="btn btn-xs btn-link">
-        Activities
-      </a>
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
     </div>
-    
-  </div>
-
-    <br>
-</div>
-
-<footer class="col-md-12 wm-page-content">
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="None">Windmill Dark</a> theme by None (noraj).</p>
 </footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '.';</script>
+        <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/mkdocs.js"></script>
+			<script src="search/main.js" defer></script>
 
 </body>
+
 </html>
-<!--
-MkDocs version : 1.6.0
-Build Date UTC : 2024-06-25 06:56:51.953566+00:00
--->
