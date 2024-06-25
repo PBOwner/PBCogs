@@ -1,10 +1,10 @@
 extra:
-  footer: "Documentations for FuturoBot made with \u2764\uFE0F by Rosie"
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
 nav:
 - Home: index.md
 - DiscordSearch: DiscordSearch.md
 site_name: DiscordSearch's Documentation
-site_url: https://docs.prismbot.icuDiscordSearch/
+site_url: https://docs.prismbot.icu/DiscordSearch/
 theme:
-  name: dracula
-use_directory_urls: true
+  name: material
+use_directory_urls: false

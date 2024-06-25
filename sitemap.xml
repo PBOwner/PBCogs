@@ -1,1577 +1,1572 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://docs.prismbot.icu/</loc>
+         <loc>https://docs.prismbot.icu/index.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AAA3A_utils/</loc>
+         <loc>https://docs.prismbot.icu/AAA3A_utils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AFK/</loc>
+         <loc>https://docs.prismbot.icu/AFK.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Activities/</loc>
+         <loc>https://docs.prismbot.icu/Activities.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AdWarn/</loc>
+         <loc>https://docs.prismbot.icu/AdWarn.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AddImage/</loc>
+         <loc>https://docs.prismbot.icu/AddImage.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Admin/</loc>
+         <loc>https://docs.prismbot.icu/Admin.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AdminToggle/</loc>
+         <loc>https://docs.prismbot.icu/AdminToggle.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AdvancedBlacklist/</loc>
+         <loc>https://docs.prismbot.icu/AdvancedBlacklist.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AdvancedLogger/</loc>
+         <loc>https://docs.prismbot.icu/AdvancedLogger.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Adventure/</loc>
+         <loc>https://docs.prismbot.icu/Adventure.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AffiliatedServers/</loc>
+         <loc>https://docs.prismbot.icu/AffiliatedServers.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Alias/</loc>
+         <loc>https://docs.prismbot.icu/Alias.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Aliases/</loc>
+         <loc>https://docs.prismbot.icu/Aliases.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AltDentifier/</loc>
+         <loc>https://docs.prismbot.icu/AltDentifier.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AltMarker/</loc>
+         <loc>https://docs.prismbot.icu/AltMarker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AnnounceDaily/</loc>
+         <loc>https://docs.prismbot.icu/AnnounceDaily.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AnonReporter/</loc>
+         <loc>https://docs.prismbot.icu/AnonReporter.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AntiHonde/</loc>
+         <loc>https://docs.prismbot.icu/AntiHonde.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AntiLinks/</loc>
+         <loc>https://docs.prismbot.icu/AntiLinks.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AntiPhishing/</loc>
+         <loc>https://docs.prismbot.icu/AntiPhishing.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AntiSpam/</loc>
+         <loc>https://docs.prismbot.icu/AntiSpam.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ApiTools/</loc>
+         <loc>https://docs.prismbot.icu/ApiTools.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Appeal/</loc>
+         <loc>https://docs.prismbot.icu/Appeal.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Application/</loc>
+         <loc>https://docs.prismbot.icu/Application.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AssistantUtils/</loc>
+         <loc>https://docs.prismbot.icu/AssistantUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AudioSlash/</loc>
+         <loc>https://docs.prismbot.icu/Audio.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AuthGG/</loc>
+         <loc>https://docs.prismbot.icu/AuthGG.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoDelete/</loc>
+         <loc>https://docs.prismbot.icu/AutoDelete.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoDocSite/</loc>
+         <loc>https://docs.prismbot.icu/AutoDocSite.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoDocs/</loc>
+         <loc>https://docs.prismbot.icu/AutoDocs.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoGist/</loc>
+         <loc>https://docs.prismbot.icu/AutoGist.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoMod/</loc>
+         <loc>https://docs.prismbot.icu/AutoMod.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoPost/</loc>
+         <loc>https://docs.prismbot.icu/AutoPost.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/AutoTraceback/</loc>
+         <loc>https://docs.prismbot.icu/AutoTraceback.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Availability/</loc>
+         <loc>https://docs.prismbot.icu/Availability.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Backup/</loc>
+         <loc>https://docs.prismbot.icu/Backup.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Badges/</loc>
+         <loc>https://docs.prismbot.icu/Badges.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BanChart/</loc>
+         <loc>https://docs.prismbot.icu/BanChart.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BanOnLeave/</loc>
+         <loc>https://docs.prismbot.icu/BanOnLeave.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BankDecay/</loc>
+         <loc>https://docs.prismbot.icu/BankDecay.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BankEvents/</loc>
+         <loc>https://docs.prismbot.icu/BankEvents.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BannedCount/</loc>
+         <loc>https://docs.prismbot.icu/BannedCount.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Battleship/</loc>
+         <loc>https://docs.prismbot.icu/Battleship.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BetterModlog/</loc>
+         <loc>https://docs.prismbot.icu/BetterModlog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Birthday/</loc>
+         <loc>https://docs.prismbot.icu/Birthday.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Blinder/</loc>
+         <loc>https://docs.prismbot.icu/Blinder.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BoostUtils/</loc>
+         <loc>https://docs.prismbot.icu/BoostUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BotJoinMessage/</loc>
+         <loc>https://docs.prismbot.icu/BotJoinMessage.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BotLogger/</loc>
+         <loc>https://docs.prismbot.icu/BotLogger.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/BrainfuckCog/</loc>
+         <loc>https://docs.prismbot.icu/BrainfuckCog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CCRole/</loc>
+         <loc>https://docs.prismbot.icu/CCRole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/COC/</loc>
+         <loc>https://docs.prismbot.icu/COC.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Calculator/</loc>
+         <loc>https://docs.prismbot.icu/Calculator.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Calendar/</loc>
+         <loc>https://docs.prismbot.icu/Calendar.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CardsAgainstHumanity/</loc>
+         <loc>https://docs.prismbot.icu/CardsAgainstHumanity.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CaseInsensitive/</loc>
+         <loc>https://docs.prismbot.icu/CaseInsensitive.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Cashdrop/</loc>
+         <loc>https://docs.prismbot.icu/Cashdrop.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ChannelTimezone/</loc>
+         <loc>https://docs.prismbot.icu/ChannelTimezone.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Charlimit/</loc>
+         <loc>https://docs.prismbot.icu/Charlimit.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ChessGame/</loc>
+         <loc>https://docs.prismbot.icu/ChessGame.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ClearChannel/</loc>
+         <loc>https://docs.prismbot.icu/ClearChannel.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Cleverbot/</loc>
+         <loc>https://docs.prismbot.icu/Cleverbot.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Clone/</loc>
+         <loc>https://docs.prismbot.icu/Clone.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Cloudflare/</loc>
+         <loc>https://docs.prismbot.icu/Cloudflare.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CodeSnippets/</loc>
+         <loc>https://docs.prismbot.icu/CodeSnippets.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Coffeetools/</loc>
+         <loc>https://docs.prismbot.icu/Coffeetools.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CogManagerUI/</loc>
+         <loc>https://docs.prismbot.icu/CogManagerUI.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Color/</loc>
+         <loc>https://docs.prismbot.icu/Color.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Comm/</loc>
+         <loc>https://docs.prismbot.icu/Comm.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CommandTracker/</loc>
+         <loc>https://docs.prismbot.icu/CommandTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CommandsButtons/</loc>
+         <loc>https://docs.prismbot.icu/CommandsButtons.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Converters/</loc>
+         <loc>https://docs.prismbot.icu/Converters.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Cooldown/</loc>
+         <loc>https://docs.prismbot.icu/Cooldown.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Core/</loc>
+         <loc>https://docs.prismbot.icu/Core.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Counter/</loc>
+         <loc>https://docs.prismbot.icu/Counter.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Counting/</loc>
+         <loc>https://docs.prismbot.icu/Counting.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CustomCommands/</loc>
+         <loc>https://docs.prismbot.icu/CustomCommands.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CustomHelp/</loc>
+         <loc>https://docs.prismbot.icu/CustomHelp.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/CustomPing/</loc>
+         <loc>https://docs.prismbot.icu/CustomPing.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Dashboard/</loc>
+         <loc>https://docs.prismbot.icu/Dashboard.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DblTools/</loc>
+         <loc>https://docs.prismbot.icu/DblTools.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DeleteCounter/</loc>
+         <loc>https://docs.prismbot.icu/DeleteCounter.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Dev/</loc>
+         <loc>https://docs.prismbot.icu/Dev.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DevUtils/</loc>
+         <loc>https://docs.prismbot.icu/DevUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Dictionary/</loc>
+         <loc>https://docs.prismbot.icu/Dictionary.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DisboardReminder/</loc>
+         <loc>https://docs.prismbot.icu/DisboardReminder.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DiscordEdit/</loc>
+         <loc>https://docs.prismbot.icu/DiscordEdit.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DiscordModals/</loc>
+         <loc>https://docs.prismbot.icu/DiscordModals.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DiscordSearch/</loc>
+         <loc>https://docs.prismbot.icu/DiscordSearch.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DontPingStaff/</loc>
+         <loc>https://docs.prismbot.icu/DontPingStaff.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Downloader/</loc>
+         <loc>https://docs.prismbot.icu/Downloader.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DropdownsTexts/</loc>
+         <loc>https://docs.prismbot.icu/DropdownsTexts.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/DynamicChannelList/</loc>
+         <loc>https://docs.prismbot.icu/DynamicChannelList.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EasyRules/</loc>
+         <loc>https://docs.prismbot.icu/EasyRules.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Economy/</loc>
+         <loc>https://docs.prismbot.icu/Economy.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EconomyTrickle/</loc>
+         <loc>https://docs.prismbot.icu/EconomyTrickle.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EditablePosts/</loc>
+         <loc>https://docs.prismbot.icu/EditablePosts.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Editor/</loc>
+         <loc>https://docs.prismbot.icu/Editor.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EmbedCreator/</loc>
+         <loc>https://docs.prismbot.icu/EmbedCreator.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EmbedPeek/</loc>
+         <loc>https://docs.prismbot.icu/EmbedPeek.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EmbedUtils/</loc>
+         <loc>https://docs.prismbot.icu/EmbedUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EmojiGrabber/</loc>
+         <loc>https://docs.prismbot.icu/EmojiGrabber.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EmojiInfo/</loc>
+         <loc>https://docs.prismbot.icu/EmojiInfo.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Encoding/</loc>
+         <loc>https://docs.prismbot.icu/Encoding.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ErrorHandler/</loc>
+         <loc>https://docs.prismbot.icu/ErrorHandler.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/EventPoster/</loc>
+         <loc>https://docs.prismbot.icu/EventPoster.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Events/</loc>
+         <loc>https://docs.prismbot.icu/Events.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ExclusiveRoles/</loc>
+         <loc>https://docs.prismbot.icu/ExclusiveRoles.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ExtendedEconomy/</loc>
+         <loc>https://docs.prismbot.icu/ExtendedEconomy.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ExtendedModLog/</loc>
+         <loc>https://docs.prismbot.icu/ExtendedModLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/FIFO/</loc>
+         <loc>https://docs.prismbot.icu/FIFO.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/FakeMod/</loc>
+         <loc>https://docs.prismbot.icu/FakeMod.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/FeatureRequest/</loc>
+         <loc>https://docs.prismbot.icu/FeatureRequest.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Filter/</loc>
+         <loc>https://docs.prismbot.icu/Filter.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/FirstMessage/</loc>
+         <loc>https://docs.prismbot.icu/FirstMessage.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Flags/</loc>
+         <loc>https://docs.prismbot.icu/Flags.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Fluent/</loc>
+         <loc>https://docs.prismbot.icu/Fluent.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/FollowCog/</loc>
+         <loc>https://docs.prismbot.icu/FollowCog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ForceMention/</loc>
+         <loc>https://docs.prismbot.icu/ForceMention.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Freshmeat/</loc>
+         <loc>https://docs.prismbot.icu/Freshmeat.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GCC/</loc>
+         <loc>https://docs.prismbot.icu/GCC.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GHIssues/</loc>
+         <loc>https://docs.prismbot.icu/GHIssues.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GTN/</loc>
+         <loc>https://docs.prismbot.icu/GTN.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GameRoles/</loc>
+         <loc>https://docs.prismbot.icu/GameRoles.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GameTracker/</loc>
+         <loc>https://docs.prismbot.icu/GameTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GistsHandler/</loc>
+         <loc>https://docs.prismbot.icu/GistsHandler.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GitHubCards/</loc>
+         <loc>https://docs.prismbot.icu/GitHubCards.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Giveaways/</loc>
+         <loc>https://docs.prismbot.icu/Giveaways.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GlobalBan/</loc>
+         <loc>https://docs.prismbot.icu/GlobalBan.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Gmail/</loc>
+         <loc>https://docs.prismbot.icu/Gmail.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Grafana/</loc>
+         <loc>https://docs.prismbot.icu/Grafana.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GuildID/</loc>
+         <loc>https://docs.prismbot.icu/GuildID.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GuildLock/</loc>
+         <loc>https://docs.prismbot.icu/GuildLock.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GuildLog/</loc>
+         <loc>https://docs.prismbot.icu/GuildLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GuildStats/</loc>
+         <loc>https://docs.prismbot.icu/GuildStats.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Hangman/</loc>
+         <loc>https://docs.prismbot.icu/Hangman.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Hellohook/</loc>
+         <loc>https://docs.prismbot.icu/Hellohook.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/HidePing/</loc>
+         <loc>https://docs.prismbot.icu/HidePing.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Hider/</loc>
+         <loc>https://docs.prismbot.icu/Hider.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Highlight/</loc>
+         <loc>https://docs.prismbot.icu/Highlight.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/HostInfo/</loc>
+         <loc>https://docs.prismbot.icu/HostInfo.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/HttpCat/</loc>
+         <loc>https://docs.prismbot.icu/HttpCat.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/IdeaBoard/</loc>
+         <loc>https://docs.prismbot.icu/IdeaBoard.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Image/</loc>
+         <loc>https://docs.prismbot.icu/Image.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ImageLog/</loc>
+         <loc>https://docs.prismbot.icu/ImageLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ImageScanner/</loc>
+         <loc>https://docs.prismbot.icu/ImageScanner.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ImgurUploader/</loc>
+         <loc>https://docs.prismbot.icu/ImgurUploader.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/InRole/</loc>
+         <loc>https://docs.prismbot.icu/InRole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Index/</loc>
+         <loc>https://docs.prismbot.icu/Index.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/InfoChannel/</loc>
+         <loc>https://docs.prismbot.icu/InfoChannel.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Inspirobot/</loc>
+         <loc>https://docs.prismbot.icu/Inspirobot.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/InstantCommands/</loc>
+         <loc>https://docs.prismbot.icu/InstantCommands.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/IntroCog/</loc>
+         <loc>https://docs.prismbot.icu/IntroCog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/InviteBlocklist/</loc>
+         <loc>https://docs.prismbot.icu/InviteBlocklist.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/InviteSettings/</loc>
+         <loc>https://docs.prismbot.icu/InviteSettings.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/IsItDown/</loc>
+         <loc>https://docs.prismbot.icu/IsItDown.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Jail/</loc>
+         <loc>https://docs.prismbot.icu/Jail.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/JoinPing/</loc>
+         <loc>https://docs.prismbot.icu/JoinPing.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Jokes/</loc>
+         <loc>https://docs.prismbot.icu/Jokes.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/KirA/</loc>
+         <loc>https://docs.prismbot.icu/KirA.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/LastPing/</loc>
+         <loc>https://docs.prismbot.icu/LastPing.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/LastSeen/</loc>
+         <loc>https://docs.prismbot.icu/LastSeen.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Lenny/</loc>
+         <loc>https://docs.prismbot.icu/Lenny.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/LevelUp/</loc>
+         <loc>https://docs.prismbot.icu/LevelUp.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/LinkQuoter/</loc>
+         <loc>https://docs.prismbot.icu/LinkQuoter.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ListMaker/</loc>
+         <loc>https://docs.prismbot.icu/ListMaker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ListPermissions/</loc>
+         <loc>https://docs.prismbot.icu/ListPermissions.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ListThreads/</loc>
+         <loc>https://docs.prismbot.icu/ListThreads.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/LoadDev/</loc>
+         <loc>https://docs.prismbot.icu/LoadDev.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Lock/</loc>
+         <loc>https://docs.prismbot.icu/Lock.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Lockdown/</loc>
+         <loc>https://docs.prismbot.icu/Lockdown.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Maintenance/</loc>
+         <loc>https://docs.prismbot.icu/Maintenance.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MassUnban/</loc>
+         <loc>https://docs.prismbot.icu/MassUnban.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Massmove/</loc>
+         <loc>https://docs.prismbot.icu/Massmove.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MemberCount/</loc>
+         <loc>https://docs.prismbot.icu/MemberCount.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MemberPrefix/</loc>
+         <loc>https://docs.prismbot.icu/MemberPrefix.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MentionTracker/</loc>
+         <loc>https://docs.prismbot.icu/MentionTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Message/</loc>
+         <loc>https://docs.prismbot.icu/Message.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MessagePinner/</loc>
+         <loc>https://docs.prismbot.icu/MessagePinner.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Minesweeper/</loc>
+         <loc>https://docs.prismbot.icu/Minesweeper.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Mod/</loc>
+         <loc>https://docs.prismbot.icu/Mod.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ModLog/</loc>
+         <loc>https://docs.prismbot.icu/ModLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ModManager/</loc>
+         <loc>https://docs.prismbot.icu/ModManager.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ModRoles/</loc>
+         <loc>https://docs.prismbot.icu/ModRoles.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Modmail/</loc>
+         <loc>https://docs.prismbot.icu/MsgReport.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MsgReport/</loc>
+         <loc>https://docs.prismbot.icu/MsgTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MsgTracker/</loc>
+         <loc>https://docs.prismbot.icu/MultiCommands.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/MultiCommands/</loc>
+         <loc>https://docs.prismbot.icu/Mutes.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Mutes/</loc>
+         <loc>https://docs.prismbot.icu/NameChanger.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NameChanger/</loc>
+         <loc>https://docs.prismbot.icu/NickNamer.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NickNamer/</loc>
+         <loc>https://docs.prismbot.icu/NitroRole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NitroRole/</loc>
+         <loc>https://docs.prismbot.icu/NoFuckYou.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NoFuckYou/</loc>
+         <loc>https://docs.prismbot.icu/NoNuke.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NoNuke/</loc>
+         <loc>https://docs.prismbot.icu/NoRoleNoInvite.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/NoRoleNoInvite/</loc>
+         <loc>https://docs.prismbot.icu/Notes.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Notes/</loc>
+         <loc>https://docs.prismbot.icu/OnEdit.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/OnEdit/</loc>
+         <loc>https://docs.prismbot.icu/OnlineStats.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/OnlineStats/</loc>
+         <loc>https://docs.prismbot.icu/Otherbot.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Otherbot/</loc>
+         <loc>https://docs.prismbot.icu/OwnerProtection.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/OwnerProtection/</loc>
+         <loc>https://docs.prismbot.icu/Paginator.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Paginator/</loc>
+         <loc>https://docs.prismbot.icu/PartyCrash.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PartyCrash/</loc>
+         <loc>https://docs.prismbot.icu/Perform.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Perform/</loc>
+         <loc>https://docs.prismbot.icu/PermChecker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PermChecker/</loc>
+         <loc>https://docs.prismbot.icu/Permissions.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Permissions/</loc>
+         <loc>https://docs.prismbot.icu/PersonalChannels.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PersonalChannels/</loc>
+         <loc>https://docs.prismbot.icu/PhenUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PhenUtils/</loc>
+         <loc>https://docs.prismbot.icu/Pinboard.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Pinboard/</loc>
+         <loc>https://docs.prismbot.icu/PingSite.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PingSite/</loc>
+         <loc>https://docs.prismbot.icu/Pingtime.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Pingtime/</loc>
+         <loc>https://docs.prismbot.icu/PlantTycoon.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PlantTycoon/</loc>
+         <loc>https://docs.prismbot.icu/Poll.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Poll/</loc>
+         <loc>https://docs.prismbot.icu/Prefix.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Prefix/</loc>
+         <loc>https://docs.prismbot.icu/PrivateWormHole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PrivateWormHole/</loc>
+         <loc>https://docs.prismbot.icu/Prunecmd.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Prunecmd/</loc>
+         <loc>https://docs.prismbot.icu/Purge.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Purge/</loc>
+         <loc>https://docs.prismbot.icu/PyPi.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/PyPi/</loc>
+         <loc>https://docs.prismbot.icu/Quarantine.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Quarantine/</loc>
+         <loc>https://docs.prismbot.icu/QuestionOfTheDay.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/QuestionOfTheDay/</loc>
+         <loc>https://docs.prismbot.icu/Quiz.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Quiz/</loc>
+         <loc>https://docs.prismbot.icu/Quotes.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Quotes/</loc>
+         <loc>https://docs.prismbot.icu/RPS.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RPS/</loc>
+         <loc>https://docs.prismbot.icu/RandomEmoji.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RandomEmoji/</loc>
+         <loc>https://docs.prismbot.icu/RandomTopic.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RandomTopic/</loc>
+         <loc>https://docs.prismbot.icu/Ratings.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Ratings/</loc>
+         <loc>https://docs.prismbot.icu/ReactLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ReactLog/</loc>
+         <loc>https://docs.prismbot.icu/ReactRestrict.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ReactRestrict/</loc>
+         <loc>https://docs.prismbot.icu/Reminders.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Reminders/</loc>
+         <loc>https://docs.prismbot.icu/RepoList.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RepoList/</loc>
+         <loc>https://docs.prismbot.icu/Reports.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Reports/</loc>
+         <loc>https://docs.prismbot.icu/RequestGB.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RequestGB/</loc>
+         <loc>https://docs.prismbot.icu/RestartMsg.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RestartMsg/</loc>
+         <loc>https://docs.prismbot.icu/ReviewsCog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ReviewsCog/</loc>
+         <loc>https://docs.prismbot.icu/Riddles.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Riddles/</loc>
+         <loc>https://docs.prismbot.icu/Rift.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Rift/</loc>
+         <loc>https://docs.prismbot.icu/Roast.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Roast/</loc>
+         <loc>https://docs.prismbot.icu/RoleBoards.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleBoards/</loc>
+         <loc>https://docs.prismbot.icu/RoleManager.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleManager/</loc>
+         <loc>https://docs.prismbot.icu/RoleNotify.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleNotify/</loc>
+         <loc>https://docs.prismbot.icu/RoleRequests.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleRequests/</loc>
+         <loc>https://docs.prismbot.icu/RoleSync.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleSync/</loc>
+         <loc>https://docs.prismbot.icu/RoleTools.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleTools/</loc>
+         <loc>https://docs.prismbot.icu/RoleUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RoleUtils/</loc>
+         <loc>https://docs.prismbot.icu/RolesButtons.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/RolesButtons/</loc>
+         <loc>https://docs.prismbot.icu/Say.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Say/</loc>
+         <loc>https://docs.prismbot.icu/SecretSanta.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SecretSanta/</loc>
+         <loc>https://docs.prismbot.icu/SecureInv.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SecureInv/</loc>
+         <loc>https://docs.prismbot.icu/SelfAssign.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SelfAssign/</loc>
+         <loc>https://docs.prismbot.icu/SendCards.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SendCards/</loc>
+         <loc>https://docs.prismbot.icu/Sendhook.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Sendhook/</loc>
+         <loc>https://docs.prismbot.icu/ServerInfo.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ServerInfo/</loc>
+         <loc>https://docs.prismbot.icu/ServerStats.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ServerStats/</loc>
+         <loc>https://docs.prismbot.icu/Session.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Session/</loc>
+         <loc>https://docs.prismbot.icu/Shell.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Shell/</loc>
+         <loc>https://docs.prismbot.icu/SimpleSanction.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SimpleSanction/</loc>
+         <loc>https://docs.prismbot.icu/Simulator.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Simulator/</loc>
+         <loc>https://docs.prismbot.icu/Skyrim.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Skyrim/</loc>
+         <loc>https://docs.prismbot.icu/SlashTags.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SlashTags/</loc>
+         <loc>https://docs.prismbot.icu/SlowMode.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/SlowMode/</loc>
+         <loc>https://docs.prismbot.icu/Snipe.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Snipe/</loc>
+         <loc>https://docs.prismbot.icu/Spoilerer.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Spoilerer/</loc>
+         <loc>https://docs.prismbot.icu/Spotify.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Spotify/</loc>
+         <loc>https://docs.prismbot.icu/Spotifyembed.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Spotifyembed/</loc>
+         <loc>https://docs.prismbot.icu/StaffManager.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/StaffManager/</loc>
+         <loc>https://docs.prismbot.icu/StatTrack.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/StatTrack/</loc>
+         <loc>https://docs.prismbot.icu/Status.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Status/</loc>
+         <loc>https://docs.prismbot.icu/Sticky.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Sticky/</loc>
+         <loc>https://docs.prismbot.icu/StickyMember.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/StickyMember/</loc>
+         <loc>https://docs.prismbot.icu/Streams.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Streams/</loc>
+         <loc>https://docs.prismbot.icu/Strikes.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Strikes/</loc>
+         <loc>https://docs.prismbot.icu/StripeIdentity.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/StripeIdentity/</loc>
+         <loc>https://docs.prismbot.icu/System.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/System/</loc>
+         <loc>https://docs.prismbot.icu/Talk.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Talk/</loc>
+         <loc>https://docs.prismbot.icu/TempRoles.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TempRoles/</loc>
+         <loc>https://docs.prismbot.icu/TextEditor.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TextEditor/</loc>
+         <loc>https://docs.prismbot.icu/TheMovieDB.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TheMovieDB/</loc>
+         <loc>https://docs.prismbot.icu/ThreadOpener.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ThreadOpener/</loc>
+         <loc>https://docs.prismbot.icu/TicketTool.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TicketTool/</loc>
+         <loc>https://docs.prismbot.icu/TimeoutSelf.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TimeoutSelf/</loc>
+         <loc>https://docs.prismbot.icu/Timestamp.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Timestamp/</loc>
+         <loc>https://docs.prismbot.icu/Timezone.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Timezone/</loc>
+         <loc>https://docs.prismbot.icu/Trigger.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Trigger/</loc>
+         <loc>https://docs.prismbot.icu/Trivia.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Trivia/</loc>
+         <loc>https://docs.prismbot.icu/Twenty.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Twenty/</loc>
+         <loc>https://docs.prismbot.icu/TypeRacer.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/TypeRacer/</loc>
+         <loc>https://docs.prismbot.icu/UnbanAll.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UnbanAll/</loc>
+         <loc>https://docs.prismbot.icu/Unbelievaboat.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Unbelievaboat/</loc>
+         <loc>https://docs.prismbot.icu/Unknown.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Unknown/</loc>
+         <loc>https://docs.prismbot.icu/UpdateChecker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UpdateChecker/</loc>
+         <loc>https://docs.prismbot.icu/UpdateRed.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UpdateRed/</loc>
+         <loc>https://docs.prismbot.icu/UpgradeChat.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UpgradeChat/</loc>
+         <loc>https://docs.prismbot.icu/UptimeResponder.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UptimeResponder/</loc>
+         <loc>https://docs.prismbot.icu/UrlButtons.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UrlButtons/</loc>
+         <loc>https://docs.prismbot.icu/UrlFetch.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UrlFetch/</loc>
+         <loc>https://docs.prismbot.icu/UselessFacts.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UselessFacts/</loc>
+         <loc>https://docs.prismbot.icu/UserTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/UserTracker/</loc>
+         <loc>https://docs.prismbot.icu/Userinfo.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Userinfo/</loc>
+         <loc>https://docs.prismbot.icu/Verifyer.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Verifyer/</loc>
+         <loc>https://docs.prismbot.icu/ViewPermissions.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/ViewPermissions/</loc>
+         <loc>https://docs.prismbot.icu/VoiceLog.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/VoiceLog/</loc>
+         <loc>https://docs.prismbot.icu/VoiceTools.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/VoiceTools/</loc>
+         <loc>https://docs.prismbot.icu/VoiceTracker.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/VoiceTracker/</loc>
+         <loc>https://docs.prismbot.icu/Voteout.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Voteout/</loc>
+         <loc>https://docs.prismbot.icu/VrtUtils.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/VrtUtils/</loc>
+         <loc>https://docs.prismbot.icu/Warnings.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Warnings/</loc>
+         <loc>https://docs.prismbot.icu/Weather.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Weather/</loc>
+         <loc>https://docs.prismbot.icu/WelcomeCount.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/WelcomeCount/</loc>
+         <loc>https://docs.prismbot.icu/WhosThatPokemon.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/WhosThatPokemon/</loc>
+         <loc>https://docs.prismbot.icu/WordScramble.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/WordScramble/</loc>
+         <loc>https://docs.prismbot.icu/WordStats.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/WordStats/</loc>
+         <loc>https://docs.prismbot.icu/WormHole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/WormHole/</loc>
+         <loc>https://docs.prismbot.icu/Xenon.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Xenon/</loc>
+         <loc>https://docs.prismbot.icu/Zalgo.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Zalgo/</loc>
-         <lastmod>2024-06-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.prismbot.icu/eep/</loc>
+         <loc>https://docs.prismbot.icu/eep.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
     </url>

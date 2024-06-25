@@ -1,10 +1,10 @@
 extra:
-  footer: "Documentations for FuturoBot made with \u2764\uFE0F by Rosie"
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
 nav:
 - Home: index.md
 - BanChart: BanChart.md
 site_name: BanChart's Documentation
-site_url: https://docs.prismbot.icuBanChart/
+site_url: https://docs.prismbot.icu/BanChart/
 theme:
-  name: dracula
-use_directory_urls: true
+  name: material
+use_directory_urls: false

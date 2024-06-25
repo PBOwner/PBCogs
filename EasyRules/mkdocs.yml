@@ -1,10 +1,10 @@
 extra:
-  footer: "Documentations for FuturoBot made with \u2764\uFE0F by Rosie"
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
 nav:
 - Home: index.md
 - EasyRules: EasyRules.md
 site_name: EasyRules's Documentation
-site_url: https://docs.prismbot.icuEasyRules/
+site_url: https://docs.prismbot.icu/EasyRules/
 theme:
-  name: dracula
-use_directory_urls: true
+  name: material
+use_directory_urls: false

@@ -1,10 +1,10 @@
 extra:
-  footer: "Documentations for FuturoBot made with \u2764\uFE0F by Rosie"
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
 nav:
 - Home: index.md
 - Status: Status.md
 site_name: Status's Documentation
-site_url: https://docs.prismbot.icuStatus/
+site_url: https://docs.prismbot.icu/Status/
 theme:
-  name: dracula
-use_directory_urls: true
+  name: material
+use_directory_urls: false
