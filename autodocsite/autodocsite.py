@@ -59,17 +59,7 @@ class AutoDocSite(commands.Cog):
                 docs += f"{cog_help}\n\n"
 
         for cmd in cog.walk_app_commands():
-            c = CustomCmdFmt(
-                self.bot,
-                cmd,
-                prefix,
-                replace_botname,
-                extended_info,
-                max_privilege_level,
-                embedding_style,
-                min_privilege_level,
-            )
-            doc = c.get_doc()
+            doc = self.generate_command_docs(cmd, prefix, extended_info)
             if not doc:
                 continue
             docs += doc
@@ -80,7 +70,18 @@ class AutoDocSite(commands.Cog):
                 continue
             if max_privilege_level == "guildowner" and not self.is_guild_owner_command(cmd):
                 continue
-            docs += self.generate_command_docs(cmd, prefix, extended_info)
+            doc = self.generate_command_docs(cmd, prefix, extended_info)
+            if not doc:
+                ignored.append(cmd.qualified_name)
+            if not doc:
+                continue
+            skip = False
+            for i in ignored:
+                if i in cmd.qualified_name:
+                    skip = True
+            if skip:
+                continue
+            docs += doc
         return docs
 
     def is_guild_owner_command(self, cmd: Command) -> bool:
@@ -107,6 +108,11 @@ class AutoDocSite(commands.Cog):
             doc += "**Parameters:**\n"
             for param, info in cmd.clean_params.items():
                 doc += f"- **{param}**: {info}\n"
+        if cmd.examples:
+            doc += "**Examples:**\n"
+            for example in cmd.examples:
+                doc += f"- `{prefix}{example}`\n"
+        doc += f"**Permission Level:** {cmd.checks}\n\n"
         if isinstance(cmd, commands.Group):
             for subcmd in cmd.commands:
                 doc += self.generate_command_docs(subcmd, prefix, extended_info)
@@ -297,6 +303,11 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             doc += "**Parameters:**\n"
             for param, info in cmd.clean_params.items():
                 doc += f"- **{param}**: {info}\n"
+        if hasattr(cmd, 'examples') and cmd.examples:
+            doc += "**Examples:**\n"
+            for example in cmd.examples:
+                doc += f"- `{prefix}{example}`\n"
+        doc += f"**Permission Level:** {cmd.checks}\n\n"
         if isinstance(cmd, commands.Group):
             for subcmd in cmd.commands:
                 doc += self.generate_command_docs(subcmd, prefix, extended_info)
