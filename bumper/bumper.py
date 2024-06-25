@@ -30,7 +30,8 @@ class Bumper(commands.Cog):
             "last_bump": None,
             "bump_count": 0,
             "bump_log_channel": None,
-            "config_log_channel": None
+            "config_log_channel": None,
+            "premium_expiry": None
         }
 
         default_global = {
@@ -109,18 +110,38 @@ class Bumper(commands.Cog):
         await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
 
     @bumpowner.command()
-    async def codegen(self, ctx: commands.Context, time: int):
-        """Generate a premium code. Use -1 for permanent, or specify months."""
+    async def codegen(self, ctx: commands.Context, user_id: int, time: int, unit: str):
+        """Generate a premium code. Use -1 for permanent, or specify time and unit (days or months)."""
+        user = self.bot.get_user(user_id)
+        if not user:
+            await ctx.send(embed=discord.Embed(description="Invalid user ID.", color=discord.Color.red()))
+            return
+
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-        expiry_date = None
+        duration = None
         if time != -1:
-            expiry_date = datetime.now(timezone.utc) + timedelta(days=time * 30)
+            if unit == "days":
+                duration = timedelta(days=time)
+            elif unit == "months":
+                duration = timedelta(days=time * 30)
+            else:
+                await ctx.send(embed=discord.Embed(description="Invalid time unit. Use 'days' or 'months'.", color=discord.Color.red()))
+                return
 
         async with self.config.premium_codes() as premium_codes:
-            premium_codes[code] = expiry_date.isoformat() if expiry_date else None
+            premium_codes[code] = {
+                "user_id": user_id,
+                "duration": duration.total_seconds() if duration else None,
+                "redeemed": False
+            }
 
-        expiry_message = " (Permanent)" if time == -1 else f" (Expires in {time} months)"
+        expiry_message = " (Permanent)" if time == -1 else f" (Expires in {time} {unit} upon redemption)"
         await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
+
+        try:
+            await user.send(embed=discord.Embed(description=f"Your premium code is: {code}{expiry_message}", color=discord.Color.green()))
+        except discord.Forbidden:
+            await ctx.send(embed=discord.Embed(description="Could not send DM to the user.", color=discord.Color.red()))
 
     @bumpowner.command()
     async def blacklist(self, ctx: commands.Context, guild_id: int):
@@ -167,12 +188,41 @@ class Bumper(commands.Cog):
     async def redeem(self, ctx: commands.Context, code: str):
         """Redeem a premium code."""
         async with self.config.premium_codes() as premium_codes:
-            if code in premium_codes and premium_codes[code] is None:
-                premium_codes[code] = ctx.guild.id
-                await self.config.guild(ctx.guild).premium.set(True)
-                await ctx.send(embed=discord.Embed(description="Premium code redeemed! Your server now has premium status.", color=discord.Color.green()))
+            if code not in premium_codes:
+                await ctx.send(embed=discord.Embed(description="Invalid premium code.", color=discord.Color.red()))
+                return
+
+            code_data = premium_codes[code]
+            if code_data["user_id"] != ctx.author.id:
+                await ctx.send(embed=discord.Embed(description="This code is not assigned to you.", color=discord.Color.red()))
+                return
+
+            if code_data["redeemed"]:
+                await ctx.send(embed=discord.Embed(description="This code has already been redeemed.", color=discord.Color.red()))
+                return
+
+            duration = code_data["duration"]
+            if duration:
+                expiry_date = datetime.now(timezone.utc) + timedelta(seconds=duration)
             else:
-                await ctx.send(embed=discord.Embed(description="Invalid or already used premium code.", color=discord.Color.red()))
+                expiry_date = None
+
+            current_expiry_date = await self.config.guild(ctx.guild).premium_expiry()
+            if current_expiry_date:
+                current_expiry_date = datetime.fromisoformat(current_expiry_date)
+                if expiry_date:
+                    new_expiry_date = max(current_expiry_date, expiry_date)
+                else:
+                    new_expiry_date = current_expiry_date + timedelta(days=365*10)  # Extend by 10 years for permanent codes
+            else:
+                new_expiry_date = expiry_date
+
+            await self.config.guild(ctx.guild).premium.set(True)
+            await self.config.guild(ctx.guild).premium_expiry.set(new_expiry_date.isoformat() if new_expiry_date else None)
+            code_data["redeemed"] = True
+
+            expiry_message = " (Permanent)" if not new_expiry_date else f" (Expires on {new_expiry_date.isoformat()})"
+            await ctx.send(embed=discord.Embed(description=f"Premium code redeemed! Your server now has premium status{expiry_message}.", color=discord.Color.green()))
 
     @commands.command()
     @commands.guild_only()
@@ -350,6 +400,7 @@ class Bumper(commands.Cog):
             await bump_log_channel.send(embed=embed)
 
     async def log_bump(self, target_guild: discord.Guild, source_guild: discord.Guild):
+        bump_count = await self.config.guild(source_guild).bump
         bump_count = await self.config.guild(source_guild).bump_count()
         bump_log_channel_id = await self.config.guild(target_guild).bump_log_channel()
         bump_log_channel = target_guild.get_channel(bump_log_channel_id)
