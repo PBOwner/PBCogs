@@ -111,25 +111,6 @@ class AutoDocSite(commands.Cog):
                 return True
         return False
 
-    def categorize_cog(self, cog: commands.Cog) -> str:
-        """Categorize the cog based on its commands."""
-        categories = {
-            "Fun": ["joke", "fun", "laugh", "meme"],
-            "Mod": ["ban", "kick", "mute", "mod"],
-            "Utilities": ["util", "tool", "info", "help"],
-            "Automod": ["automod", "auto"],
-            "Economy": ["econ", "money", "bank", "currency"],
-            "Games": ["game", "play", "slots", "cah"],
-        }
-
-        command_names = [cmd.name.lower() for cmd in cog.walk_commands()]
-
-        for category, keywords in categories.items():
-            if any(keyword in cmd for cmd in command_names for keyword in keywords):
-                return category
-
-        return "Misc"
-
     @commands.command()
     @commands.is_owner()
     async def gendocs(
@@ -253,23 +234,13 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             with open(os.path.join(docs_dir, "index.md"), "w") as f:
                 f.write(index_content)
 
-            # Define categories
-            categories = {
-                "Fun": [],
-                "Mod": [],
-                "Utilities": [],
-                "Automod": [],
-                "Economy": [],
-                "Games": [],
-                "Misc": []
-            }
-
+            # List all cogs without categorization
+            cogs = []
             prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
             for cog_name, cog in self.bot.cogs.items():
                 if cog_name in IGNORE:
                     continue
-                category = self.categorize_cog(cog)
                 docs = self.generate_readme(
                     cog,
                     prefix=prefix,
@@ -284,7 +255,7 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
                     f.write(docs)
-                categories[category].append({cog_name: f"{cog_name}.md"})
+                cogs.append({cog_name: f"{cog_name}.md"})
 
             mkdocs_config = {
                 "site_name": site_name,
@@ -293,23 +264,8 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                     "name": theme_name
                 },
                 "use_directory_urls": use_directory_urls,
-                "nav": [{"Home": "index.md"}]
+                "nav": [{"Home": "index.md"}, {"Cogs": cogs}]
             }
-
-            # Add categorized cogs to the nav with a limit on the number of cogs displayed per category
-            for category, cogs in categories.items():
-                if cogs:
-                    if len(cogs) > max_cogs_per_category:
-                        # Create a separate page listing all cogs in the category
-                        category_filename = os.path.join(docs_dir, f"{category.lower()}.md")
-                        with open(category_filename, "w", encoding="utf-8") as f:
-                            f.write(f"# {category} Cogs\n\n")
-                            for cog in cogs:
-                                for cog_name, cog_file in cog.items():
-                                    f.write(f"- [{cog_name}]({cog_file})\n")
-                        mkdocs_config["nav"].append({category: cogs[:max_cogs_per_category] + [{f"More {category} Cogs": f"{category.lower()}.md"}]})
-                    else:
-                        mkdocs_config["nav"].append({category: cogs})
 
             with open(mkdocs_config_path, "w", encoding="utf-8") as f:
                 f.write(yaml.dump(mkdocs_config, default_flow_style=False))
