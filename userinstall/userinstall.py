@@ -105,7 +105,8 @@ class UserInstall(commands.Cog):
         host_ip = socket.gethostbyname(socket.gethostname())
 
         await ctx.send("Starting the web server...")
-        process = subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py", host_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        log_file = open('webserver.log', 'w')
+        process = subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py", host_ip], stdout=log_file, stderr=log_file)
         await self.config.webserver_pid.set(process.pid)
         await ctx.send(f"Web server started on {host_ip} with PID {process.pid}.")
 
