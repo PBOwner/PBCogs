@@ -28,7 +28,9 @@ class Bumper(commands.Cog):
             "embed_color": 0x00FF00,  # Default to green
             "premium": False,
             "last_bump": None,
-            "bump_count": 0
+            "bump_count": 0,
+            "bump_log_channel": None,
+            "config_log_channel": None
         }
 
         default_global = {
@@ -93,6 +95,18 @@ class Bumper(commands.Cog):
         """Set the channel where bump reports are sent."""
         await self.config.report_channel.set(channel.id)
         await ctx.send(embed=discord.Embed(description=f"Report channel set to: {channel.mention}", color=discord.Color.green()))
+
+    @bumpowner.command()
+    async def bump_log_channel(self, ctx: commands.Context, channel: discord.TextChannel):
+        """Set the channel where bump logs are sent."""
+        await self.config.guild(ctx.guild).bump_log_channel.set(channel.id)
+        await ctx.send(embed=discord.Embed(description=f"Bump log channel set to: {channel.mention}", color=discord.Color.green()))
+
+    @bumpowner.command()
+    async def config_log_channel(self, ctx: commands.Context, channel: discord.TextChannel):
+        """Set the channel where configuration logs are sent."""
+        await self.config.guild(ctx.guild).config_log_channel.set(channel.id)
+        await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
 
     @bumpowner.command()
     async def generate_code(self, ctx: commands.Context):
@@ -319,28 +333,35 @@ class Bumper(commands.Cog):
     async def increment_bump_count(self, guild: discord.Guild):
         current_count = await self.config.guild(guild).bump_count()
         await self.config.guild(guild).bump_count.set(current_count + 1)
-        bump_channel_id = await self.config.guild(guild).bump_channel()
-        bump_channel = guild.get_channel(bump_channel_id)
-        if bump_channel:
-            await bump_channel.send(f"{guild.name} was bumped by {guild.owner.name}. This server has been bumped {current_count + 1} times.")
+        bump_log_channel_id = await self.config.guild(guild).bump_log_channel()
+        bump_log_channel = guild.get_channel(bump_log_channel_id)
+        if bump_log_channel:
+            embed = discord.Embed(
+                title="Server Bumped",
+                description=f"{guild.name} was bumped by {guild.owner.name}. This server has been bumped {current_count + 1} times.",
+                color=discord.Color.green()
+            )
+            await bump_log_channel.send(embed=embed)
 
     async def log_bump(self, target_guild: discord.Guild, source_guild: discord.Guild):
         bump_count = await self.config.guild(source_guild).bump_count()
-        bump_channel_id = await self.config.guild(target_guild).bump_channel()
-        bump_channel = target_guild.get_channel(bump_channel_id)
-        if bump_channel:
-            await bump_channel.send(f"{source_guild.name} was bumped by {source_guild.owner.name}. This server has been bumped {bump_count} times.")
+        bump_log_channel_id = await self.config.guild(target_guild).bump_log_channel()
+        bump_log_channel = target_guild.get_channel(bump_log_channel_id)
+        if bump_log_channel:
+            embed = discord.Embed(
+                title="Server Bumped",
+                description=f"{source_guild.name} was bumped by {source_guild.owner.name}. This server has been bumped {bump_count} times.",
+                color=discord.Color.green()
+            )
+            await bump_log_channel.send(embed=embed)
 
     async def log_new_server_bump(self, guild: discord.Guild):
-        report_channel_id = await self.config.report_channel()
-        if not report_channel_id:
-            return
-        report_channel = self.bot.get_channel(report_channel_id)
-        if not report_channel:
-            return
-        embed = discord.Embed(title="New Server Bump", color=discord.Color.blue())
-        embed.add_field(name="Server Name", value=guild.name, inline=True)
-        embed.add_field(name="Server ID", value=guild.id, inline=True)
-        embed.add_field(name="Server Owner", value=guild.owner.name, inline=True)
-        embed.add_field(name="Server Owner ID", value=guild.owner.id, inline=True)
-        await report_channel.send(embed=embed)
+        config_log_channel_id = await self.config.guild(guild).config_log_channel()
+        config_log_channel = guild.get_channel(config_log_channel_id)
+        if config_log_channel:
+            embed = discord.Embed(title="New Server Bump", color=discord.Color.blue())
+            embed.add_field(name="Server Name", value=guild.name, inline=True)
+            embed.add_field(name="Server ID", value=guild.id, inline=True)
+            embed.add_field(name="Server Owner", value=guild.owner.name, inline=True)
+            embed.add_field(name="Server Owner ID", value=guild.owner.id, inline=True)
+            await config_log_channel.send(embed=embed)
