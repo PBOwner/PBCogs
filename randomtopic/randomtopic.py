@@ -7,7 +7,7 @@ from redbot.core.utils.chat_formatting import box, humanize_list
 from datetime import datetime, timedelta
 
 class RandomTopic(commands.Cog):
-    """A cog to revive dead chats with random topics."""
+    """A cog to revive dead chats with random trivia questions."""
 
     def __init__(self, bot: Red):
         self.bot = bot
@@ -88,12 +88,15 @@ class RandomTopic(commands.Cog):
             return
 
         try:
-            async with self.session.get("https://api.quotable.io/random") as resp:
+            async with self.session.get("https://the-trivia-api.com/api/questions?limit=1") as resp:
                 if resp.status != 200:
                     await channel.send("Failed to retrieve a random topic. Please try again later.")
                     return
                 data = await resp.json()
-                topic = data.get("content")
+                question = data[0]['question']
+                correct_answer = data[0]['correctAnswer']
+                incorrect_answers = data[0]['incorrectAnswers']
+                all_answers = incorrect_answers + [correct_answer]
         except aiohttp.ClientError as e:
             await channel.send("There was an error connecting to the random topic service. Please try again later.")
             return
@@ -102,7 +105,8 @@ class RandomTopic(commands.Cog):
         message = (
             f"{role_mention}\n\n"
             f"**{custom_name}**\n"
-            f"{topic}\n\n"
+            f"**Question:** {question}\n"
+            f"**Answers:** {', '.join(all_answers)}\n\n"
             f"If you want a new topic, run this command: `!rt sendtopic`"
         )
         await channel.send(message)
