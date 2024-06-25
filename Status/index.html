@@ -1,1378 +1,1030 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.prismbot.icu/Status/" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Status - FuturoBot Documentation</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-    
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Status";
-        var mkdocs_page_input_path = "Status.md";
-        var mkdocs_page_url = "/Status/";
-      </script>
-    
-    <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> FuturoBot Documentation
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Core/">Core</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CogManagerUI/">CogManagerUI</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Permissions/">Permissions</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Downloader/">Downloader</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Activities/">Activities</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AddImage/">AddImage</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Admin/">Admin</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AdminToggle/">AdminToggle</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AdvancedBlacklist/">AdvancedBlacklist</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Adventure/">Adventure</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Alias/">Alias</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Aliases/">Aliases</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AltDentifier/">AltDentifier</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AltMarker/">AltMarker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AnnounceDaily/">AnnounceDaily</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AnonReporter/">AnonReporter</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AntiHonde/">AntiHonde</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AntiLinks/">AntiLinks</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AntiPhishing/">AntiPhishing</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AntiSpam/">AntiSpam</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ApiTools/">ApiTools</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Appeal/">Appeal</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AssistantUtils/">AssistantUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AuthGG/">AuthGG</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoGist/">AutoGist</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoMod/">AutoMod</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Availability/">Availability</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Backup/">Backup</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Badges/">Badges</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BankEvents/">BankEvents</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BannedCount/">BannedCount</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BanOnLeave/">BanOnLeave</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Battleship/">Battleship</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Birthday/">Birthday</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Blinder/">Blinder</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BoostUtils/">BoostUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BrainfuckCog/">BrainfuckCog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CardsAgainstHumanity/">CardsAgainstHumanity</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Calendar/">Calendar</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CaseInsensitive/">CaseInsensitive</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Cashdrop/">Cashdrop</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CCRole/">CCRole</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Charlimit/">Charlimit</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Cleverbot/">Cleverbot</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Clone/">Clone</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CodeSnippets/">CodeSnippets</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Coffeetools/">Coffeetools</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Color/">Color</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CommandsButtons/">CommandsButtons</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Converters/">Converters</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Cooldown/">Cooldown</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CustomCommands/">CustomCommands</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CustomPing/">CustomPing</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DblTools/">DblTools</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DeleteCounter/">DeleteCounter</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Dev/">Dev</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DevUtils/">DevUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Dictionary/">Dictionary</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DisboardReminder/">DisboardReminder</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DiscordModals/">DiscordModals</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DiscordSearch/">DiscordSearch</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DontPingStaff/">DontPingStaff</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DropdownsTexts/">DropdownsTexts</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DynamicChannelList/">DynamicChannelList</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EasyRules/">EasyRules</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Economy/">Economy</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EconomyTrickle/">EconomyTrickle</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EditablePosts/">EditablePosts</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Editor/">Editor</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EmbedCreator/">EmbedCreator</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EmbedPeek/">EmbedPeek</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EmbedUtils/">EmbedUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EmojiGrabber/">EmojiGrabber</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Encoding/">Encoding</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ErrorHandler/">ErrorHandler</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EventPoster/">EventPoster</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Events/">Events</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ExclusiveRoles/">ExclusiveRoles</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ExtendedModLog/">ExtendedModLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../FakeMod/">FakeMod</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../FIFO/">FIFO</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Filter/">Filter</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../FirstMessage/">FirstMessage</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Flags/">Flags</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../FollowCog/">FollowCog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ForceMention/">ForceMention</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Freshmeat/">Freshmeat</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GHIssues/">GHIssues</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GistsHandler/">GistsHandler</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GitHubCards/">GitHubCards</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Giveaways/">Giveaways</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GlobalBan/">GlobalBan</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Gmail/">Gmail</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Grafana/">Grafana</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GTN/">GTN</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GuildID/">GuildID</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Hangman/">Hangman</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Hellohook/">Hellohook</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../HidePing/">HidePing</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Hider/">Hider</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../HostInfo/">HostInfo</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../HttpCat/">HttpCat</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Image/">Image</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ImageLog/">ImageLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ImageScanner/">ImageScanner</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Index/">Index</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../InfoChannel/">InfoChannel</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../InRole/">InRole</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Inspirobot/">Inspirobot</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../InstantCommands/">InstantCommands</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../InviteBlocklist/">InviteBlocklist</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../IsItDown/">IsItDown</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../JoinPing/">JoinPing</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Jokes/">Jokes</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../KirA/">KirA</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../LastPing/">LastPing</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../LastSeen/">LastSeen</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Lenny/">Lenny</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../LinkQuoter/">LinkQuoter</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ListMaker/">ListMaker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ListPermissions/">ListPermissions</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ListThreads/">ListThreads</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../LoadDev/">LoadDev</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Lock/">Lock</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Lockdown/">Lockdown</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Maintenance/">Maintenance</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Massmove/">Massmove</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MassUnban/">MassUnban</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MemberCount/">MemberCount</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MemberPrefix/">MemberPrefix</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MentionTracker/">MentionTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Message/">Message</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MessagePinner/">MessagePinner</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Minesweeper/">Minesweeper</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Mod/">Mod</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ModLog/">ModLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ModManager/">ModManager</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ModRoles/">ModRoles</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MsgTracker/">MsgTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Mutes/">Mutes</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NameChanger/">NameChanger</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NitroRole/">NitroRole</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NoRoleNoInvite/">NoRoleNoInvite</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Notes/">Notes</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../OnEdit/">OnEdit</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../OnlineStats/">OnlineStats</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Otherbot/">Otherbot</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Paginator/">Paginator</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PartyCrash/">PartyCrash</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PermChecker/">PermChecker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PersonalChannels/">PersonalChannels</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PhenUtils/">PhenUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Pinboard/">Pinboard</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PingSite/">PingSite</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Pingtime/">Pingtime</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PlantTycoon/">PlantTycoon</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Poll/">Poll</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Prefix/">Prefix</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Prunecmd/">Prunecmd</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PyPi/">PyPi</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Quarantine/">Quarantine</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Quiz/">Quiz</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Quotes/">Quotes</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Ratings/">Ratings</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ReactLog/">ReactLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ReactRestrict/">ReactRestrict</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RepoList/">RepoList</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Reports/">Reports</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ReviewsCog/">ReviewsCog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Riddles/">Riddles</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Rift/">Rift</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleBoards/">RoleBoards</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleNotify/">RoleNotify</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleRequests/">RoleRequests</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RolesButtons/">RolesButtons</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleTools/">RoleTools</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Say/">Say</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SecretSanta/">SecretSanta</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SecureInv/">SecureInv</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SelfAssign/">SelfAssign</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SendCards/">SendCards</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Sendhook/">Sendhook</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Session/">Session</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Shell/">Shell</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Calculator/">Calculator</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SimpleSanction/">SimpleSanction</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Simulator/">Simulator</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Skyrim/">Skyrim</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../eep/">eep</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SlowMode/">SlowMode</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Snipe/">Snipe</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Spoilerer/">Spoilerer</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Spotify/">Spotify</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Spotifyembed/">Spotifyembed</a>
-                </li>
-              </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Status</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#statusset">statusset</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-clear">statusset clear</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-list">statusset list</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-remove">statusset remove</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-add">statusset add</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-preview">statusset preview</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-edit">statusset edit</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-edit-webhook">statusset edit webhook</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-edit-restrict">statusset edit restrict</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusset-edit-mode">statusset edit mode</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev">statusdev</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-checkfeedraw">statusdev checkfeedraw</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-refreshincidentids">statusdev refreshincidentids</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-clearchannels">statusdev clearchannels</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-forcestatus">statusdev forcestatus</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-checkfeed">statusdev checkfeed</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-loopstatus">statusdev loopstatus</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-checkid">statusdev checkid</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-cooldown">statusdev cooldown</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-checkguildrestrictions">statusdev checkguildrestrictions</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-devenvvars">statusdev devenvvars</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusdev-checkusedfeedcache">statusdev checkusedfeedcache</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#status">status</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#statusinfo">statusinfo</a>
-    </li>
-    </ul>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Sticky/">Sticky</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../StickyMember/">StickyMember</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Streams/">Streams</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Strikes/">Strikes</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../StripeIdentity/">StripeIdentity</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../System/">System</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Talk/">Talk</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TempRoles/">TempRoles</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TextEditor/">TextEditor</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TheMovieDB/">TheMovieDB</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TicketTool/">TicketTool</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TimeoutSelf/">TimeoutSelf</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Timestamp/">Timestamp</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Timezone/">Timezone</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Trigger/">Trigger</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Trivia/">Trivia</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Twenty/">Twenty</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../TypeRacer/">TypeRacer</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UnbanAll/">UnbanAll</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Unbelievaboat/">Unbelievaboat</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UpdateChecker/">UpdateChecker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UpgradeChat/">UpgradeChat</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UptimeResponder/">UptimeResponder</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UrlButtons/">UrlButtons</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UrlFetch/">UrlFetch</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UselessFacts/">UselessFacts</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Userinfo/">Userinfo</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Verifyer/">Verifyer</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ViewPermissions/">ViewPermissions</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../VoiceLog/">VoiceLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../VoiceTools/">VoiceTools</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../VoiceTracker/">VoiceTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Voteout/">Voteout</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Weather/">Weather</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../WelcomeCount/">WelcomeCount</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../WhosThatPokemon/">WhosThatPokemon</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../WordScramble/">WordScramble</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../WordStats/">WordStats</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Zalgo/">Zalgo</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Warnings/">Warnings</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../SlashTags/">SlashTags</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Purge/">Purge</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BetterModlog/">BetterModlog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BanChart/">BanChart</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ChessGame/">ChessGame</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UpdateRed/">UpdateRed</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AudioSlash/">AudioSlash</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ServerStats/">ServerStats</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Highlight/">Highlight</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GuildLog/">GuildLog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Application/">Application</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ChannelTimezone/">ChannelTimezone</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NoNuke/">NoNuke</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ThreadOpener/">ThreadOpener</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GuildStats/">GuildStats</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../StatTrack/">StatTrack</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Xenon/">Xenon</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleUtils/">RoleUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Modmail/">Modmail</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../LevelUp/">LevelUp</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../COC/">COC</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RandomEmoji/">RandomEmoji</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ServerInfo/">ServerInfo</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NoFuckYou/">NoFuckYou</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AdWarn/">AdWarn</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoDelete/">AutoDelete</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../QuestionOfTheDay/">QuestionOfTheDay</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CustomHelp/">CustomHelp</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GameRoles/">GameRoles</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../EmojiInfo/">EmojiInfo</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BotJoinMessage/">BotJoinMessage</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MsgReport/">MsgReport</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../FeatureRequest/">FeatureRequest</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GameTracker/">GameTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Cloudflare/">Cloudflare</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleManager/">RoleManager</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CommandTracker/">CommandTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ImgurUploader/">ImgurUploader</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AFK/">AFK</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../InviteSettings/">InviteSettings</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoPost/">AutoPost</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Roast/">Roast</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../VrtUtils/">VrtUtils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RoleSync/">RoleSync</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RestartMsg/">RestartMsg</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../OwnerProtection/">OwnerProtection</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../PrivateWormHole/">PrivateWormHole</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Comm/">Comm</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Jail/">Jail</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../StaffManager/">StaffManager</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Dashboard/">Dashboard</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GuildLock/">GuildLock</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BankDecay/">BankDecay</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Fluent/">Fluent</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../IdeaBoard/">IdeaBoard</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Perform/">Perform</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../UserTracker/">UserTracker</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../NickNamer/">NickNamer</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RequestGB/">RequestGB</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../WormHole/">WormHole</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AffiliatedServers/">AffiliatedServers</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../IntroCog/">IntroCog</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Reminders/">Reminders</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Unknown/">Unknown</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../GCC/">GCC</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Counter/">Counter</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoTraceback/">AutoTraceback</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../DiscordEdit/">DiscordEdit</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RPS/">RPS</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../Counting/">Counting</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ExtendedEconomy/">ExtendedEconomy</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AdvancedLogger/">AdvancedLogger</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../ClearChannel/">ClearChannel</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AAA3A_utils/">AAA3A_utils</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../RandomTopic/">RandomTopic</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../BotLogger/">BotLogger</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../MultiCommands/">MultiCommands</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoDocs/">AutoDocs</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../AutoDocSite/">AutoDocSite</a>
-                </li>
-              </ul>
-      </div>
-    </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">FuturoBot Documentation</a>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-      </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Status</li>
-    <li class="wy-breadcrumbs-aside">
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
-              
-                <h1 id="status-help">Status Help</h1>
+        
+        <link rel="canonical" href="https://docs.prismbot.icu/Status/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Status - FuturoBot Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/darcula.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">FuturoBot Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Core/" class="nav-link">Core</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CogManagerUI/" class="nav-link">CogManagerUI</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Permissions/" class="nav-link">Permissions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Downloader/" class="nav-link">Downloader</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Activities/" class="nav-link">Activities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AddImage/" class="nav-link">AddImage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Admin/" class="nav-link">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AdminToggle/" class="nav-link">AdminToggle</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AdvancedBlacklist/" class="nav-link">AdvancedBlacklist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Adventure/" class="nav-link">Adventure</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Alias/" class="nav-link">Alias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Aliases/" class="nav-link">Aliases</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AltDentifier/" class="nav-link">AltDentifier</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AltMarker/" class="nav-link">AltMarker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AnnounceDaily/" class="nav-link">AnnounceDaily</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AnonReporter/" class="nav-link">AnonReporter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AntiHonde/" class="nav-link">AntiHonde</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AntiLinks/" class="nav-link">AntiLinks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AntiPhishing/" class="nav-link">AntiPhishing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AntiSpam/" class="nav-link">AntiSpam</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ApiTools/" class="nav-link">ApiTools</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Appeal/" class="nav-link">Appeal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AssistantUtils/" class="nav-link">AssistantUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AuthGG/" class="nav-link">AuthGG</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoGist/" class="nav-link">AutoGist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoMod/" class="nav-link">AutoMod</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Availability/" class="nav-link">Availability</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Backup/" class="nav-link">Backup</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Badges/" class="nav-link">Badges</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BankEvents/" class="nav-link">BankEvents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BannedCount/" class="nav-link">BannedCount</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BanOnLeave/" class="nav-link">BanOnLeave</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Battleship/" class="nav-link">Battleship</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Birthday/" class="nav-link">Birthday</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Blinder/" class="nav-link">Blinder</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BoostUtils/" class="nav-link">BoostUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BrainfuckCog/" class="nav-link">BrainfuckCog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CardsAgainstHumanity/" class="nav-link">CardsAgainstHumanity</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Calendar/" class="nav-link">Calendar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CaseInsensitive/" class="nav-link">CaseInsensitive</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Cashdrop/" class="nav-link">Cashdrop</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CCRole/" class="nav-link">CCRole</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Charlimit/" class="nav-link">Charlimit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Cleverbot/" class="nav-link">Cleverbot</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Clone/" class="nav-link">Clone</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CodeSnippets/" class="nav-link">CodeSnippets</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Coffeetools/" class="nav-link">Coffeetools</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Color/" class="nav-link">Color</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CommandsButtons/" class="nav-link">CommandsButtons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Converters/" class="nav-link">Converters</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Cooldown/" class="nav-link">Cooldown</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CustomCommands/" class="nav-link">CustomCommands</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CustomPing/" class="nav-link">CustomPing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DblTools/" class="nav-link">DblTools</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DeleteCounter/" class="nav-link">DeleteCounter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Dev/" class="nav-link">Dev</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DevUtils/" class="nav-link">DevUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Dictionary/" class="nav-link">Dictionary</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DisboardReminder/" class="nav-link">DisboardReminder</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DiscordModals/" class="nav-link">DiscordModals</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DiscordSearch/" class="nav-link">DiscordSearch</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DontPingStaff/" class="nav-link">DontPingStaff</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DropdownsTexts/" class="nav-link">DropdownsTexts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DynamicChannelList/" class="nav-link">DynamicChannelList</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EasyRules/" class="nav-link">EasyRules</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Economy/" class="nav-link">Economy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EconomyTrickle/" class="nav-link">EconomyTrickle</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EditablePosts/" class="nav-link">EditablePosts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Editor/" class="nav-link">Editor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EmbedCreator/" class="nav-link">EmbedCreator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EmbedPeek/" class="nav-link">EmbedPeek</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EmbedUtils/" class="nav-link">EmbedUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EmojiGrabber/" class="nav-link">EmojiGrabber</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Encoding/" class="nav-link">Encoding</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ErrorHandler/" class="nav-link">ErrorHandler</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EventPoster/" class="nav-link">EventPoster</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Events/" class="nav-link">Events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ExclusiveRoles/" class="nav-link">ExclusiveRoles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ExtendedModLog/" class="nav-link">ExtendedModLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../FakeMod/" class="nav-link">FakeMod</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../FIFO/" class="nav-link">FIFO</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Filter/" class="nav-link">Filter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../FirstMessage/" class="nav-link">FirstMessage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Flags/" class="nav-link">Flags</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../FollowCog/" class="nav-link">FollowCog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ForceMention/" class="nav-link">ForceMention</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Freshmeat/" class="nav-link">Freshmeat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GHIssues/" class="nav-link">GHIssues</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GistsHandler/" class="nav-link">GistsHandler</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GitHubCards/" class="nav-link">GitHubCards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Giveaways/" class="nav-link">Giveaways</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GlobalBan/" class="nav-link">GlobalBan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Gmail/" class="nav-link">Gmail</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Grafana/" class="nav-link">Grafana</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GTN/" class="nav-link">GTN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GuildID/" class="nav-link">GuildID</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Hangman/" class="nav-link">Hangman</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Hellohook/" class="nav-link">Hellohook</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../HidePing/" class="nav-link">HidePing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Hider/" class="nav-link">Hider</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../HostInfo/" class="nav-link">HostInfo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../HttpCat/" class="nav-link">HttpCat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Image/" class="nav-link">Image</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ImageLog/" class="nav-link">ImageLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ImageScanner/" class="nav-link">ImageScanner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Index/" class="nav-link">Index</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../InfoChannel/" class="nav-link">InfoChannel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../InRole/" class="nav-link">InRole</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Inspirobot/" class="nav-link">Inspirobot</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../InstantCommands/" class="nav-link">InstantCommands</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../InviteBlocklist/" class="nav-link">InviteBlocklist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../IsItDown/" class="nav-link">IsItDown</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../JoinPing/" class="nav-link">JoinPing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Jokes/" class="nav-link">Jokes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../KirA/" class="nav-link">KirA</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../LastPing/" class="nav-link">LastPing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../LastSeen/" class="nav-link">LastSeen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Lenny/" class="nav-link">Lenny</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../LinkQuoter/" class="nav-link">LinkQuoter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ListMaker/" class="nav-link">ListMaker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ListPermissions/" class="nav-link">ListPermissions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ListThreads/" class="nav-link">ListThreads</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../LoadDev/" class="nav-link">LoadDev</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Lock/" class="nav-link">Lock</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Lockdown/" class="nav-link">Lockdown</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Maintenance/" class="nav-link">Maintenance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Massmove/" class="nav-link">Massmove</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MassUnban/" class="nav-link">MassUnban</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MemberCount/" class="nav-link">MemberCount</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MemberPrefix/" class="nav-link">MemberPrefix</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MentionTracker/" class="nav-link">MentionTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Message/" class="nav-link">Message</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MessagePinner/" class="nav-link">MessagePinner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Minesweeper/" class="nav-link">Minesweeper</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Mod/" class="nav-link">Mod</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ModLog/" class="nav-link">ModLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ModManager/" class="nav-link">ModManager</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ModRoles/" class="nav-link">ModRoles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MsgTracker/" class="nav-link">MsgTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Mutes/" class="nav-link">Mutes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NameChanger/" class="nav-link">NameChanger</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NitroRole/" class="nav-link">NitroRole</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NoRoleNoInvite/" class="nav-link">NoRoleNoInvite</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Notes/" class="nav-link">Notes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../OnEdit/" class="nav-link">OnEdit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../OnlineStats/" class="nav-link">OnlineStats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Otherbot/" class="nav-link">Otherbot</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Paginator/" class="nav-link">Paginator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PartyCrash/" class="nav-link">PartyCrash</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PermChecker/" class="nav-link">PermChecker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PersonalChannels/" class="nav-link">PersonalChannels</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PhenUtils/" class="nav-link">PhenUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Pinboard/" class="nav-link">Pinboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PingSite/" class="nav-link">PingSite</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Pingtime/" class="nav-link">Pingtime</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PlantTycoon/" class="nav-link">PlantTycoon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Poll/" class="nav-link">Poll</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Prefix/" class="nav-link">Prefix</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Prunecmd/" class="nav-link">Prunecmd</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PyPi/" class="nav-link">PyPi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Quarantine/" class="nav-link">Quarantine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Quiz/" class="nav-link">Quiz</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Quotes/" class="nav-link">Quotes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Ratings/" class="nav-link">Ratings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ReactLog/" class="nav-link">ReactLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ReactRestrict/" class="nav-link">ReactRestrict</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RepoList/" class="nav-link">RepoList</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Reports/" class="nav-link">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ReviewsCog/" class="nav-link">ReviewsCog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Riddles/" class="nav-link">Riddles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Rift/" class="nav-link">Rift</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleBoards/" class="nav-link">RoleBoards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleNotify/" class="nav-link">RoleNotify</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleRequests/" class="nav-link">RoleRequests</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RolesButtons/" class="nav-link">RolesButtons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleTools/" class="nav-link">RoleTools</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Say/" class="nav-link">Say</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SecretSanta/" class="nav-link">SecretSanta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SecureInv/" class="nav-link">SecureInv</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SelfAssign/" class="nav-link">SelfAssign</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SendCards/" class="nav-link">SendCards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Sendhook/" class="nav-link">Sendhook</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Session/" class="nav-link">Session</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Shell/" class="nav-link">Shell</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Calculator/" class="nav-link">Calculator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SimpleSanction/" class="nav-link">SimpleSanction</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Simulator/" class="nav-link">Simulator</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Skyrim/" class="nav-link">Skyrim</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../eep/" class="nav-link">eep</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SlowMode/" class="nav-link">SlowMode</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Snipe/" class="nav-link">Snipe</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Spoilerer/" class="nav-link">Spoilerer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Spotify/" class="nav-link">Spotify</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Spotifyembed/" class="nav-link">Spotifyembed</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Sticky/" class="nav-link">Sticky</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../StickyMember/" class="nav-link">StickyMember</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Streams/" class="nav-link">Streams</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Strikes/" class="nav-link">Strikes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../StripeIdentity/" class="nav-link">StripeIdentity</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../System/" class="nav-link">System</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Talk/" class="nav-link">Talk</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TempRoles/" class="nav-link">TempRoles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TextEditor/" class="nav-link">TextEditor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TheMovieDB/" class="nav-link">TheMovieDB</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TicketTool/" class="nav-link">TicketTool</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TimeoutSelf/" class="nav-link">TimeoutSelf</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Timestamp/" class="nav-link">Timestamp</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Timezone/" class="nav-link">Timezone</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Trigger/" class="nav-link">Trigger</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Trivia/" class="nav-link">Trivia</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Twenty/" class="nav-link">Twenty</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TypeRacer/" class="nav-link">TypeRacer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UnbanAll/" class="nav-link">UnbanAll</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Unbelievaboat/" class="nav-link">Unbelievaboat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UpdateChecker/" class="nav-link">UpdateChecker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UpgradeChat/" class="nav-link">UpgradeChat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UptimeResponder/" class="nav-link">UptimeResponder</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UrlButtons/" class="nav-link">UrlButtons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UrlFetch/" class="nav-link">UrlFetch</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UselessFacts/" class="nav-link">UselessFacts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Userinfo/" class="nav-link">Userinfo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Verifyer/" class="nav-link">Verifyer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ViewPermissions/" class="nav-link">ViewPermissions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../VoiceLog/" class="nav-link">VoiceLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../VoiceTools/" class="nav-link">VoiceTools</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../VoiceTracker/" class="nav-link">VoiceTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Voteout/" class="nav-link">Voteout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Weather/" class="nav-link">Weather</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../WelcomeCount/" class="nav-link">WelcomeCount</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../WhosThatPokemon/" class="nav-link">WhosThatPokemon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../WordScramble/" class="nav-link">WordScramble</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../WordStats/" class="nav-link">WordStats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Zalgo/" class="nav-link">Zalgo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Warnings/" class="nav-link">Warnings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../SlashTags/" class="nav-link">SlashTags</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Purge/" class="nav-link">Purge</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BetterModlog/" class="nav-link">BetterModlog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BanChart/" class="nav-link">BanChart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ChessGame/" class="nav-link">ChessGame</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UpdateRed/" class="nav-link">UpdateRed</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AudioSlash/" class="nav-link">AudioSlash</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ServerStats/" class="nav-link">ServerStats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Highlight/" class="nav-link">Highlight</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GuildLog/" class="nav-link">GuildLog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Application/" class="nav-link">Application</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ChannelTimezone/" class="nav-link">ChannelTimezone</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NoNuke/" class="nav-link">NoNuke</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ThreadOpener/" class="nav-link">ThreadOpener</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GuildStats/" class="nav-link">GuildStats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../StatTrack/" class="nav-link">StatTrack</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Xenon/" class="nav-link">Xenon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleUtils/" class="nav-link">RoleUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Modmail/" class="nav-link">Modmail</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../LevelUp/" class="nav-link">LevelUp</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../COC/" class="nav-link">COC</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RandomEmoji/" class="nav-link">RandomEmoji</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ServerInfo/" class="nav-link">ServerInfo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NoFuckYou/" class="nav-link">NoFuckYou</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AdWarn/" class="nav-link">AdWarn</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoDelete/" class="nav-link">AutoDelete</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../QuestionOfTheDay/" class="nav-link">QuestionOfTheDay</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CustomHelp/" class="nav-link">CustomHelp</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GameRoles/" class="nav-link">GameRoles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../EmojiInfo/" class="nav-link">EmojiInfo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BotJoinMessage/" class="nav-link">BotJoinMessage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MsgReport/" class="nav-link">MsgReport</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../FeatureRequest/" class="nav-link">FeatureRequest</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GameTracker/" class="nav-link">GameTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Cloudflare/" class="nav-link">Cloudflare</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleManager/" class="nav-link">RoleManager</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../CommandTracker/" class="nav-link">CommandTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ImgurUploader/" class="nav-link">ImgurUploader</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AFK/" class="nav-link">AFK</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../InviteSettings/" class="nav-link">InviteSettings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoPost/" class="nav-link">AutoPost</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Roast/" class="nav-link">Roast</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../VrtUtils/" class="nav-link">VrtUtils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RoleSync/" class="nav-link">RoleSync</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RestartMsg/" class="nav-link">RestartMsg</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../OwnerProtection/" class="nav-link">OwnerProtection</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PrivateWormHole/" class="nav-link">PrivateWormHole</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Comm/" class="nav-link">Comm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Jail/" class="nav-link">Jail</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../StaffManager/" class="nav-link">StaffManager</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Dashboard/" class="nav-link">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GuildLock/" class="nav-link">GuildLock</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BankDecay/" class="nav-link">BankDecay</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Fluent/" class="nav-link">Fluent</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../IdeaBoard/" class="nav-link">IdeaBoard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Perform/" class="nav-link">Perform</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../UserTracker/" class="nav-link">UserTracker</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../NickNamer/" class="nav-link">NickNamer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RequestGB/" class="nav-link">RequestGB</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../WormHole/" class="nav-link">WormHole</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AffiliatedServers/" class="nav-link">AffiliatedServers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../IntroCog/" class="nav-link">IntroCog</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Reminders/" class="nav-link">Reminders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Unknown/" class="nav-link">Unknown</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../GCC/" class="nav-link">GCC</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Counter/" class="nav-link">Counter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoTraceback/" class="nav-link">AutoTraceback</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DiscordEdit/" class="nav-link">DiscordEdit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RPS/" class="nav-link">RPS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../Counting/" class="nav-link">Counting</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ExtendedEconomy/" class="nav-link">ExtendedEconomy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AdvancedLogger/" class="nav-link">AdvancedLogger</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ClearChannel/" class="nav-link">ClearChannel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AAA3A_utils/" class="nav-link">AAA3A_utils</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../RandomTopic/" class="nav-link">RandomTopic</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../BotLogger/" class="nav-link">BotLogger</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../MultiCommands/" class="nav-link">MultiCommands</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoDocs/" class="nav-link">AutoDocs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../AutoDocSite/" class="nav-link">AutoDocSite</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Spotifyembed/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Sticky/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#status-help" class="nav-link">Status Help</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="status-help">Status Help</h1>
 <p>Automatically check for status updates.</p>
 <p>When there is one, it will send the update to all channels that
 have registered to recieve updates from that service.</p>
@@ -1528,52 +1180,82 @@ status channel.</p>
 <p><strong>Usage:</strong> <code>,status</code></p>
 <h3 id="statusinfo">statusinfo</h3>
 <p><strong>Description:</strong> No description provided.</p>
-<p><strong>Usage:</strong> <code>,statusinfo</code></p>
-              
+<p><strong>Usage:</strong> <code>,statusinfo</code></p></div>
             </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../Spotifyembed/" class="btn btn-neutral float-left" title="Spotifyembed"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Sticky/" class="btn btn-neutral float-right" title="Sticky">Next <span class="icon icon-circle-arrow-right"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-          
         </div>
-      </div>
 
-    </section>
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
 
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-    
-      <span><a href="../Spotifyembed/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-      <span><a href="../Sticky/" style="color: #fcfcfc">Next &raquo;</a></span>
-    
-  </span>
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-    <script src="../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "..";</script>
-    <script src="../js/theme_extra.js"></script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/main.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
 
-</body>
+    </body>
 </html>
