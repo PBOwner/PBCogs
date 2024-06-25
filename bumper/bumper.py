@@ -109,7 +109,7 @@ class Bumper(commands.Cog):
         await self.config.guild(ctx.guild).config_log_channel.set(channel.id)
         await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
 
-    @bumpowner.command()
+    @commands.command()
     async def codegen(self, ctx: commands.Context, user_id: int, time: int, unit: str):
         """Generate a premium code. Use -1 for permanent, or specify time and unit (days or months)."""
         user = self.bot.get_user(user_id)
