@@ -1,9 +1,9 @@
 import discord
 import aiohttp
 import asyncio
+import random
 from redbot.core import commands, Config, checks
 from redbot.core.bot import Red
-from redbot.core.utils.chat_formatting import box, humanize_list
 from datetime import datetime, timedelta
 
 class RandomTopic(commands.Cog):
@@ -94,22 +94,21 @@ class RandomTopic(commands.Cog):
                     return
                 data = await resp.json()
                 question = data[0]['question']
-                correct_answer = data[0]['correctAnswer']
-                incorrect_answers = data[0]['incorrectAnswers']
-                all_answers = incorrect_answers + [correct_answer]
         except aiohttp.ClientError as e:
             await channel.send("There was an error connecting to the random topic service. Please try again later.")
             return
 
         role_mention = f"<@&{role_id}>" if role_id else ""
+        prefix = (await self.bot.get_valid_prefixes(guild))[0]
         message = (
             f"{role_mention}\n\n"
             f"**{custom_name}**\n"
-            f"**Question:** {question}\n"
-            f"**Answers:** {', '.join(all_answers)}\n\n"
-            f"If you want a new topic, run this command: `!rt sendtopic`"
+            f"**Question:** {question}\n\n"
+            f"If you want a new topic, run this command: `{prefix}rt sendtopic`"
         )
-        await channel.send(message)
+
+        embed = discord.Embed(description=message, color=random.randint(0, 0xFFFFFF))
+        await channel.send(embed=embed)
 
     async def scheduled_task(self):
         await self.bot.wait_until_ready()
