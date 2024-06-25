@@ -7,7 +7,7 @@ import asyncio
 import random
 import string
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 _ = Translator("Bumper", __file__)
 log = logging.getLogger("red.Bumper")
@@ -109,12 +109,18 @@ class Bumper(commands.Cog):
         await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
 
     @bumpowner.command()
-    async def generate_code(self, ctx: commands.Context):
-        """Generate a premium code."""
+    async def codegen(self, ctx: commands.Context, time: int):
+        """Generate a premium code. Use -1 for permanent, or specify months."""
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        expiry_date = None
+        if time != -1:
+            expiry_date = datetime.now(timezone.utc) + timedelta(days=time * 30)
+
         async with self.config.premium_codes() as premium_codes:
-            premium_codes[code] = None
-        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}", color=discord.Color.green()))
+            premium_codes[code] = expiry_date.isoformat() if expiry_date else None
+
+        expiry_message = " (Permanent)" if time == -1 else f" (Expires in {time} months)"
+        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
 
     @bumpowner.command()
     async def blacklist(self, ctx: commands.Context, guild_id: int):
