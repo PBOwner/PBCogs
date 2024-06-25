@@ -12,7 +12,7 @@ from redbot.core.i18n import Translator, cog_i18n, set_contextual_locales_from_g
 
 from .formatter import IGNORE, CustomCmdFmt
 
-log = logging.getLogger("red.pbowner.autodocsite")
+log = logging.getLogger("red.vrt.autodocs")
 _ = Translator("AutoDocs", __file__)
 
 
