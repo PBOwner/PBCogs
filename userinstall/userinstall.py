@@ -82,7 +82,9 @@ class UserInstall(commands.Cog):
     async def startwebserver(self, ctx):
         """Start the Flask web server."""
         await ctx.send("Starting the web server...")
-        subprocess.Popen(["python", "cogs/userinstall/webserver.py"])
+        # Replace with the path to the Python interpreter in your venv
+        venv_python_path = "/path/to/your/venv/bin/python"
+        subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py"])
         await ctx.send("Web server started.")
 
 def setup(bot: Red):
