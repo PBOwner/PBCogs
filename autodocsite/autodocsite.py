@@ -77,6 +77,8 @@ class AutoDocSite(commands.Cog):
         for cmd in cog.walk_commands():
             if cmd.hidden and not include_hidden:
                 continue
+            if cmd.requires_guild_owner and max_privilege_level not in ["guildowner", "botowner"]:
+                continue
             c = CustomCmdFmt(
                 self.bot,
                 cmd,
@@ -114,7 +116,7 @@ class AutoDocSite(commands.Cog):
         use_directory_urls: bool = False,
         include_hidden: bool = False,
         include_help: bool = True,
-        max_privilege_level: str = "botowner",
+        max_privilege_level: str = "guildowner",
         min_privilege_level: str = "user",
         replace_botname: bool = True,
         extended_info: bool = True,
@@ -217,19 +219,34 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
             with open(os.path.join(docs_dir, "index.md"), "w") as f:
                 f.write(index_content)
 
-            mkdocs_config = {
-                "site_name": site_name,
-                "site_url": site_url,  # Use your custom domain
-                "theme": {
-                    "name": theme_name
-                },
-                "use_directory_urls": use_directory_urls,
-                "nav": [{"Home": "index.md"}]
+            # Define categories
+            categories = {
+                "Fun": [],
+                "Mod": [],
+                "Utilities": [],
+                "Automod": [],
+                "Economy": [],
+                "Games": [],
+                "Misc": []
             }
+
+            # Example categorization, you may need to adjust this based on your actual cogs
+            cog_categories = {
+                "FunCog": "Fun",
+                "ModCog": "Mod",
+                "UtilitiesCog": "Utilities",
+                "AutomodCog": "Automod",
+                "EconomyCog": "Economy",
+                "GamesCog": "Games",
+                # Add more mappings as needed
+            }
+
+            prefix = (await self.bot.get_valid_prefixes(ctx.guild))[0].strip()
 
             for cog_name, cog in self.bot.cogs.items():
                 if cog_name in IGNORE:
                     continue
+                category = cog_categories.get(cog_name, "Misc")
                 docs = self.generate_readme(
                     cog,
                     prefix=prefix,
@@ -244,7 +261,22 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                 filename = os.path.join(docs_dir, f"{cog_name}.md")
                 with open(filename, "w", encoding="utf-8") as f:
                     f.write(docs)
-                mkdocs_config["nav"].append({cog_name: f"{cog_name}.md"})
+                categories[category].append({cog_name: f"{cog_name}.md"})
+
+            mkdocs_config = {
+                "site_name": site_name,
+                "site_url": site_url,  # Use your custom domain
+                "theme": {
+                    "name": theme_name
+                },
+                "use_directory_urls": use_directory_urls,
+                "nav": [{"Home": "index.md"}]
+            }
+
+            # Add categorized cogs to the nav
+            for category, cogs in categories.items():
+                if cogs:
+                    mkdocs_config["nav"].append({category: cogs})
 
             with open(mkdocs_config_path, "w", encoding="utf-8") as f:
                 f.write(yaml.dump(mkdocs_config, default_flow_style=False))
