@@ -4,6 +4,10 @@ import asyncio
 from flask import Flask, redirect, request, session
 import requests
 from redbot.core import Config
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG, filename='webserver.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -63,5 +67,8 @@ def usercount():
     return f'The total number of users who have installed the bot is: {total_installed_users}'
 
 if __name__ == '__main__':
-    host_ip = sys.argv[1] if len(sys.argv) > 1 else '0.0.0.0'
-    app.run(debug=True, host=host_ip, port=5000)
+    try:
+        host_ip = sys.argv[1] if len(sys.argv) > 1 else '0.0.0.0'
+        app.run(debug=True, host=host_ip, port=5000)
+    except Exception as e:
+        logging.error(f"Failed to start web server: {e}")
