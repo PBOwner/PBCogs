@@ -101,13 +101,17 @@ class RandomTopic(commands.Cog):
         role_mention = f"<@&{role_id}>" if role_id else ""
         prefix = (await self.bot.get_valid_prefixes(guild))[0]
         message = (
-            f"{role_mention}\n\n"
-            f"**{custom_name}**\n"
-            f"**Question:** {question}\n\n"
             f"If you want a new topic, run this command: `{prefix}rt sendtopic`"
         )
 
-        embed = discord.Embed(description=message, color=random.randint(0, 0xFFFFFF))
+        embed = discord.Embed(
+            title=custom_name,
+            description=f"**Question:** {question}\n\n{message}",
+            color=random.randint(0, 0xFFFFFF)
+        )
+
+        if role_mention:
+            await channel.send(role_mention)
         await channel.send(embed=embed)
 
     async def scheduled_task(self):
