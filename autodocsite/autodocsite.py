@@ -581,7 +581,7 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
 
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
 
-    def generate_command_docs(self, cmd: Command, prefix: str, extended_info: bool) -> str:
+    def generate_command_docs(self, cmd: Commands, prefix: str, extended_info: bool) -> str:
         """Generate detailed documentation for a command."""
         doc = f"### {prefix}{cmd.qualified_name}\n\n"
         if cmd.help:
