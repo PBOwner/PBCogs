@@ -1,125 +1,2698 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
-    <link rel="canonical" href="https://docs.prismbot.icu/LastPing/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>LastPing - FuturoBot</title>
-    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/highlight.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+        <title>LastPing - FuturoBot</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script src="../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../js/highlight.pack.js"></script>
-    
-    <base target="_top">
-    <script>
-      var base_url = '..';
-      var is_top_frame = false;
         
-        var pageToc = [
-          {title: "LastPing Help", url: "#_top", children: [
-          ]},
-        ];
+        <link rel="canonical" href="https://docs.prismbot.icu/LastPing/">
+        
 
-    </script>
-    <script src="../js/base.js"></script>
-      <script src="../search/main.js"></script> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
 </head>
 
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
 
+    <main class="d-flex">
 
-
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
-
-    
-    
-      
-    
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../LastSeen/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../LastSeen/" class="btn btn-xs btn-link">
-        LastSeen
-      </a>
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
     </div>
-    
-    <div class="wm-article-nav">
-      <a href="../KirA/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../KirA/" class="btn btn-xs btn-link">
-        KirA
-      </a>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">FuturoBot</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Home
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href=".."
+                    class=" active 
+                    drac-anchor btn-toggle d-inline-flex align-items-center border-0 drac-text-purple--hover collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#cogs-collapse" aria-expanded="false">
+                    Cogs
+                </a>
+                <div class="collapse" id="cogs-collapse">
+                    <ul class="mb-5 drac-list drac-list-none">
+                            
+    <li class="drac-box-ternary">
+        <a href="../Core/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Core
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CogManagerUI/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CogManagerUI
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Permissions/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Permissions
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Downloader/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Downloader
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Activities/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Activities
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AddImage/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AddImage
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Admin/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Admin
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AdminToggle/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdminToggle
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AdvancedBlacklist/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdvancedBlacklist
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Adventure/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Adventure
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Alias/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Alias
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Aliases/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Aliases
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AltDentifier/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AltDentifier
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AltMarker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AltMarker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AnnounceDaily/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AnnounceDaily
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AnonReporter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AnonReporter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AntiHonde/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AntiHonde
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AntiLinks/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AntiLinks
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AntiPhishing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AntiPhishing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AntiSpam/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AntiSpam
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ApiTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ApiTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Appeal/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AssistantUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AssistantUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AuthGG/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AuthGG
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoGist/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoGist
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoMod/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoMod
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Availability/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Availability
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Backup/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Backup
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Badges/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Badges
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BankEvents/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BankEvents
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BannedCount/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BannedCount
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BanOnLeave/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BanOnLeave
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Battleship/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Battleship
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Birthday/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Blinder/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Blinder
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BoostUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BoostUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BrainfuckCog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BrainfuckCog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CardsAgainstHumanity/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CardsAgainstHumanity
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Calendar/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Calendar
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CaseInsensitive/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CaseInsensitive
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Cashdrop/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Cashdrop
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CCRole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CCRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Charlimit/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Charlimit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Cleverbot/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Cleverbot
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Clone/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Clone
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CodeSnippets/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CodeSnippets
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Coffeetools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Coffeetools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Color/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Color
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CommandsButtons/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Converters/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Converters
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Cooldown/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Cooldown
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CustomCommands/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CustomCommands
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CustomPing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CustomPing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DblTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DblTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DeleteCounter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DeleteCounter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Dev/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Dev
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DevUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DevUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Dictionary/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Dictionary
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DisboardReminder/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DisboardReminder
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DiscordModals/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DiscordSearch/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordSearch
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DontPingStaff/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DontPingStaff
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DropdownsTexts/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DropdownsTexts
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DynamicChannelList/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DynamicChannelList
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EasyRules/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EasyRules
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Economy/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Economy
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EconomyTrickle/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EconomyTrickle
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EditablePosts/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EditablePosts
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Editor/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Editor
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EmbedCreator/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmbedCreator
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EmbedPeek/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmbedPeek
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EmbedUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmbedUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EmojiGrabber/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmojiGrabber
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Encoding/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Encoding
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ErrorHandler/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ErrorHandler
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EventPoster/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EventPoster
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Events/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Events
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ExclusiveRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ExclusiveRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ExtendedModLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ExtendedModLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../FakeMod/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            FakeMod
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../FIFO/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            FIFO
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Filter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Filter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../FirstMessage/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            FirstMessage
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Flags/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Flags
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../FollowCog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            FollowCog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ForceMention/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ForceMention
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Freshmeat/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Freshmeat
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GHIssues/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GHIssues
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GistsHandler/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GistsHandler
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GitHubCards/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GitHubCards
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Giveaways/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Giveaways
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GlobalBan/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GlobalBan
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Gmail/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Gmail
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Grafana/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Grafana
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GTN/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GTN
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GuildID/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GuildID
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Hangman/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Hangman
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Hellohook/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Hellohook
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../HidePing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            HidePing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Hider/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Hider
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../HostInfo/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            HostInfo
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../HttpCat/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            HttpCat
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Image/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Image
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ImageLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ImageLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ImageScanner/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ImageScanner
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Index/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Index
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../InfoChannel/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            InfoChannel
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../InRole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            InRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Inspirobot/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Inspirobot
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../InstantCommands/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            InstantCommands
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../InviteBlocklist/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            InviteBlocklist
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../IsItDown/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            IsItDown
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../JoinPing/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            JoinPing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Jokes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Jokes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../KirA/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            KirA
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="./"
+            class=" active 
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LastPing
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../LastSeen/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LastSeen
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Lenny/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Lenny
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../LinkQuoter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LinkQuoter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ListMaker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ListMaker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ListPermissions/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ListPermissions
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ListThreads/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ListThreads
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../LoadDev/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LoadDev
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Lock/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Lock
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Lockdown/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Lockdown
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Maintenance/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Maintenance
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Massmove/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Massmove
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MassUnban/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MassUnban
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MemberCount/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MemberCount
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MemberPrefix/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MemberPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MentionTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Message/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Message
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MessagePinner/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MessagePinner
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Minesweeper/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Minesweeper
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Mod/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Mod
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ModLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ModLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ModManager/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ModManager
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ModRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ModRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MsgTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MsgTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Mutes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Mutes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NameChanger/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NameChanger
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NitroRole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NoRoleNoInvite/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoRoleNoInvite
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Notes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Notes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../OnEdit/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            OnEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../OnlineStats/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            OnlineStats
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Otherbot/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Otherbot
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Paginator/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Paginator
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PartyCrash/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PartyCrash
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PermChecker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PermChecker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PersonalChannels/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PersonalChannels
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PhenUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PhenUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Pinboard/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Pinboard
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PingSite/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PingSite
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Pingtime/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Pingtime
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PlantTycoon/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Poll/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Poll
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Prefix/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Prefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Prunecmd/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Prunecmd
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PyPi/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PyPi
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Quarantine/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Quarantine
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Quiz/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Quiz
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Quotes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Quotes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Ratings/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Ratings
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ReactLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ReactLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ReactRestrict/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ReactRestrict
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RepoList/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RepoList
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Reports/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Reports
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ReviewsCog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ReviewsCog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Riddles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Riddles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Rift/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Rift
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleBoards/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleBoards
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleNotify/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleNotify
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleRequests/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleRequests
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RolesButtons/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RolesButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Say/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Say
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SecretSanta/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SecretSanta
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SecureInv/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SecureInv
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SelfAssign/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SelfAssign
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SendCards/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SendCards
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Sendhook/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Sendhook
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Session/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Session
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Shell/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Shell
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Calculator/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Calculator
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SimpleSanction/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SimpleSanction
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Simulator/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Simulator
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Skyrim/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Skyrim
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../eep/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            eep
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SlowMode/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlowMode
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Snipe/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Snipe
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Spoilerer/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Spoilerer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Spotify/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Spotify
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Spotifyembed/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Spotifyembed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Status/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Status
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Sticky/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Sticky
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../StickyMember/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyMember
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Streams/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Streams
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Strikes/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Strikes
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../StripeIdentity/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StripeIdentity
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../System/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            System
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Talk/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Talk
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TempRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TempRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TextEditor/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TextEditor
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TheMovieDB/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TheMovieDB
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TicketTool/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TicketTool
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TimeoutSelf/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TimeoutSelf
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Timestamp/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Timestamp
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Timezone/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Timezone
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Trigger/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Trigger
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Trivia/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Trivia
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Twenty/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Twenty
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../TypeRacer/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            TypeRacer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UnbanAll/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UnbanAll
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Unbelievaboat/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Unbelievaboat
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UpdateChecker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UpdateChecker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UpgradeChat/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UpgradeChat
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UptimeResponder/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UptimeResponder
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UrlButtons/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UrlButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UrlFetch/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UrlFetch
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UselessFacts/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UselessFacts
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Userinfo/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Userinfo
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Verifyer/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ViewPermissions/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ViewPermissions
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../VoiceLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VoiceLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../VoiceTools/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VoiceTools
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../VoiceTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VoiceTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Voteout/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Voteout
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Weather/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Weather
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../WelcomeCount/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            WelcomeCount
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../WhosThatPokemon/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            WhosThatPokemon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../WordScramble/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            WordScramble
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../WordStats/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            WordStats
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Zalgo/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Zalgo
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Warnings/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Warnings
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../SlashTags/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlashTags
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Purge/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Purge
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BetterModlog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BetterModlog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BanChart/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BanChart
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ChessGame/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ChessGame
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UpdateRed/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UpdateRed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AudioSlash/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AudioSlash
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ServerStats/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ServerStats
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Highlight/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Highlight
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GuildLog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GuildLog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Application/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Application
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ChannelTimezone/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ChannelTimezone
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NoNuke/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoNuke
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ThreadOpener/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ThreadOpener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GuildStats/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GuildStats
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../StatTrack/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StatTrack
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Xenon/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Xenon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Modmail/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Modmail
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../LevelUp/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            LevelUp
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../COC/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            COC
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RandomEmoji/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RandomEmoji
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ServerInfo/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ServerInfo
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NoFuckYou/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AdWarn/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdWarn
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoDelete/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoDelete
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../QuestionOfTheDay/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            QuestionOfTheDay
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CustomHelp/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CustomHelp
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GameRoles/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GameRoles
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../EmojiInfo/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            EmojiInfo
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BotJoinMessage/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BotJoinMessage
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MsgReport/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MsgReport
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../FeatureRequest/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            FeatureRequest
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GameTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GameTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Cloudflare/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Cloudflare
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleManager/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleManager
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../CommandTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ImgurUploader/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ImgurUploader
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AFK/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AFK
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../InviteSettings/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            InviteSettings
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoPost/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoPost
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Roast/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Roast
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../VrtUtils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RoleSync/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleSync
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RestartMsg/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RestartMsg
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../OwnerProtection/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            OwnerProtection
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../PrivateWormHole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PrivateWormHole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Comm/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Comm
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Jail/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Jail
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../StaffManager/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StaffManager
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Dashboard/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Dashboard
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GuildLock/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GuildLock
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BankDecay/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BankDecay
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Fluent/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Fluent
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../IdeaBoard/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            IdeaBoard
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Perform/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Perform
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../UserTracker/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            UserTracker
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../NickNamer/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NickNamer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RequestGB/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RequestGB
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../WormHole/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            WormHole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AffiliatedServers/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AffiliatedServers
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../IntroCog/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            IntroCog
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Reminders/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Reminders
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Unknown/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Unknown
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../GCC/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            GCC
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Counter/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Counter
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoTraceback/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoTraceback
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../DiscordEdit/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RPS/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RPS
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../Counting/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Counting
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ExtendedEconomy/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ExtendedEconomy
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AdvancedLogger/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AdvancedLogger
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../ClearChannel/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            ClearChannel
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AAA3A_utils/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AAA3A_utils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../RandomTopic/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RandomTopic
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../BotLogger/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            BotLogger
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../MultiCommands/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MultiCommands
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoDocs/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoDocs
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="../AutoDocSite/"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoDocSite
+        </a>
+    </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!-- endblock -->
     </div>
-    
-  </div>
+</nav>
+        <!-- endblock -->
 
-    
+        <nav class="divider drac-bg-purple-cyan"></nav>
 
-    <h1 id="lastping-help">LastPing Help</h1>
-<p>View how long servers have lasted without a mass mention.</p>
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-  <br>
-    
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
 
-    
-    
-      
-    
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../KirA/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../LastSeen/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
 
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
-    
-    <div class="wm-article-nav pull-right">
-      <a href="../LastSeen/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../LastSeen/" class="btn btn-xs btn-link">
-        LastSeen
-      </a>
-    </div>
-    
-    <div class="wm-article-nav">
-      <a href="../KirA/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../KirA/" class="btn btn-xs btn-link">
-        KirA
-      </a>
-    </div>
-    
-  </div>
-
-    <br>
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
 </div>
+                    </li>
+                    <!--  endblock -->
 
-<footer class="col-md-12 wm-page-content">
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="None">Windmill Dark</a> theme by None (noraj).</p>
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="lastping-help">LastPing Help</h1>
+<p>View how long servers have lasted without a mass mention.</p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
 </footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
 
 </body>
+
 </html>
