@@ -27,7 +27,8 @@ class Bumper(commands.Cog):
             "description": None,
             "embed_color": 0x00FF00,  # Default to green
             "premium": False,
-            "last_bump": None
+            "last_bump": None,
+            "bump_count": 0
         }
 
         default_global = {
@@ -58,6 +59,7 @@ class Bumper(commands.Cog):
         """Set the bump channel."""
         await self.config.guild(ctx.guild).bump_channel.set(channel.id)
         await ctx.send(embed=discord.Embed(description=f"Bump channel set to: {channel.mention}", color=discord.Color.green()))
+        await self.log_new_server_bump(ctx.guild)
 
     @bumpset.command()
     async def invite(self, ctx: commands.Context, invite: str):
@@ -178,6 +180,7 @@ class Bumper(commands.Cog):
         await self.send_bump(ctx.guild)
 
         await self.config.guild(ctx.guild).last_bump.set(now.isoformat())
+        await self.increment_bump_count(ctx.guild)
         await ctx.send(embed=discord.Embed(description="Bump message sent to all configured servers.", color=discord.Color.green()))
 
     async def send_bump(self, guild: discord.Guild):
@@ -224,6 +227,7 @@ class Bumper(commands.Cog):
                 if bump_channel:
                     await bump_channel.send(embed=embed, view=view)
                     log.info(f"Bump sent to {g.name} in channel {bump_channel.name}.")
+                    await self.log_bump(g, guild)
 
     @commands.group()
     @commands.is_owner()
@@ -311,3 +315,32 @@ class Bumper(commands.Cog):
             if await self.config.guild(guild).premium():
                 log.info(f"Auto bumping for premium guild: {guild.name}")
                 await self.send_bump(guild)
+
+    async def increment_bump_count(self, guild: discord.Guild):
+        current_count = await self.config.guild(guild).bump_count()
+        await self.config.guild(guild).bump_count.set(current_count + 1)
+        bump_channel_id = await self.config.guild(guild).bump_channel()
+        bump_channel = guild.get_channel(bump_channel_id)
+        if bump_channel:
+            await bump_channel.send(f"{guild.name} was bumped by {guild.owner.name}. This server has been bumped {current_count + 1} times.")
+
+    async def log_bump(self, target_guild: discord.Guild, source_guild: discord.Guild):
+        bump_count = await self.config.guild(source_guild).bump_count()
+        bump_channel_id = await self.config.guild(target_guild).bump_channel()
+        bump_channel = target_guild.get_channel(bump_channel_id)
+        if bump_channel:
+            await bump_channel.send(f"{source_guild.name} was bumped by {source_guild.owner.name}. This server has been bumped {bump_count} times.")
+
+    async def log_new_server_bump(self, guild: discord.Guild):
+        report_channel_id = await self.config.report_channel()
+        if not report_channel_id:
+            return
+        report_channel = self.bot.get_channel(report_channel_id)
+        if not report_channel:
+            return
+        embed = discord.Embed(title="New Server Bump", color=discord.Color.blue())
+        embed.add_field(name="Server Name", value=guild.name, inline=True)
+        embed.add_field(name="Server ID", value=guild.id, inline=True)
+        embed.add_field(name="Server Owner", value=guild.owner.name, inline=True)
+        embed.add_field(name="Server Owner ID", value=guild.owner.id, inline=True)
+        await report_channel.send(embed=embed)
