@@ -256,6 +256,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/Bumper.html</loc>
+         <lastmod>2024-06-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/CCRole.html</loc>
          <lastmod>2024-06-25</lastmod>
          <changefreq>daily</changefreq>
