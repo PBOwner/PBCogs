@@ -543,14 +543,17 @@ Thank you for using **{site_name}**! We hope you enjoy all the features and func
                     "name": theme_name
                 },
                 "use_directory_urls": use_directory_urls,
-                "nav": [{"Home": "index.md"}]
+                "nav": [
+                    {"Home": "index.md"},
+                    {"Cogs": []}
+                ]
             }
 
-            # Add cogs to the navigation
+            # Add cogs to the Cogs category in the navigation
             for cog_name, cog in sorted(self.bot.cogs.items(), key=lambda item: item[0].lower()):
                 if cog_name in IGNORE:
                     continue
-                mkdocs_config["nav"].append({cog_name: f"{cog_name}.md"})
+                mkdocs_config["nav"][1]["Cogs"].append({cog_name: f"{cog_name}.md"})
 
             # Write mkdocs.yml configuration
             with open(mkdocs_config_path, "w", encoding="utf-8") as f:
