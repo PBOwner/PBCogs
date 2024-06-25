@@ -1,5 +1,6 @@
 import subprocess
 import socket
+import os
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 
@@ -106,9 +107,12 @@ class UserInstall(commands.Cog):
 
         await ctx.send("Starting the web server...")
         log_file = open('webserver.log', 'w')
-        process = subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py", host_ip], stdout=log_file, stderr=log_file)
-        await self.config.webserver_pid.set(process.pid)
-        await ctx.send(f"Web server started on {host_ip} with PID {process.pid}.")
+        try:
+            process = subprocess.Popen([venv_python_path, "cogs/userinstall/webserver.py", host_ip], stdout=log_file, stderr=log_file)
+            await self.config.webserver_pid.set(process.pid)
+            await ctx.send(f"Web server started on {host_ip} with PID {process.pid}.")
+        except Exception as e:
+            await ctx.send(f"Failed to start web server: {e}")
 
     @commands.command()
     @commands.is_owner()
