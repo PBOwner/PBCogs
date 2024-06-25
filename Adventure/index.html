@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.prismbot.icu/Adventure/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Adventure - FuturoBot Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Adventure";
+        var mkdocs_page_input_path = "Adventure.md";
+        var mkdocs_page_url = "/Adventure/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FuturoBot Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Core/">Core</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CogManagerUI/">CogManagerUI</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Permissions/">Permissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Downloader/">Downloader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Activities/">Activities</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AddImage/">AddImage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Admin/">Admin</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdminToggle/">AdminToggle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedBlacklist/">AdvancedBlacklist</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Adventure</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-rebirth">adventure rebirth</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-negaverse">adventure negaverse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-loot">adventure loot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-convert">adventure convert</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-aleaderboard">adventure aleaderboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-scoreboard">adventure scoreboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-nvsb">adventure nvsb</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-wscoreboard">adventure wscoreboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-heroclass">adventure heroclass</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-pet">adventure pet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-pet-find">adventure pet find</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-pet-forage">adventure pet forage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-pet-free">adventure pet free</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-bless">adventure bless</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-insight">adventure insight</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-rage">adventure rage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-focus">adventure focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-music">adventure music</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-forge">adventure forge</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-skill">adventure skill</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-setinfo">adventure setinfo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-stats">adventure stats</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-unequip">adventure unequip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-equip">adventure equip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack">adventure backpack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-show">adventure backpack show</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-equip">adventure backpack equip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-eset">adventure backpack eset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-disassemble">adventure backpack disassemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-sellall">adventure backpack sellall</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-sell">adventure backpack sell</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-backpack-trade">adventure backpack trade</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure-start">adventure start</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset">themeset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-delete">themeset delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-delete-pet">themeset delete pet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-delete-monster">themeset delete monster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-list">themeset list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-list-pet">themeset list pet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-list-monster">themeset list monster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-add">themeset add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-add-monster">themeset add monster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#themeset-add-pet">themeset add pet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rebirth">rebirth</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#negaverse">negaverse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loot">loot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#convert">convert</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loadout">loadout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loadout-delete">loadout delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loadout-show">loadout show</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loadout-equip">loadout equip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loadout-save">loadout save</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#aleaderboard">aleaderboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scoreboard">scoreboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#nvsb">nvsb</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wscoreboard">wscoreboard</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#atransfer">atransfer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#atransfer-player">atransfer player</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#atransfer-give">atransfer give</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#atransfer-deposit">atransfer deposit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#atransfer-withdraw">atransfer withdraw</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mysets">mysets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apayday">apayday</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#give">give</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#give-item">give item</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#give-loot">give loot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#devcooldown">devcooldown</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#makecart">makecart</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#genitems">genitems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#copyuser">copyuser</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#devrebirth">devrebirth</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#devreset">devreset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureseed">adventureseed</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventurestats">adventurestats</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#heroclass">heroclass</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pet">pet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pet-free">pet free</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pet-forage">pet forage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bless">bless</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#insight">insight</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rage">rage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#focus">focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#music">music</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#forge">forge</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#skill">skill</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setinfo">setinfo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stats">stats</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unequip">unequip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#equip">equip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack">backpack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-disassemble">backpack disassemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-sellall">backpack sellall</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-eset">backpack eset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-trade">backpack trade</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-equip">backpack equip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backpack-sell">backpack sell</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ebackpack">ebackpack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cbackpack">cbackpack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cbackpack-sell">cbackpack sell</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cbackpack-show">cbackpack show</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cbackpack-disassemble">cbackpack disassemble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset">adventureset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-carttime">adventureset carttime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-locks">adventureset locks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-locks-user">adventureset locks user</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-locks-adventure">adventureset locks adventure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-rebirthcost">adventureset rebirthcost</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-clear">adventureset clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-cartroom">adventureset cartroom</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-remove">adventureset remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-globalcartname">adventureset globalcartname</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-theme">adventureset theme</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-advcooldown">adventureset advcooldown</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-sepcurrency">adventureset sepcurrency</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-cart">adventureset cart</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-easymode">adventureset easymode</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-showsettings">adventureset showsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-dailybonus">adventureset dailybonus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-restrict">adventureset restrict</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-version">adventureset version</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-god">adventureset god</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-globalgod">adventureset globalgod</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-embeds">adventureset embeds</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-economy">adventureset economy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-economy-withdraw">adventureset economy withdraw</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-economy-rate">adventureset economy rate</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-economy-tax">adventureset economy tax</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-cartchests">adventureset cartchests</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventureset-cartname">adventureset cartname</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adventure">adventure</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Alias/">Alias</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Aliases/">Aliases</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltDentifier/">AltDentifier</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltMarker/">AltMarker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnnounceDaily/">AnnounceDaily</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnonReporter/">AnonReporter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiHonde/">AntiHonde</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiLinks/">AntiLinks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiPhishing/">AntiPhishing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiSpam/">AntiSpam</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ApiTools/">ApiTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Appeal/">Appeal</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AssistantUtils/">AssistantUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AuthGG/">AuthGG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoGist/">AutoGist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoMod/">AutoMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Availability/">Availability</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Backup/">Backup</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Badges/">Badges</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankEvents/">BankEvents</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BannedCount/">BannedCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanOnLeave/">BanOnLeave</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Battleship/">Battleship</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Birthday/">Birthday</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Blinder/">Blinder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BoostUtils/">BoostUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BrainfuckCog/">BrainfuckCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CardsAgainstHumanity/">CardsAgainstHumanity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calendar/">Calendar</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CaseInsensitive/">CaseInsensitive</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cashdrop/">Cashdrop</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CCRole/">CCRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Charlimit/">Charlimit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cleverbot/">Cleverbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Clone/">Clone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CodeSnippets/">CodeSnippets</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Coffeetools/">Coffeetools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Color/">Color</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandsButtons/">CommandsButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Converters/">Converters</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cooldown/">Cooldown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomCommands/">CustomCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomPing/">CustomPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DblTools/">DblTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DeleteCounter/">DeleteCounter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dev/">Dev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DevUtils/">DevUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dictionary/">Dictionary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DisboardReminder/">DisboardReminder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordModals/">DiscordModals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordSearch/">DiscordSearch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DontPingStaff/">DontPingStaff</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DropdownsTexts/">DropdownsTexts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DynamicChannelList/">DynamicChannelList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EasyRules/">EasyRules</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Economy/">Economy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EconomyTrickle/">EconomyTrickle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EditablePosts/">EditablePosts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Editor/">Editor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedCreator/">EmbedCreator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedPeek/">EmbedPeek</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedUtils/">EmbedUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiGrabber/">EmojiGrabber</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Encoding/">Encoding</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ErrorHandler/">ErrorHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EventPoster/">EventPoster</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Events/">Events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExclusiveRoles/">ExclusiveRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedModLog/">ExtendedModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FakeMod/">FakeMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FIFO/">FIFO</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Filter/">Filter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FirstMessage/">FirstMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Flags/">Flags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FollowCog/">FollowCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ForceMention/">ForceMention</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Freshmeat/">Freshmeat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GHIssues/">GHIssues</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GistsHandler/">GistsHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GitHubCards/">GitHubCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Giveaways/">Giveaways</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GlobalBan/">GlobalBan</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Gmail/">Gmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Grafana/">Grafana</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GTN/">GTN</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildID/">GuildID</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hangman/">Hangman</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hellohook/">Hellohook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HidePing/">HidePing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hider/">Hider</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HostInfo/">HostInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HttpCat/">HttpCat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Image/">Image</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageLog/">ImageLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageScanner/">ImageScanner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Index/">Index</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InfoChannel/">InfoChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InRole/">InRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Inspirobot/">Inspirobot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InstantCommands/">InstantCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteBlocklist/">InviteBlocklist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IsItDown/">IsItDown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../JoinPing/">JoinPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jokes/">Jokes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../KirA/">KirA</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastPing/">LastPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastSeen/">LastSeen</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lenny/">Lenny</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LinkQuoter/">LinkQuoter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListMaker/">ListMaker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListPermissions/">ListPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListThreads/">ListThreads</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LoadDev/">LoadDev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lock/">Lock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lockdown/">Lockdown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Maintenance/">Maintenance</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Massmove/">Massmove</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MassUnban/">MassUnban</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberCount/">MemberCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberPrefix/">MemberPrefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MentionTracker/">MentionTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Message/">Message</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MessagePinner/">MessagePinner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Minesweeper/">Minesweeper</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mod/">Mod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModLog/">ModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModManager/">ModManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModRoles/">ModRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgTracker/">MsgTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mutes/">Mutes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NameChanger/">NameChanger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NitroRole/">NitroRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoRoleNoInvite/">NoRoleNoInvite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Notes/">Notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnEdit/">OnEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnlineStats/">OnlineStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Otherbot/">Otherbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Paginator/">Paginator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PartyCrash/">PartyCrash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PermChecker/">PermChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PersonalChannels/">PersonalChannels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PhenUtils/">PhenUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pinboard/">Pinboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PingSite/">PingSite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pingtime/">Pingtime</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PlantTycoon/">PlantTycoon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Poll/">Poll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prefix/">Prefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prunecmd/">Prunecmd</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PyPi/">PyPi</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quarantine/">Quarantine</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quiz/">Quiz</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quotes/">Quotes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Ratings/">Ratings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactLog/">ReactLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactRestrict/">ReactRestrict</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RepoList/">RepoList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReviewsCog/">ReviewsCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Riddles/">Riddles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Rift/">Rift</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleBoards/">RoleBoards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleNotify/">RoleNotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleRequests/">RoleRequests</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RolesButtons/">RolesButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleTools/">RoleTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Say/">Say</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecretSanta/">SecretSanta</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecureInv/">SecureInv</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SelfAssign/">SelfAssign</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SendCards/">SendCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sendhook/">Sendhook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Session/">Session</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Shell/">Shell</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calculator/">Calculator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SimpleSanction/">SimpleSanction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Simulator/">Simulator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Skyrim/">Skyrim</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../eep/">eep</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlowMode/">SlowMode</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Snipe/">Snipe</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spoilerer/">Spoilerer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotify/">Spotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotifyembed/">Spotifyembed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Status/">Status</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sticky/">Sticky</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StickyMember/">StickyMember</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Streams/">Streams</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Strikes/">Strikes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StripeIdentity/">StripeIdentity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../System/">System</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Talk/">Talk</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TempRoles/">TempRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TextEditor/">TextEditor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TheMovieDB/">TheMovieDB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TicketTool/">TicketTool</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TimeoutSelf/">TimeoutSelf</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timestamp/">Timestamp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timezone/">Timezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trigger/">Trigger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trivia/">Trivia</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Twenty/">Twenty</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TypeRacer/">TypeRacer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UnbanAll/">UnbanAll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unbelievaboat/">Unbelievaboat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateChecker/">UpdateChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpgradeChat/">UpgradeChat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UptimeResponder/">UptimeResponder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlButtons/">UrlButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlFetch/">UrlFetch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UselessFacts/">UselessFacts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Userinfo/">Userinfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Verifyer/">Verifyer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ViewPermissions/">ViewPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceLog/">VoiceLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTools/">VoiceTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTracker/">VoiceTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Voteout/">Voteout</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Weather/">Weather</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WelcomeCount/">WelcomeCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WhosThatPokemon/">WhosThatPokemon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordScramble/">WordScramble</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordStats/">WordStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Zalgo/">Zalgo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Warnings/">Warnings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlashTags/">SlashTags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Purge/">Purge</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BetterModlog/">BetterModlog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanChart/">BanChart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChessGame/">ChessGame</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateRed/">UpdateRed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AudioSlash/">AudioSlash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerStats/">ServerStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Highlight/">Highlight</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLog/">GuildLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChannelTimezone/">ChannelTimezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoNuke/">NoNuke</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ThreadOpener/">ThreadOpener</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildStats/">GuildStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StatTrack/">StatTrack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Xenon/">Xenon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleUtils/">RoleUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Modmail/">Modmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LevelUp/">LevelUp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../COC/">COC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomEmoji/">RandomEmoji</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerInfo/">ServerInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoFuckYou/">NoFuckYou</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdWarn/">AdWarn</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDelete/">AutoDelete</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../QuestionOfTheDay/">QuestionOfTheDay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomHelp/">CustomHelp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameRoles/">GameRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiInfo/">EmojiInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotJoinMessage/">BotJoinMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgReport/">MsgReport</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FeatureRequest/">FeatureRequest</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameTracker/">GameTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cloudflare/">Cloudflare</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleManager/">RoleManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandTracker/">CommandTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImgurUploader/">ImgurUploader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AFK/">AFK</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteSettings/">InviteSettings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoPost/">AutoPost</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Roast/">Roast</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VrtUtils/">VrtUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleSync/">RoleSync</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RestartMsg/">RestartMsg</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OwnerProtection/">OwnerProtection</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PrivateWormHole/">PrivateWormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Comm/">Comm</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jail/">Jail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StaffManager/">StaffManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dashboard/">Dashboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLock/">GuildLock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankDecay/">BankDecay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Fluent/">Fluent</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IdeaBoard/">IdeaBoard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Perform/">Perform</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UserTracker/">UserTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NickNamer/">NickNamer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RequestGB/">RequestGB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WormHole/">WormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AffiliatedServers/">AffiliatedServers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IntroCog/">IntroCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reminders/">Reminders</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unknown/">Unknown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GCC/">GCC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counter/">Counter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoTraceback/">AutoTraceback</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordEdit/">DiscordEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RPS/">RPS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counting/">Counting</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedEconomy/">ExtendedEconomy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedLogger/">AdvancedLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ClearChannel/">ClearChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AAA3A_utils/">AAA3A_utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomTopic/">RandomTopic</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotLogger/">BotLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MultiCommands/">MultiCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocs/">AutoDocs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocSite/">AutoDocSite</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FuturoBot Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Adventure</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="adventure-help">Adventure Help</h1>
+<p>Adventure, derived from the Goblins Adventure cog by locastan.</p>
+<h3 id="adventure-rebirth">adventure rebirth</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure rebirth</code></p>
+<h3 id="adventure-negaverse">adventure negaverse</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure negaverse</code></p>
+<h3 id="adventure-loot">adventure loot</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure loot</code></p>
+<h3 id="adventure-convert">adventure convert</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure convert</code></p>
+<h3 id="adventure-aleaderboard">adventure aleaderboard</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure aleaderboard</code></p>
+<h3 id="adventure-scoreboard">adventure scoreboard</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure scoreboard</code></p>
+<h3 id="adventure-nvsb">adventure nvsb</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure nvsb</code></p>
+<h3 id="adventure-wscoreboard">adventure wscoreboard</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure wscoreboard</code></p>
+<h3 id="adventure-heroclass">adventure heroclass</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure heroclass</code></p>
+<h3 id="adventure-pet">adventure pet</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure pet</code></p>
+<h3 id="adventure-pet-find">adventure pet find</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure pet find</code></p>
+<h3 id="adventure-pet-forage">adventure pet forage</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure pet forage</code></p>
+<h3 id="adventure-pet-free">adventure pet free</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure pet free</code></p>
+<h3 id="adventure-bless">adventure bless</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure bless</code></p>
+<h3 id="adventure-insight">adventure insight</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure insight</code></p>
+<h3 id="adventure-rage">adventure rage</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure rage</code></p>
+<h3 id="adventure-focus">adventure focus</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure focus</code></p>
+<h3 id="adventure-music">adventure music</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure music</code></p>
+<h3 id="adventure-forge">adventure forge</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure forge</code></p>
+<h3 id="adventure-skill">adventure skill</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure skill</code></p>
+<h3 id="adventure-setinfo">adventure setinfo</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure setinfo</code></p>
+<h3 id="adventure-stats">adventure stats</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure stats</code></p>
+<h3 id="adventure-unequip">adventure unequip</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure unequip</code></p>
+<h3 id="adventure-equip">adventure equip</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure equip</code></p>
+<h3 id="adventure-backpack">adventure backpack</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack</code></p>
+<h3 id="adventure-backpack-show">adventure backpack show</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack show</code></p>
+<h3 id="adventure-backpack-equip">adventure backpack equip</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack equip</code></p>
+<h3 id="adventure-backpack-eset">adventure backpack eset</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack eset</code></p>
+<h3 id="adventure-backpack-disassemble">adventure backpack disassemble</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack disassemble</code></p>
+<h3 id="adventure-backpack-sellall">adventure backpack sellall</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack sellall</code></p>
+<h3 id="adventure-backpack-sell">adventure backpack sell</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack sell</code></p>
+<h3 id="adventure-backpack-trade">adventure backpack trade</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure backpack trade</code></p>
+<h3 id="adventure-start">adventure start</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,adventure start</code></p>
+<h3 id="themeset">themeset</h3>
+<p><strong>Description:</strong> [Admin] Modify themes.</p>
+<p><strong>Usage:</strong> <code>,themeset</code></p>
+<h3 id="themeset-delete">themeset delete</h3>
+<p><strong>Description:</strong> [Owner] Remove objects in the specified theme.</p>
+<p><strong>Usage:</strong> <code>,themeset delete</code></p>
+<h3 id="themeset-delete-pet">themeset delete pet</h3>
+<p><strong>Description:</strong> [Owner] Remove a pet object in the specified theme.</p>
+<p>The default theme is <code>default</code>.</p>
+<p><strong>Usage:</strong> <code>,themeset delete pet</code></p>
+<h3 id="themeset-delete-monster">themeset delete monster</h3>
+<p><strong>Description:</strong> [Owner] Remove a monster object in the specified theme.</p>
+<p>The default theme is <code>default</code>.</p>
+<p><strong>Usage:</strong> <code>,themeset delete monster</code></p>
+<h3 id="themeset-list">themeset list</h3>
+<p><strong>Description:</strong> [Admin] Show custom objects in the specified theme.</p>
+<p><strong>Usage:</strong> <code>,themeset list</code></p>
+<h3 id="themeset-list-pet">themeset list pet</h3>
+<p><strong>Description:</strong> [Admin] Show pet objects in the specified theme.</p>
+<p>The default theme is <code>default</code>.
+This will only display custom pets added through the <code>themeset</code> command.</p>
+<p><strong>Usage:</strong> <code>,themeset list pet</code></p>
+<h3 id="themeset-list-monster">themeset list monster</h3>
+<p><strong>Description:</strong> [Admin] Show monster objects in the specified theme.</p>
+<p>The default theme is <code>default</code>.
+This will only display custom monsters added through the <code>themeset</code> command.</p>
+<p><strong>Usage:</strong> <code>,themeset list monster</code></p>
+<h3 id="themeset-add">themeset add</h3>
+<p><strong>Description:</strong> [Owner] Add/Update objects in the specified theme.</p>
+<p><strong>Usage:</strong> <code>,themeset add</code></p>
+<h3 id="themeset-add-monster">themeset add monster</h3>
+<p><strong>Description:</strong> [Owner] Add/Update a monster object in the specified theme.</p>
+<p>Usage: <code>[p]themeset add monster theme++name++hp++dipl++pdef++mdef++cdef++boss++image</code></p>
+<p><code>theme</code> is the one-word theme folder name. The default is <code>default</code>.
+<code>name</code> is the name of the monster.
+<code>hp</code> is the base amount of hp the monster has.
+<code>dipl</code> is the base amount of charisma/diplomacy the monster has.
+<code>pdef</code> is the percentage of physical resistance, <code>0.0</code> to <code>100.0</code>.
+<code>mdef</code> is the percentage of magic resistance, <code>0.0</code> to <code>100.0</code>.
+<code>cdef</code> is the percentage of charisma/diplomacy resistance, <code>0.0</code> to <code>100.0</code>.
+<code>boss</code> is whether the monster is a boss, determined with <code>True</code> or <code>False</code>.
+<code>image</code> is a URL for an image of the monster.</p>
+<p><strong>Usage:</strong> <code>,themeset add monster</code></p>
+<h3 id="themeset-add-pet">themeset add pet</h3>
+<p><strong>Description:</strong> [Owner] Add/Update a pet object in the specified theme.</p>
+<p>Usage: <code>[p]themeset add pet theme++name++bonus_multiplier++required_cha++crit_chance++always_crit</code></p>
+<p><code>theme</code> is the one-word theme folder name. The default is <code>default</code>.
+<code>name</code> is the name of the pet.
+<code>bonus_multiplier</code> is a number between <code>1.00</code> and <code>2.00</code> for the reward bonus percentage on a successful adventure.
+<code>required_cha</code> is the required charisma/diplomacy level that the ranger must overcome to catch the pet - usually between <code>1</code> and <code>500</code>.
+<code>crit_chance</code> is the chance to have a critical strike, between <code>1</code> and <code>100</code> percent.
+<code>always_crit</code> is <code>True</code> or <code>False</code> for whether the pet will always have a critical strike when attacking.</p>
+<p><strong>Usage:</strong> <code>,themeset add pet</code></p>
+<h3 id="rebirth">rebirth</h3>
+<p><strong>Description:</strong> Resets your character level and increases your rebirths by 1.</p>
+<p><strong>Usage:</strong> <code>,rebirth</code></p>
+<h3 id="negaverse">negaverse</h3>
+<p><strong>Description:</strong> This will send you to fight a nega-member!</p>
+<p><strong>Usage:</strong> <code>,negaverse</code></p>
+<h3 id="loot">loot</h3>
+<p><strong>Description:</strong> This opens one of your precious treasure chests.</p>
+<p>Use the box rarity type with the command: normal, rare, epic, legendary, ascended or set.</p>
+<p><strong>Usage:</strong> <code>,loot</code></p>
+<h3 id="convert">convert</h3>
+<p><strong>Description:</strong> Convert normal, rare or epic chests.</p>
+<p>Trade 25 normal chests for 1 rare chest.
+Trade 25 rare chests for 1 epic chest.
+Trade 25 epic chests for 1 legendary chest.</p>
+<p><strong>Usage:</strong> <code>,convert</code></p>
+<h3 id="loadout">loadout</h3>
+<p><strong>Description:</strong> Set up gear sets or loadouts.</p>
+<p><strong>Usage:</strong> <code>,loadout</code></p>
+<h3 id="loadout-delete">loadout delete</h3>
+<p><strong>Description:</strong> Delete a saved loadout.</p>
+<p><strong>Usage:</strong> <code>,loadout delete</code></p>
+<h3 id="loadout-show">loadout show</h3>
+<p><strong>Description:</strong> Show saved loadouts.</p>
+<p><strong>Usage:</strong> <code>,loadout show</code></p>
+<h3 id="loadout-equip">loadout equip</h3>
+<p><strong>Description:</strong> Equip a saved loadout.</p>
+<p><strong>Usage:</strong> <code>,loadout equip</code></p>
+<h3 id="loadout-save">loadout save</h3>
+<p><strong>Description:</strong> Save your current equipment as a loadout.</p>
+<p><strong>Usage:</strong> <code>,loadout save</code></p>
+<h3 id="aleaderboard">aleaderboard</h3>
+<p><strong>Description:</strong> Print the leaderboard.</p>
+<p><strong>Usage:</strong> <code>,aleaderboard</code></p>
+<h3 id="scoreboard">scoreboard</h3>
+<p><strong>Description:</strong> Print the scoreboard.</p>
+<p><strong>Usage:</strong> <code>,scoreboard</code></p>
+<h3 id="nvsb">nvsb</h3>
+<p><strong>Description:</strong> Print the negaverse scoreboard.</p>
+<p><strong>Usage:</strong> <code>,nvsb</code></p>
+<h3 id="wscoreboard">wscoreboard</h3>
+<p><strong>Description:</strong> Print the weekly scoreboard.</p>
+<p><strong>Usage:</strong> <code>,wscoreboard</code></p>
+<h3 id="atransfer">atransfer</h3>
+<p><strong>Description:</strong> Transfer currency between players/economies.</p>
+<p><strong>Usage:</strong> <code>,atransfer</code></p>
+<h3 id="atransfer-player">atransfer player</h3>
+<p><strong>Description:</strong> Transfer gold to another player.</p>
+<p><strong>Usage:</strong> <code>,atransfer player</code></p>
+<h3 id="atransfer-give">atransfer give</h3>
+<p><strong>Description:</strong> [Owner] Give gold to adventurers.</p>
+<p><strong>Usage:</strong> <code>,atransfer give</code></p>
+<h3 id="atransfer-deposit">atransfer deposit</h3>
+<p><strong>Description:</strong> Convert bank currency to gold.</p>
+<p><strong>Usage:</strong> <code>,atransfer deposit</code></p>
+<h3 id="atransfer-withdraw">atransfer withdraw</h3>
+<p><strong>Description:</strong> Convert gold to bank currency.</p>
+<p><strong>Usage:</strong> <code>,atransfer withdraw</code></p>
+<h3 id="mysets">mysets</h3>
+<p><strong>Description:</strong> Show your sets.</p>
+<p><strong>Usage:</strong> <code>,mysets</code></p>
+<h3 id="apayday">apayday</h3>
+<p><strong>Description:</strong> Get some free gold.</p>
+<p><strong>Usage:</strong> <code>,apayday</code></p>
+<h3 id="give">give</h3>
+<p><strong>Description:</strong> [Owner] Commands to add things to players' inventories.</p>
+<p><strong>Usage:</strong> <code>,give</code></p>
+<h3 id="give-item">give item</h3>
+<p><strong>Description:</strong> [Owner] Adds a custom item to a specified member.</p>
+<p>Item names containing spaces must be enclosed in double quotes.
+available stats are:
+- <code>attack:</code> or <code>att:</code> defaults to 0.
+- <code>charisma:</code> or <code>diplo:</code> or <code>cha:</code> defaults to 0.
+- <code>intelligence:</code> or <code>int:</code> defaults to 0.
+- <code>dexterity:</code> or <code>dex:</code> defaults to 0.
+- <code>luck:</code> defaults to 0.
+- <code>rarity:</code> (one of <code>normal</code>, <code>rare</code>, <code>epic</code>, <code>legendary</code>, <code>set</code>, <code>forged</code>, or <code>event</code>) defaults to normal.
+- <code>degrade:</code> (Set to -1 to never degrade on rebirths) defaults to 3.
+- <code>level:</code> or <code>lvl:</code> defaults to the calculated level required based on stats.
+- <code>slot:</code> (one of <code>head</code>, <code>neck</code>, <code>chest</code>, <code>gloves</code>, <code>belt</code>, <code>legs</code>, <code>boots</code>, <code>left</code>, <code>right</code>
+  <code>ring</code>, <code>charm</code>, <code>two handed</code>) defaults to left.
+Example:</p>
+<pre><code>[p]give item @locastan &quot;fine dagger&quot; att: 1 charisma: 1 degrade: -1 level: 100 rarity: rare slot: twohanded
+</code></pre>
+<p>Will give locastan a 1 attack 1 charisma <code>.fine_dagger</code>.</p>
+<p><strong>Usage:</strong> <code>,give item</code></p>
+<h3 id="give-loot">give loot</h3>
+<p><strong>Description:</strong> [Owner] Give treasure chest(s) to all specified users.</p>
+<p><strong>Usage:</strong> <code>,give loot</code></p>
+<h3 id="devcooldown">devcooldown</h3>
+<p><strong>Description:</strong> [Dev] Resets the after-adventure cooldown in this server.</p>
+<p><strong>Usage:</strong> <code>,devcooldown</code></p>
+<h3 id="makecart">makecart</h3>
+<p><strong>Description:</strong> [Dev] Force a cart to appear.</p>
+<p><strong>Usage:</strong> <code>,makecart</code></p>
+<h3 id="genitems">genitems</h3>
+<p><strong>Description:</strong> [Dev] Generate random items.</p>
+<p><strong>Usage:</strong> <code>,genitems</code></p>
+<h3 id="copyuser">copyuser</h3>
+<p><strong>Description:</strong> [Owner] Copy another members data to yourself.</p>
+<p>Note this overrides your current data.</p>
+<p><strong>Usage:</strong> <code>,copyuser</code></p>
+<h3 id="devrebirth">devrebirth</h3>
+<p><strong>Description:</strong> [Dev] Set multiple users rebirths and level.</p>
+<p><strong>Usage:</strong> <code>,devrebirth</code></p>
+<h3 id="devreset">devreset</h3>
+<p><strong>Description:</strong> [Dev] Reset the skill cooldown for multiple users.</p>
+<p><strong>Usage:</strong> <code>,devreset</code></p>
+<h3 id="adventureseed">adventureseed</h3>
+<p><strong>Description:</strong> [Owner] Shows information about an adventure seed</p>
+<p><strong>Usage:</strong> <code>,adventureseed</code></p>
+<h3 id="adventurestats">adventurestats</h3>
+<p><strong>Description:</strong> [Owner] Show all current adventures.</p>
+<p><strong>Usage:</strong> <code>,adventurestats</code></p>
+<h3 id="heroclass">heroclass</h3>
+<p><strong>Description:</strong> Allows you to select a class if you are level 10 or above.</p>
+<p>For information on class use: <code>[p]heroclass classname info</code>.</p>
+<p><strong>Usage:</strong> <code>,heroclass</code></p>
+<h3 id="pet">pet</h3>
+<p><strong>Description:</strong> [Ranger Class Only]</p>
+<p>This allows a Ranger to tame or set free a pet or send it foraging.</p>
+<p><strong>Usage:</strong> <code>,pet</code></p>
+<h3 id="pet-free">pet free</h3>
+<p><strong>Description:</strong> Free your pet :cry:</p>
+<p><strong>Usage:</strong> <code>,pet free</code></p>
+<h3 id="pet-forage">pet forage</h3>
+<p><strong>Description:</strong> Use your pet to forage for items!</p>
+<p><strong>Usage:</strong> <code>,pet forage</code></p>
+<h3 id="bless">bless</h3>
+<p><strong>Description:</strong> [Cleric Class Only]</p>
+<p>This allows a praying Cleric to add substantial bonuses for heroes fighting the battle.</p>
+<p><strong>Usage:</strong> <code>,bless</code></p>
+<h3 id="insight">insight</h3>
+<p><strong>Description:</strong> [Psychic Class Only]
+This allows a Psychic to expose the current enemy's weakeness to the party.</p>
+<p><strong>Usage:</strong> <code>,insight</code></p>
+<h3 id="rage">rage</h3>
+<p><strong>Description:</strong> [Berserker Class Only]</p>
+<p>This allows a Berserker to add substantial attack bonuses for one battle.</p>
+<p><strong>Usage:</strong> <code>,rage</code></p>
+<h3 id="focus">focus</h3>
+<p><strong>Description:</strong> [Wizard Class Only]</p>
+<p>This allows a Wizard to add substantial magic bonuses for one battle.</p>
+<p><strong>Usage:</strong> <code>,focus</code></p>
+<h3 id="music">music</h3>
+<p><strong>Description:</strong> [Bard Class Only]</p>
+<p>This allows a Bard to add substantial diplomacy bonuses for one battle.</p>
+<p><strong>Usage:</strong> <code>,music</code></p>
+<h3 id="forge">forge</h3>
+<p><strong>Description:</strong> [Tinkerer Class Only]</p>
+<p>This allows a Tinkerer to forge two items into a device. (1h cooldown)</p>
+<p><strong>Usage:</strong> <code>,forge</code></p>
+<h3 id="skill">skill</h3>
+<p><strong>Description:</strong> This allows you to spend skillpoints.</p>
+<p><code>[p]skill attack/charisma/intelligence</code>
+<code>[p]skill reset</code> Will allow you to reset your skill points for a cost.</p>
+<p><strong>Usage:</strong> <code>,skill</code></p>
+<h3 id="setinfo">setinfo</h3>
+<p><strong>Description:</strong> Show set bonuses for the specified set.</p>
+<p><strong>Usage:</strong> <code>,setinfo</code></p>
+<h3 id="stats">stats</h3>
+<p><strong>Description:</strong> This draws up a character sheet of you or an optionally specified member.</p>
+<p><strong>Usage:</strong> <code>,stats</code></p>
+<h3 id="unequip">unequip</h3>
+<p><strong>Description:</strong> This stashes a specified equipped item into your backpack.</p>
+<p>Use <code>[p]unequip name of item</code> or <code>[p]unequip slot</code></p>
+<p><strong>Usage:</strong> <code>,unequip</code></p>
+<h3 id="equip">equip</h3>
+<p><strong>Description:</strong> This equips an item from your backpack.</p>
+<p><strong>Usage:</strong> <code>,equip</code></p>
+<h3 id="backpack">backpack</h3>
+<p><strong>Description:</strong> This shows the contents of your backpack.</p>
+<p>Give it a rarity and/or slot to filter what backpack items to show.</p>
+<p>Selling:     <code>[p]backpack sell item_name</code>
+Trading:     <code>[p]backpack trade @user price item_name</code>
+Equip:       <code>[p]backpack equip item_name</code>
+Sell All:    <code>[p]backpack sellall rarity slot</code>
+Disassemble: <code>[p]backpack disassemble item_name</code></p>
+<p>Note: An item <strong>degrade</strong> level is how many rebirths it will last, before it is broken down.</p>
+<p><strong>Usage:</strong> <code>,backpack</code></p>
+<h3 id="backpack-disassemble">backpack disassemble</h3>
+<p><strong>Description:</strong> Disassemble items from your backpack.</p>
+<p>This will provide a chance for a chest,
+or the item might break while you are handling it...</p>
+<p><strong>Usage:</strong> <code>,backpack disassemble</code></p>
+<h3 id="backpack-sellall">backpack sellall</h3>
+<p><strong>Description:</strong> Sell all items in your backpack. Optionally specify rarity or slot.</p>
+<p><strong>Usage:</strong> <code>,backpack sellall</code></p>
+<h3 id="backpack-eset">backpack eset</h3>
+<p><strong>Description:</strong> Equip all parts of a set that you own.</p>
+<p><strong>Usage:</strong> <code>,backpack eset</code></p>
+<h3 id="backpack-trade">backpack trade</h3>
+<p><strong>Description:</strong> Trade an item from your backpack to another user.</p>
+<p><strong>Usage:</strong> <code>,backpack trade</code></p>
+<h3 id="backpack-equip">backpack equip</h3>
+<p><strong>Description:</strong> Equip an item from your backpack.</p>
+<p><strong>Usage:</strong> <code>,backpack equip</code></p>
+<h3 id="backpack-sell">backpack sell</h3>
+<p><strong>Description:</strong> Sell an item from your backpack.</p>
+<p><strong>Usage:</strong> <code>,backpack sell</code></p>
+<h3 id="ebackpack">ebackpack</h3>
+<p><strong>Description:</strong> This shows the contents of your backpack that can be equipped.</p>
+<p>Give it a rarity and/or slot to filter what backpack items to show.</p>
+<p>Note: An item <strong>degrade</strong> level is how many rebirths it will last, before it is broken down.</p>
+<p><strong>Usage:</strong> <code>,ebackpack</code></p>
+<h3 id="cbackpack">cbackpack</h3>
+<p><strong>Description:</strong> Complex backpack management tools.</p>
+<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
+<p><strong>Usage:</strong> <code>,cbackpack</code></p>
+<h3 id="cbackpack-sell">cbackpack sell</h3>
+<p><strong>Description:</strong> Sell items from your backpack.</p>
+<p>Forged items cannot be sold using this command.</p>
+<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
+<p><strong>Usage:</strong> <code>,cbackpack sell</code></p>
+<h3 id="cbackpack-show">cbackpack show</h3>
+<p><strong>Description:</strong> This shows the contents of your backpack.</p>
+<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
+<p><strong>Usage:</strong> <code>,cbackpack show</code></p>
+<h3 id="cbackpack-disassemble">cbackpack disassemble</h3>
+<p><strong>Description:</strong> Disassemble items from your backpack.</p>
+<p>This will provide a chance for a chest,
+or the item might break while you are handling it...</p>
+<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
+<p><strong>Usage:</strong> <code>,cbackpack disassemble</code></p>
+<h3 id="adventureset">adventureset</h3>
+<p><strong>Description:</strong> Setup various adventure settings.</p>
+<p><strong>Usage:</strong> <code>,adventureset</code></p>
+<h3 id="adventureset-carttime">adventureset carttime</h3>
+<p><strong>Description:</strong> [Admin] Set the cooldown of the cart.
+Time can be in seconds, minutes, hours, or days.
+Examples: <code>1h 30m</code>, <code>2 days</code>, <code>300 seconds</code></p>
+<p><strong>Usage:</strong> <code>,adventureset carttime</code></p>
+<h3 id="adventureset-locks">adventureset locks</h3>
+<p><strong>Description:</strong> [Admin] Reset Adventure locks.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks</code></p>
+<h3 id="adventureset-locks-user">adventureset locks user</h3>
+<p><strong>Description:</strong> [Owner] Reset a multiple adventurers lock.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks user</code></p>
+<h3 id="adventureset-locks-adventure">adventureset locks adventure</h3>
+<p><strong>Description:</strong> [Admin] Reset the adventure game lock for the server.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks adventure</code></p>
+<h3 id="adventureset-rebirthcost">adventureset rebirthcost</h3>
+<p><strong>Description:</strong> [Admin] Set what percentage of the user balance to charge for rebirths.</p>
+<p>Unless the user's balance is under 1k, users that rebirth will be left with the base of 1k credits plus the remaining credit percentage after the rebirth charge.</p>
+<p><strong>Usage:</strong> <code>,adventureset rebirthcost</code></p>
+<h3 id="adventureset-clear">adventureset clear</h3>
+<p><strong>Description:</strong> [Owner] Lets you clear multiple users character sheets.</p>
+<p><strong>Usage:</strong> <code>,adventureset clear</code></p>
+<h3 id="adventureset-cartroom">adventureset cartroom</h3>
+<p><strong>Description:</strong> [Admin] Lock carts to a specific text channel.</p>
+<p><strong>Usage:</strong> <code>,adventureset cartroom</code></p>
+<h3 id="adventureset-remove">adventureset remove</h3>
+<p><strong>Description:</strong> [Owner] Lets you remove an item from a user.</p>
+<p>Use the full name of the item including the rarity characters like . or []  or {}.</p>
+<p><strong>Usage:</strong> <code>,adventureset remove</code></p>
+<h3 id="adventureset-globalcartname">adventureset globalcartname</h3>
+<p><strong>Description:</strong> [Owner] Set the default name of the cart.</p>
+<p><strong>Usage:</strong> <code>,adventureset globalcartname</code></p>
+<h3 id="adventureset-theme">adventureset theme</h3>
+<p><strong>Description:</strong> [Owner] Change the theme for adventure.</p>
+<p>The default theme is <code>default</code>.
+More info can be found at: <a href="https://github.com/aikaterna/gobcog#make-your-own-adventure-theme">https://github.com/aikaterna/gobcog#make-your-own-adventure-theme</a></p>
+<p><strong>Usage:</strong> <code>,adventureset theme</code></p>
+<h3 id="adventureset-advcooldown">adventureset advcooldown</h3>
+<p><strong>Description:</strong> [Admin] Changes the cooldown/gather time after an adventure.</p>
+<p>Default is 120 seconds.</p>
+<p><strong>Usage:</strong> <code>,adventureset advcooldown</code></p>
+<h3 id="adventureset-sepcurrency">adventureset sepcurrency</h3>
+<p><strong>Description:</strong> [Owner] Toggle whether the currency should be separated from main bot currency.</p>
+<p><strong>Usage:</strong> <code>,adventureset sepcurrency</code></p>
+<h3 id="adventureset-cart">adventureset cart</h3>
+<p><strong>Description:</strong> [Admin] Add or remove a text channel that the Trader cart can appear in.</p>
+<p>If the channel is already in the list, it will be removed.
+Use <code>[p]adventureset cart</code> with no arguments to show the channel list.</p>
+<p><strong>Usage:</strong> <code>,adventureset cart</code></p>
+<h3 id="adventureset-easymode">adventureset easymode</h3>
+<p><strong>Description:</strong> [Owner] Set whether or not Adventure will be in easy mode.</p>
+<p>Easy mode gives less rewards, but monster information is shown.</p>
+<p><strong>Usage:</strong> <code>,adventureset easymode</code></p>
+<h3 id="adventureset-showsettings">adventureset showsettings</h3>
+<p><strong>Description:</strong> Display current settings.</p>
+<p><strong>Usage:</strong> <code>,adventureset showsettings</code></p>
+<h3 id="adventureset-dailybonus">adventureset dailybonus</h3>
+<p><strong>Description:</strong> [Owner] Set the daily xp and currency bonus.</p>
+<p><strong>percentage</strong> must be between 0% and 100%.</p>
+<p><strong>Usage:</strong> <code>,adventureset dailybonus</code></p>
+<h3 id="adventureset-restrict">adventureset restrict</h3>
+<p><strong>Description:</strong> [Owner] Set whether or not adventurers are restricted to one adventure at a time.</p>
+<p><strong>Usage:</strong> <code>,adventureset restrict</code></p>
+<h3 id="adventureset-version">adventureset version</h3>
+<p><strong>Description:</strong> Display the version of adventure being used.</p>
+<p><strong>Usage:</strong> <code>,adventureset version</code></p>
+<h3 id="adventureset-god">adventureset god</h3>
+<p><strong>Description:</strong> [Admin] Set the server's name of the god.</p>
+<p><strong>Usage:</strong> <code>,adventureset god</code></p>
+<h3 id="adventureset-globalgod">adventureset globalgod</h3>
+<p><strong>Description:</strong> [Owner] Set the default name of the god.</p>
+<p><strong>Usage:</strong> <code>,adventureset globalgod</code></p>
+<h3 id="adventureset-embeds">adventureset embeds</h3>
+<p><strong>Description:</strong> [Admin] Set whether or not to use embeds for the adventure game.</p>
+<p><strong>Usage:</strong> <code>,adventureset embeds</code></p>
+<h3 id="adventureset-economy">adventureset economy</h3>
+<p><strong>Description:</strong> [Admin] Manages the adventure economy.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy</code></p>
+<h3 id="adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</h3>
+<p><strong>Description:</strong> [Admin] Set how much players are allowed to withdraw.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy maxwithdraw</code></p>
+<h3 id="adventureset-economy-withdraw">adventureset economy withdraw</h3>
+<p><strong>Description:</strong> [Admin] Toggle whether users are allowed to withdraw from adventure currency to main currency.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy withdraw</code></p>
+<h3 id="adventureset-economy-rate">adventureset economy rate</h3>
+<p><strong>Description:</strong> [Owner] Set how much 1 bank credit is worth in adventure.</p>
+<p><strong>rate_in</strong>: Is how much gold you will get for 1 bank credit. Default is 10
+<strong>rate_out</strong>: Is how much gold is needed to convert to 1 bank credit. Default is 11</p>
+<p><strong>Usage:</strong> <code>,adventureset economy rate</code></p>
+<h3 id="adventureset-economy-tax">adventureset economy tax</h3>
+<p><strong>Description:</strong> [Owner] Set the tax thresholds.</p>
+<p><strong>gold</strong> must be positive
+<strong>tax</strong> must be between 0 and 1.</p>
+<p>Example: <code>[p]adventureset economy tax 10000,0.1 20000,0.2 ...</code></p>
+<p><strong>Usage:</strong> <code>,adventureset economy tax</code></p>
+<h3 id="adventureset-cartchests">adventureset cartchests</h3>
+<p><strong>Description:</strong> [Admin] Set whether or not to sell chests in the cart.</p>
+<p><strong>Usage:</strong> <code>,adventureset cartchests</code></p>
+<h3 id="adventureset-cartname">adventureset cartname</h3>
+<p><strong>Description:</strong> [Admin] Set the server's name of the cart.</p>
+<p><strong>Usage:</strong> <code>,adventureset cartname</code></p>
+<h3 id="adventure">adventure</h3>
+<p><strong>Description:</strong> This will send you on an adventure!</p>
+<p>You play by reacting with the offered emojis.</p>
+<p><strong>Usage:</strong> <code>,adventure</code></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../AdvancedBlacklist/" class="btn btn-neutral float-left" title="AdvancedBlacklist"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Alias/" class="btn btn-neutral float-right" title="Alias">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../AdvancedBlacklist/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Alias/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

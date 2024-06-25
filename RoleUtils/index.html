@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.prismbot.icu/RoleUtils/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>RoleUtils - FuturoBot Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "RoleUtils";
+        var mkdocs_page_input_path = "RoleUtils.md";
+        var mkdocs_page_url = "/RoleUtils/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FuturoBot Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Core/">Core</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CogManagerUI/">CogManagerUI</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Permissions/">Permissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Downloader/">Downloader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Activities/">Activities</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AddImage/">AddImage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Admin/">Admin</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdminToggle/">AdminToggle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedBlacklist/">AdvancedBlacklist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Adventure/">Adventure</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Alias/">Alias</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Aliases/">Aliases</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltDentifier/">AltDentifier</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltMarker/">AltMarker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnnounceDaily/">AnnounceDaily</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnonReporter/">AnonReporter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiHonde/">AntiHonde</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiLinks/">AntiLinks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiPhishing/">AntiPhishing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiSpam/">AntiSpam</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ApiTools/">ApiTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Appeal/">Appeal</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AssistantUtils/">AssistantUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AuthGG/">AuthGG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoGist/">AutoGist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoMod/">AutoMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Availability/">Availability</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Backup/">Backup</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Badges/">Badges</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankEvents/">BankEvents</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BannedCount/">BannedCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanOnLeave/">BanOnLeave</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Battleship/">Battleship</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Birthday/">Birthday</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Blinder/">Blinder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BoostUtils/">BoostUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BrainfuckCog/">BrainfuckCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CardsAgainstHumanity/">CardsAgainstHumanity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calendar/">Calendar</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CaseInsensitive/">CaseInsensitive</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cashdrop/">Cashdrop</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CCRole/">CCRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Charlimit/">Charlimit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cleverbot/">Cleverbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Clone/">Clone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CodeSnippets/">CodeSnippets</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Coffeetools/">Coffeetools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Color/">Color</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandsButtons/">CommandsButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Converters/">Converters</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cooldown/">Cooldown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomCommands/">CustomCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomPing/">CustomPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DblTools/">DblTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DeleteCounter/">DeleteCounter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dev/">Dev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DevUtils/">DevUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dictionary/">Dictionary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DisboardReminder/">DisboardReminder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordModals/">DiscordModals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordSearch/">DiscordSearch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DontPingStaff/">DontPingStaff</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DropdownsTexts/">DropdownsTexts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DynamicChannelList/">DynamicChannelList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EasyRules/">EasyRules</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Economy/">Economy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EconomyTrickle/">EconomyTrickle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EditablePosts/">EditablePosts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Editor/">Editor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedCreator/">EmbedCreator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedPeek/">EmbedPeek</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedUtils/">EmbedUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiGrabber/">EmojiGrabber</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Encoding/">Encoding</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ErrorHandler/">ErrorHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EventPoster/">EventPoster</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Events/">Events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExclusiveRoles/">ExclusiveRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedModLog/">ExtendedModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FakeMod/">FakeMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FIFO/">FIFO</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Filter/">Filter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FirstMessage/">FirstMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Flags/">Flags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FollowCog/">FollowCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ForceMention/">ForceMention</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Freshmeat/">Freshmeat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GHIssues/">GHIssues</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GistsHandler/">GistsHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GitHubCards/">GitHubCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Giveaways/">Giveaways</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GlobalBan/">GlobalBan</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Gmail/">Gmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Grafana/">Grafana</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GTN/">GTN</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildID/">GuildID</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hangman/">Hangman</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hellohook/">Hellohook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HidePing/">HidePing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hider/">Hider</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HostInfo/">HostInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HttpCat/">HttpCat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Image/">Image</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageLog/">ImageLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageScanner/">ImageScanner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Index/">Index</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InfoChannel/">InfoChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InRole/">InRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Inspirobot/">Inspirobot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InstantCommands/">InstantCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteBlocklist/">InviteBlocklist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IsItDown/">IsItDown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../JoinPing/">JoinPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jokes/">Jokes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../KirA/">KirA</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastPing/">LastPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastSeen/">LastSeen</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lenny/">Lenny</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LinkQuoter/">LinkQuoter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListMaker/">ListMaker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListPermissions/">ListPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListThreads/">ListThreads</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LoadDev/">LoadDev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lock/">Lock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lockdown/">Lockdown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Maintenance/">Maintenance</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Massmove/">Massmove</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MassUnban/">MassUnban</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberCount/">MemberCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberPrefix/">MemberPrefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MentionTracker/">MentionTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Message/">Message</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MessagePinner/">MessagePinner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Minesweeper/">Minesweeper</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mod/">Mod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModLog/">ModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModManager/">ModManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModRoles/">ModRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgTracker/">MsgTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mutes/">Mutes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NameChanger/">NameChanger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NitroRole/">NitroRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoRoleNoInvite/">NoRoleNoInvite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Notes/">Notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnEdit/">OnEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnlineStats/">OnlineStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Otherbot/">Otherbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Paginator/">Paginator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PartyCrash/">PartyCrash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PermChecker/">PermChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PersonalChannels/">PersonalChannels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PhenUtils/">PhenUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pinboard/">Pinboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PingSite/">PingSite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pingtime/">Pingtime</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PlantTycoon/">PlantTycoon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Poll/">Poll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prefix/">Prefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prunecmd/">Prunecmd</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PyPi/">PyPi</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quarantine/">Quarantine</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quiz/">Quiz</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quotes/">Quotes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Ratings/">Ratings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactLog/">ReactLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactRestrict/">ReactRestrict</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RepoList/">RepoList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReviewsCog/">ReviewsCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Riddles/">Riddles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Rift/">Rift</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleBoards/">RoleBoards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleNotify/">RoleNotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleRequests/">RoleRequests</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RolesButtons/">RolesButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleTools/">RoleTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Say/">Say</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecretSanta/">SecretSanta</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecureInv/">SecureInv</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SelfAssign/">SelfAssign</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SendCards/">SendCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sendhook/">Sendhook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Session/">Session</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Shell/">Shell</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calculator/">Calculator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SimpleSanction/">SimpleSanction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Simulator/">Simulator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Skyrim/">Skyrim</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../eep/">eep</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlowMode/">SlowMode</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Snipe/">Snipe</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spoilerer/">Spoilerer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotify/">Spotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotifyembed/">Spotifyembed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Status/">Status</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sticky/">Sticky</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StickyMember/">StickyMember</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Streams/">Streams</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Strikes/">Strikes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StripeIdentity/">StripeIdentity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../System/">System</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Talk/">Talk</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TempRoles/">TempRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TextEditor/">TextEditor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TheMovieDB/">TheMovieDB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TicketTool/">TicketTool</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TimeoutSelf/">TimeoutSelf</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timestamp/">Timestamp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timezone/">Timezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trigger/">Trigger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trivia/">Trivia</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Twenty/">Twenty</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TypeRacer/">TypeRacer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UnbanAll/">UnbanAll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unbelievaboat/">Unbelievaboat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateChecker/">UpdateChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpgradeChat/">UpgradeChat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UptimeResponder/">UptimeResponder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlButtons/">UrlButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlFetch/">UrlFetch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UselessFacts/">UselessFacts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Userinfo/">Userinfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Verifyer/">Verifyer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ViewPermissions/">ViewPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceLog/">VoiceLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTools/">VoiceTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTracker/">VoiceTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Voteout/">Voteout</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Weather/">Weather</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WelcomeCount/">WelcomeCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WhosThatPokemon/">WhosThatPokemon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordScramble/">WordScramble</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordStats/">WordStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Zalgo/">Zalgo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Warnings/">Warnings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlashTags/">SlashTags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Purge/">Purge</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BetterModlog/">BetterModlog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanChart/">BanChart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChessGame/">ChessGame</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateRed/">UpdateRed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AudioSlash/">AudioSlash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerStats/">ServerStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Highlight/">Highlight</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLog/">GuildLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChannelTimezone/">ChannelTimezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoNuke/">NoNuke</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ThreadOpener/">ThreadOpener</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildStats/">GuildStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StatTrack/">StatTrack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Xenon/">Xenon</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">RoleUtils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole">reactrole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-clear">reactrole clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-bind">reactrole bind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-create">reactrole create</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-list">reactrole list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-delete">reactrole delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reactrole-delete-bind">reactrole delete bind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole">autorole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-add">autorole add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-remove">autorole remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-sticky">autorole sticky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-sticky-set">autorole sticky set</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-sticky-add">autorole sticky add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-sticky-remove">autorole sticky remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-bots">autorole bots</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-bots-remove">autorole bots remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-bots-toggle">autorole bots toggle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-bots-add">autorole bots add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-humans">autorole humans</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-humans-add">autorole humans add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-humans-remove">autorole humans remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-humans-toggle">autorole humans toggle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autorole-toggle">autorole toggle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role">role</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-hoist">role hoist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-all">role all</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-name">role name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-members">role members</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-add">role add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-custom">role custom</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-remove">role remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-rhumans">role rhumans</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-humans">role humans</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-removemulti">role removemulti</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-bots">role bots</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-uniquemembers">role uniquemembers</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-target">role target</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-target-add">role target add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-target-remove">role target remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-color">role color</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-rin">role rin</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-in">role in</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-rbots">role rbots</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-info">role info</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-rall">role rall</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-colors">role colors</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-create">role create</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#role-addmulti">role addmulti</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#multirole">multirole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#multirole-remove">multirole remove</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Modmail/">Modmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LevelUp/">LevelUp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../COC/">COC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomEmoji/">RandomEmoji</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerInfo/">ServerInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoFuckYou/">NoFuckYou</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdWarn/">AdWarn</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDelete/">AutoDelete</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../QuestionOfTheDay/">QuestionOfTheDay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomHelp/">CustomHelp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameRoles/">GameRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiInfo/">EmojiInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotJoinMessage/">BotJoinMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgReport/">MsgReport</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FeatureRequest/">FeatureRequest</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameTracker/">GameTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cloudflare/">Cloudflare</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleManager/">RoleManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandTracker/">CommandTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImgurUploader/">ImgurUploader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AFK/">AFK</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteSettings/">InviteSettings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoPost/">AutoPost</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Roast/">Roast</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VrtUtils/">VrtUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleSync/">RoleSync</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RestartMsg/">RestartMsg</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OwnerProtection/">OwnerProtection</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PrivateWormHole/">PrivateWormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Comm/">Comm</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jail/">Jail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StaffManager/">StaffManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dashboard/">Dashboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLock/">GuildLock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankDecay/">BankDecay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Fluent/">Fluent</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IdeaBoard/">IdeaBoard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Perform/">Perform</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UserTracker/">UserTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NickNamer/">NickNamer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RequestGB/">RequestGB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WormHole/">WormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AffiliatedServers/">AffiliatedServers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IntroCog/">IntroCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reminders/">Reminders</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unknown/">Unknown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GCC/">GCC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counter/">Counter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoTraceback/">AutoTraceback</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordEdit/">DiscordEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RPS/">RPS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counting/">Counting</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedEconomy/">ExtendedEconomy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedLogger/">AdvancedLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ClearChannel/">ClearChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AAA3A_utils/">AAA3A_utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomTopic/">RandomTopic</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotLogger/">BotLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MultiCommands/">MultiCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocs/">AutoDocs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocSite/">AutoDocSite</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FuturoBot Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">RoleUtils</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="roleutils-help">RoleUtils Help</h1>
+<p>Useful role commands.</p>
+<p>Includes massroling, role targeting, autoroling and reaction roles.</p>
+<h3 id="reactrole">reactrole</h3>
+<p><strong>Description:</strong> Base command for Reaction Role management.</p>
+<p><strong>Usage:</strong> <code>,reactrole</code></p>
+<h3 id="reactrole-clear">reactrole clear</h3>
+<p><strong>Description:</strong> Clear all ReactRole data.</p>
+<p><strong>Usage:</strong> <code>,reactrole clear</code></p>
+<h3 id="reactrole-bind">reactrole bind</h3>
+<p><strong>Description:</strong> Bind a reaction role to an emoji on a message.</p>
+<p><strong>Usage:</strong> <code>,reactrole bind</code></p>
+<h3 id="reactrole-create">reactrole create</h3>
+<p><strong>Description:</strong> Create a reaction role.</p>
+<p>Emoji and role groups should be seperated by a ';' and have no space.</p>
+<p>Example:
+    - [p]reactrole create 🎃;@SpookyRole 🅱️;MemeRole #role_channel Red</p>
+<p><strong>Usage:</strong> <code>,reactrole create</code></p>
+<h3 id="reactrole-list">reactrole list</h3>
+<p><strong>Description:</strong> View the reaction roles on this server.</p>
+<p><strong>Usage:</strong> <code>,reactrole list</code></p>
+<h3 id="reactrole-delete">reactrole delete</h3>
+<p><strong>Description:</strong> Delete an entire reaction role for a message.</p>
+<p><strong>Usage:</strong> <code>,reactrole delete</code></p>
+<h3 id="reactrole-delete-bind">reactrole delete bind</h3>
+<p><strong>Description:</strong> Delete an emoji-role bind for a reaction role.</p>
+<p><strong>Usage:</strong> <code>,reactrole delete bind</code></p>
+<h3 id="autorole">autorole</h3>
+<p><strong>Description:</strong> Manage autoroles and sticky roles.</p>
+<p><strong>Usage:</strong> <code>,autorole</code></p>
+<h3 id="autorole-add">autorole add</h3>
+<p><strong>Description:</strong> Add a role to be added to all new members on join.</p>
+<p><strong>Usage:</strong> <code>,autorole add</code></p>
+<h3 id="autorole-remove">autorole remove</h3>
+<p><strong>Description:</strong> Remove an autorole.</p>
+<p><strong>Usage:</strong> <code>,autorole remove</code></p>
+<h3 id="autorole-sticky">autorole sticky</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,autorole sticky</code></p>
+<h3 id="autorole-sticky-set">autorole sticky set</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,autorole sticky set</code></p>
+<h3 id="autorole-sticky-add">autorole sticky add</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,autorole sticky add</code></p>
+<h3 id="autorole-sticky-remove">autorole sticky remove</h3>
+<p><strong>Description:</strong> No description provided.</p>
+<p><strong>Usage:</strong> <code>,autorole sticky remove</code></p>
+<h3 id="autorole-bots">autorole bots</h3>
+<p><strong>Description:</strong> Manage autoroles for bots.</p>
+<p><strong>Usage:</strong> <code>,autorole bots</code></p>
+<h3 id="autorole-bots-remove">autorole bots remove</h3>
+<p><strong>Description:</strong> Remove an autorole for bots.</p>
+<p><strong>Usage:</strong> <code>,autorole bots remove</code></p>
+<h3 id="autorole-bots-toggle">autorole bots toggle</h3>
+<p><strong>Description:</strong> Toggle the bots only autorole system.</p>
+<p><strong>Usage:</strong> <code>,autorole bots toggle</code></p>
+<h3 id="autorole-bots-add">autorole bots add</h3>
+<p><strong>Description:</strong> Add a role to be added to all new bots on join.</p>
+<p><strong>Usage:</strong> <code>,autorole bots add</code></p>
+<h3 id="autorole-humans">autorole humans</h3>
+<p><strong>Description:</strong> Manage autoroles for humans.</p>
+<p><strong>Usage:</strong> <code>,autorole humans</code></p>
+<h3 id="autorole-humans-add">autorole humans add</h3>
+<p><strong>Description:</strong> Add a role to be added to all new humans on join.</p>
+<p><strong>Usage:</strong> <code>,autorole humans add</code></p>
+<h3 id="autorole-humans-remove">autorole humans remove</h3>
+<p><strong>Description:</strong> Remove an autorole for humans.</p>
+<p><strong>Usage:</strong> <code>,autorole humans remove</code></p>
+<h3 id="autorole-humans-toggle">autorole humans toggle</h3>
+<p><strong>Description:</strong> Toggle the human only autorole system.</p>
+<p><strong>Usage:</strong> <code>,autorole humans toggle</code></p>
+<h3 id="autorole-toggle">autorole toggle</h3>
+<p><strong>Description:</strong> Toggle the auto role system.</p>
+<p><strong>Usage:</strong> <code>,autorole toggle</code></p>
+<h3 id="role">role</h3>
+<p><strong>Description:</strong> Base command for modifying roles.</p>
+<p>Invoking this command will add or remove the given role from the member, depending on whether they already had it.</p>
+<p><strong>Usage:</strong> <code>,role</code></p>
+<h3 id="role-hoist">role hoist</h3>
+<p><strong>Description:</strong> Toggle whether a role should appear seperate from other roles.</p>
+<p><strong>Usage:</strong> <code>,role hoist</code></p>
+<h3 id="role-all">role all</h3>
+<p><strong>Description:</strong> Add a role to all members of the server.</p>
+<p><strong>Usage:</strong> <code>,role all</code></p>
+<h3 id="role-name">role name</h3>
+<p><strong>Description:</strong> Change a role's name.</p>
+<p><strong>Usage:</strong> <code>,role name</code></p>
+<h3 id="role-members">role members</h3>
+<p><strong>Description:</strong> Sends a list of members in a role.</p>
+<p>You can supply a custom formatting tagscript for each member.
+The <a href="https://seina-cogs.readthedocs.io/en/latest/tags/default_variables.html#author-block">member</a> block is available to use, found on the <a href="https://seina-cogs.readthedocs.io/en/latest/index.html">TagScript documentation</a>.</p>
+<p><strong>Example:</strong>
+<code>[p]role dump @admin &lt;t:{member(timestamp)}&gt; - {member(mention)}</code></p>
+<p><strong>Usage:</strong> <code>,role members</code></p>
+<h3 id="role-add">role add</h3>
+<p><strong>Description:</strong> Add a role to a member.</p>
+<p><strong>Usage:</strong> <code>,role add</code></p>
+<h3 id="role-custom">role custom</h3>
+<p><strong>Description:</strong> Add/Remove roles to one or more users</p>
+<p>You cannot add and remove the same Role</p>
+<p><strong>Example:</strong>
+- <code>[p]role custom inthedark.org --add role1 --remove role2</code>
+- <code>[p] role custom inthedark.org --add role1 "role to remove"</code></p>
+<p><strong>Usage:</strong> <code>,role custom</code></p>
+<h3 id="role-remove">role remove</h3>
+<p><strong>Description:</strong> Remove a role from a member.</p>
+<p><strong>Usage:</strong> <code>,role remove</code></p>
+<h3 id="role-rhumans">role rhumans</h3>
+<p><strong>Description:</strong> Remove a role from all humans (non-bots) in the server.</p>
+<p><strong>Usage:</strong> <code>,role rhumans</code></p>
+<h3 id="role-humans">role humans</h3>
+<p><strong>Description:</strong> Add a role to all humans (non-bots) in the server.</p>
+<p><strong>Usage:</strong> <code>,role humans</code></p>
+<h3 id="role-removemulti">role removemulti</h3>
+<p><strong>Description:</strong> Remove a role from multiple members.</p>
+<p><strong>Usage:</strong> <code>,role removemulti</code></p>
+<h3 id="role-bots">role bots</h3>
+<p><strong>Description:</strong> Add a role to all bots in the server.</p>
+<p><strong>Usage:</strong> <code>,role bots</code></p>
+<h3 id="role-uniquemembers">role uniquemembers</h3>
+<p><strong>Description:</strong> View the total unique members between multiple roles.</p>
+<p><strong>Usage:</strong> <code>,role uniquemembers</code></p>
+<h3 id="role-target">role target</h3>
+<p><strong>Description:</strong> Modify roles using 'targeting' args.</p>
+<p>An explanation of Targeter and test commands to preview the members affected can be found with <code>[p]target</code>.</p>
+<p><strong>Usage:</strong> <code>,role target</code></p>
+<h3 id="role-target-add">role target add</h3>
+<p><strong>Description:</strong> Add a role to members using targeting args.</p>
+<p>An explanation of Targeter and test commands to preview the members affected can be found with <code>[p]target</code>.</p>
+<p><strong>Usage:</strong> <code>,role target add</code></p>
+<h3 id="role-target-remove">role target remove</h3>
+<p><strong>Description:</strong> Remove a role from members using targeting args.</p>
+<p>An explanation of Targeter and test commands to preview the members affected can be found with <code>[p]target</code>.</p>
+<p><strong>Usage:</strong> <code>,role target remove</code></p>
+<h3 id="role-color">role color</h3>
+<p><strong>Description:</strong> Change a role's color.</p>
+<p><strong>Usage:</strong> <code>,role color</code></p>
+<h3 id="role-rin">role rin</h3>
+<p><strong>Description:</strong> Remove a role from all members of a another role.</p>
+<p><strong>Usage:</strong> <code>,role rin</code></p>
+<h3 id="role-in">role in</h3>
+<p><strong>Description:</strong> Add a role to all members of a another role.</p>
+<p><strong>Usage:</strong> <code>,role in</code></p>
+<h3 id="role-rbots">role rbots</h3>
+<p><strong>Description:</strong> Remove a role from all bots in the server.</p>
+<p><strong>Usage:</strong> <code>,role rbots</code></p>
+<h3 id="role-info">role info</h3>
+<p><strong>Description:</strong> Get information about a role.</p>
+<p><strong>Usage:</strong> <code>,role info</code></p>
+<h3 id="role-rall">role rall</h3>
+<p><strong>Description:</strong> Remove a role from all members of the server.</p>
+<p><strong>Usage:</strong> <code>,role rall</code></p>
+<h3 id="role-colors">role colors</h3>
+<p><strong>Description:</strong> Sends the server's roles, ordered by color.</p>
+<p><strong>Usage:</strong> <code>,role colors</code></p>
+<h3 id="role-create">role create</h3>
+<p><strong>Description:</strong> Creates a role.</p>
+<p>Color and whether it is hoisted can be specified.</p>
+<p><strong>Usage:</strong> <code>,role create</code></p>
+<h3 id="role-addmulti">role addmulti</h3>
+<p><strong>Description:</strong> Add a role to multiple members.</p>
+<p><strong>Usage:</strong> <code>,role addmulti</code></p>
+<h3 id="multirole">multirole</h3>
+<p><strong>Description:</strong> Add multiple roles to a member.</p>
+<p><strong>Usage:</strong> <code>,multirole</code></p>
+<h3 id="multirole-remove">multirole remove</h3>
+<p><strong>Description:</strong> Remove multiple roles from a member.</p>
+<p><strong>Usage:</strong> <code>,multirole remove</code></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Xenon/" class="btn btn-neutral float-left" title="Xenon"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Modmail/" class="btn btn-neutral float-right" title="Modmail">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Xenon/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Modmail/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

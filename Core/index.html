@@ -1,0 +1,3063 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.prismbot.icu/Core/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Core - FuturoBot Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Core";
+        var mkdocs_page_input_path = "Core.md";
+        var mkdocs_page_url = "/Core/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FuturoBot Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Core</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ping">ping</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#info">info</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#info-bot">info bot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#info-credits">info credits</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#uptime">uptime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata">mydata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-forgetme">mydata forgetme</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-getmydata">mydata getmydata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-whatdata">mydata whatdata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement">mydata ownermanagement</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-deleteuserasowner">mydata ownermanagement deleteuserasowner</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-setuserdeletionlevel">mydata ownermanagement setuserdeletionlevel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-allowuserdeletions">mydata ownermanagement allowuserdeletions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-deleteforuser">mydata ownermanagement deleteforuser</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-ownermanagement-disallowuserdeletions">mydata ownermanagement disallowuserdeletions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mydata-3rdparty">mydata 3rdparty</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#embedset">embedset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#embedset-showsettings">embedset showsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#embedset-command">embedset command</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#embedset-global">embedset global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#traceback">traceback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#invite">invite</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inviteset">inviteset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inviteset-public">inviteset public</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inviteset-perms">inviteset perms</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#inviteset-support">inviteset support</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#leave">leave</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#servers">servers</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#commandsearch">commandsearch</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load">load</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unload">unload</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reload">reload</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash">slash</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-sync">slash sync</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-enablecog">slash enablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-enable">slash enable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-disablecog">slash disablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-disable">slash disable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#slash-list">slash list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#shutdown">shutdown</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#restart">restart</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset">bankset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-creditsname">bankset creditsname</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-registeramount">bankset registeramount</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-prune">bankset prune</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-prune-user">bankset prune user</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-prune-global">bankset prune global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-prune-server">bankset prune server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-maxbal">bankset maxbal</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-toggleglobal">bankset toggleglobal</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-bankname">bankset bankname</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-reset">bankset reset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bankset-showsettings">bankset showsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modlogset">modlogset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modlogset-resetcases">modlogset resetcases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modlogset-cases">modlogset cases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modlogset-modlog">modlogset modlog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modlogset-fixcasetypes">modlogset fixcasetypes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set">set</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-deletedelay">set deletedelay</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-api">set api</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-api-list">set api list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-api-remove">set api remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-fuzzy">set fuzzy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-colour">set colour</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-locale">set locale</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-locale-server">set locale server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-locale-global">set locale global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-regionalformat">set regionalformat</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-regionalformat-global">set regionalformat global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-regionalformat-server">set regionalformat server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-usebotcolour">set usebotcolour</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-serverfuzzy">set serverfuzzy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-serverprefix">set serverprefix</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications">set ownernotifications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications-removedestination">set ownernotifications removedestination</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications-optin">set ownernotifications optin</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications-listdestinations">set ownernotifications listdestinations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications-optout">set ownernotifications optout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-ownernotifications-adddestination">set ownernotifications adddestination</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-roles">set roles</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-roles-addmodrole">set roles addmodrole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-roles-addadminrole">set roles addadminrole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-roles-removeadminrole">set roles removeadminrole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-roles-removemodrole">set roles removemodrole</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-showsettings">set showsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status">set status</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-competing">set status competing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-invisible">set status invisible</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-dnd">set status dnd</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-custom">set status custom</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-streaming">set status streaming</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-listening">set status listening</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-online">set status online</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-watching">set status watching</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-idle">set status idle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-status-playing">set status playing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot">set bot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-avatar">set bot avatar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-avatar-remove">set bot avatar remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-nickname">set bot nickname</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-username">set bot username</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-custominfo">set bot custominfo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-bot-description">set bot description</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-usebuttons">set usebuttons</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-prefix">set prefix</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset">helpset</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-showaliases">helpset showaliases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-resetsettings">helpset resetsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-pagecharlimit">helpset pagecharlimit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-tagline">helpset tagline</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-usetick">helpset usetick</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-usemenus">helpset usemenus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-maxpages">helpset maxpages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-showsettings">helpset showsettings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-verifychecks">helpset verifychecks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-showhidden">helpset showhidden</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-deletedelay">helpset deletedelay</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-resetformatter">helpset resetformatter</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-verifyexists">helpset verifyexists</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpset-reacttimeout">helpset reacttimeout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contact">contact</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dm">dm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#datapath">datapath</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#debuginfo">debuginfo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#diagnoseissues">diagnoseissues</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowlist">allowlist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowlist-add">allowlist add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowlist-clear">allowlist clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowlist-remove">allowlist remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowlist-list">allowlist list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#blocklist">blocklist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#blocklist-remove">blocklist remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#blocklist-list">blocklist list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#blocklist-clear">blocklist clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#blocklist-add">blocklist add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localallowlist">localallowlist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localallowlist-remove">localallowlist remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localallowlist-list">localallowlist list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localallowlist-add">localallowlist add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localallowlist-clear">localallowlist clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localblocklist">localblocklist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localblocklist-list">localblocklist list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localblocklist-add">localblocklist add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localblocklist-remove">localblocklist remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#localblocklist-clear">localblocklist clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command">command</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-disable">command disable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-disable-global">command disable global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-disable-server">command disable server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-defaultdisablecog">command defaultdisablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-listdisabledcogs">command listdisabledcogs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-enablecog">command enablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-enable">command enable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-enable-global">command enable global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-enable-server">command enable server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-defaultenablecog">command defaultenablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-listdisabled">command listdisabled</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-listdisabled-global">command listdisabled global</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-listdisabled-guild">command listdisabled guild</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-disablecog">command disablecog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command-disabledmsg">command disabledmsg</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autoimmune">autoimmune</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autoimmune-isimmune">autoimmune isimmune</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autoimmune-list">autoimmune list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autoimmune-add">autoimmune add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#autoimmune-remove">autoimmune remove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ignore">ignore</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ignore-channel">ignore channel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ignore-list">ignore list</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ignore-server">ignore server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unignore">unignore</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unignore-server">unignore server</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unignore-channel">unignore channel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#licenseinfo">licenseinfo</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CogManagerUI/">CogManagerUI</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Permissions/">Permissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Downloader/">Downloader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Activities/">Activities</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AddImage/">AddImage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Admin/">Admin</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdminToggle/">AdminToggle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedBlacklist/">AdvancedBlacklist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Adventure/">Adventure</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Alias/">Alias</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Aliases/">Aliases</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltDentifier/">AltDentifier</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AltMarker/">AltMarker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnnounceDaily/">AnnounceDaily</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AnonReporter/">AnonReporter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiHonde/">AntiHonde</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiLinks/">AntiLinks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiPhishing/">AntiPhishing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AntiSpam/">AntiSpam</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ApiTools/">ApiTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Appeal/">Appeal</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AssistantUtils/">AssistantUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AuthGG/">AuthGG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoGist/">AutoGist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoMod/">AutoMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Availability/">Availability</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Backup/">Backup</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Badges/">Badges</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankEvents/">BankEvents</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BannedCount/">BannedCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanOnLeave/">BanOnLeave</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Battleship/">Battleship</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Birthday/">Birthday</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Blinder/">Blinder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BoostUtils/">BoostUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BrainfuckCog/">BrainfuckCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CardsAgainstHumanity/">CardsAgainstHumanity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calendar/">Calendar</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CaseInsensitive/">CaseInsensitive</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cashdrop/">Cashdrop</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CCRole/">CCRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Charlimit/">Charlimit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cleverbot/">Cleverbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Clone/">Clone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CodeSnippets/">CodeSnippets</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Coffeetools/">Coffeetools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Color/">Color</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandsButtons/">CommandsButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Converters/">Converters</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cooldown/">Cooldown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomCommands/">CustomCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomPing/">CustomPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DblTools/">DblTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DeleteCounter/">DeleteCounter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dev/">Dev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DevUtils/">DevUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dictionary/">Dictionary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DisboardReminder/">DisboardReminder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordModals/">DiscordModals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordSearch/">DiscordSearch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DontPingStaff/">DontPingStaff</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DropdownsTexts/">DropdownsTexts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DynamicChannelList/">DynamicChannelList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EasyRules/">EasyRules</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Economy/">Economy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EconomyTrickle/">EconomyTrickle</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EditablePosts/">EditablePosts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Editor/">Editor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedCreator/">EmbedCreator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedPeek/">EmbedPeek</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmbedUtils/">EmbedUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiGrabber/">EmojiGrabber</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Encoding/">Encoding</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ErrorHandler/">ErrorHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EventPoster/">EventPoster</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Events/">Events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExclusiveRoles/">ExclusiveRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedModLog/">ExtendedModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FakeMod/">FakeMod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FIFO/">FIFO</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Filter/">Filter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FirstMessage/">FirstMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Flags/">Flags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FollowCog/">FollowCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ForceMention/">ForceMention</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Freshmeat/">Freshmeat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GHIssues/">GHIssues</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GistsHandler/">GistsHandler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GitHubCards/">GitHubCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Giveaways/">Giveaways</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GlobalBan/">GlobalBan</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Gmail/">Gmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Grafana/">Grafana</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GTN/">GTN</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildID/">GuildID</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hangman/">Hangman</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hellohook/">Hellohook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HidePing/">HidePing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Hider/">Hider</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HostInfo/">HostInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../HttpCat/">HttpCat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Image/">Image</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageLog/">ImageLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImageScanner/">ImageScanner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Index/">Index</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InfoChannel/">InfoChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InRole/">InRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Inspirobot/">Inspirobot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InstantCommands/">InstantCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteBlocklist/">InviteBlocklist</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IsItDown/">IsItDown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../JoinPing/">JoinPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jokes/">Jokes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../KirA/">KirA</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastPing/">LastPing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LastSeen/">LastSeen</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lenny/">Lenny</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LinkQuoter/">LinkQuoter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListMaker/">ListMaker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListPermissions/">ListPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ListThreads/">ListThreads</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LoadDev/">LoadDev</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lock/">Lock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Lockdown/">Lockdown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Maintenance/">Maintenance</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Massmove/">Massmove</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MassUnban/">MassUnban</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberCount/">MemberCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MemberPrefix/">MemberPrefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MentionTracker/">MentionTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Message/">Message</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MessagePinner/">MessagePinner</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Minesweeper/">Minesweeper</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mod/">Mod</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModLog/">ModLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModManager/">ModManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ModRoles/">ModRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgTracker/">MsgTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Mutes/">Mutes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NameChanger/">NameChanger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NitroRole/">NitroRole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoRoleNoInvite/">NoRoleNoInvite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Notes/">Notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnEdit/">OnEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OnlineStats/">OnlineStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Otherbot/">Otherbot</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Paginator/">Paginator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PartyCrash/">PartyCrash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PermChecker/">PermChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PersonalChannels/">PersonalChannels</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PhenUtils/">PhenUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pinboard/">Pinboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PingSite/">PingSite</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Pingtime/">Pingtime</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PlantTycoon/">PlantTycoon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Poll/">Poll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prefix/">Prefix</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Prunecmd/">Prunecmd</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PyPi/">PyPi</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quarantine/">Quarantine</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quiz/">Quiz</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Quotes/">Quotes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Ratings/">Ratings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactLog/">ReactLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReactRestrict/">ReactRestrict</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RepoList/">RepoList</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reports/">Reports</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ReviewsCog/">ReviewsCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Riddles/">Riddles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Rift/">Rift</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleBoards/">RoleBoards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleNotify/">RoleNotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleRequests/">RoleRequests</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RolesButtons/">RolesButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleTools/">RoleTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Say/">Say</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecretSanta/">SecretSanta</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SecureInv/">SecureInv</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SelfAssign/">SelfAssign</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SendCards/">SendCards</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sendhook/">Sendhook</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Session/">Session</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Shell/">Shell</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Calculator/">Calculator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SimpleSanction/">SimpleSanction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Simulator/">Simulator</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Skyrim/">Skyrim</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../eep/">eep</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlowMode/">SlowMode</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Snipe/">Snipe</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spoilerer/">Spoilerer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotify/">Spotify</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Spotifyembed/">Spotifyembed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Status/">Status</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Sticky/">Sticky</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StickyMember/">StickyMember</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Streams/">Streams</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Strikes/">Strikes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StripeIdentity/">StripeIdentity</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../System/">System</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Talk/">Talk</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TempRoles/">TempRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TextEditor/">TextEditor</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TheMovieDB/">TheMovieDB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TicketTool/">TicketTool</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TimeoutSelf/">TimeoutSelf</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timestamp/">Timestamp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Timezone/">Timezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trigger/">Trigger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Trivia/">Trivia</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Twenty/">Twenty</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TypeRacer/">TypeRacer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UnbanAll/">UnbanAll</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unbelievaboat/">Unbelievaboat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateChecker/">UpdateChecker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpgradeChat/">UpgradeChat</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UptimeResponder/">UptimeResponder</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlButtons/">UrlButtons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UrlFetch/">UrlFetch</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UselessFacts/">UselessFacts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Userinfo/">Userinfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Verifyer/">Verifyer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ViewPermissions/">ViewPermissions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceLog/">VoiceLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTools/">VoiceTools</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VoiceTracker/">VoiceTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Voteout/">Voteout</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Weather/">Weather</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WelcomeCount/">WelcomeCount</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WhosThatPokemon/">WhosThatPokemon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordScramble/">WordScramble</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WordStats/">WordStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Zalgo/">Zalgo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Warnings/">Warnings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../SlashTags/">SlashTags</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Purge/">Purge</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BetterModlog/">BetterModlog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BanChart/">BanChart</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChessGame/">ChessGame</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UpdateRed/">UpdateRed</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AudioSlash/">AudioSlash</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerStats/">ServerStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Highlight/">Highlight</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLog/">GuildLog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Application/">Application</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ChannelTimezone/">ChannelTimezone</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoNuke/">NoNuke</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ThreadOpener/">ThreadOpener</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildStats/">GuildStats</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StatTrack/">StatTrack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Xenon/">Xenon</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleUtils/">RoleUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Modmail/">Modmail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../LevelUp/">LevelUp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../COC/">COC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomEmoji/">RandomEmoji</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ServerInfo/">ServerInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NoFuckYou/">NoFuckYou</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdWarn/">AdWarn</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDelete/">AutoDelete</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../QuestionOfTheDay/">QuestionOfTheDay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CustomHelp/">CustomHelp</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameRoles/">GameRoles</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../EmojiInfo/">EmojiInfo</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotJoinMessage/">BotJoinMessage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MsgReport/">MsgReport</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../FeatureRequest/">FeatureRequest</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GameTracker/">GameTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Cloudflare/">Cloudflare</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleManager/">RoleManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CommandTracker/">CommandTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ImgurUploader/">ImgurUploader</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AFK/">AFK</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../InviteSettings/">InviteSettings</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoPost/">AutoPost</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Roast/">Roast</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../VrtUtils/">VrtUtils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RoleSync/">RoleSync</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RestartMsg/">RestartMsg</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../OwnerProtection/">OwnerProtection</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PrivateWormHole/">PrivateWormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Comm/">Comm</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Jail/">Jail</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../StaffManager/">StaffManager</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Dashboard/">Dashboard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GuildLock/">GuildLock</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BankDecay/">BankDecay</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Fluent/">Fluent</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IdeaBoard/">IdeaBoard</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Perform/">Perform</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../UserTracker/">UserTracker</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../NickNamer/">NickNamer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RequestGB/">RequestGB</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WormHole/">WormHole</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AffiliatedServers/">AffiliatedServers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../IntroCog/">IntroCog</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Reminders/">Reminders</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Unknown/">Unknown</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GCC/">GCC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counter/">Counter</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoTraceback/">AutoTraceback</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DiscordEdit/">DiscordEdit</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RPS/">RPS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Counting/">Counting</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ExtendedEconomy/">ExtendedEconomy</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AdvancedLogger/">AdvancedLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ClearChannel/">ClearChannel</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AAA3A_utils/">AAA3A_utils</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RandomTopic/">RandomTopic</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../BotLogger/">BotLogger</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../MultiCommands/">MultiCommands</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocs/">AutoDocs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../AutoDocSite/">AutoDocSite</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FuturoBot Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Core</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="core-help">Core Help</h1>
+<p>The Core cog has many commands related to core functions.</p>
+<p>These commands come loaded with every Red bot, and cover some of the most basic usage of the bot.</p>
+<h3 id="ping">ping</h3>
+<p><strong>Description:</strong> Shows my ping/latency.</p>
+<p>This data can't be considered an actual latency and as matter of fact, affected by many factors.</p>
+<p>Discord WS: WebSocket latency. This is how fast bot will receive events from Discord.
+Message: Difference between your command message and message with ping.
+Typing: Time that bot taken to send message with ping.</p>
+<p><strong>Usage:</strong> <code>,ping</code></p>
+<h3 id="info">info</h3>
+<p><strong>Description:</strong> Shows info about something</p>
+<p><strong>Usage:</strong> <code>,info</code></p>
+<h3 id="info-bot">info bot</h3>
+<p><strong>Description:</strong> Shows info about me.</p>
+<p><strong>Usage:</strong> <code>,info bot</code></p>
+<h3 id="info-credits">info credits</h3>
+<p><strong>Description:</strong> Shows my credits.</p>
+<p><strong>Usage:</strong> <code>,info credits</code></p>
+<h3 id="uptime">uptime</h3>
+<p><strong>Description:</strong> Shows my uptime.</p>
+<p><strong>Usage:</strong> <code>,uptime</code></p>
+<h3 id="mydata">mydata</h3>
+<p><strong>Description:</strong> Commands which interact with the data [botname] has about you.</p>
+<p>More information can be found in the <a href="https://docs.discord.red/en/stable/red_core_data_statement.html">End User Data Documentation.</a></p>
+<p><strong>Usage:</strong> <code>,mydata</code></p>
+<h3 id="mydata-forgetme">mydata forgetme</h3>
+<p><strong>Description:</strong> Have [botname] forget what it knows about you.</p>
+<p>This may not remove all data about you, data needed for operation,
+such as command cooldowns will be kept until no longer necessary.</p>
+<p>Further interactions with [botname] may cause it to learn about you again.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata forgetme</code></p>
+<p><strong>Usage:</strong> <code>,mydata forgetme</code></p>
+<h3 id="mydata-getmydata">mydata getmydata</h3>
+<p><strong>Description:</strong> [Coming Soon] Get what data [botname] has about you.</p>
+<p><strong>Usage:</strong> <code>,mydata getmydata</code></p>
+<h3 id="mydata-whatdata">mydata whatdata</h3>
+<p><strong>Description:</strong> Find out what type of data [botname] stores and why.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata whatdata</code></p>
+<p><strong>Usage:</strong> <code>,mydata whatdata</code></p>
+<h3 id="mydata-ownermanagement">mydata ownermanagement</h3>
+<p><strong>Description:</strong> Commands for more complete data handling.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement</code></p>
+<h3 id="mydata-ownermanagement-deleteuserasowner">mydata ownermanagement deleteuserasowner</h3>
+<p><strong>Description:</strong> Delete data [botname] has about a user.</p>
+<p>This will cause the bot to get rid of or disassociate a lot of data about the specified user.
+This may include more than just end user data, including anti abuse records.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement deleteuserasowner</code></p>
+<h3 id="mydata-ownermanagement-setuserdeletionlevel">mydata ownermanagement setuserdeletionlevel</h3>
+<p><strong>Description:</strong> Sets how user deletions are treated.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata ownermanagement setuserdeletionlevel 1</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;level&gt;</code> - The strictness level for user deletion. See Level guide below.</p>
+<p>Level:
+- <code>0</code>: What users can delete is left entirely up to each cog.
+- <code>1</code>: Cogs should delete anything the cog doesn't need about the user.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement setuserdeletionlevel</code></p>
+<h3 id="mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</h3>
+<p><strong>Description:</strong> Handle a deletion request from Discord.</p>
+<p>This will cause the bot to get rid of or disassociate all data from the specified user ID.
+You should not use this unless Discord has specifically requested this with regard to a deleted user.
+This will remove the user from various anti-abuse measures.
+If you are processing a manual request from a user, you may want <code>[p]mydata ownermanagement deleteforuser</code> instead.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement processdiscordrequest</code></p>
+<h3 id="mydata-ownermanagement-allowuserdeletions">mydata ownermanagement allowuserdeletions</h3>
+<p><strong>Description:</strong> Set the bot to allow users to request a data deletion.</p>
+<p>This is on by default.
+Opposite of <code>[p]mydata ownermanagement disallowuserdeletions</code></p>
+<p><strong>Example:</strong>
+- <code>[p]mydata ownermanagement allowuserdeletions</code></p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement allowuserdeletions</code></p>
+<h3 id="mydata-ownermanagement-deleteforuser">mydata ownermanagement deleteforuser</h3>
+<p><strong>Description:</strong> Delete data [botname] has about a user for a user.</p>
+<p>This will cause the bot to get rid of or disassociate a lot of non-operational data from the specified user.
+Users have access to a different command for this unless they can't interact with the bot at all.
+This is a mostly safe operation, but you should not use it unless processing a request from this user as it may impact their usage of the bot.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement deleteforuser</code></p>
+<h3 id="mydata-ownermanagement-disallowuserdeletions">mydata ownermanagement disallowuserdeletions</h3>
+<p><strong>Description:</strong> Set the bot to not allow users to request a data deletion.</p>
+<p>Opposite of <code>[p]mydata ownermanagement allowuserdeletions</code></p>
+<p><strong>Example:</strong>
+- <code>[p]mydata ownermanagement disallowuserdeletions</code></p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement disallowuserdeletions</code></p>
+<h3 id="mydata-3rdparty">mydata 3rdparty</h3>
+<p><strong>Description:</strong> View the End User Data statements of each 3rd-party module.</p>
+<p>This will send an attachment with the End User Data statements of all loaded 3rd party cogs.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata 3rdparty</code></p>
+<p><strong>Usage:</strong> <code>,mydata 3rdparty</code></p>
+<h3 id="embedset">embedset</h3>
+<p><strong>Description:</strong> Commands for toggling embeds on or off.</p>
+<p>This setting determines whether or not to use embeds as a response to a command (for commands that support it).
+The default is to use embeds.</p>
+<p>The embed settings are checked until the first True/False in this order:
+- In guild context:
+    1. Channel override - <code>[p]embedset channel</code>
+    2. Server command override - <code>[p]embedset command server</code>
+    3. Server override - <code>[p]embedset server</code>
+    4. Global command override - <code>[p]embedset command global</code>
+    5. Global setting  -<code>[p]embedset global</code></p>
+<ul>
+<li>In DM context:<ol>
+<li>User override - <code>[p]embedset user</code></li>
+<li>Global command override - <code>[p]embedset command global</code></li>
+<li>Global setting - <code>[p]embedset global</code></li>
+</ol>
+</li>
+</ul>
+<p><strong>Usage:</strong> <code>,embedset</code></p>
+<h3 id="embedset-showsettings">embedset showsettings</h3>
+<p><strong>Description:</strong> Show the current embed settings.</p>
+<p>Provide a command name to check for command specific embed settings.</p>
+<p><strong>Examples:</strong>
+- <code>[p]embedset showsettings</code> - Shows embed settings.
+- <code>[p]embedset showsettings info</code> - Also shows embed settings for the 'info' command.
+- <code>[p]embedset showsettings "ignore list"</code> - Checking subcommands requires quotes.</p>
+<p><strong>Arguments:</strong>
+- <code>[command]</code> - Checks this command for command specific embed settings.</p>
+<p><strong>Usage:</strong> <code>,embedset showsettings</code></p>
+<h3 id="embedset-command">embedset command</h3>
+<p><strong>Description:</strong> Sets a command's embed setting.</p>
+<p>If you're the bot owner, this will try to change the command's embed setting globally by default.
+Otherwise, this will try to change embed settings on the current server.</p>
+<p>If enabled is left blank, the setting will be unset.</p>
+<p>To see full evaluation order of embed settings, run <code>[p]help embedset</code>.</p>
+<p><strong>Examples:</strong>
+- <code>[p]embedset command info</code> - Clears command specific embed settings for 'info'.
+- <code>[p]embedset command info False</code> - Disables embeds for 'info'.
+- <code>[p]embedset command "ignore list" True</code> - Quotes are needed for subcommands.</p>
+<p><strong>Arguments:</strong>
+- <code>[enabled]</code> - Whether to use embeds for this command. Leave blank to reset to default.</p>
+<p><strong>Usage:</strong> <code>,embedset command</code></p>
+<h3 id="embedset-global">embedset global</h3>
+<p><strong>Description:</strong> Toggle the global embed setting.</p>
+<p>This is used as a fallback if the user or guild hasn't set a preference.
+The default is to use embeds.</p>
+<p>To see full evaluation order of embed settings, run <code>[p]help embedset</code>.</p>
+<p><strong>Example:</strong>
+- <code>[p]embedset global</code></p>
+<p><strong>Usage:</strong> <code>,embedset global</code></p>
+<h3 id="traceback">traceback</h3>
+<p><strong>Description:</strong> Sends the last command exception that has occurred.</p>
+<p><strong>Usage:</strong> <code>,traceback</code></p>
+<h3 id="invite">invite</h3>
+<p><strong>Description:</strong> Shows my invite url and requirements.</p>
+<p><strong>Usage:</strong> <code>,invite</code></p>
+<h3 id="inviteset">inviteset</h3>
+<p><strong>Description:</strong> Commands to setup [botname]'s invite settings.</p>
+<p><strong>Usage:</strong> <code>,inviteset</code></p>
+<h3 id="inviteset-public">inviteset public</h3>
+<p><strong>Description:</strong> Toggles if <code>[p]invite</code> should be accessible for the average user.</p>
+<p>The bot must be made into a <code>Public bot</code> in the developer dashboard for public invites to work.</p>
+<p><strong>Example:</strong>
+- <code>[p]inviteset public</code> - Toggles the public invite setting.</p>
+<p><strong>Usage:</strong> <code>,inviteset public</code></p>
+<h3 id="inviteset-perms">inviteset perms</h3>
+<p><strong>Description:</strong> Make the bot create its own role with permissions on join.</p>
+<p>The bot will create its own role with the desired permissions when it joins a new server. This is a special role that can't be deleted or removed from the bot.</p>
+<p>For that, you need to provide a valid permissions level.
+You can generate one here: https://discordapi.com/permissions.html</p>
+<p>Please note that you might need two factor authentication for some permissions.</p>
+<p><strong>Example:</strong>
+- <code>[p]inviteset perms 134217728</code> - Adds a "Manage Nicknames" permission requirement to the invite.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;level&gt;</code> - The permission level to require for the bot in the generated invite.</p>
+<p><strong>Usage:</strong> <code>,inviteset perms</code></p>
+<h3 id="inviteset-support">inviteset support</h3>
+<p><strong>Description:</strong> Set the support server invite for the bot.</p>
+<p><strong>Example:</strong>
+- <code>[p]inviteset support https://discord.gg/shiro</code> - Sets the support server url to https://discord.gg/shiro.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;support_server&gt;</code> - The invite URL to the support server.</p>
+<p><strong>Usage:</strong> <code>,inviteset support</code></p>
+<h3 id="leave">leave</h3>
+<p><strong>Description:</strong> Leaves servers.</p>
+<p>If no server IDs are passed the local server will be left instead.</p>
+<p>Note: This command is interactive.</p>
+<p><strong>Examples:</strong>
+- <code>[p]leave</code> - Leave the current server.
+- <code>[p]leave "Red - Discord Bot"</code> - Quotes are necessary when there are spaces in the name.
+- <code>[p]leave 133049272517001216 240154543684321280</code> - Leaves multiple servers, using IDs.</p>
+<p><strong>Arguments:</strong>
+- <code>[servers...]</code> - The servers to leave. When blank, attempts to leave the current server.</p>
+<p><strong>Usage:</strong> <code>,leave</code></p>
+<h3 id="servers">servers</h3>
+<p><strong>Description:</strong> Lists the servers [botname] is currently in.</p>
+<p>Note: This command is interactive.</p>
+<p><strong>Usage:</strong> <code>,servers</code></p>
+<h3 id="commandsearch">commandsearch</h3>
+<p><strong>Description:</strong> Commands will never be able to hide from you again!</p>
+<p><strong>Usage:</strong> <code>,commandsearch</code></p>
+<h3 id="load">load</h3>
+<p><strong>Description:</strong> Loads cog packages from the local paths and installed cogs.</p>
+<p>See packages available to load with <code>[p]cogs</code>.</p>
+<p>Additional cogs can be added using Downloader, or from local paths using <code>[p]addpath</code>.</p>
+<p><strong>Examples:</strong>
+- <code>[p]load general</code> - Loads the <code>general</code> cog.
+- <code>[p]load admin mod mutes</code> - Loads multiple cogs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cogs...&gt;</code> - The cog packages to load.</p>
+<p><strong>Usage:</strong> <code>,load</code></p>
+<h3 id="unload">unload</h3>
+<p><strong>Description:</strong> Unloads previously loaded cog packages.</p>
+<p>See packages available to unload with <code>[p]cogs</code>.</p>
+<p><strong>Examples:</strong>
+- <code>[p]unload general</code> - Unloads the <code>general</code> cog.
+- <code>[p]unload admin mod mutes</code> - Unloads multiple cogs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cogs...&gt;</code> - The cog packages to unload.</p>
+<p><strong>Usage:</strong> <code>,unload</code></p>
+<h3 id="reload">reload</h3>
+<p><strong>Description:</strong> Reloads cog packages.</p>
+<p>This will unload and then load the specified cogs.</p>
+<p>Cogs that were not loaded will only be loaded.</p>
+<p><strong>Examples:</strong>
+- <code>[p]reload general</code> - Unloads then loads the <code>general</code> cog.
+- <code>[p]reload admin mod mutes</code> - Unloads then loads multiple cogs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cogs...&gt;</code> - The cog packages to reload.</p>
+<p><strong>Usage:</strong> <code>,reload</code></p>
+<h3 id="slash">slash</h3>
+<p><strong>Description:</strong> Base command for managing what application commands are able to be used on [botname].</p>
+<p><strong>Usage:</strong> <code>,slash</code></p>
+<h3 id="slash-sync">slash sync</h3>
+<p><strong>Description:</strong> Syncs the slash settings to discord.</p>
+<p>Settings from <code>[p]slash list</code> will be synced with discord, changing what commands appear for users.
+This should be run sparingly, make all necessary changes before running this command.</p>
+<p><strong>Arguments:</strong>
+- <code>[guild]</code> - If provided, syncs commands for that guild. Otherwise, syncs global commands.</p>
+<p><strong>Usage:</strong> <code>,slash sync</code></p>
+<h3 id="slash-enablecog">slash enablecog</h3>
+<p><strong>Description:</strong> Marks all application commands in a cog as being enabled, allowing them to be added to the bot.</p>
+<p>See a list of cogs with application commands with <code>[p]slash list</code>.</p>
+<p>This command does NOT sync the enabled commands with Discord, that must be done manually with <code>[p]slash sync</code> for commands to appear in users' clients.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog_name&gt;</code> - The cog to enable commands from. This argument is case sensitive.</p>
+<p><strong>Usage:</strong> <code>,slash enablecog</code></p>
+<h3 id="slash-enable">slash enable</h3>
+<p><strong>Description:</strong> Marks an application command as being enabled, allowing it to be added to the bot.</p>
+<p>See commands available to enable with <code>[p]slash list</code>.</p>
+<p>This command does NOT sync the enabled commands with Discord, that must be done manually with <code>[p]slash sync</code> for commands to appear in users' clients.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command_name&gt;</code> - The command name to enable. Only the top level name of a group command should be used.
+- <code>[command_type]</code> - What type of application command to enable. Must be one of <code>slash</code>, <code>message</code>, or <code>user</code>. Defaults to <code>slash</code>.</p>
+<p><strong>Usage:</strong> <code>,slash enable</code></p>
+<h3 id="slash-disablecog">slash disablecog</h3>
+<p><strong>Description:</strong> Marks all application commands in a cog as being disabled, preventing them from being added to the bot.</p>
+<p>See a list of cogs with application commands with <code>[p]slash list</code>.</p>
+<p>This command does NOT sync the enabled commands with Discord, that must be done manually with <code>[p]slash sync</code> for commands to appear in users' clients.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog_name&gt;</code> - The cog to disable commands from. This argument is case sensitive.</p>
+<p><strong>Usage:</strong> <code>,slash disablecog</code></p>
+<h3 id="slash-disable">slash disable</h3>
+<p><strong>Description:</strong> Marks an application command as being disabled, preventing it from being added to the bot.</p>
+<p>See commands available to disable with <code>[p]slash list</code>.</p>
+<p>This command does NOT sync the enabled commands with Discord, that must be done manually with <code>[p]slash sync</code> for commands to appear in users' clients.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command_name&gt;</code> - The command name to disable. Only the top level name of a group command should be used.
+- <code>[command_type]</code> - What type of application command to disable. Must be one of <code>slash</code>, <code>message</code>, or <code>user</code>. Defaults to <code>slash</code>.</p>
+<p><strong>Usage:</strong> <code>,slash disable</code></p>
+<h3 id="slash-list">slash list</h3>
+<p><strong>Description:</strong> List the slash commands the bot can see, and whether or not they are enabled.</p>
+<p>This command shows the state that will be changed to when <code>[p]slash sync</code> is run.
+Commands from the same cog are grouped, with the cog name as the header.</p>
+<p>The prefix denotes the state of the command:
+- Commands starting with <code>-</code> have not yet been enabled.
+- Commands starting with <code>+</code> have been manually enabled.
+- Commands starting with <code>++</code> have been enabled by the cog author, and cannot be disabled.</p>
+<p><strong>Usage:</strong> <code>,slash list</code></p>
+<h3 id="shutdown">shutdown</h3>
+<p><strong>Description:</strong> Shuts down the bot.</p>
+<p>Allows [botname] to shut down gracefully.</p>
+<p>This is the recommended method for shutting down the bot.</p>
+<p><strong>Examples:</strong>
+- <code>[p]shutdown</code>
+- <code>[p]shutdown True</code> - Shutdowns directly.</p>
+<p><strong>Arguments:</strong>
+- <code>[directly]</code> - Whether to shutdown directly without confirmation. Defaults to False.</p>
+<p><strong>Usage:</strong> <code>,shutdown</code></p>
+<h3 id="restart">restart</h3>
+<p><strong>Description:</strong> Attempts to restart [botname].</p>
+<p>Makes [botname] quit with exit code 26.
+The restart is not guaranteed: it must be dealt with by the process manager in use.</p>
+<p><strong>Examples:</strong>
+- <code>[p]restart</code>
+- <code>[p]restart True</code> - Restarts directly.</p>
+<p><strong>Arguments:</strong>
+- <code>[directly]</code> - Whether to restart directly without confirmation. Defaults to False.</p>
+<p><strong>Usage:</strong> <code>,restart</code></p>
+<h3 id="bankset">bankset</h3>
+<p><strong>Description:</strong> Base command for bank settings.</p>
+<p><strong>Usage:</strong> <code>,bankset</code></p>
+<h3 id="bankset-creditsname">bankset creditsname</h3>
+<p><strong>Description:</strong> Set the name for the bank's currency.</p>
+<p><strong>Usage:</strong> <code>,bankset creditsname</code></p>
+<h3 id="bankset-registeramount">bankset registeramount</h3>
+<p><strong>Description:</strong> Set the initial balance for new bank accounts.</p>
+<p>Example:
+- <code>[p]bankset registeramount 5000</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;creds&gt;</code> The new initial balance amount. Default is 0.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset registeramount</code></p>
+<h3 id="bankset-prune">bankset prune</h3>
+<p><strong>Description:</strong> Base command for pruning bank accounts.</p>
+<p><strong>Usage:</strong> <code>,bankset prune</code></p>
+<h3 id="bankset-prune-user">bankset prune user</h3>
+<p><strong>Description:</strong> Delete the bank account of a specified user.</p>
+<p>Examples:
+- <code>[p]bankset prune user @Rosie</code> - Did not confirm. Shows the help message.
+- <code>[p]bankset prune user @Rosie yes</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;user&gt;</code> The user to delete the bank of. Takes mentions, names, and user ids.</li>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset prune user</code></p>
+<h3 id="bankset-prune-global">bankset prune global</h3>
+<p><strong>Description:</strong> Prune bank accounts for users who no longer share a server with the bot.</p>
+<p>Cannot be used without a global bank. See <code>[p]bankset prune server</code>.</p>
+<p>Examples:
+- <code>[p]bankset prune global</code> - Did not confirm. Shows the help message.
+- <code>[p]bankset prune global yes</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset prune global</code></p>
+<h3 id="bankset-prune-server">bankset prune server</h3>
+<p><strong>Description:</strong> Prune bank accounts for users no longer in the server.</p>
+<p>Cannot be used with a global bank. See <code>[p]bankset prune global</code>.</p>
+<p>Examples:
+- <code>[p]bankset prune server</code> - Did not confirm. Shows the help message.
+- <code>[p]bankset prune server yes</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset prune server</code></p>
+<h3 id="bankset-maxbal">bankset maxbal</h3>
+<p><strong>Description:</strong> Set the maximum balance a user can get.</p>
+<p><strong>Usage:</strong> <code>,bankset maxbal</code></p>
+<h3 id="bankset-toggleglobal">bankset toggleglobal</h3>
+<p><strong>Description:</strong> Toggle whether the bank is global or not.</p>
+<p>If the bank is global, it will become per-server.
+If the bank is per-server, it will become global.</p>
+<p><strong>Usage:</strong> <code>,bankset toggleglobal</code></p>
+<h3 id="bankset-bankname">bankset bankname</h3>
+<p><strong>Description:</strong> Set the bank's name.</p>
+<p><strong>Usage:</strong> <code>,bankset bankname</code></p>
+<h3 id="bankset-reset">bankset reset</h3>
+<p><strong>Description:</strong> Delete all bank accounts.</p>
+<p>Examples:
+- <code>[p]bankset reset</code> - Did not confirm. Shows the help message.
+- <code>[p]bankset reset yes</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset reset</code></p>
+<h3 id="bankset-showsettings">bankset showsettings</h3>
+<p><strong>Description:</strong> Show the current bank settings.</p>
+<p><strong>Usage:</strong> <code>,bankset showsettings</code></p>
+<h3 id="modlogset">modlogset</h3>
+<p><strong>Description:</strong> Manage modlog settings.</p>
+<p><strong>Usage:</strong> <code>,modlogset</code></p>
+<h3 id="modlogset-resetcases">modlogset resetcases</h3>
+<p><strong>Description:</strong> Reset all modlog cases in this server.</p>
+<p><strong>Usage:</strong> <code>,modlogset resetcases</code></p>
+<h3 id="modlogset-cases">modlogset cases</h3>
+<p><strong>Description:</strong> Enable or disable case creation for a mod action.</p>
+<p>An action can be enabling or disabling specific cases. (Ban, kick, mute, etc.)</p>
+<p>Example: <code>[p]modlogset cases kick enabled</code></p>
+<p><strong>Usage:</strong> <code>,modlogset cases</code></p>
+<h3 id="modlogset-modlog">modlogset modlog</h3>
+<p><strong>Description:</strong> Set a channel as the modlog.</p>
+<p>Omit <code>[channel]</code> to disable the modlog.</p>
+<p><strong>Usage:</strong> <code>,modlogset modlog</code></p>
+<h3 id="modlogset-fixcasetypes">modlogset fixcasetypes</h3>
+<p><strong>Description:</strong> Command to fix misbehaving casetypes.</p>
+<p><strong>Usage:</strong> <code>,modlogset fixcasetypes</code></p>
+<h3 id="set">set</h3>
+<p><strong>Description:</strong> Commands for changing [botname]'s settings.</p>
+<p><strong>Usage:</strong> <code>,set</code></p>
+<h3 id="set-deletedelay">set deletedelay</h3>
+<p><strong>Description:</strong> Set the delay until the bot removes the command message.</p>
+<p>Must be between -1 and 60.</p>
+<p>Set to -1 to disable this feature.</p>
+<p>This is only applied to the current server and not globally.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set deletedelay</code> - Shows the current delete delay setting.
+- <code>[p]set deletedelay 60</code> - Sets the delete delay to the max of 60 seconds.
+- <code>[p]set deletedelay -1</code> - Disables deleting command messages.</p>
+<p><strong>Arguments:</strong>
+- <code>[time]</code> - The seconds to wait before deleting the command message. Use -1 to disable.</p>
+<p><strong>Usage:</strong> <code>,set deletedelay</code></p>
+<h3 id="set-api">set api</h3>
+<p><strong>Description:</strong> Commands to set, list or remove various external API tokens.</p>
+<p>This setting will be asked for by some 3rd party cogs and some core cogs.</p>
+<p>If passed without the <code>&lt;service&gt;</code> or <code>&lt;tokens&gt;</code> arguments it will allow you to open a modal to set your API keys securely.</p>
+<p>To add the keys provide the service name and the tokens as a comma separated
+list of key,values as described by the cog requesting this command.</p>
+<p>Note: API tokens are sensitive, so this command should only be used in a private channel or in DM with the bot.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set api</code>
+- <code>[p]set api spotify</code>
+- <code>[p]set api spotify redirect_uri localhost</code>
+- <code>[p]set api github client_id,whoops client_secret,whoops</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;service&gt;</code> - The service you're adding tokens to.
+- <code>&lt;tokens&gt;</code> - Pairs of token keys and values. The key and value should be separated by one of <code></code>, <code>,</code>, or <code>;</code>.</p>
+<p><strong>Usage:</strong> <code>,set api</code></p>
+<h3 id="set-api-list">set api list</h3>
+<p><strong>Description:</strong> Show all external API services along with their keys that have been set.</p>
+<p>Secrets are not shown.</p>
+<p><strong>Example:</strong>
+- <code>[p]set api list</code></p>
+<p><strong>Usage:</strong> <code>,set api list</code></p>
+<h3 id="set-api-remove">set api remove</h3>
+<p><strong>Description:</strong> Remove the given services with all their keys and tokens.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set api remove spotify</code>
+- <code>[p]set api remove github youtube</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;services...&gt;</code> - The services to remove.</p>
+<p><strong>Usage:</strong> <code>,set api remove</code></p>
+<h3 id="set-fuzzy">set fuzzy</h3>
+<p><strong>Description:</strong> Toggle whether to enable fuzzy command search in DMs.</p>
+<p>This allows the bot to identify potential misspelled commands and offer corrections.</p>
+<p>Default is for fuzzy command search to be disabled.</p>
+<p><strong>Example:</strong>
+- <code>[p]set fuzzy</code></p>
+<p><strong>Usage:</strong> <code>,set fuzzy</code></p>
+<h3 id="set-colour">set colour</h3>
+<p><strong>Description:</strong> Sets a default colour to be used for the bot's embeds.</p>
+<p>Acceptable values for the colour parameter can be found at:</p>
+<p>https://discordpy.readthedocs.io/en/stable/ext/commands/api.html#discord.ext.commands.ColourConverter</p>
+<p><strong>Examples:</strong>
+- <code>[p]set colour dark red</code>
+- <code>[p]set colour blurple</code>
+- <code>[p]set colour 0x5DADE2</code>
+- <code>[p]set color 0x#FDFEFE</code>
+- <code>[p]set color #7F8C8D</code></p>
+<p><strong>Arguments:</strong>
+- <code>[colour]</code> - The colour to use for embeds. Leave blank to set to the default value (red).</p>
+<p><strong>Usage:</strong> <code>,set colour</code></p>
+<h3 id="set-locale">set locale</h3>
+<p><strong>Description:</strong> Changes [botname]'s locale in this server.</p>
+<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
+<p>Use "default" to return to the bot's default set language.</p>
+<p>If you want to change bot's global locale, see <code>[p]set locale global</code> command.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set locale en-US</code>
+- <code>[p]set locale de-DE</code>
+- <code>[p]set locale fr-FR</code>
+- <code>[p]set locale pl-PL</code>
+- <code>[p]set locale default</code> - Resets to the global default locale.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
+<p><strong>Usage:</strong> <code>,set locale</code></p>
+<h3 id="set-locale-server">set locale server</h3>
+<p><strong>Description:</strong> Changes [botname]'s locale in this server.</p>
+<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
+<p>Use "default" to return to the bot's default set language.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set locale server en-US</code>
+- <code>[p]set locale server de-DE</code>
+- <code>[p]set locale server fr-FR</code>
+- <code>[p]set locale server pl-PL</code>
+- <code>[p]set locale server default</code> - Resets to the global default locale.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
+<p><strong>Usage:</strong> <code>,set locale server</code></p>
+<h3 id="set-locale-global">set locale global</h3>
+<p><strong>Description:</strong> Changes [botname]'s default locale.</p>
+<p>This will be used when a server has not set a locale, or in DMs.</p>
+<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
+<p>To reset to English, use "en-US".</p>
+<p><strong>Examples:</strong>
+- <code>[p]set locale global en-US</code>
+- <code>[p]set locale global de-DE</code>
+- <code>[p]set locale global fr-FR</code>
+- <code>[p]set locale global pl-PL</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
+<p><strong>Usage:</strong> <code>,set locale global</code></p>
+<h3 id="set-regionalformat">set regionalformat</h3>
+<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
+<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
+Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
+<p>If you want to change bot's global regional format, see <code>[p]set regionalformat global</code> command.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set regionalformat en-US</code>
+- <code>[p]set region de-DE</code>
+- <code>[p]set regionalformat reset</code> - Resets to the locale.</p>
+<p><strong>Arguments:</strong>
+- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
+<p><strong>Usage:</strong> <code>,set regionalformat</code></p>
+<h3 id="set-regionalformat-global">set regionalformat global</h3>
+<p><strong>Description:</strong> Changes the bot's regional format. This is used for formatting date, time and numbers.</p>
+<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
+Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set regionalformat global en-US</code>
+- <code>[p]set region global de-DE</code>
+- <code>[p]set regionalformat global reset</code> - Resets to the locale.</p>
+<p><strong>Arguments:</strong>
+- <code>[language_code]</code> - The default region format to use for the bot.</p>
+<p><strong>Usage:</strong> <code>,set regionalformat global</code></p>
+<h3 id="set-regionalformat-server">set regionalformat server</h3>
+<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
+<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
+Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set regionalformat server en-US</code>
+- <code>[p]set region local de-DE</code>
+- <code>[p]set regionalformat server reset</code> - Resets to the locale.</p>
+<p><strong>Arguments:</strong>
+- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
+<p><strong>Usage:</strong> <code>,set regionalformat server</code></p>
+<h3 id="set-usebotcolour">set usebotcolour</h3>
+<p><strong>Description:</strong> Toggle whether to use the bot owner-configured colour for embeds.</p>
+<p>Default is to use the bot's configured colour.
+Otherwise, the colour used will be the colour of the bot's top role.</p>
+<p><strong>Example:</strong>
+- <code>[p]set usebotcolour</code></p>
+<p><strong>Usage:</strong> <code>,set usebotcolour</code></p>
+<h3 id="set-serverfuzzy">set serverfuzzy</h3>
+<p><strong>Description:</strong> Toggle whether to enable fuzzy command search for the server.</p>
+<p>This allows the bot to identify potential misspelled commands and offer corrections.</p>
+<p>Note: This can be processor intensive and may be unsuitable for larger servers.</p>
+<p>Default is for fuzzy command search to be disabled.</p>
+<p><strong>Example:</strong>
+- <code>[p]set serverfuzzy</code></p>
+<p><strong>Usage:</strong> <code>,set serverfuzzy</code></p>
+<h3 id="set-serverprefix">set serverprefix</h3>
+<p><strong>Description:</strong> Sets [botname]'s server prefix(es).</p>
+<p>Warning: This will override global prefixes, the bot will not respond to any global prefixes in this server.
+    This is not additive. It will replace all current server prefixes.
+    A prefix cannot have more than 25 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set serverprefix !</code>
+- <code>[p]set serverprefix "! "</code> - Quotes are needed to use spaces in prefixes.
+- <code>[p]set serverprefix "@[botname] "</code> - This uses a mention as the prefix.
+- <code>[p]set serverprefix ! ? .</code> - Sets multiple prefixes.
+- <code>[p]set serverprefix "Red - Discord Bot" ?</code> - Sets the prefix for a specific server. Quotes are needed to use spaces in the server name.</p>
+<p><strong>Arguments:</strong>
+- <code>[server]</code> - The server to set the prefix for. Defaults to current server.
+- <code>[prefixes...]</code> - The prefixes the bot will respond to on this server. Leave blank to clear server prefixes.</p>
+<p><strong>Usage:</strong> <code>,set serverprefix</code></p>
+<h3 id="set-ownernotifications">set ownernotifications</h3>
+<p><strong>Description:</strong> Commands for configuring owner notifications.</p>
+<p>Owner notifications include usage of <code>[p]contact</code> and available Red updates.</p>
+<p><strong>Usage:</strong> <code>,set ownernotifications</code></p>
+<h3 id="set-ownernotifications-removedestination">set ownernotifications removedestination</h3>
+<p><strong>Description:</strong> Removes a destination text channel from receiving owner notifications.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set ownernotifications removedestination #owner-notifications</code>
+- <code>[p]set ownernotifications deletedestination 168091848718417920</code> - Accepts channel IDs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> - The channel to stop sending owner notifications to.</p>
+<p><strong>Usage:</strong> <code>,set ownernotifications removedestination</code></p>
+<h3 id="set-ownernotifications-optin">set ownernotifications optin</h3>
+<p><strong>Description:</strong> Opt-in on receiving owner notifications.</p>
+<p>This is the default state.</p>
+<p>Note: This will only resume sending owner notifications to your DMs.
+    Additional owners and destinations will not be affected.</p>
+<p><strong>Example:</strong>
+- <code>[p]set ownernotifications optin</code></p>
+<p><strong>Usage:</strong> <code>,set ownernotifications optin</code></p>
+<h3 id="set-ownernotifications-listdestinations">set ownernotifications listdestinations</h3>
+<p><strong>Description:</strong> Lists the configured extra destinations for owner notifications.</p>
+<p><strong>Example:</strong>
+- <code>[p]set ownernotifications listdestinations</code></p>
+<p><strong>Usage:</strong> <code>,set ownernotifications listdestinations</code></p>
+<h3 id="set-ownernotifications-optout">set ownernotifications optout</h3>
+<p><strong>Description:</strong> Opt-out of receiving owner notifications.</p>
+<p>Note: This will only stop sending owner notifications to your DMs.
+    Additional owners and destinations will still receive notifications.</p>
+<p><strong>Example:</strong>
+- <code>[p]set ownernotifications optout</code></p>
+<p><strong>Usage:</strong> <code>,set ownernotifications optout</code></p>
+<h3 id="set-ownernotifications-adddestination">set ownernotifications adddestination</h3>
+<p><strong>Description:</strong> Adds a destination text channel to receive owner notifications.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set ownernotifications adddestination #owner-notifications</code>
+- <code>[p]set ownernotifications adddestination 168091848718417920</code> - Accepts channel IDs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> - The channel to send owner notifications to.</p>
+<p><strong>Usage:</strong> <code>,set ownernotifications adddestination</code></p>
+<h3 id="set-roles">set roles</h3>
+<p><strong>Description:</strong> Set server's admin and mod roles for [botname].</p>
+<p><strong>Usage:</strong> <code>,set roles</code></p>
+<h3 id="set-roles-addmodrole">set roles addmodrole</h3>
+<p><strong>Description:</strong> Adds a moderator role for this server.</p>
+<p>This grants access to moderator level commands like:
+- <code>[p]mute</code>
+- <code>[p]cleanup</code>
+- <code>[p]customcommand create</code></p>
+<p>And more.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles addmodrole @Mods</code>
+- <code>[p]set roles addmodrole Loyal Helpers</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to add as a moderator.</p>
+<p><strong>Usage:</strong> <code>,set roles addmodrole</code></p>
+<h3 id="set-roles-addadminrole">set roles addadminrole</h3>
+<p><strong>Description:</strong> Adds an admin role for this server.</p>
+<p>Admins have the same access as Mods, plus additional admin level commands like:
+- <code>[p]set serverprefix</code>
+- <code>[p]addrole</code>
+- <code>[p]ban</code>
+- <code>[p]ignore guild</code></p>
+<p>And more.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles addadminrole @Admins</code>
+- <code>[p]set roles addadminrole Super Admins</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to add as an admin.</p>
+<p><strong>Usage:</strong> <code>,set roles addadminrole</code></p>
+<h3 id="set-roles-removeadminrole">set roles removeadminrole</h3>
+<p><strong>Description:</strong> Removes an admin role for this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles removeadminrole @Admins</code>
+- <code>[p]set roles removeadminrole Super Admins</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to remove from being an admin.</p>
+<p><strong>Usage:</strong> <code>,set roles removeadminrole</code></p>
+<h3 id="set-roles-removemodrole">set roles removemodrole</h3>
+<p><strong>Description:</strong> Removes a mod role for this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles removemodrole @Mods</code>
+- <code>[p]set roles removemodrole Loyal Helpers</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to remove from being a moderator.</p>
+<p><strong>Usage:</strong> <code>,set roles removemodrole</code></p>
+<h3 id="set-showsettings">set showsettings</h3>
+<p><strong>Description:</strong> Show the current settings for [botname].</p>
+<p>Accepts optional server parameter to allow prefix recovery.</p>
+<p><strong>Usage:</strong> <code>,set showsettings</code></p>
+<h3 id="set-status">set status</h3>
+<p><strong>Description:</strong> Commands for setting [botname]'s status.</p>
+<p><strong>Usage:</strong> <code>,set status</code></p>
+<h3 id="set-status-competing">set status competing</h3>
+<p><strong>Description:</strong> Sets [botname]'s competing status.</p>
+<p>This will appear as <code>Competing in &lt;competing&gt;</code>.</p>
+<p>Maximum length for a competing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status competing</code> - Clears the activity status.
+- <code>[p]set status competing London 2012 Olympic Games</code></p>
+<p><strong>Arguments:</strong>
+- <code>[competing]</code> - The text to follow <code>Competing in</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status competing</code></p>
+<h3 id="set-status-invisible">set status invisible</h3>
+<p><strong>Description:</strong> Set [botname]'s status to invisible.</p>
+<p><strong>Usage:</strong> <code>,set status invisible</code></p>
+<h3 id="set-status-dnd">set status dnd</h3>
+<p><strong>Description:</strong> Set [botname]'s status to do not disturb.</p>
+<p><strong>Usage:</strong> <code>,set status dnd</code></p>
+<h3 id="set-status-custom">set status custom</h3>
+<p><strong>Description:</strong> Sets [botname]'s custom status.</p>
+<p>This will appear as <code>&lt;text&gt;</code>.</p>
+<p>Maximum length for a custom status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status custom</code> - Clears the activity status.
+- <code>[p]set status custom Running cogs...</code></p>
+<p><strong>Arguments:</strong>
+- <code>[text]</code> - The custom status text. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status custom</code></p>
+<h3 id="set-status-streaming">set status streaming</h3>
+<p><strong>Description:</strong> Sets [botname]'s streaming status to a twitch stream.</p>
+<p>This will appear as <code>Streaming &lt;stream_title&gt;</code> or <code>LIVE ON TWITCH</code> depending on the context.
+It will also include a <code>Watch</code> button with a twitch.tv url for the provided streamer.</p>
+<p>Maximum length for a stream title is 128 characters.</p>
+<p>Leaving both streamer and stream_title empty will clear it.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status stream</code> - Clears the activity status.
+- <code>[p]set status stream 26 Rosie is streaming</code> - Sets the stream to <code>https://www.twitch.tv/26</code>.
+- <code>[p]set status stream https://twitch.tv/26 Rosie is streaming</code> - Sets the URL manually.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;streamer&gt;</code> - The twitch streamer to provide a link to. This can be their twitch name or the entire URL.
+- <code>&lt;stream_title&gt;</code> - The text to follow <code>Streaming</code> in the status.</p>
+<p><strong>Usage:</strong> <code>,set status streaming</code></p>
+<h3 id="set-status-listening">set status listening</h3>
+<p><strong>Description:</strong> Sets [botname]'s listening status.</p>
+<p>This will appear as <code>Listening to &lt;listening&gt;</code>.</p>
+<p>Maximum length for a listening status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status listening</code> - Clears the activity status.
+- <code>[p]set status listening jams</code></p>
+<p><strong>Arguments:</strong>
+- <code>[listening]</code> - The text to follow <code>Listening to</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status listening</code></p>
+<h3 id="set-status-online">set status online</h3>
+<p><strong>Description:</strong> Set [botname]'s status to online.</p>
+<p><strong>Usage:</strong> <code>,set status online</code></p>
+<h3 id="set-status-watching">set status watching</h3>
+<p><strong>Description:</strong> Sets [botname]'s watching status.</p>
+<p>This will appear as <code>Watching &lt;watching&gt;</code>.</p>
+<p>Maximum length for a watching status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status watching</code> - Clears the activity status.
+- <code>[p]set status watching [p]help</code></p>
+<p><strong>Arguments:</strong>
+- <code>[watching]</code> - The text to follow <code>Watching</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status watching</code></p>
+<h3 id="set-status-idle">set status idle</h3>
+<p><strong>Description:</strong> Set [botname]'s status to idle.</p>
+<p><strong>Usage:</strong> <code>,set status idle</code></p>
+<h3 id="set-status-playing">set status playing</h3>
+<p><strong>Description:</strong> Sets [botname]'s playing status.</p>
+<p>This will appear as <code>Playing &lt;game&gt;</code> or <code>PLAYING A GAME: &lt;game&gt;</code> depending on the context.</p>
+<p>Maximum length for a playing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status playing</code> - Clears the activity status.
+- <code>[p]set status playing the keyboard</code></p>
+<p><strong>Arguments:</strong>
+- <code>[game]</code> - The text to follow <code>Playing</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status playing</code></p>
+<h3 id="set-bot">set bot</h3>
+<p><strong>Description:</strong> Commands for changing [botname]'s metadata.</p>
+<p><strong>Usage:</strong> <code>,set bot</code></p>
+<h3 id="set-bot-avatar">set bot avatar</h3>
+<p><strong>Description:</strong> Sets [botname]'s avatar</p>
+<p>Supports either an attachment or an image URL.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set bot avatar</code> - With an image attachment, this will set the avatar.
+- <code>[p]set bot avatar</code> - Without an attachment, this will show the command help.
+- <code>[p]set bot avatar https://links.flaree.xyz/k95</code> - Sets the avatar to the provided url.</p>
+<p><strong>Arguments:</strong>
+- <code>[url]</code> - An image url to be used as an avatar. Leave blank when uploading an attachment.</p>
+<p><strong>Usage:</strong> <code>,set bot avatar</code></p>
+<h3 id="set-bot-avatar-remove">set bot avatar remove</h3>
+<p><strong>Description:</strong> Removes [botname]'s avatar.</p>
+<p><strong>Example:</strong>
+- <code>[p]set bot avatar remove</code></p>
+<p><strong>Usage:</strong> <code>,set bot avatar remove</code></p>
+<h3 id="set-bot-nickname">set bot nickname</h3>
+<p><strong>Description:</strong> Sets [botname]'s nickname for the current server.</p>
+<p>Maximum length for a nickname is 32 characters.</p>
+<p><strong>Example:</strong>
+- <code>[p]set bot nickname 🎃 SpookyBot 🎃</code></p>
+<p><strong>Arguments:</strong>
+- <code>[nickname]</code> - The nickname to give the bot. Leave blank to clear the current nickname.</p>
+<p><strong>Usage:</strong> <code>,set bot nickname</code></p>
+<h3 id="set-bot-username">set bot username</h3>
+<p><strong>Description:</strong> Sets [botname]'s username.</p>
+<p>Maximum length for a username is 32 characters.</p>
+<p>Note: The username of a verified bot cannot be manually changed.
+    Please contact Discord support to change it.</p>
+<p><strong>Example:</strong>
+- <code>[p]set bot username BaguetteBot</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;username&gt;</code> - The username to give the bot.</p>
+<p><strong>Usage:</strong> <code>,set bot username</code></p>
+<h3 id="set-bot-custominfo">set bot custominfo</h3>
+<p><strong>Description:</strong> Customizes a section of <code>[p]info</code>.</p>
+<p>The maximum amount of allowed characters is 1024.
+Supports markdown, links and "mentions".</p>
+<p>Link example: <code>[My link](https://example.com)</code></p>
+<p><strong>Examples:</strong>
+- <code>[p]set bot custominfo &gt;&gt;&gt; I can use **markdown** such as quotes, ||spoilers|| and multiple lines.</code>
+- <code>[p]set bot custominfo Join my [support server](discord.gg/discord)!</code>
+- <code>[p]set bot custominfo</code> - Removes custom info text.</p>
+<p><strong>Arguments:</strong>
+- <code>[text]</code> - The custom info text.</p>
+<p><strong>Usage:</strong> <code>,set bot custominfo</code></p>
+<h3 id="set-bot-description">set bot description</h3>
+<p><strong>Description:</strong> Sets the bot's description.</p>
+<p>Use without a description to reset.
+This is shown in a few locations, including the help menu.</p>
+<p>The maximum description length is 250 characters to ensure it displays properly.</p>
+<p>The default is "Red V3".</p>
+<p><strong>Examples:</strong>
+- <code>[p]set bot description</code> - Resets the description to the default setting.
+- <code>[p]set bot description MyBot: A Red V3 Bot</code></p>
+<p><strong>Arguments:</strong>
+- <code>[description]</code> - The description to use for this bot. Leave blank to reset to the default.</p>
+<p><strong>Usage:</strong> <code>,set bot description</code></p>
+<h3 id="set-usebuttons">set usebuttons</h3>
+<p><strong>Description:</strong> Set a global bot variable for using buttons in menus.</p>
+<p>When enabled, all usage of cores menus API will use buttons instead of reactions.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set usebuttons</code> - Toggles the value.
+- <code>[p]set usebuttons True</code> - Enables using buttons.</p>
+<p><strong>Arguments:</strong>
+- <code>[use_buttons]</code> - Whether to use buttons. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,set usebuttons</code></p>
+<h3 id="set-prefix">set prefix</h3>
+<p><strong>Description:</strong> Sets [botname]'s global prefix(es).</p>
+<p>Warning: This is not additive. It will replace all current prefixes.</p>
+<p>See also the <code>--mentionable</code> flag to enable mentioning the bot as the prefix.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set prefix !</code>
+- <code>[p]set prefix "! "</code> - Quotes are needed to use spaces in prefixes.
+- <code>[p]set prefix "@[botname] "</code> - This uses a mention as the prefix. See also the <code>--mentionable</code> flag.
+- <code>[p]set prefix ! ? .</code> - Sets multiple prefixes.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;prefixes...&gt;</code> - The prefixes the bot will respond to globally.</p>
+<p><strong>Usage:</strong> <code>,set prefix</code></p>
+<h3 id="helpset">helpset</h3>
+<p><strong>Description:</strong> Commands to manage settings for the help command.</p>
+<p>All help settings are applied globally.</p>
+<p><strong>Usage:</strong> <code>,helpset</code></p>
+<h3 id="helpset-showaliases">helpset showaliases</h3>
+<p><strong>Description:</strong> This allows the help command to show existing commands aliases if there is any.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset showaliases False</code> - Disables showing aliases on this server.
+- <code>[p]helpset showaliases</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[show_aliases]</code> - Whether to include aliases in help. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset showaliases</code></p>
+<h3 id="helpset-resetsettings">helpset resetsettings</h3>
+<p><strong>Description:</strong> This resets [botname]'s help settings to their defaults.</p>
+<p>This may not have an impact when using custom formatters from 3rd party cogs</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset resetsettings</code></p>
+<p><strong>Usage:</strong> <code>,helpset resetsettings</code></p>
+<h3 id="helpset-pagecharlimit">helpset pagecharlimit</h3>
+<p><strong>Description:</strong> Set the character limit for each page in the help message.</p>
+<p>Note: This setting only applies to embedded help.</p>
+<p>The default value is 1000 characters. The minimum value is 500.
+The maximum is based on the lower of what you provide and what discord allows.</p>
+<p>Please note that setting a relatively small character limit may
+mean some pages will exceed this limit.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset pagecharlimit 1500</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;limit&gt;</code> - The max amount of characters to show per page in the help message.</p>
+<p><strong>Usage:</strong> <code>,helpset pagecharlimit</code></p>
+<h3 id="helpset-tagline">helpset tagline</h3>
+<p><strong>Description:</strong> Set the tagline to be used.</p>
+<p>The maximum tagline length is 2048 characters.
+This setting only applies to embedded help. If no tagline is specified, the default will be used instead.</p>
+<p>You can use <code>[​p]</code> in your tagline, which will be replaced by the bot's prefix.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset tagline Thanks for using the bot!</code>
+- <code>[p]helpset tagline Use [​p]invite to add me to your server.</code>
+- <code>[p]helpset tagline</code> - Resets the tagline to the default.</p>
+<p><strong>Arguments:</strong>
+- <code>[tagline]</code> - The tagline to appear at the bottom of help embeds. Leave blank to reset.</p>
+<p><strong>Usage:</strong> <code>,helpset tagline</code></p>
+<h3 id="helpset-usetick">helpset usetick</h3>
+<p><strong>Description:</strong> This allows the help command message to be ticked if help is sent to a DM.</p>
+<p>Ticking is reacting to the help message with a ✅.</p>
+<p>Defaults to False.
+Using this without a setting will toggle.</p>
+<p>Note: This is only used when the bot is not using menus.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset usetick False</code> - Disables ticking when help is sent to DMs.
+- <code>[p]helpset usetick</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[use_tick]</code> - Whether to tick the help command when help is sent to DMs. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset usetick</code></p>
+<h3 id="helpset-usemenus">helpset usemenus</h3>
+<p><strong>Description:</strong> Allows the help command to be sent as a paginated menu instead of separate messages.</p>
+<p>When "reactions", "buttons", "select", or "selectonly" is passed,
+ <code>[p]help</code> will only show one page at a time
+and will use the associated control scheme to navigate between pages.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset usemenus reactions</code> - Enables using reaction menus.
+- <code>[p]helpset usemenus buttons</code> - Enables using button menus.
+- <code>[p]helpset usemenus select</code> - Enables buttons with a select menu.
+- <code>[p]helpset usemenus selectonly</code> - Enables a select menu only on help.
+- <code>[p]helpset usemenus disable</code> - Disables help menus.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;"buttons"|"reactions"|"select"|"selectonly"|"disable"&gt;</code> - Whether to use <code>buttons</code>,
+    <code>reactions</code>, <code>select</code>, <code>selectonly</code>, or no menus.</p>
+<p><strong>Usage:</strong> <code>,helpset usemenus</code></p>
+<h3 id="helpset-maxpages">helpset maxpages</h3>
+<p><strong>Description:</strong> Set the maximum number of help pages sent in a server channel.</p>
+<p>If a help message contains more pages than this value, the help message will
+be sent to the command author via DM. This is to help reduce spam in server
+text channels.</p>
+<p>The default value is 2 pages.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset maxpages 50</code> - Basically never send help to DMs.
+- <code>[p]helpset maxpages 0</code> - Always send help to DMs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;limit&gt;</code> - The max pages allowed to send per help in a server.</p>
+<p><strong>Usage:</strong> <code>,helpset maxpages</code></p>
+<h3 id="helpset-showsettings">helpset showsettings</h3>
+<p><strong>Description:</strong> Show the current help settings.</p>
+<p>Warning: These settings may not be accurate if the default formatter is not in use.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset showsettings</code></p>
+<p><strong>Usage:</strong> <code>,helpset showsettings</code></p>
+<h3 id="helpset-verifychecks">helpset verifychecks</h3>
+<p><strong>Description:</strong> Sets if commands which can't be run in the current context should be filtered from help.</p>
+<p>Defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset verifychecks False</code> - Enables showing unusable commands in help.
+- <code>[p]helpset verifychecks</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[verify]</code> - Whether to hide unusable commands in help. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset verifychecks</code></p>
+<h3 id="helpset-showhidden">helpset showhidden</h3>
+<p><strong>Description:</strong> This allows the help command to show hidden commands.</p>
+<p>This defaults to False.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset showhidden True</code> - Enables showing hidden commands.
+- <code>[p]helpset showhidden</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[show_hidden]</code> - Whether to use show hidden commands in help. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset showhidden</code></p>
+<h3 id="helpset-deletedelay">helpset deletedelay</h3>
+<p><strong>Description:</strong> Set the delay after which help pages will be deleted.</p>
+<p>The setting is disabled by default, and only applies to non-menu help,
+sent in server text channels.
+Setting the delay to 0 disables this feature.</p>
+<p>The bot has to have MANAGE_MESSAGES permission for this to work.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset deletedelay 60</code> - Delete the help pages after a minute.
+- <code>[p]helpset deletedelay 1</code> - Delete the help pages as quickly as possible.
+- <code>[p]helpset deletedelay 1209600</code> - Max time to wait before deleting (14 days).
+- <code>[p]helpset deletedelay 0</code> - Disable deleting help pages.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;seconds&gt;</code> - The seconds to wait before deleting help pages.</p>
+<p><strong>Usage:</strong> <code>,helpset deletedelay</code></p>
+<h3 id="helpset-resetformatter">helpset resetformatter</h3>
+<p><strong>Description:</strong> This resets [botname]'s help formatter to the default formatter.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset resetformatter</code></p>
+<p><strong>Usage:</strong> <code>,helpset resetformatter</code></p>
+<h3 id="helpset-verifyexists">helpset verifyexists</h3>
+<p><strong>Description:</strong> Sets whether the bot should respond to help commands for nonexistent topics.</p>
+<p>When enabled, this will indicate the existence of help topics, even if the user can't use it.</p>
+<p>Note: This setting on its own does not fully prevent command enumeration.</p>
+<p>Defaults to False.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset verifyexists True</code> - Enables sending help for nonexistent topics.
+- <code>[p]helpset verifyexists</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[verify]</code> - Whether to respond to help for nonexistent topics. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset verifyexists</code></p>
+<h3 id="helpset-reacttimeout">helpset reacttimeout</h3>
+<p><strong>Description:</strong> Set the timeout for reactions, if menus are enabled.</p>
+<p>The default is 30 seconds.
+The timeout has to be between 15 and 300 seconds.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset reacttimeout 30</code> - The default timeout.
+- <code>[p]helpset reacttimeout 60</code> - Timeout of 1 minute.
+- <code>[p]helpset reacttimeout 15</code> - Minimum allowed timeout.
+- <code>[p]helpset reacttimeout 300</code> - Max allowed timeout (5 mins).</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;seconds&gt;</code> - The timeout, in seconds, of the reactions.</p>
+<p><strong>Usage:</strong> <code>,helpset reacttimeout</code></p>
+<h3 id="contact">contact</h3>
+<p><strong>Description:</strong> Sends a message to the owners.</p>
+<p><strong>Example:</strong>
+- <code>[p]contact Unblock me pls :(</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;message&gt;</code> - The message to send to the owners.</p>
+<p><strong>Usage:</strong> <code>,contact</code></p>
+<h3 id="dm">dm</h3>
+<p><strong>Description:</strong> Sends a DM to a user.</p>
+<p><strong>Example:</strong>
+- <code>[p]dm 732425670856147075 I love you &lt;3</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;message&gt;</code> - The message to dm to the user.</p>
+<p><strong>Usage:</strong> <code>,dm</code></p>
+<h3 id="datapath">datapath</h3>
+<p><strong>Description:</strong> Prints the bot's data path.</p>
+<p><strong>Usage:</strong> <code>,datapath</code></p>
+<h3 id="debuginfo">debuginfo</h3>
+<p><strong>Description:</strong> Shows debug information useful for debugging.</p>
+<p><strong>Usage:</strong> <code>,debuginfo</code></p>
+<h3 id="diagnoseissues">diagnoseissues</h3>
+<p><strong>Description:</strong> Diagnose issues with the command checks with ease!</p>
+<p>If you want to diagnose the command from a text channel in a different server,
+you can do so by using the command in DMs.</p>
+<p><strong>Example:</strong>
+- <code>[p]diagnoseissues #general @Slime ban</code> - Diagnose why @Slime can't use <code>[p]ban</code> in #general channel.</p>
+<p><strong>Arguments:</strong>
+- <code>[channel]</code> - The text channel that the command should be tested for. Defaults to the current channel.
+- <code>&lt;member&gt;</code> - The member that should be considered as the command caller.
+- <code>&lt;command_name&gt;</code> - The name of the command to test.</p>
+<p><strong>Usage:</strong> <code>,diagnoseissues</code></p>
+<h3 id="allowlist">allowlist</h3>
+<p><strong>Description:</strong> Commands to manage the allowlist.</p>
+<p>Warning: When the allowlist is in use, the bot will ignore commands from everyone not on the list.</p>
+<p>Use <code>[p]allowlist clear</code> to disable the allowlist</p>
+<p><strong>Usage:</strong> <code>,allowlist</code></p>
+<h3 id="allowlist-add">allowlist add</h3>
+<p><strong>Description:</strong> Adds users to the allowlist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]allowlist add @26 @Will</code> - Adds two users to the allowlist.
+- <code>[p]allowlist add 262626262626262626</code> - Adds a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to add to the allowlist.</p>
+<p><strong>Usage:</strong> <code>,allowlist add</code></p>
+<h3 id="allowlist-clear">allowlist clear</h3>
+<p><strong>Description:</strong> Clears the allowlist.</p>
+<p>This disables the allowlist.</p>
+<p><strong>Example:</strong>
+- <code>[p]allowlist clear</code></p>
+<p><strong>Usage:</strong> <code>,allowlist clear</code></p>
+<h3 id="allowlist-remove">allowlist remove</h3>
+<p><strong>Description:</strong> Removes users from the allowlist.</p>
+<p>The allowlist will be disabled if all users are removed.</p>
+<p><strong>Examples:</strong>
+- <code>[p]allowlist remove @26 @Will</code> - Removes two users from the allowlist.
+- <code>[p]allowlist remove 262626262626262626</code> - Removes a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to remove from the allowlist.</p>
+<p><strong>Usage:</strong> <code>,allowlist remove</code></p>
+<h3 id="allowlist-list">allowlist list</h3>
+<p><strong>Description:</strong> Lists users on the allowlist.</p>
+<p><strong>Example:</strong>
+- <code>[p]allowlist list</code></p>
+<p><strong>Usage:</strong> <code>,allowlist list</code></p>
+<h3 id="blocklist">blocklist</h3>
+<p><strong>Description:</strong> Commands to manage the blocklist.</p>
+<p>Use <code>[p]blocklist clear</code> to disable the blocklist</p>
+<p><strong>Usage:</strong> <code>,blocklist</code></p>
+<h3 id="blocklist-remove">blocklist remove</h3>
+<p><strong>Description:</strong> Removes users from the blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]blocklist remove @26 @Will</code> - Removes two users from the blocklist.
+- <code>[p]blocklist remove 262626262626262626</code> - Removes a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to remove from the blocklist.</p>
+<p><strong>Usage:</strong> <code>,blocklist remove</code></p>
+<h3 id="blocklist-list">blocklist list</h3>
+<p><strong>Description:</strong> Lists users on the blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]blocklist list</code></p>
+<p><strong>Usage:</strong> <code>,blocklist list</code></p>
+<h3 id="blocklist-clear">blocklist clear</h3>
+<p><strong>Description:</strong> Clears the blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]blocklist clear</code></p>
+<p><strong>Usage:</strong> <code>,blocklist clear</code></p>
+<h3 id="blocklist-add">blocklist add</h3>
+<p><strong>Description:</strong> Adds users to the blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]blocklist add @26 @Will</code> - Adds two users to the blocklist.
+- <code>[p]blocklist add 262626262626262626</code> - Blocks a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to add to the blocklist.</p>
+<p><strong>Usage:</strong> <code>,blocklist add</code></p>
+<h3 id="localallowlist">localallowlist</h3>
+<p><strong>Description:</strong> Commands to manage the server specific allowlist.</p>
+<p>Warning: When the allowlist is in use, the bot will ignore commands from everyone not on the list in the server.</p>
+<p>Use <code>[p]localallowlist clear</code> to disable the allowlist</p>
+<p><strong>Usage:</strong> <code>,localallowlist</code></p>
+<h3 id="localallowlist-remove">localallowlist remove</h3>
+<p><strong>Description:</strong> Removes user or role from the allowlist.</p>
+<p>The local allowlist will be disabled if all users are removed.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localallowlist remove @26 @Will</code> - Removes two users from the local allowlist.
+- <code>[p]localallowlist remove 262626262626262626</code> - Removes a user by ID.
+- <code>[p]localallowlist remove "Super Admins"</code> - Removes a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
+<p><strong>Usage:</strong> <code>,localallowlist remove</code></p>
+<h3 id="localallowlist-list">localallowlist list</h3>
+<p><strong>Description:</strong> Lists users and roles on the server allowlist.</p>
+<p><strong>Example:</strong>
+- <code>[p]localallowlist list</code></p>
+<p><strong>Usage:</strong> <code>,localallowlist list</code></p>
+<h3 id="localallowlist-add">localallowlist add</h3>
+<p><strong>Description:</strong> Adds a user or role to the server allowlist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localallowlist add @26 @Will</code> - Adds two users to the local allowlist.
+- <code>[p]localallowlist add 262626262626262626</code> - Allows a user by ID.
+- <code>[p]localallowlist add "Super Admins"</code> - Allows a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
+<p><strong>Usage:</strong> <code>,localallowlist add</code></p>
+<h3 id="localallowlist-clear">localallowlist clear</h3>
+<p><strong>Description:</strong> Clears the allowlist.</p>
+<p>This disables the local allowlist and clears all entries.</p>
+<p><strong>Example:</strong>
+- <code>[p]localallowlist clear</code></p>
+<p><strong>Usage:</strong> <code>,localallowlist clear</code></p>
+<h3 id="localblocklist">localblocklist</h3>
+<p><strong>Description:</strong> Commands to manage the server specific blocklist.</p>
+<p>Use <code>[p]localblocklist clear</code> to disable the blocklist</p>
+<p><strong>Usage:</strong> <code>,localblocklist</code></p>
+<h3 id="localblocklist-list">localblocklist list</h3>
+<p><strong>Description:</strong> Lists users and roles on the server blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]localblocklist list</code></p>
+<p><strong>Usage:</strong> <code>,localblocklist list</code></p>
+<h3 id="localblocklist-add">localblocklist add</h3>
+<p><strong>Description:</strong> Adds a user or role to the local blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localblocklist add @26 @Will</code> - Adds two users to the local blocklist.
+- <code>[p]localblocklist add 262626262626262626</code> - Blocks a user by ID.
+- <code>[p]localblocklist add "Bad Apples"</code> - Blocks a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to add to the local blocklist.</p>
+<p><strong>Usage:</strong> <code>,localblocklist add</code></p>
+<h3 id="localblocklist-remove">localblocklist remove</h3>
+<p><strong>Description:</strong> Removes user or role from local blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localblocklist remove @26 @Will</code> - Removes two users from the local blocklist.
+- <code>[p]localblocklist remove 262626262626262626</code> - Unblocks a user by ID.
+- <code>[p]localblocklist remove "Bad Apples"</code> - Unblocks a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local blocklist.</p>
+<p><strong>Usage:</strong> <code>,localblocklist remove</code></p>
+<h3 id="localblocklist-clear">localblocklist clear</h3>
+<p><strong>Description:</strong> Clears the server blocklist.</p>
+<p>This disables the server blocklist and clears all entries.</p>
+<p><strong>Example:</strong>
+- <code>[p]blocklist clear</code></p>
+<p><strong>Usage:</strong> <code>,localblocklist clear</code></p>
+<h3 id="command">command</h3>
+<p><strong>Description:</strong> Commands to enable and disable commands and cogs.</p>
+<p><strong>Usage:</strong> <code>,command</code></p>
+<h3 id="command-disable">command disable</h3>
+<p><strong>Description:</strong> Disable a command.</p>
+<p>If you're the bot owner, this will disable commands globally by default.
+Otherwise, this will disable commands on the current server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable.</p>
+<p><strong>Usage:</strong> <code>,command disable</code></p>
+<h3 id="command-disable-global">command disable global</h3>
+<p><strong>Description:</strong> Disable a command globally.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable global userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable global urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable globally.</p>
+<p><strong>Usage:</strong> <code>,command disable global</code></p>
+<h3 id="command-disable-server">command disable server</h3>
+<p><strong>Description:</strong> Disable a command in this server only.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable server userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable server urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable for the current server.</p>
+<p><strong>Usage:</strong> <code>,command disable server</code></p>
+<h3 id="command-defaultdisablecog">command defaultdisablecog</h3>
+<p><strong>Description:</strong> Set the default state for a cog as disabled.</p>
+<p>This will disable the cog for all servers by default.
+To override it, use <code>[p]command enablecog</code> on the servers you want to allow usage.</p>
+<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command defaultdisablecog Economy</code>
+- <code>[p]command defaultdisablecog ModLog</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog&gt;</code> - The name of the cog to make disabled by default. Must be title-case.</p>
+<p><strong>Usage:</strong> <code>,command defaultdisablecog</code></p>
+<h3 id="command-listdisabledcogs">command listdisabledcogs</h3>
+<p><strong>Description:</strong> List the cogs which are disabled in this server.</p>
+<p><strong>Example:</strong>
+- <code>[p]command listdisabledcogs</code></p>
+<p><strong>Usage:</strong> <code>,command listdisabledcogs</code></p>
+<h3 id="command-enablecog">command enablecog</h3>
+<p><strong>Description:</strong> Enable a cog in this server.</p>
+<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command enablecog Economy</code>
+- <code>[p]command enablecog ModLog</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog&gt;</code> - The name of the cog to enable on this server. Must be title-case.</p>
+<p><strong>Usage:</strong> <code>,command enablecog</code></p>
+<h3 id="command-enable">command enable</h3>
+<p><strong>Description:</strong> Enable a command.</p>
+<p>If you're the bot owner, this will try to enable a globally disabled command by default.
+Otherwise, this will try to enable a command disabled on the current server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command enable userinfo</code> - Enables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command enable urban</code> - Enables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to enable.</p>
+<p><strong>Usage:</strong> <code>,command enable</code></p>
+<h3 id="command-enable-global">command enable global</h3>
+<p><strong>Description:</strong> Enable a command globally.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command enable global userinfo</code> - Enables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command enable global urban</code> - Enables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to enable globally.</p>
+<p><strong>Usage:</strong> <code>,command enable global</code></p>
+<h3 id="command-enable-server">command enable server</h3>
+<p><strong>Description:</strong>     Enable a command in this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command enable server userinfo</code> - Enables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command enable server urban</code> - Enables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to enable for the current server.</p>
+<p><strong>Usage:</strong> <code>,command enable server</code></p>
+<h3 id="command-defaultenablecog">command defaultenablecog</h3>
+<p><strong>Description:</strong> Set the default state for a cog as enabled.</p>
+<p>This will re-enable the cog for all servers by default.
+To override it, use <code>[p]command disablecog</code> on the servers you want to disallow usage.</p>
+<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command defaultenablecog Economy</code>
+- <code>[p]command defaultenablecog ModLog</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog&gt;</code> - The name of the cog to make enabled by default. Must be title-case.</p>
+<p><strong>Usage:</strong> <code>,command defaultenablecog</code></p>
+<h3 id="command-listdisabled">command listdisabled</h3>
+<p><strong>Description:</strong> List disabled commands.</p>
+<p>If you're the bot owner, this will show global disabled commands by default.
+Otherwise, this will show disabled commands on the current server.</p>
+<p><strong>Example:</strong>
+- <code>[p]command listdisabled</code></p>
+<p><strong>Usage:</strong> <code>,command listdisabled</code></p>
+<h3 id="command-listdisabled-global">command listdisabled global</h3>
+<p><strong>Description:</strong> List disabled commands globally.</p>
+<p><strong>Example:</strong>
+- <code>[p]command listdisabled global</code></p>
+<p><strong>Usage:</strong> <code>,command listdisabled global</code></p>
+<h3 id="command-listdisabled-guild">command listdisabled guild</h3>
+<p><strong>Description:</strong> List disabled commands in this server.</p>
+<p><strong>Example:</strong>
+- <code>[p]command listdisabled guild</code></p>
+<p><strong>Usage:</strong> <code>,command listdisabled guild</code></p>
+<h3 id="command-disablecog">command disablecog</h3>
+<p><strong>Description:</strong> Disable a cog in this server.</p>
+<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disablecog Economy</code>
+- <code>[p]command disablecog ModLog</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog&gt;</code> - The name of the cog to disable on this server. Must be title-case.</p>
+<p><strong>Usage:</strong> <code>,command disablecog</code></p>
+<h3 id="command-disabledmsg">command disabledmsg</h3>
+<p><strong>Description:</strong> Set the bot's response to disabled commands.</p>
+<p>Leave blank to send nothing.</p>
+<p>To include the command name in the message, include the <code>{command}</code> placeholder.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disabledmsg This command is disabled</code>
+- <code>[p]command disabledmsg {command} is disabled</code>
+- <code>[p]command disabledmsg</code> - Sends nothing when a disabled command is attempted.</p>
+<p><strong>Arguments:</strong>
+- <code>[message]</code> - The message to send when a disabled command is attempted.</p>
+<p><strong>Usage:</strong> <code>,command disabledmsg</code></p>
+<h3 id="autoimmune">autoimmune</h3>
+<p><strong>Description:</strong> Commands to manage server settings for immunity from automated actions.</p>
+<p>This includes duplicate message deletion and mention spam from the Mod cog, and filters from the Filter cog.</p>
+<p><strong>Usage:</strong> <code>,autoimmune</code></p>
+<h3 id="autoimmune-isimmune">autoimmune isimmune</h3>
+<p><strong>Description:</strong> Checks if a user or role would be considered immune from automated actions.</p>
+<p><strong>Examples:</strong>
+- <code>[p]autoimmune isimmune @Rosie</code>
+- <code>[p]autoimmune isimmune @Mods</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_or_role&gt;</code> - The user or role to check the immunity of.</p>
+<p><strong>Usage:</strong> <code>,autoimmune isimmune</code></p>
+<h3 id="autoimmune-list">autoimmune list</h3>
+<p><strong>Description:</strong> Gets the current members and roles configured for automatic moderation action immunity.</p>
+<p><strong>Example:</strong>
+- <code>[p]autoimmune list</code></p>
+<p><strong>Usage:</strong> <code>,autoimmune list</code></p>
+<h3 id="autoimmune-add">autoimmune add</h3>
+<p><strong>Description:</strong> Makes a user or role immune from automated moderation actions.</p>
+<p><strong>Examples:</strong>
+- <code>[p]autoimmune add @Rosie</code> - Adds a user.
+- <code>[p]autoimmune add @Mods</code> - Adds a role.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_or_role&gt;</code> - The user or role to add immunity to.</p>
+<p><strong>Usage:</strong> <code>,autoimmune add</code></p>
+<h3 id="autoimmune-remove">autoimmune remove</h3>
+<p><strong>Description:</strong> Remove a user or role from being immune to automated moderation actions.</p>
+<p><strong>Examples:</strong>
+- <code>[p]autoimmune remove @Rosie</code> - Removes a user.
+- <code>[p]autoimmune remove @Mods</code> - Removes a role.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_or_role&gt;</code> - The user or role to remove immunity from.</p>
+<p><strong>Usage:</strong> <code>,autoimmune remove</code></p>
+<h3 id="ignore">ignore</h3>
+<p><strong>Description:</strong> Commands to add servers or channels to the ignore list.</p>
+<p>The ignore list will prevent the bot from responding to commands in the configured locations.</p>
+<p>Note: Owners and Admins override the ignore list.</p>
+<p><strong>Usage:</strong> <code>,ignore</code></p>
+<h3 id="ignore-channel">ignore channel</h3>
+<p><strong>Description:</strong> Ignore commands in the channel, thread, or category.</p>
+<p>Defaults to the current thread or channel.</p>
+<p>Note: Owners, Admins, and those with Manage Channel permissions override ignored channels.</p>
+<p><strong>Examples:</strong>
+- <code>[p]ignore channel #general</code> - Ignores commands in the #general channel.
+- <code>[p]ignore channel</code> - Ignores commands in the current channel.
+- <code>[p]ignore channel "General Channels"</code> - Use quotes for categories with spaces.
+- <code>[p]ignore channel 356236713347252226</code> - Also accepts IDs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> - The channel to ignore. This can also be a thread or category channel.</p>
+<p><strong>Usage:</strong> <code>,ignore channel</code></p>
+<h3 id="ignore-list">ignore list</h3>
+<p><strong>Description:</strong> List the currently ignored servers and channels.</p>
+<p><strong>Example:</strong>
+- <code>[p]ignore list</code></p>
+<p><strong>Usage:</strong> <code>,ignore list</code></p>
+<h3 id="ignore-server">ignore server</h3>
+<p><strong>Description:</strong> Ignore commands in this server.</p>
+<p>Note: Owners, Admins, and those with Manage Server permissions override ignored servers.</p>
+<p><strong>Example:</strong>
+- <code>[p]ignore server</code> - Ignores the current server</p>
+<p><strong>Usage:</strong> <code>,ignore server</code></p>
+<h3 id="unignore">unignore</h3>
+<p><strong>Description:</strong> Commands to remove servers or channels from the ignore list.</p>
+<p><strong>Usage:</strong> <code>,unignore</code></p>
+<h3 id="unignore-server">unignore server</h3>
+<p><strong>Description:</strong> Remove this server from the ignore list.</p>
+<p><strong>Example:</strong>
+- <code>[p]unignore server</code> - Stops ignoring the current server</p>
+<p><strong>Usage:</strong> <code>,unignore server</code></p>
+<h3 id="unignore-channel">unignore channel</h3>
+<p><strong>Description:</strong> Remove a channel, thread, or category from the ignore list.</p>
+<p>Defaults to the current thread or channel.</p>
+<p><strong>Examples:</strong>
+- <code>[p]unignore channel #general</code> - Unignores commands in the #general channel.
+- <code>[p]unignore channel</code> - Unignores commands in the current channel.
+- <code>[p]unignore channel "General Channels"</code> - Use quotes for categories with spaces.
+- <code>[p]unignore channel 356236713347252226</code> - Also accepts IDs. Use this method to unignore categories.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> - The channel to unignore. This can also be a thread or category channel.</p>
+<p><strong>Usage:</strong> <code>,unignore channel</code></p>
+<h3 id="licenseinfo">licenseinfo</h3>
+<p><strong>Description:</strong> Get info about Red's licenses.</p>
+<p><strong>Usage:</strong> <code>,licenseinfo</code></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../CogManagerUI/" class="btn btn-neutral float-right" title="CogManagerUI">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../CogManagerUI/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
