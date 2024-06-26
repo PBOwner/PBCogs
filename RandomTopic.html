@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Application.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Application
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -731,14 +723,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DblTools.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DblTools
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DeleteCounter.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -799,6 +783,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordSearch
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DmInvite.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DmInvite
         </a>
     </li>
                             
@@ -2195,10 +2187,10 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="StaffManager.html"
+        <a href="StaffApps.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            StaffManager
+            StaffApps
         </a>
     </li>
                             
@@ -2387,14 +2379,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Unknown.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Unknown
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="UpdateChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2483,6 +2467,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VirusTotal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VirusTotal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="VoiceLog.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2511,6 +2503,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Voteout
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VoteRewards.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VoteRewards
         </a>
     </li>
                             
@@ -2668,30 +2668,26 @@
                 <section class="p-md-5 section-content">
     <article>
         <p><h1 id="randomtopic-help">RandomTopic Help</h1>
-<p>A cog to revive dead chats with random trivia questions.</p>
+<p>A cog to send random topics at configurable intervals.</p>
 <h3 id="rt">rt</h3>
 <p><strong>Description:</strong> Commands to configure Random Topic.</p>
 <p><strong>Usage:</strong> <code>,rt</code></p>
-<h3 id="rt-settime">rt settime</h3>
-<p><strong>Description:</strong> Set the time for daily topic posting (HH:MM in 24-hour format).</p>
-<p>Use this command to schedule a daily time for the bot to automatically send a random topic. The time should be in 24-hour format (e.g., 14:00 for 2 PM).</p>
-<p><strong>Usage:</strong> <code>,rt settime</code></p>
-<h3 id="rt-setname">rt setname</h3>
-<p><strong>Description:</strong> Set a custom name for the Random Topic messages.</p>
-<p>Use this command to customize the name that will appear in the random topic messages. This can help personalize the bot's messages for your server.</p>
-<p><strong>Usage:</strong> <code>,rt setname</code></p>
-<h3 id="rt-setchannel">rt setchannel</h3>
-<p><strong>Description:</strong> Set the channel where random topics will be sent.</p>
-<p>Use this command to specify which text channel the bot should use to send the random topics. Make sure to mention the channel.</p>
-<p><strong>Usage:</strong> <code>,rt setchannel</code></p>
-<h3 id="rt-sendtopic">rt sendtopic</h3>
-<p><strong>Description:</strong> Send a random topic immediately.</p>
-<p>Use this command to manually trigger the bot to send a random topic to the configured channel. This can be useful if you want to revive a dead chat instantly.</p>
-<p><strong>Usage:</strong> <code>,rt sendtopic</code></p>
 <h3 id="rt-setrole">rt setrole</h3>
 <p><strong>Description:</strong> Set the role to be pinged when a new topic is posted.</p>
 <p>Use this command to specify which role should be mentioned whenever a new random topic is generated and sent to the channel.</p>
-<p><strong>Usage:</strong> <code>,rt setrole</code></p></p>
+<p><strong>Usage:</strong> <code>,rt setrole</code></p>
+<h3 id="rt-setinterval">rt setinterval</h3>
+<p><strong>Description:</strong> Set the interval for sending random topics (in minutes).</p>
+<p>Use this command to set the interval at which the bot will send random topics.</p>
+<p><strong>Usage:</strong> <code>,rt setinterval</code></p>
+<h3 id="rt-settitle">rt settitle</h3>
+<p><strong>Description:</strong> Set the title for the Random Topic embed.</p>
+<p>Use this command to customize the title that will appear in the random topic embeds.</p>
+<p><strong>Usage:</strong> <code>,rt settitle</code></p>
+<h3 id="rt-setchannel">rt setchannel</h3>
+<p><strong>Description:</strong> Set the channel where random topics will be sent.</p>
+<p>Use this command to specify which text channel the bot should use to send the random topics. Make sure to mention the channel.</p>
+<p><strong>Usage:</strong> <code>,rt setchannel</code></p></p>
     </article>
 </section>
             <!-- endblock -->

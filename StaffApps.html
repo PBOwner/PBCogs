@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-        <title>StaffManager - FuturoBot's Documentation</title>
+        <title>StaffApps - FuturoBot's Documentation</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         
-        <link rel="canonical" href="https://docs.prismbot.icu/StaffManager.html">
+        <link rel="canonical" href="https://docs.prismbot.icu/StaffApps.html">
         
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -263,14 +263,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Application.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Application
         </a>
     </li>
                             
@@ -731,14 +723,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DblTools.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DblTools
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DeleteCounter.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -799,6 +783,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordSearch
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DmInvite.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DmInvite
         </a>
     </li>
                             
@@ -2195,10 +2187,10 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="StaffManager.html"
+        <a href="StaffApps.html"
             class=" active 
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            StaffManager
+            StaffApps
         </a>
     </li>
                             
@@ -2387,14 +2379,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Unknown.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Unknown
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="UpdateChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2483,6 +2467,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VirusTotal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VirusTotal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="VoiceLog.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2511,6 +2503,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Voteout
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VoteRewards.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VoteRewards
         </a>
     </li>
                             
@@ -2667,8 +2667,26 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p><h1 id="staffmanager-help">StaffManager Help</h1>
-<p>Cog for managing staff members in a Discord server.</p>
+        <p><h1 id="staffapps-help">StaffApps Help</h1>
+<p>Cog for handling staff applications and managing staff members.</p>
+<h3 id="addq">addq</h3>
+<p><strong>Description:</strong> Add a question for a specific role.</p>
+<p><strong>Usage:</strong> <code>,addq</code></p>
+<h3 id="setappchannel">setappchannel</h3>
+<p><strong>Description:</strong> Set the application channel.</p>
+<p><strong>Usage:</strong> <code>,setappchannel</code></p>
+<h3 id="listroles">listroles</h3>
+<p><strong>Description:</strong> List roles available for application.</p>
+<p><strong>Usage:</strong> <code>,listroles</code></p>
+<h3 id="apply">apply</h3>
+<p><strong>Description:</strong> Apply for a specific role.</p>
+<p><strong>Usage:</strong> <code>,apply</code></p>
+<h3 id="remq">remq</h3>
+<p><strong>Description:</strong> Remove a question for a specific role.</p>
+<p><strong>Usage:</strong> <code>,remq</code></p>
+<h3 id="clearqs">clearqs</h3>
+<p><strong>Description:</strong> Clear all questions for a specific role.</p>
+<p><strong>Usage:</strong> <code>,clearqs</code></p>
 <h3 id="setupdates">setupdates</h3>
 <p><strong>Description:</strong> Set the channel for staff update messages.</p>
 <p><strong>Usage:</strong> <code>,setupdates</code></p>
@@ -2678,9 +2696,6 @@
 <h3 id="fire">fire</h3>
 <p><strong>Description:</strong> Fire a staff member.</p>
 <p><strong>Usage:</strong> <code>,fire</code></p>
-<h3 id="hire">hire</h3>
-<p><strong>Description:</strong> Hire a new staff member.</p>
-<p><strong>Usage:</strong> <code>,hire</code></p>
 <h3 id="demote">demote</h3>
 <p><strong>Description:</strong> Demote a staff member.</p>
 <p><strong>Usage:</strong> <code>,demote</code></p>
@@ -2693,39 +2708,39 @@
 <h3 id="loa">loa</h3>
 <p><strong>Description:</strong> Group command for managing leave of absence requests.</p>
 <p><strong>Usage:</strong> <code>,loa</code></p>
-<h3 id="loa-role">loa role</h3>
-<p><strong>Description:</strong> Set the role to be assigned during LOA.</p>
-<p><strong>Usage:</strong> <code>,loa role</code></p>
-<h3 id="loa-end">loa end</h3>
-<p><strong>Description:</strong> End a leave of absence.</p>
-<p><strong>Usage:</strong> <code>,loa end</code></p>
-<h3 id="loa-deny">loa deny</h3>
-<p><strong>Description:</strong> Deny a leave of absence request.</p>
-<p><strong>Usage:</strong> <code>,loa deny</code></p>
-<h3 id="loa-approve">loa approve</h3>
-<p><strong>Description:</strong> Approve a leave of absence request.</p>
-<p><strong>Usage:</strong> <code>,loa approve</code></p>
-<h3 id="loa-channel">loa channel</h3>
-<p><strong>Description:</strong> Set the channel for LOA request messages.</p>
-<p><strong>Usage:</strong> <code>,loa channel</code></p>
 <h3 id="loa-request">loa request</h3>
 <p><strong>Description:</strong> Request a leave of absence.</p>
 <p><strong>Usage:</strong> <code>,loa request</code></p>
+<h3 id="loa-deny">loa deny</h3>
+<p><strong>Description:</strong> Deny a leave of absence request.</p>
+<p><strong>Usage:</strong> <code>,loa deny</code></p>
+<h3 id="loa-end">loa end</h3>
+<p><strong>Description:</strong> End a leave of absence.</p>
+<p><strong>Usage:</strong> <code>,loa end</code></p>
+<h3 id="loa-channel">loa channel</h3>
+<p><strong>Description:</strong> Set the channel for LOA request messages.</p>
+<p><strong>Usage:</strong> <code>,loa channel</code></p>
+<h3 id="loa-role">loa role</h3>
+<p><strong>Description:</strong> Set the role to be assigned during LOA.</p>
+<p><strong>Usage:</strong> <code>,loa role</code></p>
+<h3 id="loa-approve">loa approve</h3>
+<p><strong>Description:</strong> Approve a leave of absence request.</p>
+<p><strong>Usage:</strong> <code>,loa approve</code></p>
 <h3 id="resign">resign</h3>
 <p><strong>Description:</strong> Group command for managing resignation requests.</p>
 <p><strong>Usage:</strong> <code>,resign</code></p>
-<h3 id="resign-channel">resign channel</h3>
-<p><strong>Description:</strong> Set the channel for resignation request messages.</p>
-<p><strong>Usage:</strong> <code>,resign channel</code></p>
 <h3 id="resign-request">resign request</h3>
 <p><strong>Description:</strong> Request a resignation.</p>
 <p><strong>Usage:</strong> <code>,resign request</code></p>
-<h3 id="resign-accept">resign accept</h3>
-<p><strong>Description:</strong> Accept a resignation request.</p>
-<p><strong>Usage:</strong> <code>,resign accept</code></p>
 <h3 id="resign-deny">resign deny</h3>
 <p><strong>Description:</strong> Deny a resignation request.</p>
-<p><strong>Usage:</strong> <code>,resign deny</code></p></p>
+<p><strong>Usage:</strong> <code>,resign deny</code></p>
+<h3 id="resign-channel">resign channel</h3>
+<p><strong>Description:</strong> Set the channel for resignation request messages.</p>
+<p><strong>Usage:</strong> <code>,resign channel</code></p>
+<h3 id="resign-accept">resign accept</h3>
+<p><strong>Description:</strong> Accept a resignation request.</p>
+<p><strong>Usage:</strong> <code>,resign accept</code></p></p>
     </article>
 </section>
             <!-- endblock -->
