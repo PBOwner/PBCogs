@@ -272,7 +272,7 @@ class AutoDocs(commands.Cog):
         return await self.get_coglist(current)
 
     # New command to search for a specific command
-    @commands.command(name="search", description="Search for a specific command and get its documentation.")
+    @commands.command(name="searchcmd", description="Search for a specific command and get its documentation.")
     async def search_command(self, ctx: commands.Context, *, command_name: str):
         """
         Search for a specific command and get its documentation.
