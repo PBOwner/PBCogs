@@ -18,7 +18,10 @@ class StaffApps(commands.Cog):
             "loa_role": None,
             "resignation_requests_channel": None,
             "loa_requests": {},
-            "resignation_requests": {}
+            "resignation_requests": {},
+            "role_categories": {},
+            "base_role": None,
+            "auto_role": None
         }
         self.config.register_guild(**default_guild)
 
@@ -139,6 +142,11 @@ class StaffApps(commands.Cog):
     async def fire(self, ctx, member: discord.Member, role: discord.Role):
         """Fire a staff member."""
         await member.remove_roles(role)
+        auto_role_id = await self.config.guild(ctx.guild).auto_role()
+        if auto_role_id:
+            auto_role = ctx.guild.get_role(auto_role_id)
+            if auto_role:
+                await member.remove_roles(auto_role)
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
@@ -151,15 +159,48 @@ class StaffApps(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def demote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
+    async def demote(self, ctx, member: discord.Member, new_role: discord.Role = None):
         """Demote a staff member."""
-        await member.remove_roles(old_role)
+        role_categories = await self.config.guild(ctx.guild).role_categories()
+        member_roles = [role for role in member.roles if role.id in [int(role_id) for roles in role_categories.values() for role_id in roles]]
+
+        if not member_roles:
+            return await ctx.send("This member does not have any staff role that can be demoted.")
+
+        current_role = sorted(member_roles, key=lambda r: r.position, reverse=True)[0]
+        category_name = next((cat for cat, roles in role_categories.items() if str(current_role.id) in roles), None)
+        if not category_name:
+            return await ctx.send("This role is not part of any configured category.")
+
+        roles_in_category = role_categories[category_name]
+        current_index = roles_in_category.index(str(current_role.id))
+
+        if new_role:
+            if str(new_role.id) not in roles_in_category:
+                return await ctx.send("The specified new role is not part of the same category.")
+        else:
+            if current_index == 0:
+                return await ctx.send("This member is already at the lowest role in the category.")
+            new_role = ctx.guild.get_role(int(roles_in_category[current_index - 1]))
+
+        await member.remove_roles(current_role)
         await member.add_roles(new_role)
+
+        # Handle category role switch
+        new_category_name = next((cat for cat, roles in role_categories.items() if str(new_role.id) in roles), None)
+        if new_category_name and new_category_name != category_name:
+            old_category_role = ctx.guild.get_role(int(role_categories[category_name][0]))
+            new_category_role = ctx.guild.get_role(int(role_categories[new_category_name][0]))
+            if old_category_role:
+                await member.remove_roles(old_category_role)
+            if new_category_role:
+                await member.add_roles(new_category_role)
+
         embed = discord.Embed(title="Staff Demoted", color=discord.Color.orange())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=new_role.mention, inline=False)
-        embed.add_field(name="Old Position", value=old_role.mention, inline=False)
+        embed.add_field(name="New Position", value=new_role.mention, inline=False)
+        embed.add_field(name="Old Position", value=current_role.mention, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
@@ -168,49 +209,101 @@ class StaffApps(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def promote(self, ctx, member: discord.Member, old_role: discord.Role, new_role: discord.Role):
+    async def promote(self, ctx, member: discord.Member, new_role: discord.Role = None):
         """Promote a staff member."""
-        await member.remove_roles(old_role)
+        role_categories = await self.config.guild(ctx.guild).role_categories()
+        member_roles = [role for role in member.roles if role.id in [int(role_id) for roles in role_categories.values() for role_id in roles]]
+
+        if not member_roles:
+            return await ctx.send("This member does not have any staff role that can be promoted.")
+
+        current_role = sorted(member_roles, key=lambda r: r.position, reverse=True)[0]
+        category_name = next((cat for cat, roles in role_categories.items() if str(current_role.id) in roles), None)
+        if not category_name:
+            return await ctx.send("This role is not part of any configured category.")
+
+        roles_in_category = role_categories[category_name]
+        current_index = roles_in_category.index(str(current_role.id))
+
+        if new_role:
+            if str(new_role.id) not in roles_in_category:
+                return await ctx.send("The specified new role is not part of the same category.")
+        else:
+            if current_index == len(roles_in_category) - 1:
+                return await ctx.send("This member is already at the highest role in the category.")
+            new_role = ctx.guild.get_role(int(roles_in_category[current_index + 1]))
+
+        await member.remove_roles(current_role)
         await member.add_roles(new_role)
+
+        # Handle category role switch
+        new_category_name = next((cat for cat, roles in role_categories.items() if str(new_role.id) in roles), None)
+        if new_category_name and new_category_name != category_name:
+            old_category_role = ctx.guild.get_role(int(role_categories[category_name][0]))
+            new_category_role = ctx.guild.get_role(int(role_categories[new_category_name][0]))
+            if old_category_role:
+                await member.remove_roles(old_category_role)
+            if new_category_role:
+                await member.add_roles(new_category_role)
+
         embed = discord.Embed(title="Staff Promoted", color=discord.Color.blue())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=new_role.mention, inline=False)
-        embed.add_field(name="Old Position", value=old_role.mention, inline=False)
+        embed.add_field(name="New Position", value=new_role.mention, inline=False)
+        embed.add_field(name="Old Position", value=current_role.mention, inline=False)
         embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
         staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
 
-    @commands.command(name="staffblacklist")
-    @commands.has_permissions(ban_members=True)
-    async def staffblacklist(self, ctx, member: discord.Member, reason: str, proof: str, ban: str = "no"):
-        """Blacklist a staff member. Optionally ban the member by specifying 'yes' for the ban parameter."""
-        # Send a DM to the member before blacklisting/banning them
-        try:
-            await member.send(f"You have been blacklisted from {ctx.guild.name} for: {reason}. If you wish to appeal, please contact {ctx.guild.owner.mention} or the Support team.")
-        except discord.Forbidden:
-            await ctx.send(f"Failed to send a DM to {member.name}. They will still be blacklisted.")
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def setcategory(self, ctx, category_name: str):
+        """Set a new role category."""
+        async with self.config.guild(ctx.guild).role_categories() as role_categories:
+            if category_name in role_categories:
+                return await ctx.send("This category already exists.")
+            role_categories[category_name] = []
+        await ctx.send(f"Category '{category_name}' created.")
 
-        # Ban the member if specified
-        if ban.lower() == "yes":
-            await member.ban(reason=reason)
-            ban_status = "banned and blacklisted"
-        else:
-            ban_status = "blacklisted"
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def addrole(self, ctx, category_name: str, role: discord.Role):
+        """Add a role to a category."""
+        async with self.config.guild(ctx.guild).role_categories() as role_categories:
+            if category_name not in role_categories:
+                return await ctx.send("This category does not exist.")
+            if str(role.id) in role_categories[category_name]:
+                return await ctx.send("This role is already in the category.")
+            role_categories[category_name].append(str(role.id))
+        await ctx.send(f"Role {role.mention} added to category '{category_name}'.")
 
-        # Send an embed message to the blacklist_channel
-        embed = discord.Embed(title="Staff Blacklisted", color=discord.Color.dark_red())
-        embed.add_field(name="Username", value=member.name, inline=False)
-        embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Reason", value=reason, inline=False)
-        embed.add_field(name="Proof", value=proof, inline=False)
-        embed.add_field(name="Status", value=ban_status, inline=False)
-        blacklist_channel_id = await self.config.guild(ctx.guild).blacklist_channel()
-        blacklist_channel = self.bot.get_channel(blacklist_channel_id)
-        if blacklist_channel:
-            await blacklist_channel.send(embed=embed)
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def removerole(self, ctx, category_name: str, role: discord.Role):
+        """Remove a role from a category."""
+        async with self.config.guild(ctx.guild).role_categories() as role_categories:
+            if category_name not in role_categories:
+                return await ctx.send("This category does not exist.")
+            if str(role.id) not in role_categories[category_name]:
+                return await ctx.send("This role is not in the category.")
+            role_categories[category_name].remove(str(role.id))
+        await ctx.send(f"Role {role.mention} removed from category '{category_name}'.")
+
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def setbaserole(self, ctx, role: discord.Role):
+        """Set the base role given to each staff member."""
+        await self.config.guild(ctx.guild).base_role.set(role.id)
+        await ctx.send(f"Base role set to {role.mention}.")
+
+    @commands.command()
+    @commands.has_permissions(manage_roles=True)
+    async def setautorole(self, ctx, role: discord.Role):
+        """Set the automatically configured role given upon hiring."""
+        await self.config.guild(ctx.guild).auto_role.set(role.id)
+        await ctx.send(f"Automatically configured role set to {role.mention}.")
 
     # LOA Commands
     @commands.group()
@@ -373,6 +466,11 @@ class StaffApps(commands.Cog):
                     if not role:
                         return await ctx.send(f"Role {role_id} not found.")
                     await member.add_roles(role)
+                    auto_role_id = await self.config.guild(ctx.guild).auto_role()
+                    if auto_role_id:
+                        auto_role = ctx.guild.get_role(auto_role_id)
+                        if auto_role:
+                            await member.add_roles(auto_role)
                     await member.send(f"Congratulations! Your application for {role.mention} has been accepted.")
                     embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
                     embed.add_field(name="Username", value=member.name, inline=False)
