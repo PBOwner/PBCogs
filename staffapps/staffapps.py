@@ -23,29 +23,23 @@ class StaffApps(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
-    @commands.group()
-    async def app(self, ctx):
-        """Group command for managing staff applications."""
-        if ctx.invoked_subcommand is None:
-            return
-
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def addq(self, ctx, role: discord.Role, *, question: str):
         """Add a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
             questions.setdefault(str(role.id), []).append(question)
         await ctx.send(f"Question added for {role.name}.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def setappchannel(self, ctx, channel: discord.TextChannel):
         """Set the application channel."""
         await self.config.guild(ctx.guild).application_channel.set(channel.id)
         await ctx.send(f"Application channel set to {channel.mention}.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def listroles(self, ctx):
         """List roles available for application."""
         questions = await self.config.guild(ctx.guild).questions()
@@ -56,8 +50,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No roles set for applications.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def apply(self, ctx, *, role_name: str):
         """Apply for a specific role."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -100,7 +94,7 @@ class StaffApps(commands.Cog):
             self.bot.loop.create_task(self.tally_votes(poll_message, ctx.channel))
             await ctx.send("Application submitted. Thank you!")
         else:
-            await ctx.send("Application channel not set. Please set an application channel using the `app setappchannel` command.")
+            await ctx.send("Application channel not set. Please set an application channel using the `setappchannel` command.")
 
     async def tally_votes(self, poll_message, channel):
         await asyncio.sleep(14400)  # 4 hours in seconds
@@ -109,8 +103,8 @@ class StaffApps(commands.Cog):
         no_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "👎")
         await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def accept(self, ctx, member: discord.Member, role_name: str):
         """Accept an application and assign a role."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -134,8 +128,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No application found for this member and role.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def deny(self, ctx, member: discord.Member, role_name: str):
         """Deny an application and send a denial message."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -150,8 +144,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No application found for this member and role.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def remq(self, ctx, role: discord.Role, *, question: str):
         """Remove a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -161,8 +155,8 @@ class StaffApps(commands.Cog):
             else:
                 await ctx.send("Question not found for this role.")
 
-    @app.command()
     @commands.guild_only()
+    @commands.command()
     async def clearqs(self, ctx, role: discord.Role):
         """Clear all questions for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -374,7 +368,7 @@ class StaffApps(commands.Cog):
         """Group command for managing resignation requests."""
         if ctx.invoked_subcommand is None:
             return
-            
+
     @resign.command()
     async def request(self, ctx, reason: str):
         """Request a resignation."""
