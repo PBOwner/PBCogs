@@ -269,7 +269,7 @@ class StaffApps(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def addrole(self, ctx, category_name: str, role: discord.Role):
+    async def roleadd(self, ctx, category_name: str, role: discord.Role):
         """Add a role to a category."""
         async with self.config.guild(ctx.guild).role_categories() as role_categories:
             if category_name not in role_categories:
@@ -281,7 +281,7 @@ class StaffApps(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def removerole(self, ctx, category_name: str, role: discord.Role):
+    async def rolerem(self, ctx, category_name: str, role: discord.Role):
         """Remove a role from a category."""
         async with self.config.guild(ctx.guild).role_categories() as role_categories:
             if category_name not in role_categories:
