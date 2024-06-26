@@ -150,49 +150,6 @@ class AdvancedLogger(commands.Cog):
         await self.log_event(guild, "message", "Message Deleted", description, discord.Color.red(), message.author)
 
     @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-        guild = message.guild
-
-        if message.attachments:
-            attachments = "\n".join([attachment.url for attachment in message.attachments])
-            description = (
-                f"**Message with Attachments Sent in {message.channel.mention}**\n"
-                f"**Content:** {message.content}\n"
-                f"**Author:** {message.author.mention}\n"
-                f"**Message ID:** {message.id}\n"
-                f"**Channel ID:** {message.channel.id}\n"
-                f"**Guild ID:** {message.guild.id}\n"
-                f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>\n"
-                f"**Attachments:**\n{attachments}"
-            )
-            await self.log_event(guild, "message", "Message with Attachments Sent", description, discord.Color.blue(), message.author)
-
-        if re.search(r'https?://\S+', message.content):
-            description = (
-                f"**Message with Link Sent in {message.channel.mention}**\n"
-                f"**Content:** {message.content}\n"
-                f"**Author:** {message.author.mention}\n"
-                f"**Message ID:** {message.id}\n"
-                f"**Channel ID:** {message.channel.id}\n"
-                f"**Guild ID:** {message.guild.id}\n"
-                f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
-            )
-            await self.log_event(guild, "message", "Message with Link Sent", description, discord.Color.green(), message.author)
-
-        description = (
-            f"**Message Sent in {message.channel.mention}**\n"
-            f"**Content:** {message.content}\n"
-            f"**Author:** {message.author.mention}\n"
-            f"**Message ID:** {message.id}\n"
-            f"**Channel ID:** {message.channel.id}\n"
-            f"**Guild ID:** {message.guild.id}\n"
-            f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
-        )
-        await self.log_event(guild, "message", "Message Sent", description, discord.Color.blue(), message.author)
-
-    @commands.Cog.listener()
     async def on_interaction(self, interaction: discord.Interaction):
         if interaction.is_expired():
             return
@@ -369,6 +326,7 @@ class AdvancedLogger(commands.Cog):
             guild = before
             description = (
                 f"**Guild Renamed:** {before.name} -> {after.name}\n"
+                f"**Guild ID:** {guild.id}\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "channel", "Guild Renamed", description, discord.Color.blue())
@@ -405,7 +363,6 @@ class AdvancedLogger(commands.Cog):
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
                 )
                 await self.log_event(guild, "voice", "Voice Channel Switch", description, discord.Color.blue(), member)
-
         if before.self_mute != after.self_mute:
             if after.self_mute:
                 description = (
