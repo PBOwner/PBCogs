@@ -219,22 +219,22 @@ class StaffApps(commands.Cog):
         """Group command for managing leave of absence requests."""
         pass
 
-    @loa.command()
+    @loa.command(name="setchannel")
     @commands.has_permissions(manage_channels=True)
-    async def channel(self, ctx, channel: discord.TextChannel):
+    async def loa_setchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for LOA request messages."""
         await self.config.guild(ctx.guild).loa_requests_channel.set(channel.id)
         await ctx.send(f"LOA requests channel set to {channel.mention}")
 
-    @loa.command()
+    @loa.command(name="role")
     @commands.has_permissions(manage_roles=True)
-    async def role(self, ctx, role: discord.Role):
+    async def loa_role(self, ctx, role: discord.Role):
         """Set the role to be assigned during LOA."""
         await self.config.guild(ctx.guild).loa_role.set(role.id)
         await ctx.send(f"LOA role set to {role.mention}")
 
-    @loa.command()
-    async def request(self, ctx, duration: str, reason: str):
+    @loa.command(name="request")
+    async def loa_request(self, ctx, duration: str, reason: str):
         """Request a leave of absence."""
         loa_requests = await self.config.guild(ctx.guild).loa_requests()
         user_id = ctx.author.id
@@ -261,8 +261,8 @@ class StaffApps(commands.Cog):
 
         await ctx.send(f"Leave of Absence request submitted for {duration} due to {reason}.")
 
-    @loa.command()
-    async def end(self, ctx, user_id: int):
+    @loa.command(name="end")
+    async def loa_end(self, ctx, user_id: int):
         """End a leave of absence."""
         loa_requests = await self.config.guild(ctx.guild).loa_requests()
         if user_id in loa_requests and loa_requests[user_id]["approved_by"] is not None:
@@ -291,8 +291,8 @@ class StaffApps(commands.Cog):
         """Group command for managing resignation requests."""
         pass
 
-    @resign.command()
-    async def request(self, ctx, reason: str):
+    @resign.command(name="request")
+    async def resign_request(self, ctx, reason: str):
         """Request a resignation."""
         resignation_requests = await self.config.guild(ctx.guild).resignation_requests()
         user_id = ctx.author.id
@@ -317,9 +317,9 @@ class StaffApps(commands.Cog):
 
         await ctx.send(f"Resignation request submitted due to {reason}.")
 
-    @resign.command()
+    @resign.command(name="setchannel")
     @commands.has_permissions(manage_channels=True)
-    async def channel(self, ctx, channel: discord.TextChannel):
+    async def resign_setchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for resignation request messages."""
         await self.config.guild(ctx.guild).resignation_requests_channel.set(channel.id)
         await ctx.send(f"Resignation requests channel set to {channel.mention}")
