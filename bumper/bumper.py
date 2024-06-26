@@ -8,9 +8,10 @@ import random
 import string
 import logging
 from datetime import datetime, timezone, timedelta
+import humanize
 
 _ = Translator("Bumper", __file__)
-log = logging.getLogger("red.Bumper")
+log = logging.getLogger("fb.Bumper")
 
 class Bumper(commands.Cog):
     """
@@ -72,9 +73,9 @@ class Bumper(commands.Cog):
 
     @bumpset.command()
     async def description(self, ctx: commands.Context, *, description: str):
-        """Set the server description (max 500 characters)."""
-        if len(description) > 500:
-            await ctx.send(embed=discord.Embed(description="Description is too long. Please keep it under 500 characters.", color=discord.Color.red()))
+        """Set the server description (max 1024 characters)."""
+        if len(description) > 1024:
+            await ctx.send(embed=discord.Embed(description="Description is too long. Please keep it under 1024 characters.", color=discord.Color.red()))
             return
         await self.config.guild(ctx.guild).description.set(description)
         await ctx.send(embed=discord.Embed(description="Description set.", color=discord.Color.green()))
@@ -255,8 +256,8 @@ class Bumper(commands.Cog):
             last_bump = datetime.fromisoformat(guild_data["last_bump"])
             time_since_last_bump = (now - last_bump).total_seconds()
             if time_since_last_bump < 7200 and not await self.bot.is_owner(ctx.author):
-                hours_left = (7200 - time_since_last_bump) / 3600
-                await ctx.send(embed=discord.Embed(title="Too Early", description=f"You have {hours_left:.2f} hours till you can bump again.", color=discord.Color.red()))
+                hours_left = humanize.precisedelta(timedelta(seconds=(7200 - time_since_last_bump)))
+                await ctx.send(embed=discord.Embed(title="Too Early", description=f"You have {hours_left} till you can bump again.", color=discord.Color.red()))
                 return
 
         if guild_data["premium"]:
@@ -387,6 +388,8 @@ class Bumper(commands.Cog):
             report_message = await report_channel.fetch_message(report_message_id)
         except discord.NotFound:
             await ctx.send(embed=discord.Embed(description="Report message not found.", color=discord.Color.red()))
+            return
+
         self.reported_bumps.pop(report_message_id, None)
         await ctx.send(embed=discord.Embed(description="Report denied and dismissed.", color=discord.Color.green()))
 
