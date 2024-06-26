@@ -136,18 +136,19 @@ class StaffApps(commands.Cog):
 
     @app.command()
     @commands.guild_only()
-    async def deny(self, ctx, member: discord.Member, role_name: str):
+    async def deny(self, ctx, member: discord.Member):
         """Deny an application and send a denial message."""
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
-        if not role:
-            return await ctx.send("Role not found.")
-
         applications = await self.config.guild(ctx.guild).applications()
-        if str(role.id) in applications and str(member.id) in applications[str(role.id)]:
-            await member.send(f"Sorry, your application for {role.name} was denied.")
-            await ctx.send(f"Denied {member.display_name}'s application for {role.name}.")
-        else:
-            await ctx.send("No application found for this member and role.")
+        for role_id, applicants in applications.items():
+            if str(member.id) in applicants:
+                role = ctx.guild.get_role(int(role_id))
+                if role:
+                    await member.send(f"Sorry, your application for {role.name} was denied.")
+                    await ctx.send(f"Denied {member.display_name}'s application for {role.name}.")
+                del applicants[str(member.id)]
+                return
+
+        await ctx.send("No application found for this member.")
 
     @app.command()
     @commands.guild_only()
