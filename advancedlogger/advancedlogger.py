@@ -26,6 +26,7 @@ class AdvancedLogger(commands.Cog):
             "timeout_log_channel": None,
             "attachment_log_channel": None,
             "link_log_channel": None,
+            "slash_log_channel": None,  # Add slash log channel
         }
         self.config.register_guild(**default_guild)
 
@@ -56,7 +57,7 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash
 
         **Example**:
         `[p]logging setchannel member #member-log`
@@ -74,8 +75,9 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel timeout #timeout-log`
         `[p]logging setchannel attachment #attachment-log`
         `[p]logging setchannel link #link-log`
+        `[p]logging setchannel slash #slash-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -86,7 +88,7 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash
 
         **Example**:
         `[p]logging removechannel member`
@@ -104,8 +106,9 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel timeout`
         `[p]logging removechannel attachment`
         `[p]logging removechannel link`
+        `[p]logging removechannel slash`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -195,7 +198,19 @@ class AdvancedLogger(commands.Cog):
                     f"**Guild ID:** {interaction.guild.id}\n"
                     f"**Timestamp:** <t:{int(interaction.created_at.timestamp())}:F>"
                 )
-                await self.log_event(guild, "message", "Ephemeral Message Sent", description, discord.Color.purple(), interaction.user)
+                await self.log_event(guild, "slash", "Ephemeral Message Sent", description, discord.Color.purple(), interaction.user)
+            elif interaction.type == discord.InteractionType.application_command:
+                guild = interaction.guild
+                description = (
+                    f"**Slash Command Used in {interaction.channel.mention}**\n"
+                    f"**Command:** {interaction.data['name']}\n"
+                    f"**Author:** {interaction.user.mention}\n"
+                    f"**Interaction ID:** {interaction.id}\n"
+                    f"**Channel ID:** {interaction.channel.id}\n"
+                    f"**Guild ID:** {interaction.guild.id}\n"
+                    f"**Timestamp:** <t:{int(interaction.created_at.timestamp())}:F>"
+                )
+                await self.log_event(guild, "slash", "Slash Command Used", description, discord.Color.blue(), interaction.user)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
