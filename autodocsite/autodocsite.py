@@ -22,6 +22,8 @@ from .formatter import IGNORE, CustomCmdFmt
 log = logging.getLogger("red.vrt.autodocs")
 _ = Translator("AutoDocs", __file__)
 
+PRIVILEGE_LEVELS = ["user", "mod", "admin", "guildowner", "botowner"]
+
 @cog_i18n(_)
 class AutoDocs(commands.Cog):
     """
