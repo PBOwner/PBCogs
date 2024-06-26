@@ -34,7 +34,7 @@ class AdvancedLogger(commands.Cog):
                 if log_channel:
                     embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
                     if author:
-                        embed.set_thumbnail(url=author.avatar_url)
+                        embed.set_thumbnail(url=author.display_avatar.url)
                     await log_channel.send(embed=embed)
         except Exception as e:
             print(f"Failed to log event: {e}")
