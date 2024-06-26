@@ -6,5 +6,5 @@ nav:
 site_name: RoleBoards's Documentation
 site_url: https://docs.prismbot.icu/RoleBoards/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

@@ -6,5 +6,5 @@ nav:
 site_name: IdeaBoard's Documentation
 site_url: https://docs.prismbot.icu/IdeaBoard/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false
