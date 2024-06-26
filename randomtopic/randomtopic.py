@@ -141,7 +141,7 @@ class RandomTopic(commands.Cog):
         await self.bot.wait_until_ready()
         while True:
             now = datetime.now(self.timezone)
-            current_time = now.time()
+            current_time = now.time().replace(second=0, microsecond=0)
             for guild in self.bot.guilds:
                 scheduled_hour = await self.config.guild(guild).scheduled_hour()
                 scheduled_minute = await self.config.guild(guild).scheduled_minute()
@@ -159,6 +159,3 @@ class RandomTopic(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.bot.loop.create_task(self.scheduled_task())
-
-def setup(bot: Red):
-    bot.add_cog(RandomTopic(bot))
