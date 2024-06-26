@@ -110,32 +110,42 @@ class Bumper(commands.Cog):
         await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
 
     @commands.command()
-    async def codegen(self, ctx: commands.Context, user_id: int, time: int, unit: str):
-        """Generate a premium code. Use -1 for permanent, or specify time and unit (days or months)."""
+    async def codegen(self, ctx: commands.Context, user_id: int, duration: str):
+        """Generate a premium code. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month)."""
         user = self.bot.get_user(user_id)
         if not user:
             await ctx.send(embed=discord.Embed(description="Invalid user ID.", color=discord.Color.red()))
             return
 
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-        duration = None
-        if time != -1:
-            if unit == "days":
-                duration = timedelta(days=time)
-            elif unit == "months":
-                duration = timedelta(days=time * 30)
-            else:
-                await ctx.send(embed=discord.Embed(description="Invalid time unit. Use 'days' or 'months'.", color=discord.Color.red()))
+        expiry_message = ""
+        duration_seconds = None
+
+        if duration == "-1":
+            expiry_message = " (Permanent)"
+        else:
+            try:
+                if duration.endswith("d"):
+                    days = int(duration[:-1])
+                    duration_seconds = timedelta(days=days).total_seconds()
+                    expiry_message = f" (Expires in {days} days upon redemption)"
+                elif duration.endswith("m"):
+                    months = int(duration[:-1])
+                    duration_seconds = timedelta(days=months * 30).total_seconds()
+                    expiry_message = f" (Expires in {months} months upon redemption)"
+                else:
+                    raise ValueError("Invalid duration format")
+            except ValueError:
+                await ctx.send(embed=discord.Embed(description="Invalid duration format. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month).", color=discord.Color.red()))
                 return
 
         async with self.config.premium_codes() as premium_codes:
             premium_codes[code] = {
                 "user_id": user_id,
-                "duration": duration.total_seconds() if duration else None,
+                "duration": duration_seconds,
                 "redeemed": False
             }
 
-        expiry_message = " (Permanent)" if time == -1 else f" (Expires in {time} {unit} upon redemption)"
         await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
 
         try:
@@ -243,15 +253,21 @@ class Bumper(commands.Cog):
         now = datetime.now(timezone.utc)
         if guild_data["last_bump"]:
             last_bump = datetime.fromisoformat(guild_data["last_bump"])
-            if (now - last_bump).total_seconds() < 7200 and not await self.bot.is_owner(ctx.author):
-                await ctx.send(embed=discord.Embed(description="You can only bump once every 2 hours.", color=discord.Color.red()))
+            time_since_last_bump = (now - last_bump).total_seconds()
+            if time_since_last_bump < 7200 and not await self.bot.is_owner(ctx.author):
+                hours_left = (7200 - time_since_last_bump) / 3600
+                await ctx.send(embed=discord.Embed(title="Too Early", description=f"You have {hours_left:.2f} hours till you can bump again.", color=discord.Color.red()))
                 return
+
+        if guild_data["premium"]:
+            await ctx.send(embed=discord.Embed(title="Failed!", description="Your server has autobump enabled due to having premium!", color=discord.Color.red()))
+            return
 
         await self.send_bump(ctx.guild)
 
         await self.config.guild(ctx.guild).last_bump.set(now.isoformat())
         await self.increment_bump_count(ctx.guild)
-        await ctx.send(embed=discord.Embed(description="Bump message sent to all configured servers.", color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title="Success!", description="Your bump has successfully been sent to every server.", color=discord.Color.green()))
 
     async def send_bump(self, guild: discord.Guild):
         guild_data = await self.config.guild(guild).all()
@@ -371,8 +387,6 @@ class Bumper(commands.Cog):
             report_message = await report_channel.fetch_message(report_message_id)
         except discord.NotFound:
             await ctx.send(embed=discord.Embed(description="Report message not found.", color=discord.Color.red()))
-            return
-
         self.reported_bumps.pop(report_message_id, None)
         await ctx.send(embed=discord.Embed(description="Report denied and dismissed.", color=discord.Color.green()))
 
@@ -400,7 +414,6 @@ class Bumper(commands.Cog):
             await bump_log_channel.send(embed=embed)
 
     async def log_bump(self, target_guild: discord.Guild, source_guild: discord.Guild):
-        bump_count = await self.config.guild(source_guild).bump
         bump_count = await self.config.guild(source_guild).bump_count()
         bump_log_channel_id = await self.config.guild(target_guild).bump_log_channel()
         bump_log_channel = target_guild.get_channel(bump_log_channel_id)
