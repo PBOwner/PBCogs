@@ -360,7 +360,6 @@ class StaffApps(commands.Cog):
                 await ctx.send(f"Leave of Absence for {user.name} has ended.")
             else:
                 await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
-
     @commands.group()
     @commands.has_permissions(manage_roles=True)
     async def resign(self, ctx):
@@ -439,12 +438,6 @@ class StaffApps(commands.Cog):
 
         embed = message.embeds[0]
         if embed.title.startswith("New Application for"):
-            role_name = embed.title.split(" - ")[0].replace("New Application for ", "")
-            applicant_id = int(embed.title.split(" - ")[2])
-            applicant = self.bot.get_user(applicant_id)
-            guild = self.bot.get_guild(payload.guild_id)
-            role = discord.utils.get(guild.roles, name=role_name)
-
             if payload.emoji.name == "✅" or payload.emoji.name == "❌":
                 # Add the reaction to the tally
                 await self.add_vote(payload.message_id, payload.emoji.name)
@@ -464,3 +457,6 @@ class StaffApps(commands.Cog):
             yes_votes = votes["✅"]
             no_votes = votes["❌"]
             await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
+
+def setup(bot):
+    bot.add_cog(StaffApps(bot))
