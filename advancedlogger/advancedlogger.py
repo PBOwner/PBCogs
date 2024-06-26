@@ -164,7 +164,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>\n"
                 f"**Attachments:**\n{attachments}"
             )
-            await self.log_event(guild, "attachment", "Message with Attachments Sent", description, discord.Color.blue(), message.author)
+            await self.log_event(guild, "message", "Message with Attachments Sent", description, discord.Color.blue(), message.author)
 
         if re.search(r'https?://\S+', message.content):
             description = (
@@ -176,7 +176,26 @@ class AdvancedLogger(commands.Cog):
                 f"**Guild ID:** {message.guild.id}\n"
                 f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
             )
-            await self.log_event(guild, "link", "Message with Link Sent", description, discord.Color.green(), message.author)
+            await self.log_event(guild, "message", "Message with Link Sent", description, discord.Color.green(), message.author)
+
+    @commands.Cog.listener()
+    async def on_interaction(self, interaction: discord.Interaction):
+        if interaction.is_expired():
+            return
+
+        if interaction.response.is_done():
+            if interaction.response.type == discord.InteractionResponseType.channel_message_with_source and interaction.response.is_ephemeral:
+                guild = interaction.guild
+                description = (
+                    f"**Ephemeral Message Sent in {interaction.channel.mention}**\n"
+                    f"**Content:** {interaction.response.message.content}\n"
+                    f"**Author:** {interaction.user.mention}\n"
+                    f"**Interaction ID:** {interaction.id}\n"
+                    f"**Channel ID:** {interaction.channel.id}\n"
+                    f"**Guild ID:** {interaction.guild.id}\n"
+                    f"**Timestamp:** <t:{int(interaction.created_at.timestamp())}:F>"
+                )
+                await self.log_event(guild, "message", "Ephemeral Message Sent", description, discord.Color.purple(), interaction.user)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -349,7 +368,6 @@ class AdvancedLogger(commands.Cog):
                     f"**Channel ID:** {before.channel.id}\n"
                     f"**Guild:** {guild.name} ({guild.id})\n"
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-                )
                 await self.log_event(guild, "voice", "Voice Channel Leave", description, discord.Color.red(), member)
             else:
                 description = (
