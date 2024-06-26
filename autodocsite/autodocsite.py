@@ -257,125 +257,28 @@ class AutoDocs(commands.Cog):
     async def get_cog_names(self, inter: discord.Interaction, current: str):
         return await self.get_coglist(current)
 
-    # ------------------------------------------------------------------------
-    # ------------------------------------------------------------------------
-    # ------------------------------------------------------------------------
-    # ------------------- ASSISTANT FUNCTION REGISTRATION --------------------
-    # ------------------------------------------------------------------------
-    # ------------------------------------------------------------------------
-    # ------------------------------------------------------------------------
-    async def get_command_info(
-        self, guild: discord.Guild, user: discord.Member, command_name: str, *args, **kwargs
-    ) -> str:
+    # New command to search for a specific command
+    @commands.command(name="searchcmd", description="Search for a specific command and get its documentation.")
+    async def search_command(self, ctx: commands.Context, *, command_name: str):
+        """
+        Search for a specific command and get its documentation.
+
+        **Arguments**
+        `command_name: `(str) The name of the command you want to search for.
+        """
         command = self.bot.get_command(command_name)
         if not command:
-            return "Command not found, check valid commands for this cog first"
+            return await ctx.send("Command not found. Please check the command name and try again.")
 
-        prefixes = await self.bot.get_valid_prefixes(guild)
+        prefixes = await self.bot.get_valid_prefixes(ctx.guild)
+        prefix = prefixes[0].strip()
 
-        if user.id in self.bot.owner_ids:
-            level = "botowner"
-        elif user.id == guild.owner_id or user.guild_permissions.manage_guild:
-            level = "guildowner"
-        elif (await is_admin_or_superior(self.bot, user)) or user.guild_permissions.manage_roles:
-            level = "admin"
-        elif (await is_mod_or_superior(self.bot, user)) or user.guild_permissions.manage_messages:
-            level = "mod"
-        else:
-            level = "user"
-
-        c = CustomCmdFmt(self.bot, command, prefixes[0], True, False, level, True)
+        c = CustomCmdFmt(self.bot, command, prefix, True, False, "botowner", True)
         doc = c.get_doc()
         if not doc:
-            return "The user you are chatting with does not have the required permissions to use that command"
+            return await ctx.send("No documentation found for this command.")
 
-        return f"Cog name: {command.cog.qualified_name}\nCommand:\n{doc}"
-
-    async def get_command_names(self, cog_name: str, *args, **kwargs):
-        cog = self.bot.get_cog(cog_name)
-        if not cog:
-            return "Could not find that cog, check loaded cogs first"
-        names = [i.qualified_name for i in cog.walk_app_commands()] + [i.qualified_name for i in cog.walk_commands()]
-        joined = "\n".join(names)
-        return f"Available commands for the {cog_name} cog:\n{joined}"
-
-    async def get_cog_info(self, cog_name: str, *args, **kwargs):
-        cog = self.bot.get_cog(cog_name)
-        if not cog:
-            return "Could not find that cog, check loaded cogs first"
-        if desc := cog.help:
-            return f"Description of the {cog_name} cog: {desc}"
-        return "This cog has no description"
-
-    async def get_cog_list(self, *args, **kwargs):
-        joined = "\n".join([i for i in self.bot.cogs])
-        return f"Currently loaded cogs:\n{joined}"
-
-    @commands.Cog.listener()
-    async def on_assistant_cog_add(self, cog: commands.Cog):
-        """Registers a command with Assistant enabling it to access to command docs"""
-        schemas = []
-
-        schema = {
-            "name": "get_command_info",
-            "description": "Get info about a specific command",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "command_name": {
-                        "type": "string",
-                        "description": "name of the command",
-                    },
-                },
-                "required": ["command_name"],
-            },
-        }
-        schemas.append(schema)
-
-        schema = {
-            "name": "get_command_names",
-            "description": "Get a list of commands for a cog",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "cog_name": {
-                        "type": "string",
-                        "description": "name of the cog, case sensitive",
-                    }
-                },
-                "required": ["cog_name"],
-            },
-        }
-        schemas.append(schema)
-
-        schema = {
-            "name": "get_cog_info",
-            "description": "Get the description for a cog",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "cog_name": {
-                        "type": "string",
-                        "description": "name of the cog, case sensitive",
-                    }
-                },
-                "required": ["cog_name"],
-            },
-        }
-        schemas.append(schema)
-
-        schema = {
-            "name": "get_cog_list",
-            "description": "Get a list of currently loaded cogs by name",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-            },
-        }
-        schemas.append(schema)
-
-        await cog.register_functions(self.qualified_name, schemas)
-
+        await ctx.send(f"Documentation for `{command_name}`:\n\n{doc}")
 
 # Now, integrating the documentation generation into the AutoDocSite class
 
@@ -578,7 +481,7 @@ To get started with **{self.config['site_name']}**, follow these simple steps:
 
 Moderation commands help you manage your server effectively. These commands include:
 
-- `{prefix}ban [user] [reason]`: Bans a user from the server
+- `{prefix}ban [user] [reason]`: Bans a user from the server.
 - `{prefix}kick [user] [reason]`: Kicks a user from the server.
 - `{prefix}mute [user] [duration]`: Mutes a user for a specified duration.
 - There's a ton more, just take a look at the different features!
