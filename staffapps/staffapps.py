@@ -27,7 +27,7 @@ class StaffApps(commands.Cog):
     async def app(self, ctx):
         """Group command for managing staff applications."""
         if ctx.invoked_subcommand is None:
-            await ctx.send("Invalid subcommand passed. Use `app addq`, `app setappchannel`, `app listroles`, `app apply`, `app accept`, `app deny`, `app remq`, `app clearqs`")
+            return
 
     @app.command()
     @commands.guild_only()
@@ -271,7 +271,7 @@ class StaffApps(commands.Cog):
     async def loa(self, ctx):
         """Group command for managing leave of absence requests."""
         if ctx.invoked_subcommand is None:
-            await ctx.send("Invalid subcommand passed. Use `loa request`, `loa approve`, `loa deny`, `loa channel`, or `loa role`.")
+            return
 
     @loa.command()
     @commands.has_permissions(manage_channels=True)
@@ -372,7 +372,7 @@ class StaffApps(commands.Cog):
     async def resign(self, ctx):
         """Group command for managing resignation requests."""
         if ctx.invoked_subcommand is None:
-            await ctx.send("Invalid subcommand passed. Use `resign request`, `resign accept`, `resign deny`, or `resign channel`.")
+            return
 
     @resign.command()
     async def request(self, ctx, reason: str):
