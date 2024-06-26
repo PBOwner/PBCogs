@@ -4,28 +4,25 @@ import asyncio
 import random
 from redbot.core import commands, Config, checks
 from redbot.core.bot import Red
-from datetime import datetime, time
-import pytz
 
 class RandomTopic(commands.Cog):
-    """A cog to revive dead chats with random trivia questions."""
+    """A cog to send random topics at configurable intervals."""
 
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_guild(
-            role_id=None,
             channel_id=None,
-            custom_name="Random Topic",
-            scheduled_hour=None,
-            scheduled_minute=None,
-            scheduled_period=None
+            role_id=None,
+            embed_title="Random Topic",
+            interval=60  # Default interval in minutes
         )
         self.session = aiohttp.ClientSession()
-        self.timezone = pytz.timezone("US/Eastern")
+        self.task = self.bot.loop.create_task(self.scheduled_task())
 
     def cog_unload(self):
         asyncio.create_task(self.session.close())
+        self.task.cancel()
 
     @commands.group()
     @commands.guild_only()
@@ -33,15 +30,6 @@ class RandomTopic(commands.Cog):
     async def rt(self, ctx):
         """Commands to configure Random Topic."""
         pass
-
-    @rt.command()
-    async def setrole(self, ctx, role: discord.Role):
-        """Set the role to be pinged when a new topic is posted.
-
-        Use this command to specify which role should be mentioned whenever a new random topic is generated and sent to the channel.
-        """
-        await self.config.guild(ctx.guild).role_id.set(role.id)
-        await ctx.send(f"Role set to {role.name}", allowed_mentions=discord.AllowedMentions(roles=True))
 
     @rt.command()
     async def setchannel(self, ctx, channel: discord.TextChannel):
@@ -53,61 +41,38 @@ class RandomTopic(commands.Cog):
         await ctx.send(f"Channel set to {channel.name}")
 
     @rt.command()
-    async def setname(self, ctx, *, name: str):
-        """Set a custom name for the Random Topic messages.
+    async def setrole(self, ctx, role: discord.Role):
+        """Set the role to be pinged when a new topic is posted.
 
-        Use this command to customize the name that will appear in the random topic messages. This can help personalize the bot's messages for your server.
+        Use this command to specify which role should be mentioned whenever a new random topic is generated and sent to the channel.
         """
-        await self.config.guild(ctx.guild).custom_name.set(name)
-        await ctx.send(f"Custom name set to {name}")
+        await self.config.guild(ctx.guild).role_id.set(role.id)
+        await ctx.send(f"Role set to {role.name}", allowed_mentions=discord.AllowedMentions(roles=True))
 
     @rt.command()
-    async def settime(self, ctx, time: str, period: str = None):
-        """Set the time for daily topic posting (12-hour or 24-hour format).
+    async def settitle(self, ctx, *, title: str):
+        """Set the title for the Random Topic embed.
 
-        Use this command to schedule a daily time for the bot to automatically send a random topic.
-        The time can be in 12-hour format (e.g., 2:30 PM) or 24-hour format (e.g., 14:30).
-        For 12-hour format, specify the period as 'AM' or 'PM'.
+        Use this command to customize the title that will appear in the random topic embeds.
         """
-        if period:
-            period = period.upper()
-            if period not in ["AM", "PM"]:
-                return await ctx.send("Invalid period. Please use 'AM' or 'PM'.")
-
-            try:
-                hour, minute = map(int, time.split(":"))
-            except ValueError:
-                return await ctx.send("Invalid time format. Please use 'HH:MM' format.")
-
-            if period == "PM" and hour != 12:
-                hour += 12
-            elif period == "AM" and hour == 12:
-                hour = 0
-        else:
-            try:
-                hour, minute = map(int, time.split(":"))
-            except ValueError:
-                return await ctx.send("Invalid time format. Please use 'HH:MM' format.")
-
-        if not (0 <= hour < 24) or not (0 <= minute < 60):
-            return await ctx.send("Invalid time. Please provide a valid time in 12-hour or 24-hour format.")
-
-        await self.config.guild(ctx.guild).scheduled_hour.set(hour)
-        await self.config.guild(ctx.guild).scheduled_minute.set(minute)
-        await ctx.send(f"Scheduled time set to {hour:02d}:{minute:02d} Eastern Time")
+        await self.config.guild(ctx.guild).embed_title.set(title)
+        await ctx.send(f"Embed title set to {title}")
 
     @rt.command()
-    async def sendtopic(self, ctx):
-        """Send a random topic immediately.
+    async def setinterval(self, ctx, interval: int):
+        """Set the interval for sending random topics (in minutes).
 
-        Use this command to manually trigger the bot to send a random topic to the configured channel. This can be useful if you want to revive a dead chat instantly.
+        Use this command to set the interval at which the bot will send random topics.
         """
-        await self.send_random_topic(ctx.guild)
+        await self.config.guild(ctx.guild).interval.set(interval)
+        await ctx.send(f"Interval set to {interval} minutes")
+        self.task.cancel()
+        self.task = self.bot.loop.create_task(self.scheduled_task())
 
     async def send_random_topic(self, guild: discord.Guild):
         role_id = await self.config.guild(guild).role_id()
         channel_id = await self.config.guild(guild).channel_id()
-        custom_name = await self.config.guild(guild).custom_name()
+        embed_title = await self.config.guild(guild).embed_title()
 
         if channel_id is None:
             return
@@ -123,49 +88,34 @@ class RandomTopic(commands.Cog):
                     return
                 data = await resp.json()
                 question = data[0]['question']
-        except aiohttp.ClientError as e:
+        except aiohttp.ClientError:
             await channel.send("There was an error connecting to the random topic service. Please try again later.")
             return
 
         role_mention = f"<@&{role_id}>" if role_id else ""
-        prefix = (await self.bot.get_valid_prefixes(guild))[0]
-        message = (
-            f"If you want a new topic, run this command: `{prefix}rt sendtopic`"
-        )
 
         embed = discord.Embed(
-            title=custom_name,
+            title=embed_title,
             color=random.randint(0, 0xFFFFFF)
         )
         embed.add_field(name="Question", value=question, inline=False)
-        embed.set_footer(text=message)
 
         try:
             if role_mention:
                 await channel.send(role_mention, allowed_mentions=discord.AllowedMentions(roles=True))
             await channel.send(embed=embed)
-        except discord.HTTPException as e:
+        except discord.HTTPException:
             await channel.send("Failed to send the random topic. Please try again later.")
 
     async def scheduled_task(self):
         await self.bot.wait_until_ready()
         while True:
-            now = datetime.now(self.timezone)
-            current_time = now.time().replace(second=0, microsecond=0)
             for guild in self.bot.guilds:
-                scheduled_hour = await self.config.guild(guild).scheduled_hour()
-                scheduled_minute = await self.config.guild(guild).scheduled_minute()
-
-                if scheduled_hour is None or scheduled_minute is None:
-                    continue
-
-                scheduled_time = time(scheduled_hour, scheduled_minute)
-
-                if current_time == scheduled_time:
-                    await self.send_random_topic(guild)
-
-            await asyncio.sleep(60)
+                await self.send_random_topic(guild)
+            interval = await self.config.all_guilds()
+            interval = interval.get("interval", 60)
+            await asyncio.sleep(interval * 60)
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.bot.loop.create_task(self.scheduled_task())
+        self.task = self.bot.loop.create_task(self.scheduled_task())
