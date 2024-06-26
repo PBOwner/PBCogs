@@ -68,7 +68,7 @@ class GlobalLogger(commands.Cog):
         `[p]globallogging removeglobalchannel command`
         `[p]globallogging removeglobalchannel error`
         """
-        valid log_types = ["command", "error"]
+        valid_log_types = ["command", "error"]
         if log_type not in valid log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid log_types)}")
             return
@@ -79,8 +79,13 @@ class GlobalLogger(commands.Cog):
     async def on_command(self, ctx):
         fields = {
             "Command Ran": str(ctx.command),
-            "Ran By": ctx.author.mention,
-            "Where": ctx.channel.mention,
+            "Ran By": f"{ctx.author} ({ctx.author.mention})",
+            "User ID": ctx.author.id,
+            "Where": f"{ctx.channel.name} ({ctx.channel.mention})",
+            "Channel ID": ctx.channel.id,
+            "Guild": f"{ctx.guild.name} ({ctx.guild.id})",
+            "Timestamp": ctx.message.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"),
+            "Message Content": ctx.message.content,
         }
         await self.log_global_event("command", "Command Executed", fields, discord.Color.purple(), ctx.author)
 
@@ -89,8 +94,15 @@ class GlobalLogger(commands.Cog):
         tb = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         fields = {
             "Command Ran": str(ctx.command),
-            "Ran By": ctx.author.mention,
-            "Error": f"```python\n{tb}```",
-            "Where": ctx.channel.mention,
+            "Ran By": f"{ctx.author} ({ctx.author.mention})",
+            "User ID": ctx.author.id,
+            "Where": f"{ctx.channel.name} ({ctx.channel.mention})",
+            "Channel ID": ctx.channel.id,
+            "Guild": f"{ctx.guild.name} ({ctx.guild.id})",
+            "Timestamp": ctx.message.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"),
+            "Message Content": ctx.message.content,
+            "Error Type": type(error).__name__,
+            "Error Message": str(error),
+            "Stack Trace": f"```python\n{tb}```",
         }
         await self.log_global_event("error", "Command Error", fields, discord.Color.red(), ctx.author)
