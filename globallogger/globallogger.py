@@ -28,6 +28,10 @@ class GlobalLogger(commands.Cog):
                     if author:
                         embed.set_thumbnail(url=author.display_avatar.url)
                     await log_channel.send(embed=embed)
+                else:
+                    print(f"Log channel not found for log type: {log_type}")
+            else:
+                print(f"No log channel set for log type: {log_type}")
         except Exception as e:
             print(f"Failed to log global event: {e}")
 
@@ -64,9 +68,9 @@ class GlobalLogger(commands.Cog):
         `[p]globallogging removeglobalchannel command`
         `[p]globallogging removeglobalchannel error`
         """
-        valid_log_types = ["command", "error"]
-        if log_type not in valid_log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
+        valid log_types = ["command", "error"]
+        if log_type not in valid log_types:
+            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid log_types)}")
             return
         await self.config.set_raw(log_type + "_log_channel", value=None)
         await ctx.send(f"{log_type.capitalize()} logging channel removed")
@@ -74,7 +78,7 @@ class GlobalLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_command(self, ctx):
         fields = {
-            "Command Ran": ctx.command,
+            "Command Ran": str(ctx.command),
             "Ran By": ctx.author.mention,
             "Where": ctx.channel.mention,
         }
@@ -84,7 +88,7 @@ class GlobalLogger(commands.Cog):
     async def on_command_error(self, ctx, error):
         tb = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         fields = {
-            "Command Ran": ctx.command,
+            "Command Ran": str(ctx.command),
             "Ran By": ctx.author.mention,
             "Error": f"```python\n{tb}```",
             "Where": ctx.channel.mention,
