@@ -1,10 +1,9 @@
 import discord
-from discord.ext import commands, tasks
 import asyncio
-from redbot.core import Config, commands
+from redbot.core import commands, Config
 
 class StaffApps(commands.Cog):
-    """Cog for handling staff applications and managing staff members."""
+    """Cog for handling applications and managing staff members."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -23,6 +22,7 @@ class StaffApps(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
+    # Application Commands
     @commands.guild_only()
     @commands.command()
     async def addq(self, ctx, role: discord.Role, *, question: str):
@@ -87,62 +87,11 @@ class StaffApps(commands.Cog):
             embed = discord.Embed(title=f"New Application for {role.name} - {ctx.author.display_name} - {ctx.author.id}", color=discord.Color.blue())
             for question, response in responses.items():
                 embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
-            message = await application_channel.send(embed=embed)
-            poll_message = await application_channel.send("Should we hire them?")
-            await poll_message.add_reaction("👍")
-            await poll_message.add_reaction("👎")
-            self.bot.loop.create_task(self.tally_votes(poll_message, ctx.channel))
+            embed.add_field(name="Status", value="Pending", inline=False)
+            await application_channel.send(embed=embed)
             await ctx.send("Application submitted. Thank you!")
         else:
             await ctx.send("Application channel not set. Please set an application channel using the `setappchannel` command.")
-
-    async def tally_votes(self, poll_message, channel):
-        await asyncio.sleep(14400)  # 4 hours in seconds
-        poll_message = await poll_message.channel.fetch_message(poll_message.id)
-        yes_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "👍")
-        no_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "👎")
-        await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
-
-    @commands.guild_only()
-    @commands.command()
-    async def accept(self, ctx, member: discord.Member, role_name: str):
-        """Accept an application and assign a role."""
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
-        if not role:
-            return await ctx.send("Role not found.")
-
-        applications = await self.config.guild(ctx.guild).applications()
-        if str(role.id) in applications and str(member.id) in applications[str(role.id)]:
-            await member.add_roles(role)
-            embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
-            embed.add_field(name="Username", value=member.name, inline=False)
-            embed.add_field(name="User ID", value=member.id, inline=False)
-            embed.add_field(name="Position", value=role.name, inline=False)
-            embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
-            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-            if staff_updates_channel:
-                await staff_updates_channel.send(embed=embed)
-            await member.send(f"Congratulations! Your application for {role.name} has been accepted.")
-            await ctx.send(f"Accepted {member.display_name} for {role.name}.")
-        else:
-            await ctx.send("No application found for this member and role.")
-
-    @commands.guild_only()
-    @commands.command()
-    async def deny(self, ctx, member: discord.Member, role_name: str):
-        """Deny an application and send a denial message."""
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
-        if not role:
-            return await ctx.send("Role not found.")
-
-        applications = await self.config.guild(ctx.guild).applications()
-        if str(role.id) in applications and str(member.id) in applications[str(role.id)]:
-            await member.send(f"Sorry, your application for {role.name} was denied.")
-            del applications[str(role.id)][str(member.id)]
-            await ctx.send(f"Denied {member.display_name}'s application for {role.name}.")
-        else:
-            await ctx.send("No application found for this member and role.")
 
     @commands.guild_only()
     @commands.command()
@@ -166,6 +115,7 @@ class StaffApps(commands.Cog):
             else:
                 await ctx.send("No questions set for this role.")
 
+    # Staff Management Commands
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def setupdates(self, ctx, channel: discord.TextChannel):
@@ -184,7 +134,7 @@ class StaffApps(commands.Cog):
     async def on_command_error(self, ctx, error):
         """Handle command errors."""
         if isinstance(error, commands.CheckFailure):
-            await ctx.send("You do not have the required permissions to use this command.")
+            await ctx.send("You do not have the required permissions to run this command.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -200,7 +150,6 @@ class StaffApps(commands.Cog):
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
-        await ctx.send(f"Fired {member.name} from {role.name}.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -218,7 +167,6 @@ class StaffApps(commands.Cog):
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
-        await ctx.send(f"Demoted {member.name} from {old_role.name} to {new_role.name}.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -236,7 +184,6 @@ class StaffApps(commands.Cog):
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
-        await ctx.send(f"Promoted {member.name} from {old_role.name} to {new_role.name}.")
 
     @commands.command(name="staffblacklist")
     @commands.has_permissions(ban_members=True)
@@ -259,14 +206,13 @@ class StaffApps(commands.Cog):
         blacklist_channel = self.bot.get_channel(blacklist_channel_id)
         if blacklist_channel:
             await blacklist_channel.send(embed=embed)
-        await ctx.send(f"Blacklisted {member.name} for {reason}.")
 
+    # LOA Commands
     @commands.group()
     @commands.has_permissions(manage_roles=True)
     async def loa(self, ctx):
         """Group command for managing leave of absence requests."""
-        if ctx.invoked_subcommand is None:
-            return
+        pass
 
     @loa.command()
     @commands.has_permissions(manage_channels=True)
@@ -285,13 +231,15 @@ class StaffApps(commands.Cog):
     @loa.command()
     async def request(self, ctx, duration: str, reason: str):
         """Request a leave of absence."""
-        async with self.config.guild(ctx.guild).loa_requests() as loa_requests:
-            loa_requests[ctx.author.id] = {
-                "user": ctx.author.id,
-                "duration": duration,
-                "reason": reason,
-                "approved_by": None
-            }
+        loa_requests = await self.config.guild(ctx.guild).loa_requests()
+        user_id = ctx.author.id
+        loa_requests[user_id] = {
+            "user": ctx.author.id,
+            "duration": duration,
+            "reason": reason,
+            "approved_by": None
+        }
+        await self.config.guild(ctx.guild).loa_requests.set(loa_requests)
 
         loa_requests_channel_id = await self.config.guild(ctx.guild).loa_requests_channel()
         loa_requests_channel = self.bot.get_channel(loa_requests_channel_id)
@@ -301,6 +249,7 @@ class StaffApps(commands.Cog):
             embed.add_field(name="Reason", value=reason, inline=False)
             embed.add_field(name="Duration", value=duration, inline=False)
             embed.add_field(name="User ID", value=ctx.author.id, inline=False)
+            embed.add_field(name="Status", value="Pending", inline=False)
             embed.set_footer(text="Do `loa approve <user_id>` or `loa deny <user_id>`")
             await loa_requests_channel.send(embed=embed)
 
@@ -309,75 +258,88 @@ class StaffApps(commands.Cog):
     @loa.command()
     async def approve(self, ctx, user_id: int):
         """Approve a leave of absence request."""
-        async with self.config.guild(ctx.guild).loa_requests() as loa_requests:
-            if user_id in loa_requests and loa_requests[user_id]["approved_by"] is None:
-                loa_requests[user_id]["approved_by"] = ctx.author.id
-                user = self.bot.get_user(loa_requests[user_id]["user"])
-                loa_role_id = await self.config.guild(ctx.guild).loa_role()
-                loa_role = ctx.guild.get_role(loa_role_id)
-                if loa_role:
-                    await user.add_roles(loa_role)
-                embed = discord.Embed(title="Leave of Absence", color=discord.Color.green())
-                embed.add_field(name="User", value=user.name, inline=False)
-                embed.add_field(name="Duration", value=loa_requests[user_id]["duration"], inline=False)
-                embed.add_field(name="Reason", value=loa_requests[user_id]["reason"], inline=False)
-                embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
-                staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
-                staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-                if staff_updates_channel:
-                    await staff_updates_channel.send(embed=embed)
-                await ctx.send(f"Leave of Absence request for {user.name} approved.")
-            else:
-                await ctx.send(f"Leave of Absence request for user ID {user_id} not found or already approved.")
+        loa_requests = await self.config.guild(ctx.guild).loa_requests()
+        if user_id in loa_requests and loa_requests[user_id]["approved_by"] is None:
+            loa_requests[user_id]["approved_by"] = ctx.author.id
+            await self.config.guild(ctx.guild).loa_requests.set(loa_requests)
+            user = self.bot.get_user(loa_requests[user_id]["user"])
+            loa_role_id = await self.config.guild(ctx.guild).loa_role()
+            loa_role = ctx.guild.get_role(loa_role_id)
+            if loa_role:
+                await user.add_roles(loa_role)
+            embed = discord.Embed(title="Leave of Absence", color=discord.Color.green())
+            embed.add_field(name="User", value=user.name, inline=False)
+            embed.add_field(name="Duration", value=loa_requests[user_id]["duration"], inline=False)
+            embed.add_field(name="Reason", value=loa_requests[user_id]["reason"], inline=False)
+            embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
+            embed.add_field(name="Status", value="Approved", inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Leave of Absence request for {user.name} approved.")
+        else:
+            await ctx.send(f"Leave of Absence request for user ID {user_id} not found or already approved.")
 
     @loa.command()
     async def deny(self, ctx, user_id: int):
         """Deny a leave of absence request."""
-        async with self.config.guild(ctx.guild).loa_requests() as loa_requests:
-            if user_id in loa_requests:
-                del loa_requests[user_id]
-                await ctx.send(f"Leave of Absence request for user ID {user_id} denied and removed.")
-            else:
-                await ctx.send(f"Leave of Absence request for user ID {user_id} not found.")
+        loa_requests = await self.config.guild(ctx.guild).loa_requests()
+        if user_id in loa_requests:
+            loa_requests[user_id]["approved_by"] = None
+            await self.config.guild(ctx.guild).loa_requests.set(loa_requests)
+            embed = discord.Embed(title="Leave of Absence", color=discord.Color.red())
+            embed.add_field(name="User ID", value=user_id, inline=False)
+            embed.add_field(name="Status", value="Denied", inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Leave of Absence request for user ID {user_id} denied.")
+        else:
+            await ctx.send(f"Leave of Absence request for user ID {user_id} not found.")
 
     @loa.command()
     async def end(self, ctx, user_id: int):
         """End a leave of absence."""
-        async with self.config.guild(ctx.guild).loa_requests() as loa_requests:
-            if user_id in loa_requests and loa_requests[user_id]["approved_by"] is not None:
-                user = self.bot.get_user(loa_requests[user_id]["user"])
-                loa_role_id = await self.config.guild(ctx.guild).loa_role()
-                loa_role = ctx.guild.get_role(loa_role_id)
-                if loa_role:
-                    await user.remove_roles(loa_role)
-                del loa_requests[user_id]
-                embed = discord.Embed(title="Leave of Absence Ended", color=discord.Color.red())
-                embed.add_field(name="User", value=user.name, inline=False)
-                embed.add_field(name="User ID", value=user.id, inline=False)
-                staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
-                staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-                if staff_updates_channel:
-                    await staff_updates_channel.send(embed=embed)
-                await ctx.send(f"Leave of Absence for {user.name} has ended.")
-            else:
-                await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
+        loa_requests = await self.config.guild(ctx.guild).loa_requests()
+        if user_id in loa_requests and loa_requests[user_id]["approved_by"] is not None:
+            user = self.bot.get_user(loa_requests[user_id]["user"])
+            loa_role_id = await self.config.guild(ctx.guild).loa_role()
+            loa_role = ctx.guild.get_role(loa_role_id)
+            if loa_role:
+                await user.remove_roles(loa_role)
+            del loa_requests[user_id]
+            await self.config.guild(ctx.guild).loa_requests.set(loa_requests)
+            embed = discord.Embed(title="Leave of Absence Ended", color=discord.Color.red())
+            embed.add_field(name="User", value=user.name, inline=False)
+            embed.add_field(name="User ID", value=user.id, inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Leave of Absence for {user.name} has ended.")
+        else:
+            await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
 
+    # Resignation Commands
     @commands.group()
     @commands.has_permissions(manage_roles=True)
     async def resign(self, ctx):
         """Group command for managing resignation requests."""
-        if ctx.invoked_subcommand is None:
-            return
+        pass
 
     @resign.command()
     async def request(self, ctx, reason: str):
         """Request a resignation."""
-        async with self.config.guild(ctx.guild).resignation_requests() as resignation_requests:
-            resignation_requests[ctx.author.id] = {
-                "user": ctx.author.id,
-                "reason": reason,
-                "approved_by": None
-            }
+        resignation_requests = await self.config.guild(ctx.guild).resignation_requests()
+        user_id = ctx.author.id
+        resignation_requests[user_id] = {
+            "user": ctx.author.id,
+            "reason": reason,
+            "approved_by": None
+        }
+        await self.config.guild(ctx.guild).resignation_requests.set(resignation_requests)
 
         resignation_requests_channel_id = await self.config.guild(ctx.guild).resignation_requests_channel()
         resignation_requests_channel = self.bot.get_channel(resignation_requests_channel_id)
@@ -386,6 +348,7 @@ class StaffApps(commands.Cog):
             embed.add_field(name="User", value=ctx.author.name, inline=False)
             embed.add_field(name="Reason", value=reason, inline=False)
             embed.add_field(name="User ID", value=ctx.author.id, inline=False)
+            embed.add_field(name="Status", value="Pending", inline=False)
             embed.set_footer(text="Do `resign accept <user_id>` or `resign deny <user_id>`")
             await resignation_requests_channel.send(embed=embed)
 
@@ -394,31 +357,41 @@ class StaffApps(commands.Cog):
     @resign.command()
     async def accept(self, ctx, user_id: int):
         """Accept a resignation request."""
-        async with self.config.guild(ctx.guild).resignation_requests() as resignation_requests:
-            if user_id in resignation_requests and resignation_requests[user_id]["approved_by"] is None:
-                resignation_requests[user_id]["approved_by"] = ctx.author.id
-                user = self.bot.get_user(resignation_requests[user_id]["user"])
-                embed = discord.Embed(title="Staff Member Resigned", color=discord.Color.red())
-                embed.add_field(name="Former Staff", value=user.name, inline=False)
-                embed.add_field(name="Reason", value=resignation_requests[user_id]["reason"], inline=False)
-                embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
-                staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
-                staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-                if staff_updates_channel:
-                    await staff_updates_channel.send(embed=embed)
-                await ctx.send(f"Resignation request for {user.name} accepted.")
-            else:
-                await ctx.send(f"Resignation request for user ID {user_id} not found or already accepted.")
+        resignation_requests = await self.config.guild(ctx.guild).resignation_requests()
+        if user_id in resignation_requests and resignation_requests[user_id]["approved_by"] is None:
+            resignation_requests[user_id]["approved_by"] = ctx.author.id
+            await self.config.guild(ctx.guild).resignation_requests.set(resignation_requests)
+            user = self.bot.get_user(resignation_requests[user_id]["user"])
+            embed = discord.Embed(title="Staff Member Resigned", color=discord.Color.red())
+            embed.add_field(name="Former Staff", value=user.name, inline=False)
+            embed.add_field(name="Reason", value=resignation_requests[user_id]["reason"], inline=False)
+            embed.add_field(name="Approved by", value=ctx.author.name, inline=False)
+            embed.add_field(name="Status", value="Approved", inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Resignation request for {user.name} accepted.")
+        else:
+            await ctx.send(f"Resignation request for user ID {user_id} not found or already accepted.")
 
     @resign.command()
     async def deny(self, ctx, user_id: int):
         """Deny a resignation request."""
-        async with self.config.guild(ctx.guild).resignation_requests() as resignation_requests:
-            if user_id in resignation_requests:
-                del resignation_requests[user_id]
-                await ctx.send(f"Resignation request for user ID {user_id} denied and removed.")
-            else:
-                await ctx.send(f"Resignation request for user ID {user_id} not found.")
+        resignation_requests = await self.config.guild(ctx.guild).resignation_requests()
+        if user_id in resignation_requests:
+            resignation_requests[user_id]["approved_by"] = None
+            await self.config.guild(ctx.guild).resignation_requests.set(resignation_requests)
+            embed = discord.Embed(title="Resignation Request", color=discord.Color.red())
+            embed.add_field(name="User ID", value=user_id, inline=False)
+            embed.add_field(name="Status", value="Denied", inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
+            await ctx.send(f"Resignation request for user ID {user_id} denied.")
+        else:
+            await ctx.send(f"Resignation request for user ID {user_id} not found.")
 
     @resign.command()
     @commands.has_permissions(manage_channels=True)
@@ -427,35 +400,88 @@ class StaffApps(commands.Cog):
         await self.config.guild(ctx.guild).resignation_requests_channel.set(channel.id)
         await ctx.send(f"Resignation requests channel set to {channel.mention}")
 
-    @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
-        """Handle reactions for application voting."""
-        if payload.user_id == self.bot.user.id:
-            return
+    # App Commands
+    @commands.group()
+    async def app(self, ctx):
+        """Group command for managing applications, LOA, and resignations."""
+        pass
 
-        channel = self.bot.get_channel(payload.channel_id)
-        message = await channel.fetch_message(payload.message_id)
-        if message.author != self.bot.user or not message.embeds:
-            return
+    @app.command()
+    async def status(self, ctx, request_type: str):
+        """Check the status of your application, LOA, or resignation."""
+        if request_type.lower() == "application":
+            applications = await self.config.guild(ctx.guild).applications()
+            for role_id, role_apps in applications.items():
+                if str(ctx.author.id) in role_apps:
+                    await ctx.send(f"Your application status for role ID {role_id}: pending")
+                    return
+            await ctx.send("You have no pending applications.")
+        elif request_type.lower() == "loa":
+            loa_requests = await self.config.guild(ctx.guild).loa_requests()
+            if str(ctx.author.id) in loa_requests:
+                loa_request = loa_requests[str(ctx.author.id)]
+                status = "approved" if loa_request["approved_by"] else "pending"
+                await ctx.send(f"Your leave of absence status: {status}")
+            else:
+                await ctx.send("You have no pending leave of absence requests.")
+        elif request_type.lower() == "resignation":
+            resignation_requests = await self.config.guild(ctx.guild).resignation_requests()
+            if str(ctx.author.id) in resignation_requests:
+                resignation_request = resignation_requests[str(ctx.author.id)]
+                status = "approved" if resignation_request["approved_by"] else "pending"
+                await ctx.send(f"Your resignation status: {status}")
+            else:
+                await ctx.send("You have no pending resignation requests.")
+        else:
+            await ctx.send("Invalid request type. Use 'application', 'loa', or 'resignation'.")
 
-        embed = message.embeds[0]
-        if embed.title.startswith("New Application for"):
-            if payload.emoji.name == "👍" or payload.emoji.name == "👎":
-                # Add the reaction to the tally
-                await self.add_vote(payload.message_id, payload.emoji.name)
+    @app.command()
+    @commands.has_permissions(manage_roles=True)
+    async def accept(self, ctx, request_type: str, user_id: int):
+        """Accept an application, LOA, or resignation request."""
+        if request_type.lower() == "application":
+            applications = await self.config.guild(ctx.guild).applications()
+            for role_id, role_apps in applications.items():
+                if str(user_id) in role_apps:
+                    member = ctx.guild.get_member(user_id)
+                    role = ctx.guild.get_role(int(role_id))
+                    await member.add_roles(role)
+                    await member.send(f"Congratulations! Your application for {role.name} has been accepted.")
+                    embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
+                    embed.add_field(name="Username", value=member.name, inline=False)
+                    embed.add_field(name="User ID", value=member.id, inline=False)
+                    embed.add_field(name="Position", value=role.name, inline=False)
+                    embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+                    staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+                    staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+                    if staff_updates_channel:
+                        await staff_updates_channel.send(embed=embed)
+                    await ctx.send(f"Accepted {member.display_name} for {role.name}.")
+                    return
+            await ctx.send("No application found for this member and role.")
+        elif request_type.lower() == "loa":
+            await self.loa.approve(ctx, user_id)
+        elif request_type.lower() == "resignation":
+            await self.resign.accept(ctx, user_id)
+        else:
+            await ctx.send("Invalid request type. Use 'application', 'loa', or 'resignation'.")
 
-    async def add_vote(self, message_id, emoji):
-        """Add a vote to the tally."""
-        async with self.config.guild_from_id(payload.guild_id).applications() as applications:
-            if str(message_id) not in applications:
-                applications[str(message_id)] = {"👍": 0, "👎": 0}
-            applications[str(message_id)][emoji] += 1
-
-    async def tally_votes(self, poll_message, channel):
-        await asyncio.sleep(14400)  # 4 hours in seconds
-        poll_message = await poll_message.channel.fetch_message(poll_message.id)
-        async with self.config.guild_from_id(poll_message.guild.id).applications() as applications:
-            votes = applications.get(str(poll_message.id), {"👍": 0, "👎": 0})
-            yes_votes = votes["👍"]
-            no_votes = votes["👎"]
-            await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
+    @app.command()
+    @commands.has_permissions(manage_roles=True)
+    async def deny(self, ctx, request_type: str, user_id: int):
+        """Deny an application, LOA, or resignation request."""
+        if request_type.lower() == "application":
+            applications = await self.config.guild(ctx.guild).applications()
+            for role_id, role_apps in applications.items():
+                if str(user_id) in role_apps:
+                    member = ctx.guild.get_member(user_id)
+                    await member.send(f"Sorry, your application for role ID {role_id} was denied.")
+                    await ctx.send(f"Denied {member.display_name}'s application for role ID {role_id}.")
+                    return
+            await ctx.send("No application found for this member and role.")
+        elif request_type.lower() == "loa":
+            await self.loa.deny(ctx, user_id)
+        elif request_type.lower() == "resignation":
+            await self.resign.deny(ctx, user_id)
+        else:
+            await ctx.send("Invalid request type. Use 'application', 'loa', or 'resignation'.")
