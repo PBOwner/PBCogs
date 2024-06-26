@@ -140,9 +140,12 @@ class RandomTopic(commands.Cog):
         embed.add_field(name="Question", value=question, inline=False)
         embed.set_footer(text=message)
 
-        if role_mention:
-            await channel.send(role_mention, allowed_mentions=discord.AllowedMentions(roles=True))
-        await channel.send(embed=embed)
+        try:
+            if role_mention:
+                await channel.send(role_mention, allowed_mentions=discord.AllowedMentions(roles=True))
+            await channel.send(embed=embed)
+        except discord.HTTPException as e:
+            await channel.send("Failed to send the random topic. Please try again later.")
 
     async def scheduled_task(self):
         await self.bot.wait_until_ready()
