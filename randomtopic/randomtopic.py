@@ -5,6 +5,7 @@ import random
 from redbot.core import commands, Config, checks
 from redbot.core.bot import Red
 from datetime import datetime, timedelta
+import pytz
 
 class RandomTopic(commands.Cog):
     """A cog to revive dead chats with random trivia questions."""
@@ -20,6 +21,7 @@ class RandomTopic(commands.Cog):
             last_sent=None
         )
         self.session = aiohttp.ClientSession()
+        self.timezone = pytz.timezone("US/Eastern")
 
     def cog_unload(self):
         asyncio.create_task(self.session.close())
@@ -60,12 +62,12 @@ class RandomTopic(commands.Cog):
 
     @rt.command()
     async def settime(self, ctx, time: str):
-        """Set the time for daily topic posting (HH:MM in 24-hour format).
+        """Set the time for daily topic posting (HH:MM in 24-hour format, Eastern Time).
 
-        Use this command to schedule a daily time for the bot to automatically send a random topic. The time should be in 24-hour format (e.g., 14:00 for 2 PM).
+        Use this command to schedule a daily time for the bot to automatically send a random topic. The time should be in 24-hour format (e.g., 14:00 for 2 PM Eastern Time).
         """
         await self.config.guild(ctx.guild).scheduled_time.set(time)
-        await ctx.send(f"Scheduled time set to {time}")
+        await ctx.send(f"Scheduled time set to {time} Eastern Time")
 
     @rt.command()
     async def sendtopic(self, ctx):
@@ -118,7 +120,7 @@ class RandomTopic(commands.Cog):
     async def scheduled_task(self):
         await self.bot.wait_until_ready()
         while True:
-            now = datetime.utcnow()
+            now = datetime.now(self.timezone)
             for guild in self.bot.guilds:
                 scheduled_time = await self.config.guild(guild).scheduled_time()
                 last_sent = await self.config.guild(guild).last_sent()
@@ -127,11 +129,11 @@ class RandomTopic(commands.Cog):
                     continue
 
                 scheduled_hour, scheduled_minute = map(int, scheduled_time.split(":"))
-                scheduled_datetime = datetime(
+                scheduled_datetime = self.timezone.localize(datetime(
                     now.year, now.month, now.day, scheduled_hour, scheduled_minute
-                )
+                ))
                 if last_sent:
-                    last_sent = datetime.strptime(last_sent, "%Y-%m-%d %H:%M:%S")
+                    last_sent = datetime.strptime(last_sent, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(self.timezone)
                 else:
                     last_sent = now - timedelta(days=1)
 
