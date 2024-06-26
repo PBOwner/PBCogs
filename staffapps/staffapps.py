@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import asyncio
 from redbot.core import Config
 
@@ -88,11 +88,20 @@ class StaffApps(commands.Cog):
             for question, response in responses.items():
                 embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
             message = await application_channel.send(embed=embed)
-            await message.add_reaction("✅")
-            await message.add_reaction("❌")
+            poll_message = await application_channel.send("Should we hire them?")
+            await poll_message.add_reaction("✅")
+            await poll_message.add_reaction("❌")
+            self.bot.loop.create_task(self.tally_votes(poll_message, ctx.channel))
             await ctx.send("Application submitted. Thank you!")
         else:
             await ctx.send("Application channel not set. Please set an application channel using the `setappchannel` command.")
+
+    async def tally_votes(self, poll_message, channel):
+        await asyncio.sleep(14400)  # 4 hours in seconds
+        poll_message = await poll_message.channel.fetch_message(poll_message.id)
+        yes_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "✅")
+        no_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "❌")
+        await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
 
     @commands.guild_only()
     @commands.command()
@@ -105,6 +114,15 @@ class StaffApps(commands.Cog):
         applications = await self.config.guild(ctx.guild).applications()
         if str(role.id) in applications and str(member.id) in applications[str(role.id)]:
             await member.add_roles(role)
+            embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
+            embed.add_field(name="Username", value=member.name, inline=False)
+            embed.add_field(name="User ID", value=member.id, inline=False)
+            embed.add_field(name="Position", value=role.name, inline=False)
+            embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
+            staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
+            staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+            if staff_updates_channel:
+                await staff_updates_channel.send(embed=embed)
             await member.send(f"Congratulations! Your application for {role.name} has been accepted.")
             await ctx.send(f"Accepted {member.display_name} for {role.name}.")
         else:
@@ -182,22 +200,6 @@ class StaffApps(commands.Cog):
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
         await ctx.send(f"Fired {member.name} from {role.name}.")
-
-    @commands.command()
-    @commands.has_permissions(manage_roles=True)
-    async def hire(self, ctx, member: discord.Member, role: discord.Role):
-        """Hire a new staff member."""
-        await member.add_roles(role)
-        embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
-        embed.add_field(name="Username", value=member.name, inline=False)
-        embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=role.name, inline=False)
-        embed.add_field(name="Issuer", value=ctx.author.name, inline=False)
-        staff_updates_channel_id = await self.config.guild(ctx.guild).staff_updates_channel()
-        staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
-        if staff_updates_channel:
-            await staff_updates_channel.send(embed=embed)
-        await ctx.send(f"Hired {member.name} for {role.name}.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -375,6 +377,7 @@ class StaffApps(commands.Cog):
                 "reason": reason,
                 "approved_by": None
             }
+
         resignation_requests_channel_id = await self.config.guild(ctx.guild).resignation_requests_channel()
         resignation_requests_channel = self.bot.get_channel(resignation_requests_channel_id)
         if resignation_requests_channel:
