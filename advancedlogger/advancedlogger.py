@@ -23,21 +23,14 @@ class AdvancedLogger(commands.Cog):
             "ban_log_channel": None,
             "mute_log_channel": None,
             "timeout_log_channel": None,
-        }
-        default_global = {
             "command_log_channel": None,
             "error_log_channel": None,
         }
         self.config.register_guild(**default_guild)
-        self.config.register_global(**default_global)
 
     async def log_event(self, guild: discord.Guild, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
         try:
-            if log_type in ["command", "error"]:
-                log_channel_id = await self.config.get_raw(log_type + "_log_channel")
-            else:
-                log_channel_id = await self.config.guild(guild).get_raw(log_type + "_log_channel")
-
+            log_channel_id = await self.config.guild(guild).get_raw(log_type + "_log_channel")
             if log_channel_id:
                 log_channel = self.bot.get_channel(log_channel_id)
                 if log_channel:
@@ -47,19 +40,6 @@ class AdvancedLogger(commands.Cog):
                     await log_channel.send(embed=embed)
         except Exception as e:
             print(f"Failed to log event: {e}")
-
-    async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
-        try:
-            log_channel_id = await self.config.get_raw(log_type + "_log_channel")
-            if log_channel_id:
-                log_channel = self.bot.get_channel(log_channel_id)
-                if log_channel:
-                    embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
-                    if author:
-                        embed.set_thumbnail(url=author.avatar_url)
-                    await log_channel.send(embed=embed)
-        except Exception as e:
-            print(f"Failed to log global event: {e}")
 
     @commands.group()
     @commands.admin_or_permissions(manage_guild=True)
@@ -71,7 +51,7 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, command, error
 
         **Example**:
         `[p]logging setchannel member #member-log`
@@ -87,8 +67,10 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel ban #ban-log`
         `[p]logging setchannel mute #mute-log`
         `[p]logging setchannel timeout #timeout-log`
+        `[p]logging setchannel command #command-log`
+        `[p]logging setchannel error #error-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "command", "error"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -99,7 +81,7 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, command, error
 
         **Example**:
         `[p]logging removechannel member`
@@ -115,48 +97,14 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel ban`
         `[p]logging removechannel mute`
         `[p]logging removechannel timeout`
+        `[p]logging removechannel command`
+        `[p]logging removechannel error`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "command", "error"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=None)
-        await ctx.send(f"{log_type.capitalize()} logging channel removed")
-
-    @logging.command()
-    @commands.is_owner()
-    async def setglobalchannel(self, ctx, log_type: str, channel: discord.TextChannel):
-        """Set the global channel for logging commands and errors.
-
-        **Valid log types**: command, error
-
-        **Example**:
-        `[p]logging setglobalchannel command #command-log`
-        `[p]logging setglobalchannel error #error-log`
-        """
-        valid_log_types = ["command", "error"]
-        if log_type not in valid_log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
-            return
-        await self.config.set_raw(log_type + "_log_channel", value=channel.id)
-        await ctx.send(f"{log_type.capitalize()} logging channel set to {channel.mention}")
-
-    @logging.command()
-    @commands.is_owner()
-    async def removeglobalchannel(self, ctx, log_type: str):
-        """Remove the global logging channel for commands and errors.
-
-        **Valid log types**: command, error
-
-        **Example**:
-        `[p]logging removeglobalchannel command`
-        `[p]logging removeglobalchannel error`
-        """
-        valid_log_types = ["command", "error"]
-        if log_type not in valid_log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
-            return
-        await self.config.set_raw(log_type + "_log_channel", value=None)
         await ctx.send(f"{log_type.capitalize()} logging channel removed")
 
     @commands.Cog.listener()
@@ -355,13 +303,15 @@ class AdvancedLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
+        guild = ctx.guild
         description = f"**Command Executed:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}"
-        await self.log_global_event("command", "Command Executed", description, discord.Color.purple(), ctx.author)
+        await self.log_event(guild, "command", "Command Executed", description, discord.Color.purple(), ctx.author)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        guild = ctx.guild
         description = f"**Command Error:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}\n**Error:** {error}"
-        await self.log_global_event("error", "Command Error", description, discord.Color.red(), ctx.author)
+        await self.log_event(guild, "error", "Command Error", description, discord.Color.red(), ctx.author)
 
     @commands.Cog.listener()
     async def on_member_kick(self, guild, user):
