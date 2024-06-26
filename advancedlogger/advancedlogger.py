@@ -129,7 +129,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Message ID:** {before.id}\n"
                 f"**Channel ID:** {before.channel.id}\n"
                 f"**Guild ID:** {before.guild.id}\n"
-                f"**Timestamp:** <t:{int(before.edited_at.timestamp())}:F>"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "message", "Message Edited", description, discord.Color.orange(), before.author)
 
