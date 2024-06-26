@@ -36,6 +36,10 @@ class AdvancedLogger(commands.Cog):
                     if author:
                         embed.set_thumbnail(url=author.display_avatar.url)
                     await log_channel.send(embed=embed)
+                else:
+                    print(f"Log channel not found for log type: {log_type}")
+            else:
+                print(f"No log channel set for log type: {log_type}")
         except Exception as e:
             print(f"Failed to log event: {e}")
 
@@ -465,3 +469,6 @@ class AdvancedLogger(commands.Cog):
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue())
+
+def setup(bot):
+    bot.add_cog(AdvancedLogger(bot))
