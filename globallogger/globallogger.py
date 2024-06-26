@@ -66,7 +66,7 @@ class GlobalLogger(commands.Cog):
         """
         valid_log_types = ["command", "error"]
         if log_type not in valid log_types:
-            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid log_types)}")
+            await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
         await self.config.set_raw(log_type + "_log_channel", value=None)
         await ctx.send(f"{log_type.capitalize()} logging channel removed")
