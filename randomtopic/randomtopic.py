@@ -17,7 +17,8 @@ class RandomTopic(commands.Cog):
             role_id=None,
             channel_id=None,
             custom_name="Random Topic",
-            scheduled_time="12:00",
+            scheduled_hour=None,
+            scheduled_period=None,
             last_sent=None
         )
         self.session = aiohttp.ClientSession()
@@ -61,13 +62,18 @@ class RandomTopic(commands.Cog):
         await ctx.send(f"Custom name set to {name}")
 
     @rt.command()
-    async def settime(self, ctx, time: str):
-        """Set the time for daily topic posting (HH:MM in 24-hour format, Eastern Time).
+    async def settime(self, ctx, hour: int, period: str):
+        """Set the time for daily topic posting (hour in 12-hour format with AM/PM).
 
-        Use this command to schedule a daily time for the bot to automatically send a random topic. The time should be in 24-hour format (e.g., 14:00 for 2 PM Eastern Time).
+        Use this command to schedule a daily time for the bot to automatically send a random topic.
+        The hour should be in 12-hour format (e.g., 2 for 2 PM) and the period should be 'AM' or 'PM'.
         """
-        await self.config.guild(ctx.guild).scheduled_time.set(time)
-        await ctx.send(f"Scheduled time set to {time} Eastern Time")
+        if period.upper() not in ["AM", "PM"]:
+            return await ctx.send("Invalid period. Please use 'AM' or 'PM'.")
+
+        await self.config.guild(ctx.guild).scheduled_hour.set(hour)
+        await self.config.guild(ctx.guild).scheduled_period.set(period.upper())
+        await ctx.send(f"Scheduled time set to {hour} {period.upper()} Eastern Time")
 
     @rt.command()
     async def sendtopic(self, ctx):
@@ -122,15 +128,20 @@ class RandomTopic(commands.Cog):
         while True:
             now = datetime.now(self.timezone)
             for guild in self.bot.guilds:
-                scheduled_time = await self.config.guild(guild).scheduled_time()
+                scheduled_hour = await self.config.guild(guild).scheduled_hour()
+                scheduled_period = await self.config.guild(guild).scheduled_period()
                 last_sent = await self.config.guild(guild).last_sent()
 
-                if scheduled_time is None:
+                if scheduled_hour is None or scheduled_period is None:
                     continue
 
-                scheduled_hour, scheduled_minute = map(int, scheduled_time.split(":"))
+                if scheduled_period == "PM" and scheduled_hour != 12:
+                    scheduled_hour += 12
+                elif scheduled_period == "AM" and scheduled_hour == 12:
+                    scheduled_hour = 0
+
                 scheduled_datetime = self.timezone.localize(datetime(
-                    now.year, now.month, now.day, scheduled_hour, scheduled_minute
+                    now.year, now.month, now.day, scheduled_hour, 0
                 ))
                 if last_sent:
                     last_sent = datetime.strptime(last_sent, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(self.timezone)
@@ -146,3 +157,6 @@ class RandomTopic(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.bot.loop.create_task(self.scheduled_task())
+
+def setup(bot: Red):
+    bot.add_cog(RandomTopic(bot))
