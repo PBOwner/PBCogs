@@ -368,6 +368,7 @@ class AdvancedLogger(commands.Cog):
                     f"**Channel ID:** {before.channel.id}\n"
                     f"**Guild:** {guild.name} ({guild.id})\n"
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+                )
                 await self.log_event(guild, "voice", "Voice Channel Leave", description, discord.Color.red(), member)
             else:
                 description = (
