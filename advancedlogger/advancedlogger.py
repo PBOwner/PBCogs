@@ -368,7 +368,7 @@ class AdvancedLogger(commands.Cog):
             if after.self_deaf:
                 description = (
                     f"**{member.mention} deafened themselves in voice channel:** {after.channel.mention}\n"
-                    f"**User ID:** {member.id}\n
+                    f"**User ID:** {member.id}\n"
                     f"**Channel ID:** {after.channel.id}\n"
                     f"**Guild:** {guild.name} ({guild.id})\n"
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
