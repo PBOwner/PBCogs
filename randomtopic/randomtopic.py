@@ -18,11 +18,12 @@ class RandomTopic(commands.Cog):
             interval=60  # Default interval in minutes
         )
         self.session = aiohttp.ClientSession()
-        self.task = self.bot.loop.create_task(self.scheduled_task())
+        self.tasks = {}
 
     def cog_unload(self):
         asyncio.create_task(self.session.close())
-        self.task.cancel()
+        for task in self.tasks.values():
+            task.cancel()
 
     @commands.group()
     @commands.guild_only()
@@ -66,8 +67,7 @@ class RandomTopic(commands.Cog):
         """
         await self.config.guild(ctx.guild).interval.set(interval)
         await ctx.send(f"Interval set to {interval} minutes")
-        self.task.cancel()
-        self.task = self.bot.loop.create_task(self.scheduled_task())
+        await self.restart_task(ctx.guild.id)
 
     async def send_random_topic(self, guild: discord.Guild):
         role_id = await self.config.guild(guild).role_id()
@@ -107,15 +107,26 @@ class RandomTopic(commands.Cog):
         except discord.HTTPException:
             await channel.send("Failed to send the random topic. Please try again later.")
 
-    async def scheduled_task(self):
+    async def scheduled_task(self, guild_id):
         await self.bot.wait_until_ready()
+        guild = self.bot.get_guild(guild_id)
+        if not guild:
+            return
+
         while True:
-            for guild in self.bot.guilds:
-                await self.send_random_topic(guild)
-            interval = await self.config.all_guilds()
-            interval = interval.get("interval", 60)
+            await self.send_random_topic(guild)
+            interval = await self.config.guild(guild).interval()
             await asyncio.sleep(interval * 60)
+
+    async def restart_task(self, guild_id):
+        if guild_id in self.tasks:
+            self.tasks[guild_id].cancel()
+        self.tasks[guild_id] = self.bot.loop.create_task(self.scheduled_task(guild_id))
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.task = self.bot.loop.create_task(self.scheduled_task())
+        for guild in self.bot.guilds:
+            self.tasks[guild.id] = self.bot.loop.create_task(self.scheduled_task(guild.id))
+
+def setup(bot: Red):
+    bot.add_cog(RandomTopic(bot))
