@@ -23,23 +23,29 @@ class StaffApps(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
+    @commands.group()
+    async def app(self, ctx):
+        """Group command for managing staff applications."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send("Invalid subcommand passed. Use `app addq`, `app setappchannel`, `app listroles`, `app apply`, `app accept`, `app deny`, `app remq`, `app clearqs`")
+
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def addq(self, ctx, role: discord.Role, *, question: str):
         """Add a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
             questions.setdefault(str(role.id), []).append(question)
         await ctx.send(f"Question added for {role.name}.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def setappchannel(self, ctx, channel: discord.TextChannel):
         """Set the application channel."""
         await self.config.guild(ctx.guild).application_channel.set(channel.id)
         await ctx.send(f"Application channel set to {channel.mention}.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def listroles(self, ctx):
         """List roles available for application."""
         questions = await self.config.guild(ctx.guild).questions()
@@ -50,8 +56,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No roles set for applications.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def apply(self, ctx, *, role_name: str):
         """Apply for a specific role."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -89,22 +95,22 @@ class StaffApps(commands.Cog):
                 embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
             message = await application_channel.send(embed=embed)
             poll_message = await application_channel.send("Should we hire them?")
-            await poll_message.add_reaction("✅")
-            await poll_message.add_reaction("❌")
+            await poll_message.add_reaction("👍")
+            await poll_message.add_reaction("👎")
             self.bot.loop.create_task(self.tally_votes(poll_message, ctx.channel))
             await ctx.send("Application submitted. Thank you!")
         else:
-            await ctx.send("Application channel not set. Please set an application channel using the `setappchannel` command.")
+            await ctx.send("Application channel not set. Please set an application channel using the `app setappchannel` command.")
 
     async def tally_votes(self, poll_message, channel):
         await asyncio.sleep(14400)  # 4 hours in seconds
         poll_message = await poll_message.channel.fetch_message(poll_message.id)
-        yes_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "✅")
-        no_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "❌")
+        yes_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "👍")
+        no_votes = sum(1 for reaction in poll_message.reactions if reaction.emoji == "👎")
         await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def accept(self, ctx, member: discord.Member, role_name: str):
         """Accept an application and assign a role."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -128,8 +134,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No application found for this member and role.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def deny(self, ctx, member: discord.Member, role_name: str):
         """Deny an application and send a denial message."""
         role = discord.utils.get(ctx.guild.roles, name=role_name)
@@ -143,8 +149,8 @@ class StaffApps(commands.Cog):
         else:
             await ctx.send("No application found for this member and role.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def remq(self, ctx, role: discord.Role, *, question: str):
         """Remove a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -154,8 +160,8 @@ class StaffApps(commands.Cog):
             else:
                 await ctx.send("Question not found for this role.")
 
+    @app.command()
     @commands.guild_only()
-    @commands.command()
     async def clearqs(self, ctx, role: discord.Role):
         """Clear all questions for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -360,6 +366,7 @@ class StaffApps(commands.Cog):
                 await ctx.send(f"Leave of Absence for {user.name} has ended.")
             else:
                 await ctx.send(f"Leave of Absence for user ID {user_id} not found or not approved.")
+
     @commands.group()
     @commands.has_permissions(manage_roles=True)
     async def resign(self, ctx):
@@ -438,7 +445,7 @@ class StaffApps(commands.Cog):
 
         embed = message.embeds[0]
         if embed.title.startswith("New Application for"):
-            if payload.emoji.name == "✅" or payload.emoji.name == "❌":
+            if payload.emoji.name == "👍" or payload.emoji.name == "👎":
                 # Add the reaction to the tally
                 await self.add_vote(payload.message_id, payload.emoji.name)
 
@@ -446,17 +453,14 @@ class StaffApps(commands.Cog):
         """Add a vote to the tally."""
         async with self.config.guild_from_id(payload.guild_id).applications() as applications:
             if str(message_id) not in applications:
-                applications[str(message_id)] = {"✅": 0, "❌": 0}
+                applications[str(message_id)] = {"👍": 0, "👎": 0}
             applications[str(message_id)][emoji] += 1
 
     async def tally_votes(self, poll_message, channel):
         await asyncio.sleep(14400)  # 4 hours in seconds
         poll_message = await poll_message.channel.fetch_message(poll_message.id)
         async with self.config.guild_from_id(poll_message.guild.id).applications() as applications:
-            votes = applications.get(str(poll_message.id), {"✅": 0, "❌": 0})
-            yes_votes = votes["✅"]
-            no_votes = votes["❌"]
+            votes = applications.get(str(poll_message.id), {"👍": 0, "👎": 0})
+            yes_votes = votes["👍"]
+            no_votes = votes["👎"]
             await channel.send(f"Voting has ended. Results:\nYes: {yes_votes} votes\nNo: {no_votes} votes")
-
-def setup(bot):
-    bot.add_cog(StaffApps(bot))
