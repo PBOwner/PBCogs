@@ -23,8 +23,6 @@ class AdvancedLogger(commands.Cog):
             "ban_log_channel": None,
             "mute_log_channel": None,
             "timeout_log_channel": None,
-            "command_log_channel": None,
-            "error_log_channel": None,
         }
         self.config.register_guild(**default_guild)
 
@@ -51,7 +49,7 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, command, error
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
 
         **Example**:
         `[p]logging setchannel member #member-log`
@@ -67,10 +65,8 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel ban #ban-log`
         `[p]logging setchannel mute #mute-log`
         `[p]logging setchannel timeout #timeout-log`
-        `[p]logging setchannel command #command-log`
-        `[p]logging setchannel error #error-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "command", "error"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -81,7 +77,7 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, command, error
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
 
         **Example**:
         `[p]logging removechannel member`
@@ -97,10 +93,8 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel ban`
         `[p]logging removechannel mute`
         `[p]logging removechannel timeout`
-        `[p]logging removechannel command`
-        `[p]logging removechannel error`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "command", "error"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -300,30 +294,3 @@ class AdvancedLogger(commands.Cog):
         for emoji in updated_emojis:
             description = f"**Emoji Updated:** {emoji} ({emoji.name})"
             await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue())
-
-    @commands.Cog.listener()
-    async def on_command(self, ctx):
-        guild = ctx.guild
-        description = f"**Command Executed:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}"
-        await self.log_event(guild, "command", "Command Executed", description, discord.Color.purple(), ctx.author)
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        guild = ctx.guild
-        description = f"**Command Error:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}\n**Error:** {error}"
-        await self.log_event(guild, "error", "Command Error", description, discord.Color.red(), ctx.author)
-
-    @commands.Cog.listener()
-    async def on_member_kick(self, guild, user):
-        description = f"**Member Kicked:** {user.mention} ({user})"
-        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red(), user)
-
-    @commands.Cog.listener()
-    async def on_member_mute(self, guild, user):
-        description = f"**Member Muted:** {user.mention} ({user})"
-        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red(), user)
-
-    @commands.Cog.listener()
-    async def on_member_timeout(self, guild, user):
-        description = f"**Member Timed Out:** {user.mention} ({user})"
-        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red(), user)
