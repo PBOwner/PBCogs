@@ -74,13 +74,20 @@ class RandomTopic(commands.Cog):
             if period not in ["AM", "PM"]:
                 return await ctx.send("Invalid period. Please use 'AM' or 'PM'.")
 
-            hour, minute = map(int, time.split(":"))
+            try:
+                hour, minute = map(int, time.split(":"))
+            except ValueError:
+                return await ctx.send("Invalid time format. Please use 'HH:MM' format.")
+
             if period == "PM" and hour != 12:
                 hour += 12
             elif period == "AM" and hour == 12:
                 hour = 0
         else:
-            hour, minute = map(int, time.split(":"))
+            try:
+                hour, minute = map(int, time.split(":"))
+            except ValueError:
+                return await ctx.send("Invalid time format. Please use 'HH:MM' format.")
 
         if not (0 <= hour < 24) or not (0 <= minute < 60):
             return await ctx.send("Invalid time. Please provide a valid time in 12-hour or 24-hour format.")
