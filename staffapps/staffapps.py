@@ -550,3 +550,6 @@ class StaffApps(commands.Cog):
                 await ctx.send(f"Resignation request for user ID {user_id} not found.")
         else:
             await ctx.send("Invalid request type. Use 'application', 'loa', or 'resignation'.")
+
+def setup(bot):
+    bot.add_cog(StaffApps(bot))
