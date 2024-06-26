@@ -95,7 +95,7 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel timeout`
         """
         valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
-        if log_type not in valid log_types:
+        if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
         await self.config.guild(ctx.guild).set_raw(log_type + "_log_channel", value=None)
