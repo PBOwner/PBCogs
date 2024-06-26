@@ -431,18 +431,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#logging-setchannel" class="md-nav__link">
+  <a href="#logging-removechannel" class="md-nav__link">
     <span class="md-ellipsis">
-      logging setchannel
+      logging removechannel
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#logging-removechannel" class="md-nav__link">
+  <a href="#logging-setchannel" class="md-nav__link">
     <span class="md-ellipsis">
-      logging removechannel
+      logging setchannel
     </span>
   </a>
   
@@ -6968,18 +6968,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#logging-setchannel" class="md-nav__link">
+  <a href="#logging-removechannel" class="md-nav__link">
     <span class="md-ellipsis">
-      logging setchannel
+      logging removechannel
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#logging-removechannel" class="md-nav__link">
+  <a href="#logging-setchannel" class="md-nav__link">
     <span class="md-ellipsis">
-      logging removechannel
+      logging setchannel
     </span>
   </a>
   
@@ -7005,27 +7005,9 @@
 <h3 id="logging">logging</h3>
 <p><strong>Description:</strong> Manage logging settings for various events in the server.</p>
 <p><strong>Usage:</strong> <code>,logging</code></p>
-<h3 id="logging-setchannel">logging setchannel</h3>
-<p><strong>Description:</strong> Set the channel for logging events.</p>
-<p><strong>Valid log types</strong>: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout</p>
-<p><strong>Example</strong>:
-<code>[p]logging setchannel member #member-log</code>
-<code>[p]logging setchannel role #role-log</code>
-<code>[p]logging setchannel message #message-log</code>
-<code>[p]logging setchannel channel #channel-log</code>
-<code>[p]logging setchannel webhook #webhook-log</code>
-<code>[p]logging setchannel app #app-log</code>
-<code>[p]logging setchannel voice #voice-log</code>
-<code>[p]logging setchannel reaction #reaction-log</code>
-<code>[p]logging setchannel emoji #emoji-log</code>
-<code>[p]logging setchannel kick #kick-log</code>
-<code>[p]logging setchannel ban #ban-log</code>
-<code>[p]logging setchannel mute #mute-log</code>
-<code>[p]logging setchannel timeout #timeout-log</code></p>
-<p><strong>Usage:</strong> <code>,logging setchannel</code></p>
 <h3 id="logging-removechannel">logging removechannel</h3>
 <p><strong>Description:</strong> Remove the logging channel.</p>
-<p><strong>Valid log types</strong>: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout</p>
+<p><strong>Valid log types</strong>: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash</p>
 <p><strong>Example</strong>:
 <code>[p]logging removechannel member</code>
 <code>[p]logging removechannel role</code>
@@ -7039,8 +7021,32 @@
 <code>[p]logging removechannel kick</code>
 <code>[p]logging removechannel ban</code>
 <code>[p]logging removechannel mute</code>
-<code>[p]logging removechannel timeout</code></p>
+<code>[p]logging removechannel timeout</code>
+<code>[p]logging removechannel attachment</code>
+<code>[p]logging removechannel link</code>
+<code>[p]logging removechannel slash</code></p>
 <p><strong>Usage:</strong> <code>,logging removechannel</code></p>
+<h3 id="logging-setchannel">logging setchannel</h3>
+<p><strong>Description:</strong> Set the channel for logging events.</p>
+<p><strong>Valid log types</strong>: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash</p>
+<p><strong>Example</strong>:
+<code>[p]logging setchannel member #member-log</code>
+<code>[p]logging setchannel role #role-log</code>
+<code>[p]logging setchannel message #message-log</code>
+<code>[p]logging setchannel channel #channel-log</code>
+<code>[p]logging setchannel webhook #webhook-log</code>
+<code>[p]logging setchannel app #app-log</code>
+<code>[p]logging setchannel voice #voice-log</code>
+<code>[p]logging setchannel reaction #reaction-log</code>
+<code>[p]logging setchannel emoji #emoji-log</code>
+<code>[p]logging setchannel kick #kick-log</code>
+<code>[p]logging setchannel ban #ban-log</code>
+<code>[p]logging setchannel mute #mute-log</code>
+<code>[p]logging setchannel timeout #timeout-log</code>
+<code>[p]logging setchannel attachment #attachment-log</code>
+<code>[p]logging setchannel link #link-log</code>
+<code>[p]logging setchannel slash #slash-log</code></p>
+<p><strong>Usage:</strong> <code>,logging setchannel</code></p>
 
 
 
