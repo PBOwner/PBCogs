@@ -6,5 +6,5 @@ nav:
 site_name: Giveaways's Documentation
 site_url: https://docs.prismbot.icu/Giveaways/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false
