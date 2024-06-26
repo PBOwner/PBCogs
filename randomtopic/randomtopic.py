@@ -4,7 +4,7 @@ import asyncio
 import random
 from redbot.core import commands, Config, checks
 from redbot.core.bot import Red
-from datetime import datetime, timedelta
+from datetime import datetime
 import pytz
 
 class RandomTopic(commands.Cog):
@@ -19,8 +19,7 @@ class RandomTopic(commands.Cog):
             custom_name="Random Topic",
             scheduled_hour=None,
             scheduled_minute=None,
-            scheduled_period=None,
-            last_sent=None
+            scheduled_period=None
         )
         self.session = aiohttp.ClientSession()
         self.timezone = pytz.timezone("US/Eastern")
@@ -63,22 +62,32 @@ class RandomTopic(commands.Cog):
         await ctx.send(f"Custom name set to {name}")
 
     @rt.command()
-    async def settime(self, ctx, hour: int, minute: int, period: str):
-        """Set the time for daily topic posting (hour and minute in 12-hour format with AM/PM).
+    async def settime(self, ctx, time: str, period: str = None):
+        """Set the time for daily topic posting (12-hour or 24-hour format).
 
         Use this command to schedule a daily time for the bot to automatically send a random topic.
-        The hour should be in 12-hour format (e.g., 2 for 2 PM) and the period should be 'AM' or 'PM'.
+        The time can be in 12-hour format (e.g., 2:30 PM) or 24-hour format (e.g., 14:30).
+        For 12-hour format, specify the period as 'AM' or 'PM'.
         """
-        if period.upper() not in ["AM", "PM"]:
-            return await ctx.send("Invalid period. Please use 'AM' or 'PM'.")
+        if period:
+            period = period.upper()
+            if period not in ["AM", "PM"]:
+                return await ctx.send("Invalid period. Please use 'AM' or 'PM'.")
 
-        if not (0 <= minute < 60):
-            return await ctx.send("Invalid minute. Please use a value between 0 and 59.")
+            hour, minute = map(int, time.split(":"))
+            if period == "PM" and hour != 12:
+                hour += 12
+            elif period == "AM" and hour == 12:
+                hour = 0
+        else:
+            hour, minute = map(int, time.split(":"))
+
+        if not (0 <= hour < 24) or not (0 <= minute < 60):
+            return await ctx.send("Invalid time. Please provide a valid time in 12-hour or 24-hour format.")
 
         await self.config.guild(ctx.guild).scheduled_hour.set(hour)
         await self.config.guild(ctx.guild).scheduled_minute.set(minute)
-        await self.config.guild(ctx.guild).scheduled_period.set(period.upper())
-        await ctx.send(f"Scheduled time set to {hour}:{minute:02d} {period.upper()} Eastern Time")
+        await ctx.send(f"Scheduled time set to {hour:02d}:{minute:02d} Eastern Time")
 
     @rt.command()
     async def sendtopic(self, ctx):
@@ -135,28 +144,16 @@ class RandomTopic(commands.Cog):
             for guild in self.bot.guilds:
                 scheduled_hour = await self.config.guild(guild).scheduled_hour()
                 scheduled_minute = await self.config.guild(guild).scheduled_minute()
-                scheduled_period = await self.config.guild(guild).scheduled_period()
-                last_sent = await self.config.guild(guild).last_sent()
 
-                if scheduled_hour is None or scheduled_minute is None or scheduled_period is None:
+                if scheduled_hour is None or scheduled_minute is None:
                     continue
-
-                if scheduled_period == "PM" and scheduled_hour != 12:
-                    scheduled_hour += 12
-                elif scheduled_period == "AM" and scheduled_hour == 12:
-                    scheduled_hour = 0
 
                 scheduled_datetime = self.timezone.localize(datetime(
                     now.year, now.month, now.day, scheduled_hour, scheduled_minute
                 ))
-                if last_sent:
-                    last_sent = datetime.strptime(last_sent, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(self.timezone)
-                else:
-                    last_sent = now - timedelta(days=1)
 
-                if now >= scheduled_datetime > last_sent:
+                if now >= scheduled_datetime:
                     await self.send_random_topic(guild)
-                    await self.config.guild(guild).last_sent.set(now.strftime("%Y-%m-%d %H:%M:%S"))
 
             await asyncio.sleep(60)
 
