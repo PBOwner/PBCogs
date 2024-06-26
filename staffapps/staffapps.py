@@ -373,6 +373,8 @@ class StaffApps(commands.Cog):
                 if str(user_id) in role_apps:
                     member = ctx.guild.get_member(user_id)
                     role = discord.utils.get(ctx.guild.roles, name=role_name)
+                    if not role:
+                        return await ctx.send(f"Role {role_name} not found.")
                     await member.add_roles(role)
                     await member.send(f"Congratulations! Your application for {role.name} has been accepted.")
                     embed = discord.Embed(title="Staff Hired", color=discord.Color.green())
@@ -384,7 +386,6 @@ class StaffApps(commands.Cog):
                     staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
                     if staff_updates_channel:
                         await staff_updates_channel.send(embed=embed)
-
                     # Update the original application message
                     message_id = role_apps[str(user_id)].get("message_id")
                     if message_id:
@@ -407,8 +408,9 @@ class StaffApps(commands.Cog):
                 user = self.bot.get_user(loa_requests[user_id]["user"])
                 loa_role_id = await self.config.guild(ctx.guild).loa_role()
                 loa_role = ctx.guild.get_role(loa_role_id)
-                if loa_role:
-                    await user.add_roles(loa_role)
+                if not loa_role:
+                    return await ctx.send("LOA role not found.")
+                await user.add_roles(loa_role)
                 embed = discord.Embed(title="Leave of Absence", color=discord.Color.green())
                 embed.add_field(name="User", value=user.name, inline=False)
                 embed.add_field(name="Duration", value=loa_requests[user_id]["duration"], inline=False)
