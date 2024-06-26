@@ -273,7 +273,7 @@ class AutoDocs(commands.Cog):
         prefixes = await self.bot.get_valid_prefixes(ctx.guild)
         prefix = prefixes[0].strip()
 
-        c = CustomCmdFmt(self.bot, command, prefix, True, False, "botowner", True)
+        c = CustomCmdFmt(self.bot, command, prefix, True, False, "botowner", True, "user")
         doc = c.get_doc()
         if not doc:
             return await ctx.send("No documentation found for this command.")
