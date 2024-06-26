@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime
+import re
 
 class AdvancedLogger(commands.Cog):
     """A cog for advanced logging of various actions in a server"""
@@ -23,6 +24,8 @@ class AdvancedLogger(commands.Cog):
             "ban_log_channel": None,
             "mute_log_channel": None,
             "timeout_log_channel": None,
+            "attachment_log_channel": None,
+            "link_log_channel": None,
         }
         self.config.register_guild(**default_guild)
 
@@ -53,7 +56,7 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link
 
         **Example**:
         `[p]logging setchannel member #member-log`
@@ -69,8 +72,10 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel ban #ban-log`
         `[p]logging setchannel mute #mute-log`
         `[p]logging setchannel timeout #timeout-log`
+        `[p]logging setchannel attachment #attachment-log`
+        `[p]logging setchannel link #link-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -81,7 +86,7 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link
 
         **Example**:
         `[p]logging removechannel member`
@@ -97,8 +102,10 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel ban`
         `[p]logging removechannel mute`
         `[p]logging removechannel timeout`
+        `[p]logging removechannel attachment`
+        `[p]logging removechannel link`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -144,21 +151,32 @@ class AdvancedLogger(commands.Cog):
         if message.author.bot:
             return
         guild = message.guild
-        description = (
-            f"**Message Sent in {message.channel.mention}**\n"
-            f"**Content:** {message.content}\n"
-            f"**Author:** {message.author.mention}\n"
-            f"**Message ID:** {message.id}\n"
-            f"**Channel ID:** {message.channel.id}\n"
-            f"**Guild ID:** {message.guild.id}\n"
-            f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
-        )
 
         if message.attachments:
             attachments = "\n".join([attachment.url for attachment in message.attachments])
-            description += f"\n**Attachments:**\n{attachments}"
+            description = (
+                f"**Message with Attachments Sent in {message.channel.mention}**\n"
+                f"**Content:** {message.content}\n"
+                f"**Author:** {message.author.mention}\n"
+                f"**Message ID:** {message.id}\n"
+                f"**Channel ID:** {message.channel.id}\n"
+                f"**Guild ID:** {message.guild.id}\n"
+                f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>\n"
+                f"**Attachments:**\n{attachments}"
+            )
+            await self.log_event(guild, "attachment", "Message with Attachments Sent", description, discord.Color.blue(), message.author)
 
-        await self.log_event(guild, "message", "Message Sent", description, discord.Color.blue(), message.author)
+        if re.search(r'https?://\S+', message.content):
+            description = (
+                f"**Message with Link Sent in {message.channel.mention}**\n"
+                f"**Content:** {message.content}\n"
+                f"**Author:** {message.author.mention}\n"
+                f"**Message ID:** {message.id}\n"
+                f"**Channel ID:** {message.channel.id}\n"
+                f"**Guild ID:** {message.guild.id}\n"
+                f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
+            )
+            await self.log_event(guild, "link", "Message with Link Sent", description, discord.Color.green(), message.author)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
