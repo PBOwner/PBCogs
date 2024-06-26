@@ -16,13 +16,15 @@ class GlobalLogger(commands.Cog):
         }
         self.config.register_global(**default_global)
 
-    async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
+    async def log_global_event(self, log_type: str, title: str, fields: dict, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
         try:
             log_channel_id = await self.config.get_raw(log_type + "_log_channel")
             if log_channel_id:
                 log_channel = self.bot.get_channel(log_channel_id)
                 if log_channel:
-                    embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                    embed = discord.Embed(title=title, color=color, timestamp=datetime.utcnow())
+                    for name, value in fields.items():
+                        embed.add_field(name=name, value=value, inline=False)
                     if author:
                         embed.set_thumbnail(url=author.display_avatar.url)
                     await log_channel.send(embed=embed)
@@ -71,17 +73,20 @@ class GlobalLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
-        description = f"**Command Executed:** {ctx.command}\n**User:** {ctx.author.mention}\n**Channel:** {ctx.channel.mention}\n**Message:** {ctx.message.content}"
-        await self.log_global_event("command", "Command Executed", description, discord.Color.purple(), ctx.author)
+        fields = {
+            "Command Ran": ctx.command,
+            "Ran By": ctx.author.mention,
+            "Where": ctx.channel.mention,
+        }
+        await self.log_global_event("command", "Command Executed", fields, discord.Color.purple(), ctx.author)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         tb = "".join(traceback.format_exception(type(error), error, error.__traceback__))
-        description = (
-            f"**Command Error:** {ctx.command}\n"
-            f"**User:** {ctx.author.mention}\n"
-            f"**Channel:** {ctx.channel.mention}\n"
-            f"**Message:** {ctx.message.content}\n"
-            f"**Error:** ```python\n{tb}```"
-        )
-        await self.log_global_event("error", "Command Error", description, discord.Color.red(), ctx.author)
+        fields = {
+            "Command Ran": ctx.command,
+            "Ran By": ctx.author.mention,
+            "Error": f"```python\n{tb}```",
+            "Where": ctx.channel.mention,
+        }
+        await self.log_global_event("error", "Command Error", fields, discord.Color.red(), ctx.author)
