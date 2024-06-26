@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import asyncio
-from redbot.core import Config
+from redbot.core import Config, commands
 
 class StaffApps(commands.Cog):
     """Cog for handling staff applications and managing staff members."""
