@@ -4,7 +4,7 @@ import asyncio
 import random
 from redbot.core import commands, Config, checks
 from redbot.core.bot import Red
-from datetime import datetime
+from datetime import datetime, time
 import pytz
 
 class RandomTopic(commands.Cog):
@@ -141,6 +141,7 @@ class RandomTopic(commands.Cog):
         await self.bot.wait_until_ready()
         while True:
             now = datetime.now(self.timezone)
+            current_time = now.time()
             for guild in self.bot.guilds:
                 scheduled_hour = await self.config.guild(guild).scheduled_hour()
                 scheduled_minute = await self.config.guild(guild).scheduled_minute()
@@ -148,11 +149,9 @@ class RandomTopic(commands.Cog):
                 if scheduled_hour is None or scheduled_minute is None:
                     continue
 
-                scheduled_datetime = self.timezone.localize(datetime(
-                    now.year, now.month, now.day, scheduled_hour, scheduled_minute
-                ))
+                scheduled_time = time(scheduled_hour, scheduled_minute)
 
-                if now >= scheduled_datetime:
+                if current_time == scheduled_time:
                     await self.send_random_topic(guild)
 
             await asyncio.sleep(60)
@@ -160,3 +159,6 @@ class RandomTopic(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.bot.loop.create_task(self.scheduled_task())
+
+def setup(bot: Red):
+    bot.add_cog(RandomTopic(bot))
