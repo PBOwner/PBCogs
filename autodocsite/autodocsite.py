@@ -5,6 +5,7 @@ from io import BytesIO
 from typing import List, Literal, Optional, Tuple
 from zipfile import ZIP_DEFLATED, ZipFile
 import yaml
+import random
 
 import discord
 import pandas as pd
@@ -28,6 +29,8 @@ class AutoDocs(commands.Cog):
 
     Easily create documentation for any cog in Markdown format.
     """
+    __author__ = "[Rosie](https://github.com/PBOwner/PBCogs)"
+    __version__ = "1.0.0"
 
     def format_help_for_context(self, ctx):
         helpcmd = super().format_help_for_context(ctx)
@@ -69,7 +72,14 @@ class AutoDocs(commands.Cog):
         else:
             docs = ""
 
+        max_level_index = PRIVILEGE_LEVELS.index(max_privilege_level)
+        min_level_index = PRIVILEGE_LEVELS.index(min_privilege_level)
+
         for cmd in cog.walk_app_commands():
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) > max_level_index:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) < min_level_index:
+                continue
             c = CustomCmdFmt(
                 self.bot,
                 cmd,
@@ -90,6 +100,10 @@ class AutoDocs(commands.Cog):
         ignored = []
         for cmd in cog.walk_commands():
             if cmd.hidden and not include_hidden:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) > max_level_index:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) < min_level_index:
                 continue
             c = CustomCmdFmt(
                 self.bot,
@@ -258,7 +272,7 @@ class AutoDocs(commands.Cog):
         return await self.get_coglist(current)
 
     # New command to search for a specific command
-    @commands.command(name="searchcmd", description="Search for a specific command and get its documentation.")
+    @commands.command(name="search", description="Search for a specific command and get its documentation.")
     async def search_command(self, ctx: commands.Context, *, command_name: str):
         """
         Search for a specific command and get its documentation.
@@ -278,7 +292,18 @@ class AutoDocs(commands.Cog):
         if not doc:
             return await ctx.send("No documentation found for this command.")
 
-        await ctx.send(f"Documentation for `{command_name}`:\n\n{doc}")
+        # Create an embed with a randomized color
+        embed = discord.Embed(
+            title=f"Documentation for `{command_name}`",
+            description=doc,
+            color=random.randint(0, 0xFFFFFF)
+        )
+
+        # Add a link to the relative docs
+        cog_name = command.cog.qualified_name
+        embed.add_field(name="More Info", value=f"[Documentation](https://{self.config['custom_domain']}/{cog_name}.html#{command_name.replace(' ', '-')})")
+
+        await ctx.send(embed=embed)
 
 # Now, integrating the documentation generation into the AutoDocSite class
 
@@ -656,7 +681,14 @@ Thank you for using **{self.config['site_name']}**! We hope you enjoy all the fe
         else:
             docs = ""
 
+        max_level_index = PRIVILEGE_LEVELS.index(max_privilege_level)
+        min_level_index = PRIVILEGE_LEVELS.index(min_privilege_level)
+
         for cmd in cog.walk_app_commands():
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) > max_level_index:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) < min_level_index:
+                continue
             c = CustomCmdFmt(
                 self.bot,
                 cmd,
@@ -677,6 +709,10 @@ Thank you for using **{self.config['site_name']}**! We hope you enjoy all the fe
         ignored = []
         for cmd in cog.walk_commands():
             if cmd.hidden and not include_hidden:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) > max_level_index:
+                continue
+            if PRIVILEGE_LEVELS.index(cmd.extras.get("privilege_level", "user")) < min_level_index:
                 continue
             c = CustomCmdFmt(
                 self.bot,
