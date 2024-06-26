@@ -181,6 +181,17 @@ class AdvancedLogger(commands.Cog):
             )
             await self.log_event(guild, "message", "Message with Link Sent", description, discord.Color.green(), message.author)
 
+        description = (
+            f"**Message Sent in {message.channel.mention}**\n"
+            f"**Content:** {message.content}\n"
+            f"**Author:** {message.author.mention}\n"
+            f"**Message ID:** {message.id}\n"
+            f"**Channel ID:** {message.channel.id}\n"
+            f"**Guild ID:** {message.guild.id}\n"
+            f"**Timestamp:** <t:{int(message.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "message", "Message Sent", description, discord.Color.blue(), message.author)
+
     @commands.Cog.listener()
     async def on_interaction(self, interaction: discord.Interaction):
         if interaction.is_expired():
@@ -358,7 +369,6 @@ class AdvancedLogger(commands.Cog):
             guild = before
             description = (
                 f"**Guild Renamed:** {before.name} -> {after.name}\n"
-                f"**Guild ID:** {guild.id}\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "channel", "Guild Renamed", description, discord.Color.blue())
