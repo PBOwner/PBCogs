@@ -32,28 +32,34 @@ class AdvancedLogger(commands.Cog):
         self.config.register_global(**default_global)
 
     async def log_event(self, guild: discord.Guild, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
-        if log_type in ["command", "error"]:
-            log_channel_id = await self.config.get_raw(log_type + "_log_channel")
-        else:
-            log_channel_id = await self.config.guild(guild).get_raw(log_type + "_log_channel")
+        try:
+            if log_type in ["command", "error"]:
+                log_channel_id = await self.config.get_raw(log_type + "_log_channel")
+            else:
+                log_channel_id = await self.config.guild(guild).get_raw(log_type + "_log_channel")
 
-        if log_channel_id:
-            log_channel = self.bot.get_channel(log_channel_id)
-            if log_channel:
-                embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
-                if author:
-                    embed.set_thumbnail(url=author.avatar_url)
-                await log_channel.send(embed=embed)
+            if log_channel_id:
+                log_channel = self.bot.get_channel(log_channel_id)
+                if log_channel:
+                    embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                    if author:
+                        embed.set_thumbnail(url=author.avatar_url)
+                    await log_channel.send(embed=embed)
+        except Exception as e:
+            print(f"Failed to log event: {e}")
 
     async def log_global_event(self, log_type: str, title: str, description: str, color: discord.Color = discord.Color.blue(), author: discord.Member = None):
-        log_channel_id = await self.config.get_raw(log_type + "_log_channel")
-        if log_channel_id:
-            log_channel = self.bot.get_channel(log_channel_id)
-            if log_channel:
-                embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
-                if author:
-                    embed.set_thumbnail(url=author.avatar_url)
-                await log_channel.send(embed=embed)
+        try:
+            log_channel_id = await self.config.get_raw(log_type + "_log_channel")
+            if log_channel_id:
+                log_channel = self.bot.get_channel(log_channel_id)
+                if log_channel:
+                    embed = discord.Embed(title=title, description=description, color=color, timestamp=datetime.utcnow())
+                    if author:
+                        embed.set_thumbnail(url=author.avatar_url)
+                    await log_channel.send(embed=embed)
+        except Exception as e:
+            print(f"Failed to log global event: {e}")
 
     @commands.group()
     @commands.admin_or_permissions(manage_guild=True)
@@ -261,8 +267,9 @@ class AdvancedLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_update(self, before, after):
         if before.name != after.name:
+            guild = before
             description = f"**Guild Renamed:** {before.name} -> {after.name}"
-            await self.log_event(before, "channel", "Guild Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "channel", "Guild Renamed", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
@@ -359,17 +366,14 @@ class AdvancedLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_member_kick(self, guild, user):
         description = f"**Member Kicked:** {user.mention} ({user})"
-        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red(), ctx.author)
+        await self.log_event(guild, "kick", "Member Kicked", description, discord.Color.red(), user)
 
     @commands.Cog.listener()
     async def on_member_mute(self, guild, user):
         description = f"**Member Muted:** {user.mention} ({user})"
-        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red(), ctx.author)
+        await self.log_event(guild, "mute", "Member Muted", description, discord.Color.red(), user)
 
     @commands.Cog.listener()
     async def on_member_timeout(self, guild, user):
         description = f"**Member Timed Out:** {user.mention} ({user})"
-        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red(), ctx.author)
-
-def setup(bot):
-    bot.add_cog(AdvancedLogger(bot))
+        await self.log_event(guild, "timeout", "Member Timed Out", description, discord.Color.red(), user)
