@@ -701,11 +701,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/GuildStats.html</loc>
-         <lastmod>2024-06-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://docs.prismbot.icu/Hangman.html</loc>
          <lastmod>2024-06-27</lastmod>
          <changefreq>daily</changefreq>
@@ -907,11 +902,6 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/MemberPrefix.html</loc>
-         <lastmod>2024-06-27</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.prismbot.icu/MentionTracker.html</loc>
          <lastmod>2024-06-27</lastmod>
          <changefreq>daily</changefreq>
     </url>

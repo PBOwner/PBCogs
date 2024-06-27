@@ -6,5 +6,5 @@ nav:
 site_name: DeleteCounter's Documentation
 site_url: https://docs.prismbot.icu/DeleteCounter/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false
