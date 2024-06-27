@@ -288,8 +288,8 @@ class AdvancedLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_role_update(self, before, after):
+        guild = before.guild
         if before.name != after.name:
-            guild = before.guild
             description = (
                 f"**Role Renamed:** {before.name} -> {after.name}\n"
                 f"**Role ID:** {before.id}\n"
@@ -297,6 +297,22 @@ class AdvancedLogger(commands.Cog):
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "role", "Role Renamed", description, discord.Color.blue())
+
+        if before.permissions != after.permissions:
+            added_permissions = [perm for perm, value in after.permissions if value and not getattr(before.permissions, perm)]
+            removed_permissions = [perm for perm, value in before.permissions if value and not getattr(after.permissions, perm)]
+
+            description = f"**Permissions Updated for Role {before.name}:**\n"
+            if added_permissions:
+                description += f"**Permissions Added:** {', '.join(added_permissions)}\n"
+            if removed_permissions:
+                description += f"**Permissions Removed:** {', '.join(removed_permissions)}\n"
+            description += (
+                f"**Role ID:** {before.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "role", "Role Permissions Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
@@ -322,8 +338,8 @@ class AdvancedLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_update(self, before, after):
+        guild = before.guild
         if before.name != after.name:
-            guild = before.guild
             description = (
                 f"**Channel Renamed:** {before.name} -> {after.name}\n"
                 f"**Channel ID:** {before.id}\n"
@@ -331,6 +347,38 @@ class AdvancedLogger(commands.Cog):
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "channel", "Channel Renamed", description, discord.Color.blue())
+
+        if before.permissions != after.permissions:
+            added_permissions = []
+            removed_permissions = []
+
+            for target, perms in after.overwrites.items():
+                before_perms = before.overwrites.get(target)
+                if before_perms is None:
+                    added_permissions.append((target, perms))
+                elif perms != before_perms:
+                    added = perms.pair()[0] - before_perms.pair()[0]
+                    removed = before_perms.pair()[0] - perms.pair()[0]
+                    if added:
+                        added_permissions.append((target, added))
+                    if removed:
+                        removed_permissions.append((target, removed))
+
+            description = f"**Permissions Updated for Channel {before.name}:**\n"
+            if added_permissions:
+                description += "**Permissions Added:**\n"
+                for target, perms in added_permissions:
+                    description += f"**{target}:** {', '.join(perm for perm in perms)}\n"
+            if removed_permissions:
+                description += "**Permissions Removed:**\n"
+                for target, perms in removed_permissions:
+                    description += f"**{target}:** {', '.join(perm for perm in perms)}\n"
+            description += (
+                f"**Channel ID:** {before.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "channel", "Channel Permissions Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_webhooks_update(self, channel):
