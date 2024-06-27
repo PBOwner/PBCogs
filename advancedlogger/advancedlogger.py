@@ -348,7 +348,7 @@ class AdvancedLogger(commands.Cog):
             )
             await self.log_event(guild, "channel", "Channel Renamed", description, discord.Color.blue())
 
-        if before.permissions != after.permissions:
+        if before.overwrites != after.overwrites:
             added_permissions = []
             removed_permissions = []
 
@@ -357,8 +357,8 @@ class AdvancedLogger(commands.Cog):
                 if before_perms is None:
                     added_permissions.append((target, perms))
                 elif perms != before_perms:
-                    added = perms.pair()[0] - before_perms.pair()[0]
-                    removed = before_perms.pair()[0] - perms.pair()[0]
+                    added = [perm for perm, value in perms if value and not getattr(before_perms, perm)]
+                    removed = [perm for perm, value in before_perms if value and not getattr(perms, perm)]
                     if added:
                         added_permissions.append((target, added))
                     if removed:
@@ -409,6 +409,14 @@ class AdvancedLogger(commands.Cog):
             if before.channel is None:
                 description = (
                     f"**{member.mention} joined voice channel:** {after.channel.mention}\n"
+                    f"**User ID:** {member.id}\n"
+                    f"**Guild:** {guild.name} ({guild.id})\n"
+                    f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+                )
+                await self.log_event(guild, "voice", "Voice Channel Join", description, discord.Color.green(), member)
+            elif after.channel is None:
+                description = (
+                    f"**{member.mention} left voice channel:** {before.channel.mention}\n"
                     f"**User ID:** {member.id}\n"
                     f"**Guild:** {guild.name} ({guild.id})\n"
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
