@@ -12,8 +12,10 @@ class AdvancedLogger(commands.Cog):
         default_guild = {
             "member_log_channel": None,
             "role_log_channel": None,
+            "role_permissions_log_channel": None,
             "message_log_channel": None,
             "channel_log_channel": None,
+            "channel_permissions_log_channel": None,
             "webhook_log_channel": None,
             "app_log_channel": None,
             "voice_log_channel": None,
@@ -64,13 +66,15 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
+        **Valid log types**: member, role, role_permissions, message, channel, channel_permissions, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
 
         **Example**:
         `[p]logging setchannel member #member-log`
         `[p]logging setchannel role #role-log`
+        `[p]logging setchannel role_permissions #role-permissions-log`
         `[p]logging setchannel message #message-log`
         `[p]logging setchannel channel #channel-log`
+        `[p]logging setchannel channel_permissions #channel-permissions-log`
         `[p]logging setchannel webhook #webhook-log`
         `[p]logging setchannel app #app-log`
         `[p]logging setchannel voice #voice-log`
@@ -92,7 +96,7 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel scheduled_event #scheduled_event-log`
         `[p]logging setchannel stage_instance #stage_instance-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
+        valid_log_types = ["member", "role", "role_permissions", "message", "channel", "channel_permissions", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -103,13 +107,15 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
+        **Valid log types**: member, role, role_permissions, message, channel, channel_permissions, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
 
         **Example**:
         `[p]logging removechannel member`
         `[p]logging removechannel role`
+        `[p]logging removechannel role_permissions`
         `[p]logging removechannel message`
         `[p]logging removechannel channel`
+        `[p]logging removechannel channel_permissions`
         `[p]logging removechannel webhook`
         `[p]logging removechannel app`
         `[p]logging removechannel voice`
@@ -131,7 +137,7 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel scheduled_event`
         `[p]logging removechannel stage_instance`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
+        valid_log_types = ["member", "role", "role_permissions", "message", "channel", "channel_permissions", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -312,7 +318,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "role", "Role Permissions Updated", description, discord.Color.blue())
+            await self.log_event(guild, "role_permissions", "Role Permissions Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
@@ -351,7 +357,6 @@ class AdvancedLogger(commands.Cog):
         if before.overwrites != after.overwrites:
             added_permissions = []
             removed_permissions = []
-
             for target, perms in after.overwrites.items():
                 before_perms = before.overwrites.get(target)
                 if before_perms is None:
@@ -378,7 +383,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "channel", "Channel Permissions Updated", description, discord.Color.blue())
+            await self.log_event(guild, "channel_permissions", "Channel Permissions Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_webhooks_update(self, channel):
@@ -699,8 +704,6 @@ class AdvancedLogger(commands.Cog):
             )
             await self.log_event(guild, "thread", "Thread Renamed", description, discord.Color.blue())
 
-    @commands.Cog.listener()
-    async def on_sticker_create(self, sticker):
         guild = sticker.guild
         description = (
             f"**Sticker Created:** {sticker.name}\n"
