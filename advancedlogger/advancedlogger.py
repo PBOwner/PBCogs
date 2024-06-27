@@ -2,7 +2,6 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime
-import re
 
 class AdvancedLogger(commands.Cog):
     """A cog for advanced logging of various actions in a server"""
@@ -26,7 +25,15 @@ class AdvancedLogger(commands.Cog):
             "timeout_log_channel": None,
             "attachment_log_channel": None,
             "link_log_channel": None,
-            "slash_log_channel": None,  # Add slash log channel
+            "slash_log_channel": None,
+            "guild_log_channel": None,
+            "invite_log_channel": None,
+            "integration_log_channel": None,
+            "typing_log_channel": None,
+            "thread_log_channel": None,
+            "sticker_log_channel": None,
+            "scheduled_event_log_channel": None,
+            "stage_instance_log_channel": None,
         }
         self.config.register_guild(**default_guild)
 
@@ -57,7 +64,7 @@ class AdvancedLogger(commands.Cog):
     async def setchannel(self, ctx, log_type: str, channel: discord.TextChannel):
         """Set the channel for logging events.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
 
         **Example**:
         `[p]logging setchannel member #member-log`
@@ -76,8 +83,16 @@ class AdvancedLogger(commands.Cog):
         `[p]logging setchannel attachment #attachment-log`
         `[p]logging setchannel link #link-log`
         `[p]logging setchannel slash #slash-log`
+        `[p]logging setchannel guild #guild-log`
+        `[p]logging setchannel invite #invite-log`
+        `[p]logging setchannel integration #integration-log`
+        `[p]logging setchannel typing #typing-log`
+        `[p]logging setchannel thread #thread-log`
+        `[p]logging setchannel sticker #sticker-log`
+        `[p]logging setchannel scheduled_event #scheduled_event-log`
+        `[p]logging setchannel stage_instance #stage_instance-log`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -88,7 +103,7 @@ class AdvancedLogger(commands.Cog):
     async def removechannel(self, ctx, log_type: str):
         """Remove the logging channel.
 
-        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash
+        **Valid log types**: member, role, message, channel, webhook, app, voice, reaction, emoji, kick, ban, mute, timeout, attachment, link, slash, guild, invite, integration, typing, thread, sticker, scheduled_event, stage_instance
 
         **Example**:
         `[p]logging removechannel member`
@@ -107,8 +122,16 @@ class AdvancedLogger(commands.Cog):
         `[p]logging removechannel attachment`
         `[p]logging removechannel link`
         `[p]logging removechannel slash`
+        `[p]logging removechannel guild`
+        `[p]logging removechannel invite`
+        `[p]logging removechannel integration`
+        `[p]logging removechannel typing`
+        `[p]logging removechannel thread`
+        `[p]logging removechannel sticker`
+        `[p]logging removechannel scheduled_event`
+        `[p]logging removechannel stage_instance`
         """
-        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash"]
+        valid_log_types = ["member", "role", "message", "channel", "webhook", "app", "voice", "reaction", "emoji", "kick", "ban", "mute", "timeout", "attachment", "link", "slash", "guild", "invite", "integration", "typing", "thread", "sticker", "scheduled_event", "stage_instance"]
         if log_type not in valid_log_types:
             await ctx.send(f"Invalid log type. Valid log types are: {', '.join(valid_log_types)}")
             return
@@ -329,7 +352,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Guild ID:** {guild.id}\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "channel", "Guild Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "guild", "Guild Renamed", description, discord.Color.blue())
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
@@ -339,16 +362,6 @@ class AdvancedLogger(commands.Cog):
                 description = (
                     f"**{member.mention} joined voice channel:** {after.channel.mention}\n"
                     f"**User ID:** {member.id}\n"
-                    f"**Channel ID:** {after.channel.id}\n"
-                    f"**Guild:** {guild.name} ({guild.id})\n"
-                    f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-                )
-                await self.log_event(guild, "voice", "Voice Channel Join", description, discord.Color.green(), member)
-            elif after.channel is None:
-                description = (
-                    f"**{member.mention} left voice channel:** {before.channel.mention}\n"
-                    f"**User ID:** {member.id}\n"
-                    f"**Channel ID:** {before.channel.id}\n"
                     f"**Guild:** {guild.name} ({guild.id})\n"
                     f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
                 )
@@ -510,3 +523,226 @@ class AdvancedLogger(commands.Cog):
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
             await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_invite_create(self, invite):
+        guild = invite.guild
+        description = (
+            f"**Invite Created:**\n"
+            f"**Code:** {invite.code}\n"
+            f"**Channel:** {invite.channel.mention}\n"
+            f"**Inviter:** {invite.inviter.mention}\n"
+            f"**Max Uses:** {invite.max_uses}\n"
+            f"**Max Age:** {invite.max_age}\n"
+            f"**Temporary:** {invite.temporary}\n"
+            f"**Created At:** <t:{int(invite.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "invite", "Invite Created", description, discord.Color.green(), invite.inviter)
+
+    @commands.Cog.listener()
+    async def on_invite_delete(self, invite):
+        guild = invite.guild
+        description = (
+            f"**Invite Deleted:**\n"
+            f"**Code:** {invite.code}\n"
+            f"**Channel:** {invite.channel.mention}\n"
+            f"**Inviter:** {invite.inviter.mention}\n"
+            f"**Max Uses:** {invite.max_uses}\n"
+            f"**Max Age:** {invite.max_age}\n"
+            f"**Temporary:** {invite.temporary}\n"
+            f"**Created At:** <t:{int(invite.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "invite", "Invite Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_integration_create(self, integration):
+        guild = integration.guild
+        description = (
+            f"**Integration Created:**\n"
+            f"**Name:** {integration.name}\n"
+            f"**Type:** {integration.type}\n"
+            f"**Enabled:** {integration.enabled}\n"
+            f"**Account:** {integration.account.name}\n"
+            f"**Created At:** <t:{int(integration.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "integration", "Integration Created", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_integration_update(self, integration):
+        guild = integration.guild
+        description = (
+            f"**Integration Updated:**\n"
+            f"**Name:** {integration.name}\n"
+            f"**Type:** {integration.type}\n"
+            f"**Enabled:** {integration.enabled}\n"
+            f"**Account:** {integration.account.name}\n"
+            f"**Updated At:** <t:{int(integration.updated_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "integration", "Integration Updated", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_integration_delete(self, integration):
+        guild = integration.guild
+        description = (
+            f"**Integration Deleted:**\n"
+            f"**Name:** {integration.name}\n"
+            f"**Type:** {integration.type}\n"
+            f"**Enabled:** {integration.enabled}\n"
+            f"**Account:** {integration.account.name}\n"
+            f"**Deleted At:** <t:{int(integration.deleted_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "integration", "Integration Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_typing(self, channel, user, when):
+        if user.bot:
+            return
+        guild = channel.guild
+        description = (
+            f"**User Typing:** {user.mention}\n"
+            f"**Channel:** {channel.mention}\n"
+            f"**User ID:** {user.id}\n"
+            f"**Timestamp:** <t:{int(when.timestamp())}:F>"
+        )
+        await self.log_event(guild, "typing", "User Typing", description, discord.Color.blue(), user)
+
+    @commands.Cog.listener()
+    async def on_thread_create(self, thread):
+        guild = thread.guild
+        description = (
+            f"**Thread Created:** {thread.mention} ({thread.name})\n"
+            f"**Thread ID:** {thread.id}\n"
+            f"**Parent Channel:** {thread.parent.mention}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(thread.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "thread", "Thread Created", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_thread_delete(self, thread):
+        guild = thread.guild
+        description = (
+            f"**Thread Deleted:** {thread.name}\n"
+            f"**Thread ID:** {thread.id}\n"
+            f"**Parent Channel:** {thread.parent.mention}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "thread", "Thread Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_thread_update(self, before, after):
+        guild = before.guild
+        if before.name != after.name:
+            description = (
+                f"**Thread Renamed:** {before.name} -> {after.name}\n"
+                f"**Thread ID:** {before.id}\n"
+                f"**Parent Channel:** {before.parent.mention}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "thread", "Thread Renamed", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_sticker_create(self, sticker):
+        guild = sticker.guild
+        description = (
+            f"**Sticker Created:** {sticker.name}\n"
+            f"**Sticker ID:** {sticker.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(sticker.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "sticker", "Sticker Created", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_sticker_delete(self, sticker):
+        guild = sticker.guild
+        description = (
+            f"**Sticker Deleted:** {sticker.name}\n"
+            f"**Sticker ID:** {sticker.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "sticker", "Sticker Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_sticker_update(self, before, after):
+        guild = before.guild
+        if before.name != after.name:
+            description = (
+                f"**Sticker Renamed:** {before.name} -> {after.name}\n"
+                f"**Sticker ID:** {before.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "sticker", "Sticker Renamed", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_scheduled_event_create(self, event):
+        guild = event.guild
+        description = (
+            f"**Scheduled Event Created:** {event.name}\n"
+            f"**Event ID:** {event.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(event.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "scheduled_event", "Scheduled Event Created", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_scheduled_event_delete(self, event):
+        guild = event.guild
+        description = (
+            f"**Scheduled Event Deleted:** {event.name}\n"
+            f"**Event ID:** {event.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "scheduled_event", "Scheduled Event Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_scheduled_event_update(self, before, after):
+        guild = before.guild
+        if before.name != after.name:
+            description = (
+                f"**Scheduled Event Renamed:** {before.name} -> {after.name}\n"
+                f"**Event ID:** {before.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            await self.log_event(guild, "scheduled_event", "Scheduled Event Renamed", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_stage_instance_create(self, stage_instance):
+        guild = stage_instance.guild
+        description = (
+            f"**Stage Instance Created:** {stage_instance.channel.mention} ({stage_instance.channel.name})\n"
+            f"**Topic:** {stage_instance.topic}\n"
+            f"**Channel ID:** {stage_instance.channel.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(stage_instance.created_at.timestamp())}:F>"
+        )
+        await self.log_event(guild, "stage_instance", "Stage Instance Created", description, discord.Color.green())
+
+    @commands.Cog.listener()
+    async def on_stage_instance_delete(self, stage_instance):
+        guild = stage_instance.guild
+        description = (
+            f"**Stage Instance Deleted:** {stage_instance.channel.mention} ({stage_instance.channel.name})\n"
+            f"**Topic:** {stage_instance.topic}\n"
+            f"**Channel ID:** {stage_instance.channel.id}\n"
+            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "stage_instance", "Stage Instance Deleted", description, discord.Color.red())
+
+    @commands.Cog.listener()
+    async def on_stage_instance_update(self, before, after):
+        guild = before.guild
+        if before.topic != after.topic:
+            description = (
+                f"**Stage Instance Topic Updated:** {before.topic} -> {after.topic}\n"
+                f"**Channel:** {before.channel.mention} ({before.channel.name})\n"
+                f"**Channel ID:** {before.channel.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "stage_instance", "Stage Instance Topic Updated", description, discord.Color.blue()
