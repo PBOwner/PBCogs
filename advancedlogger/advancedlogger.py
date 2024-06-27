@@ -708,6 +708,7 @@ class AdvancedLogger(commands.Cog):
                 f"**Event ID:** {before.id}\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
             await self.log_event(guild, "scheduled_event", "Scheduled Event Renamed", description, discord.Color.blue())
 
     @commands.Cog.listener()
