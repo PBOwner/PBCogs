@@ -746,4 +746,4 @@ class AdvancedLogger(commands.Cog):
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "stage_instance", "Stage Instance Topic Updated", description, discord.Color.blue()
+            await self.log_event(guild, "stage_instance", "Stage Instance Topic Updated", description, discord.Color.blue())
