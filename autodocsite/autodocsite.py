@@ -30,6 +30,8 @@ class AutoDocs(commands.Cog):
     Document your cogs with ease!
 
     Easily create documentation for any cog in Markdown format.
+
+    Credits to Vrt and Vertyco for making this entire code possible.
     """
     __author__ = "[Rosie](https://github.com/PBOwner/PBCogs)"
     __version__ = "1.0.0"
