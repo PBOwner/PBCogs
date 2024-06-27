@@ -1,10 +1,14 @@
 import discord
-from redbot.core import commands
+from redbot.core import commands, Config
 
 class AffiliatedServers(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.affiliated_servers = []
+        self.config = Config.get_conf(self, identifier=1234567890)
+        default_global = {
+            "affiliated_servers": []
+        }
+        self.config.register_global(**default_global)
 
     @commands.is_owner()
     @commands.group()
@@ -16,17 +20,19 @@ class AffiliatedServers(commands.Cog):
     @affiliate.command()
     async def add(self, ctx, message: str, name: str, invite: str):
         """Add a new affiliated server."""
-        self.affiliated_servers.append({
-            "message": message,
-            "name": name,
-            "invite": invite
-        })
+        async with self.config.affiliated_servers() as affiliated_servers:
+            affiliated_servers.append({
+                "message": message,
+                "name": name,
+                "invite": invite
+            })
         await ctx.send(f"Affiliated server '{name}' added successfully!")
 
     @affiliate.command()
     async def list(self, ctx):
         """List all affiliated servers."""
-        if not self.affiliated_servers:
+        affiliated_servers = await self.config.affiliated_servers()
+        if not affiliated_servers:
             await ctx.send("No affiliated servers found.")
             return
 
@@ -36,7 +42,7 @@ class AffiliatedServers(commands.Cog):
             color=discord.Color.blue()
         )
 
-        for server in self.affiliated_servers:
+        for server in affiliated_servers:
             embed = discord.Embed(
                 title=server["name"],
                 description=server["message"],
@@ -50,20 +56,21 @@ class AffiliatedServers(commands.Cog):
     @affiliate.command()
     async def clear(self, ctx):
         """Clear all affiliated servers."""
-        self.affiliated_servers.clear()
+        await self.config.affiliated_servers.set([])
         await ctx.send("All affiliated servers have been cleared.")
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         """Event listener that triggers when a new member joins a server."""
-        if not self.affiliated_servers:
+        affiliated_servers = await self.config.affiliated_servers()
+        if not affiliated_servers:
             return  # No affiliated servers to send
 
         initial_message = "The servers listed below are affiliated with FuturoBot"
 
         try:
             await member.send(initial_message)
-            for server in self.affiliated_servers:
+            for server in affiliated_servers:
                 embed = discord.Embed(
                     title=server["name"],
                     description=server["message"],
@@ -73,6 +80,3 @@ class AffiliatedServers(commands.Cog):
                 await member.send(embed=embed)
         except discord.Forbidden:
             print(f"Could not send DM to the new member: {member.name}")
-
-def setup(bot):
-    bot.add_cog(AffiliatedServers(bot))
