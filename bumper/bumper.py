@@ -32,14 +32,17 @@ class Bumper(commands.Cog):
             "bump_count": 0,
             "bump_log_channel": None,
             "config_log_channel": None,
-            "premium_expiry": None
+            "premium_expiry": None,
+            "image_url": None,
+            "thumbnail_url": None
         }
 
         default_global = {
             "report_channel": None,
             "premium_codes": {},
             "blacklisted_guilds": [],
-            "trusted_users": []
+            "trusted_users": [],
+            "support_server_invite": None  # Add support server invite link
         }
 
         self.config.register_guild(**default_guild)
@@ -86,6 +89,18 @@ class Bumper(commands.Cog):
         await self.config.guild(ctx.guild).embed_color.set(color.value)
         await ctx.send(embed=discord.Embed(description=f"Embed color set to: {color}", color=discord.Color.green()))
 
+    @bumpset.command()
+    async def image(self, ctx: commands.Context, image_url: str):
+        """Set the image URL for the bump embed."""
+        await self.config.guild(ctx.guild).image_url.set(image_url)
+        await ctx.send(embed=discord.Embed(description="Image URL set.", color=discord.Color.green()))
+
+    @bumpset.command()
+    async def thumbnail(self, ctx: commands.Context, thumbnail_url: str):
+        """Set the thumbnail URL for the bump embed."""
+        await self.config.guild(ctx.guild).thumbnail_url.set(thumbnail_url)
+        await ctx.send(embed=discord.Embed(description="Thumbnail URL set.", color=discord.Color.green()))
+
     @commands.group()
     @commands.is_owner()
     async def bumpowner(self, ctx: commands.Context):
@@ -109,6 +124,12 @@ class Bumper(commands.Cog):
         """Set the channel where configuration logs are sent."""
         await self.config.guild(ctx.guild).config_log_channel.set(channel.id)
         await ctx.send(embed=discord.Embed(description=f"Configuration log channel set to: {channel.mention}", color=discord.Color.green()))
+
+    @bumpowner.command()
+    async def support_server_invite(self, ctx: commands.Context, invite: str):
+        """Set the support server invite link."""
+        await self.config.support_server_invite.set(invite)
+        await ctx.send(embed=discord.Embed(description=f"Support server invite link set to: {invite}", color=discord.Color.green()))
 
     @commands.command()
     async def codegen(self, ctx: commands.Context, user_id: int, duration: str):
@@ -280,6 +301,17 @@ class Bumper(commands.Cog):
         )
         embed.add_field(name="Invite Link", value=guild_data["invite"], inline=False)
 
+        if guild_data["image_url"]:
+            embed.set_image(url=guild_data["image_url"])
+
+        if guild_data["thumbnail_url"]:
+            embed.set_thumbnail(url=guild_data["thumbnail_url"])
+
+        join_button = discord.ui.Button(label="Join Server", style=discord.ButtonStyle.red, url=guild_data["invite"])
+
+        support_server_invite = await self.config.support_server_invite()
+        support_button = discord.ui.Button(label="Join Support Server", style=discord.ButtonStyle.green, url=support_server_invite)
+
         report_button = discord.ui.Button(label="Report", style=discord.ButtonStyle.danger)
 
         async def report_callback(interaction: discord.Interaction):
@@ -303,6 +335,8 @@ class Bumper(commands.Cog):
         report_button.callback = report_callback
 
         view = discord.ui.View()
+        view.add_item(join_button)
+        view.add_item(support_button)
         view.add_item(report_button)
 
         log.info(f"Sending bump from {guild.name} to all configured servers.")
