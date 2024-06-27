@@ -171,6 +171,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/Autoreact.html</loc>
+         <lastmod>2024-06-27</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/Availability.html</loc>
          <lastmod>2024-06-27</lastmod>
          <changefreq>daily</changefreq>
