@@ -6,5 +6,5 @@ nav:
 site_name: DiscordSearch's Documentation
 site_url: https://docs.prismbot.icu/DiscordSearch/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

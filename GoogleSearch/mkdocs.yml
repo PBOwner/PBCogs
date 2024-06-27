@@ -6,5 +6,5 @@ nav:
 site_name: GoogleSearch's Documentation
 site_url: https://docs.prismbot.icu/GoogleSearch/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false
