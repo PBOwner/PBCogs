@@ -48,7 +48,7 @@ class AutoDocs(commands.Cog):
         super().__init__(*args, **kwargs)
         self.bot = bot
         self.config = {
-            "custom_domain": "your_default_domain_here"  # Add default value or load from a config file
+            "custom_domain": "docs.prismbot.icu"  # Add default value or load from a config file
         }
         self.bot.add_listener(self.on_cog_load, "on_cog_load")
         self.bot.add_listener(self.on_cog_unload, "on_cog_unload")
