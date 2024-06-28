@@ -1,11 +1,11 @@
 import discord
 from discord.ext import commands
-from redbot.core import commands as red_commands
+from redbot.core import commands
 from PIL import Image, ImageFilter, ImageOps, ImageEnhance
 import aiohttp
 import io
 
-class ImageManipulation(red_commands.Cog):
+class ImageManipulation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -23,7 +23,7 @@ class ImageManipulation(red_commands.Cog):
             image_binary.seek(0)
             await ctx.send(file=discord.File(fp=image_binary, filename=filename))
 
-    @red_commands.command()
+    @commands.command()
     async def resize(self, ctx, width: int, height: int):
         """Resize an image to the specified width and height."""
         img = await self.get_image(ctx)
@@ -31,7 +31,7 @@ class ImageManipulation(red_commands.Cog):
             img_resized = img.resize((width, height))
             await self.send_image(ctx, img_resized, 'resized.png')
 
-    @red_commands.command()
+    @commands.command()
     async def rotate(self, ctx, degrees: int):
         """Rotate an image by the specified number of degrees."""
         img = await self.get_image(ctx)
@@ -39,7 +39,7 @@ class ImageManipulation(red_commands.Cog):
             img_rotated = img.rotate(degrees)
             await self.send_image(ctx, img_rotated, 'rotated.png')
 
-    @red_commands.command()
+    @commands.command()
     async def flip(self, ctx, direction: str):
         """Flip an image. Available directions: horizontal, vertical."""
         img = await self.get_image(ctx)
@@ -53,7 +53,7 @@ class ImageManipulation(red_commands.Cog):
                 return
             await self.send_image(ctx, img_flipped, 'flipped.png')
 
-    @red_commands.command()
+    @commands.command()
     async def grayscale(self, ctx):
         """Convert an image to grayscale."""
         img = await self.get_image(ctx)
@@ -61,7 +61,7 @@ class ImageManipulation(red_commands.Cog):
             img_gray = ImageOps.grayscale(img)
             await self.send_image(ctx, img_gray, 'grayscale.png')
 
-    @red_commands.command()
+    @commands.command()
     async def invert(self, ctx):
         """Invert the colors of an image."""
         img = await self.get_image(ctx)
@@ -69,7 +69,7 @@ class ImageManipulation(red_commands.Cog):
             img_inverted = ImageOps.invert(img.convert("RGB"))
             await self.send_image(ctx, img_inverted, 'inverted.png')
 
-    @red_commands.command()
+    @commands.command()
     async def contrast(self, ctx, factor: float):
         """Adjust the contrast of an image. Factor > 1 increases contrast, < 1 decreases."""
         img = await self.get_image(ctx)
@@ -78,7 +78,7 @@ class ImageManipulation(red_commands.Cog):
             img_contrast = enhancer.enhance(factor)
             await self.send_image(ctx, img_contrast, 'contrast.png')
 
-    @red_commands.command()
+    @commands.command()
     async def brightness(self, ctx, factor: float):
         """Adjust the brightness of an image. Factor > 1 increases brightness, < 1 decreases."""
         img = await self.get_image(ctx)
@@ -87,7 +87,7 @@ class ImageManipulation(red_commands.Cog):
             img_brightness = enhancer.enhance(factor)
             await self.send_image(ctx, img_brightness, 'brightness.png')
 
-    @red_commands.command()
+    @commands.command()
     async def blur(self, ctx, radius: int):
         """Apply a blur effect to an image."""
         img = await self.get_image(ctx)
@@ -95,7 +95,7 @@ class ImageManipulation(red_commands.Cog):
             img_blurred = img.filter(ImageFilter.GaussianBlur(radius))
             await self.send_image(ctx, img_blurred, 'blurred.png')
 
-    @red_commands.command()
+    @commands.command()
     async def sharpen(self, ctx, factor: float):
         """Sharpen an image. Factor > 1 increases sharpness, < 1 decreases."""
         img = await self.get_image(ctx)
@@ -104,8 +104,8 @@ class ImageManipulation(red_commands.Cog):
             img_sharpen = enhancer.enhance(factor)
             await self.send_image(ctx, img_sharpen, 'sharpen.png')
 
-    @red_commands.command()
-    async def filter(self, ctx, filter_name: str):
+    @commands.command()
+    async def imfilter(self, ctx, filter_name: str):
         """Apply a filter to an image. Available filters: BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EMBOSS, SHARPEN"""
         img = await self.get_image(ctx)
         if img:
