@@ -194,10 +194,10 @@ class AdvancedInviteTracker(commands.Cog):
             color=discord.Color.blue(),
             timestamp=datetime.utcnow()
         )
-        embed.set_thumbnail(url=guild.icon)
+        embed.set_thumbnail(url=guild.icon.url if guild.icon else None)
         embed.add_field(name="ID", value=guild.id)
         embed.add_field(name="Owner", value=guild.owner.mention)
-        embed.add_field(name="Region", value=guild.region)
+        embed.add_field(name="Region", value=guild.rtc_region or "Automatic")
         embed.add_field(name="Members", value=guild.member_count)
         embed.add_field(name="Roles", value=len(guild.roles))
         embed.add_field(name="Channels", value=len(guild.channels))
@@ -242,7 +242,7 @@ class AdvancedInviteTracker(commands.Cog):
             color=member.color,
             timestamp=datetime.utcnow()
         )
-        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_thumbnail(url=member.avatar.url if member.avatar else None)
         embed.add_field(name="ID", value=member.id)
         embed.add_field(name="Joined At", value=member.joined_at.strftime("%Y-%m-%d %H:%M:%S"))
         embed.add_field(name="Created At", value=member.created_at.strftime("%Y-%m-%d %H:%M:%S"))
