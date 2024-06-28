@@ -197,7 +197,6 @@ class AdvancedInviteTracker(commands.Cog):
         embed.set_thumbnail(url=guild.icon.url if guild.icon else None)
         embed.add_field(name="ID", value=guild.id)
         embed.add_field(name="Owner", value=guild.owner.mention)
-        embed.add_field(name="Region", value=guild.rtc_region or "Automatic")
         embed.add_field(name="Members", value=guild.member_count)
         embed.add_field(name="Roles", value=len(guild.roles))
         embed.add_field(name="Channels", value=len(guild.channels))
