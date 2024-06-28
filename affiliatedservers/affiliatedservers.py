@@ -40,6 +40,8 @@ class AffiliatedServers(commands.Cog):
             return
 
         for server in affiliated_servers:
+            if "id" not in server:
+                continue
             embed = discord.Embed(
                 title=server["name"],
                 description=server["message"],
@@ -53,7 +55,7 @@ class AffiliatedServers(commands.Cog):
     async def view(self, ctx, affiliate_id: str):
         """View a specific affiliated server by ID."""
         affiliated_servers = await self.config.affiliated_servers()
-        server = next((s for s in affiliated_servers if s["id"] == affiliate_id), None)
+        server = next((s for s in affiliated_servers if s.get("id") == affiliate_id), None)
         if not server:
             await ctx.send(f"No affiliated server found with ID {affiliate_id}.")
             return
@@ -71,7 +73,7 @@ class AffiliatedServers(commands.Cog):
     async def delete(self, ctx, affiliate_id: str):
         """Delete an affiliated server by ID."""
         async with self.config.affiliated_servers() as affiliated_servers:
-            server = next((s for s in affiliated_servers if s["id"] == affiliate_id), None)
+            server = next((s for s in affiliated_servers if s.get("id") == affiliate_id), None)
             if not server:
                 await ctx.send(f"No affiliated server found with ID {affiliate_id}.")
                 return
@@ -82,7 +84,7 @@ class AffiliatedServers(commands.Cog):
     async def edit(self, ctx, affiliate_id: str, field: str, value: str):
         """Edit a specific field of an affiliated server by ID."""
         async with self.config.affiliated_servers() as affiliated_servers:
-            server = next((s for s in affiliated_servers if s["id"] == affiliate_id), None)
+            server = next((s for s in affiliated_servers if s.get("id") == affiliate_id), None)
             if not server:
                 await ctx.send(f"No affiliated server found with ID {affiliate_id}.")
                 return
@@ -96,7 +98,7 @@ class AffiliatedServers(commands.Cog):
     async def move(self, ctx, affiliate_id: str, position: int):
         """Move an affiliated server to a different position."""
         async with self.config.affiliated_servers() as affiliated_servers:
-            server_index = next((i for i, s in enumerate(affiliated_servers) if s["id"] == affiliate_id), None)
+            server_index = next((i for i, s in enumerate(affiliated_servers) if s.get("id") == affiliate_id), None)
             if server_index is None:
                 await ctx.send(f"No affiliated server found with ID {affiliate_id}.")
                 return
@@ -128,6 +130,8 @@ class AffiliatedServers(commands.Cog):
         try:
             await member.send(initial_message)
             for server in affiliated_servers:
+                if "id" not in server:
+                    continue
                 embed = discord.Embed(
                     title=server["name"],
                     description=server["message"],
