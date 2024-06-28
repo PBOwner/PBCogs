@@ -1,3 +1,4 @@
+import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime
