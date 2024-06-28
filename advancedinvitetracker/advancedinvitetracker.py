@@ -227,7 +227,7 @@ class AdvancedInviteTracker(commands.Cog):
         """Get help and support from the Invite Tracker team."""
         embed = discord.Embed(
             title="Invite Tracker Support",
-            description="For support, please visit our [support server](https://discord.gg/support).",
+            description="For support, please visit our [support server](https://discord.gg/DmGBCrRtQz).",
             color=discord.Color.blue(),
             timestamp=datetime.utcnow()
         )
