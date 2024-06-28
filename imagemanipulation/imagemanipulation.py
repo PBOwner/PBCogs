@@ -1,4 +1,5 @@
 import discord
+from redbot.core import commands
 from discord.ext import commands
 from PIL import Image, ImageFilter, ImageOps, ImageEnhance
 import aiohttp
