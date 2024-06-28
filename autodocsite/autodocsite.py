@@ -306,6 +306,13 @@ class AutoDocs(commands.Cog):
             color=random.randint(0, 0xFFFFFF)
         )
 
+    # Add a link to the relative docs
+    cog_name = command.cog.qualified_name
+    site_url = self.config.get("site_url", f"https://{self.config['custom_domain']}")
+    embed.add_field(name="More Info", value=f"[Documentation]({site_url}/{cog_name}.html#{command_name.replace(' ', '-')})")
+
+    await ctx.send(embed=embed)
+
         # Add a link to the relative docs
         cog_name = command.cog.qualified_name
         embed.add_field(name="More Info", value=f"[Documentation](https://{self.config['custom_domain']}/{cog_name}.html#{command_name.replace(' ', '-')})")
