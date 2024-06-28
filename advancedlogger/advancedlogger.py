@@ -234,126 +234,113 @@ class AdvancedLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_ban(self, guild, user):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.ban, limit=1).get()
         description = (
-            f"**Member Banned:** {user.mention} ({user})\n"
-            f"**User ID:** {user.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Banned By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "ban", "Member Banned", description, discord.Color.red(), user)
+        await self.log_event(guild, "ban", "User Banned", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_member_unban(self, guild, user):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.unban, limit=1).get()
         description = (
-            f"**Member Unbanned:** {user.mention} ({user})\n"
-            f"**User ID:** {user.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Unbanned By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "ban", "Member Unbanned", description, discord.Color.green(), user)
+        await self.log_event(guild, "ban", "User Unbanned", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
-    async def on_member_update(self, before, after):
-        if before.roles != after.roles:
-            guild = before.guild
-            added_roles = [role for role in after.roles if role not in before.roles]
-            removed_roles = [role for role in before.roles if role not in after.roles]
-            description = f"**Roles Updated for {before.mention} ({before}):**\n"
-            if added_roles:
-                description += f"**Roles Added:** {', '.join(role.mention for role in added_roles)}\n"
-            if removed_roles:
-                description += f"**Roles Removed:** {', '.join(role.mention for role in removed_roles)}\n"
-            description += (
-                f"**User ID:** {before.id}\n"
-                f"**Guild:** {guild.name} ({guild.id})\n"
-                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-            )
-            await self.log_event(guild, "role", "Roles Updated", description, discord.Color.blue(), before)
-
-    @commands.Cog.listener()
-    async def on_guild_role_create(self, role):
-        guild = role.guild
+    async def on_member_kick(self, guild, user):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.kick, limit=1).get()
         description = (
-            f"**Role Created:** {role.mention} ({role.name})\n"
-            f"**Role ID:** {role.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Kicked By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "role", "Role Created", description, discord.Color.green())
+        await self.log_event(guild, "kick", "User Kicked", description, discord.Color.orange(), entry.user)
 
     @commands.Cog.listener()
-    async def on_guild_role_delete(self, role):
-        guild = role.guild
+    async def on_member_warn(self, guild, user):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.warn, limit=1).get()
         description = (
-            f"**Role Deleted:** {role.name}\n"
-            f"**Role ID:** {role.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Warned By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "role", "Role Deleted", description, discord.Color.red())
+        await self.log_event(guild, "warn", "User Warned", description, discord.Color.yellow(), entry.user)
 
     @commands.Cog.listener()
-    async def on_guild_role_update(self, before, after):
-        guild = before.guild
-        if before.name != after.name:
+    async def on_member_mute(self, guild, user, duration):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.mute, limit=1).get()
+        description = (
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Muted By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Duration:** {duration}\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "mute", "User Muted", description, discord.Color.red(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_member_unmute(self, guild, user):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.unmute, limit=1).get()
+        description = (
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Unmuted By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "unmute", "User Unmuted", description, discord.Color.green(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_member_timeout(self, guild, user, duration):
+        entry = await guild.audit_logs(action=discord.AuditLogAction.timeout, limit=1).get()
+        description = (
+            f"**User:** {user.mention} ({user.id})\n"
+            f"**Timed Out By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Duration:** {duration}\n"
+            f"**Reason:** {entry.reason if entry.reason else 'No reason provided'}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "timeout", "User Timed Out", description, discord.Color.red(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_message_attachment(self, message):
+        if message.attachments:
+            guild = message.guild
+            for attachment in message.attachments:
+                description = (
+                    f"**Attachment Added:**\n"
+                    f"**User:** {message.author.mention} ({message.author.id})\n"
+                    f"**Channel:** {message.channel.mention}\n"
+                    f"**Attachment URL:** [Link]({attachment.url})\n"
+                    f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+                )
+                await self.log_event(guild, "attachment", "Attachment Added", description, discord.Color.blue(), message.author)
+
+    @commands.Cog.listener()
+    async def on_message_link(self, message):
+        if any(word.startswith("http") for word in message.content.split()):
+            guild = message.guild
             description = (
-                f"**Role Renamed:** {before.name} -> {after.name}\n"
-                f"**Role ID:** {before.id}\n"
-                f"**Guild:** {guild.name} ({guild.id})\n"
+                f"**Link Added:**\n"
+                f"**User:** {message.author.mention} ({message.author.id})\n"
+                f"**Channel:** {message.channel.mention}\n"
+                f"**Message Content:** {message.content}\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "role", "Role Renamed", description, discord.Color.blue())
-
-        if before.permissions != after.permissions:
-            added_permissions = [perm for perm, value in after.permissions if value and not getattr(before.permissions, perm)]
-            removed_permissions = [perm for perm, value in before.permissions if value and not getattr(after.permissions, perm)]
-
-            description = f"**Permissions Updated for Role {before.name}:**\n"
-            if added_permissions:
-                description += f"**Permissions Added:** {', '.join(added_permissions)}\n"
-            if removed_permissions:
-                description += f"**Permissions Removed:** {', '.join(removed_permissions)}\n"
-            description += (
-                f"**Role ID:** {before.id}\n"
-                f"**Guild:** {guild.name} ({guild.id})\n"
-                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-            )
-            await self.log_event(guild, "role_permissions", "Role Permissions Updated", description, discord.Color.blue())
+            await self.log_event(guild, "link", "Link Added", description, discord.Color.blue(), message.author)
 
     @commands.Cog.listener()
-    async def on_guild_channel_create(self, channel):
+    async def on_channel_permissions_update(self, channel, before, after):
         guild = channel.guild
-        description = (
-            f"**Channel Created:** {channel.mention} ({channel.name})\n"
-            f"**Channel ID:** {channel.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "channel", "Channel Created", description, discord.Color.green())
-
-    @commands.Cog.listener()
-    async def on_guild_channel_delete(self, channel):
-        guild = channel.guild
-        description = (
-            f"**Channel Deleted:** {channel.name}\n"
-            f"**Channel ID:** {channel.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "channel", "Channel Deleted", description, discord.Color.red())
-
-    @commands.Cog.listener()
-    async def on_guild_channel_update(self, before, after):
-        guild = before.guild
-        if before.name != after.name:
-            description = (
-                f"**Channel Renamed:** {before.name} -> {after.name}\n"
-                f"**Channel ID:** {before.id}\n"
-                f"**Guild:** {guild.name} ({guild.id})\n"
-                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-            )
-            await self.log_event(guild, "channel", "Channel Renamed", description, discord.Color.blue())
-
         if before.overwrites != after.overwrites:
             added_permissions = []
             removed_permissions = []
@@ -386,26 +373,124 @@ class AdvancedLogger(commands.Cog):
             await self.log_event(guild, "channel_permissions", "Channel Permissions Updated", description, discord.Color.blue())
 
     @commands.Cog.listener()
-    async def on_webhooks_update(self, channel):
-        guild = channel.guild
-        description = (
-            f"**Webhooks Updated in Channel:** {channel.mention} ({channel.name})\n"
-            f"**Channel ID:** {channel.id}\n"
-            f"**Guild:** {guild.name} ({guild.id})\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "webhook", "Webhooks Updated", description, discord.Color.blue())
+    async def on_role_permissions_update(self, role, before, after):
+        guild = role.guild
+        if before.permissions != after.permissions:
+            added_permissions = [perm for perm, value in after.permissions if value and not getattr(before.permissions, perm)]
+            removed_permissions = [perm for perm, value in before.permissions if value and not getattr(after.permissions, perm)]
 
-    @commands.Cog.listener()
-    async def on_guild_update(self, before, after):
-        if before.name != after.name:
-            guild = before
-            description = (
-                f"**Guild Renamed:** {before.name} -> {after.name}\n"
-                f"**Guild ID:** {guild.id}\n"
+            description = f"**Permissions Updated for Role {before.name}:**\n"
+            if added_permissions:
+                description += f"**Permissions Added:** {', '.join(added_permissions)}\n"
+            if removed_permissions:
+                description += f"**Permissions Removed:** {', '.join(removed_permissions)}\n"
+            description += (
+                f"**Role ID:** {before.id}\n"
+                f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "guild", "Guild Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "role_permissions", "Role Permissions Updated", description, discord.Color.blue())
+
+    @commands.Cog.listener()
+    async def on_role_create(self, role):
+        guild = role.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.role_create, limit=1).get()
+        description = (
+            f"**Role Created:** {role.mention} ({role.name})\n"
+            f"**Role ID:** {role.id}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "role", "Role Created", description, discord.Color.green(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_role_delete(self, role):
+        guild = role.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.role_delete, limit=1).get()
+        description = (
+            f"**Role Deleted:** {role.name}\n"
+            f"**Role ID:** {role.id}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "role", "Role Deleted", description, discord.Color.red(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_role_update(self, before, after):
+        guild = before.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.role_update, limit=1).get()
+        if before.name != after.name:
+            description = (
+                f"**Role Renamed:** {before.name} -> {after.name}\n"
+                f"**Role ID:** {before.id}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
+                f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+            )
+            await self.log_event(guild, "role", "Role Renamed", description, discord.Color.blue(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_webhook_create(self, webhook):
+        guild = webhook.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.webhook_create, limit=1).get()
+        description = (
+            f"**Webhook Created:** {webhook.name}\n"
+            f"**Webhook ID:** {webhook.id}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Channel:** {webhook.channel.mention}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "webhook", "Webhook Created", description, discord.Color.green(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_webhook_update(self, webhook):
+        guild = webhook.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.webhook_update, limit=1).get()
+        description = (
+            f"**Webhook Updated:** {webhook.name}\n"
+            f"**Webhook ID:** {webhook.id}\n"
+            f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Channel:** {webhook.channel.mention}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "webhook", "Webhook Updated", description, discord.Color.blue(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_webhook_delete(self, webhook):
+        guild = webhook.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.webhook_delete, limit=1).get()
+        description = (
+            f"**Webhook Deleted:** {webhook.name}\n"
+            f"**Webhook ID:** {webhook.id}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Channel:** {webhook.channel.mention}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "webhook", "Webhook Deleted", description, discord.Color.red(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_app_add(self, integration):
+        guild = integration.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.integration_create, limit=1).get()
+        description = (
+            f"**App Invited:** {integration.name}\n"
+            f"**App ID:** {integration.id}\n"
+            f"**Invited By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Permissions Level:** {integration.permissions}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "app", "App Invited", description, discord.Color.green(), entry.user)
+
+    @commands.Cog.listener()
+    async def on_app_remove(self, integration):
+        guild = integration.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.integration_delete, limit=1).get()
+        description = (
+            f"**App Removed:** {integration.name}\n"
+            f"**App ID:** {integration.id}\n"
+            f"**Removed By:** {entry.user.mention} ({entry.user.id})\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(guild, "app", "App Removed", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
@@ -559,100 +644,114 @@ class AdvancedLogger(commands.Cog):
         updated_emojis = {emoji for emoji in before_emojis & after_emojis if emoji.name != next(e.name for e in after if e.id == emoji.id)}
 
         for emoji in added_emojis:
+            entry = await guild.audit_logs(action=discord.AuditLogAction.emoji_create, limit=1).get()
             description = (
                 f"**Emoji Added:** {emoji} ({emoji.name})\n"
                 f"**Emoji ID:** {emoji.id}\n"
+                f"**Added By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "emoji", "Emoji Added", description, discord.Color.green())
+            await self.log_event(guild, "emoji", "Emoji Added", description, discord.Color.green(), entry.user)
 
         for emoji in removed_emojis:
+            entry = await guild.audit_logs(action=discord.AuditLogAction.emoji_delete, limit=1).get()
             description = (
                 f"**Emoji Removed:** {emoji} ({emoji.name})\n"
                 f"**Emoji ID:** {emoji.id}\n"
+                f"**Removed By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "emoji", "Emoji Removed", description, discord.Color.red())
+            await self.log_event(guild, "emoji", "Emoji Removed", description, discord.Color.red(), entry.user)
 
         for emoji in updated_emojis:
+            entry = await guild.audit_logs(action=discord.AuditLogAction.emoji_update, limit=1).get()
             description = (
                 f"**Emoji Updated:** {emoji} ({emoji.name})\n"
                 f"**Emoji ID:** {emoji.id}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue())
+            await self.log_event(guild, "emoji", "Emoji Updated", description, discord.Color.blue(), entry.user)
 
     @commands.Cog.listener()
     async def on_invite_create(self, invite):
         guild = invite.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.invite_create, limit=1).get()
         description = (
             f"**Invite Created:**\n"
             f"**Code:** {invite.code}\n"
             f"**Channel:** {invite.channel.mention}\n"
-            f"**Inviter:** {invite.inviter.mention}\n"
+            f"**Inviter:** {entry.user.mention} ({entry.user.id})\n"
             f"**Max Uses:** {invite.max_uses}\n"
             f"**Max Age:** {invite.max_age}\n"
             f"**Temporary:** {invite.temporary}\n"
             f"**Created At:** <t:{int(invite.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "invite", "Invite Created", description, discord.Color.green(), invite.inviter)
+        await self.log_event(guild, "invite", "Invite Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_invite_delete(self, invite):
         guild = invite.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.invite_delete, limit=1).get()
         description = (
             f"**Invite Deleted:**\n"
             f"**Code:** {invite.code}\n"
             f"**Channel:** {invite.channel.mention}\n"
-            f"**Inviter:** {invite.inviter.mention}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Max Uses:** {invite.max_uses}\n"
             f"**Max Age:** {invite.max_age}\n"
             f"**Temporary:** {invite.temporary}\n"
             f"**Created At:** <t:{int(invite.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "invite", "Invite Deleted", description, discord.Color.red())
+        await self.log_event(guild, "invite", "Invite Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_integration_create(self, integration):
         guild = integration.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.integration_create, limit=1).get()
         description = (
             f"**Integration Created:**\n"
             f"**Name:** {integration.name}\n"
             f"**Type:** {integration.type}\n"
             f"**Enabled:** {integration.enabled}\n"
             f"**Account:** {integration.account.name}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Created At:** <t:{int(integration.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "integration", "Integration Created", description, discord.Color.green())
+        await self.log_event(guild, "integration", "Integration Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_integration_update(self, integration):
         guild = integration.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.integration_update, limit=1).get()
         description = (
             f"**Integration Updated:**\n"
             f"**Name:** {integration.name}\n"
             f"**Type:** {integration.type}\n"
             f"**Enabled:** {integration.enabled}\n"
             f"**Account:** {integration.account.name}\n"
+            f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Updated At:** <t:{int(integration.updated_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "integration", "Integration Updated", description, discord.Color.blue())
+        await self.log_event(guild, "integration", "Integration Updated", description, discord.Color.blue(), entry.user)
 
     @commands.Cog.listener()
     async def on_integration_delete(self, integration):
         guild = integration.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.integration_delete, limit=1).get()
         description = (
             f"**Integration Deleted:**\n"
             f"**Name:** {integration.name}\n"
             f"**Type:** {integration.type}\n"
             f"**Enabled:** {integration.enabled}\n"
             f"**Account:** {integration.account.name}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Deleted At:** <t:{int(integration.deleted_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "integration", "Integration Deleted", description, discord.Color.red())
+        await self.log_event(guild, "integration", "Integration Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_typing(self, channel, user, when):
@@ -670,139 +769,165 @@ class AdvancedLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_thread_create(self, thread):
         guild = thread.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.thread_create, limit=1).get()
         description = (
             f"**Thread Created:** {thread.mention} ({thread.name})\n"
             f"**Thread ID:** {thread.id}\n"
             f"**Parent Channel:** {thread.parent.mention}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(thread.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "thread", "Thread Created", description, discord.Color.green())
+        await self.log_event(guild, "thread", "Thread Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_thread_delete(self, thread):
         guild = thread.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.thread_delete, limit=1).get()
         description = (
             f"**Thread Deleted:** {thread.name}\n"
             f"**Thread ID:** {thread.id}\n"
             f"**Parent Channel:** {thread.parent.mention}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "thread", "Thread Deleted", description, discord.Color.red())
+        await self.log_event(guild, "thread", "Thread Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_thread_update(self, before, after):
         guild = before.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.thread_update, limit=1).get()
         if before.name != after.name:
             description = (
                 f"**Thread Renamed:** {before.name} -> {after.name}\n"
                 f"**Thread ID:** {before.id}\n"
                 f"**Parent Channel:** {before.parent.mention}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "thread", "Thread Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "thread", "Thread Renamed", description, discord.Color.blue(), entry.user)
 
+    @commands.Cog.listener()
+    async def on_sticker_create(self, sticker):
         guild = sticker.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.sticker_create, limit=1).get()
         description = (
             f"**Sticker Created:** {sticker.name}\n"
             f"**Sticker ID:** {sticker.id}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(sticker.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "sticker", "Sticker Created", description, discord.Color.green())
+        await self.log_event(guild, "sticker", "Sticker Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_sticker_delete(self, sticker):
         guild = sticker.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.sticker_delete, limit=1).get()
         description = (
             f"**Sticker Deleted:** {sticker.name}\n"
             f"**Sticker ID:** {sticker.id}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "sticker", "Sticker Deleted", description, discord.Color.red())
+        await self.log_event(guild, "sticker", "Sticker Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_sticker_update(self, before, after):
         guild = before.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.sticker_update, limit=1).get()
         if before.name != after.name:
             description = (
                 f"**Sticker Renamed:** {before.name} -> {after.name}\n"
                 f"**Sticker ID:** {before.id}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "sticker", "Sticker Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "sticker", "Sticker Renamed", description, discord.Color.blue(), entry.user)
 
     @commands.Cog.listener()
     async def on_scheduled_event_create(self, event):
         guild = event.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.scheduled_event_create, limit=1).get()
         description = (
             f"**Scheduled Event Created:** {event.name}\n"
             f"**Event ID:** {event.id}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(event.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "scheduled_event", "Scheduled Event Created", description, discord.Color.green())
+        await self.log_event(guild, "scheduled_event", "Scheduled Event Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_scheduled_event_delete(self, event):
         guild = event.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.scheduled_event_delete, limit=1).get()
         description = (
             f"**Scheduled Event Deleted:** {event.name}\n"
             f"**Event ID:** {event.id}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "scheduled_event", "Scheduled Event Deleted", description, discord.Color.red())
+        await self.log_event(guild, "scheduled_event", "Scheduled Event Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_scheduled_event_update(self, before, after):
         guild = before.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.scheduled_event_update, limit=1).get()
         if before.name != after.name:
             description = (
                 f"**Scheduled Event Renamed:** {before.name} -> {after.name}\n"
                 f"**Event ID:** {before.id}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "scheduled_event", "Scheduled Event Renamed", description, discord.Color.blue())
+            await self.log_event(guild, "scheduled_event", "Scheduled Event Renamed", description, discord.Color.blue(), entry.user)
 
     @commands.Cog.listener()
     async def on_stage_instance_create(self, stage_instance):
         guild = stage_instance.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.stage_instance_create, limit=1).get()
         description = (
             f"**Stage Instance Created:** {stage_instance.channel.mention} ({stage_instance.channel.name})\n"
             f"**Topic:** {stage_instance.topic}\n"
             f"**Channel ID:** {stage_instance.channel.id}\n"
+            f"**Created By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(stage_instance.created_at.timestamp())}:F>"
         )
-        await self.log_event(guild, "stage_instance", "Stage Instance Created", description, discord.Color.green())
+        await self.log_event(guild, "stage_instance", "Stage Instance Created", description, discord.Color.green(), entry.user)
 
     @commands.Cog.listener()
     async def on_stage_instance_delete(self, stage_instance):
         guild = stage_instance.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.stage_instance_delete, limit=1).get()
         description = (
             f"**Stage Instance Deleted:** {stage_instance.channel.mention} ({stage_instance.channel.name})\n"
             f"**Topic:** {stage_instance.topic}\n"
             f"**Channel ID:** {stage_instance.channel.id}\n"
+            f"**Deleted By:** {entry.user.mention} ({entry.user.id})\n"
             f"**Guild:** {guild.name} ({guild.id})\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(guild, "stage_instance", "Stage Instance Deleted", description, discord.Color.red())
+        await self.log_event(guild, "stage_instance", "Stage Instance Deleted", description, discord.Color.red(), entry.user)
 
     @commands.Cog.listener()
     async def on_stage_instance_update(self, before, after):
         guild = before.guild
+        entry = await guild.audit_logs(action=discord.AuditLogAction.stage_instance_update, limit=1).get()
         if before.topic != after.topic:
             description = (
                 f"**Stage Instance Topic Updated:** {before.topic} -> {after.topic}\n"
                 f"**Channel:** {before.channel.mention} ({before.channel.name})\n"
                 f"**Channel ID:** {before.channel.id}\n"
+                f"**Updated By:** {entry.user.mention} ({entry.user.id})\n"
                 f"**Guild:** {guild.name} ({guild.id})\n"
                 f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
             )
-            await self.log_event(guild, "stage_instance", "Stage Instance Topic Updated", description, discord.Color.blue())
+            await self.log_event(guild, "stage_instance", "Stage Instance Topic Updated", description, discord.Color.blue(), entry.user)
