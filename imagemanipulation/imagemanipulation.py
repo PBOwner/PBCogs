@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
-from redbot.core import commands
 from PIL import Image, ImageFilter, ImageOps, ImageEnhance
 import aiohttp
 import io
+import legofy
 
 class ImageManipulation(commands.Cog):
     def __init__(self, bot):
@@ -124,3 +124,11 @@ class ImageManipulation(commands.Cog):
 
             img_filtered = img.filter(filter_dict[filter_name.upper()])
             await self.send_image(ctx, img_filtered, 'filtered.png')
+
+    @commands.command()
+    async def legofy(self, ctx):
+        """Turn an image into a LEGO-style creation."""
+        img = await self.get_image(ctx)
+        if img:
+            legofy.legofy_image(img, img)
+            await self.send_image(ctx, img, 'legofy.png')
