@@ -6,5 +6,5 @@ nav:
 site_name: LoadDev's Documentation
 site_url: https://docs.prismbot.icu/LoadDev/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

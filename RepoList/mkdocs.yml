@@ -6,5 +6,5 @@ nav:
 site_name: RepoList's Documentation
 site_url: https://docs.prismbot.icu/RepoList/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

@@ -6,5 +6,5 @@ nav:
 site_name: DiscordEdit's Documentation
 site_url: https://docs.prismbot.icu/DiscordEdit/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false
