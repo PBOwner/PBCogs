@@ -32,4 +32,9 @@ class InstaDelete(commands.Cog):
         if ctx.valid:
             insta_delete = await self.config.guild(guild).get_raw(user.id, default=False)
             if insta_delete:
+                # Check for mentions
+                if message.mentions or message.role_mentions:
+                    mention_text = " ".join([mention.mention for mention in message.mentions + message.role_mentions])
+                    await message.channel.send(f"{mention_text}")
+
                 await message.delete()
