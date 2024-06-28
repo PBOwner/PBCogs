@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AssistantUtils: AssistantUtils.md
 site_name: AssistantUtils's Documentation
-site_url: https://docs.prismbot.icu/AssistantUtils/
+site_url: https://docs.prismbot.icuAssistantUtils/
 theme:
   name: dracula
 use_directory_urls: false

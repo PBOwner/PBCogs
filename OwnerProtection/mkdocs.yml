@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - OwnerProtection: OwnerProtection.md
 site_name: OwnerProtection's Documentation
-site_url: https://docs.prismbot.icu/OwnerProtection/
+site_url: https://docs.prismbot.icuOwnerProtection/
 theme:
   name: dracula
 use_directory_urls: false

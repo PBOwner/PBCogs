@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - NoNuke: NoNuke.md
 site_name: NoNuke's Documentation
-site_url: https://docs.prismbot.icu/NoNuke/
+site_url: https://docs.prismbot.icuNoNuke/
 theme:
   name: dracula
 use_directory_urls: false

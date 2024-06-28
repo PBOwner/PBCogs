@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - EconomyTrickle: EconomyTrickle.md
 site_name: EconomyTrickle's Documentation
-site_url: https://docs.prismbot.icu/EconomyTrickle/
+site_url: https://docs.prismbot.icuEconomyTrickle/
 theme:
   name: dracula
 use_directory_urls: false

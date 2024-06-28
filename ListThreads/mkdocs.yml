@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ListThreads: ListThreads.md
 site_name: ListThreads's Documentation
-site_url: https://docs.prismbot.icu/ListThreads/
+site_url: https://docs.prismbot.icuListThreads/
 theme:
   name: dracula
 use_directory_urls: false

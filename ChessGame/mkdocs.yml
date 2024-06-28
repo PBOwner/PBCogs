@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ChessGame: ChessGame.md
 site_name: ChessGame's Documentation
-site_url: https://docs.prismbot.icu/ChessGame/
+site_url: https://docs.prismbot.icuChessGame/
 theme:
   name: dracula
 use_directory_urls: false

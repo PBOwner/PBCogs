@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RepoList: RepoList.md
 site_name: RepoList's Documentation
-site_url: https://docs.prismbot.icu/RepoList/
+site_url: https://docs.prismbot.icuRepoList/
 theme:
   name: dracula
 use_directory_urls: false

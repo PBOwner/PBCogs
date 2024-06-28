@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Verifyer: Verifyer.md
 site_name: Verifyer's Documentation
-site_url: https://docs.prismbot.icu/Verifyer/
+site_url: https://docs.prismbot.icuVerifyer/
 theme:
   name: dracula
 use_directory_urls: false

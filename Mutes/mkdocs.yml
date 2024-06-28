@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Mutes: Mutes.md
 site_name: Mutes's Documentation
-site_url: https://docs.prismbot.icu/Mutes/
+site_url: https://docs.prismbot.icuMutes/
 theme:
   name: dracula
 use_directory_urls: false

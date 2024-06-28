@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PingSite: PingSite.md
 site_name: PingSite's Documentation
-site_url: https://docs.prismbot.icu/PingSite/
+site_url: https://docs.prismbot.icuPingSite/
 theme:
   name: dracula
 use_directory_urls: false

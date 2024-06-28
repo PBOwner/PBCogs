@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BankDecay: BankDecay.md
 site_name: BankDecay's Documentation
-site_url: https://docs.prismbot.icu/BankDecay/
+site_url: https://docs.prismbot.icuBankDecay/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AdvancedLogger: AdvancedLogger.md
 site_name: AdvancedLogger's Documentation
-site_url: https://docs.prismbot.icu/AdvancedLogger/
+site_url: https://docs.prismbot.icuAdvancedLogger/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AuthGG: AuthGG.md
 site_name: AuthGG's Documentation
-site_url: https://docs.prismbot.icu/AuthGG/
+site_url: https://docs.prismbot.icuAuthGG/
 theme:
   name: dracula
 use_directory_urls: false

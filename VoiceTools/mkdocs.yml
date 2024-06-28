@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - VoiceTools: VoiceTools.md
 site_name: VoiceTools's Documentation
-site_url: https://docs.prismbot.icu/VoiceTools/
+site_url: https://docs.prismbot.icuVoiceTools/
 theme:
   name: dracula
 use_directory_urls: false

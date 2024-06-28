@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - LinkQuoter: LinkQuoter.md
 site_name: LinkQuoter's Documentation
-site_url: https://docs.prismbot.icu/LinkQuoter/
+site_url: https://docs.prismbot.icuLinkQuoter/
 theme:
   name: dracula
 use_directory_urls: false

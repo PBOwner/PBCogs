@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UselessFacts: UselessFacts.md
 site_name: UselessFacts's Documentation
-site_url: https://docs.prismbot.icu/UselessFacts/
+site_url: https://docs.prismbot.icuUselessFacts/
 theme:
   name: dracula
 use_directory_urls: false

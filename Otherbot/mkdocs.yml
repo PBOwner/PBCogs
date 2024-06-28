@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Otherbot: Otherbot.md
 site_name: Otherbot's Documentation
-site_url: https://docs.prismbot.icu/Otherbot/
+site_url: https://docs.prismbot.icuOtherbot/
 theme:
   name: dracula
 use_directory_urls: false

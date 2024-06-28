@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Massmove: Massmove.md
 site_name: Massmove's Documentation
-site_url: https://docs.prismbot.icu/Massmove/
+site_url: https://docs.prismbot.icuMassmove/
 theme:
   name: dracula
 use_directory_urls: false

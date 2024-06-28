@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BotLogger: BotLogger.md
 site_name: BotLogger's Documentation
-site_url: https://docs.prismbot.icu/BotLogger/
+site_url: https://docs.prismbot.icuBotLogger/
 theme:
   name: dracula
 use_directory_urls: false

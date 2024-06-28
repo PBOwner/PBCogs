@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - MemberPrefix: MemberPrefix.md
 site_name: MemberPrefix's Documentation
-site_url: https://docs.prismbot.icu/MemberPrefix/
+site_url: https://docs.prismbot.icuMemberPrefix/
 theme:
   name: dracula
 use_directory_urls: false

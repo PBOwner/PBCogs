@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GCC: GCC.md
 site_name: GCC's Documentation
-site_url: https://docs.prismbot.icu/GCC/
+site_url: https://docs.prismbot.icuGCC/
 theme:
   name: dracula
 use_directory_urls: false

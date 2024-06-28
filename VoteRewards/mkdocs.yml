@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - VoteRewards: VoteRewards.md
 site_name: VoteRewards's Documentation
-site_url: https://docs.prismbot.icu/VoteRewards/
+site_url: https://docs.prismbot.icuVoteRewards/
 theme:
   name: dracula
 use_directory_urls: false

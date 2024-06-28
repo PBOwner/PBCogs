@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - MsgReport: MsgReport.md
 site_name: MsgReport's Documentation
-site_url: https://docs.prismbot.icu/MsgReport/
+site_url: https://docs.prismbot.icuMsgReport/
 theme:
   name: dracula
 use_directory_urls: false

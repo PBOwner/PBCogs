@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RestartMsg: RestartMsg.md
 site_name: RestartMsg's Documentation
-site_url: https://docs.prismbot.icu/RestartMsg/
+site_url: https://docs.prismbot.icuRestartMsg/
 theme:
   name: dracula
 use_directory_urls: false

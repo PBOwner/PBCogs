@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Comm: Comm.md
 site_name: Comm's Documentation
-site_url: https://docs.prismbot.icu/Comm/
+site_url: https://docs.prismbot.icuComm/
 theme:
   name: dracula
 use_directory_urls: false

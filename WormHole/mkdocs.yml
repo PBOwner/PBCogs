@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - WormHole: WormHole.md
 site_name: WormHole's Documentation
-site_url: https://docs.prismbot.icu/WormHole/
+site_url: https://docs.prismbot.icuWormHole/
 theme:
   name: dracula
 use_directory_urls: false

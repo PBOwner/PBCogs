@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Adventure: Adventure.md
 site_name: Adventure's Documentation
-site_url: https://docs.prismbot.icu/Adventure/
+site_url: https://docs.prismbot.icuAdventure/
 theme:
   name: dracula
 use_directory_urls: false

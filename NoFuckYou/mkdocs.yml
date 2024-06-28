@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - NoFuckYou: NoFuckYou.md
 site_name: NoFuckYou's Documentation
-site_url: https://docs.prismbot.icu/NoFuckYou/
+site_url: https://docs.prismbot.icuNoFuckYou/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Coffeetools: Coffeetools.md
 site_name: Coffeetools's Documentation
-site_url: https://docs.prismbot.icu/Coffeetools/
+site_url: https://docs.prismbot.icuCoffeetools/
 theme:
   name: dracula
 use_directory_urls: false

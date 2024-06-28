@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Streams: Streams.md
 site_name: Streams's Documentation
-site_url: https://docs.prismbot.icu/Streams/
+site_url: https://docs.prismbot.icuStreams/
 theme:
   name: dracula
 use_directory_urls: false

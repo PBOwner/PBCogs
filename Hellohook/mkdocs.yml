@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Hellohook: Hellohook.md
 site_name: Hellohook's Documentation
-site_url: https://docs.prismbot.icu/Hellohook/
+site_url: https://docs.prismbot.icuHellohook/
 theme:
   name: dracula
 use_directory_urls: false

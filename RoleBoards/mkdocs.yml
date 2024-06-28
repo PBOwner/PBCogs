@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleBoards: RoleBoards.md
 site_name: RoleBoards's Documentation
-site_url: https://docs.prismbot.icu/RoleBoards/
+site_url: https://docs.prismbot.icuRoleBoards/
 theme:
   name: dracula
 use_directory_urls: false

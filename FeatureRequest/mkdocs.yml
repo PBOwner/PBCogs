@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - FeatureRequest: FeatureRequest.md
 site_name: FeatureRequest's Documentation
-site_url: https://docs.prismbot.icu/FeatureRequest/
+site_url: https://docs.prismbot.icuFeatureRequest/
 theme:
   name: dracula
 use_directory_urls: false

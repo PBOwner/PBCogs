@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Snipe: Snipe.md
 site_name: Snipe's Documentation
-site_url: https://docs.prismbot.icu/Snipe/
+site_url: https://docs.prismbot.icuSnipe/
 theme:
   name: dracula
 use_directory_urls: false

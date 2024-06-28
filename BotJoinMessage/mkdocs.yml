@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BotJoinMessage: BotJoinMessage.md
 site_name: BotJoinMessage's Documentation
-site_url: https://docs.prismbot.icu/BotJoinMessage/
+site_url: https://docs.prismbot.icuBotJoinMessage/
 theme:
   name: dracula
 use_directory_urls: false

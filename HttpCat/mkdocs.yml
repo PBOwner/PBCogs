@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - HttpCat: HttpCat.md
 site_name: HttpCat's Documentation
-site_url: https://docs.prismbot.icu/HttpCat/
+site_url: https://docs.prismbot.icuHttpCat/
 theme:
   name: dracula
 use_directory_urls: false

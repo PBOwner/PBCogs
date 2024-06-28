@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Badges: Badges.md
 site_name: Badges's Documentation
-site_url: https://docs.prismbot.icu/Badges/
+site_url: https://docs.prismbot.icuBadges/
 theme:
   name: dracula
 use_directory_urls: false

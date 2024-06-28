@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Jail: Jail.md
 site_name: Jail's Documentation
-site_url: https://docs.prismbot.icu/Jail/
+site_url: https://docs.prismbot.icuJail/
 theme:
   name: dracula
 use_directory_urls: false

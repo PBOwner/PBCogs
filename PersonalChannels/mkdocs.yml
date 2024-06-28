@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PersonalChannels: PersonalChannels.md
 site_name: PersonalChannels's Documentation
-site_url: https://docs.prismbot.icu/PersonalChannels/
+site_url: https://docs.prismbot.icuPersonalChannels/
 theme:
   name: dracula
 use_directory_urls: false

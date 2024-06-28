@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - WelcomeCount: WelcomeCount.md
 site_name: WelcomeCount's Documentation
-site_url: https://docs.prismbot.icu/WelcomeCount/
+site_url: https://docs.prismbot.icuWelcomeCount/
 theme:
   name: dracula
 use_directory_urls: false

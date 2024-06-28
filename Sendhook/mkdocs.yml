@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Sendhook: Sendhook.md
 site_name: Sendhook's Documentation
-site_url: https://docs.prismbot.icu/Sendhook/
+site_url: https://docs.prismbot.icuSendhook/
 theme:
   name: dracula
 use_directory_urls: false

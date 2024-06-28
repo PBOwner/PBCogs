@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DynamicChannelList: DynamicChannelList.md
 site_name: DynamicChannelList's Documentation
-site_url: https://docs.prismbot.icu/DynamicChannelList/
+site_url: https://docs.prismbot.icuDynamicChannelList/
 theme:
   name: dracula
 use_directory_urls: false

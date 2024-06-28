@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Calculator: Calculator.md
 site_name: Calculator's Documentation
-site_url: https://docs.prismbot.icu/Calculator/
+site_url: https://docs.prismbot.icuCalculator/
 theme:
   name: dracula
 use_directory_urls: false

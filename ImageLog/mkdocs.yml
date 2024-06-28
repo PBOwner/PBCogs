@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ImageLog: ImageLog.md
 site_name: ImageLog's Documentation
-site_url: https://docs.prismbot.icu/ImageLog/
+site_url: https://docs.prismbot.icuImageLog/
 theme:
   name: dracula
 use_directory_urls: false

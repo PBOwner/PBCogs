@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AntiLinks: AntiLinks.md
 site_name: AntiLinks's Documentation
-site_url: https://docs.prismbot.icu/AntiLinks/
+site_url: https://docs.prismbot.icuAntiLinks/
 theme:
   name: dracula
 use_directory_urls: false

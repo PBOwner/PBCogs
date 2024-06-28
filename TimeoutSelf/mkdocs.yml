@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - TimeoutSelf: TimeoutSelf.md
 site_name: TimeoutSelf's Documentation
-site_url: https://docs.prismbot.icu/TimeoutSelf/
+site_url: https://docs.prismbot.icuTimeoutSelf/
 theme:
   name: dracula
 use_directory_urls: false

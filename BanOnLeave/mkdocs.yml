@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BanOnLeave: BanOnLeave.md
 site_name: BanOnLeave's Documentation
-site_url: https://docs.prismbot.icu/BanOnLeave/
+site_url: https://docs.prismbot.icuBanOnLeave/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Trigger: Trigger.md
 site_name: Trigger's Documentation
-site_url: https://docs.prismbot.icu/Trigger/
+site_url: https://docs.prismbot.icuTrigger/
 theme:
   name: dracula
 use_directory_urls: false

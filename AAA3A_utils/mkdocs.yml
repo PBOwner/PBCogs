@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AAA3A_utils: AAA3A_utils.md
 site_name: AAA3A_utils's Documentation
-site_url: https://docs.prismbot.icu/AAA3A_utils/
+site_url: https://docs.prismbot.icuAAA3A_utils/
 theme:
   name: dracula
 use_directory_urls: false

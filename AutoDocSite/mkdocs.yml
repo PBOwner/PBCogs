@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AutoDocSite: AutoDocSite.md
 site_name: AutoDocSite's Documentation
-site_url: https://docs.prismbot.icu/AutoDocSite/
+site_url: https://docs.prismbot.icuAutoDocSite/
 theme:
   name: dracula
 use_directory_urls: false

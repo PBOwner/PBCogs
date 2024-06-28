@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - EmbedPeek: EmbedPeek.md
 site_name: EmbedPeek's Documentation
-site_url: https://docs.prismbot.icu/EmbedPeek/
+site_url: https://docs.prismbot.icuEmbedPeek/
 theme:
   name: dracula
 use_directory_urls: false

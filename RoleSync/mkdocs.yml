@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleSync: RoleSync.md
 site_name: RoleSync's Documentation
-site_url: https://docs.prismbot.icu/RoleSync/
+site_url: https://docs.prismbot.icuRoleSync/
 theme:
   name: dracula
 use_directory_urls: false

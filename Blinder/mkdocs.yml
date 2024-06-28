@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Blinder: Blinder.md
 site_name: Blinder's Documentation
-site_url: https://docs.prismbot.icu/Blinder/
+site_url: https://docs.prismbot.icuBlinder/
 theme:
   name: dracula
 use_directory_urls: false

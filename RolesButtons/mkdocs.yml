@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RolesButtons: RolesButtons.md
 site_name: RolesButtons's Documentation
-site_url: https://docs.prismbot.icu/RolesButtons/
+site_url: https://docs.prismbot.icuRolesButtons/
 theme:
   name: dracula
 use_directory_urls: false

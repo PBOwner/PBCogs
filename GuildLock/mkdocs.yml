@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GuildLock: GuildLock.md
 site_name: GuildLock's Documentation
-site_url: https://docs.prismbot.icu/GuildLock/
+site_url: https://docs.prismbot.icuGuildLock/
 theme:
   name: dracula
 use_directory_urls: false

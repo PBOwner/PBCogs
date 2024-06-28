@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Spoilerer: Spoilerer.md
 site_name: Spoilerer's Documentation
-site_url: https://docs.prismbot.icu/Spoilerer/
+site_url: https://docs.prismbot.icuSpoilerer/
 theme:
   name: dracula
 use_directory_urls: false

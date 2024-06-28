@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - EmbedUtils: EmbedUtils.md
 site_name: EmbedUtils's Documentation
-site_url: https://docs.prismbot.icu/EmbedUtils/
+site_url: https://docs.prismbot.icuEmbedUtils/
 theme:
   name: dracula
 use_directory_urls: false

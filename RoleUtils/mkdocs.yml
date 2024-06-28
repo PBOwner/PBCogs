@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleUtils: RoleUtils.md
 site_name: RoleUtils's Documentation
-site_url: https://docs.prismbot.icu/RoleUtils/
+site_url: https://docs.prismbot.icuRoleUtils/
 theme:
   name: dracula
 use_directory_urls: false

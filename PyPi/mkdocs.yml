@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PyPi: PyPi.md
 site_name: PyPi's Documentation
-site_url: https://docs.prismbot.icu/PyPi/
+site_url: https://docs.prismbot.icuPyPi/
 theme:
   name: dracula
 use_directory_urls: false

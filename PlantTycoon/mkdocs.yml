@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PlantTycoon: PlantTycoon.md
 site_name: PlantTycoon's Documentation
-site_url: https://docs.prismbot.icu/PlantTycoon/
+site_url: https://docs.prismbot.icuPlantTycoon/
 theme:
   name: dracula
 use_directory_urls: false

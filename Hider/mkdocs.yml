@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Hider: Hider.md
 site_name: Hider's Documentation
-site_url: https://docs.prismbot.icu/Hider/
+site_url: https://docs.prismbot.icuHider/
 theme:
   name: dracula
 use_directory_urls: false

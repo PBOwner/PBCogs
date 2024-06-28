@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UpdateChecker: UpdateChecker.md
 site_name: UpdateChecker's Documentation
-site_url: https://docs.prismbot.icu/UpdateChecker/
+site_url: https://docs.prismbot.icuUpdateChecker/
 theme:
   name: dracula
 use_directory_urls: false

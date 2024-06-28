@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Voteout: Voteout.md
 site_name: Voteout's Documentation
-site_url: https://docs.prismbot.icu/Voteout/
+site_url: https://docs.prismbot.icuVoteout/
 theme:
   name: dracula
 use_directory_urls: false

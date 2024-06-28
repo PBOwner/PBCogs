@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Gmail: Gmail.md
 site_name: Gmail's Documentation
-site_url: https://docs.prismbot.icu/Gmail/
+site_url: https://docs.prismbot.icuGmail/
 theme:
   name: dracula
 use_directory_urls: false

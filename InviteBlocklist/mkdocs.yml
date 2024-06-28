@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - InviteBlocklist: InviteBlocklist.md
 site_name: InviteBlocklist's Documentation
-site_url: https://docs.prismbot.icu/InviteBlocklist/
+site_url: https://docs.prismbot.icuInviteBlocklist/
 theme:
   name: dracula
 use_directory_urls: false

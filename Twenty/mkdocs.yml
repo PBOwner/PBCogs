@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Twenty: Twenty.md
 site_name: Twenty's Documentation
-site_url: https://docs.prismbot.icu/Twenty/
+site_url: https://docs.prismbot.icuTwenty/
 theme:
   name: dracula
 use_directory_urls: false

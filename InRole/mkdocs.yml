@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - InRole: InRole.md
 site_name: InRole's Documentation
-site_url: https://docs.prismbot.icu/InRole/
+site_url: https://docs.prismbot.icuInRole/
 theme:
   name: dracula
 use_directory_urls: false

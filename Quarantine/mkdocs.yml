@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Quarantine: Quarantine.md
 site_name: Quarantine's Documentation
-site_url: https://docs.prismbot.icu/Quarantine/
+site_url: https://docs.prismbot.icuQuarantine/
 theme:
   name: dracula
 use_directory_urls: false

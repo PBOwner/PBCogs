@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Spotify: Spotify.md
 site_name: Spotify's Documentation
-site_url: https://docs.prismbot.icu/Spotify/
+site_url: https://docs.prismbot.icuSpotify/
 theme:
   name: dracula
 use_directory_urls: false

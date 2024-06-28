@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Prunecmd: Prunecmd.md
 site_name: Prunecmd's Documentation
-site_url: https://docs.prismbot.icu/Prunecmd/
+site_url: https://docs.prismbot.icuPrunecmd/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Charlimit: Charlimit.md
 site_name: Charlimit's Documentation
-site_url: https://docs.prismbot.icu/Charlimit/
+site_url: https://docs.prismbot.icuCharlimit/
 theme:
   name: dracula
 use_directory_urls: false

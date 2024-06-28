@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - MultiCommands: MultiCommands.md
 site_name: MultiCommands's Documentation
-site_url: https://docs.prismbot.icu/MultiCommands/
+site_url: https://docs.prismbot.icuMultiCommands/
 theme:
   name: dracula
 use_directory_urls: false

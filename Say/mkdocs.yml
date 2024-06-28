@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Say: Say.md
 site_name: Say's Documentation
-site_url: https://docs.prismbot.icu/Say/
+site_url: https://docs.prismbot.icuSay/
 theme:
   name: dracula
 use_directory_urls: false

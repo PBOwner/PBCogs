@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Reminders: Reminders.md
 site_name: Reminders's Documentation
-site_url: https://docs.prismbot.icu/Reminders/
+site_url: https://docs.prismbot.icuReminders/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UrlFetch: UrlFetch.md
 site_name: UrlFetch's Documentation
-site_url: https://docs.prismbot.icu/UrlFetch/
+site_url: https://docs.prismbot.icuUrlFetch/
 theme:
   name: dracula
 use_directory_urls: false

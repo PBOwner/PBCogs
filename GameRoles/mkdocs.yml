@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GameRoles: GameRoles.md
 site_name: GameRoles's Documentation
-site_url: https://docs.prismbot.icu/GameRoles/
+site_url: https://docs.prismbot.icuGameRoles/
 theme:
   name: dracula
 use_directory_urls: false

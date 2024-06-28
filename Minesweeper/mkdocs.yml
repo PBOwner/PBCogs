@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Minesweeper: Minesweeper.md
 site_name: Minesweeper's Documentation
-site_url: https://docs.prismbot.icu/Minesweeper/
+site_url: https://docs.prismbot.icuMinesweeper/
 theme:
   name: dracula
 use_directory_urls: false

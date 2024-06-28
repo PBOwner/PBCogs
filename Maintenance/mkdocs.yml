@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Maintenance: Maintenance.md
 site_name: Maintenance's Documentation
-site_url: https://docs.prismbot.icu/Maintenance/
+site_url: https://docs.prismbot.icuMaintenance/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - IdeaBoard: IdeaBoard.md
 site_name: IdeaBoard's Documentation
-site_url: https://docs.prismbot.icu/IdeaBoard/
+site_url: https://docs.prismbot.icuIdeaBoard/
 theme:
   name: dracula
 use_directory_urls: false

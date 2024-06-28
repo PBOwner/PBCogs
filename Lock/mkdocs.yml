@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Lock: Lock.md
 site_name: Lock's Documentation
-site_url: https://docs.prismbot.icu/Lock/
+site_url: https://docs.prismbot.icuLock/
 theme:
   name: dracula
 use_directory_urls: false

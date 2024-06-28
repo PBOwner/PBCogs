@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - IntroCog: IntroCog.md
 site_name: IntroCog's Documentation
-site_url: https://docs.prismbot.icu/IntroCog/
+site_url: https://docs.prismbot.icuIntroCog/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BankEvents: BankEvents.md
 site_name: BankEvents's Documentation
-site_url: https://docs.prismbot.icu/BankEvents/
+site_url: https://docs.prismbot.icuBankEvents/
 theme:
   name: dracula
 use_directory_urls: false

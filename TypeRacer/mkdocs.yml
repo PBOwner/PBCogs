@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - TypeRacer: TypeRacer.md
 site_name: TypeRacer's Documentation
-site_url: https://docs.prismbot.icu/TypeRacer/
+site_url: https://docs.prismbot.icuTypeRacer/
 theme:
   name: dracula
 use_directory_urls: false

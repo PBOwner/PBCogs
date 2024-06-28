@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - EmbedCreator: EmbedCreator.md
 site_name: EmbedCreator's Documentation
-site_url: https://docs.prismbot.icu/EmbedCreator/
+site_url: https://docs.prismbot.icuEmbedCreator/
 theme:
   name: dracula
 use_directory_urls: false

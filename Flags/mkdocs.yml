@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Flags: Flags.md
 site_name: Flags's Documentation
-site_url: https://docs.prismbot.icu/Flags/
+site_url: https://docs.prismbot.icuFlags/
 theme:
   name: dracula
 use_directory_urls: false

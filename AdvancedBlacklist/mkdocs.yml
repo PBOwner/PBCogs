@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AdvancedBlacklist: AdvancedBlacklist.md
 site_name: AdvancedBlacklist's Documentation
-site_url: https://docs.prismbot.icu/AdvancedBlacklist/
+site_url: https://docs.prismbot.icuAdvancedBlacklist/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AnonReporter: AnonReporter.md
 site_name: AnonReporter's Documentation
-site_url: https://docs.prismbot.icu/AnonReporter/
+site_url: https://docs.prismbot.icuAnonReporter/
 theme:
   name: dracula
 use_directory_urls: false

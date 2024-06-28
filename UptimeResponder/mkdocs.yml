@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UptimeResponder: UptimeResponder.md
 site_name: UptimeResponder's Documentation
-site_url: https://docs.prismbot.icu/UptimeResponder/
+site_url: https://docs.prismbot.icuUptimeResponder/
 theme:
   name: dracula
 use_directory_urls: false

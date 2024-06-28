@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ClearChannel: ClearChannel.md
 site_name: ClearChannel's Documentation
-site_url: https://docs.prismbot.icu/ClearChannel/
+site_url: https://docs.prismbot.icuClearChannel/
 theme:
   name: dracula
 use_directory_urls: false

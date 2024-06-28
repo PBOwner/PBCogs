@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Backup: Backup.md
 site_name: Backup's Documentation
-site_url: https://docs.prismbot.icu/Backup/
+site_url: https://docs.prismbot.icuBackup/
 theme:
   name: dracula
 use_directory_urls: false

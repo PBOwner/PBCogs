@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Giveaways: Giveaways.md
 site_name: Giveaways's Documentation
-site_url: https://docs.prismbot.icu/Giveaways/
+site_url: https://docs.prismbot.icuGiveaways/
 theme:
   name: dracula
 use_directory_urls: false

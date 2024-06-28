@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AntiSpam: AntiSpam.md
 site_name: AntiSpam's Documentation
-site_url: https://docs.prismbot.icu/AntiSpam/
+site_url: https://docs.prismbot.icuAntiSpam/
 theme:
   name: dracula
 use_directory_urls: false

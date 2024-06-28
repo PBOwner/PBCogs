@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DeleteCounter: DeleteCounter.md
 site_name: DeleteCounter's Documentation
-site_url: https://docs.prismbot.icu/DeleteCounter/
+site_url: https://docs.prismbot.icuDeleteCounter/
 theme:
   name: dracula
 use_directory_urls: false

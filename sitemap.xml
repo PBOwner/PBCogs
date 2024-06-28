@@ -266,6 +266,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/ButtonPoll.html</loc>
+         <lastmod>2024-06-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/CCRole.html</loc>
          <lastmod>2024-06-28</lastmod>
          <changefreq>daily</changefreq>
@@ -1076,11 +1081,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Poll.html</loc>
-         <lastmod>2024-06-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://docs.prismbot.icu/Prefix.html</loc>
          <lastmod>2024-06-28</lastmod>
          <changefreq>daily</changefreq>
@@ -1152,6 +1152,16 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/ReactRestrict.html</loc>
+         <lastmod>2024-06-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.prismbot.icu/Reddit.html</loc>
+         <lastmod>2024-06-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.prismbot.icu/RedditPost.html</loc>
          <lastmod>2024-06-28</lastmod>
          <changefreq>daily</changefreq>
     </url>

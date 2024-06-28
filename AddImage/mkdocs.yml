@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AddImage: AddImage.md
 site_name: AddImage's Documentation
-site_url: https://docs.prismbot.icu/AddImage/
+site_url: https://docs.prismbot.icuAddImage/
 theme:
   name: dracula
 use_directory_urls: false

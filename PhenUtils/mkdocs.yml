@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PhenUtils: PhenUtils.md
 site_name: PhenUtils's Documentation
-site_url: https://docs.prismbot.icu/PhenUtils/
+site_url: https://docs.prismbot.icuPhenUtils/
 theme:
   name: dracula
 use_directory_urls: false

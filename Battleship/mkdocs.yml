@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Battleship: Battleship.md
 site_name: Battleship's Documentation
-site_url: https://docs.prismbot.icu/Battleship/
+site_url: https://docs.prismbot.icuBattleship/
 theme:
   name: dracula
 use_directory_urls: false

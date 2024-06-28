@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - MsgTracker: MsgTracker.md
 site_name: MsgTracker's Documentation
-site_url: https://docs.prismbot.icu/MsgTracker/
+site_url: https://docs.prismbot.icuMsgTracker/
 theme:
   name: dracula
 use_directory_urls: false

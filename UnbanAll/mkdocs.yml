@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UnbanAll: UnbanAll.md
 site_name: UnbanAll's Documentation
-site_url: https://docs.prismbot.icu/UnbanAll/
+site_url: https://docs.prismbot.icuUnbanAll/
 theme:
   name: dracula
 use_directory_urls: false

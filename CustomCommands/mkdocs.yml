@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - CustomCommands: CustomCommands.md
 site_name: CustomCommands's Documentation
-site_url: https://docs.prismbot.icu/CustomCommands/
+site_url: https://docs.prismbot.icuCustomCommands/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - LoadDev: LoadDev.md
 site_name: LoadDev's Documentation
-site_url: https://docs.prismbot.icu/LoadDev/
+site_url: https://docs.prismbot.icuLoadDev/
 theme:
   name: dracula
 use_directory_urls: false

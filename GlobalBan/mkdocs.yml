@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GlobalBan: GlobalBan.md
 site_name: GlobalBan's Documentation
-site_url: https://docs.prismbot.icu/GlobalBan/
+site_url: https://docs.prismbot.icuGlobalBan/
 theme:
   name: dracula
 use_directory_urls: false

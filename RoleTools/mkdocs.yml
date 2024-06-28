@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleTools: RoleTools.md
 site_name: RoleTools's Documentation
-site_url: https://docs.prismbot.icu/RoleTools/
+site_url: https://docs.prismbot.icuRoleTools/
 theme:
   name: dracula
 use_directory_urls: false

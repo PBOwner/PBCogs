@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GHIssues: GHIssues.md
 site_name: GHIssues's Documentation
-site_url: https://docs.prismbot.icu/GHIssues/
+site_url: https://docs.prismbot.icuGHIssues/
 theme:
   name: dracula
 use_directory_urls: false

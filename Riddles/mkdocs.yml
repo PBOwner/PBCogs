@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Riddles: Riddles.md
 site_name: Riddles's Documentation
-site_url: https://docs.prismbot.icu/Riddles/
+site_url: https://docs.prismbot.icuRiddles/
 theme:
   name: dracula
 use_directory_urls: false

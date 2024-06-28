@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Dice: Dice.md
 site_name: Dice's Documentation
-site_url: https://docs.prismbot.icu/Dice/
+site_url: https://docs.prismbot.icuDice/
 theme:
   name: dracula
 use_directory_urls: false

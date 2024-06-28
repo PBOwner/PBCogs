@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - WordStats: WordStats.md
 site_name: WordStats's Documentation
-site_url: https://docs.prismbot.icu/WordStats/
+site_url: https://docs.prismbot.icuWordStats/
 theme:
   name: dracula
 use_directory_urls: false

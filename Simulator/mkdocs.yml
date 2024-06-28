@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Simulator: Simulator.md
 site_name: Simulator's Documentation
-site_url: https://docs.prismbot.icu/Simulator/
+site_url: https://docs.prismbot.icuSimulator/
 theme:
   name: dracula
 use_directory_urls: false

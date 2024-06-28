@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Clone: Clone.md
 site_name: Clone's Documentation
-site_url: https://docs.prismbot.icu/Clone/
+site_url: https://docs.prismbot.icuClone/
 theme:
   name: dracula
 use_directory_urls: false

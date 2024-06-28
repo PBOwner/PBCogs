@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GitHubCards: GitHubCards.md
 site_name: GitHubCards's Documentation
-site_url: https://docs.prismbot.icu/GitHubCards/
+site_url: https://docs.prismbot.icuGitHubCards/
 theme:
   name: dracula
 use_directory_urls: false

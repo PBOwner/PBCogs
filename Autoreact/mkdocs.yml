@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Autoreact: Autoreact.md
 site_name: Autoreact's Documentation
-site_url: https://docs.prismbot.icu/Autoreact/
+site_url: https://docs.prismbot.icuAutoreact/
 theme:
   name: dracula
 use_directory_urls: false

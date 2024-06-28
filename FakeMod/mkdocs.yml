@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - FakeMod: FakeMod.md
 site_name: FakeMod's Documentation
-site_url: https://docs.prismbot.icu/FakeMod/
+site_url: https://docs.prismbot.icuFakeMod/
 theme:
   name: dracula
 use_directory_urls: false

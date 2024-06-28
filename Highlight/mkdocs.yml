@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Highlight: Highlight.md
 site_name: Highlight's Documentation
-site_url: https://docs.prismbot.icu/Highlight/
+site_url: https://docs.prismbot.icuHighlight/
 theme:
   name: dracula
 use_directory_urls: false

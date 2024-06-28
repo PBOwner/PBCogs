@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GuildLog: GuildLog.md
 site_name: GuildLog's Documentation
-site_url: https://docs.prismbot.icu/GuildLog/
+site_url: https://docs.prismbot.icuGuildLog/
 theme:
   name: dracula
 use_directory_urls: false

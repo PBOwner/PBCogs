@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GlobalLogger: GlobalLogger.md
 site_name: GlobalLogger's Documentation
-site_url: https://docs.prismbot.icu/GlobalLogger/
+site_url: https://docs.prismbot.icuGlobalLogger/
 theme:
   name: dracula
 use_directory_urls: false

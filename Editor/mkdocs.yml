@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Editor: Editor.md
 site_name: Editor's Documentation
-site_url: https://docs.prismbot.icu/Editor/
+site_url: https://docs.prismbot.icuEditor/
 theme:
   name: dracula
 use_directory_urls: false

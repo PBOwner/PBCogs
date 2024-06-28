@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AutoMod: AutoMod.md
 site_name: AutoMod's Documentation
-site_url: https://docs.prismbot.icu/AutoMod/
+site_url: https://docs.prismbot.icuAutoMod/
 theme:
   name: dracula
 use_directory_urls: false

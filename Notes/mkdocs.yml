@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Notes: Notes.md
 site_name: Notes's Documentation
-site_url: https://docs.prismbot.icu/Notes/
+site_url: https://docs.prismbot.icuNotes/
 theme:
   name: dracula
 use_directory_urls: false

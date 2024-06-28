@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GTN: GTN.md
 site_name: GTN's Documentation
-site_url: https://docs.prismbot.icu/GTN/
+site_url: https://docs.prismbot.icuGTN/
 theme:
   name: dracula
 use_directory_urls: false

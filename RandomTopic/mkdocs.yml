@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RandomTopic: RandomTopic.md
 site_name: RandomTopic's Documentation
-site_url: https://docs.prismbot.icu/RandomTopic/
+site_url: https://docs.prismbot.icuRandomTopic/
 theme:
   name: dracula
 use_directory_urls: false

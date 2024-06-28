@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - COC: COC.md
 site_name: COC's Documentation
-site_url: https://docs.prismbot.icu/COC/
+site_url: https://docs.prismbot.icuCOC/
 theme:
   name: dracula
 use_directory_urls: false

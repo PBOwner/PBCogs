@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BrainfuckCog: BrainfuckCog.md
 site_name: BrainfuckCog's Documentation
-site_url: https://docs.prismbot.icu/BrainfuckCog/
+site_url: https://docs.prismbot.icuBrainfuckCog/
 theme:
   name: dracula
 use_directory_urls: false

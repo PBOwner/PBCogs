@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - CommandTracker: CommandTracker.md
 site_name: CommandTracker's Documentation
-site_url: https://docs.prismbot.icu/CommandTracker/
+site_url: https://docs.prismbot.icuCommandTracker/
 theme:
   name: dracula
 use_directory_urls: false

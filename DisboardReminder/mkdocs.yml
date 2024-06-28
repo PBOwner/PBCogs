@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DisboardReminder: DisboardReminder.md
 site_name: DisboardReminder's Documentation
-site_url: https://docs.prismbot.icu/DisboardReminder/
+site_url: https://docs.prismbot.icuDisboardReminder/
 theme:
   name: dracula
 use_directory_urls: false

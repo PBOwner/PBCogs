@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Lenny: Lenny.md
 site_name: Lenny's Documentation
-site_url: https://docs.prismbot.icu/Lenny/
+site_url: https://docs.prismbot.icuLenny/
 theme:
   name: dracula
 use_directory_urls: false

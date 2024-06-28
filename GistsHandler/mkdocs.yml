@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GistsHandler: GistsHandler.md
 site_name: GistsHandler's Documentation
-site_url: https://docs.prismbot.icu/GistsHandler/
+site_url: https://docs.prismbot.icuGistsHandler/
 theme:
   name: dracula
 use_directory_urls: false

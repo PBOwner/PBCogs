@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - TicketTool: TicketTool.md
 site_name: TicketTool's Documentation
-site_url: https://docs.prismbot.icu/TicketTool/
+site_url: https://docs.prismbot.icuTicketTool/
 theme:
   name: dracula
 use_directory_urls: false

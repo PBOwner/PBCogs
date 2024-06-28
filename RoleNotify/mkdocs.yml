@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleNotify: RoleNotify.md
 site_name: RoleNotify's Documentation
-site_url: https://docs.prismbot.icu/RoleNotify/
+site_url: https://docs.prismbot.icuRoleNotify/
 theme:
   name: dracula
 use_directory_urls: false

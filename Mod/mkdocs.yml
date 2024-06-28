@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Mod: Mod.md
 site_name: Mod's Documentation
-site_url: https://docs.prismbot.icu/Mod/
+site_url: https://docs.prismbot.icuMod/
 theme:
   name: dracula
 use_directory_urls: false

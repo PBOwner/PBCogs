@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - eep: eep.md
 site_name: eep's Documentation
-site_url: https://docs.prismbot.icu/eep/
+site_url: https://docs.prismbot.icueep/
 theme:
   name: dracula
 use_directory_urls: false

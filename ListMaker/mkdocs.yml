@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ListMaker: ListMaker.md
 site_name: ListMaker's Documentation
-site_url: https://docs.prismbot.icu/ListMaker/
+site_url: https://docs.prismbot.icuListMaker/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - KirA: KirA.md
 site_name: KirA's Documentation
-site_url: https://docs.prismbot.icu/KirA/
+site_url: https://docs.prismbot.icuKirA/
 theme:
   name: dracula
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Freshmeat: Freshmeat.md
 site_name: Freshmeat's Documentation
-site_url: https://docs.prismbot.icu/Freshmeat/
+site_url: https://docs.prismbot.icuFreshmeat/
 theme:
   name: dracula
 use_directory_urls: false

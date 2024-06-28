@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - PermChecker: PermChecker.md
 site_name: PermChecker's Documentation
-site_url: https://docs.prismbot.icu/PermChecker/
+site_url: https://docs.prismbot.icuPermChecker/
 theme:
   name: dracula
 use_directory_urls: false

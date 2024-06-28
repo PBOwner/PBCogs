@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AntiHonde: AntiHonde.md
 site_name: AntiHonde's Documentation
-site_url: https://docs.prismbot.icu/AntiHonde/
+site_url: https://docs.prismbot.icuAntiHonde/
 theme:
   name: dracula
 use_directory_urls: false

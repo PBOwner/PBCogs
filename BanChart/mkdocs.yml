@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BanChart: BanChart.md
 site_name: BanChart's Documentation
-site_url: https://docs.prismbot.icu/BanChart/
+site_url: https://docs.prismbot.icuBanChart/
 theme:
   name: dracula
 use_directory_urls: false

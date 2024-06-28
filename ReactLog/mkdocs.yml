@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ReactLog: ReactLog.md
 site_name: ReactLog's Documentation
-site_url: https://docs.prismbot.icu/ReactLog/
+site_url: https://docs.prismbot.icuReactLog/
 theme:
   name: dracula
 use_directory_urls: false

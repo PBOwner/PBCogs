@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Aliases: Aliases.md
 site_name: Aliases's Documentation
-site_url: https://docs.prismbot.icu/Aliases/
+site_url: https://docs.prismbot.icuAliases/
 theme:
   name: dracula
 use_directory_urls: false

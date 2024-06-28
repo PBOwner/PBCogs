@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - InfoChannel: InfoChannel.md
 site_name: InfoChannel's Documentation
-site_url: https://docs.prismbot.icu/InfoChannel/
+site_url: https://docs.prismbot.icuInfoChannel/
 theme:
   name: dracula
 use_directory_urls: false
