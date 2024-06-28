@@ -48,7 +48,7 @@ class AutoDocs(commands.Cog):
         super().__init__(*args, **kwargs)
         self.bot = bot
         self.config = {
-            "custom_domain": "your_default_domain_here"  # Add default value or load from a config file
+            "custom_domain": "{site_url}"  # Add default value or load from a config file
         }
 
     def generate_readme(
