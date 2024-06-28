@@ -314,7 +314,7 @@ class AutoDocs(commands.Cog):
     await ctx.send(embed=embed)
 
         # Add a link to the relative docs
-        cog_name = command.cog.qualified_name
+    cog_name = command.cog.qualified_name
         embed.add_field(name="More Info", value=f"[Documentation](https://{self.config['custom_domain']}/{cog_name}.html#{command_name.replace(' ', '-')})")
 
         await ctx.send(embed=embed)
