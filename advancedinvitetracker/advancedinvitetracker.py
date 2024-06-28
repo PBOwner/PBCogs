@@ -21,7 +21,10 @@ class AdvancedInviteTracker(commands.Cog):
     async def initialize(self):
         await self.bot.wait_until_ready()
         for guild in self.bot.guilds:
-            self.invites_cache[guild.id] = await guild.invites()
+            try:
+                self.invites_cache[guild.id] = await guild.invites()
+            except discord.Forbidden:
+                print(f"Missing permissions to fetch invites for guild: {guild.name} ({guild.id})")
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -281,7 +284,10 @@ class AdvancedInviteTracker(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        self.invites_cache[guild.id] = await guild.invites()
+        try:
+            self.invites_cache[guild.id] = await guild.invites()
+        except discord.Forbidden:
+            print(f"Missing permissions to fetch invites for guild: {guild.name} ({guild.id})")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
@@ -290,11 +296,17 @@ class AdvancedInviteTracker(commands.Cog):
 
     @commands.Cog.listener()
     async def on_invite_create(self, invite):
-        self.invites_cache[invite.guild.id] = await invite.guild.invites()
+        try:
+            self.invites_cache[invite.guild.id] = await invite.guild.invites()
+        except discord.Forbidden:
+            print(f"Missing permissions to fetch invites for guild: {invite.guild.name} ({invite.guild.id})")
 
     @commands.Cog.listener()
     async def on_invite_delete(self, invite):
-        self.invites_cache[invite.guild.id] = await invite.guild.invites()
+        try:
+            self.invites_cache[invite.guild.id] = await invite.guild.invites()
+        except discord.Forbidden:
+            print(f"Missing permissions to fetch invites for guild: {invite.guild.name} ({invite.guild.id})")
 
     async def cog_load(self):
         await self.initialize()
