@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AnnounceDaily: AnnounceDaily.md
 site_name: AnnounceDaily's Documentation
-site_url: https://docs.prismbot.icuAnnounceDaily/
+site_url: https://docs.prismbot.icu/AnnounceDaily/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

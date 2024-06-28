@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Core: Core.md
 site_name: Core's Documentation
-site_url: https://docs.prismbot.icuCore/
+site_url: https://docs.prismbot.icu/Core/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

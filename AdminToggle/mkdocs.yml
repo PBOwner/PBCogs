@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AdminToggle: AdminToggle.md
 site_name: AdminToggle's Documentation
-site_url: https://docs.prismbot.icuAdminToggle/
+site_url: https://docs.prismbot.icu/AdminToggle/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

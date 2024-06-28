@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - NameChanger: NameChanger.md
 site_name: NameChanger's Documentation
-site_url: https://docs.prismbot.icuNameChanger/
+site_url: https://docs.prismbot.icu/NameChanger/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

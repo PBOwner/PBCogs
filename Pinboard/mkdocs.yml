@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Pinboard: Pinboard.md
 site_name: Pinboard's Documentation
-site_url: https://docs.prismbot.icuPinboard/
+site_url: https://docs.prismbot.icu/Pinboard/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

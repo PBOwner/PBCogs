@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UpdateRed: UpdateRed.md
 site_name: UpdateRed's Documentation
-site_url: https://docs.prismbot.icuUpdateRed/
+site_url: https://docs.prismbot.icu/UpdateRed/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

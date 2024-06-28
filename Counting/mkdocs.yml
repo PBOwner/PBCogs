@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Counting: Counting.md
 site_name: Counting's Documentation
-site_url: https://docs.prismbot.icuCounting/
+site_url: https://docs.prismbot.icu/Counting/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

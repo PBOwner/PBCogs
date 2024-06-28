@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - TheMovieDB: TheMovieDB.md
 site_name: TheMovieDB's Documentation
-site_url: https://docs.prismbot.icuTheMovieDB/
+site_url: https://docs.prismbot.icu/TheMovieDB/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

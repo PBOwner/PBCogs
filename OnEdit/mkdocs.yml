@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - OnEdit: OnEdit.md
 site_name: OnEdit's Documentation
-site_url: https://docs.prismbot.icuOnEdit/
+site_url: https://docs.prismbot.icu/OnEdit/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

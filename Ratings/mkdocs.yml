@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Ratings: Ratings.md
 site_name: Ratings's Documentation
-site_url: https://docs.prismbot.icuRatings/
+site_url: https://docs.prismbot.icu/Ratings/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

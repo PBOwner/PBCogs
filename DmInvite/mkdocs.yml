@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DmInvite: DmInvite.md
 site_name: DmInvite's Documentation
-site_url: https://docs.prismbot.icuDmInvite/
+site_url: https://docs.prismbot.icu/DmInvite/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

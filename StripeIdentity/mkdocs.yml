@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - StripeIdentity: StripeIdentity.md
 site_name: StripeIdentity's Documentation
-site_url: https://docs.prismbot.icuStripeIdentity/
+site_url: https://docs.prismbot.icu/StripeIdentity/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

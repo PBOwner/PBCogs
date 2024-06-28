@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ServerInfo: ServerInfo.md
 site_name: ServerInfo's Documentation
-site_url: https://docs.prismbot.icuServerInfo/
+site_url: https://docs.prismbot.icu/ServerInfo/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

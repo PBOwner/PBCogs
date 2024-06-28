@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Pingtime: Pingtime.md
 site_name: Pingtime's Documentation
-site_url: https://docs.prismbot.icuPingtime/
+site_url: https://docs.prismbot.icu/Pingtime/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

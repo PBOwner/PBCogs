@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ButtonPoll: ButtonPoll.md
 site_name: ButtonPoll's Documentation
-site_url: https://docs.prismbot.icuButtonPoll/
+site_url: https://docs.prismbot.icu/ButtonPoll/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

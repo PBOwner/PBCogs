@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AntiPhishing: AntiPhishing.md
 site_name: AntiPhishing's Documentation
-site_url: https://docs.prismbot.icuAntiPhishing/
+site_url: https://docs.prismbot.icu/AntiPhishing/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

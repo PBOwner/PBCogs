@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ModLog: ModLog.md
 site_name: ModLog's Documentation
-site_url: https://docs.prismbot.icuModLog/
+site_url: https://docs.prismbot.icu/ModLog/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

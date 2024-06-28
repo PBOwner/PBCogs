@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - StatTrack: StatTrack.md
 site_name: StatTrack's Documentation
-site_url: https://docs.prismbot.icuStatTrack/
+site_url: https://docs.prismbot.icu/StatTrack/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

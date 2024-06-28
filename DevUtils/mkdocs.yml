@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DevUtils: DevUtils.md
 site_name: DevUtils's Documentation
-site_url: https://docs.prismbot.icuDevUtils/
+site_url: https://docs.prismbot.icu/DevUtils/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - SelfAssign: SelfAssign.md
 site_name: SelfAssign's Documentation
-site_url: https://docs.prismbot.icuSelfAssign/
+site_url: https://docs.prismbot.icu/SelfAssign/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

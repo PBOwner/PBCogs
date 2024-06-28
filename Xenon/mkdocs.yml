@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Xenon: Xenon.md
 site_name: Xenon's Documentation
-site_url: https://docs.prismbot.icuXenon/
+site_url: https://docs.prismbot.icu/Xenon/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

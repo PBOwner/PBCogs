@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BoostUtils: BoostUtils.md
 site_name: BoostUtils's Documentation
-site_url: https://docs.prismbot.icuBoostUtils/
+site_url: https://docs.prismbot.icu/BoostUtils/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

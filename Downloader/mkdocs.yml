@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Downloader: Downloader.md
 site_name: Downloader's Documentation
-site_url: https://docs.prismbot.icuDownloader/
+site_url: https://docs.prismbot.icu/Downloader/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

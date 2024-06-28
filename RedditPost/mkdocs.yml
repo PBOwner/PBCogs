@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RedditPost: RedditPost.md
 site_name: RedditPost's Documentation
-site_url: https://docs.prismbot.icuRedditPost/
+site_url: https://docs.prismbot.icu/RedditPost/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

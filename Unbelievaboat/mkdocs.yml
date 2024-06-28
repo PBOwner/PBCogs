@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Unbelievaboat: Unbelievaboat.md
 site_name: Unbelievaboat's Documentation
-site_url: https://docs.prismbot.icuUnbelievaboat/
+site_url: https://docs.prismbot.icu/Unbelievaboat/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Cloudflare: Cloudflare.md
 site_name: Cloudflare's Documentation
-site_url: https://docs.prismbot.icuCloudflare/
+site_url: https://docs.prismbot.icu/Cloudflare/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

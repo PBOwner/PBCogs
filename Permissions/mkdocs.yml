@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Permissions: Permissions.md
 site_name: Permissions's Documentation
-site_url: https://docs.prismbot.icuPermissions/
+site_url: https://docs.prismbot.icu/Permissions/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

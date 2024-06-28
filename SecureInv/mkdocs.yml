@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - SecureInv: SecureInv.md
 site_name: SecureInv's Documentation
-site_url: https://docs.prismbot.icuSecureInv/
+site_url: https://docs.prismbot.icu/SecureInv/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

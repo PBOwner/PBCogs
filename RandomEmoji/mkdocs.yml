@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RandomEmoji: RandomEmoji.md
 site_name: RandomEmoji's Documentation
-site_url: https://docs.prismbot.icuRandomEmoji/
+site_url: https://docs.prismbot.icu/RandomEmoji/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

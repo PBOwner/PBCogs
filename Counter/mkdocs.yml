@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Counter: Counter.md
 site_name: Counter's Documentation
-site_url: https://docs.prismbot.icuCounter/
+site_url: https://docs.prismbot.icu/Counter/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AltDentifier: AltDentifier.md
 site_name: AltDentifier's Documentation
-site_url: https://docs.prismbot.icuAltDentifier/
+site_url: https://docs.prismbot.icu/AltDentifier/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Roast: Roast.md
 site_name: Roast's Documentation
-site_url: https://docs.prismbot.icuRoast/
+site_url: https://docs.prismbot.icu/Roast/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

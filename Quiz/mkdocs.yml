@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Quiz: Quiz.md
 site_name: Quiz's Documentation
-site_url: https://docs.prismbot.icuQuiz/
+site_url: https://docs.prismbot.icu/Quiz/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

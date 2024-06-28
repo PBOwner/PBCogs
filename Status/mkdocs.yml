@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Status: Status.md
 site_name: Status's Documentation
-site_url: https://docs.prismbot.icuStatus/
+site_url: https://docs.prismbot.icu/Status/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

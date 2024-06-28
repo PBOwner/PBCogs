@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Rift: Rift.md
 site_name: Rift's Documentation
-site_url: https://docs.prismbot.icuRift/
+site_url: https://docs.prismbot.icu/Rift/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

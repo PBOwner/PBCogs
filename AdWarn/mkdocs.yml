@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AdWarn: AdWarn.md
 site_name: AdWarn's Documentation
-site_url: https://docs.prismbot.icuAdWarn/
+site_url: https://docs.prismbot.icu/AdWarn/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

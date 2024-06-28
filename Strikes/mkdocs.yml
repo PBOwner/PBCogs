@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Strikes: Strikes.md
 site_name: Strikes's Documentation
-site_url: https://docs.prismbot.icuStrikes/
+site_url: https://docs.prismbot.icu/Strikes/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

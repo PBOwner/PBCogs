@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Dictionary: Dictionary.md
 site_name: Dictionary's Documentation
-site_url: https://docs.prismbot.icuDictionary/
+site_url: https://docs.prismbot.icu/Dictionary/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BannedCount: BannedCount.md
 site_name: BannedCount's Documentation
-site_url: https://docs.prismbot.icuBannedCount/
+site_url: https://docs.prismbot.icu/BannedCount/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DiscordModals: DiscordModals.md
 site_name: DiscordModals's Documentation
-site_url: https://docs.prismbot.icuDiscordModals/
+site_url: https://docs.prismbot.icu/DiscordModals/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

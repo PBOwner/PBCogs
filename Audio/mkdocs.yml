@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Audio: Audio.md
 site_name: Audio's Documentation
-site_url: https://docs.prismbot.icuAudio/
+site_url: https://docs.prismbot.icu/Audio/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

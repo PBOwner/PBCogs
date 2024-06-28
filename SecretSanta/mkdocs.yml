@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - SecretSanta: SecretSanta.md
 site_name: SecretSanta's Documentation
-site_url: https://docs.prismbot.icuSecretSanta/
+site_url: https://docs.prismbot.icu/SecretSanta/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

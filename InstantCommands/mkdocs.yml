@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - InstantCommands: InstantCommands.md
 site_name: InstantCommands's Documentation
-site_url: https://docs.prismbot.icuInstantCommands/
+site_url: https://docs.prismbot.icu/InstantCommands/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

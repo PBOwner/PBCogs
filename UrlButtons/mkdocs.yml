@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UrlButtons: UrlButtons.md
 site_name: UrlButtons's Documentation
-site_url: https://docs.prismbot.icuUrlButtons/
+site_url: https://docs.prismbot.icu/UrlButtons/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

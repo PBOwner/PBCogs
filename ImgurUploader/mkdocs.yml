@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ImgurUploader: ImgurUploader.md
 site_name: ImgurUploader's Documentation
-site_url: https://docs.prismbot.icuImgurUploader/
+site_url: https://docs.prismbot.icu/ImgurUploader/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

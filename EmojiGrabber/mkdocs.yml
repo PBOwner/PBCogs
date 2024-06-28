@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - EmojiGrabber: EmojiGrabber.md
 site_name: EmojiGrabber's Documentation
-site_url: https://docs.prismbot.icuEmojiGrabber/
+site_url: https://docs.prismbot.icu/EmojiGrabber/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

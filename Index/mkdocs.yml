@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Index: Index.md
 site_name: Index's Documentation
-site_url: https://docs.prismbot.icuIndex/
+site_url: https://docs.prismbot.icu/Index/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

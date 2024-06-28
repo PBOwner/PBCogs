@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ExclusiveRoles: ExclusiveRoles.md
 site_name: ExclusiveRoles's Documentation
-site_url: https://docs.prismbot.icuExclusiveRoles/
+site_url: https://docs.prismbot.icu/ExclusiveRoles/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

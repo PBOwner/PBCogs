@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Cleverbot: Cleverbot.md
 site_name: Cleverbot's Documentation
-site_url: https://docs.prismbot.icuCleverbot/
+site_url: https://docs.prismbot.icu/Cleverbot/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

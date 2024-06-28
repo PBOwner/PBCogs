@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Grafana: Grafana.md
 site_name: Grafana's Documentation
-site_url: https://docs.prismbot.icuGrafana/
+site_url: https://docs.prismbot.icu/Grafana/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

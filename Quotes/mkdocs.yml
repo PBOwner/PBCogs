@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Quotes: Quotes.md
 site_name: Quotes's Documentation
-site_url: https://docs.prismbot.icuQuotes/
+site_url: https://docs.prismbot.icu/Quotes/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

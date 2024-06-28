@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Filter: Filter.md
 site_name: Filter's Documentation
-site_url: https://docs.prismbot.icuFilter/
+site_url: https://docs.prismbot.icu/Filter/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

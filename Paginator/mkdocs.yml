@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Paginator: Paginator.md
 site_name: Paginator's Documentation
-site_url: https://docs.prismbot.icuPaginator/
+site_url: https://docs.prismbot.icu/Paginator/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

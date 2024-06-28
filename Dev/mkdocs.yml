@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Dev: Dev.md
 site_name: Dev's Documentation
-site_url: https://docs.prismbot.icuDev/
+site_url: https://docs.prismbot.icu/Dev/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

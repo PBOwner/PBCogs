@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - FollowCog: FollowCog.md
 site_name: FollowCog's Documentation
-site_url: https://docs.prismbot.icuFollowCog/
+site_url: https://docs.prismbot.icu/FollowCog/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

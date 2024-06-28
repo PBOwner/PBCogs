@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Websearch: Websearch.md
 site_name: Websearch's Documentation
-site_url: https://docs.prismbot.icuWebsearch/
+site_url: https://docs.prismbot.icu/Websearch/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

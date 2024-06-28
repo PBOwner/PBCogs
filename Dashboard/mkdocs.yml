@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Dashboard: Dashboard.md
 site_name: Dashboard's Documentation
-site_url: https://docs.prismbot.icuDashboard/
+site_url: https://docs.prismbot.icu/Dashboard/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

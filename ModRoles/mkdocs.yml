@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ModRoles: ModRoles.md
 site_name: ModRoles's Documentation
-site_url: https://docs.prismbot.icuModRoles/
+site_url: https://docs.prismbot.icu/ModRoles/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Perform: Perform.md
 site_name: Perform's Documentation
-site_url: https://docs.prismbot.icuPerform/
+site_url: https://docs.prismbot.icu/Perform/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AutoTraceback: AutoTraceback.md
 site_name: AutoTraceback's Documentation
-site_url: https://docs.prismbot.icuAutoTraceback/
+site_url: https://docs.prismbot.icu/AutoTraceback/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

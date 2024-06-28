@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - CustomHelp: CustomHelp.md
 site_name: CustomHelp's Documentation
-site_url: https://docs.prismbot.icuCustomHelp/
+site_url: https://docs.prismbot.icu/CustomHelp/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

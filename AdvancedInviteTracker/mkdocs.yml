@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AdvancedInviteTracker: AdvancedInviteTracker.md
 site_name: AdvancedInviteTracker's Documentation
-site_url: https://docs.prismbot.icuAdvancedInviteTracker/
+site_url: https://docs.prismbot.icu/AdvancedInviteTracker/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

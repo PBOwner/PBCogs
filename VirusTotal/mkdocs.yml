@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - VirusTotal: VirusTotal.md
 site_name: VirusTotal's Documentation
-site_url: https://docs.prismbot.icuVirusTotal/
+site_url: https://docs.prismbot.icu/VirusTotal/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

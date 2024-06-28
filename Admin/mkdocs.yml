@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Admin: Admin.md
 site_name: Admin's Documentation
-site_url: https://docs.prismbot.icuAdmin/
+site_url: https://docs.prismbot.icu/Admin/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

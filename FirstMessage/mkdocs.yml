@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - FirstMessage: FirstMessage.md
 site_name: FirstMessage's Documentation
-site_url: https://docs.prismbot.icuFirstMessage/
+site_url: https://docs.prismbot.icu/FirstMessage/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

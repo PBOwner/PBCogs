@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GoogleSearch: GoogleSearch.md
 site_name: GoogleSearch's Documentation
-site_url: https://docs.prismbot.icuGoogleSearch/
+site_url: https://docs.prismbot.icu/GoogleSearch/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GuildID: GuildID.md
 site_name: GuildID's Documentation
-site_url: https://docs.prismbot.icuGuildID/
+site_url: https://docs.prismbot.icu/GuildID/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - CardsAgainstHumanity: CardsAgainstHumanity.md
 site_name: CardsAgainstHumanity's Documentation
-site_url: https://docs.prismbot.icuCardsAgainstHumanity/
+site_url: https://docs.prismbot.icu/CardsAgainstHumanity/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

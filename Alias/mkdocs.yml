@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Alias: Alias.md
 site_name: Alias's Documentation
-site_url: https://docs.prismbot.icuAlias/
+site_url: https://docs.prismbot.icu/Alias/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

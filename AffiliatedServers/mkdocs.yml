@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - AffiliatedServers: AffiliatedServers.md
 site_name: AffiliatedServers's Documentation
-site_url: https://docs.prismbot.icuAffiliatedServers/
+site_url: https://docs.prismbot.icu/AffiliatedServers/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

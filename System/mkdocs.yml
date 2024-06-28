@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - System: System.md
 site_name: System's Documentation
-site_url: https://docs.prismbot.icuSystem/
+site_url: https://docs.prismbot.icu/System/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

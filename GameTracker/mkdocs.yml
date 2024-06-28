@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - GameTracker: GameTracker.md
 site_name: GameTracker's Documentation
-site_url: https://docs.prismbot.icuGameTracker/
+site_url: https://docs.prismbot.icu/GameTracker/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - SlowMode: SlowMode.md
 site_name: SlowMode's Documentation
-site_url: https://docs.prismbot.icuSlowMode/
+site_url: https://docs.prismbot.icu/SlowMode/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

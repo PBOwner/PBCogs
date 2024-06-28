@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ServerStats: ServerStats.md
 site_name: ServerStats's Documentation
-site_url: https://docs.prismbot.icuServerStats/
+site_url: https://docs.prismbot.icu/ServerStats/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

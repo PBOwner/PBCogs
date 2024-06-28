@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DiscordEdit: DiscordEdit.md
 site_name: DiscordEdit's Documentation
-site_url: https://docs.prismbot.icuDiscordEdit/
+site_url: https://docs.prismbot.icu/DiscordEdit/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Jokes: Jokes.md
 site_name: Jokes's Documentation
-site_url: https://docs.prismbot.icuJokes/
+site_url: https://docs.prismbot.icu/Jokes/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

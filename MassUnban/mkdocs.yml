@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - MassUnban: MassUnban.md
 site_name: MassUnban's Documentation
-site_url: https://docs.prismbot.icuMassUnban/
+site_url: https://docs.prismbot.icu/MassUnban/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

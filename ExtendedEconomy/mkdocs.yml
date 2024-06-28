@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ExtendedEconomy: ExtendedEconomy.md
 site_name: ExtendedEconomy's Documentation
-site_url: https://docs.prismbot.icuExtendedEconomy/
+site_url: https://docs.prismbot.icu/ExtendedEconomy/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

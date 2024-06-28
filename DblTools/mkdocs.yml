@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - DblTools: DblTools.md
 site_name: DblTools's Documentation
-site_url: https://docs.prismbot.icuDblTools/
+site_url: https://docs.prismbot.icu/DblTools/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Message: Message.md
 site_name: Message's Documentation
-site_url: https://docs.prismbot.icuMessage/
+site_url: https://docs.prismbot.icu/Message/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

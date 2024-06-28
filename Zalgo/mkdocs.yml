@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Zalgo: Zalgo.md
 site_name: Zalgo's Documentation
-site_url: https://docs.prismbot.icuZalgo/
+site_url: https://docs.prismbot.icu/Zalgo/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

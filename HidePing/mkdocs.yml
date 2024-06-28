@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - HidePing: HidePing.md
 site_name: HidePing's Documentation
-site_url: https://docs.prismbot.icuHidePing/
+site_url: https://docs.prismbot.icu/HidePing/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

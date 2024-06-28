@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Sticky: Sticky.md
 site_name: Sticky's Documentation
-site_url: https://docs.prismbot.icuSticky/
+site_url: https://docs.prismbot.icu/Sticky/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

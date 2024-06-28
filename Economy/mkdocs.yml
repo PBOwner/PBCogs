@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Economy: Economy.md
 site_name: Economy's Documentation
-site_url: https://docs.prismbot.icuEconomy/
+site_url: https://docs.prismbot.icu/Economy/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

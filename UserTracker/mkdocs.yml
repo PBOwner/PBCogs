@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - UserTracker: UserTracker.md
 site_name: UserTracker's Documentation
-site_url: https://docs.prismbot.icuUserTracker/
+site_url: https://docs.prismbot.icu/UserTracker/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

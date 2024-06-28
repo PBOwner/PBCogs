@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ThreadOpener: ThreadOpener.md
 site_name: ThreadOpener's Documentation
-site_url: https://docs.prismbot.icuThreadOpener/
+site_url: https://docs.prismbot.icu/ThreadOpener/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

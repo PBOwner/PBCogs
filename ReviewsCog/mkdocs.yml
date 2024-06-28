@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - ReviewsCog: ReviewsCog.md
 site_name: ReviewsCog's Documentation
-site_url: https://docs.prismbot.icuReviewsCog/
+site_url: https://docs.prismbot.icu/ReviewsCog/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

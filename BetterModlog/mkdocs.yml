@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - BetterModlog: BetterModlog.md
 site_name: BetterModlog's Documentation
-site_url: https://docs.prismbot.icuBetterModlog/
+site_url: https://docs.prismbot.icu/BetterModlog/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

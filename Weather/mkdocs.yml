@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Weather: Weather.md
 site_name: Weather's Documentation
-site_url: https://docs.prismbot.icuWeather/
+site_url: https://docs.prismbot.icu/Weather/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

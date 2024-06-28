@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Hangman: Hangman.md
 site_name: Hangman's Documentation
-site_url: https://docs.prismbot.icuHangman/
+site_url: https://docs.prismbot.icu/Hangman/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

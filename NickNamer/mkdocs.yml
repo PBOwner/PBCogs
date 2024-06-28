@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - NickNamer: NickNamer.md
 site_name: NickNamer's Documentation
-site_url: https://docs.prismbot.icuNickNamer/
+site_url: https://docs.prismbot.icu/NickNamer/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

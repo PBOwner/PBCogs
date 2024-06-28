@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Color: Color.md
 site_name: Color's Documentation
-site_url: https://docs.prismbot.icuColor/
+site_url: https://docs.prismbot.icu/Color/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

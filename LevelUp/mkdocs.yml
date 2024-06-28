@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - LevelUp: LevelUp.md
 site_name: LevelUp's Documentation
-site_url: https://docs.prismbot.icuLevelUp/
+site_url: https://docs.prismbot.icu/LevelUp/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

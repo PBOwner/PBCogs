@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - RoleRequests: RoleRequests.md
 site_name: RoleRequests's Documentation
-site_url: https://docs.prismbot.icuRoleRequests/
+site_url: https://docs.prismbot.icu/RoleRequests/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

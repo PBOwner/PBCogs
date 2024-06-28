@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Appeal: Appeal.md
 site_name: Appeal's Documentation
-site_url: https://docs.prismbot.icuAppeal/
+site_url: https://docs.prismbot.icu/Appeal/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

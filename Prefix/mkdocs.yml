@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - Prefix: Prefix.md
 site_name: Prefix's Documentation
-site_url: https://docs.prismbot.icuPrefix/
+site_url: https://docs.prismbot.icu/Prefix/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false

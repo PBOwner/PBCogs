@@ -4,7 +4,7 @@ nav:
 - Home: index.md
 - CodeSnippets: CodeSnippets.md
 site_name: CodeSnippets's Documentation
-site_url: https://docs.prismbot.icuCodeSnippets/
+site_url: https://docs.prismbot.icu/CodeSnippets/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false
