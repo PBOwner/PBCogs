@@ -48,8 +48,33 @@ class AutoDocs(commands.Cog):
         super().__init__(*args, **kwargs)
         self.bot = bot
         self.config = {
-            "custom_domain": "{site_url}"  # Add default value or load from a config file
+            "custom_domain": "your_default_domain_here"  # Add default value or load from a config file
         }
+        self.bot.add_listener(self.on_cog_load, "on_cog_load")
+        self.bot.add_listener(self.on_cog_unload, "on_cog_unload")
+
+    async def on_cog_load(self, cog: commands.Cog):
+        await self.generate_docs_for_cog(cog)
+
+    async def on_cog_unload(self, cog: commands.Cog):
+        await self.generate_docs_for_cog(cog)
+
+    async def generate_docs_for_cog(self, cog: commands.Cog):
+        prefix = (await self.bot.get_valid_prefixes())[0].strip()
+        docs, _ = self.generate_readme(
+            cog,
+            prefix,
+            replace_botname=True,
+            extended_info=True,
+            include_hidden=False,
+            include_help=True,
+            max_privilege_level="botowner",
+            min_privilege_level="user",
+            embedding_style=False,
+        )
+        filename = f"{cog.qualified_name}.md"
+        with open(os.path.join(self.config["repo_dir"], "docs", filename), "w", encoding="utf-8") as f:
+            f.write(docs)
 
     def generate_readme(
         self,
