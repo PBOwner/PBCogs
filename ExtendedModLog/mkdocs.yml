@@ -6,5 +6,5 @@ nav:
 site_name: ExtendedModLog's Documentation
 site_url: https://docs.prismbot.icu/ExtendedModLog/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

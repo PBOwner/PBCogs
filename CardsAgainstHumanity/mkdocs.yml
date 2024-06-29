@@ -6,5 +6,5 @@ nav:
 site_name: CardsAgainstHumanity's Documentation
 site_url: https://docs.prismbot.icu/CardsAgainstHumanity/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

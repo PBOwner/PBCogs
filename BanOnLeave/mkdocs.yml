@@ -6,5 +6,5 @@ nav:
 site_name: BanOnLeave's Documentation
 site_url: https://docs.prismbot.icu/BanOnLeave/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

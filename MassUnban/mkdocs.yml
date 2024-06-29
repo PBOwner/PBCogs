@@ -6,5 +6,5 @@ nav:
 site_name: MassUnban's Documentation
 site_url: https://docs.prismbot.icu/MassUnban/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

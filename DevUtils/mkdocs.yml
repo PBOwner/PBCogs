@@ -6,5 +6,5 @@ nav:
 site_name: DevUtils's Documentation
 site_url: https://docs.prismbot.icu/DevUtils/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false

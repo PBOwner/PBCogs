@@ -6,5 +6,5 @@ nav:
 site_name: Coffeetools's Documentation
 site_url: https://docs.prismbot.icu/Coffeetools/
 theme:
-  name: material
+  name: dracula
 use_directory_urls: false
