@@ -7,7 +7,7 @@ class Fun(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(name='8ball')
     async def eightball(self, ctx, *, question: str):
         """Ask the magic 8-ball a question."""
         responses = [
