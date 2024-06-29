@@ -46,21 +46,27 @@ class AdWarn(commands.Cog):
                     description=f"{user.mention} has been warned for: {reason} in {ctx.channel.mention}",
                     color=discord.Color.green()
                 )
-                await ctx.send(embed=confirmation_embed)
+                confirmation_message = await ctx.send(embed=confirmation_embed)
+                await confirmation_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="ErRoR 404",
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await ctx.send(embed=error_embed)
+                error_message = await ctx.send(embed=error_embed)
+                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="ErRoR 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            await ctx.send(embed=error_embed)
+            error_message = await ctx.send(embed=error_embed)
+            await error_message.delete(delay=3)
+
+        # Delete the command message after 3 seconds
+        await ctx.message.delete(delay=3)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
