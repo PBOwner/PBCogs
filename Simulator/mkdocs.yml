@@ -6,5 +6,5 @@ nav:
 site_name: Simulator's Documentation
 site_url: https://docs.prismbot.icu/Simulator/
 theme:
-  name: dracula
+  name: material
 use_directory_urls: false
