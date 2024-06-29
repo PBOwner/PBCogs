@@ -7,7 +7,8 @@ class AffiliatedServers(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         default_global = {
-            "affiliated_servers": []
+            "affiliated_servers": [],
+            "optout_servers": []
         }
         self.config.register_global(**default_global)
 
@@ -118,12 +119,34 @@ class AffiliatedServers(commands.Cog):
         await self.config.affiliated_servers.set([])
         await ctx.send("All affiliated servers have been cleared.")
 
+    @affiliate.command()
+    async def optout(self, ctx):
+        """Opt-out of sending DMs to users when they join."""
+        async with self.config.optout_servers() as optout_servers:
+            if ctx.guild.id not in optout_servers:
+                optout_servers.append(ctx.guild.id)
+                await ctx.send("This server has opted out of sending DMs to new users.")
+            else:
+                await ctx.send("This server is already opted out.")
+
+    @affiliate.command()
+    async def optin(self, ctx):
+        """Opt-in to sending DMs to users when they join."""
+        async with self.config.optout_servers() as optout_servers:
+            if ctx.guild.id in optout_servers:
+                optout_servers.remove(ctx.guild.id)
+                await ctx.send("This server has opted in to sending DMs to new users.")
+            else:
+                await ctx.send("This server is already opted in.")
+
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         """Event listener that triggers when a new member joins a server."""
         affiliated_servers = await self.config.affiliated_servers()
-        if not affiliated_servers:
-            return  # No affiliated servers to send
+        optout_servers = await self.config.optout_servers()
+
+        if not affiliated_servers or member.guild.id in optout_servers:
+            return  # No affiliated servers to send or server has opted out
 
         initial_message = "The servers listed below are affiliated with FuturoBot"
 
