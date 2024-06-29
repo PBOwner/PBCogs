@@ -3,6 +3,9 @@ from redbot.core import commands, Config
 from redbot.core.bot import Red
 import random
 
+# Replace this URL with the actual URL of the magic 8-ball image you want to use
+MAGIC_8BALL_IMAGE_URL = "https://cdn.prismbot.icu/Q3q6qB.png"
+
 class Fun(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
@@ -33,7 +36,13 @@ class Fun(commands.Cog):
             "Very doubtful."
         ]
         response = random.choice(responses)
-        await ctx.send(f"🎱 {response}")
+
+        embed = discord.Embed(title="I can see your answer", color=discord.Color.blue())
+        embed.set_thumbnail(url=MAGIC_8BALL_IMAGE_URL)
+        embed.add_field(name="Question", value=question, inline=False)
+        embed.add_field(name="Answer", value=response, inline=False)
+
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def mock(self, ctx, *, text: str):
@@ -46,3 +55,6 @@ class Fun(commands.Cog):
         """Memeify a given text."""
         memeified_text = ' '.join([char.upper() if i % 2 == 0 else char.lower() for i, char in enumerate(text)])
         await ctx.send(memeified_text)
+
+def setup(bot: Red):
+    bot.add_cog(Fun(bot))
