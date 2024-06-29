@@ -41,7 +41,7 @@ class AdWarn(commands.Cog):
                 await warn_channel.send(embed=embed)
 
                 # Send plain text message to the warning channel
-                await warn_channel.send(f"{user.mention}, you have been warned for: {reason}")
+                await warn_channel.send(f"{user.mention}")
 
                 # Send confirmation embed to the command issuer
                 confirmation_embed = discord.Embed(
