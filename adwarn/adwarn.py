@@ -12,7 +12,7 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, user: discord.Member, channel: discord.TextChannel, *, reason: str):
+    async def adwarn(self, ctx, user: discord.Member, *, reason: str):
         """Warn a user and send an embed to the default warning channel."""
         warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
         if warn_channel_id:
@@ -25,14 +25,14 @@ class AdWarn(commands.Cog):
                     "reason": reason,
                     "moderator": ctx.author.id,
                     "time": warning_time,
-                    "channel": channel.id
+                    "channel": ctx.channel.id
                 })
                 await self.config.member(user).warnings.set(warnings)
 
                 # Create the embed message
                 embed = discord.Embed(title="You were warned!", color=discord.Color.red())
                 embed.add_field(name="User", value=user.mention, inline=True)
-                embed.add_field(name="In", value=channel.mention, inline=True)
+                embed.add_field(name="In", value=ctx.channel.mention, inline=True)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 embed.add_field(name="Time", value=warning_time, inline=False)
                 embed.set_footer(text=f"Total warnings: {len(warnings)}")
@@ -43,7 +43,7 @@ class AdWarn(commands.Cog):
                 # Send confirmation embed to the command issuer
                 confirmation_embed = discord.Embed(
                     title="Warning Issued",
-                    description=f"{user.mention} has been warned for: {reason} in {channel.mention}",
+                    description=f"{user.mention} has been warned for: {reason} in {ctx.channel.mention}",
                     color=discord.Color.green()
                 )
                 await ctx.send(embed=confirmation_embed)
@@ -231,6 +231,3 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             await ctx.send(embed=embed)
-
-def setup(bot: Red):
-    bot.add_cog(AdWarn(bot))
