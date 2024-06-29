@@ -8,7 +8,10 @@ class IntroCog(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890, force_registration=True)
         default_guild = {
             "fields": [],
-            "intro_channel": None
+            "intro_channel": None,
+            "title": "Introduction",  # Default title
+            "footer": None,  # Default footer
+            "break_field_title": None  # Default break field title
         }
         default_user = {
             "color": None,
@@ -90,13 +93,22 @@ class IntroCog(commands.Cog):
         """Preview your introduction."""
         color = await self.config.user(ctx.author).color()
         fields = await self.config.user(ctx.author).fields()
+        title = await self.config.guild(ctx.guild).title()
+        footer = await self.config.guild(ctx.guild).footer()
+        break_field_title = await self.config.guild(ctx.guild).break_field_title()
         if not color or not fields:
             await ctx.send("You need to set your introduction color and fields first.")
             return
 
-        embed = discord.Embed(color=color, title=f"{ctx.author.display_name}'s Introduction")
+        embed = discord.Embed(color=color, title=title)
         for field_name, field_value in fields.items():
             embed.add_field(name=field_name.capitalize(), value=field_value, inline=False)
+
+        if break_field_title:
+            embed.add_field(name=break_field_title, value="\u200b", inline=False)
+
+        if footer:
+            embed.set_footer(text=footer)
 
         await ctx.send(embed=embed)
 
@@ -105,13 +117,22 @@ class IntroCog(commands.Cog):
         """Send your introduction to the configured channel."""
         color = await self.config.user(ctx.author).color()
         fields = await self.config.user(ctx.author).fields()
+        title = await self.config.guild(ctx.guild).title()
+        footer = await self.config.guild(ctx.guild).footer()
+        break_field_title = await self.config.guild(ctx.guild).break_field_title()
         if not color or not fields:
             await ctx.send("You need to set your introduction color and fields first.")
             return
 
-        embed = discord.Embed(color=color, title=f"{ctx.author.display_name}'s Introduction")
+        embed = discord.Embed(color=color, title=title)
         for field_name, field_value in fields.items():
             embed.add_field(name=field_name.capitalize(), value=field_value, inline=False)
+
+        if break_field_title:
+            embed.add_field(name=break_field_title, value="\u200b", inline=False)
+
+        if footer:
+            embed.set_footer(text=footer)
 
         intro_channel_id = await self.config.guild(ctx.guild).intro_channel()
         if intro_channel_id:
@@ -167,5 +188,58 @@ class IntroCog(commands.Cog):
         else:
             await ctx.send(f"The field `{field_name}` does not exist in the introduction form.")
 
-def setup(bot: Red):
-    bot.add_cog(IntroCog(bot))
+    @commands.guild_only()
+    @commands.admin_or_permissions(manage_guild=True)
+    @intro.command(name="settitle")
+    async def intro_settitle(self, ctx, *, title: str):
+        """Set the title for the introduction embed."""
+        await self.config.guild(ctx.guild).title.set(title)
+        await ctx.send(f"The introduction title has been set to `{title}`.")
+
+    @intro.command(name="viewtitle")
+    async def intro_viewtitle(self, ctx):
+        """View the current title for the introduction embed."""
+        title = await self.config.guild(ctx.guild).title()
+        await ctx.send(f"The current introduction title is `{title}`.")
+
+    @commands.guild_only()
+    @commands.admin_or_permissions(manage_guild=True)
+    @intro.command(name="setfooter")
+    async def intro_setfooter(self, ctx, *, footer: str):
+        """Set the footer for the introduction embed."""
+        await self.config.guild(ctx.guild).footer.set(footer)
+        await ctx.send(f"The introduction footer has been set to `{footer}`.")
+
+    @intro.command(name="viewfooter")
+    async def intro_viewfooter(self, ctx):
+        """View the current footer for the introduction embed."""
+        footer = await self.config.guild(ctx.guild).footer()
+        await ctx.send(f"The current introduction footer is `{footer}`.")
+
+    @commands.guild_only()
+    @commands.admin_or_permissions(manage_guild=True)
+    @intro.command(name="setbreakfield")
+    async def intro_setbreakfield(self, ctx, *, break_field_title: str):
+        """Set the title for the break field."""
+        await self.config.guild(ctx.guild).break_field_title.set(break_field_title)
+        await ctx.send(f"The break field title has been set to `{break_field_title}`.")
+
+    @intro.command(name="viewbreakfield")
+    async def intro_viewbreakfield(self, ctx):
+        """View the current break field title."""
+        break_field_title = await self.config.guild(ctx.guild).break_field_title()
+        await ctx.send(f"The current break field title is `{break_field_title}`.")
+
+    @intro.command(name="example")
+    async def intro_example(self, ctx):
+        """Set an example introduction with predefined fields and values."""
+        example_fields = {f"Example field {i}": "Example Description" for i in range(1, 16)}
+        example_title = "Example Title"
+        example_footer = "Example Footer"
+        example_break_field_title = "Example Break Field"
+        await self.config.user(ctx.author).color.set(discord.Color.blue().value)
+        await self.config.user(ctx.author).fields.set(example_fields)
+        await self.config.guild(ctx.guild).title.set(example_title)
+        await self.config.guild(ctx.guild).footer.set(example_footer)
+        await self.config.guild(ctx.guild).break_field_title.set(example_break_field_title)
+        await ctx.send("Example introduction has been set with predefined fields, title, footer, and break field title.")
