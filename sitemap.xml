@@ -626,6 +626,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/Fun.html</loc>
+         <lastmod>2024-06-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/GCC.html</loc>
          <lastmod>2024-06-29</lastmod>
          <changefreq>daily</changefreq>
