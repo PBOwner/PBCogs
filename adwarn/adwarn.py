@@ -7,7 +7,7 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None)
+        self.config.register_guild(warn_channel=None, thresholds={})
         self.config.register_member(warnings=[])
 
     @commands.command()
@@ -48,6 +48,9 @@ class AdWarn(commands.Cog):
                 )
                 confirmation_message = await ctx.send(embed=confirmation_embed)
                 await confirmation_message.delete(delay=3)
+
+                # Check thresholds and take action if necessary
+                await self.check_thresholds(ctx, user, len(warnings))
             else:
                 error_embed = discord.Embed(
                     title="ErRoR 404",
@@ -67,6 +70,22 @@ class AdWarn(commands.Cog):
 
         # Delete the command message after 3 seconds
         await ctx.message.delete(delay=3)
+
+    async def check_thresholds(self, ctx, user, warning_count):
+        thresholds = await self.config.guild(ctx.guild).thresholds()
+
+        if warning_count in thresholds:
+            action = thresholds[warning_count]
+            if action == "kick":
+                await ctx.guild.kick(user, reason="Reached warning threshold")
+                await ctx.send(f"{user.mention} has been kicked for reaching {warning_count} warnings.")
+            elif action == "ban":
+                await ctx.guild.ban(user, reason="Reached warning threshold")
+                await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
+            elif action == "mute":
+                # Implement your mute logic here
+                await ctx.send(f"{user.mention} has been muted for reaching {warning_count} warnings.")
+            # Add more actions as needed
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -237,3 +256,16 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             await ctx.send(embed=embed)
+
+    @warnset.command()
+    async def threshold(self, ctx, warning_count: int, action: str):
+        """Set an action for a specific warning count threshold."""
+        valid_actions = ["kick", "ban", "mute"]  # Add more actions as needed
+        if action not in valid_actions:
+            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)}")
+            return
+
+        thresholds = await self.config.guild(ctx.guild).thresholds()
+        thresholds[warning_count] = action
+        await self.config.guild(ctx.guild).thresholds.set(thresholds)
+        await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
