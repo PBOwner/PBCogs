@@ -139,17 +139,22 @@ class Bumper(commands.Cog):
             await ctx.send(embed=discord.Embed(description="No premium codes found.", color=discord.Color.red()))
             return
 
-        embed = discord.Embed(title="Premium Codes", color=discord.Color.blue())
-        for code, data in premium_codes.items():
-            if isinstance(data, dict):  # Ensure data is a dictionary
-                user = self.bot.get_user(data["user_id"])
-                user_name = user.name if user else "Unknown User"
-                redeemed = "Yes" if data["redeemed"] else "No"
-                embed.add_field(name=code, value=f"User: {user_name}\nRedeemed: {redeemed}", inline=False)
-            else:
-                log.error(f"Invalid data format for code {code}: {data}")
+        codes_per_page = 25
+        pages = [dict(list(premium_codes.items())[i:i + codes_per_page]) for i in range(0, len(premium_codes), codes_per_page)]
+        total_pages = len(pages)
 
-        await ctx.send(embed=embed)
+        for page_num, page in enumerate(pages, start=1):
+            embed = discord.Embed(title=f"Premium Codes (Page {page_num}/{total_pages})", color=discord.Color.blue())
+            for code, data in page.items():
+                if isinstance(data, dict):  # Ensure data is a dictionary
+                    user = self.bot.get_user(data["user_id"])
+                    user_name = user.name if user else "Unknown User"
+                    redeemed = "Yes" if data["redeemed"] else "No"
+                    embed.add_field(name=code, value=f"User: {user_name}\nRedeemed: {redeemed}", inline=False)
+                else:
+                    log.error(f"Invalid data format for code {code}: {data}")
+
+            await ctx.send(embed=embed)
 
     @commands.command()
     async def mycodes(self, ctx: commands.Context):
@@ -160,13 +165,62 @@ class Bumper(commands.Cog):
             await ctx.send(embed=discord.Embed(description="You have no premium codes assigned.", color=discord.Color.red()))
             return
 
-        embed = discord.Embed(title="Your Premium Codes", color=discord.Color.blue())
-        for code in user_codes:
-            data = premium_codes[code]
-            redeemed = "Yes" if data["redeemed"] else "No"
-            embed.add_field(name=code, value=f"Redeemed: {redeemed}", inline=False)
+        codes_per_page = 25
+        pages = [user_codes[i:i + codes_per_page] for i in range(0, len(user_codes), codes_per_page)]
+        total_pages = len(pages)
 
-        await ctx.send(embed=embed)
+        for page_num, page in enumerate(pages, start=1):
+            embed = discord.Embed(title=f"Your Premium Codes (Page {page_num}/{total_pages})", color=discord.Color.blue())
+            for code in page:
+                data = premium_codes[code]
+                redeemed = "Yes" if data["redeemed"] else "No"
+                embed.add_field(name=code, value=f"Redeemed: {redeemed}", inline=False)
+
+            await ctx.send(embed=embed)
+        
+    @commands.command()
+    async def codegen(self, ctx: commands.Context, user_id: int, duration: str):
+        """Generate a premium code. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month)."""
+        user = self.bot.get_user(user_id)
+        if not user:
+            await ctx.send(embed=discord.Embed(description="Invalid user ID.", color=discord.Color.red()))
+            return
+
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        expiry_message = ""
+        duration_seconds = None
+
+        if duration == "-1":
+            expiry_message = " (Permanent)"
+        else:
+            try:
+                if duration.endswith("d"):
+                    days = int(duration[:-1])
+                    duration_seconds = timedelta(days=days).total_seconds()
+                    expiry_message = f" (Expires in {days} days upon redemption)"
+                elif duration.endswith("m"):
+                    months = int(duration[:-1])
+                    duration_seconds = timedelta(days=months * 30).total_seconds()
+                    expiry_message = f" (Expires in {months} months upon redemption)"
+                else:
+                    raise ValueError("Invalid duration format")
+            except ValueError:
+                await ctx.send(embed=discord.Embed(description="Invalid duration format. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month).", color=discord.Color.red()))
+                return
+
+        async with self.config.premium_codes() as premium_codes:
+            premium_codes[code] = {
+                "user_id": user_id,
+                "duration": duration_seconds,
+                "redeemed": False
+            }
+
+        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
+
+        try:
+            await user.send(embed=discord.Embed(description=f"Your premium code is: {code}{expiry_message}", color=discord.Color.green()))
+        except discord.Forbidden:
+            await ctx.send(embed=discord.Embed(description="Could not send DM to the user.", color=discord.Color.red()))
 
     @commands.command()
     @commands.is_owner()
