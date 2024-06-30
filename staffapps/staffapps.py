@@ -32,7 +32,7 @@ class StaffApps(commands.Cog):
         """Add a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
             questions.setdefault(str(role.id), []).append(question)
-        await ctx.send(f"Question added for {role.mention}.")
+        await ctx.send(f"Question added for {role.name}.")
 
     @commands.guild_only()
     @commands.command()
@@ -83,7 +83,7 @@ class StaffApps(commands.Cog):
         application_channel = self.bot.get_channel(application_channel_id)
 
         if application_channel:
-            embed = discord.Embed(title=f"New Application for {role.mention} - {ctx.author.display_name} - {ctx.author.id}", color=discord.Color.blue())
+            embed = discord.Embed(title=f"New Application for {role.name} - {ctx.author.display_name} - {ctx.author.id}", color=discord.Color.blue())
             for question, response in responses.items():
                 embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
             embed.add_field(name="Status", value="Pending", inline=False)
