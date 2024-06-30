@@ -731,6 +731,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CycleStatus.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Dashboard.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1803,6 +1811,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="PfpImgen.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PfpImgen
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="PhenUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2199,14 +2215,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             ServerStats
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Session.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Session
         </a>
     </li>
                             
@@ -2780,7 +2788,7 @@
                 <section class="p-md-5 section-content">
     <article>
         <p><h1 id="fluent-help">Fluent Help</h1>
-<p>Seamless translation between two languages in one channel. Or manual translation to various languages.<br/><br/>Fluent uses google translate by default, with <a href="https://flowery.pw/">Flowery</a> as a fallback.<br/><br/>Fluent also supports the <a href="https://www.deepl.com/pro#developer">Deepl</a> tranlsation api.<br/>1. Register your free Deepl account <strong><a href="https://www.deepl.com/pro#developer">Here</a></strong>.<br/>2. Obtain your API key <strong><a href="https://www.deepl.com/account/summary">Here</a></strong>.<br/>3. Set your API key with:<br/><code>[p]set api deepl key YOUR_KEY_HERE</code><br/><br/>If a deepl key is set, it will use that before falling back to google translate and then flowery.</p>
+<p>Seamless translation between two languages in one channel. Or manual translation to various languages.<br/><br/>Fluent uses google translate by default, with <a href="https://flowery.pw/">Flowery</a> as a fallback.<br/><br/>Fluent also supports the <a href="https://www.deepl.com/pro#developer">Deepl</a> translation api.<br/>1. Register your free Deepl account <strong><a href="https://www.deepl.com/pro#developer">Here</a></strong>.<br/>2. Obtain your API key <strong><a href="https://www.deepl.com/account/summary">Here</a></strong>.<br/>3. Set your API key with:<br/><code>[p]set api deepl key YOUR_KEY_HERE</code><br/><br/>If a deepl key is set, it will use that before falling back to google translate and then flowery.</p>
 <h3 id="serverlocale">serverlocale</h3>
 <p><strong>Description:</strong> Check the current server's locale</p>
 <p><strong>Usage:</strong> <code>,serverlocale</code></p>
@@ -2790,17 +2798,20 @@
 <h3 id="fluent">fluent</h3>
 <p><strong>Description:</strong> Base command</p>
 <p><strong>Usage:</strong> <code>,fluent</code></p>
+<h3 id="fluent-add">fluent add</h3>
+<p><strong>Description:</strong> Add a channel and languages to translate between</p>
+<p>Tip: Language 1 is the first to be converted. For example, if you expect most of the conversation to be
+in english, then make english language 2 to use less api calls.</p>
+<p><strong>Usage:</strong> <code>,fluent add</code></p>
 <h3 id="fluent-view">fluent view</h3>
 <p><strong>Description:</strong> View all fluent channels</p>
 <p><strong>Usage:</strong> <code>,fluent view</code></p>
 <h3 id="fluent-remove">fluent remove</h3>
 <p><strong>Description:</strong> Remove a channel from Fluent</p>
 <p><strong>Usage:</strong> <code>,fluent remove</code></p>
-<h3 id="fluent-add">fluent add</h3>
-<p><strong>Description:</strong> Add a channel and languages to translate between</p>
-<p>Tip: Language 1 is the first to be converted. For example, if you expect most of the conversation to be
-in english, then make english language 2 to use less api calls.</p>
-<p><strong>Usage:</strong> <code>,fluent add</code></p></p>
+<h3 id="autotranslate">autotranslate</h3>
+<p><strong>Description:</strong> Enable or disable auto-translation to English for a specific channel</p>
+<p><strong>Usage:</strong> <code>,autotranslate</code></p></p>
     </article>
 </section>
             <!-- endblock -->

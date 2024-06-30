@@ -411,6 +411,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/CycleStatus.html</loc>
+         <lastmod>2024-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/Dashboard.html</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
@@ -1076,6 +1081,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/PfpImgen.html</loc>
+         <lastmod>2024-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/PhenUtils.html</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
@@ -1322,11 +1332,6 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/ServerStats.html</loc>
-         <lastmod>2024-06-30</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.prismbot.icu/Session.html</loc>
          <lastmod>2024-06-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
