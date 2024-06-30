@@ -215,6 +215,65 @@ class Bumper(commands.Cog):
             else:
                 await ctx.send(embed=discord.Embed(description=f"User {user.mention} is not a trusted user.", color=discord.Color.orange()))
 
+    @bumpowner.command()
+    async def listprem(self, ctx: commands.Context):
+        """List all premium codes and who they are assigned to."""
+        premium_codes = await self.config.premium_codes()
+        if not premium_codes:
+            await ctx.send(embed=discord.Embed(description="No premium codes found.", color=discord.Color.red()))
+            return
+
+        embed = discord.Embed(title="Premium Codes", color=discord.Color.blue())
+        for code, data in premium_codes.items():
+            user = self.bot.get_user(data["user_id"])
+            user_name = user.name if user else "Unknown User"
+            redeemed = "Yes" if data["redeemed"] else "No"
+            embed.add_field(name=code, value=f"User: {user_name}\nRedeemed: {redeemed}", inline=False)
+
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def mycodes(self, ctx: commands.Context):
+        """List all premium codes assigned to the user."""
+        premium_codes = await self.config.premium_codes()
+        user_codes = [code for code, data in premium_codes.items() if data["user_id"] == ctx.author.id]
+        if not user_codes:
+            await ctx.send(embed=discord.Embed(description="You have no premium codes assigned.", color=discord.Color.red()))
+            return
+
+        embed = discord.Embed(title="Your Premium Codes", color=discord.Color.blue())
+        for code in user_codes:
+            data = premium_codes[code]
+            redeemed = "Yes" if data["redeemed"] else "No"
+            embed.add_field(name=code, value=f"Redeemed: {redeemed}", inline=False)
+
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.is_owner()
+    async def revokeprem(self, ctx: commands.Context, code: str):
+        """Revoke a premium code."""
+        async with self.config.premium_codes() as premium_codes:
+            if code not in premium_codes:
+                await ctx.send(embed=discord.Embed(description="Invalid premium code.", color=discord.Color.red()))
+                return
+
+            del premium_codes[code]
+            await ctx.send(embed=discord.Embed(description=f"Premium code {code} has been revoked.", color=discord.Color.green()))
+
+    @commands.command()
+    @commands.is_owner()
+    async def revokepremserver(self, ctx: commands.Context, guild_id: int):
+        """Revoke premium status from a server."""
+        guild = self.bot.get_guild(guild_id)
+        if not guild:
+            await ctx.send(embed=discord.Embed(description="Invalid guild ID.", color=discord.Color.red()))
+            return
+
+        await self.config.guild(guild).premium.set(False)
+        await self.config.guild(guild).premium_expiry.set(None)
+        await ctx.send(embed=discord.Embed(description=f"Premium status revoked from server {guild.name}.", color=discord.Color.green()))
+
     @commands.command()
     @commands.guild_only()
     async def redeem(self, ctx: commands.Context, code: str):
@@ -436,6 +495,8 @@ class Bumper(commands.Cog):
             if await self.config.guild(guild).premium():
                 log.info(f"Auto bumping for premium guild: {guild.name}")
                 await self.send_bump(guild)
+                await self.config.guild(guild).last_bump.set(datetime.now(timezone.utc).isoformat())
+                await self.increment_bump_count(guild)
 
     async def increment_bump_count(self, guild: discord.Guild):
         current_count = await self.config.guild(guild).bump_count()
@@ -445,7 +506,7 @@ class Bumper(commands.Cog):
         if bump_log_channel:
             embed = discord.Embed(
                 title="Server Bumped",
-                description=f"{guild.name} was bumped by {guild.owner.name}. This server has been bumped {current_count + 1} times.",
+                description=f"{guild.name} was bumped. This server has been bumped {current_count + 1} times.",
                 color=discord.Color.green()
             )
             await bump_log_channel.send(embed=embed)
@@ -457,7 +518,7 @@ class Bumper(commands.Cog):
         if bump_log_channel:
             embed = discord.Embed(
                 title="Server Bumped",
-                description=f"{source_guild.name} was bumped by {source_guild.owner.name}. This server has been bumped {bump_count} times.",
+                description=f"{source_guild.name} was bumped. This server has been bumped {bump_count} times.",
                 color=discord.Color.green()
             )
             await bump_log_channel.send(embed=embed)
