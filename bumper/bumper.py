@@ -179,46 +179,52 @@ class Bumper(commands.Cog):
             await ctx.send(embed=embed)
         
     @commands.command()
-    async def codegen(self, ctx: commands.Context, user_id: int, duration: str):
-        """Generate a premium code. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month)."""
+    async def codegen(self, ctx: commands.Context, user_id: int, duration: str, quantity: int = 1):
+        """Generate premium codes. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month)."""
         user = self.bot.get_user(user_id)
         if not user:
             await ctx.send(embed=discord.Embed(description="Invalid user ID.", color=discord.Color.red()))
             return
 
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-        expiry_message = ""
-        duration_seconds = None
+        codes = []
+        for _ in range(quantity):
+            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            expiry_message = ""
+            duration_seconds = None
 
-        if duration == "-1":
-            expiry_message = " (Permanent)"
-        else:
-            try:
-                if duration.endswith("d"):
-                    days = int(duration[:-1])
-                    duration_seconds = timedelta(days=days).total_seconds()
-                    expiry_message = f" (Expires in {days} days upon redemption)"
-                elif duration.endswith("m"):
-                    months = int(duration[:-1])
-                    duration_seconds = timedelta(days=months * 30).total_seconds()
-                    expiry_message = f" (Expires in {months} months upon redemption)"
-                else:
-                    raise ValueError("Invalid duration format")
-            except ValueError:
-                await ctx.send(embed=discord.Embed(description="Invalid duration format. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month).", color=discord.Color.red()))
-                return
+            if duration == "-1":
+                expiry_message = " (Permanent)"
+            else:
+                try:
+                    if duration.endswith("d"):
+                        days = int(duration[:-1])
+                        duration_seconds = timedelta(days=days).total_seconds()
+                        expiry_message = f" (Expires in {days} days upon redemption)"
+                    elif duration.endswith("m"):
+                        months = int(duration[:-1])
+                        duration_seconds = timedelta(days=months * 30).total_seconds()
+                        expiry_message = f" (Expires in {months} months upon redemption)"
+                    else:
+                        raise ValueError("Invalid duration format")
+                except ValueError:
+                    await ctx.send(embed=discord.Embed(description="Invalid duration format. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month).", color=discord.Color.red()))
+                    return
+
+            codes.append((code, expiry_message, duration_seconds))
 
         async with self.config.premium_codes() as premium_codes:
-            premium_codes[code] = {
-                "user_id": user_id,
-                "duration": duration_seconds,
-                "redeemed": False
-            }
+            for code, expiry_message, duration_seconds in codes:
+                premium_codes[code] = {
+                    "user_id": user_id,
+                    "duration": duration_seconds,
+                    "redeemed": False
+                }
 
-        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
+        codes_str = "\n".join([f"{code}{expiry_message}" for code, expiry_message, _ in codes])
+        await ctx.send(embed=discord.Embed(description=f"Generated premium codes:\n{codes_str}", color=discord.Color.green()))
 
         try:
-            await user.send(embed=discord.Embed(description=f"Your premium code is: {code}{expiry_message}", color=discord.Color.green()))
+            await user.send(embed=discord.Embed(description=f"Your premium codes:\n{codes_str}", color=discord.Color.green()))
         except discord.Forbidden:
             await ctx.send(embed=discord.Embed(description="Could not send DM to the user.", color=discord.Color.red()))
 
