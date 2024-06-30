@@ -131,90 +131,6 @@ class Bumper(commands.Cog):
         await self.config.support_server_invite.set(invite)
         await ctx.send(embed=discord.Embed(description=f"Support server invite link set to: {invite}", color=discord.Color.green()))
 
-    @commands.command()
-    async def codegen(self, ctx: commands.Context, user_id: int, duration: str):
-        """Generate a premium code. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month)."""
-        user = self.bot.get_user(user_id)
-        if not user:
-            await ctx.send(embed=discord.Embed(description="Invalid user ID.", color=discord.Color.red()))
-            return
-
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-        expiry_message = ""
-        duration_seconds = None
-
-        if duration == "-1":
-            expiry_message = " (Permanent)"
-        else:
-            try:
-                if duration.endswith("d"):
-                    days = int(duration[:-1])
-                    duration_seconds = timedelta(days=days).total_seconds()
-                    expiry_message = f" (Expires in {days} days upon redemption)"
-                elif duration.endswith("m"):
-                    months = int(duration[:-1])
-                    duration_seconds = timedelta(days=months * 30).total_seconds()
-                    expiry_message = f" (Expires in {months} months upon redemption)"
-                else:
-                    raise ValueError("Invalid duration format")
-            except ValueError:
-                await ctx.send(embed=discord.Embed(description="Invalid duration format. Use -1 for permanent, or specify time and unit (e.g., 1d for 1 day, 1m for 1 month).", color=discord.Color.red()))
-                return
-
-        async with self.config.premium_codes() as premium_codes:
-            premium_codes[code] = {
-                "user_id": user_id,
-                "duration": duration_seconds,
-                "redeemed": False
-            }
-
-        await ctx.send(embed=discord.Embed(description=f"Generated premium code: {code}{expiry_message}", color=discord.Color.green()))
-
-        try:
-            await user.send(embed=discord.Embed(description=f"Your premium code is: {code}{expiry_message}", color=discord.Color.green()))
-        except discord.Forbidden:
-            await ctx.send(embed=discord.Embed(description="Could not send DM to the user.", color=discord.Color.red()))
-
-    @bumpowner.command()
-    async def blacklist(self, ctx: commands.Context, guild_id: int):
-        """Blacklist a server by ID."""
-        async with self.config.blacklisted_guilds() as blacklisted_guilds:
-            if guild_id not in blacklisted_guilds:
-                blacklisted_guilds.append(guild_id)
-                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} has been blacklisted.", color=discord.Color.green()))
-            else:
-                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} is already blacklisted.", color=discord.Color.orange()))
-
-    @bumpowner.command()
-    async def unblacklist(self, ctx: commands.Context, guild_id: int):
-        """Unblacklist a server by ID."""
-        async with self.config.blacklisted_guilds() as blacklisted_guilds:
-            if guild_id in blacklisted_guilds:
-                blacklisted_guilds.remove(guild_id)
-                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} has been unblacklisted.", color=discord.Color.green()))
-            else:
-                await ctx.send(embed=discord.Embed(description=f"Server with ID {guild_id} is not blacklisted.", color=discord.Color.orange()))
-
-    @bumpowner.command()
-    async def add_trusted(self, ctx: commands.Context, user: discord.User):
-        """Add a trusted user to accept or deny reports."""
-        async with self.config.trusted_users() as trusted_users:
-            if user.id not in trusted_users:
-                trusted_users.append(user.id)
-                await ctx.send(embed=discord.Embed(description=f"User {user.mention} has been added as a trusted user.", color=discord.Color.green()))
-            else:
-                await ctx.send(embed=discord.Embed(description=f"User {user.mention} is already a trusted user.", color=discord.Color.orange()))
-
-    @bumpowner.command()
-    async def remove_trusted(self, ctx: commands.Context, user: discord.User):
-        """Remove a trusted user."""
-        async with self.config.trusted_users() as trusted_users:
-            if user.id in trusted_users:
-                trusted_users.remove(user.id)
-                await ctx.send(embed=discord.Embed(description=f"User {user.mention} has been removed from trusted users.", color=discord.Color.green()))
-            else:
-                await ctx.send(embed=discord.Embed(description=f"User {user.mention} is not a trusted user.", color=discord.Color.orange()))
-
     @bumpowner.command()
     async def listprem(self, ctx: commands.Context):
         """List all premium codes and who they are assigned to."""
@@ -225,10 +141,13 @@ class Bumper(commands.Cog):
 
         embed = discord.Embed(title="Premium Codes", color=discord.Color.blue())
         for code, data in premium_codes.items():
-            user = self.bot.get_user(data["user_id"])
-            user_name = user.name if user else "Unknown User"
-            redeemed = "Yes" if data["redeemed"] else "No"
-            embed.add_field(name=code, value=f"User: {user_name}\nRedeemed: {redeemed}", inline=False)
+            if isinstance(data, dict):  # Ensure data is a dictionary
+                user = self.bot.get_user(data["user_id"])
+                user_name = user.name if user else "Unknown User"
+                redeemed = "Yes" if data["redeemed"] else "No"
+                embed.add_field(name=code, value=f"User: {user_name}\nRedeemed: {redeemed}", inline=False)
+            else:
+                log.error(f"Invalid data format for code {code}: {data}")
 
         await ctx.send(embed=embed)
 
@@ -236,7 +155,7 @@ class Bumper(commands.Cog):
     async def mycodes(self, ctx: commands.Context):
         """List all premium codes assigned to the user."""
         premium_codes = await self.config.premium_codes()
-        user_codes = [code for code, data in premium_codes.items() if data["user_id"] == ctx.author.id]
+        user_codes = [code for code, data in premium_codes.items() if isinstance(data, dict) and data["user_id"] == ctx.author.id]
         if not user_codes:
             await ctx.send(embed=discord.Embed(description="You have no premium codes assigned.", color=discord.Color.red()))
             return
