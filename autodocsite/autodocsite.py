@@ -52,11 +52,19 @@ class AutoDocs(commands.Cog):
         }
         self.bot.add_listener(self.on_cog_load, "on_cog_load")
         self.bot.add_listener(self.on_cog_unload, "on_cog_unload")
+        self.bot.add_listener(self.on_cog_add, "on_cog_add")
+        self.bot.add_listener(self.on_cog_remove, "on_cog_remove")
 
     async def on_cog_load(self, cog: commands.Cog):
         await self.generate_docs_for_cog(cog)
 
     async def on_cog_unload(self, cog: commands.Cog):
+        await self.generate_docs_for_cog(cog)
+
+    async def on_cog_add(self, cog: commands.Cog):
+        await self.generate_docs_for_cog(cog)
+
+    async def on_cog_remove(self, cog: commands.Cog):
         await self.generate_docs_for_cog(cog)
 
     async def generate_docs_for_cog(self, cog: commands.Cog):
@@ -363,7 +371,7 @@ class AutoDocSite(commands.Cog):
             "custom_domain": "docs.prismbot.icu",
             "site_name": "FuturoBot Documentation",
             "site_url": None,
-            "theme_name": "material",
+            "theme_name": "dracula",
             "use_directory_urls": False,
             "include_hidden": False,
             "include_help": True,
@@ -438,7 +446,7 @@ class AutoDocSite(commands.Cog):
         await ctx.send(f"max_privilege_level set to: {value}")
 
     @setsite.command()
-    async def min_privilege_level(self, ctx: commands.Context, *, value: str):
+    async     def min_privilege_level(self, ctx: commands.Context, *, value: str):
         """Set the min_privilege_level."""
         self.config["min_privilege_level"] = value
         await ctx.send(f"min_privilege_level set to: {value}")
@@ -658,6 +666,17 @@ Thank you for using **{self.config['site_name']}**! We hope you enjoy all the fe
             os.system(f"{mkdocs_path} gh-deploy")
 
             await ctx.send(f"Documentation site has been generated and deployed to GitHub Pages.\nYou can view it here: {site_url}")
+
+    @commands.command()
+    @commands.is_owner()
+    async def docs(self, ctx: commands.Context):
+        """
+        Send the link to the documentation site.
+        """
+        site_url = self.config["site_url"]
+        if site_url is None:
+            site_url = f"https://{self.config['custom_domain']}/"
+        await ctx.send(f"Here is the link to the documentation site: {site_url}")
 
     def generate_command_docs(self, cmd: commands.Command, prefix: str, extended_info: bool) -> str:
         """Generate detailed documentation for a command."""
