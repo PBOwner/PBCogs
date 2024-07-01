@@ -79,7 +79,7 @@ class SupportBuddy(commands.Cog):
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
             user: discord.PermissionOverwrite(read_messages=True),
-            buddy: discord.PermissionOverwrite.read_messages=True)
+            buddy: discord.PermissionOverwrite(read_messages=True)
         }
 
         category = discord.utils.get(guild.categories, name="Support Buddies")
