@@ -17,7 +17,8 @@ class SupportBuddy(commands.Cog):
                 "What are you seeking support for?"
             ],
             "requests_channel": None,
-            "reaction_message_id": None
+            "reaction_message_id": None,
+            "reaction_emoji": "👍"
         }
         self.config.register_guild(**default_guild)
 
@@ -36,8 +37,17 @@ class SupportBuddy(commands.Cog):
             return  # Ignore reactions from other bots
 
         reaction_message_id = await self.config.guild(guild).reaction_message_id()
+        reaction_emoji = await self.config.guild(guild).reaction_emoji()
         if payload.message_id != reaction_message_id:
             return  # Ignore reactions to other messages
+
+        # Remove the user's reaction
+        channel = self.bot.get_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        await message.remove_reaction(payload.emoji, user)
+
+        if str(payload.emoji) != reaction_emoji:
+            return  # Ignore reactions that are not the configured emoji
 
         # Send the questions to the user
         questions = await self.config.guild(guild).buddy_questions()
@@ -189,7 +199,23 @@ class SupportBuddy(commands.Cog):
     async def setreactionmsg(self, ctx, message_id: int):
         """Set the message ID to watch for reactions."""
         await self.config.guild(ctx.guild).reaction_message_id.set(message_id)
-        await ctx.send(f"Reaction message ID has been set to {message_id}.")
+        reaction_emoji = await self.config.guild(ctx.guild).reaction_emoji()
+        message = await ctx.fetch_message(message_id)
+        await message.add_reaction(reaction_emoji)
+        await ctx.send(f"Reaction message ID has been set to {message_id} and reacted with {reaction_emoji}.")
+
+    @commands.guild_only()
+    @commands.command()
+    @commands.has_permissions(manage_guild=True)
+    async def setreactionemoji(self, ctx, emoji: str):
+        """Set the emoji to watch for reactions."""
+        await self.config.guild(ctx.guild).reaction_emoji.set(emoji)
+        reaction_message_id = await self.config.guild(ctx.guild).reaction_message_id()
+        if reaction_message_id:
+            message = await ctx.fetch_message(reaction_message_id)
+            await message.clear_reactions()
+            await message.add_reaction(emoji)
+        await ctx.send(f"Reaction emoji has been set to {emoji}.")
 
     @commands.guild_only()
     @commands.command()
