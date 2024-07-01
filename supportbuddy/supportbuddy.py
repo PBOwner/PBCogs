@@ -84,16 +84,16 @@ class SupportBuddy(commands.Cog):
 
         category = discord.utils.get(guild.categories, name="Support Buddies")
         if not category:
-            category = await guild.create_category("Support Buddies")
+            category = await guild.create_category("Buddy Support Networking")
 
-        channel = await guild.create_text_channel(f"{user.name}-support", overwrites=overwrites, category=category)
-        await channel.send(f"Hello {user.mention} and {buddy.mention}, you have been paired for support!")
+        channel = await guild.create_text_channel(f"{user.name}-buddy-support", overwrites=overwrites, category=category)
+        await channel.send(f"Hello {user.mention}! Your buddy is {buddy.mention}! Please, anything you need just ask them!")
 
         async with self.config.guild(ctx.guild).buddy_pending_requests() as buddy_pending_requests:
             if str(user.id) in buddy_pending_requests:
                 del buddy_pending_requests[str(user.id)]
 
-        await ctx.send(f"{user.mention} has been paired with {buddy.mention}.")
+        await ctx.send(f"{user.name} has been paired with {buddy.name}.")
 
     @commands.guild_only()
     @commands.command()
