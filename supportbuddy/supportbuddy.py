@@ -9,7 +9,7 @@ class SupportBuddy(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         default_guild = {
             "pending_requests": {},
-            "questions": [
+            "buddyreqs": [
                 "What is your name?",
                 "What is your age?",
                 "What are you seeking support for?"
@@ -27,7 +27,7 @@ class SupportBuddy(commands.Cog):
     @commands.command()
     async def buddyreq(self, ctx):
         """Request a support buddy."""
-        questions = await self.config.guild(ctx.guild).questions()
+        questions = await self.config.guild(ctx.guild).buddyreqs()
         if not questions:
             await ctx.send("No questions set for the support request.")
             return
@@ -119,7 +119,7 @@ class SupportBuddy(commands.Cog):
             await ctx.send("You must provide at least one question.")
             return
 
-        await self.config.guild(ctx.guild).questions.set(list(questions))
+        await self.config.guild(ctx.guild).buddyreqs.set(list(questions))
         await ctx.send("Support request questions have been updated.")
 
     @commands.guild_only()
