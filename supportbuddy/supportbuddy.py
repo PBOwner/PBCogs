@@ -2,6 +2,8 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from asyncio import TimeoutError
+import requests
+from bs4 import BeautifulSoup
 
 class SupportBuddy(commands.Cog):
     def __init__(self, bot: Red):
@@ -14,14 +16,65 @@ class SupportBuddy(commands.Cog):
                 "What is your age?",
                 "What are you seeking support for?"
             ],
-            "icebreakers": [
-                "What's your favorite hobby?",
-                "What's a fun fact about yourself?",
-                "If you could travel anywhere, where would you go?"
-            ],
-            "requests_channel": None
+            "requests_channel": None,
+            "reaction_message_id": None
         }
         self.config.register_guild(**default_guild)
+
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self, payload):
+        """Handle reactions to the specified message."""
+        if payload.user_id == self.bot.user.id:
+            return  # Ignore reactions from the bot itself
+
+        guild = self.bot.get_guild(payload.guild_id)
+        if not guild:
+            return
+
+        user = guild.get_member(payload.user_id)
+        if user.bot:
+            return  # Ignore reactions from other bots
+
+        reaction_message_id = await self.config.guild(guild).reaction_message_id()
+        if payload.message_id != reaction_message_id:
+            return  # Ignore reactions to other messages
+
+        # Send the questions to the user
+        questions = await self.config.guild(guild).buddy_questions()
+        if not questions:
+            await user.send("No questions set for the support request.")
+            return
+
+        await user.send("Starting your request for a support buddy. Please answer the following questions:")
+
+        responses = {}
+        for question in questions:
+            await user.send(f"Question: {question}")
+            try:
+                response = await self.bot.wait_for(
+                    "message",
+                    check=lambda m: m.author == user and isinstance(m.channel, discord.DMChannel),
+                    timeout=300
+                )
+                responses[question] = response.content
+            except TimeoutError:
+                await user.send("You took too long to respond. Please try again later.")
+                return
+
+        async with self.config.guild(guild).buddy_pending_requests() as buddy_pending_requests:
+            buddy_pending_requests[str(user.id)] = responses
+
+        requests_channel_id = await self.config.guild(guild).requests_channel()
+        requests_channel = self.bot.get_channel(requests_channel_id)
+
+        if requests_channel:
+            embed = discord.Embed(title=f"New Support Request - {user.display_name}", color=discord.Color.blue())
+            for question, response in responses.items():
+                embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
+            await requests_channel.send(embed=embed)
+            await user.send("Your request has been submitted. A moderator will pair you with a support buddy soon.")
+        else:
+            await user.send("Requests channel not set. Please contact an admin.")
 
     @commands.guild_only()
     @commands.command()
@@ -132,34 +185,33 @@ class SupportBuddy(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
+    @commands.has_permissions(manage_guild=True)
+    async def setreactionmsg(self, ctx, message_id: int):
+        """Set the message ID to watch for reactions."""
+        await self.config.guild(ctx.guild).reaction_message_id.set(message_id)
+        await ctx.send(f"Reaction message ID has been set to {message_id}.")
+
+    @commands.guild_only()
+    @commands.command()
     async def icebreakers(self, ctx):
-        """Display a list of icebreaker topics."""
-        icebreakers = await self.config.guild(ctx.guild).icebreakers()
-        if not icebreakers:
-            await ctx.send("There are no icebreaker topics set.")
-            return
+        """Display a random icebreaker topic."""
+        icebreaker = self.get_random_icebreaker()
+        if icebreaker:
+            await ctx.send(f"Icebreaker topic: {icebreaker}")
+        else:
+            await ctx.send("Could not fetch icebreaker topics at this time. Please try again later.")
 
-        await ctx.send("Here are some icebreaker topics to get the conversation started:")
-        for topic in icebreakers:
-            await ctx.send(f"- {topic}")
-
-    @commands.guild_only()
-    @commands.command()
-    @commands.has_permissions(manage_guild=True)
-    async def addicebreaker(self, ctx, *, topic):
-        """Add an icebreaker topic."""
-        async with self.config.guild(ctx.guild).icebreakers() as icebreakers:
-            icebreakers.append(topic)
-        await ctx.send("Icebreaker topic has been added.")
-
-    @commands.guild_only()
-    @commands.command()
-    @commands.has_permissions(manage_guild=True)
-    async def remicebreaker(self, ctx, *, topic):
-        """Remove an icebreaker topic."""
-        async with self.config.guild(ctx.guild).icebreakers() as icebreakers:
-            if topic in icebreakers:
-                icebreakers.remove(topic)
-                await ctx.send("Icebreaker topic has been removed.")
+    def get_random_icebreaker(self):
+        """Fetch a random icebreaker topic from the internet."""
+        try:
+            url = "https://conversationstartersworld.com/250-conversation-starters/"
+            response = requests.get(url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            topics = soup.find_all("h2", class_="su-spoiler-title")
+            if topics:
+                return topics[0].text.strip()  # Return the first topic found
             else:
-                await ctx.send("That topic is not in the list of icebreakers.")
+                return None
+        except Exception as e:
+            print(f"Error fetching icebreaker topics: {e}")
+            return None
