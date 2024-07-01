@@ -8,7 +8,7 @@ class SupportBuddy(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         default_guild = {
-            "pending_requests": {},
+            "buddy_pending_requests": {},
             "buddy_questions": [
                 "What is your name?",
                 "What is your age?",
@@ -19,7 +19,7 @@ class SupportBuddy(commands.Cog):
                 "What's a fun fact about yourself?",
                 "If you could travel anywhere, where would you go?"
             ],
-            "notification_channel": None
+            "requests_channel": None
         }
         self.config.register_guild(**default_guild)
 
@@ -48,20 +48,20 @@ class SupportBuddy(commands.Cog):
                 await ctx.author.send("You took too long to respond. Please try again later.")
                 return
 
-        async with self.config.guild(ctx.guild).pending_requests() as pending_requests:
-            pending_requests[str(ctx.author.id)] = responses
+        async with self.config.guild(ctx.guild).buddy_pending_requests() as buddy_pending_requests:
+            buddy_pending_requests[str(ctx.author.id)] = responses
 
-        notification_channel_id = await self.config.guild(ctx.guild).notification_channel()
-        notification_channel = self.bot.get_channel(notification_channel_id)
+        requests_channel_id = await self.config.guild(ctx.guild).requests_channel()
+        requests_channel = self.bot.get_channel(requests_channel_id)
 
-        if notification_channel:
+        if requests_channel:
             embed = discord.Embed(title=f"New Support Request - {ctx.author.display_name}", color=discord.Color.blue())
             for question, response in responses.items():
                 embed.add_field(name=f"Question: {question}", value=f"Response: {response}", inline=False)
-            await notification_channel.send(embed=embed)
+            await requests_channel.send(embed=embed)
             await ctx.author.send("Your request has been submitted. A moderator will pair you with a support buddy soon.")
         else:
-            await ctx.author.send("Notification channel not set. Please contact an admin.")
+            await ctx.author.send("Requests channel not set. Please contact an admin.")
 
     @commands.guild_only()
     @commands.command()
@@ -89,9 +89,9 @@ class SupportBuddy(commands.Cog):
         channel = await guild.create_text_channel(f"{user.name}-support", overwrites=overwrites, category=category)
         await channel.send(f"Hello {user.mention} and {buddy.mention}, you have been paired for support!")
 
-        async with self.config.guild(ctx.guild).pending_requests() as pending_requests:
-            if str(user.id) in pending_requests:
-                del pending_requests[str(user.id)]
+        async with self.config.guild(ctx.guild).buddy_pending_requests() as buddy_pending_requests:
+            if str(user.id) in buddy_pending_requests:
+                del buddy_pending_requests[str(user.id)]
 
         await ctx.send(f"{user.mention} has been paired with {buddy.mention}.")
 
@@ -100,12 +100,12 @@ class SupportBuddy(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def buddyreqs(self, ctx):
         """List all pending support requests."""
-        pending_requests = await self.config.guild(ctx.guild).pending_requests()
-        if not pending_requests:
+        buddy_pending_requests = await self.config.guild(ctx.guild).buddy_pending_requests()
+        if not buddy_pending_requests:
             await ctx.send("There are no pending support requests.")
             return
 
-        for user_id, answers in pending_requests.items():
+        for user_id, answers in buddy_pending_requests.items():
             user = ctx.guild.get_member(int(user_id))
             if user:
                 await ctx.send(f"{user.mention} - {answers}")
@@ -127,8 +127,8 @@ class SupportBuddy(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def setbuddyreqchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for support request notifications."""
-        await self.config.guild(ctx.guild).notification_channel.set(channel.id)
-        await ctx.send(f"Notification channel has been set to {channel.mention}.")
+        await self.config.guild(ctx.guild).requests_channel.set(channel.id)
+        await ctx.send(f"Requests channel has been set to {channel.mention}.")
 
     @commands.guild_only()
     @commands.command()
