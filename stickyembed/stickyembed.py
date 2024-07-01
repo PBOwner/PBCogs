@@ -11,12 +11,20 @@ class StickyEmbed(commands.Cog):
         self.embed = None
 
     @commands.command()
-    async def esticky(self, ctx, title: str, description: str, footer: str, *fields: str):
-        """Create a customizable sticky embed."""
+    async def esticky(self, ctx, title: str, description: str, color: discord.Color, footer: str = None, *fields: str):
+        """Create a customizable sticky embed.
+
+        Parameters:
+        - title: The title of the embed.
+        - description: The description of the embed.
+        - color: The color of the embed (e.g., #3498db).
+        - footer: The footer text of the embed (optional).
+        - fields: Optional fields in the format name:value.
+        """
         embed = discord.Embed(
             title=title,
             description=description,
-            color=discord.Color.blue()  # You can customize the color if needed
+            color=color
         )
 
         # Add fields to the embed if provided
@@ -25,8 +33,9 @@ class StickyEmbed(commands.Cog):
                 name, value = field.split(":", 1)
                 embed.add_field(name=name.strip(), value=value.strip(), inline=False)
 
-        # Set the footer
-        embed.set_footer(text=footer)
+        # Set the footer if provided
+        if footer:
+            embed.set_footer(text=footer)
 
         # Store the embed and channel for later use
         self.embed = embed
