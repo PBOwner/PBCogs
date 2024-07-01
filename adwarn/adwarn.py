@@ -34,6 +34,7 @@ class AdWarn(commands.Cog):
                 embed.add_field(name="User", value=user.mention, inline=True)
                 embed.add_field(name="In", value=ctx.channel.mention, inline=True)
                 embed.add_field(name="Reason", value=reason, inline=False)
+                embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                 embed.add_field(name="Time", value=warning_time, inline=False)
                 embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
