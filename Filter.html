@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2818,6 +2826,18 @@
 <p><strong>Description:</strong> Base command to add or remove words from the server filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
 <p><strong>Usage:</strong> <code>,filter</code></p>
+<h3 id="filter-delete">filter delete</h3>
+<p><strong>Description:</strong> Remove words from the filter.</p>
+<p>Use double quotes to remove sentences.</p>
+<p>Examples:
+- <code>[p]filter remove word1 word2 word3</code>
+- <code>[p]filter remove "This is a sentence"</code></p>
+<p><strong>Arguments:</strong>
+- <code>[words...]</code> The words or sentences to no longer filter.</p>
+<p><strong>Usage:</strong> <code>,filter delete</code></p>
+<h3 id="filter-clear">filter clear</h3>
+<p><strong>Description:</strong> Clears this server's filter list.</p>
+<p><strong>Usage:</strong> <code>,filter clear</code></p>
 <h3 id="filter-add">filter add</h3>
 <p><strong>Description:</strong> Add words to the filter.</p>
 <p>Use double quotes to add sentences.</p>
@@ -2831,25 +2851,20 @@
 <p><strong>Description:</strong> Toggle name and nickname filtering.</p>
 <p>This is disabled by default.</p>
 <p><strong>Usage:</strong> <code>,filter names</code></p>
-<h3 id="filter-clear">filter clear</h3>
-<p><strong>Description:</strong> Clears this server's filter list.</p>
-<p><strong>Usage:</strong> <code>,filter clear</code></p>
-<h3 id="filter-list">filter list</h3>
-<p><strong>Description:</strong> Send a list of this server's filtered words.</p>
-<p><strong>Usage:</strong> <code>,filter list</code></p>
-<h3 id="filter-delete">filter delete</h3>
-<p><strong>Description:</strong> Remove words from the filter.</p>
-<p>Use double quotes to remove sentences.</p>
-<p>Examples:
-- <code>[p]filter remove word1 word2 word3</code>
-- <code>[p]filter remove "This is a sentence"</code></p>
-<p><strong>Arguments:</strong>
-- <code>[words...]</code> The words or sentences to no longer filter.</p>
-<p><strong>Usage:</strong> <code>,filter delete</code></p>
 <h3 id="filter-channel">filter channel</h3>
 <p><strong>Description:</strong> Base command to add or remove words from the channel filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
 <p><strong>Usage:</strong> <code>,filter channel</code></p>
+<h3 id="filter-channel-delete">filter channel delete</h3>
+<p><strong>Description:</strong> Remove words from the filter.</p>
+<p>Use double quotes to remove sentences.</p>
+<p>Examples:
+- <code>[p]filter channel remove #channel word1 word2 word3</code>
+- <code>[p]filter channel remove #channel "This is a sentence"</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
+- <code>[words...]</code> The words or sentences to no longer filter.</p>
+<p><strong>Usage:</strong> <code>,filter channel delete</code></p>
 <h3 id="filter-channel-add">filter channel add</h3>
 <p><strong>Description:</strong> Add words to the filter.</p>
 <p>Use double quotes to add sentences.</p>
@@ -2860,22 +2875,15 @@
 - <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
 - <code>[words...]</code> The words or sentences to filter.</p>
 <p><strong>Usage:</strong> <code>,filter channel add</code></p>
-<h3 id="filter-channel-clear">filter channel clear</h3>
-<p><strong>Description:</strong> Clears this channel's filter list.</p>
-<p><strong>Usage:</strong> <code>,filter channel clear</code></p>
 <h3 id="filter-channel-list">filter channel list</h3>
 <p><strong>Description:</strong> Send a list of the channel's filtered words.</p>
 <p><strong>Usage:</strong> <code>,filter channel list</code></p>
-<h3 id="filter-channel-delete">filter channel delete</h3>
-<p><strong>Description:</strong> Remove words from the filter.</p>
-<p>Use double quotes to remove sentences.</p>
-<p>Examples:
-- <code>[p]filter channel remove #channel word1 word2 word3</code>
-- <code>[p]filter channel remove #channel "This is a sentence"</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
-- <code>[words...]</code> The words or sentences to no longer filter.</p>
-<p><strong>Usage:</strong> <code>,filter channel delete</code></p></p>
+<h3 id="filter-channel-clear">filter channel clear</h3>
+<p><strong>Description:</strong> Clears this channel's filter list.</p>
+<p><strong>Usage:</strong> <code>,filter channel clear</code></p>
+<h3 id="filter-list">filter list</h3>
+<p><strong>Description:</strong> Send a list of this server's filtered words.</p>
+<p><strong>Usage:</strong> <code>,filter list</code></p></p>
     </article>
 </section>
             <!-- endblock -->

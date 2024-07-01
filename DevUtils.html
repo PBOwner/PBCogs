@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,6 +2800,9 @@
 <h3 id="devutils">devutils</h3>
 <p><strong>Description:</strong> Various development utilities.</p>
 <p><strong>Usage:</strong> <code>,devutils</code></p>
+<h3 id="devutils-execute">devutils execute</h3>
+<p><strong>Description:</strong> Execute multiple commands at once. Split them using |.</p>
+<p><strong>Usage:</strong> <code>,devutils execute</code></p>
 <h3 id="devutils-loglevel">devutils loglevel</h3>
 <p><strong>Description:</strong> Change the logging level for a logger. If no name is provided, the root logger (<code>red</code>) is used.</p>
 <p>Levels are the following:
@@ -2803,31 +2814,28 @@
 - <code>5</code>: <code>VERBOSE</code>
 - <code>6</code>: <code>TRACE</code></p>
 <p><strong>Usage:</strong> <code>,devutils loglevel</code></p>
+<h3 id="devutils-rawrequest">devutils rawrequest</h3>
+<p><strong>Description:</strong> Display the JSON of a Discord object with a raw request.</p>
+<p><strong>Usage:</strong> <code>,devutils rawrequest</code></p>
 <h3 id="devutils-reinvoke">devutils reinvoke</h3>
 <p><strong>Description:</strong> Reinvoke a command message.</p>
 <p>You may reply to a message to reinvoke it or pass a message ID/link.
 The command will be invoked with the author and the channel of the specified message.</p>
 <p><strong>Usage:</strong> <code>,devutils reinvoke</code></p>
-<h3 id="devutils-timing">devutils timing</h3>
-<p><strong>Description:</strong> Run a command timing execution and catching exceptions.</p>
-<p><strong>Usage:</strong> <code>,devutils timing</code></p>
-<h3 id="devutils-rawrequest">devutils rawrequest</h3>
-<p><strong>Description:</strong> Display the JSON of a Discord object with a raw request.</p>
-<p><strong>Usage:</strong> <code>,devutils rawrequest</code></p>
-<h3 id="devutils-do">devutils do</h3>
-<p><strong>Description:</strong> Repeats a command a specified number of times.</p>
-<p><code>--sleep &lt;int&gt;</code> is an optional flag specifying how much time to wait between command invocations.</p>
-<p><strong>Usage:</strong> <code>,devutils do</code></p>
-<h3 id="devutils-bypass">devutils bypass</h3>
-<p><strong>Description:</strong> Bypass a command's checks and cooldowns.</p>
-<p><strong>Usage:</strong> <code>,devutils bypass</code></p>
 <h3 id="devutils-reloadmodule">devutils reloadmodule</h3>
 <p><strong>Description:</strong> Force reload a module (to use code changes without restarting your bot).</p>
 <p>⚠️ Please only use this if you know what you're doing.</p>
 <p><strong>Usage:</strong> <code>,devutils reloadmodule</code></p>
-<h3 id="devutils-execute">devutils execute</h3>
-<p><strong>Description:</strong> Execute multiple commands at once. Split them using |.</p>
-<p><strong>Usage:</strong> <code>,devutils execute</code></p></p>
+<h3 id="devutils-do">devutils do</h3>
+<p><strong>Description:</strong> Repeats a command a specified number of times.</p>
+<p><code>--sleep &lt;int&gt;</code> is an optional flag specifying how much time to wait between command invocations.</p>
+<p><strong>Usage:</strong> <code>,devutils do</code></p>
+<h3 id="devutils-timing">devutils timing</h3>
+<p><strong>Description:</strong> Run a command timing execution and catching exceptions.</p>
+<p><strong>Usage:</strong> <code>,devutils timing</code></p>
+<h3 id="devutils-bypass">devutils bypass</h3>
+<p><strong>Description:</strong> Bypass a command's checks and cooldowns.</p>
+<p><strong>Usage:</strong> <code>,devutils bypass</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,12 +2800,15 @@
 <h3 id="nitrorole">nitrorole</h3>
 <p><strong>Description:</strong> Settings for NitroRole cog.</p>
 <p><strong>Usage:</strong> <code>,nitrorole</code></p>
-<h3 id="nitrorole-removemessage">nitrorole removemessage</h3>
-<p><strong>Description:</strong> Remove new booster message.</p>
-<p><strong>Usage:</strong> <code>,nitrorole removemessage</code></p>
+<h3 id="nitrorole-unsetimage">nitrorole unsetimage</h3>
+<p><strong>Description:</strong> Unset image for new booster message.</p>
+<p><strong>Usage:</strong> <code>,nitrorole unsetimage</code></p>
 <h3 id="nitrorole-channel">nitrorole channel</h3>
 <p><strong>Description:</strong> Set channel for new booster messages. Leave empty to disable.</p>
 <p><strong>Usage:</strong> <code>,nitrorole channel</code></p>
+<h3 id="nitrorole-removemessage">nitrorole removemessage</h3>
+<p><strong>Description:</strong> Remove new booster message.</p>
+<p><strong>Usage:</strong> <code>,nitrorole removemessage</code></p>
 <h3 id="nitrorole-setimage">nitrorole setimage</h3>
 <p><strong>Description:</strong> Set image for new booster message.</p>
 <p><strong>Usage:</strong> <code>,nitrorole setimage</code></p>
@@ -2813,9 +2824,9 @@ $plural - Empty if count is 1. 's' otherwise</p>
 <p>Note: New booster message can also have image.
 To set it, use <code>[p]nitrorole setimage</code></p>
 <p><strong>Usage:</strong> <code>,nitrorole addmessage</code></p>
-<h3 id="nitrorole-unsetimage">nitrorole unsetimage</h3>
-<p><strong>Description:</strong> Unset image for new booster message.</p>
-<p><strong>Usage:</strong> <code>,nitrorole unsetimage</code></p>
+<h3 id="nitrorole-listmessages">nitrorole listmessages</h3>
+<p><strong>Description:</strong> List new booster message templates.</p>
+<p><strong>Usage:</strong> <code>,nitrorole listmessages</code></p>
 <h3 id="nitrorole-unassignonboostend">nitrorole unassignonboostend</h3>
 <p><strong>Description:</strong> Set if booster role should be unassigned when someone stops boosting server.</p>
 <p>Leave empty to see current settings.</p>
@@ -2823,10 +2834,7 @@ To set it, use <code>[p]nitrorole setimage</code></p>
 <h3 id="nitrorole-autoassignrole">nitrorole autoassignrole</h3>
 <p><strong>Description:</strong> Set role that will be autoassigned after someone boosts server.</p>
 <p>Leave empty to not assign any role.</p>
-<p><strong>Usage:</strong> <code>,nitrorole autoassignrole</code></p>
-<h3 id="nitrorole-listmessages">nitrorole listmessages</h3>
-<p><strong>Description:</strong> List new booster message templates.</p>
-<p><strong>Usage:</strong> <code>,nitrorole listmessages</code></p></p>
+<p><strong>Usage:</strong> <code>,nitrorole autoassignrole</code></p></p>
     </article>
 </section>
             <!-- endblock -->

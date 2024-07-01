@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2794,15 +2802,22 @@
 <h3 id="votesettings">votesettings</h3>
 <p><strong>Description:</strong> Change the settings for voteout.</p>
 <p><strong>Usage:</strong> <code>,votesettings</code></p>
+<h3 id="votesettings-anonymousvotes">votesettings anonymousvotes</h3>
+<p><strong>Description:</strong> Change whether or not votes are anonymous.</p>
+<p><strong>Usage:</strong> <code>,votesettings anonymousvotes</code></p>
+<h3 id="votesettings-action">votesettings action</h3>
+<p><strong>Description:</strong> Change the action to take on a voted out user.</p>
+<p><strong>Usage:</strong> <code>,votesettings action</code></p>
+<h3 id="votesettings-threshold">votesettings threshold</h3>
+<p><strong>Description:</strong> Change the threshold for voteout.</p>
+<p>This is the number of votes required to take action on a voted out user.</p>
+<p><strong>Usage:</strong> <code>,votesettings threshold</code></p>
 <h3 id="votesettings-ignorehierarchy">votesettings ignorehierarchy</h3>
 <p><strong>Description:</strong> Change whether or not to ignore role hierarchy when users vote out other users.</p>
 <p><strong>Usage:</strong> <code>,votesettings ignorehierarchy</code></p>
 <h3 id="votesettings-button">votesettings button</h3>
 <p><strong>Description:</strong> Change the button settings for voteout.</p>
 <p><strong>Usage:</strong> <code>,votesettings button</code></p>
-<h3 id="votesettings-button-emoji">votesettings button emoji</h3>
-<p><strong>Description:</strong> Change the emoji of the button.</p>
-<p><strong>Usage:</strong> <code>,votesettings button emoji</code></p>
 <h3 id="votesettings-button-style">votesettings button style</h3>
 <p><strong>Description:</strong> Change the style of the button.</p>
 <p>1 is blurple, 2 is grey, 3 is green and 4 is red.</p>
@@ -2815,6 +2830,9 @@
     "{threshold}" will be replaced with the threshold.
     "{action}" will be replaced with the action to take on user if voteout succeeds.</p>
 <p><strong>Usage:</strong> <code>,votesettings button label</code></p>
+<h3 id="votesettings-button-emoji">votesettings button emoji</h3>
+<p><strong>Description:</strong> Change the emoji of the button.</p>
+<p><strong>Usage:</strong> <code>,votesettings button emoji</code></p>
 <h3 id="votesettings-mutuallyexclusiveroles">votesettings mutuallyexclusiveroles</h3>
 <p><strong>Description:</strong> Change the mutually exclusive roles for voteout.</p>
 <p>This command overwrites the previously set roles.</p>
@@ -2826,17 +2844,7 @@ They also impose a restriction that users with one of these roles cannot voteout
 <p>Timeout can not be greater than 15 minutes.
 This accepts second and minute units, by default, it assumes a number to be seconds.
 e.g. <code>5</code> is 5 seconds, <code>5m</code> is 5 minutes.</p>
-<p><strong>Usage:</strong> <code>,votesettings timeout</code></p>
-<h3 id="votesettings-anonymousvotes">votesettings anonymousvotes</h3>
-<p><strong>Description:</strong> Change whether or not votes are anonymous.</p>
-<p><strong>Usage:</strong> <code>,votesettings anonymousvotes</code></p>
-<h3 id="votesettings-action">votesettings action</h3>
-<p><strong>Description:</strong> Change the action to take on a voted out user.</p>
-<p><strong>Usage:</strong> <code>,votesettings action</code></p>
-<h3 id="votesettings-threshold">votesettings threshold</h3>
-<p><strong>Description:</strong> Change the threshold for voteout.</p>
-<p>This is the number of votes required to take action on a voted out user.</p>
-<p><strong>Usage:</strong> <code>,votesettings threshold</code></p></p>
+<p><strong>Usage:</strong> <code>,votesettings timeout</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2803,18 +2811,6 @@
 <h3 id="repo">repo</h3>
 <p><strong>Description:</strong> Base command for repository management.</p>
 <p><strong>Usage:</strong> <code>,repo</code></p>
-<h3 id="repo-list">repo list</h3>
-<p><strong>Description:</strong> List all installed repos.</p>
-<p><strong>Usage:</strong> <code>,repo list</code></p>
-<h3 id="repo-info">repo info</h3>
-<p><strong>Description:</strong> Show information about a repo.</p>
-<p>Example:
-- <code>[p]repo info 26-Cogs</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;repo&gt;</code> The name of the repo to show info about.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,repo info</code></p>
 <h3 id="repo-delete">repo delete</h3>
 <p><strong>Description:</strong> Remove repos and their files.</p>
 <p>Examples:
@@ -2825,6 +2821,15 @@
 <li><code>&lt;repos...&gt;</code> The repo or repos to remove.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,repo delete</code></p>
+<h3 id="repo-info">repo info</h3>
+<p><strong>Description:</strong> Show information about a repo.</p>
+<p>Example:
+- <code>[p]repo info 26-Cogs</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;repo&gt;</code> The name of the repo to show info about.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,repo info</code></p>
 <h3 id="repo-add">repo add</h3>
 <p><strong>Description:</strong> Add a new repo.</p>
 <p>Examples:
@@ -2851,61 +2856,12 @@
 <li><code>[repos...]</code> The name or names of repos to update. If omitted, all repos are updated.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,repo update</code></p>
+<h3 id="repo-list">repo list</h3>
+<p><strong>Description:</strong> List all installed repos.</p>
+<p><strong>Usage:</strong> <code>,repo list</code></p>
 <h3 id="cog">cog</h3>
 <p><strong>Description:</strong> Base command for cog installation management commands.</p>
 <p><strong>Usage:</strong> <code>,cog</code></p>
-<h3 id="cog-checkforupdates">cog checkforupdates</h3>
-<p><strong>Description:</strong> Check for available cog updates (including pinned cogs).</p>
-<p>This command doesn't update cogs, it only checks for updates.
-Use <code>[p]cog update</code> to update cogs.</p>
-<p><strong>Usage:</strong> <code>,cog checkforupdates</code></p>
-<h3 id="cog-reinstallreqs">cog reinstallreqs</h3>
-<p><strong>Description:</strong> This command should not be used unless Red specifically asks for it.</p>
-<p>This command will reinstall cog requirements and shared libraries for all installed cogs.</p>
-<p>Red might ask the owner to use this when it clears contents of the lib folder
-because of change in minor version of Python.</p>
-<p><strong>Usage:</strong> <code>,cog reinstallreqs</code></p>
-<h3 id="cog-unpin">cog unpin</h3>
-<p><strong>Description:</strong> Unpin cogs - this will remove the update lock from those cogs.</p>
-<p>Examples:
-- <code>[p]cog unpin defender</code>
-- <code>[p]cog unpin updated_cog1 updated_cog2</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;cogs...&gt;</code> The cog or cogs to unpin. Must already be installed and pinned.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,cog unpin</code></p>
-<h3 id="cog-updatetoversion">cog updatetoversion</h3>
-<p><strong>Description:</strong> Update all cogs, or ones of your choosing to chosen revision of one repo.</p>
-<p>Note that update doesn't mean downgrade and therefore <code>revision</code>
-has to be newer than the version that cog currently has installed. If you want to
-downgrade the cog, uninstall and install it again.</p>
-<p>See <code>[p]cog installversion</code> for an explanation of <code>revision</code>.</p>
-<p>Examples:
-- <code>[p]cog updatetoversion Broken-Repo e798cc268e199612b1316a3d1f193da0770c7016 cog_name</code>
-- <code>[p]cog updatetoversion True Broken-Repo 6107c0770ad391f1d3a6131b216991e862cc897e cog_name</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>[reload]</code> Whether to reload cogs immediately after update or not.</li>
-<li><code>&lt;repo&gt;</code> The repo or repos to update all cogs from.</li>
-<li><code>&lt;revision&gt;</code> The revision to update to.</li>
-<li><code>[cogs...]</code> The cog or cogs to update.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,cog updatetoversion</code></p>
-<h3 id="cog-installversion">cog installversion</h3>
-<p><strong>Description:</strong> Install a cog from the specified revision of given repo.</p>
-<p>Revisions are "commit ids" that point to the point in the code when a specific change was made.
-The latest revision can be found in the URL bar for any GitHub repo by <a href="https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/getting-permanent-links-to-files#press-y-to-permalink-to-a-file-in-a-specific-commit">pressing "y" on that repo</a>.</p>
-<p>Older revisions can be found in the URL bar by <a href="https://cdn.discordapp.com/attachments/133251234164375552/775760247787749406/unknown.png">viewing the commit history of any repo</a></p>
-<p>Example:
-- <code>[p]cog installversion Broken-Repo e798cc268e199612b1316a3d1f193da0770c7016 cog_name</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;repo&gt;</code> The name of the repo to install cogs from.</li>
-<li><code>&lt;revision&gt;</code> The revision to install from.</li>
-<li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,cog installversion</code></p>
 <h3 id="cog-update">cog update</h3>
 <p><strong>Description:</strong> Update all cogs, or ones of your choosing.</p>
 <p>Examples:
@@ -2962,17 +2918,6 @@ by Downloader.</p>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to uninstall.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,cog uninstall</code></p>
-<h3 id="cog-install">cog install</h3>
-<p><strong>Description:</strong> Install a cog from the given repo.</p>
-<p>Examples:
-- <code>[p]cog install 26-Cogs defender</code>
-- <code>[p]cog install Laggrons-Dumb-Cogs say roleinvite</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;repo&gt;</code> The name of the repo to install cogs from.</li>
-<li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,cog install</code></p>
 <h3 id="cog-listpinned">cog listpinned</h3>
 <p><strong>Description:</strong> List currently pinned cogs.</p>
 <p><strong>Usage:</strong> <code>,cog listpinned</code></p>
@@ -2986,6 +2931,69 @@ by Downloader.</p>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to pin. Must already be installed.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,cog pin</code></p>
+<h3 id="cog-install">cog install</h3>
+<p><strong>Description:</strong> Install a cog from the given repo.</p>
+<p>Examples:
+- <code>[p]cog install 26-Cogs defender</code>
+- <code>[p]cog install Laggrons-Dumb-Cogs say roleinvite</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;repo&gt;</code> The name of the repo to install cogs from.</li>
+<li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,cog install</code></p>
+<h3 id="cog-checkforupdates">cog checkforupdates</h3>
+<p><strong>Description:</strong> Check for available cog updates (including pinned cogs).</p>
+<p>This command doesn't update cogs, it only checks for updates.
+Use <code>[p]cog update</code> to update cogs.</p>
+<p><strong>Usage:</strong> <code>,cog checkforupdates</code></p>
+<h3 id="cog-reinstallreqs">cog reinstallreqs</h3>
+<p><strong>Description:</strong> This command should not be used unless Red specifically asks for it.</p>
+<p>This command will reinstall cog requirements and shared libraries for all installed cogs.</p>
+<p>Red might ask the owner to use this when it clears contents of the lib folder
+because of change in minor version of Python.</p>
+<p><strong>Usage:</strong> <code>,cog reinstallreqs</code></p>
+<h3 id="cog-unpin">cog unpin</h3>
+<p><strong>Description:</strong> Unpin cogs - this will remove the update lock from those cogs.</p>
+<p>Examples:
+- <code>[p]cog unpin defender</code>
+- <code>[p]cog unpin updated_cog1 updated_cog2</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;cogs...&gt;</code> The cog or cogs to unpin. Must already be installed and pinned.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,cog unpin</code></p>
+<h3 id="cog-updatetoversion">cog updatetoversion</h3>
+<p><strong>Description:</strong> Update all cogs, or ones of your choosing to chosen revision of one repo.</p>
+<p>Note that update doesn't mean downgrade and therefore <code>revision</code>
+has to be newer than the version that cog currently has installed. If you want to
+downgrade the cog, uninstall and install it again.</p>
+<p>See <code>[p]cog installversion</code> for an explanation of <code>revision</code>.</p>
+<p>Examples:
+- <code>[p]cog updatetoversion Broken-Repo e798cc268e199612b1316a3d1f193da0770c7016 cog_name</code>
+- <code>[p]cog updatetoversion True Broken-Repo 6107c0770ad391f1d3a6131b216991e862cc897e cog_name</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>[reload]</code> Whether to reload cogs immediately after update or not.</li>
+<li><code>&lt;repo&gt;</code> The repo or repos to update all cogs from.</li>
+<li><code>&lt;revision&gt;</code> The revision to update to.</li>
+<li><code>[cogs...]</code> The cog or cogs to update.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,cog updatetoversion</code></p>
+<h3 id="cog-installversion">cog installversion</h3>
+<p><strong>Description:</strong> Install a cog from the specified revision of given repo.</p>
+<p>Revisions are "commit ids" that point to the point in the code when a specific change was made.
+The latest revision can be found in the URL bar for any GitHub repo by <a href="https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/getting-permanent-links-to-files#press-y-to-permalink-to-a-file-in-a-specific-commit">pressing "y" on that repo</a>.</p>
+<p>Older revisions can be found in the URL bar by <a href="https://cdn.discordapp.com/attachments/133251234164375552/775760247787749406/unknown.png">viewing the commit history of any repo</a></p>
+<p>Example:
+- <code>[p]cog installversion Broken-Repo e798cc268e199612b1316a3d1f193da0770c7016 cog_name</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;repo&gt;</code> The name of the repo to install cogs from.</li>
+<li><code>&lt;revision&gt;</code> The revision to install from.</li>
+<li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,cog installversion</code></p>
 <h3 id="findcog">findcog</h3>
 <p><strong>Description:</strong> Find which cog a command comes from.</p>
 <p>This will only work with loaded cogs.</p>

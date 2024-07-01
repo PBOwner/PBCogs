@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2794,6 +2802,16 @@
 <p>Put the title in quotes if it contains spaces.
 If you provide a message, it will be edited.</p>
 <p><strong>Usage:</strong> <code>,embed</code></p>
+<h3 id="embed-unstore">embed unstore</h3>
+<p><strong>Description:</strong> Remove a stored embed.</p>
+<p><strong>Usage:</strong> <code>,embed unstore</code></p>
+<h3 id="embed-edit">embed edit</h3>
+<p><strong>Description:</strong> Edit a message sent by [botname].</p>
+<p>It would be better to use the <code>message</code> parameter of all the other commands.</p>
+<p><strong>Usage:</strong> <code>,embed edit</code></p>
+<h3 id="embed-list">embed list</h3>
+<p><strong>Description:</strong> Get info about a stored embed.</p>
+<p><strong>Usage:</strong> <code>,embed list</code></p>
 <h3 id="embed-json">embed json</h3>
 <p><strong>Description:</strong> Post embeds from valid JSON.</p>
 <p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
@@ -2802,42 +2820,23 @@ You can use an <a href="https://embedutils.com/"><strong>embeds creator</strong>
 <p>If you provide a message, it will be edited.
 You can use an attachment and the command <code>[p]embed yamlfile</code> will be invoked automatically.</p>
 <p><strong>Usage:</strong> <code>,embed json</code></p>
-<h3 id="embed-edit">embed edit</h3>
-<p><strong>Description:</strong> Edit a message sent by [botname].</p>
-<p>It would be better to use the <code>message</code> parameter of all the other commands.</p>
-<p><strong>Usage:</strong> <code>,embed edit</code></p>
-<h3 id="embed-yaml">embed yaml</h3>
-<p><strong>Description:</strong> Post embeds from valid YAML.</p>
-<p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
-Here's an example: <a href="https://gist.github.com/AAA3A-AAA3A/3c9772b34a8ebc09b3b10018185f4cd4"><strong>this example</strong></a>.</p>
-<p>If you provide a message, it will be edited.
-You can use an attachment and the command <code>[p]embed yamlfile</code> will be invoked automatically.</p>
-<p><strong>Usage:</strong> <code>,embed yaml</code></p>
-<h3 id="embed-dashboard">embed dashboard</h3>
-<p><strong>Description:</strong> Get the link to the Dashboard.</p>
-<p><strong>Usage:</strong> <code>,embed dashboard</code></p>
+<h3 id="embed-migratefromphen">embed migratefromphen</h3>
+<p><strong>Description:</strong> Migrate stored embeds from EmbedUtils by Phen.</p>
+<p><strong>Usage:</strong> <code>,embed migratefromphen</code></p>
+<h3 id="embed-store">embed store</h3>
+<p><strong>Description:</strong> Store an embed.</p>
+<p>Put the name in quotes if it is multiple words.
+The <code>locked</code> argument specifies whether the embed should be locked to mod and superior only (guild level) or bot owners only (global level).</p>
+<p><strong>Usage:</strong> <code>,embed store</code></p>
+<h3 id="embed-postwebhook">embed postwebhook</h3>
+<p><strong>Description:</strong> Post stored embeds with a webhook.</p>
+<p><strong>Usage:</strong> <code>,embed postwebhook</code></p>
 <h3 id="embed-pastebin">embed pastebin</h3>
 <p><strong>Description:</strong> Post embeds from a GitHub/Gist/Pastebin/Hastebin link containing valid JSON.</p>
 <p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
 Here's an example: <a href="https://gist.github.com/AAA3A-AAA3A/3c9772b34a8ebc09b3b10018185f4cd4"><strong>this example</strong></a>.</p>
 <p>If you provide a message, it will be edited.</p>
 <p><strong>Usage:</strong> <code>,embed pastebin</code></p>
-<h3 id="embed-yamlfile">embed yamlfile</h3>
-<p><strong>Description:</strong> Post an embed from a valid YAML file (upload it).</p>
-<p>If you provide a message, it will be edited.</p>
-<p><strong>Usage:</strong> <code>,embed yamlfile</code></p>
-<h3 id="embed-list">embed list</h3>
-<p><strong>Description:</strong> Get info about a stored embed.</p>
-<p><strong>Usage:</strong> <code>,embed list</code></p>
-<h3 id="embed-unstore">embed unstore</h3>
-<p><strong>Description:</strong> Remove a stored embed.</p>
-<p><strong>Usage:</strong> <code>,embed unstore</code></p>
-<h3 id="embed-migratefromphen">embed migratefromphen</h3>
-<p><strong>Description:</strong> Migrate stored embeds from EmbedUtils by Phen.</p>
-<p><strong>Usage:</strong> <code>,embed migratefromphen</code></p>
-<h3 id="embed-postwebhook">embed postwebhook</h3>
-<p><strong>Description:</strong> Post stored embeds with a webhook.</p>
-<p><strong>Usage:</strong> <code>,embed postwebhook</code></p>
 <h3 id="embed-message">embed message</h3>
 <p><strong>Description:</strong> Post embed(s) from an existing message.</p>
 <p>The message must have at least one embed.
@@ -2845,18 +2844,9 @@ You can specify an index (starting by 0) if you want to send only one of the emb
 The content of the message already sent is included if no index is specified.</p>
 <p>If you provide a message, it will be edited.</p>
 <p><strong>Usage:</strong> <code>,embed message</code></p>
-<h3 id="embed-fromfile">embed fromfile</h3>
-<p><strong>Description:</strong> Post an embed from a valid JSON file (upload it).</p>
-<p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
-Here's an example: <a href="https://gist.github.com/AAA3A-AAA3A/3c9772b34a8ebc09b3b10018185f4cd4"><strong>this example</strong></a>.
-You can use an <a href="https://embedutils.com/"><strong>embeds creator</strong></a> to get a JSON payload.</p>
-<p>If you provide a message, it will be edited.</p>
-<p><strong>Usage:</strong> <code>,embed fromfile</code></p>
-<h3 id="embed-store">embed store</h3>
-<p><strong>Description:</strong> Store an embed.</p>
-<p>Put the name in quotes if it is multiple words.
-The <code>locked</code> argument specifies whether the embed should be locked to mod and superior only (guild level) or bot owners only (global level).</p>
-<p><strong>Usage:</strong> <code>,embed store</code></p>
+<h3 id="embed-dashboard">embed dashboard</h3>
+<p><strong>Description:</strong> Get the link to the Dashboard.</p>
+<p><strong>Usage:</strong> <code>,embed dashboard</code></p>
 <h3 id="embed-download">embed download</h3>
 <p><strong>Description:</strong> Download a JSON file for a message's embed(s).</p>
 <p>The message must have at least one embed.
@@ -2866,12 +2856,30 @@ The content of the message already sent is included if no index is specified.</p
 <h3 id="embed-info">embed info</h3>
 <p><strong>Description:</strong> Get info about a stored embed.</p>
 <p><strong>Usage:</strong> <code>,embed info</code></p>
+<h3 id="embed-yamlfile">embed yamlfile</h3>
+<p><strong>Description:</strong> Post an embed from a valid YAML file (upload it).</p>
+<p>If you provide a message, it will be edited.</p>
+<p><strong>Usage:</strong> <code>,embed yamlfile</code></p>
 <h3 id="embed-downloadstored">embed downloadstored</h3>
 <p><strong>Description:</strong> Download a JSON file for a stored embed.</p>
 <p><strong>Usage:</strong> <code>,embed downloadstored</code></p>
 <h3 id="embed-poststored">embed poststored</h3>
 <p><strong>Description:</strong> Post stored embeds.</p>
-<p><strong>Usage:</strong> <code>,embed poststored</code></p></p>
+<p><strong>Usage:</strong> <code>,embed poststored</code></p>
+<h3 id="embed-fromfile">embed fromfile</h3>
+<p><strong>Description:</strong> Post an embed from a valid JSON file (upload it).</p>
+<p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
+Here's an example: <a href="https://gist.github.com/AAA3A-AAA3A/3c9772b34a8ebc09b3b10018185f4cd4"><strong>this example</strong></a>.
+You can use an <a href="https://embedutils.com/"><strong>embeds creator</strong></a> to get a JSON payload.</p>
+<p>If you provide a message, it will be edited.</p>
+<p><strong>Usage:</strong> <code>,embed fromfile</code></p>
+<h3 id="embed-yaml">embed yaml</h3>
+<p><strong>Description:</strong> Post embeds from valid YAML.</p>
+<p>This must be in the format expected by <a href="https://discord.com/developers/docs/resources/channel#embed-object"><strong>this Discord documentation</strong></a>.
+Here's an example: <a href="https://gist.github.com/AAA3A-AAA3A/3c9772b34a8ebc09b3b10018185f4cd4"><strong>this example</strong></a>.</p>
+<p>If you provide a message, it will be edited.
+You can use an attachment and the command <code>[p]embed yamlfile</code> will be invoked automatically.</p>
+<p><strong>Usage:</strong> <code>,embed yaml</code></p></p>
     </article>
 </section>
             <!-- endblock -->

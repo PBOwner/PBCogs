@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2796,6 +2804,30 @@
 <p><strong>Description:</strong> Birthday management commands for admins.</p>
 <p>Looking to set your own birthday? Use <code>[p]birthday set</code> or <code>[p]bday set</code>.</p>
 <p><strong>Usage:</strong> <code>,bdset</code></p>
+<h3 id="bdset-forceset">bdset forceset</h3>
+<p><strong>Description:</strong> Force-set a specific user's birthday.</p>
+<p>You can @ mention any user or type out their exact name. If you're typing out a name with
+spaces, make sure to put quotes around it (<code>"</code>).</p>
+<p><strong>Examples:</strong>
+- <code>[p]bdset set @User 1-1-2000</code> - set the birthday of <code>@User</code> to 1/1/2000
+- <code>[p]bdset set User 1/1</code> - set the birthday of <code>@User</code> to 1/1/2000
+- <code>[p]bdset set "User with spaces" 1-1</code> - set the birthday of <code>@User with spaces</code>
+    to 1/1
+- <code>[p]bdset set 354125157387344896 1/1/2000</code> - set the birthday of <code>354125157387344896</code>
+    to 1/1/2000</p>
+<p><strong>Usage:</strong> <code>,bdset forceset</code></p>
+<h3 id="bdset-zemigrate">bdset zemigrate</h3>
+<p><strong>Description:</strong> Import data from ZeCogs'/flare's fork of Birthdays cog</p>
+<p><strong>Usage:</strong> <code>,bdset zemigrate</code></p>
+<h3 id="bdset-rolemention">bdset rolemention</h3>
+<p><strong>Description:</strong> Choose whether or not to allow role mentions in birthday messages.</p>
+<p>By default role mentions are suppressed.</p>
+<p>To allow role mentions in the birthday message, run <code>[p]bdset rolemention true</code>.
+Disable them with <code>[p]bdset rolemention true</code></p>
+<p><strong>Usage:</strong> <code>,bdset rolemention</code></p>
+<h3 id="bdset-stop">bdset stop</h3>
+<p><strong>Description:</strong> Stop the cog from sending birthday messages and giving roles in the server.</p>
+<p><strong>Usage:</strong> <code>,bdset stop</code></p>
 <h3 id="bdset-role">bdset role</h3>
 <p><strong>Description:</strong> Set the role that will be given to the user on their birthday.</p>
 <p>You can give the exact name or a mention.</p>
@@ -2804,9 +2836,32 @@
 - <code>[p]bdset role Birthday</code> - set the role to @Birthday without a mention
 - <code>[p]bdset role 418058139913063657</code> - set the role with an ID</p>
 <p><strong>Usage:</strong> <code>,bdset role</code></p>
-<h3 id="bdset-stop">bdset stop</h3>
-<p><strong>Description:</strong> Stop the cog from sending birthday messages and giving roles in the server.</p>
-<p><strong>Usage:</strong> <code>,bdset stop</code></p>
+<h3 id="bdset-time">bdset time</h3>
+<p><strong>Description:</strong> Set the time of day for the birthday message.</p>
+<p>Minutes are ignored.</p>
+<p><strong>Examples:</strong>
+- <code>[p]bdset time 7:00</code> - set the time to 7:45AM UTC
+- <code>[p]bdset time 12AM</code> - set the time to midnight UTC
+- <code>[p]bdset time 3PM</code> - set the time to 3:00PM UTC</p>
+<p><strong>Usage:</strong> <code>,bdset time</code></p>
+<h3 id="bdset-settings">bdset settings</h3>
+<p><strong>Description:</strong> View your current settings</p>
+<p><strong>Usage:</strong> <code>,bdset settings</code></p>
+<h3 id="bdset-msgwithoutyear">bdset msgwithoutyear</h3>
+<p><strong>Description:</strong> Set the message to send when the user did not provide a year.</p>
+<p>If you would like to mention a role, you will need to run <code>[p]bdset rolemention true</code>.</p>
+<p><strong>Placeholders:</strong>
+- <code>{name}</code> - the user's name
+- <code>{mention}</code> - an @ mention of the user</p>
+<pre><code>All the placeholders are optional.
+</code></pre>
+<p><strong>Examples:</strong>
+- <code>[p]bdset msgwithoutyear Happy birthday {mention}!</code>
+- <code>[p]bdset msgwithoutyear {mention}'s birthday is today! Happy birthday {name}.</code></p>
+<p><strong>Usage:</strong> <code>,bdset msgwithoutyear</code></p>
+<h3 id="bdset-interactive">bdset interactive</h3>
+<p><strong>Description:</strong> Start interactive setup</p>
+<p><strong>Usage:</strong> <code>,bdset interactive</code></p>
 <h3 id="bdset-msgwithyear">bdset msgwithyear</h3>
 <p><strong>Description:</strong> Set the message to send when the user did provide a year.</p>
 <p>If you would like to mention a role, you will need to run <code>[p]bdset rolemention true</code></p>
@@ -2820,67 +2875,17 @@
 - <code>[p]bdset msgwithyear {mention} has turned {new_age}, happy birthday!</code>
 - <code>[p]bdset msgwithyear {name} is {new_age} today! Happy birthday {mention}!</code></p>
 <p><strong>Usage:</strong> <code>,bdset msgwithyear</code></p>
-<h3 id="bdset-forceset">bdset forceset</h3>
-<p><strong>Description:</strong> Force-set a specific user's birthday.</p>
-<p>You can @ mention any user or type out their exact name. If you're typing out a name with
-spaces, make sure to put quotes around it (<code>"</code>).</p>
-<p><strong>Examples:</strong>
-- <code>[p]bdset set @User 1-1-2000</code> - set the birthday of <code>@User</code> to 1/1/2000
-- <code>[p]bdset set User 1/1</code> - set the birthday of <code>@User</code> to 1/1/2000
-- <code>[p]bdset set "User with spaces" 1-1</code> - set the birthday of <code>@User with spaces</code>
-    to 1/1
-- <code>[p]bdset set 354125157387344896 1/1/2000</code> - set the birthday of <code>354125157387344896</code>
-    to 1/1/2000</p>
-<p><strong>Usage:</strong> <code>,bdset forceset</code></p>
-<h3 id="bdset-settings">bdset settings</h3>
-<p><strong>Description:</strong> View your current settings</p>
-<p><strong>Usage:</strong> <code>,bdset settings</code></p>
-<h3 id="bdset-interactive">bdset interactive</h3>
-<p><strong>Description:</strong> Start interactive setup</p>
-<p><strong>Usage:</strong> <code>,bdset interactive</code></p>
-<h3 id="bdset-forceremove">bdset forceremove</h3>
-<p><strong>Description:</strong> Force-remove a user's birthday.</p>
-<p><strong>Usage:</strong> <code>,bdset forceremove</code></p>
 <h3 id="bdset-channel">bdset channel</h3>
 <p><strong>Description:</strong> Set the channel where the birthday message will be sent.</p>
 <p><strong>Example:</strong>
 - <code>[p]bdset channel #birthdays</code> - set the channel to #birthdays</p>
 <p><strong>Usage:</strong> <code>,bdset channel</code></p>
-<h3 id="bdset-rolemention">bdset rolemention</h3>
-<p><strong>Description:</strong> Choose whether or not to allow role mentions in birthday messages.</p>
-<p>By default role mentions are suppressed.</p>
-<p>To allow role mentions in the birthday message, run <code>[p]bdset rolemention true</code>.
-Disable them with <code>[p]bdset rolemention true</code></p>
-<p><strong>Usage:</strong> <code>,bdset rolemention</code></p>
-<h3 id="bdset-time">bdset time</h3>
-<p><strong>Description:</strong> Set the time of day for the birthday message.</p>
-<p>Minutes are ignored.</p>
-<p><strong>Examples:</strong>
-- <code>[p]bdset time 7:00</code> - set the time to 7:45AM UTC
-- <code>[p]bdset time 12AM</code> - set the time to midnight UTC
-- <code>[p]bdset time 3PM</code> - set the time to 3:00PM UTC</p>
-<p><strong>Usage:</strong> <code>,bdset time</code></p>
-<h3 id="bdset-zemigrate">bdset zemigrate</h3>
-<p><strong>Description:</strong> Import data from ZeCogs'/flare's fork of Birthdays cog</p>
-<p><strong>Usage:</strong> <code>,bdset zemigrate</code></p>
-<h3 id="bdset-msgwithoutyear">bdset msgwithoutyear</h3>
-<p><strong>Description:</strong> Set the message to send when the user did not provide a year.</p>
-<p>If you would like to mention a role, you will need to run <code>[p]bdset rolemention true</code>.</p>
-<p><strong>Placeholders:</strong>
-- <code>{name}</code> - the user's name
-- <code>{mention}</code> - an @ mention of the user</p>
-<pre><code>All the placeholders are optional.
-</code></pre>
-<p><strong>Examples:</strong>
-- <code>[p]bdset msgwithoutyear Happy birthday {mention}!</code>
-- <code>[p]bdset msgwithoutyear {mention}'s birthday is today! Happy birthday {name}.</code></p>
-<p><strong>Usage:</strong> <code>,bdset msgwithoutyear</code></p>
+<h3 id="bdset-forceremove">bdset forceremove</h3>
+<p><strong>Description:</strong> Force-remove a user's birthday.</p>
+<p><strong>Usage:</strong> <code>,bdset forceremove</code></p>
 <h3 id="birthday">birthday</h3>
 <p><strong>Description:</strong> Set and manage your birthday.</p>
 <p><strong>Usage:</strong> <code>,birthday</code></p>
-<h3 id="birthday-remove">birthday remove</h3>
-<p><strong>Description:</strong> Remove your birthday.</p>
-<p><strong>Usage:</strong> <code>,birthday remove</code></p>
 <h3 id="birthday-upcoming">birthday upcoming</h3>
 <p><strong>Description:</strong> View upcoming birthdays, defaults to 7 days.</p>
 <p><strong>Examples:</strong>
@@ -2897,7 +2902,10 @@ Disable them with <code>[p]bdset rolemention true</code></p>
 - <code>[p]bday set 9/24/2002</code>
 - <code>[p]bday set 9-24-2002</code>
 - <code>[p]bday set 9-24</code></p>
-<p><strong>Usage:</strong> <code>,birthday set</code></p></p>
+<p><strong>Usage:</strong> <code>,birthday set</code></p>
+<h3 id="birthday-remove">birthday remove</h3>
+<p><strong>Description:</strong> Remove your birthday.</p>
+<p><strong>Usage:</strong> <code>,birthday remove</code></p></p>
     </article>
 </section>
             <!-- endblock -->

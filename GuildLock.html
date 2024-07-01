@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,9 +2800,10 @@
 <h3 id="guildlock">guildlock</h3>
 <p><strong>Description:</strong> View GuildLock settings</p>
 <p><strong>Usage:</strong> <code>,guildlock</code></p>
-<h3 id="guildlock-channel">guildlock channel</h3>
-<p><strong>Description:</strong> Set the log channel for the bot</p>
-<p><strong>Usage:</strong> <code>,guildlock channel</code></p>
+<h3 id="guildlock-minmembers">guildlock minmembers</h3>
+<p><strong>Description:</strong> Set the minimum number of members a server should have for the bot to stay in it.</p>
+<p>Set to <strong>0</strong> to disable.</p>
+<p><strong>Usage:</strong> <code>,guildlock minmembers</code></p>
 <h3 id="guildlock-leave">guildlock leave</h3>
 <p><strong>Description:</strong> Make the bot leave certain servers.</p>
 <p><strong>Leave Arguments</strong>
@@ -2807,12 +2816,10 @@
 <p><strong>Description:</strong> Add/Remove a guild from the blacklist.</p>
 <p>To remove a guild from the blacklist, specify it again.</p>
 <p><strong>Usage:</strong> <code>,guildlock blacklist</code></p>
-<h3 id="guildlock-botratio">guildlock botratio</h3>
-<p><strong>Description:</strong> Set the the threshold percentage of bots-to-members for the bot to auto-leave.</p>
-<p><strong>Example</strong>
-If bot ratio is 60% and it joins a guild with 10 members (7 bots and 3 members) it will auto-leave since that ratio is 70%.</p>
-<p>Set to <strong>0</strong> to disable.</p>
-<p><strong>Usage:</strong> <code>,guildlock botratio</code></p>
+<h3 id="guildlock-limit">guildlock limit</h3>
+<p><strong>Description:</strong> Set the maximum amount of guilds the bot can be in.</p>
+<p>Set to <strong>0</strong> to disable the guild limit.</p>
+<p><strong>Usage:</strong> <code>,guildlock limit</code></p>
 <h3 id="guildlock-view">guildlock view</h3>
 <p><strong>Description:</strong> View servers that fall under the auto-leave thresholds.</p>
 <p><strong>Arguments</strong>
@@ -2825,14 +2832,15 @@ If bot ratio is 60% and it joins a guild with 10 members (7 bots and 3 members) 
 <p><strong>Description:</strong> Add/Remove a guild from the whitelist.</p>
 <p>To remove a guild from the whitelist, specify it again.</p>
 <p><strong>Usage:</strong> <code>,guildlock whitelist</code></p>
-<h3 id="guildlock-limit">guildlock limit</h3>
-<p><strong>Description:</strong> Set the maximum amount of guilds the bot can be in.</p>
-<p>Set to <strong>0</strong> to disable the guild limit.</p>
-<p><strong>Usage:</strong> <code>,guildlock limit</code></p>
-<h3 id="guildlock-minmembers">guildlock minmembers</h3>
-<p><strong>Description:</strong> Set the minimum number of members a server should have for the bot to stay in it.</p>
+<h3 id="guildlock-botratio">guildlock botratio</h3>
+<p><strong>Description:</strong> Set the the threshold percentage of bots-to-members for the bot to auto-leave.</p>
+<p><strong>Example</strong>
+If bot ratio is 60% and it joins a guild with 10 members (7 bots and 3 members) it will auto-leave since that ratio is 70%.</p>
 <p>Set to <strong>0</strong> to disable.</p>
-<p><strong>Usage:</strong> <code>,guildlock minmembers</code></p></p>
+<p><strong>Usage:</strong> <code>,guildlock botratio</code></p>
+<h3 id="guildlock-channel">guildlock channel</h3>
+<p><strong>Description:</strong> Set the log channel for the bot</p>
+<p><strong>Usage:</strong> <code>,guildlock channel</code></p></p>
     </article>
 </section>
             <!-- endblock -->

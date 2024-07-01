@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,18 +2800,21 @@
 <h3 id="rolenotify">rolenotify</h3>
 <p><strong>Description:</strong> Configure RoleNotify</p>
 <p><strong>Usage:</strong> <code>,rolenotify</code></p>
-<h3 id="rolenotify-channel">rolenotify channel</h3>
-<p><strong>Description:</strong> Set the channel to output Role Notifications to</p>
-<p>Pass 0 to clear the channel
-Pass nothing to see the configured channel</p>
-<p><strong>Usage:</strong> <code>,rolenotify channel</code></p>
 <h3 id="rolenotify-role">rolenotify role</h3>
 <p><strong>Description:</strong> Configure settings for a Role</p>
 <p><strong>Usage:</strong> <code>,rolenotify role</code></p>
-<h3 id="rolenotify-role-add">rolenotify role add</h3>
-<p><strong>Description:</strong> Set if the notification should be sent on Role Add</p>
+<h3 id="rolenotify-role-method">rolenotify role method</h3>
+<p><strong>Description:</strong> Set the notification method</p>
+<p>Valid options are <code>dm</code> and <code>channel</code></p>
+<p><strong>Usage:</strong> <code>,rolenotify role method</code></p>
+<h3 id="rolenotify-role-remove">rolenotify role remove</h3>
+<p><strong>Description:</strong> Set if the notification should be sent on Role Remove</p>
 <p><state> should be any of these combinations, <code>on/off</code>, <code>yes/no</code>, <code>1/0</code>, <code>true/false</code></p>
-<p><strong>Usage:</strong> <code>,rolenotify role add</code></p>
+<p><strong>Usage:</strong> <code>,rolenotify role remove</code></p>
+<h3 id="rolenotify-role-channel">rolenotify role channel</h3>
+<p><strong>Description:</strong> Set the channel to output Role Notifications to</p>
+<p>Pass 0 to clear the channel and use the server defined channel</p>
+<p><strong>Usage:</strong> <code>,rolenotify role channel</code></p>
 <h3 id="rolenotify-role-message">rolenotify role message</h3>
 <p><strong>Description:</strong> Set the notification message</p>
 <option> can be either `add` or `remove`
@@ -2816,35 +2827,28 @@ Formatting options available for <message> are
 
 **Usage:** `,rolenotify role message`
 
-### rolenotify role method
-
-**Description:** Set the notification method
-
-Valid options are `dm` and `channel`
-
-**Usage:** `,rolenotify role method`
-
-### rolenotify role remove
-
-**Description:** Set if the notification should be sent on Role Remove
-
-<state> should be any of these combinations, `on/off`, `yes/no`, `1/0`, `true/false`
-
-**Usage:** `,rolenotify role remove`
-
-### rolenotify role channel
-
-**Description:** Set the channel to output Role Notifications to
-
-Pass 0 to clear the channel and use the server defined channel
-
-**Usage:** `,rolenotify role channel`
-
 ### rolenotify role info
 
 **Description:** Display the configured settings for a Role
 
-**Usage:** `,rolenotify role info`</p>
+**Usage:** `,rolenotify role info`
+
+### rolenotify role add
+
+**Description:** Set if the notification should be sent on Role Add
+
+<state> should be any of these combinations, `on/off`, `yes/no`, `1/0`, `true/false`
+
+**Usage:** `,rolenotify role add`
+
+### rolenotify channel
+
+**Description:** Set the channel to output Role Notifications to
+
+Pass 0 to clear the channel
+Pass nothing to see the configured channel
+
+**Usage:** `,rolenotify channel`</p>
     </article>
 </section>
             <!-- endblock -->

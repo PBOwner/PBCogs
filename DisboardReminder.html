@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2793,6 +2801,10 @@
 <p><strong>Description:</strong> Set a reminder to bump on Disboard.</p>
 <p>This sends a reminder to bump in a specified channel 2 hours after someone successfully bumps, thus making it more accurate than a repeating schedule.</p>
 <p><strong>Usage:</strong> <code>,bumpreminder</code></p>
+<h3 id="bumpreminder-channel">bumpreminder channel</h3>
+<p><strong>Description:</strong> Set the channel to send bump reminders to.</p>
+<p>This also works as a toggle, so if no channel is provided, it will disable reminders for this server.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder channel</code></p>
 <h3 id="bumpreminder-clean">bumpreminder clean</h3>
 <p><strong>Description:</strong> Toggle whether [botname] should keep the bump channel "clean."</p>
 <p>[botname] will remove all failed invoke messages by Disboard.</p>
@@ -2801,6 +2813,15 @@
 <p><strong>Description:</strong> Set a role to ping for bump reminders.</p>
 <p>If no role is provided, it will clear the current role.</p>
 <p><strong>Usage:</strong> <code>,bumpreminder pingrole</code></p>
+<h3 id="bumpreminder-lock">bumpreminder lock</h3>
+<p><strong>Description:</strong> Toggle whether the bot should automatically lock/unlock the bump channel.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder lock</code></p>
+<h3 id="bumpreminder-settings">bumpreminder settings</h3>
+<p><strong>Description:</strong> Show your Bump Reminder settings.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder settings</code></p>
+<h3 id="bumpreminder-message">bumpreminder message</h3>
+<p><strong>Description:</strong> Change the message used for reminders. Providing no message will reset to the default message.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder message</code></p>
 <h3 id="bumpreminder-thankyou">bumpreminder thankyou</h3>
 <p><strong>Description:</strong> Change the message used for 'Thank You' messages. Providing no message will reset to the default message.</p>
 <p>The thank you message supports TagScript blocks which can customize the message and even add an embed!
@@ -2815,20 +2836,7 @@
 <p><code>[p]bprm ty Thanks {member} for bumping! You earned 10 brownie points from phen!</code>
 <code>[p]bprm ty {embed(description):{member(mention)}, thank you for bumping! Make sure to vote for **{server}** on [our voting page](https://disboard.org/server/{guild(id)}).}</code></p>
 </blockquote>
-<p><strong>Usage:</strong> <code>,bumpreminder thankyou</code></p>
-<h3 id="bumpreminder-lock">bumpreminder lock</h3>
-<p><strong>Description:</strong> Toggle whether the bot should automatically lock/unlock the bump channel.</p>
-<p><strong>Usage:</strong> <code>,bumpreminder lock</code></p>
-<h3 id="bumpreminder-settings">bumpreminder settings</h3>
-<p><strong>Description:</strong> Show your Bump Reminder settings.</p>
-<p><strong>Usage:</strong> <code>,bumpreminder settings</code></p>
-<h3 id="bumpreminder-message">bumpreminder message</h3>
-<p><strong>Description:</strong> Change the message used for reminders. Providing no message will reset to the default message.</p>
-<p><strong>Usage:</strong> <code>,bumpreminder message</code></p>
-<h3 id="bumpreminder-channel">bumpreminder channel</h3>
-<p><strong>Description:</strong> Set the channel to send bump reminders to.</p>
-<p>This also works as a toggle, so if no channel is provided, it will disable reminders for this server.</p>
-<p><strong>Usage:</strong> <code>,bumpreminder channel</code></p></p>
+<p><strong>Usage:</strong> <code>,bumpreminder thankyou</code></p></p>
     </article>
 </section>
             <!-- endblock -->

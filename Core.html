@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2815,14 +2823,18 @@ Typing: Time that bot taken to send message with ping.</p>
 <h3 id="mydata-getmydata">mydata getmydata</h3>
 <p><strong>Description:</strong> [Coming Soon] Get what data [botname] has about you.</p>
 <p><strong>Usage:</strong> <code>,mydata getmydata</code></p>
-<h3 id="mydata-whatdata">mydata whatdata</h3>
-<p><strong>Description:</strong> Find out what type of data [botname] stores and why.</p>
-<p><strong>Example:</strong>
-- <code>[p]mydata whatdata</code></p>
-<p><strong>Usage:</strong> <code>,mydata whatdata</code></p>
 <h3 id="mydata-ownermanagement">mydata ownermanagement</h3>
 <p><strong>Description:</strong> Commands for more complete data handling.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement</code></p>
+<h3 id="mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</h3>
+<p><strong>Description:</strong> Handle a deletion request from Discord.</p>
+<p>This will cause the bot to get rid of or disassociate all data from the specified user ID.
+You should not use this unless Discord has specifically requested this with regard to a deleted user.
+This will remove the user from various anti-abuse measures.
+If you are processing a manual request from a user, you may want <code>[p]mydata ownermanagement deleteforuser</code> instead.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement processdiscordrequest</code></p>
 <h3 id="mydata-ownermanagement-setuserdeletionlevel">mydata ownermanagement setuserdeletionlevel</h3>
 <p><strong>Description:</strong> Sets how user deletions are treated.</p>
 <p><strong>Example:</strong>
@@ -2833,15 +2845,6 @@ Typing: Time that bot taken to send message with ping.</p>
 - <code>0</code>: What users can delete is left entirely up to each cog.
 - <code>1</code>: Cogs should delete anything the cog doesn't need about the user.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement setuserdeletionlevel</code></p>
-<h3 id="mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</h3>
-<p><strong>Description:</strong> Handle a deletion request from Discord.</p>
-<p>This will cause the bot to get rid of or disassociate all data from the specified user ID.
-You should not use this unless Discord has specifically requested this with regard to a deleted user.
-This will remove the user from various anti-abuse measures.
-If you are processing a manual request from a user, you may want <code>[p]mydata ownermanagement deleteforuser</code> instead.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
-<p><strong>Usage:</strong> <code>,mydata ownermanagement processdiscordrequest</code></p>
 <h3 id="mydata-ownermanagement-allowuserdeletions">mydata ownermanagement allowuserdeletions</h3>
 <p><strong>Description:</strong> Set the bot to allow users to request a data deletion.</p>
 <p>This is on by default.
@@ -2849,14 +2852,6 @@ Opposite of <code>[p]mydata ownermanagement disallowuserdeletions</code></p>
 <p><strong>Example:</strong>
 - <code>[p]mydata ownermanagement allowuserdeletions</code></p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement allowuserdeletions</code></p>
-<h3 id="mydata-ownermanagement-deleteforuser">mydata ownermanagement deleteforuser</h3>
-<p><strong>Description:</strong> Delete data [botname] has about a user for a user.</p>
-<p>This will cause the bot to get rid of or disassociate a lot of non-operational data from the specified user.
-Users have access to a different command for this unless they can't interact with the bot at all.
-This is a mostly safe operation, but you should not use it unless processing a request from this user as it may impact their usage of the bot.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
-<p><strong>Usage:</strong> <code>,mydata ownermanagement deleteforuser</code></p>
 <h3 id="mydata-ownermanagement-disallowuserdeletions">mydata ownermanagement disallowuserdeletions</h3>
 <p><strong>Description:</strong> Set the bot to not allow users to request a data deletion.</p>
 <p>Opposite of <code>[p]mydata ownermanagement allowuserdeletions</code></p>
@@ -2870,12 +2865,14 @@ This may include more than just end user data, including anti abuse records.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement deleteuserasowner</code></p>
-<h3 id="mydata-3rdparty">mydata 3rdparty</h3>
-<p><strong>Description:</strong> View the End User Data statements of each 3rd-party module.</p>
-<p>This will send an attachment with the End User Data statements of all loaded 3rd party cogs.</p>
-<p><strong>Example:</strong>
-- <code>[p]mydata 3rdparty</code></p>
-<p><strong>Usage:</strong> <code>,mydata 3rdparty</code></p>
+<h3 id="mydata-ownermanagement-deleteforuser">mydata ownermanagement deleteforuser</h3>
+<p><strong>Description:</strong> Delete data [botname] has about a user for a user.</p>
+<p>This will cause the bot to get rid of or disassociate a lot of non-operational data from the specified user.
+Users have access to a different command for this unless they can't interact with the bot at all.
+This is a mostly safe operation, but you should not use it unless processing a request from this user as it may impact their usage of the bot.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement deleteforuser</code></p>
 <h3 id="mydata-forgetme">mydata forgetme</h3>
 <p><strong>Description:</strong> Have [botname] forget what it knows about you.</p>
 <p>This may not remove all data about you, data needed for operation,
@@ -2884,6 +2881,17 @@ such as command cooldowns will be kept until no longer necessary.</p>
 <p><strong>Example:</strong>
 - <code>[p]mydata forgetme</code></p>
 <p><strong>Usage:</strong> <code>,mydata forgetme</code></p>
+<h3 id="mydata-3rdparty">mydata 3rdparty</h3>
+<p><strong>Description:</strong> View the End User Data statements of each 3rd-party module.</p>
+<p>This will send an attachment with the End User Data statements of all loaded 3rd party cogs.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata 3rdparty</code></p>
+<p><strong>Usage:</strong> <code>,mydata 3rdparty</code></p>
+<h3 id="mydata-whatdata">mydata whatdata</h3>
+<p><strong>Description:</strong> Find out what type of data [botname] stores and why.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata whatdata</code></p>
+<p><strong>Usage:</strong> <code>,mydata whatdata</code></p>
 <h3 id="embedset">embedset</h3>
 <p><strong>Description:</strong> Commands for toggling embeds on or off.</p>
 <p>This setting determines whether or not to use embeds as a response to a command (for commands that support it).
@@ -2904,6 +2912,14 @@ The default is to use embeds.</p>
 </li>
 </ul>
 <p><strong>Usage:</strong> <code>,embedset</code></p>
+<h3 id="embedset-global">embedset global</h3>
+<p><strong>Description:</strong> Toggle the global embed setting.</p>
+<p>This is used as a fallback if the user or guild hasn't set a preference.
+The default is to use embeds.</p>
+<p>To see full evaluation order of embed settings, run <code>[p]help embedset</code>.</p>
+<p><strong>Example:</strong>
+- <code>[p]embedset global</code></p>
+<p><strong>Usage:</strong> <code>,embedset global</code></p>
 <h3 id="embedset-command">embedset command</h3>
 <p><strong>Description:</strong> Sets a command's embed setting.</p>
 <p>If you're the bot owner, this will try to change the command's embed setting globally by default.
@@ -2917,14 +2933,6 @@ Otherwise, this will try to change embed settings on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>[enabled]</code> - Whether to use embeds for this command. Leave blank to reset to default.</p>
 <p><strong>Usage:</strong> <code>,embedset command</code></p>
-<h3 id="embedset-global">embedset global</h3>
-<p><strong>Description:</strong> Toggle the global embed setting.</p>
-<p>This is used as a fallback if the user or guild hasn't set a preference.
-The default is to use embeds.</p>
-<p>To see full evaluation order of embed settings, run <code>[p]help embedset</code>.</p>
-<p><strong>Example:</strong>
-- <code>[p]embedset global</code></p>
-<p><strong>Usage:</strong> <code>,embedset global</code></p>
 <h3 id="embedset-showsettings">embedset showsettings</h3>
 <p><strong>Description:</strong> Show the current embed settings.</p>
 <p>Provide a command name to check for command specific embed settings.</p>
@@ -2944,13 +2952,6 @@ The default is to use embeds.</p>
 <h3 id="inviteset">inviteset</h3>
 <p><strong>Description:</strong> Commands to setup [botname]'s invite settings.</p>
 <p><strong>Usage:</strong> <code>,inviteset</code></p>
-<h3 id="inviteset-support">inviteset support</h3>
-<p><strong>Description:</strong> Set the support server invite for the bot.</p>
-<p><strong>Example:</strong>
-- <code>[p]inviteset support https://discord.gg/shiro</code> - Sets the support server url to https://discord.gg/shiro.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;support_server&gt;</code> - The invite URL to the support server.</p>
-<p><strong>Usage:</strong> <code>,inviteset support</code></p>
 <h3 id="inviteset-public">inviteset public</h3>
 <p><strong>Description:</strong> Toggles if <code>[p]invite</code> should be accessible for the average user.</p>
 <p>The bot must be made into a <code>Public bot</code> in the developer dashboard for public invites to work.</p>
@@ -2968,6 +2969,13 @@ You can generate one here: https://discordapi.com/permissions.html</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;level&gt;</code> - The permission level to require for the bot in the generated invite.</p>
 <p><strong>Usage:</strong> <code>,inviteset perms</code></p>
+<h3 id="inviteset-support">inviteset support</h3>
+<p><strong>Description:</strong> Set the support server invite for the bot.</p>
+<p><strong>Example:</strong>
+- <code>[p]inviteset support https://discord.gg/shiro</code> - Sets the support server url to https://discord.gg/shiro.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;support_server&gt;</code> - The invite URL to the support server.</p>
+<p><strong>Usage:</strong> <code>,inviteset support</code></p>
 <h3 id="leave">leave</h3>
 <p><strong>Description:</strong> Leaves servers.</p>
 <p>If no server IDs are passed the local server will be left instead.</p>
@@ -3018,6 +3026,15 @@ You can generate one here: https://discordapi.com/permissions.html</p>
 <h3 id="slash">slash</h3>
 <p><strong>Description:</strong> Base command for managing what application commands are able to be used on [botname].</p>
 <p><strong>Usage:</strong> <code>,slash</code></p>
+<h3 id="slash-list">slash list</h3>
+<p><strong>Description:</strong> List the slash commands the bot can see, and whether or not they are enabled.</p>
+<p>This command shows the state that will be changed to when <code>[p]slash sync</code> is run.
+Commands from the same cog are grouped, with the cog name as the header.</p>
+<p>The prefix denotes the state of the command:
+- Commands starting with <code>-</code> have not yet been enabled.
+- Commands starting with <code>+</code> have been manually enabled.
+- Commands starting with <code>++</code> have been enabled by the cog author, and cannot be disabled.</p>
+<p><strong>Usage:</strong> <code>,slash list</code></p>
 <h3 id="slash-sync">slash sync</h3>
 <p><strong>Description:</strong> Syncs the slash settings to discord.</p>
 <p>Settings from <code>[p]slash list</code> will be synced with discord, changing what commands appear for users.
@@ -3055,15 +3072,6 @@ This should be run sparingly, make all necessary changes before running this com
 - <code>&lt;command_name&gt;</code> - The command name to disable. Only the top level name of a group command should be used.
 - <code>[command_type]</code> - What type of application command to disable. Must be one of <code>slash</code>, <code>message</code>, or <code>user</code>. Defaults to <code>slash</code>.</p>
 <p><strong>Usage:</strong> <code>,slash disable</code></p>
-<h3 id="slash-list">slash list</h3>
-<p><strong>Description:</strong> List the slash commands the bot can see, and whether or not they are enabled.</p>
-<p>This command shows the state that will be changed to when <code>[p]slash sync</code> is run.
-Commands from the same cog are grouped, with the cog name as the header.</p>
-<p>The prefix denotes the state of the command:
-- Commands starting with <code>-</code> have not yet been enabled.
-- Commands starting with <code>+</code> have been manually enabled.
-- Commands starting with <code>++</code> have been enabled by the cog author, and cannot be disabled.</p>
-<p><strong>Usage:</strong> <code>,slash list</code></p>
 <h3 id="shutdown">shutdown</h3>
 <p><strong>Description:</strong> Shuts down the bot.</p>
 <p>Allows [botname] to shut down gracefully.</p>
@@ -3162,9 +3170,6 @@ If the bank is per-server, it will become global.</p>
 <h3 id="modlogset">modlogset</h3>
 <p><strong>Description:</strong> Manage modlog settings.</p>
 <p><strong>Usage:</strong> <code>,modlogset</code></p>
-<h3 id="modlogset-resetcases">modlogset resetcases</h3>
-<p><strong>Description:</strong> Reset all modlog cases in this server.</p>
-<p><strong>Usage:</strong> <code>,modlogset resetcases</code></p>
 <h3 id="modlogset-modlog">modlogset modlog</h3>
 <p><strong>Description:</strong> Set a channel as the modlog.</p>
 <p>Omit <code>[channel]</code> to disable the modlog.</p>
@@ -3174,9 +3179,24 @@ If the bank is per-server, it will become global.</p>
 <p>An action can be enabling or disabling specific cases. (Ban, kick, mute, etc.)</p>
 <p>Example: <code>[p]modlogset cases kick enabled</code></p>
 <p><strong>Usage:</strong> <code>,modlogset cases</code></p>
+<h3 id="modlogset-resetcases">modlogset resetcases</h3>
+<p><strong>Description:</strong> Reset all modlog cases in this server.</p>
+<p><strong>Usage:</strong> <code>,modlogset resetcases</code></p>
 <h3 id="set">set</h3>
 <p><strong>Description:</strong> Commands for changing [botname]'s settings.</p>
 <p><strong>Usage:</strong> <code>,set</code></p>
+<h3 id="set-deletedelay">set deletedelay</h3>
+<p><strong>Description:</strong> Set the delay until the bot removes the command message.</p>
+<p>Must be between -1 and 60.</p>
+<p>Set to -1 to disable this feature.</p>
+<p>This is only applied to the current server and not globally.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set deletedelay</code> - Shows the current delete delay setting.
+- <code>[p]set deletedelay 60</code> - Sets the delete delay to the max of 60 seconds.
+- <code>[p]set deletedelay -1</code> - Disables deleting command messages.</p>
+<p><strong>Arguments:</strong>
+- <code>[time]</code> - The seconds to wait before deleting the command message. Use -1 to disable.</p>
+<p><strong>Usage:</strong> <code>,set deletedelay</code></p>
 <h3 id="set-api">set api</h3>
 <p><strong>Description:</strong> Commands to set, list or remove various external API tokens.</p>
 <p>This setting will be asked for by some 3rd party cogs and some core cogs.</p>
@@ -3193,6 +3213,12 @@ list of key,values as described by the cog requesting this command.</p>
 - <code>&lt;service&gt;</code> - The service you're adding tokens to.
 - <code>&lt;tokens&gt;</code> - Pairs of token keys and values. The key and value should be separated by one of <code></code>, <code>,</code>, or <code>;</code>.</p>
 <p><strong>Usage:</strong> <code>,set api</code></p>
+<h3 id="set-api-list">set api list</h3>
+<p><strong>Description:</strong> Show all external API services along with their keys that have been set.</p>
+<p>Secrets are not shown.</p>
+<p><strong>Example:</strong>
+- <code>[p]set api list</code></p>
+<p><strong>Usage:</strong> <code>,set api list</code></p>
 <h3 id="set-api-remove">set api remove</h3>
 <p><strong>Description:</strong> Remove the given services with all their keys and tokens.</p>
 <p><strong>Examples:</strong>
@@ -3201,12 +3227,17 @@ list of key,values as described by the cog requesting this command.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;services...&gt;</code> - The services to remove.</p>
 <p><strong>Usage:</strong> <code>,set api remove</code></p>
-<h3 id="set-api-list">set api list</h3>
-<p><strong>Description:</strong> Show all external API services along with their keys that have been set.</p>
-<p>Secrets are not shown.</p>
-<p><strong>Example:</strong>
-- <code>[p]set api list</code></p>
-<p><strong>Usage:</strong> <code>,set api list</code></p>
+<h3 id="set-usebuttons">set usebuttons</h3>
+<p><strong>Description:</strong> Set a global bot variable for using buttons in menus.</p>
+<p>When enabled, all usage of cores menus API will use buttons instead of reactions.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set usebuttons</code> - Toggles the value.
+- <code>[p]set usebuttons True</code> - Enables using buttons.</p>
+<p><strong>Arguments:</strong>
+- <code>[use_buttons]</code> - Whether to use buttons. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,set usebuttons</code></p>
 <h3 id="set-colour">set colour</h3>
 <p><strong>Description:</strong> Sets a default colour to be used for the bot's embeds.</p>
 <p>Acceptable values for the colour parameter can be found at:</p>
@@ -3234,19 +3265,6 @@ list of key,values as described by the cog requesting this command.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
 <p><strong>Usage:</strong> <code>,set locale</code></p>
-<h3 id="set-locale-global">set locale global</h3>
-<p><strong>Description:</strong> Changes [botname]'s default locale.</p>
-<p>This will be used when a server has not set a locale, or in DMs.</p>
-<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
-<p>To reset to English, use "en-US".</p>
-<p><strong>Examples:</strong>
-- <code>[p]set locale global en-US</code>
-- <code>[p]set locale global de-DE</code>
-- <code>[p]set locale global fr-FR</code>
-- <code>[p]set locale global pl-PL</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
-<p><strong>Usage:</strong> <code>,set locale global</code></p>
 <h3 id="set-locale-server">set locale server</h3>
 <p><strong>Description:</strong> Changes [botname]'s locale in this server.</p>
 <p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
@@ -3260,6 +3278,19 @@ list of key,values as described by the cog requesting this command.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
 <p><strong>Usage:</strong> <code>,set locale server</code></p>
+<h3 id="set-locale-global">set locale global</h3>
+<p><strong>Description:</strong> Changes [botname]'s default locale.</p>
+<p>This will be used when a server has not set a locale, or in DMs.</p>
+<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
+<p>To reset to English, use "en-US".</p>
+<p><strong>Examples:</strong>
+- <code>[p]set locale global en-US</code>
+- <code>[p]set locale global de-DE</code>
+- <code>[p]set locale global fr-FR</code>
+- <code>[p]set locale global pl-PL</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
+<p><strong>Usage:</strong> <code>,set locale global</code></p>
 <h3 id="set-regionalformat">set regionalformat</h3>
 <p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
 <p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
@@ -3272,17 +3303,6 @@ Pass "reset" to <code>language_code</code> to base regional formatting on bot's 
 <p><strong>Arguments:</strong>
 - <code>[language_code]</code> - The region format to use for the bot in this server.</p>
 <p><strong>Usage:</strong> <code>,set regionalformat</code></p>
-<h3 id="set-regionalformat-server">set regionalformat server</h3>
-<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
-<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
-Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set regionalformat server en-US</code>
-- <code>[p]set region local de-DE</code>
-- <code>[p]set regionalformat server reset</code> - Resets to the locale.</p>
-<p><strong>Arguments:</strong>
-- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
-<p><strong>Usage:</strong> <code>,set regionalformat server</code></p>
 <h3 id="set-regionalformat-global">set regionalformat global</h3>
 <p><strong>Description:</strong> Changes the bot's regional format. This is used for formatting date, time and numbers.</p>
 <p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
@@ -3294,6 +3314,17 @@ Pass "reset" to <code>language_code</code> to base regional formatting on bot's 
 <p><strong>Arguments:</strong>
 - <code>[language_code]</code> - The default region format to use for the bot.</p>
 <p><strong>Usage:</strong> <code>,set regionalformat global</code></p>
+<h3 id="set-regionalformat-server">set regionalformat server</h3>
+<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
+<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
+Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set regionalformat server en-US</code>
+- <code>[p]set region local de-DE</code>
+- <code>[p]set regionalformat server reset</code> - Resets to the locale.</p>
+<p><strong>Arguments:</strong>
+- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
+<p><strong>Usage:</strong> <code>,set regionalformat server</code></p>
 <h3 id="set-usebotcolour">set usebotcolour</h3>
 <p><strong>Description:</strong> Toggle whether to use the bot owner-configured colour for embeds.</p>
 <p>Default is to use the bot's configured colour.
@@ -3309,17 +3340,6 @@ Otherwise, the colour used will be the colour of the bot's top role.</p>
 <p><strong>Example:</strong>
 - <code>[p]set serverfuzzy</code></p>
 <p><strong>Usage:</strong> <code>,set serverfuzzy</code></p>
-<h3 id="set-usebuttons">set usebuttons</h3>
-<p><strong>Description:</strong> Set a global bot variable for using buttons in menus.</p>
-<p>When enabled, all usage of cores menus API will use buttons instead of reactions.</p>
-<p>This defaults to True.
-Using this without a setting will toggle.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set usebuttons</code> - Toggles the value.
-- <code>[p]set usebuttons True</code> - Enables using buttons.</p>
-<p><strong>Arguments:</strong>
-- <code>[use_buttons]</code> - Whether to use buttons. Leave blank to toggle.</p>
-<p><strong>Usage:</strong> <code>,set usebuttons</code></p>
 <h3 id="set-serverprefix">set serverprefix</h3>
 <p><strong>Description:</strong> Sets [botname]'s server prefix(es).</p>
 <p>Warning: This will override global prefixes, the bot will not respond to any global prefixes in this server.
@@ -3389,6 +3409,27 @@ Using this without a setting will toggle.</p>
 <h3 id="set-roles">set roles</h3>
 <p><strong>Description:</strong> Set server's admin and mod roles for [botname].</p>
 <p><strong>Usage:</strong> <code>,set roles</code></p>
+<h3 id="set-roles-addmodrole">set roles addmodrole</h3>
+<p><strong>Description:</strong> Adds a moderator role for this server.</p>
+<p>This grants access to moderator level commands like:
+- <code>[p]mute</code>
+- <code>[p]cleanup</code>
+- <code>[p]customcommand create</code></p>
+<p>And more.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles addmodrole @Mods</code>
+- <code>[p]set roles addmodrole Loyal Helpers</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to add as a moderator.</p>
+<p><strong>Usage:</strong> <code>,set roles addmodrole</code></p>
+<h3 id="set-roles-removeadminrole">set roles removeadminrole</h3>
+<p><strong>Description:</strong> Removes an admin role for this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles removeadminrole @Admins</code>
+- <code>[p]set roles removeadminrole Super Admins</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to remove from being an admin.</p>
+<p><strong>Usage:</strong> <code>,set roles removeadminrole</code></p>
 <h3 id="set-roles-removemodrole">set roles removemodrole</h3>
 <p><strong>Description:</strong> Removes a mod role for this server.</p>
 <p><strong>Examples:</strong>
@@ -3411,30 +3452,24 @@ Using this without a setting will toggle.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;role&gt;</code> - The role to add as an admin.</p>
 <p><strong>Usage:</strong> <code>,set roles addadminrole</code></p>
-<h3 id="set-roles-addmodrole">set roles addmodrole</h3>
-<p><strong>Description:</strong> Adds a moderator role for this server.</p>
-<p>This grants access to moderator level commands like:
-- <code>[p]mute</code>
-- <code>[p]cleanup</code>
-- <code>[p]customcommand create</code></p>
-<p>And more.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles addmodrole @Mods</code>
-- <code>[p]set roles addmodrole Loyal Helpers</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to add as a moderator.</p>
-<p><strong>Usage:</strong> <code>,set roles addmodrole</code></p>
-<h3 id="set-roles-removeadminrole">set roles removeadminrole</h3>
-<p><strong>Description:</strong> Removes an admin role for this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles removeadminrole @Admins</code>
-- <code>[p]set roles removeadminrole Super Admins</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to remove from being an admin.</p>
-<p><strong>Usage:</strong> <code>,set roles removeadminrole</code></p>
 <h3 id="set-bot">set bot</h3>
 <p><strong>Description:</strong> Commands for changing [botname]'s metadata.</p>
 <p><strong>Usage:</strong> <code>,set bot</code></p>
+<h3 id="set-bot-avatar">set bot avatar</h3>
+<p><strong>Description:</strong> Sets [botname]'s avatar</p>
+<p>Supports either an attachment or an image URL.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set bot avatar</code> - With an image attachment, this will set the avatar.
+- <code>[p]set bot avatar</code> - Without an attachment, this will show the command help.
+- <code>[p]set bot avatar https://links.flaree.xyz/k95</code> - Sets the avatar to the provided url.</p>
+<p><strong>Arguments:</strong>
+- <code>[url]</code> - An image url to be used as an avatar. Leave blank when uploading an attachment.</p>
+<p><strong>Usage:</strong> <code>,set bot avatar</code></p>
+<h3 id="set-bot-avatar-remove">set bot avatar remove</h3>
+<p><strong>Description:</strong> Removes [botname]'s avatar.</p>
+<p><strong>Example:</strong>
+- <code>[p]set bot avatar remove</code></p>
+<p><strong>Usage:</strong> <code>,set bot avatar remove</code></p>
 <h3 id="set-bot-nickname">set bot nickname</h3>
 <p><strong>Description:</strong> Sets [botname]'s nickname for the current server.</p>
 <p>Maximum length for a nickname is 32 characters.</p>
@@ -3443,16 +3478,6 @@ Using this without a setting will toggle.</p>
 <p><strong>Arguments:</strong>
 - <code>[nickname]</code> - The nickname to give the bot. Leave blank to clear the current nickname.</p>
 <p><strong>Usage:</strong> <code>,set bot nickname</code></p>
-<h3 id="set-bot-username">set bot username</h3>
-<p><strong>Description:</strong> Sets [botname]'s username.</p>
-<p>Maximum length for a username is 32 characters.</p>
-<p>Note: The username of a verified bot cannot be manually changed.
-    Please contact Discord support to change it.</p>
-<p><strong>Example:</strong>
-- <code>[p]set bot username BaguetteBot</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;username&gt;</code> - The username to give the bot.</p>
-<p><strong>Usage:</strong> <code>,set bot username</code></p>
 <h3 id="set-bot-custominfo">set bot custominfo</h3>
 <p><strong>Description:</strong> Customizes a section of <code>[p]info</code>.</p>
 <p>The maximum amount of allowed characters is 1024.
@@ -3477,30 +3502,45 @@ This is shown in a few locations, including the help menu.</p>
 <p><strong>Arguments:</strong>
 - <code>[description]</code> - The description to use for this bot. Leave blank to reset to the default.</p>
 <p><strong>Usage:</strong> <code>,set bot description</code></p>
-<h3 id="set-bot-avatar">set bot avatar</h3>
-<p><strong>Description:</strong> Sets [botname]'s avatar</p>
-<p>Supports either an attachment or an image URL.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set bot avatar</code> - With an image attachment, this will set the avatar.
-- <code>[p]set bot avatar</code> - Without an attachment, this will show the command help.
-- <code>[p]set bot avatar https://links.flaree.xyz/k95</code> - Sets the avatar to the provided url.</p>
-<p><strong>Arguments:</strong>
-- <code>[url]</code> - An image url to be used as an avatar. Leave blank when uploading an attachment.</p>
-<p><strong>Usage:</strong> <code>,set bot avatar</code></p>
-<h3 id="set-bot-avatar-remove">set bot avatar remove</h3>
-<p><strong>Description:</strong> Removes [botname]'s avatar.</p>
+<h3 id="set-bot-username">set bot username</h3>
+<p><strong>Description:</strong> Sets [botname]'s username.</p>
+<p>Maximum length for a username is 32 characters.</p>
+<p>Note: The username of a verified bot cannot be manually changed.
+    Please contact Discord support to change it.</p>
 <p><strong>Example:</strong>
-- <code>[p]set bot avatar remove</code></p>
-<p><strong>Usage:</strong> <code>,set bot avatar remove</code></p>
+- <code>[p]set bot username BaguetteBot</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;username&gt;</code> - The username to give the bot.</p>
+<p><strong>Usage:</strong> <code>,set bot username</code></p>
 <h3 id="set-status">set status</h3>
 <p><strong>Description:</strong> Commands for setting [botname]'s status.</p>
 <p><strong>Usage:</strong> <code>,set status</code></p>
+<h3 id="set-status-competing">set status competing</h3>
+<p><strong>Description:</strong> Sets [botname]'s competing status.</p>
+<p>This will appear as <code>Competing in &lt;competing&gt;</code>.</p>
+<p>Maximum length for a competing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status competing</code> - Clears the activity status.
+- <code>[p]set status competing London 2012 Olympic Games</code></p>
+<p><strong>Arguments:</strong>
+- <code>[competing]</code> - The text to follow <code>Competing in</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status competing</code></p>
 <h3 id="set-status-invisible">set status invisible</h3>
 <p><strong>Description:</strong> Set [botname]'s status to invisible.</p>
 <p><strong>Usage:</strong> <code>,set status invisible</code></p>
 <h3 id="set-status-dnd">set status dnd</h3>
 <p><strong>Description:</strong> Set [botname]'s status to do not disturb.</p>
 <p><strong>Usage:</strong> <code>,set status dnd</code></p>
+<h3 id="set-status-playing">set status playing</h3>
+<p><strong>Description:</strong> Sets [botname]'s playing status.</p>
+<p>This will appear as <code>Playing &lt;game&gt;</code> or <code>PLAYING A GAME: &lt;game&gt;</code> depending on the context.</p>
+<p>Maximum length for a playing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status playing</code> - Clears the activity status.
+- <code>[p]set status playing the keyboard</code></p>
+<p><strong>Arguments:</strong>
+- <code>[game]</code> - The text to follow <code>Playing</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status playing</code></p>
 <h3 id="set-status-custom">set status custom</h3>
 <p><strong>Description:</strong> Sets [botname]'s custom status.</p>
 <p>This will appear as <code>&lt;text&gt;</code>.</p>
@@ -3551,26 +3591,6 @@ It will also include a <code>Watch</code> button with a twitch.tv url for the pr
 <h3 id="set-status-idle">set status idle</h3>
 <p><strong>Description:</strong> Set [botname]'s status to idle.</p>
 <p><strong>Usage:</strong> <code>,set status idle</code></p>
-<h3 id="set-status-playing">set status playing</h3>
-<p><strong>Description:</strong> Sets [botname]'s playing status.</p>
-<p>This will appear as <code>Playing &lt;game&gt;</code> or <code>PLAYING A GAME: &lt;game&gt;</code> depending on the context.</p>
-<p>Maximum length for a playing status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status playing</code> - Clears the activity status.
-- <code>[p]set status playing the keyboard</code></p>
-<p><strong>Arguments:</strong>
-- <code>[game]</code> - The text to follow <code>Playing</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status playing</code></p>
-<h3 id="set-status-competing">set status competing</h3>
-<p><strong>Description:</strong> Sets [botname]'s competing status.</p>
-<p>This will appear as <code>Competing in &lt;competing&gt;</code>.</p>
-<p>Maximum length for a competing status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status competing</code> - Clears the activity status.
-- <code>[p]set status competing London 2012 Olympic Games</code></p>
-<p><strong>Arguments:</strong>
-- <code>[competing]</code> - The text to follow <code>Competing in</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status competing</code></p>
 <h3 id="set-prefix">set prefix</h3>
 <p><strong>Description:</strong> Sets [botname]'s global prefix(es).</p>
 <p>Warning: This is not additive. It will replace all current prefixes.</p>
@@ -3583,22 +3603,20 @@ It will also include a <code>Watch</code> button with a twitch.tv url for the pr
 <p><strong>Arguments:</strong>
 - <code>&lt;prefixes...&gt;</code> - The prefixes the bot will respond to globally.</p>
 <p><strong>Usage:</strong> <code>,set prefix</code></p>
-<h3 id="set-deletedelay">set deletedelay</h3>
-<p><strong>Description:</strong> Set the delay until the bot removes the command message.</p>
-<p>Must be between -1 and 60.</p>
-<p>Set to -1 to disable this feature.</p>
-<p>This is only applied to the current server and not globally.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set deletedelay</code> - Shows the current delete delay setting.
-- <code>[p]set deletedelay 60</code> - Sets the delete delay to the max of 60 seconds.
-- <code>[p]set deletedelay -1</code> - Disables deleting command messages.</p>
-<p><strong>Arguments:</strong>
-- <code>[time]</code> - The seconds to wait before deleting the command message. Use -1 to disable.</p>
-<p><strong>Usage:</strong> <code>,set deletedelay</code></p>
 <h3 id="helpset">helpset</h3>
 <p><strong>Description:</strong> Commands to manage settings for the help command.</p>
 <p>All help settings are applied globally.</p>
 <p><strong>Usage:</strong> <code>,helpset</code></p>
+<h3 id="helpset-showaliases">helpset showaliases</h3>
+<p><strong>Description:</strong> This allows the help command to show existing commands aliases if there is any.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset showaliases False</code> - Disables showing aliases on this server.
+- <code>[p]helpset showaliases</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[show_aliases]</code> - Whether to include aliases in help. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset showaliases</code></p>
 <h3 id="helpset-resetsettings">helpset resetsettings</h3>
 <p><strong>Description:</strong> This resets [botname]'s help settings to their defaults.</p>
 <p>This may not have an impact when using custom formatters from 3rd party cogs</p>
@@ -3737,16 +3755,6 @@ The timeout has to be between 15 and 300 seconds.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;seconds&gt;</code> - The timeout, in seconds, of the reactions.</p>
 <p><strong>Usage:</strong> <code>,helpset reacttimeout</code></p>
-<h3 id="helpset-showaliases">helpset showaliases</h3>
-<p><strong>Description:</strong> This allows the help command to show existing commands aliases if there is any.</p>
-<p>This defaults to True.
-Using this without a setting will toggle.</p>
-<p><strong>Examples:</strong>
-- <code>[p]helpset showaliases False</code> - Disables showing aliases on this server.
-- <code>[p]helpset showaliases</code> - Toggles the value.</p>
-<p><strong>Arguments:</strong>
-- <code>[show_aliases]</code> - Whether to include aliases in help. Leave blank to toggle.</p>
-<p><strong>Usage:</strong> <code>,helpset showaliases</code></p>
 <h3 id="contact">contact</h3>
 <p><strong>Description:</strong> Sends a message to the owners.</p>
 <p><strong>Example:</strong>
@@ -3788,6 +3796,14 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]allowlist list</code></p>
 <p><strong>Usage:</strong> <code>,allowlist list</code></p>
+<h3 id="allowlist-add">allowlist add</h3>
+<p><strong>Description:</strong> Adds users to the allowlist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]allowlist add @26 @Will</code> - Adds two users to the allowlist.
+- <code>[p]allowlist add 262626262626262626</code> - Adds a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to add to the allowlist.</p>
+<p><strong>Usage:</strong> <code>,allowlist add</code></p>
 <h3 id="allowlist-remove">allowlist remove</h3>
 <p><strong>Description:</strong> Removes users from the allowlist.</p>
 <p>The allowlist will be disabled if all users are removed.</p>
@@ -3803,26 +3819,10 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]allowlist clear</code></p>
 <p><strong>Usage:</strong> <code>,allowlist clear</code></p>
-<h3 id="allowlist-add">allowlist add</h3>
-<p><strong>Description:</strong> Adds users to the allowlist.</p>
-<p><strong>Examples:</strong>
-- <code>[p]allowlist add @26 @Will</code> - Adds two users to the allowlist.
-- <code>[p]allowlist add 262626262626262626</code> - Adds a user by ID.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users...&gt;</code> - The user or users to add to the allowlist.</p>
-<p><strong>Usage:</strong> <code>,allowlist add</code></p>
 <h3 id="blocklist">blocklist</h3>
 <p><strong>Description:</strong> Commands to manage the blocklist.</p>
 <p>Use <code>[p]blocklist clear</code> to disable the blocklist</p>
 <p><strong>Usage:</strong> <code>,blocklist</code></p>
-<h3 id="blocklist-remove">blocklist remove</h3>
-<p><strong>Description:</strong> Removes users from the blocklist.</p>
-<p><strong>Examples:</strong>
-- <code>[p]blocklist remove @26 @Will</code> - Removes two users from the blocklist.
-- <code>[p]blocklist remove 262626262626262626</code> - Removes a user by ID.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users...&gt;</code> - The user or users to remove from the blocklist.</p>
-<p><strong>Usage:</strong> <code>,blocklist remove</code></p>
 <h3 id="blocklist-list">blocklist list</h3>
 <p><strong>Description:</strong> Lists users on the blocklist.</p>
 <p><strong>Example:</strong>
@@ -3833,6 +3833,14 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]blocklist clear</code></p>
 <p><strong>Usage:</strong> <code>,blocklist clear</code></p>
+<h3 id="blocklist-remove">blocklist remove</h3>
+<p><strong>Description:</strong> Removes users from the blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]blocklist remove @26 @Will</code> - Removes two users from the blocklist.
+- <code>[p]blocklist remove 262626262626262626</code> - Removes a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to remove from the blocklist.</p>
+<p><strong>Usage:</strong> <code>,blocklist remove</code></p>
 <h3 id="blocklist-add">blocklist add</h3>
 <p><strong>Description:</strong> Adds users to the blocklist.</p>
 <p><strong>Examples:</strong>
@@ -3846,6 +3854,15 @@ you can do so by using the command in DMs.</p>
 <p>Warning: When the allowlist is in use, the bot will ignore commands from everyone not on the list in the server.</p>
 <p>Use <code>[p]localallowlist clear</code> to disable the allowlist</p>
 <p><strong>Usage:</strong> <code>,localallowlist</code></p>
+<h3 id="localallowlist-add">localallowlist add</h3>
+<p><strong>Description:</strong> Adds a user or role to the server allowlist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localallowlist add @26 @Will</code> - Adds two users to the local allowlist.
+- <code>[p]localallowlist add 262626262626262626</code> - Allows a user by ID.
+- <code>[p]localallowlist add "Super Admins"</code> - Allows a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
+<p><strong>Usage:</strong> <code>,localallowlist add</code></p>
 <h3 id="localallowlist-list">localallowlist list</h3>
 <p><strong>Description:</strong> Lists users and roles on the server allowlist.</p>
 <p><strong>Example:</strong>
@@ -3867,33 +3884,10 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]localallowlist clear</code></p>
 <p><strong>Usage:</strong> <code>,localallowlist clear</code></p>
-<h3 id="localallowlist-add">localallowlist add</h3>
-<p><strong>Description:</strong> Adds a user or role to the server allowlist.</p>
-<p><strong>Examples:</strong>
-- <code>[p]localallowlist add @26 @Will</code> - Adds two users to the local allowlist.
-- <code>[p]localallowlist add 262626262626262626</code> - Allows a user by ID.
-- <code>[p]localallowlist add "Super Admins"</code> - Allows a role with a space in the name without mentioning.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
-<p><strong>Usage:</strong> <code>,localallowlist add</code></p>
 <h3 id="localblocklist">localblocklist</h3>
 <p><strong>Description:</strong> Commands to manage the server specific blocklist.</p>
 <p>Use <code>[p]localblocklist clear</code> to disable the blocklist</p>
 <p><strong>Usage:</strong> <code>,localblocklist</code></p>
-<h3 id="localblocklist-remove">localblocklist remove</h3>
-<p><strong>Description:</strong> Removes user or role from local blocklist.</p>
-<p><strong>Examples:</strong>
-- <code>[p]localblocklist remove @26 @Will</code> - Removes two users from the local blocklist.
-- <code>[p]localblocklist remove 262626262626262626</code> - Unblocks a user by ID.
-- <code>[p]localblocklist remove "Bad Apples"</code> - Unblocks a role with a space in the name without mentioning.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local blocklist.</p>
-<p><strong>Usage:</strong> <code>,localblocklist remove</code></p>
-<h3 id="localblocklist-list">localblocklist list</h3>
-<p><strong>Description:</strong> Lists users and roles on the server blocklist.</p>
-<p><strong>Example:</strong>
-- <code>[p]localblocklist list</code></p>
-<p><strong>Usage:</strong> <code>,localblocklist list</code></p>
 <h3 id="localblocklist-add">localblocklist add</h3>
 <p><strong>Description:</strong> Adds a user or role to the local blocklist.</p>
 <p><strong>Examples:</strong>
@@ -3909,9 +3903,49 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]blocklist clear</code></p>
 <p><strong>Usage:</strong> <code>,localblocklist clear</code></p>
+<h3 id="localblocklist-remove">localblocklist remove</h3>
+<p><strong>Description:</strong> Removes user or role from local blocklist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localblocklist remove @26 @Will</code> - Removes two users from the local blocklist.
+- <code>[p]localblocklist remove 262626262626262626</code> - Unblocks a user by ID.
+- <code>[p]localblocklist remove "Bad Apples"</code> - Unblocks a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local blocklist.</p>
+<p><strong>Usage:</strong> <code>,localblocklist remove</code></p>
+<h3 id="localblocklist-list">localblocklist list</h3>
+<p><strong>Description:</strong> Lists users and roles on the server blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]localblocklist list</code></p>
+<p><strong>Usage:</strong> <code>,localblocklist list</code></p>
 <h3 id="command">command</h3>
 <p><strong>Description:</strong> Commands to enable and disable commands and cogs.</p>
 <p><strong>Usage:</strong> <code>,command</code></p>
+<h3 id="command-disable">command disable</h3>
+<p><strong>Description:</strong> Disable a command.</p>
+<p>If you're the bot owner, this will disable commands globally by default.
+Otherwise, this will disable commands on the current server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable.</p>
+<p><strong>Usage:</strong> <code>,command disable</code></p>
+<h3 id="command-disable-server">command disable server</h3>
+<p><strong>Description:</strong> Disable a command in this server only.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable server userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable server urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable for the current server.</p>
+<p><strong>Usage:</strong> <code>,command disable server</code></p>
+<h3 id="command-disable-global">command disable global</h3>
+<p><strong>Description:</strong> Disable a command globally.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable global userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable global urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable globally.</p>
+<p><strong>Usage:</strong> <code>,command disable global</code></p>
 <h3 id="command-defaultdisablecog">command defaultdisablecog</h3>
 <p><strong>Description:</strong> Set the default state for a cog as disabled.</p>
 <p>This will disable the cog for all servers by default.
@@ -3923,11 +3957,6 @@ To override it, use <code>[p]command enablecog</code> on the servers you want to
 <p><strong>Arguments:</strong>
 - <code>&lt;cog&gt;</code> - The name of the cog to make disabled by default. Must be title-case.</p>
 <p><strong>Usage:</strong> <code>,command defaultdisablecog</code></p>
-<h3 id="command-listdisabledcogs">command listdisabledcogs</h3>
-<p><strong>Description:</strong> List the cogs which are disabled in this server.</p>
-<p><strong>Example:</strong>
-- <code>[p]command listdisabledcogs</code></p>
-<p><strong>Usage:</strong> <code>,command listdisabledcogs</code></p>
 <h3 id="command-enablecog">command enablecog</h3>
 <p><strong>Description:</strong> Enable a cog in this server.</p>
 <p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
@@ -3937,6 +3966,11 @@ To override it, use <code>[p]command enablecog</code> on the servers you want to
 <p><strong>Arguments:</strong>
 - <code>&lt;cog&gt;</code> - The name of the cog to enable on this server. Must be title-case.</p>
 <p><strong>Usage:</strong> <code>,command enablecog</code></p>
+<h3 id="command-listdisabledcogs">command listdisabledcogs</h3>
+<p><strong>Description:</strong> List the cogs which are disabled in this server.</p>
+<p><strong>Example:</strong>
+- <code>[p]command listdisabledcogs</code></p>
+<p><strong>Usage:</strong> <code>,command listdisabledcogs</code></p>
 <h3 id="command-enable">command enable</h3>
 <p><strong>Description:</strong> Enable a command.</p>
 <p>If you're the bot owner, this will try to enable a globally disabled command by default.
@@ -3947,14 +3981,6 @@ Otherwise, this will try to enable a command disabled on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;command&gt;</code> - The command to enable.</p>
 <p><strong>Usage:</strong> <code>,command enable</code></p>
-<h3 id="command-enable-server">command enable server</h3>
-<p><strong>Description:</strong>     Enable a command in this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command enable server userinfo</code> - Enables the <code>userinfo</code> command in the Mod cog.
-- <code>[p]command enable server urban</code> - Enables the <code>urban</code> command in the General cog.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;command&gt;</code> - The command to enable for the current server.</p>
-<p><strong>Usage:</strong> <code>,command enable server</code></p>
 <h3 id="command-enable-global">command enable global</h3>
 <p><strong>Description:</strong> Enable a command globally.</p>
 <p><strong>Examples:</strong>
@@ -3963,6 +3989,14 @@ Otherwise, this will try to enable a command disabled on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;command&gt;</code> - The command to enable globally.</p>
 <p><strong>Usage:</strong> <code>,command enable global</code></p>
+<h3 id="command-enable-server">command enable server</h3>
+<p><strong>Description:</strong>     Enable a command in this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command enable server userinfo</code> - Enables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command enable server urban</code> - Enables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to enable for the current server.</p>
+<p><strong>Usage:</strong> <code>,command enable server</code></p>
 <h3 id="command-defaultenablecog">command defaultenablecog</h3>
 <p><strong>Description:</strong> Set the default state for a cog as enabled.</p>
 <p>This will re-enable the cog for all servers by default.
@@ -4011,36 +4045,18 @@ Otherwise, this will show disabled commands on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>[message]</code> - The message to send when a disabled command is attempted.</p>
 <p><strong>Usage:</strong> <code>,command disabledmsg</code></p>
-<h3 id="command-disable">command disable</h3>
-<p><strong>Description:</strong> Disable a command.</p>
-<p>If you're the bot owner, this will disable commands globally by default.
-Otherwise, this will disable commands on the current server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disable userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
-- <code>[p]command disable urban</code> - Disables the <code>urban</code> command in the General cog.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;command&gt;</code> - The command to disable.</p>
-<p><strong>Usage:</strong> <code>,command disable</code></p>
-<h3 id="command-disable-global">command disable global</h3>
-<p><strong>Description:</strong> Disable a command globally.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disable global userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
-- <code>[p]command disable global urban</code> - Disables the <code>urban</code> command in the General cog.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;command&gt;</code> - The command to disable globally.</p>
-<p><strong>Usage:</strong> <code>,command disable global</code></p>
-<h3 id="command-disable-server">command disable server</h3>
-<p><strong>Description:</strong> Disable a command in this server only.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disable server userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
-- <code>[p]command disable server urban</code> - Disables the <code>urban</code> command in the General cog.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;command&gt;</code> - The command to disable for the current server.</p>
-<p><strong>Usage:</strong> <code>,command disable server</code></p>
 <h3 id="autoimmune">autoimmune</h3>
 <p><strong>Description:</strong> Commands to manage server settings for immunity from automated actions.</p>
 <p>This includes duplicate message deletion and mention spam from the Mod cog, and filters from the Filter cog.</p>
 <p><strong>Usage:</strong> <code>,autoimmune</code></p>
+<h3 id="autoimmune-isimmune">autoimmune isimmune</h3>
+<p><strong>Description:</strong> Checks if a user or role would be considered immune from automated actions.</p>
+<p><strong>Examples:</strong>
+- <code>[p]autoimmune isimmune @Rosie</code>
+- <code>[p]autoimmune isimmune @Mods</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_or_role&gt;</code> - The user or role to check the immunity of.</p>
+<p><strong>Usage:</strong> <code>,autoimmune isimmune</code></p>
 <h3 id="autoimmune-list">autoimmune list</h3>
 <p><strong>Description:</strong> Gets the current members and roles configured for automatic moderation action immunity.</p>
 <p><strong>Example:</strong>
@@ -4062,14 +4078,6 @@ Otherwise, this will disable commands on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;user_or_role&gt;</code> - The user or role to remove immunity from.</p>
 <p><strong>Usage:</strong> <code>,autoimmune remove</code></p>
-<h3 id="autoimmune-isimmune">autoimmune isimmune</h3>
-<p><strong>Description:</strong> Checks if a user or role would be considered immune from automated actions.</p>
-<p><strong>Examples:</strong>
-- <code>[p]autoimmune isimmune @Rosie</code>
-- <code>[p]autoimmune isimmune @Mods</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;user_or_role&gt;</code> - The user or role to check the immunity of.</p>
-<p><strong>Usage:</strong> <code>,autoimmune isimmune</code></p>
 <h3 id="ignore">ignore</h3>
 <p><strong>Description:</strong> Commands to add servers or channels to the ignore list.</p>
 <p>The ignore list will prevent the bot from responding to commands in the configured locations.</p>

@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,21 +2800,6 @@
 <h3 id="maintenance">maintenance</h3>
 <p><strong>Description:</strong> Control the bot's maintenance.</p>
 <p><strong>Usage:</strong> <code>,maintenance</code></p>
-<h3 id="maintenance-deleteafter">maintenance deleteafter</h3>
-<p><strong>Description:</strong> Set the amount of seconds before the maintenance message is deleted.  Pass 0 to make it not delete the message.</p>
-<p><strong>Usage:</strong> <code>,maintenance deleteafter</code></p>
-<h3 id="maintenance-settings">maintenance settings</h3>
-<p><strong>Description:</strong> Tells the current settings of the cog.</p>
-<p><strong>Usage:</strong> <code>,maintenance settings</code></p>
-<h3 id="maintenance-whitelist">maintenance whitelist</h3>
-<p><strong>Description:</strong> Remove or add a person from or to the whitelist for the current maintenance.  Note that this is only for the current maintenance, subsequent ones must have them set again.</p>
-<p><strong>Usage:</strong> <code>,maintenance whitelist</code></p>
-<h3 id="maintenance-off">maintenance off</h3>
-<p><strong>Description:</strong> Clears the bot from maintenance</p>
-<p><strong>Usage:</strong> <code>,maintenance off</code></p>
-<h3 id="maintenance-message">maintenance message</h3>
-<p><strong>Description:</strong> Set the message sent when the bot is down for maintenance</p>
-<p><strong>Usage:</strong> <code>,maintenance message</code></p>
 <h3 id="maintenance-on">maintenance on</h3>
 <p><strong>Description:</strong> Puts the bot on maintenance, preventing everyone but you and people whitelisted from running commands.  Other people will just be told the bot is currently on maintenance.</p>
 <p>You can use the following arguments to specify things:
@@ -2818,7 +2811,22 @@
 <code>[p]maintenance on --start-in 5 seconds</code>; starts a maintenance in 5 seconds
 <code>[p]maintenance on --start-in 5 seconds --end-in 10 seconds</code>; starts a maintenance in 5 seconds, then scheduled to end in 10 seconds, so it will only be on maintenance for 5 seconds.
 <code>[p]maintenance on --start-in 10 seconds --end-after 10 seconds --whitelist 473541068378341376 473541068378341377</code>; starts a maintenance in 10 seconds, that lasts for 10 seconds after, and has the two user IDs who are exempted from the maintenance.</p>
-<p><strong>Usage:</strong> <code>,maintenance on</code></p></p>
+<p><strong>Usage:</strong> <code>,maintenance on</code></p>
+<h3 id="maintenance-message">maintenance message</h3>
+<p><strong>Description:</strong> Set the message sent when the bot is down for maintenance</p>
+<p><strong>Usage:</strong> <code>,maintenance message</code></p>
+<h3 id="maintenance-deleteafter">maintenance deleteafter</h3>
+<p><strong>Description:</strong> Set the amount of seconds before the maintenance message is deleted.  Pass 0 to make it not delete the message.</p>
+<p><strong>Usage:</strong> <code>,maintenance deleteafter</code></p>
+<h3 id="maintenance-off">maintenance off</h3>
+<p><strong>Description:</strong> Clears the bot from maintenance</p>
+<p><strong>Usage:</strong> <code>,maintenance off</code></p>
+<h3 id="maintenance-whitelist">maintenance whitelist</h3>
+<p><strong>Description:</strong> Remove or add a person from or to the whitelist for the current maintenance.  Note that this is only for the current maintenance, subsequent ones must have them set again.</p>
+<p><strong>Usage:</strong> <code>,maintenance whitelist</code></p>
+<h3 id="maintenance-settings">maintenance settings</h3>
+<p><strong>Description:</strong> Tells the current settings of the cog.</p>
+<p><strong>Usage:</strong> <code>,maintenance settings</code></p></p>
     </article>
 </section>
             <!-- endblock -->

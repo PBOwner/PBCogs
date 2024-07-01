@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2792,6 +2800,30 @@
 <h3 id="autogistset">autogistset</h3>
 <p><strong>Description:</strong> AutoGist settings.</p>
 <p><strong>Usage:</strong> <code>,autogistset</code></p>
+<h3 id="autogistset-extensions">autogistset extensions</h3>
+<p><strong>Description:</strong> Settings for file extensions
+that are required for AutoGist to upload file to Gist.</p>
+<p>By default AutoGist will look for files with <code>.txt</code> and <code>.log</code> extensions.</p>
+<p><strong>Usage:</strong> <code>,autogistset extensions</code></p>
+<h3 id="autogistset-extensions-list">autogistset extensions list</h3>
+<p><strong>Description:</strong> List file extensions that are required for AutoGist to upload file to Gist.</p>
+<p><strong>Usage:</strong> <code>,autogistset extensions list</code></p>
+<h3 id="autogistset-extensions-add">autogistset extensions add</h3>
+<p><strong>Description:</strong> Add file extensions to the list.</p>
+<p>Example:
+<code>[p]autogist extensions add txt .log</code> - adds <code>.txt</code> and <code>.log</code> extensions.</p>
+<p><strong>Usage:</strong> <code>,autogistset extensions add</code></p>
+<h3 id="autogistset-extensions-remove">autogistset extensions remove</h3>
+<p><strong>Description:</strong> Remove file extensions from the list.</p>
+<p>Example:
+<code>[p]autogist extensions remove txt .log</code> - removes <code>.txt</code> and <code>.log</code> extensions.</p>
+<p><strong>Usage:</strong> <code>,autogistset extensions remove</code></p>
+<h3 id="autogistset-listentohumans">autogistset listentohumans</h3>
+<p><strong>Description:</strong> Make AutoGist listen to messages from humans in this server.</p>
+<p><strong>Usage:</strong> <code>,autogistset listentohumans</code></p>
+<h3 id="autogistset-blockchannels">autogistset blockchannels</h3>
+<p><strong>Description:</strong> Block the bot from listening to the given channels.</p>
+<p><strong>Usage:</strong> <code>,autogistset blockchannels</code></p>
 <h3 id="autogistset-listentobots">autogistset listentobots</h3>
 <p><strong>Description:</strong> Make AutoGist listen to messages from other bots in this server.</p>
 <p>NOTE: To make bot listen to messages from itself,
@@ -2805,24 +2837,6 @@ that makes the bot listen to other bots.</p>
 <h3 id="autogistset-token">autogistset token</h3>
 <p><strong>Description:</strong> Instructions to set the GitHub API token.</p>
 <p><strong>Usage:</strong> <code>,autogistset token</code></p>
-<h3 id="autogistset-extensions">autogistset extensions</h3>
-<p><strong>Description:</strong> Settings for file extensions
-that are required for AutoGist to upload file to Gist.</p>
-<p>By default AutoGist will look for files with <code>.txt</code> and <code>.log</code> extensions.</p>
-<p><strong>Usage:</strong> <code>,autogistset extensions</code></p>
-<h3 id="autogistset-extensions-add">autogistset extensions add</h3>
-<p><strong>Description:</strong> Add file extensions to the list.</p>
-<p>Example:
-<code>[p]autogist extensions add txt .log</code> - adds <code>.txt</code> and <code>.log</code> extensions.</p>
-<p><strong>Usage:</strong> <code>,autogistset extensions add</code></p>
-<h3 id="autogistset-extensions-remove">autogistset extensions remove</h3>
-<p><strong>Description:</strong> Remove file extensions from the list.</p>
-<p>Example:
-<code>[p]autogist extensions remove txt .log</code> - removes <code>.txt</code> and <code>.log</code> extensions.</p>
-<p><strong>Usage:</strong> <code>,autogistset extensions remove</code></p>
-<h3 id="autogistset-extensions-list">autogistset extensions list</h3>
-<p><strong>Description:</strong> List file extensions that are required for AutoGist to upload file to Gist.</p>
-<p><strong>Usage:</strong> <code>,autogistset extensions list</code></p>
 <h3 id="autogistset-listoverridden">autogistset listoverridden</h3>
 <p><strong>Description:</strong> List guild channels that don't use the default setting.</p>
 <p><strong>Usage:</strong> <code>,autogistset listoverridden</code></p>
@@ -2838,13 +2852,7 @@ it was explicitly blocked from listening to
 with <code>[p]autogistset denychannels</code> command.</p>
 <p>By default, guilds will not listen to any channel.
 Use <code>[p]autogist channeldefault</code> without a setting to see current mode.</p>
-<p><strong>Usage:</strong> <code>,autogistset channeldefault</code></p>
-<h3 id="autogistset-listentohumans">autogistset listentohumans</h3>
-<p><strong>Description:</strong> Make AutoGist listen to messages from humans in this server.</p>
-<p><strong>Usage:</strong> <code>,autogistset listentohumans</code></p>
-<h3 id="autogistset-blockchannels">autogistset blockchannels</h3>
-<p><strong>Description:</strong> Block the bot from listening to the given channels.</p>
-<p><strong>Usage:</strong> <code>,autogistset blockchannels</code></p></p>
+<p><strong>Usage:</strong> <code>,autogistset channeldefault</code></p></p>
     </article>
 </section>
             <!-- endblock -->

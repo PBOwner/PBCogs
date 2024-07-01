@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2795,6 +2803,24 @@
 <h3 id="infochannelset">infochannelset</h3>
 <p><strong>Description:</strong> Toggle different types of infochannels</p>
 <p><strong>Usage:</strong> <code>,infochannelset</code></p>
+<h3 id="infochannelset-name">infochannelset name</h3>
+<p><strong>Description:</strong> Change the name of the infochannel for the specified channel type.</p>
+<p>{count} must be used to display number of total members in the server.
+Leave blank to set back to default.</p>
+<p>Examples:
+- <code>[p]infochannelset name members Cool Cats: {count}</code>
+- <code>[p]infochannelset name bots {count} Robot Overlords</code></p>
+<p>Valid Types are:
+- <code>members</code>: Total members on the server
+- <code>humans</code>: Total members that aren't bots
+- <code>boosters</code>: Total amount of boosters
+- <code>bots</code>: Total bots
+- <code>roles</code>: Total number of roles
+- <code>channels</code>: Total number of channels excluding infochannels
+- <code>online</code>: Total online members
+- <code>offline</code>: Total offline members</p>
+<p>Warning: This command counts against the channel update rate limit and may be queued.</p>
+<p><strong>Usage:</strong> <code>,infochannelset name</code></p>
 <h3 id="infochannelset-rolename">infochannelset rolename</h3>
 <p><strong>Description:</strong> Change the name of the infochannel for specific roles.</p>
 <p>{count} must be used to display number members with the given role.
@@ -2821,25 +2847,7 @@ Leave blank to set back to default.</p>
 <p><strong>Usage:</strong> <code>,infochannelset togglechannel</code></p>
 <h3 id="infochannelset-togglerole">infochannelset togglerole</h3>
 <p><strong>Description:</strong> Toggle an infochannel that shows the count of users with the specified role</p>
-<p><strong>Usage:</strong> <code>,infochannelset togglerole</code></p>
-<h3 id="infochannelset-name">infochannelset name</h3>
-<p><strong>Description:</strong> Change the name of the infochannel for the specified channel type.</p>
-<p>{count} must be used to display number of total members in the server.
-Leave blank to set back to default.</p>
-<p>Examples:
-- <code>[p]infochannelset name members Cool Cats: {count}</code>
-- <code>[p]infochannelset name bots {count} Robot Overlords</code></p>
-<p>Valid Types are:
-- <code>members</code>: Total members on the server
-- <code>humans</code>: Total members that aren't bots
-- <code>boosters</code>: Total amount of boosters
-- <code>bots</code>: Total bots
-- <code>roles</code>: Total number of roles
-- <code>channels</code>: Total number of channels excluding infochannels
-- <code>online</code>: Total online members
-- <code>offline</code>: Total offline members</p>
-<p>Warning: This command counts against the channel update rate limit and may be queued.</p>
-<p><strong>Usage:</strong> <code>,infochannelset name</code></p></p>
+<p><strong>Usage:</strong> <code>,infochannelset togglerole</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2882,9 +2890,23 @@
 <h3 id="channeledit">channeledit</h3>
 <p><strong>Description:</strong> Modify channel options</p>
 <p><strong>Usage:</strong> <code>,channeledit</code></p>
-<h3 id="channeledit-sync">channeledit sync</h3>
-<p><strong>Description:</strong> Set whether or not to sync permissions with the channels Category</p>
-<p><strong>Usage:</strong> <code>,channeledit sync</code></p>
+<h3 id="channeledit-topic">channeledit topic</h3>
+<p><strong>Description:</strong> Edit a channels topic</p>
+<p><strong>Usage:</strong> <code>,channeledit topic</code></p>
+<h3 id="channeledit-bitrate">channeledit bitrate</h3>
+<p><strong>Description:</strong> Edit a voice channels bitrate</p>
+<ul>
+<li><code>&lt;channel&gt;</code> The voice channel you want to change.</li>
+<li><code>&lt;bitrate&gt;</code> The new bitrate between 8000 and 96000.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,channeledit bitrate</code></p>
+<h3 id="channeledit-userlimit">channeledit userlimit</h3>
+<p><strong>Description:</strong> Edit a voice channels user limit</p>
+<ul>
+<li><code>&lt;channel&gt;</code> The voice channel you want to change the limit on.</li>
+<li><code>&lt;limit&gt;</code> The limt on number of users between 0 and 99.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,channeledit userlimit</code></p>
 <h3 id="channeledit-permissions">channeledit permissions</h3>
 <p><strong>Description:</strong> Edit channel read permissions for designated role</p>
 <p><code>[channel]</code> The channel you would like to edit. If no channel is provided
@@ -2924,32 +2946,18 @@ provided <code>None</code> will be used instead which signifies the default stat
  - send_messages_in_threads
  - use_soundboard</p>
 <p><strong>Usage:</strong> <code>,channeledit permissions</code></p>
-<h3 id="channeledit-nsfw">channeledit nsfw</h3>
-<p><strong>Description:</strong> Set whether or not a channel is NSFW</p>
-<p><strong>Usage:</strong> <code>,channeledit nsfw</code></p>
-<h3 id="channeledit-topic">channeledit topic</h3>
-<p><strong>Description:</strong> Edit a channels topic</p>
-<p><strong>Usage:</strong> <code>,channeledit topic</code></p>
-<h3 id="channeledit-bitrate">channeledit bitrate</h3>
-<p><strong>Description:</strong> Edit a voice channels bitrate</p>
-<ul>
-<li><code>&lt;channel&gt;</code> The voice channel you want to change.</li>
-<li><code>&lt;bitrate&gt;</code> The new bitrate between 8000 and 96000.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,channeledit bitrate</code></p>
 <h3 id="channeledit-position">channeledit position</h3>
 <p><strong>Description:</strong> Edit a channels position</p>
 <p><strong>Usage:</strong> <code>,channeledit position</code></p>
+<h3 id="channeledit-sync">channeledit sync</h3>
+<p><strong>Description:</strong> Set whether or not to sync permissions with the channels Category</p>
+<p><strong>Usage:</strong> <code>,channeledit sync</code></p>
 <h3 id="channeledit-name">channeledit name</h3>
 <p><strong>Description:</strong> Edit a channels name</p>
 <p><strong>Usage:</strong> <code>,channeledit name</code></p>
-<h3 id="channeledit-userlimit">channeledit userlimit</h3>
-<p><strong>Description:</strong> Edit a voice channels user limit</p>
-<ul>
-<li><code>&lt;channel&gt;</code> The voice channel you want to change the limit on.</li>
-<li><code>&lt;limit&gt;</code> The limt on number of users between 0 and 99.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,channeledit userlimit</code></p>
+<h3 id="channeledit-nsfw">channeledit nsfw</h3>
+<p><strong>Description:</strong> Set whether or not a channel is NSFW</p>
+<p><strong>Usage:</strong> <code>,channeledit nsfw</code></p>
 <h3 id="pruneroles">pruneroles</h3>
 <p><strong>Description:</strong> Perform various actions on users who haven't spoken in x days</p>
 <p>Note: This will only check if a user has talked in the past x days whereas
@@ -3000,25 +3008,24 @@ discords built in Prune checks online status</p>
 <h3 id="guildedit">guildedit</h3>
 <p><strong>Description:</strong> Edit various guild settings</p>
 <p><strong>Usage:</strong> <code>,guildedit</code></p>
-<h3 id="guildedit-name">guildedit name</h3>
-<p><strong>Description:</strong> Change the server name</p>
-<ul>
-<li><code>&lt;name&gt;</code> The new name of the server.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,guildedit name</code></p>
 <h3 id="guildedit-afktimeout">guildedit afktimeout</h3>
 <p><strong>Description:</strong> Change the servers AFK timeout</p>
 <ul>
 <li><code>&lt;timeout&gt;</code> must be a value of 60, 300, 900, 1800, or 3600.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,guildedit afktimeout</code></p>
-<h3 id="guildedit-afkchannel">guildedit afkchannel</h3>
-<p><strong>Description:</strong> Change the servers AFK voice channel</p>
+<h3 id="guildedit-name">guildedit name</h3>
+<p><strong>Description:</strong> Change the server name</p>
 <ul>
-<li><code>[channel]</code> The channel you want to set as the system channel.</li>
-<li>If not provided will be set to <code>None</code>.</li>
+<li><code>&lt;name&gt;</code> The new name of the server.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,guildedit afkchannel</code></p>
+<p><strong>Usage:</strong> <code>,guildedit name</code></p>
+<h3 id="guildedit-systemchannel">guildedit systemchannel</h3>
+<p><strong>Description:</strong> Change the system channel</p>
+<p>This is the default discord welcome channel.
+- <code>[channel]</code> The channel you want to set as the system channel.
+ - If not provided will be set to <code>None</code>.</p>
+<p><strong>Usage:</strong> <code>,guildedit systemchannel</code></p>
 <h3 id="guildedit-verificationlevel">guildedit verificationlevel</h3>
 <p><strong>Description:</strong> Modify the guilds verification level</p>
 <ul>
@@ -3032,12 +3039,13 @@ discords built in Prune checks online status</p>
 <li><code>extreme</code></li>
 </ul>
 <p><strong>Usage:</strong> <code>,guildedit verificationlevel</code></p>
-<h3 id="guildedit-systemchannel">guildedit systemchannel</h3>
-<p><strong>Description:</strong> Change the system channel</p>
-<p>This is the default discord welcome channel.
-- <code>[channel]</code> The channel you want to set as the system channel.
- - If not provided will be set to <code>None</code>.</p>
-<p><strong>Usage:</strong> <code>,guildedit systemchannel</code></p>
+<h3 id="guildedit-afkchannel">guildedit afkchannel</h3>
+<p><strong>Description:</strong> Change the servers AFK voice channel</p>
+<ul>
+<li><code>[channel]</code> The channel you want to set as the system channel.</li>
+<li>If not provided will be set to <code>None</code>.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,guildedit afkchannel</code></p>
 <h3 id="topmembers">topmembers</h3>
 <p><strong>Description:</strong> Lists top members on the server by join date</p>
 <ul>

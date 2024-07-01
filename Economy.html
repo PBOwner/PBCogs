@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2866,26 +2874,6 @@
 <h3 id="economyset">economyset</h3>
 <p><strong>Description:</strong> Base command to manage Economy settings.</p>
 <p><strong>Usage:</strong> <code>,economyset</code></p>
-<h3 id="economyset-paydaytime">economyset paydaytime</h3>
-<p><strong>Description:</strong> Set the cooldown for the payday command.</p>
-<p>Examples:
-- <code>[p]economyset paydaytime 86400</code>
-- <code>[p]economyset paydaytime 1d</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of payday. Default is 5 minutes.
-Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
-</ul>
-<p><strong>Usage:</strong> <code>,economyset paydaytime</code></p>
-<h3 id="economyset-slotmin">economyset slotmin</h3>
-<p><strong>Description:</strong> Set the minimum slot machine bid.</p>
-<p>Example:
-- <code>[p]economyset slotmin 10</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;bid&gt;</code> The new minimum bid for using the slot machine. Default is 5.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,economyset slotmin</code></p>
 <h3 id="economyset-paydayamount">economyset paydayamount</h3>
 <p><strong>Description:</strong> Set the amount earned each payday.</p>
 <p>Example:
@@ -2895,15 +2883,15 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <li><code>&lt;creds&gt;</code> The new amount to give when using the payday command. Default is 120.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset paydayamount</code></p>
-<h3 id="economyset-slotmax">economyset slotmax</h3>
-<p><strong>Description:</strong> Set the maximum slot machine bid.</p>
+<h3 id="economyset-slotmin">economyset slotmin</h3>
+<p><strong>Description:</strong> Set the minimum slot machine bid.</p>
 <p>Example:
-- <code>[p]economyset slotmax 50</code></p>
+- <code>[p]economyset slotmin 10</code></p>
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>&lt;bid&gt;</code> The new maximum bid for using the slot machine. Default is 100.</li>
+<li><code>&lt;bid&gt;</code> The new minimum bid for using the slot machine. Default is 5.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset slotmax</code></p>
+<p><strong>Usage:</strong> <code>,economyset slotmin</code></p>
 <h3 id="economyset-rolepaydayamount">economyset rolepaydayamount</h3>
 <p><strong>Description:</strong> Set the amount earned each payday for a role.</p>
 <p>Set to <code>0</code> to remove the payday amount you set for that role.</p>
@@ -2916,6 +2904,20 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <li><code>&lt;creds&gt;</code> The new amount to give when using the payday command.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset rolepaydayamount</code></p>
+<h3 id="economyset-paydaytime">economyset paydaytime</h3>
+<p><strong>Description:</strong> Set the cooldown for the payday command.</p>
+<p>Examples:
+- <code>[p]economyset paydaytime 86400</code>
+- <code>[p]economyset paydaytime 1d</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of payday. Default is 5 minutes.
+Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
+</ul>
+<p><strong>Usage:</strong> <code>,economyset paydaytime</code></p>
+<h3 id="economyset-showsettings">economyset showsettings</h3>
+<p><strong>Description:</strong> Shows the current economy settings</p>
+<p><strong>Usage:</strong> <code>,economyset showsettings</code></p>
 <h3 id="economyset-slottime">economyset slottime</h3>
 <p><strong>Description:</strong> Set the cooldown for the slot machine.</p>
 <p>Examples:
@@ -2927,9 +2929,15 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset slottime</code></p>
-<h3 id="economyset-showsettings">economyset showsettings</h3>
-<p><strong>Description:</strong> Shows the current economy settings</p>
-<p><strong>Usage:</strong> <code>,economyset showsettings</code></p></p>
+<h3 id="economyset-slotmax">economyset slotmax</h3>
+<p><strong>Description:</strong> Set the maximum slot machine bid.</p>
+<p>Example:
+- <code>[p]economyset slotmax 50</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;bid&gt;</code> The new maximum bid for using the slot machine. Default is 100.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,economyset slotmax</code></p></p>
     </article>
 </section>
             <!-- endblock -->

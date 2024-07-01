@@ -131,14 +131,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AdvancedInviteTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AdvancedInviteTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AdvancedLogger.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -263,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Appeal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
         </a>
     </li>
                             
@@ -647,14 +647,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Color
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="Comm.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Comm
         </a>
     </li>
                             
@@ -1779,14 +1771,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Perform.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Perform
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="PermChecker.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2331,6 +2315,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="StickyEmbed.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            StickyEmbed
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="StickyMember.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2547,6 +2539,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="URLShortener.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            URLShortener
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="UselessFacts.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2575,6 +2575,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Verifyer
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="VideoDownloader.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VideoDownloader
         </a>
     </li>
                             
@@ -2795,23 +2803,22 @@
 <h3 id="setlinkquoter">setlinkquoter</h3>
 <p><strong>Description:</strong> Commands to configure LinkQuoter.</p>
 <p><strong>Usage:</strong> <code>,setlinkquoter</code></p>
-<h3 id="setlinkquoter-resetsetting">setlinkquoter resetsetting</h3>
-<p><strong>Description:</strong> Reset a setting.</p>
-<p><strong>Usage:</strong> <code>,setlinkquoter resetsetting</code></p>
-<h3 id="setlinkquoter-crossserver">setlinkquoter crossserver</h3>
-<p><strong>Description:</strong>  Toggle cross-server quoting.</p>
-<p>Turning this setting on will allow this server to quote other servers, and other servers to quote this one.</p>
-<p>Default value: <code>False</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setlinkquoter crossserver</code></p>
 <h3 id="setlinkquoter-migratefromphen">setlinkquoter migratefromphen</h3>
 <p><strong>Description:</strong> Migrate config from LinkQuoter by Phen.</p>
 <p><strong>Usage:</strong> <code>,setlinkquoter migratefromphen</code></p>
+<h3 id="setlinkquoter-resetsetting">setlinkquoter resetsetting</h3>
+<p><strong>Description:</strong> Reset a setting.</p>
+<p><strong>Usage:</strong> <code>,setlinkquoter resetsetting</code></p>
 <h3 id="setlinkquoter-deletemessagebutton">setlinkquoter deletemessagebutton</h3>
 <p><strong>Description:</strong> Toggle the delete message button on the quote messages.</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setlinkquoter deletemessagebutton</code></p>
+<h3 id="setlinkquoter-whitelistchannels">setlinkquoter whitelistchannels</h3>
+<p><strong>Description:</strong> Set the channels in which auto-quoting will be enabled.</p>
+<p>Default value: <code>[]</code>
+Dev: <code>Greedy[GuildChannel]</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter whitelistchannels</code></p>
 <h3 id="setlinkquoter-enabled">setlinkquoter enabled</h3>
 <p><strong>Description:</strong> Toggle automatic link-quoting.</p>
 <p>Enabling this will make [botname] attempt to quote any message link that is sent in this server.
@@ -2822,25 +2829,23 @@ If the user doesn't have permission to view the channel that they link, it will 
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setlinkquoter enabled</code></p>
+<h3 id="setlinkquoter-webhooks">setlinkquoter webhooks</h3>
+<p><strong>Description:</strong> Toggle sending message with the name and avatar of the Author of the quote (with webhooks)</p>
+<p>Default value: <code>True</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter webhooks</code></p>
+<h3 id="setlinkquoter-crossserver">setlinkquoter crossserver</h3>
+<p><strong>Description:</strong>  Toggle cross-server quoting.</p>
+<p>Turning this setting on will allow this server to quote other servers, and other servers to quote this one.</p>
+<p>Default value: <code>False</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter crossserver</code></p>
 <h3 id="setlinkquoter-deletemessage">setlinkquoter deletemessage</h3>
 <p><strong>Description:</strong> Toggle deleting of messages for automatic quoting.</p>
 <p>If automatic quoting is enabled, then [botname] will also delete messages that contain links in them.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setlinkquoter deletemessage</code></p>
-<h3 id="setlinkquoter-whitelistchannels">setlinkquoter whitelistchannels</h3>
-<p><strong>Description:</strong> Set the channels in which auto-quoting will be enabled.</p>
-<p>Default value: <code>[]</code>
-Dev: <code>Greedy[GuildChannel]</code></p>
-<p><strong>Usage:</strong> <code>,setlinkquoter whitelistchannels</code></p>
-<h3 id="setlinkquoter-deleteafter">setlinkquoter deleteafter</h3>
-<p><strong>Description:</strong> Set the time in seconds to delete the message after.</p>
-<p>Default value: <code>0</code>
-Dev: <code>&lt;class 'int'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setlinkquoter deleteafter</code></p>
-<h3 id="setlinkquoter-modalconfig">setlinkquoter modalconfig</h3>
-<p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
-<p><strong>Usage:</strong> <code>,setlinkquoter modalconfig</code></p>
 <h3 id="setlinkquoter-blacklistchannels">setlinkquoter blacklistchannels</h3>
 <p><strong>Description:</strong> Set the channels in which auto-quoting will be disabled.</p>
 <p>Default value: <code>[]</code>
@@ -2849,11 +2854,14 @@ Dev: <code>Greedy[GuildChannel]</code></p>
 <h3 id="setlinkquoter-showsettings">setlinkquoter showsettings</h3>
 <p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
 <p><strong>Usage:</strong> <code>,setlinkquoter showsettings</code></p>
-<h3 id="setlinkquoter-webhooks">setlinkquoter webhooks</h3>
-<p><strong>Description:</strong> Toggle sending message with the name and avatar of the Author of the quote (with webhooks)</p>
-<p>Default value: <code>True</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setlinkquoter webhooks</code></p></p>
+<h3 id="setlinkquoter-deleteafter">setlinkquoter deleteafter</h3>
+<p><strong>Description:</strong> Set the time in seconds to delete the message after.</p>
+<p>Default value: <code>0</code>
+Dev: <code>&lt;class 'int'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter deleteafter</code></p>
+<h3 id="setlinkquoter-modalconfig">setlinkquoter modalconfig</h3>
+<p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
+<p><strong>Usage:</strong> <code>,setlinkquoter modalconfig</code></p></p>
     </article>
 </section>
             <!-- endblock -->
