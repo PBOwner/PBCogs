@@ -116,11 +116,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Assistant.html</loc>
-         <lastmod>2024-07-01</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://docs.prismbot.icu/AssistantUtils.html</loc>
          <lastmod>2024-07-01</lastmod>
          <changefreq>daily</changefreq>
@@ -407,6 +402,11 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/CycleStatus.html</loc>
+         <lastmod>2024-07-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.prismbot.icu/DMAffiliates.html</loc>
          <lastmod>2024-07-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -1052,6 +1052,11 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/PartyCrash.html</loc>
+         <lastmod>2024-07-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://docs.prismbot.icu/Perform.html</loc>
          <lastmod>2024-07-01</lastmod>
          <changefreq>daily</changefreq>
     </url>
