@@ -1,6 +1,5 @@
 import discord
 from redbot.core import commands
-import asyncio
 
 class StickyEmbed(commands.Cog):
     """A cog for creating sticky embeds."""
@@ -12,7 +11,7 @@ class StickyEmbed(commands.Cog):
         self.embed = None
 
     @commands.command()
-    async def create_sticky(self, ctx, title: str, description: str, footer: str, *fields: str):
+    async def esticky(self, ctx, title: str, description: str, footer: str, *fields: str):
         """Create a customizable sticky embed."""
         embed = discord.Embed(
             title=title,
