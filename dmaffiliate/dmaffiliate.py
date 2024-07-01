@@ -11,18 +11,18 @@ class DMAffiliates(commands.Cog):
     @commands.group()
     @commands.guild_only()
     @commands.has_permissions(administrator=True)
-    async def affiliate(self, ctx):
+    async def dmaffiliate(self, ctx):
         """Settings for the affiliate messages."""
         pass
 
-    @affiliate.command()
+    @dmaffiliate.command()
     async def add(self, ctx, *, message: str):
         """Add a new affiliate message."""
         async with self.config.guild(ctx.guild).affiliates() as affiliates:
             affiliates.append(message)
         await ctx.send("Affiliate message added.")
 
-    @affiliate.command()
+    @dmaffiliate.command()
     async def remove(self, ctx, index: int):
         """Remove an affiliate message by its index."""
         async with self.config.guild(ctx.guild).affiliates() as affiliates:
@@ -32,15 +32,13 @@ class DMAffiliates(commands.Cog):
             else:
                 await ctx.send("Invalid index.")
 
-    @affiliate.command()
+    @dmaffiliate.command()
     async def list(self, ctx):
         """List all affiliate messages."""
         affiliates = await self.config.guild(ctx.guild).affiliates()
         if affiliates:
-            embed = discord.Embed(title="Affiliate Messages", color=discord.Color.blue())
-            for i, message in enumerate(affiliates):
-                embed.add_field(name=f"Message {i+1}", value=message, inline=False)
-            await ctx.send(embed=embed)
+            messages = "\n".join(f"{i+1}. {message}" for i, message in enumerate(affiliates))
+            await ctx.send(f"Affiliate Messages:\n{messages}")
         else:
             await ctx.send("No affiliate messages set.")
 
