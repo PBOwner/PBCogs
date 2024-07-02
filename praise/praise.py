@@ -9,18 +9,7 @@ class Praise(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.praises = {
-            str(uuid.uuid4()): "You have been so good!! Keep it up and we will see where you go!",
-            str(uuid.uuid4()): "Amazing job! You're doing fantastic!",
-            str(uuid.uuid4()): "Keep up the great work, superstar!",
-            str(uuid.uuid4()): "You're on fire! Keep it going!",
-            str(uuid.uuid4()): "You're doing an excellent job, keep it up!",
-            str(uuid.uuid4()): "You're a rockstar! Keep shining!",
-            str(uuid.uuid4()): "Fantastic effort! Keep up the good work!",
-            str(uuid.uuid4()): "You're making great progress, keep it up!",
-            str(uuid.uuid4()): "You're doing wonderfully, keep it going!",
-            str(uuid.uuid4()): "You're a champ! Keep up the awesome work!"
-        }
+        self.praises = {}
 
     @commands.group()
     async def praise(self, ctx):
@@ -31,7 +20,7 @@ class Praise(commands.Cog):
     async def add(self, ctx, *, new_praise: str):
         """Add a new praise message to the list."""
         praise_id = str(uuid.uuid4())
-        self.praises[praise_id] = new_praise
+        self.praises[praise_id] = {"message": new_praise, "author": ctx.author.display_name}
         await ctx.send(f"Added new praise with ID {praise_id}: {new_praise}")
 
     @praise.command()
@@ -39,7 +28,7 @@ class Praise(commands.Cog):
         """Remove a praise message by its UUID."""
         if praise_id in self.praises:
             removed_praise = self.praises.pop(praise_id)
-            await ctx.send(f"Removed praise with ID {praise_id}: {removed_praise}")
+            await ctx.send(f"Removed praise with ID {praise_id}: {removed_praise['message']}")
         else:
             await ctx.send(f"No praise found with ID {praise_id}")
 
@@ -50,8 +39,27 @@ class Praise(commands.Cog):
             await ctx.send("No praises available.")
             return
 
-        praise_list = "\n".join(f"{praise_id}: {praise}" for praise_id, praise in self.praises.items())
-        await ctx.send(f"Current praises:\n{praise_list}")
+        pages = []
+        current_page = 0
+        page_limit = 5  # Number of praises per page
+        praises_list = list(self.praises.items())
+
+        while current_page * page_limit < len(praises_list):
+            embed = discord.Embed(title=f"Praises (Page {current_page + 1})", color=discord.Color.gold())
+            for i in range(page_limit):
+                if current_page * page_limit + i >= len(praises_list):
+                    break
+                praise_id, praise_info = praises_list[current_page * page_limit + i]
+                embed.add_field(
+                    name=f"Added by {praise_info['author']}",
+                    value=f"{praise_info['message']}\n**UUID:** {praise_id}",
+                    inline=False
+                )
+            pages.append(embed)
+            current_page += 1
+
+        for page in pages:
+            await ctx.send(embed=page)
 
     @praise.command()
     async def user(self, ctx, target: discord.Member, *, custom_message: str = None):
@@ -71,7 +79,7 @@ class Praise(commands.Cog):
 
         # Create the embed message for the user
         title = f"Praising {target.display_name}"
-        description = custom_message if custom_message else random.choice(list(self.praises.values()))
+        description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
         embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
         # Send the embed message
@@ -86,7 +94,7 @@ class Praise(commands.Cog):
 
         # Create the embed message for the role
         title = f"Praising {target.name}"
-        description = custom_message if custom_message else random.choice(list(self.praises.values()))
+        description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
         embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
         # Send the embed message and ping the role
