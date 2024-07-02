@@ -5,11 +5,22 @@ from redbot.core.bot import Red
 import discord
 
 class Praise(commands.Cog):
-    """Praise Kink style cog for Red-DiscordBot"""
+    """Praise Kink style cog for FuturoBot"""
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.praises = {}
+        self.praises = {
+            str(uuid.uuid4()): "You have been so good!! Keep it up and we will see where you go!",
+            str(uuid.uuid4()): "Amazing job! You're doing fantastic!",
+            str(uuid.uuid4()): "Keep up the great work, superstar!",
+            str(uuid.uuid4()): "You're on fire! Keep it going!",
+            str(uuid.uuid4()): "You're doing an excellent job, keep it up!",
+            str(uuid.uuid4()): "You're a rockstar! Keep shining!",
+            str(uuid.uuid4()): "Fantastic effort! Keep up the good work!",
+            str(uuid.uuid4()): "You're making great progress, keep it up!",
+            str(uuid.uuid4()): "You're doing wonderfully, keep it going!",
+            str(uuid.uuid4()): "You're a champ! Keep up the awesome work!"
+        }
 
     @commands.group(invoke_without_command=True)
     async def praise(self, ctx, target: discord.Role or discord.Member = None, *, custom_message: str = None):
@@ -31,7 +42,7 @@ class Praise(commands.Cog):
 
             # Create the embed message for the user
             title = f"Praising {target.display_name}"
-            description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
+            description = custom_message if custom_message else random.choice(list(self.praises.values()))
             embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
             # Send the embed message
@@ -40,7 +51,7 @@ class Praise(commands.Cog):
         elif isinstance(target, discord.Role):
             # Create the embed message for the role
             title = f"Praising {target.name}"
-            description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
+            description = custom_message if custom_message else random.choice(list(self.praises.values()))
             embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
             # Send the embed message and ping the role
