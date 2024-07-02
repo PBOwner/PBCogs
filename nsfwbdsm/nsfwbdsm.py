@@ -10,7 +10,7 @@ class NSFWBDSM(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.giphy_api_key = "YOUR_GIPHY_API_KEY"
+        self.giphy_api_key = "pLZxwS4terpmufwW365QiS8v5T0FvqZa"
         self.tenor_api_key = "YOUR_TENOR_API_KEY"
         self.bdsms = {
             "aftercare": {
