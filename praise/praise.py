@@ -11,10 +11,42 @@ class Praise(commands.Cog):
         self.bot = bot
         self.praises = {}
 
-    @commands.group()
-    async def praise(self, ctx):
-        """Praise commands."""
-        pass
+    @commands.group(invoke_without_command=True)
+    async def praise(self, ctx, target: discord.Role or discord.Member = None, *, custom_message: str = None):
+        """Praise a user or a role with a default or custom message."""
+        if target is None and custom_message is None:
+            await ctx.send("Please mention a user or role, or provide a custom message.")
+            return
+
+        # Determine if the target is a user or a role
+        if isinstance(target, discord.Member):
+            # Fetch the target's most recent message
+            async for message in ctx.channel.history(limit=100):
+                if message.author == target:
+                    await message.add_reaction("⭐")
+                    break
+            else:
+                await ctx.send(f"Could not find a recent message from {target.display_name} in this channel.")
+                return
+
+            # Create the embed message for the user
+            title = f"Praising {target.display_name}"
+            description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
+            embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
+
+            # Send the embed message
+            await ctx.send(embed=embed)
+
+        elif isinstance(target, discord.Role):
+            # Create the embed message for the role
+            title = f"Praising {target.name}"
+            description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
+            embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
+
+            # Send the embed message and ping the role
+            await ctx.send(content=target.mention, embed=embed)
+        else:
+            await ctx.send("Please mention a valid user or role.")
 
     @praise.command()
     async def add(self, ctx, *, new_praise: str):
@@ -60,42 +92,3 @@ class Praise(commands.Cog):
 
         for page in pages:
             await ctx.send(embed=page)
-
-    @praise.command()
-    async def user(self, ctx, target: discord.Member, *, custom_message: str = None):
-        """Praise a user with a default or custom message."""
-        if target is None and custom_message is None:
-            await ctx.send("Please mention a user or provide a custom message.")
-            return
-
-        # Fetch the target's most recent message
-        async for message in ctx.channel.history(limit=100):
-            if message.author == target:
-                await message.add_reaction("⭐")
-                break
-        else:
-            await ctx.send(f"Could not find a recent message from {target.display_name} in this channel.")
-            return
-
-        # Create the embed message for the user
-        title = f"Praising {target.display_name}"
-        description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
-        embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
-
-        # Send the embed message
-        await ctx.send(embed=embed)
-
-    @praise.command()
-    async def role(self, ctx, target: discord.Role, *, custom_message: str = None):
-        """Praise a role with a default or custom message."""
-        if target is None and custom_message is None:
-            await ctx.send("Please mention a role or provide a custom message.")
-            return
-
-        # Create the embed message for the role
-        title = f"Praising {target.name}"
-        description = custom_message if custom_message else random.choice(list(self.praises.values()))['message']
-        embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
-
-        # Send the embed message and ping the role
-        await ctx.send(content=target.mention, embed=embed)
