@@ -6,5 +6,5 @@ nav:
 site_name: Index's Documentation
 site_url: https://docs.prismbot.icu/Index/
 theme:
-  name: dracula
+  name: cinder
 use_directory_urls: false

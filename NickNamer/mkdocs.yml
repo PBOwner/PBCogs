@@ -6,5 +6,5 @@ nav:
 site_name: NickNamer's Documentation
 site_url: https://docs.prismbot.icu/NickNamer/
 theme:
-  name: dracula
+  name: cinder
 use_directory_urls: false

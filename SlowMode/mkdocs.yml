@@ -6,5 +6,5 @@ nav:
 site_name: SlowMode's Documentation
 site_url: https://docs.prismbot.icu/SlowMode/
 theme:
-  name: dracula
+  name: cinder
 use_directory_urls: false
