@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2823,21 +2831,21 @@
 <p>Notify a user when they have a Role added or removed from them<br/><br/>More detailed docs: <a href="https://cogs.yamikaitou.dev/rolenotify.html">https://cogs.yamikaitou.dev/rolenotify.html</a></p>
 <h3 id="rolenotify">rolenotify</h3>
 <p><strong>Description:</strong> Configure RoleNotify</p>
-<p><strong>Usage:</strong> <code>,rolenotify</code></p>
+<p><strong>Usage:</strong> <code>-rolenotify</code></p>
 <h3 id="rolenotify-role">rolenotify role</h3>
 <p><strong>Description:</strong> Configure settings for a Role</p>
-<p><strong>Usage:</strong> <code>,rolenotify role</code></p>
+<p><strong>Usage:</strong> <code>-rolenotify role</code></p>
 <h3 id="rolenotify-role-channel">rolenotify role channel</h3>
 <p><strong>Description:</strong> Set the channel to output Role Notifications to</p>
 <p>Pass 0 to clear the channel and use the server defined channel</p>
-<p><strong>Usage:</strong> <code>,rolenotify role channel</code></p>
+<p><strong>Usage:</strong> <code>-rolenotify role channel</code></p>
 <h3 id="rolenotify-role-info">rolenotify role info</h3>
 <p><strong>Description:</strong> Display the configured settings for a Role</p>
-<p><strong>Usage:</strong> <code>,rolenotify role info</code></p>
+<p><strong>Usage:</strong> <code>-rolenotify role info</code></p>
 <h3 id="rolenotify-role-add">rolenotify role add</h3>
 <p><strong>Description:</strong> Set if the notification should be sent on Role Add</p>
 <p><state> should be any of these combinations, <code>on/off</code>, <code>yes/no</code>, <code>1/0</code>, <code>true/false</code></p>
-<p><strong>Usage:</strong> <code>,rolenotify role add</code></p>
+<p><strong>Usage:</strong> <code>-rolenotify role add</code></p>
 <h3 id="rolenotify-role-message">rolenotify role message</h3>
 <p><strong>Description:</strong> Set the notification message</p>
 <option> can be either `add` or `remove`
@@ -2848,7 +2856,7 @@ Formatting options available for <message> are
 {user_name} = User's Display Name
 {user_mention} = User Mention
 
-**Usage:** `,rolenotify role message`
+**Usage:** `-rolenotify role message`
 
 ### rolenotify role method
 
@@ -2856,7 +2864,7 @@ Formatting options available for <message> are
 
 Valid options are `dm` and `channel`
 
-**Usage:** `,rolenotify role method`
+**Usage:** `-rolenotify role method`
 
 ### rolenotify role remove
 
@@ -2864,7 +2872,7 @@ Valid options are `dm` and `channel`
 
 <state> should be any of these combinations, `on/off`, `yes/no`, `1/0`, `true/false`
 
-**Usage:** `,rolenotify role remove`
+**Usage:** `-rolenotify role remove`
 
 ### rolenotify channel
 
@@ -2873,7 +2881,7 @@ Valid options are `dm` and `channel`
 Pass 0 to clear the channel
 Pass nothing to see the configured channel
 
-**Usage:** `,rolenotify channel`</p>
+**Usage:** `-rolenotify channel`</p>
     </article>
 </section>
             <!-- endblock -->

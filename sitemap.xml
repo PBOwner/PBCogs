@@ -941,6 +941,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.prismbot.icu/MentionPrefix.html</loc>
+         <lastmod>2024-07-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.prismbot.icu/Message.html</loc>
          <lastmod>2024-07-02</lastmod>
          <changefreq>daily</changefreq>

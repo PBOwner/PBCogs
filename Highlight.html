@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2824,58 +2832,58 @@
 <h3 id="highlight">highlight</h3>
 <p><strong>Description:</strong> Slack-like feature to be notified based on specific words outside of
 at-mentions.</p>
-<p><strong>Usage:</strong> <code>,highlight</code></p>
+<p><strong>Usage:</strong> <code>-highlight</code></p>
 <h3 id="highlight-add">highlight add</h3>
 <p><strong>Description:</strong> Add a word to be highlighted in the current guild.</p>
-<p><strong>Usage:</strong> <code>,highlight add</code></p>
+<p><strong>Usage:</strong> <code>-highlight add</code></p>
 <h3 id="highlight-list">highlight list</h3>
 <p><strong>Description:</strong> List your highlighted words for the current guild.</p>
-<p><strong>Usage:</strong> <code>,highlight list</code></p>
+<p><strong>Usage:</strong> <code>-highlight list</code></p>
 <h3 id="highlight-blacklist">highlight blacklist</h3>
 <p><strong>Description:</strong> Blacklist certain users from triggering your words.</p>
-<p><strong>Usage:</strong> <code>,highlight blacklist</code></p>
+<p><strong>Usage:</strong> <code>-highlight blacklist</code></p>
 <h3 id="highlight-blacklist-add">highlight blacklist add</h3>
 <p><strong>Description:</strong> Add a user to your blacklist.</p>
 <h2 id="parameters">Parameters:</h2>
 <p>user: discord.Member
     The user you wish to block from triggering your highlight words.</p>
-<p><strong>Usage:</strong> <code>,highlight blacklist add</code></p>
+<p><strong>Usage:</strong> <code>-highlight blacklist add</code></p>
 <h3 id="highlight-blacklist-list">highlight blacklist list</h3>
 <p><strong>Description:</strong> List the users on your blacklist.</p>
-<p><strong>Usage:</strong> <code>,highlight blacklist list</code></p>
+<p><strong>Usage:</strong> <code>-highlight blacklist list</code></p>
 <h3 id="highlight-blacklist-del">highlight blacklist del</h3>
 <p><strong>Description:</strong> Remove a user from your blacklist.</p>
 <h2 id="parameters_1">Parameters:</h2>
 <p>user: discord.Member
     The user you wish to remove from your blacklist.</p>
-<p><strong>Usage:</strong> <code>,highlight blacklist del</code></p>
+<p><strong>Usage:</strong> <code>-highlight blacklist del</code></p>
 <h3 id="highlight-blacklist-clear">highlight blacklist clear</h3>
 <p><strong>Description:</strong> Clear your user blacklist.</p>
 <p>Will ask for confirmation.</p>
-<p><strong>Usage:</strong> <code>,highlight blacklist clear</code></p>
+<p><strong>Usage:</strong> <code>-highlight blacklist clear</code></p>
 <h3 id="highlight-guild">highlight guild</h3>
 <p><strong>Description:</strong> Guild-wide settings</p>
-<p><strong>Usage:</strong> <code>,highlight guild</code></p>
+<p><strong>Usage:</strong> <code>-highlight guild</code></p>
 <h3 id="highlight-guild-channel">highlight guild channel</h3>
 <p><strong>Description:</strong> Channel denylist.</p>
 <p>Channels on this list will NOT trigger user highlights.</p>
-<p><strong>Usage:</strong> <code>,highlight guild channel</code></p>
+<p><strong>Usage:</strong> <code>-highlight guild channel</code></p>
 <h3 id="highlight-guild-channel-del">highlight guild channel del</h3>
 <p><strong>Description:</strong> Remove a channel from the denylist.</p>
 <h2 id="parameters_2">Parameters:</h2>
 <p>channel: discord.TextChannel
     The channel you wish to remove from the denylist.</p>
-<p><strong>Usage:</strong> <code>,highlight guild channel del</code></p>
+<p><strong>Usage:</strong> <code>-highlight guild channel del</code></p>
 <h3 id="highlight-guild-channel-add">highlight guild channel add</h3>
 <p><strong>Description:</strong> Add a channel to the denylist.</p>
 <p>Channels in this list will NOT trigger user highlights.</p>
 <h2 id="parameters_3">Parameters:</h2>
 <p>channel: discord.TextChannel
     The channel you wish to not trigger user highlights for.</p>
-<p><strong>Usage:</strong> <code>,highlight guild channel add</code></p>
+<p><strong>Usage:</strong> <code>-highlight guild channel add</code></p>
 <h3 id="highlight-guild-channel-show">highlight guild channel show</h3>
 <p><strong>Description:</strong> List the channels in the denylist.</p>
-<p><strong>Usage:</strong> <code>,highlight guild channel show</code></p>
+<p><strong>Usage:</strong> <code>-highlight guild channel show</code></p>
 <h3 id="highlight-timeout">highlight timeout</h3>
 <p><strong>Description:</strong> Set the timeout between consecutive highlight triggers.</p>
 <p>This applies to consecutive highlights within the same channel.
@@ -2886,7 +2894,7 @@ only be notified once.</p>
     The timeout between consecutive triggers within a channel, in seconds.
     Minimum timeout is 0 (always trigger).
     Maximum timeout is 3600 seconds (1 hour).</p>
-<p><strong>Usage:</strong> <code>,highlight timeout</code></p>
+<p><strong>Usage:</strong> <code>-highlight timeout</code></p>
 <h3 id="highlight-ignore">highlight ignore</h3>
 <p><strong>Description:</strong> Ignore certain words to avoid having them trigger your DMs.</p>
 <p>Suppose you have a word X in your highlighted words, and a word Y you are
@@ -2894,40 +2902,40 @@ ignoring.  Then, we have some scenarios as below:
 - "X something something": triggers DM.
 - "X Y": does NOT triggers DM.
 - "X something something Y": does NOT trigger DM.</p>
-<p><strong>Usage:</strong> <code>,highlight ignore</code></p>
+<p><strong>Usage:</strong> <code>-highlight ignore</code></p>
 <h3 id="highlight-ignore-add">highlight ignore add</h3>
 <p><strong>Description:</strong> Add words to your ignore list.</p>
 <h2 id="parameters_5">Parameters:</h2>
 <p>word: str
     The word you wish to ignore.</p>
-<p><strong>Usage:</strong> <code>,highlight ignore add</code></p>
+<p><strong>Usage:</strong> <code>-highlight ignore add</code></p>
 <h3 id="highlight-ignore-del">highlight ignore del</h3>
 <p><strong>Description:</strong> Remove an ignored word from the list.</p>
-<p><strong>Usage:</strong> <code>,highlight ignore del</code></p>
+<p><strong>Usage:</strong> <code>-highlight ignore del</code></p>
 <h3 id="highlight-ignore-list">highlight ignore list</h3>
 <p><strong>Description:</strong> List ignored words.</p>
-<p><strong>Usage:</strong> <code>,highlight ignore list</code></p>
+<p><strong>Usage:</strong> <code>-highlight ignore list</code></p>
 <h3 id="highlight-channeldeny">highlight channelDeny</h3>
 <p><strong>Description:</strong> Stops certain channels from triggering your highlight words</p>
-<p><strong>Usage:</strong> <code>,highlight channelDeny</code></p>
+<p><strong>Usage:</strong> <code>-highlight channelDeny</code></p>
 <h3 id="highlight-channeldeny-add">highlight channelDeny add</h3>
 <p><strong>Description:</strong> Add a channel to be blocked from triggering highlights</p>
 <h2 id="parameters_6">Parameters:</h2>
 <p>channel: discord.TextChannel
     The channel you wish to block highlight triggers from.</p>
-<p><strong>Usage:</strong> <code>,highlight channelDeny add</code></p>
+<p><strong>Usage:</strong> <code>-highlight channelDeny add</code></p>
 <h3 id="highlight-channeldeny-list">highlight channelDeny list</h3>
 <p><strong>Description:</strong> Sends a DM with all of the channels you've stopped from triggering your highlights</p>
-<p><strong>Usage:</strong> <code>,highlight channelDeny list</code></p>
+<p><strong>Usage:</strong> <code>-highlight channelDeny list</code></p>
 <h3 id="highlight-channeldeny-remove">highlight channelDeny remove</h3>
 <p><strong>Description:</strong> Remove a channel that was on the denylist and allow the channel to trigger highlights again</p>
 <h2 id="parameters_7">Parameters:</h2>
 <p>channel: discord.TextChannel
     The channel you wish to receive highlights from again.</p>
-<p><strong>Usage:</strong> <code>,highlight channelDeny remove</code></p>
+<p><strong>Usage:</strong> <code>-highlight channelDeny remove</code></p>
 <h3 id="highlight-del">highlight del</h3>
 <p><strong>Description:</strong> Remove a highlighted word in the current guild.</p>
-<p><strong>Usage:</strong> <code>,highlight del</code></p></p>
+<p><strong>Usage:</strong> <code>-highlight del</code></p></p>
     </article>
 </section>
             <!-- endblock -->

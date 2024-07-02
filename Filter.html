@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2823,7 +2831,7 @@
 <p>This cog is designed for "filtering" unwanted words and phrases from a server.<br/><br/>It provides tools to manage a list of words or sentences, and to customize automatic actions to be taken against users who use those words in channels or in their name/nickname.<br/><br/>This can be used to prevent inappropriate language, off-topic discussions, invite links, and more.</p>
 <h3 id="filterset">filterset</h3>
 <p><strong>Description:</strong> Base command to manage filter settings.</p>
-<p><strong>Usage:</strong> <code>,filterset</code></p>
+<p><strong>Usage:</strong> <code>-filterset</code></p>
 <h3 id="filterset-ban">filterset ban</h3>
 <p><strong>Description:</strong> Set the filter's autoban conditions.</p>
 <p>Users will be banned if they send <code>&lt;count&gt;</code> filtered words in
@@ -2835,7 +2843,7 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;count&gt;</code> The amount of filtered words required to trigger a ban.
 - <code>&lt;timeframe&gt;</code> The period of time in which too many filtered words will trigger a ban.</p>
-<p><strong>Usage:</strong> <code>,filterset ban</code></p>
+<p><strong>Usage:</strong> <code>-filterset ban</code></p>
 <h3 id="filterset-defaultname">filterset defaultname</h3>
 <p><strong>Description:</strong> Set the nickname for users with a filtered name.</p>
 <p>Note that this has no effect if filtering names is disabled
@@ -2845,7 +2853,7 @@
 - <code>[p]filterset defaultname Missingno</code></p>
 <p><strong>Arguments:</strong>
 - <code>&lt;name&gt;</code> The new nickname to assign.</p>
-<p><strong>Usage:</strong> <code>,filterset defaultname</code></p>
+<p><strong>Usage:</strong> <code>-filterset defaultname</code></p>
 <h3 id="filterset-addimmune">filterset addimmune</h3>
 <p><strong>Description:</strong> Add a role to the filter immune list.</p>
 <p>Users with this role will not have their messages filtered.</p>
@@ -2853,18 +2861,18 @@
 - <code>[p]filterset addimmune @RoleName</code></p>
 <p><strong>Arguments:</strong>
 - <code>&lt;role&gt;</code> The role to add to the immune list.</p>
-<p><strong>Usage:</strong> <code>,filterset addimmune</code></p>
+<p><strong>Usage:</strong> <code>-filterset addimmune</code></p>
 <h3 id="filterset-removeimmune">filterset removeimmune</h3>
 <p><strong>Description:</strong> Remove a role from the filter immune list.</p>
 <p>Example:
 - <code>[p]filterset removeimmune @RoleName</code></p>
 <p><strong>Arguments:</strong>
 - <code>&lt;role&gt;</code> The role to remove from the immune list.</p>
-<p><strong>Usage:</strong> <code>,filterset removeimmune</code></p>
+<p><strong>Usage:</strong> <code>-filterset removeimmune</code></p>
 <h3 id="filter">filter</h3>
 <p><strong>Description:</strong> Base command to add or remove words from the server filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
-<p><strong>Usage:</strong> <code>,filter</code></p>
+<p><strong>Usage:</strong> <code>-filter</code></p>
 <h3 id="filter-add">filter add</h3>
 <p><strong>Description:</strong> Add words to the filter.</p>
 <p>Use double quotes to add sentences.</p>
@@ -2873,15 +2881,15 @@
 - <code>[p]filter add "This is a sentence"</code></p>
 <p><strong>Arguments:</strong>
 - <code>[words...]</code> The words or sentences to filter.</p>
-<p><strong>Usage:</strong> <code>,filter add</code></p>
+<p><strong>Usage:</strong> <code>-filter add</code></p>
 <h3 id="filter-names">filter names</h3>
 <p><strong>Description:</strong> Toggle name and nickname filtering.</p>
 <p>This is disabled by default.</p>
-<p><strong>Usage:</strong> <code>,filter names</code></p>
+<p><strong>Usage:</strong> <code>-filter names</code></p>
 <h3 id="filter-channel">filter channel</h3>
 <p><strong>Description:</strong> Base command to add or remove words from the channel filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
-<p><strong>Usage:</strong> <code>,filter channel</code></p>
+<p><strong>Usage:</strong> <code>-filter channel</code></p>
 <h3 id="filter-channel-add">filter channel add</h3>
 <p><strong>Description:</strong> Add words to the filter.</p>
 <p>Use double quotes to add sentences.</p>
@@ -2891,13 +2899,13 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
 - <code>[words...]</code> The words or sentences to filter.</p>
-<p><strong>Usage:</strong> <code>,filter channel add</code></p>
+<p><strong>Usage:</strong> <code>-filter channel add</code></p>
 <h3 id="filter-channel-list">filter channel list</h3>
 <p><strong>Description:</strong> Send a list of the channel's filtered words.</p>
-<p><strong>Usage:</strong> <code>,filter channel list</code></p>
+<p><strong>Usage:</strong> <code>-filter channel list</code></p>
 <h3 id="filter-channel-clear">filter channel clear</h3>
 <p><strong>Description:</strong> Clears this channel's filter list.</p>
-<p><strong>Usage:</strong> <code>,filter channel clear</code></p>
+<p><strong>Usage:</strong> <code>-filter channel clear</code></p>
 <h3 id="filter-channel-delete">filter channel delete</h3>
 <p><strong>Description:</strong> Remove words from the filter.</p>
 <p>Use double quotes to remove sentences.</p>
@@ -2907,10 +2915,10 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
 - <code>[words...]</code> The words or sentences to no longer filter.</p>
-<p><strong>Usage:</strong> <code>,filter channel delete</code></p>
+<p><strong>Usage:</strong> <code>-filter channel delete</code></p>
 <h3 id="filter-list">filter list</h3>
 <p><strong>Description:</strong> Send a list of this server's filtered words.</p>
-<p><strong>Usage:</strong> <code>,filter list</code></p>
+<p><strong>Usage:</strong> <code>-filter list</code></p>
 <h3 id="filter-delete">filter delete</h3>
 <p><strong>Description:</strong> Remove words from the filter.</p>
 <p>Use double quotes to remove sentences.</p>
@@ -2919,10 +2927,10 @@
 - <code>[p]filter remove "This is a sentence"</code></p>
 <p><strong>Arguments:</strong>
 - <code>[words...]</code> The words or sentences to no longer filter.</p>
-<p><strong>Usage:</strong> <code>,filter delete</code></p>
+<p><strong>Usage:</strong> <code>-filter delete</code></p>
 <h3 id="filter-clear">filter clear</h3>
 <p><strong>Description:</strong> Clears this server's filter list.</p>
-<p><strong>Usage:</strong> <code>,filter clear</code></p></p>
+<p><strong>Usage:</strong> <code>-filter clear</code></p></p>
     </article>
 </section>
             <!-- endblock -->

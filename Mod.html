@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2825,21 +2833,21 @@
 <p><strong>Description:</strong> Changes thread's or text channel's slowmode setting.</p>
 <p>Interval can be anything from 0 seconds to 6 hours.
 Use without parameters to disable.</p>
-<p><strong>Usage:</strong> <code>,slowmode</code></p>
+<p><strong>Usage:</strong> <code>-slowmode</code></p>
 <h3 id="userinfo">userinfo</h3>
 <p><strong>Description:</strong> Show information about a user.</p>
 <p>This includes fields for status, discord join date, server join date,
 voice state and previous usernames/display names/nicknames.</p>
 <p>If the member has no roles, previous usernames, display names, or nicknames,
 these fields will be omitted.</p>
-<p><strong>Usage:</strong> <code>,userinfo</code></p>
+<p><strong>Usage:</strong> <code>-userinfo</code></p>
 <h3 id="names">names</h3>
 <p><strong>Description:</strong> Show previous usernames, display names, and server nicknames of a member.</p>
-<p><strong>Usage:</strong> <code>,names</code></p>
+<p><strong>Usage:</strong> <code>-names</code></p>
 <h3 id="rename">rename</h3>
 <p><strong>Description:</strong> Change a member's nickname.</p>
 <p>Leaving the nickname argument empty will remove it.</p>
-<p><strong>Usage:</strong> <code>,rename</code></p>
+<p><strong>Usage:</strong> <code>-rename</code></p>
 <h3 id="kick">kick</h3>
 <p><strong>Description:</strong> Kick a user.</p>
 <p>Examples:
@@ -2849,7 +2857,7 @@ these fields will be omitted.</p>
     This will kick Twentysix from the server.</p>
 <p>If a reason is specified, it will be the reason that shows up
 in the audit log.</p>
-<p><strong>Usage:</strong> <code>,kick</code></p>
+<p><strong>Usage:</strong> <code>-kick</code></p>
 <h3 id="ban">ban</h3>
 <p><strong>Description:</strong> Ban a user from this server and optionally delete days of messages.</p>
 <p><code>days</code> is the amount of days of messages to cleanup on ban.</p>
@@ -2861,7 +2869,7 @@ in the audit log.</p>
 <p>A user ID should be provided if the user is not a member of this server.
 If days is not a number, it's treated as the first word of the reason.
 Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be used instead.</p>
-<p><strong>Usage:</strong> <code>,ban</code></p>
+<p><strong>Usage:</strong> <code>-ban</code></p>
 <h3 id="massban">massban</h3>
 <p><strong>Description:</strong> Mass bans user(s) from the server.</p>
 <p><code>days</code> is the amount of days of messages to cleanup on massban.</p>
@@ -2869,7 +2877,7 @@ Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be use
 - <code>[p]massban 345628097929936898 57287406247743488 7 they broke all rules.</code>
     This will ban all the added userids and delete 7 days worth of their messages.</p>
 <p>User IDs need to be provided in order to ban using this command.</p>
-<p><strong>Usage:</strong> <code>,massban</code></p>
+<p><strong>Usage:</strong> <code>-massban</code></p>
 <h3 id="tempban">tempban</h3>
 <p><strong>Description:</strong> Temporarily ban a user from this server.</p>
 <p><code>duration</code> is the amount of time the user should be banned for.
@@ -2881,90 +2889,90 @@ Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be use
     This will ban Twentysix for 15 minutes.
 - <code>[p]tempban 428675506947227648 1d2h15m 5 Evil person</code>
     This will ban the user with ID 428675506947227648 for 1 day 2 hours 15 minutes and will delete the last 5 days of their messages.</p>
-<p><strong>Usage:</strong> <code>,tempban</code></p>
+<p><strong>Usage:</strong> <code>-tempban</code></p>
 <h3 id="softban">softban</h3>
 <p><strong>Description:</strong> Kick a user and delete 1 day's worth of their messages.</p>
 <p>Example:
 - <code>[p]softban 345628097929936898 Hacked account</code>
     This will kick the user with ID 345628097929936898 and delete 1 day's worth of their messages.</p>
-<p><strong>Usage:</strong> <code>,softban</code></p>
+<p><strong>Usage:</strong> <code>-softban</code></p>
 <h3 id="voicekick">voicekick</h3>
 <p><strong>Description:</strong> Kick a member from a voice channel.</p>
-<p><strong>Usage:</strong> <code>,voicekick</code></p>
+<p><strong>Usage:</strong> <code>-voicekick</code></p>
 <h3 id="voiceunban">voiceunban</h3>
 <p><strong>Description:</strong> Unban a user from speaking and listening in the server's voice channels.</p>
-<p><strong>Usage:</strong> <code>,voiceunban</code></p>
+<p><strong>Usage:</strong> <code>-voiceunban</code></p>
 <h3 id="voiceban">voiceban</h3>
 <p><strong>Description:</strong> Ban a user from speaking and listening in the server's voice channels.</p>
-<p><strong>Usage:</strong> <code>,voiceban</code></p>
+<p><strong>Usage:</strong> <code>-voiceban</code></p>
 <h3 id="unban">unban</h3>
 <p><strong>Description:</strong> Unban a user from this server.</p>
 <p>Requires specifying the target user's ID. To find this, you may either:
 1. Copy it from the mod log case (if one was created), or
 2. Enable Developer Mode, go to Bans in this server's settings, right-click the user and select 'Copy ID'.</p>
-<p><strong>Usage:</strong> <code>,unban</code></p>
+<p><strong>Usage:</strong> <code>-unban</code></p>
 <h3 id="modset">modset</h3>
 <p><strong>Description:</strong> Manage server administration settings.</p>
-<p><strong>Usage:</strong> <code>,modset</code></p>
+<p><strong>Usage:</strong> <code>-modset</code></p>
 <h3 id="modset-showsettings">modset showsettings</h3>
 <p><strong>Description:</strong> Show the current server administration settings.</p>
-<p><strong>Usage:</strong> <code>,modset showsettings</code></p>
+<p><strong>Usage:</strong> <code>-modset showsettings</code></p>
 <h3 id="modset-trackallnames">modset trackallnames</h3>
 <p><strong>Description:</strong> Toggle whether all name changes should be tracked.</p>
 <p>Toggling this off also overrides the tracknicknames setting.</p>
-<p><strong>Usage:</strong> <code>,modset trackallnames</code></p>
+<p><strong>Usage:</strong> <code>-modset trackallnames</code></p>
 <h3 id="modset-deleterepeats">modset deleterepeats</h3>
 <p><strong>Description:</strong> Enable auto-deletion of repeated messages.</p>
 <p>Must be between 2 and 20.</p>
 <p>Set to -1 to disable this feature.</p>
-<p><strong>Usage:</strong> <code>,modset deleterepeats</code></p>
+<p><strong>Usage:</strong> <code>-modset deleterepeats</code></p>
 <h3 id="modset-hierarchy">modset hierarchy</h3>
 <p><strong>Description:</strong> Toggle role hierarchy check for mods and admins.</p>
 <p><strong>WARNING</strong>: Disabling this setting will allow mods to take
 actions on users above them in the role hierarchy!</p>
 <p>This is enabled by default.</p>
-<p><strong>Usage:</strong> <code>,modset hierarchy</code></p>
+<p><strong>Usage:</strong> <code>-modset hierarchy</code></p>
 <h3 id="modset-reinvite">modset reinvite</h3>
 <p><strong>Description:</strong> Toggle whether an invite will be sent to a user when unbanned.</p>
 <p>If this is True, the bot will attempt to create and send a single-use invite
 to the newly-unbanned user.</p>
-<p><strong>Usage:</strong> <code>,modset reinvite</code></p>
+<p><strong>Usage:</strong> <code>-modset reinvite</code></p>
 <h3 id="modset-mentionspam">modset mentionspam</h3>
 <p><strong>Description:</strong> Manage the automoderation settings for mentionspam.</p>
-<p><strong>Usage:</strong> <code>,modset mentionspam</code></p>
+<p><strong>Usage:</strong> <code>-modset mentionspam</code></p>
 <h3 id="modset-mentionspam-strict">modset mentionspam strict</h3>
 <p><strong>Description:</strong> Setting to account for duplicate mentions.</p>
 <p>If enabled all mentions will count including duplicated mentions.
 If disabled only unique mentions will count.</p>
 <p>Use this command without any parameter to see current setting.</p>
-<p><strong>Usage:</strong> <code>,modset mentionspam strict</code></p>
+<p><strong>Usage:</strong> <code>-modset mentionspam strict</code></p>
 <h3 id="modset-mentionspam-warn">modset mentionspam warn</h3>
 <p><strong>Description:</strong> Sets the autowarn conditions for mention spam.</p>
 <p>Users will be warned if they send any messages which contain more than
 <code>&lt;max_mentions&gt;</code> mentions.</p>
 <p><code>&lt;max_mentions&gt;</code> Must be 0 or greater. Set to 0 to disable this feature.</p>
-<p><strong>Usage:</strong> <code>,modset mentionspam warn</code></p>
+<p><strong>Usage:</strong> <code>-modset mentionspam warn</code></p>
 <h3 id="modset-mentionspam-kick">modset mentionspam kick</h3>
 <p><strong>Description:</strong> Sets the autokick conditions for mention spam.</p>
 <p>Users will be kicked if they send any messages which contain more than
 <code>&lt;max_mentions&gt;</code> mentions.</p>
 <p><code>&lt;max_mentions&gt;</code> Must be 0 or greater. Set to 0 to disable this feature.</p>
-<p><strong>Usage:</strong> <code>,modset mentionspam kick</code></p>
+<p><strong>Usage:</strong> <code>-modset mentionspam kick</code></p>
 <h3 id="modset-mentionspam-ban">modset mentionspam ban</h3>
 <p><strong>Description:</strong> Set the autoban conditions for mention spam.</p>
 <p>Users will be banned if they send any message which contains more than
 <code>&lt;max_mentions&gt;</code> mentions.</p>
 <p><code>&lt;max_mentions&gt;</code> Must be 0 or greater. Set to 0 to disable this feature.</p>
-<p><strong>Usage:</strong> <code>,modset mentionspam ban</code></p>
+<p><strong>Usage:</strong> <code>-modset mentionspam ban</code></p>
 <h3 id="modset-tracknicknames">modset tracknicknames</h3>
 <p><strong>Description:</strong> Toggle whether nickname changes should be tracked.</p>
 <p>This setting will be overridden if trackallnames is disabled.</p>
-<p><strong>Usage:</strong> <code>,modset tracknicknames</code></p>
+<p><strong>Usage:</strong> <code>-modset tracknicknames</code></p>
 <h3 id="modset-dm">modset dm</h3>
 <p><strong>Description:</strong> Toggle whether a message should be sent to a user when they are kicked/banned.</p>
 <p>If this option is enabled, the bot will attempt to DM the user with the guild name
 and reason as to why they were kicked/banned.</p>
-<p><strong>Usage:</strong> <code>,modset dm</code></p>
+<p><strong>Usage:</strong> <code>-modset dm</code></p>
 <h3 id="modset-defaultduration">modset defaultduration</h3>
 <p><strong>Description:</strong> Set the default time to be used when a user is tempbanned.</p>
 <p>Accepts: seconds, minutes, hours, days, weeks
@@ -2972,11 +2980,11 @@ and reason as to why they were kicked/banned.</p>
 <p>Examples:
     <code>[p]modset defaultduration 7d12h10m</code>
     <code>[p]modset defaultduration 7 days 12 hours 10 minutes</code></p>
-<p><strong>Usage:</strong> <code>,modset defaultduration</code></p>
+<p><strong>Usage:</strong> <code>-modset defaultduration</code></p>
 <h3 id="modset-defaultdays">modset defaultdays</h3>
 <p><strong>Description:</strong> Set the default number of days worth of messages to be deleted when a user is banned.</p>
 <p>The number of days must be between 0 and 7.</p>
-<p><strong>Usage:</strong> <code>,modset defaultdays</code></p>
+<p><strong>Usage:</strong> <code>-modset defaultdays</code></p>
 <h3 id="modset-deletenames">modset deletenames</h3>
 <p><strong>Description:</strong> Delete all stored usernames, display names, and nicknames.</p>
 <p>Examples:
@@ -2986,13 +2994,13 @@ and reason as to why they were kicked/banned.</p>
 <ul>
 <li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,modset deletenames</code></p>
+<p><strong>Usage:</strong> <code>-modset deletenames</code></p>
 <h3 id="moveignoredchannels">moveignoredchannels</h3>
 <p><strong>Description:</strong> Move ignored channels and servers to core</p>
-<p><strong>Usage:</strong> <code>,moveignoredchannels</code></p>
+<p><strong>Usage:</strong> <code>-moveignoredchannels</code></p>
 <h3 id="movedeletedelay">movedeletedelay</h3>
 <p><strong>Description:</strong> Move deletedelay settings to core</p>
-<p><strong>Usage:</strong> <code>,movedeletedelay</code></p></p>
+<p><strong>Usage:</strong> <code>-movedeletedelay</code></p></p>
     </article>
 </section>
             <!-- endblock -->

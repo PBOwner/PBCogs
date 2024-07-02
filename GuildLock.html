@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2823,7 +2831,7 @@
 <p>Tools for managing guild joins and leaves.</p>
 <h3 id="guildlock">guildlock</h3>
 <p><strong>Description:</strong> View GuildLock settings</p>
-<p><strong>Usage:</strong> <code>,guildlock</code></p>
+<p><strong>Usage:</strong> <code>-guildlock</code></p>
 <h3 id="guildlock-leave">guildlock leave</h3>
 <p><strong>Description:</strong> Make the bot leave certain servers.</p>
 <p><strong>Leave Arguments</strong>
@@ -2831,11 +2839,11 @@
 - <code>minmembers</code>: leave servers with a member count below the set amount.
 - <code>blacklist</code>: leave any servers in the blacklist.
 - <code>whitelist</code>: leave any server not in the whitelist.</p>
-<p><strong>Usage:</strong> <code>,guildlock leave</code></p>
+<p><strong>Usage:</strong> <code>-guildlock leave</code></p>
 <h3 id="guildlock-blacklist">guildlock blacklist</h3>
 <p><strong>Description:</strong> Add/Remove a guild from the blacklist.</p>
 <p>To remove a guild from the blacklist, specify it again.</p>
-<p><strong>Usage:</strong> <code>,guildlock blacklist</code></p>
+<p><strong>Usage:</strong> <code>-guildlock blacklist</code></p>
 <h3 id="guildlock-view">guildlock view</h3>
 <p><strong>Description:</strong> View servers that fall under the auto-leave thresholds.</p>
 <p><strong>Arguments</strong>
@@ -2843,28 +2851,28 @@
 - <code>minmembers</code>: show servers with a member count below the set amount.
 - <code>blacklist</code>: show any servers in the blacklist.
 - <code>whitelist</code>: show any server not in the whitelist.</p>
-<p><strong>Usage:</strong> <code>,guildlock view</code></p>
+<p><strong>Usage:</strong> <code>-guildlock view</code></p>
 <h3 id="guildlock-whitelist">guildlock whitelist</h3>
 <p><strong>Description:</strong> Add/Remove a guild from the whitelist.</p>
 <p>To remove a guild from the whitelist, specify it again.</p>
-<p><strong>Usage:</strong> <code>,guildlock whitelist</code></p>
+<p><strong>Usage:</strong> <code>-guildlock whitelist</code></p>
 <h3 id="guildlock-channel">guildlock channel</h3>
 <p><strong>Description:</strong> Set the log channel for the bot</p>
-<p><strong>Usage:</strong> <code>,guildlock channel</code></p>
+<p><strong>Usage:</strong> <code>-guildlock channel</code></p>
 <h3 id="guildlock-minmembers">guildlock minmembers</h3>
 <p><strong>Description:</strong> Set the minimum number of members a server should have for the bot to stay in it.</p>
 <p>Set to <strong>0</strong> to disable.</p>
-<p><strong>Usage:</strong> <code>,guildlock minmembers</code></p>
+<p><strong>Usage:</strong> <code>-guildlock minmembers</code></p>
 <h3 id="guildlock-limit">guildlock limit</h3>
 <p><strong>Description:</strong> Set the maximum amount of guilds the bot can be in.</p>
 <p>Set to <strong>0</strong> to disable the guild limit.</p>
-<p><strong>Usage:</strong> <code>,guildlock limit</code></p>
+<p><strong>Usage:</strong> <code>-guildlock limit</code></p>
 <h3 id="guildlock-botratio">guildlock botratio</h3>
 <p><strong>Description:</strong> Set the the threshold percentage of bots-to-members for the bot to auto-leave.</p>
 <p><strong>Example</strong>
 If bot ratio is 60% and it joins a guild with 10 members (7 bots and 3 members) it will auto-leave since that ratio is 70%.</p>
 <p>Set to <strong>0</strong> to disable.</p>
-<p><strong>Usage:</strong> <code>,guildlock botratio</code></p></p>
+<p><strong>Usage:</strong> <code>-guildlock botratio</code></p></p>
     </article>
 </section>
             <!-- endblock -->

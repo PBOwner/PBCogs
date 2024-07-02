@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2823,7 +2831,7 @@
 <p>Track your bot's metrics and view them in Discord.<br/>This cog creates its own SQLite database to store data, using around 150KB per day.<br/><br/>Commands will output as a graph.<br/>Data can also be exported with <code>[p]stattrack export</code> into a few different formats.</p>
 <h3 id="stattrack">stattrack</h3>
 <p><strong>Description:</strong> View my stats.</p>
-<p><strong>Usage:</strong> <code>,stattrack</code></p>
+<p><strong>Usage:</strong> <code>-stattrack</code></p>
 <h3 id="stattrack-status">stattrack status</h3>
 <p><strong>Description:</strong> Get status stats.</p>
 <p>You can just run this command on its own to see all metrics,
@@ -2838,7 +2846,7 @@ Defaults to all of them.</p>
 - <code>[p]stattrack status 3w2d</code> - show all metrics, 3 weeks 2 days
 - <code>[p]stattrack status 5d dnd online</code> - show dnd &amp; online, 5 days
 - <code>[p]stattrack status all online idle</code> - show online &amp; idle, all time</p>
-<p><strong>Usage:</strong> <code>,stattrack status</code></p>
+<p><strong>Usage:</strong> <code>-stattrack status</code></p>
 <h3 id="stattrack-messages">stattrack messages</h3>
 <p><strong>Description:</strong> Get message stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2848,16 +2856,16 @@ at least 1 hour.</p>
 - <code>[p]stattrack messages 3w2d</code>
 - <code>[p]stattrack messages 5d</code>
 - <code>[p]stattrack messages all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack messages</code></p>
+<p><strong>Usage:</strong> <code>-stattrack messages</code></p>
 <h3 id="stattrack-export">stattrack export</h3>
 <p><strong>Description:</strong> Export stattrack data.</p>
-<p><strong>Usage:</strong> <code>,stattrack export</code></p>
+<p><strong>Usage:</strong> <code>-stattrack export</code></p>
 <h3 id="stattrack-export-csv">stattrack export csv</h3>
 <p><strong>Description:</strong> Export as CSV</p>
-<p><strong>Usage:</strong> <code>,stattrack export csv</code></p>
+<p><strong>Usage:</strong> <code>-stattrack export csv</code></p>
 <h3 id="stattrack-export-json">stattrack export json</h3>
 <p><strong>Description:</strong> Export as JSON with pandas orient "split" </p>
-<p><strong>Usage:</strong> <code>,stattrack export json</code></p>
+<p><strong>Usage:</strong> <code>-stattrack export json</code></p>
 <h3 id="stattrack-servers">stattrack servers</h3>
 <p><strong>Description:</strong> Get server stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2867,7 +2875,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack servers 3w2d</code>
 - <code>[p]stattrack servers 5d</code>
 - <code>[p]stattrack servers all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack servers</code></p>
+<p><strong>Usage:</strong> <code>-stattrack servers</code></p>
 <h3 id="stattrack-latency">stattrack latency</h3>
 <p><strong>Description:</strong> Get my latency stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2877,7 +2885,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack latency 3w2d</code>
 - <code>[p]stattrack latency 5d</code>
 - <code>[p]stattrack latency all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack latency</code></p>
+<p><strong>Usage:</strong> <code>-stattrack latency</code></p>
 <h3 id="stattrack-users">stattrack users</h3>
 <p><strong>Description:</strong> Get user stats.</p>
 <p>You can just run this command on its own to see all metrics,
@@ -2894,7 +2902,7 @@ Defaults to all of them.</p>
 - <code>[p]stattrack users 3w2d</code> - show all metrics, 3 weeks 2 days
 - <code>[p]stattrack users 5d total unique</code> - show total &amp; unique, 5 days
 - <code>[p]stattrack users all humans bots</code> - show humans &amp; bots, all time</p>
-<p><strong>Usage:</strong> <code>,stattrack users</code></p>
+<p><strong>Usage:</strong> <code>-stattrack users</code></p>
 <h3 id="stattrack-commands">stattrack commands</h3>
 <p><strong>Description:</strong> Get command usage stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2904,7 +2912,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack commands 3w2d</code>
 - <code>[p]stattrack commands 5d</code>
 - <code>[p]stattrack commands all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack commands</code></p>
+<p><strong>Usage:</strong> <code>-stattrack commands</code></p>
 <h3 id="stattrack-channels">stattrack channels</h3>
 <p><strong>Description:</strong> Get channel stats.</p>
 <p>You can just run this command on its own to see all metrics,
@@ -2922,7 +2930,7 @@ Defaults to all of them.</p>
 - <code>[p]stattrack servers 3w2d</code>
 - <code>[p]stattrack servers 5d</code>
 - <code>[p]stattrack servers all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack channels</code></p>
+<p><strong>Usage:</strong> <code>-stattrack channels</code></p>
 <h3 id="stattrack-maxpoints">stattrack maxpoints</h3>
 <p><strong>Description:</strong> Set the maximum number of points to plot. This affects the speed of graph plotting.</p>
 <p>The default value is 25k (25000).</p>
@@ -2936,7 +2944,7 @@ Defaults to all of them.</p>
 - <code>[p]stattrack maxpoints 1440</code> - the minimum value possible
 - <code>[p]stattrack maxpoints 25000</code> - the default value
 - <code>[p]stattrack maxpoints -1</code> - disable, always plot all points</p>
-<p><strong>Usage:</strong> <code>,stattrack maxpoints</code></p>
+<p><strong>Usage:</strong> <code>-stattrack maxpoints</code></p>
 <h3 id="stattrack-looptime">stattrack looptime</h3>
 <p><strong>Description:</strong> Get my loop time stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2946,10 +2954,10 @@ at least 1 hour.</p>
 - <code>[p]stattrack looptime 3w2d</code>
 - <code>[p]stattrack looptime 5d</code>
 - <code>[p]stattrack looptime all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack looptime</code></p>
+<p><strong>Usage:</strong> <code>-stattrack looptime</code></p>
 <h3 id="stattrack-system">stattrack system</h3>
 <p><strong>Description:</strong> Get system metrics.</p>
-<p><strong>Usage:</strong> <code>,stattrack system</code></p>
+<p><strong>Usage:</strong> <code>-stattrack system</code></p>
 <h3 id="stattrack-system-cpu">stattrack system cpu</h3>
 <p><strong>Description:</strong> Get CPU stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2959,7 +2967,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack system cpu 3w2d</code>
 - <code>[p]stattrack system cpu 5d</code>
 - <code>[p]stattrack system cpu all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack system cpu</code></p>
+<p><strong>Usage:</strong> <code>-stattrack system cpu</code></p>
 <h3 id="stattrack-system-mem">stattrack system mem</h3>
 <p><strong>Description:</strong> Get memory usage stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2969,7 +2977,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack system mem 3w2d</code>
 - <code>[p]stattrack system mem 5d</code>
 - <code>[p]stattrack system mem all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack system mem</code></p></p>
+<p><strong>Usage:</strong> <code>-stattrack system mem</code></p></p>
     </article>
 </section>
             <!-- endblock -->

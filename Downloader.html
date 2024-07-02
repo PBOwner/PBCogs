@@ -1587,6 +1587,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MentionPrefix.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MentionPrefix
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2831,13 +2839,13 @@
 <ul>
 <li><code>&lt;deps...&gt;</code> The package or packages you wish to install.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,pipinstall</code></p>
+<p><strong>Usage:</strong> <code>-pipinstall</code></p>
 <h3 id="repo">repo</h3>
 <p><strong>Description:</strong> Base command for repository management.</p>
-<p><strong>Usage:</strong> <code>,repo</code></p>
+<p><strong>Usage:</strong> <code>-repo</code></p>
 <h3 id="repo-list">repo list</h3>
 <p><strong>Description:</strong> List all installed repos.</p>
-<p><strong>Usage:</strong> <code>,repo list</code></p>
+<p><strong>Usage:</strong> <code>-repo list</code></p>
 <h3 id="repo-info">repo info</h3>
 <p><strong>Description:</strong> Show information about a repo.</p>
 <p>Example:
@@ -2846,7 +2854,7 @@
 <ul>
 <li><code>&lt;repo&gt;</code> The name of the repo to show info about.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,repo info</code></p>
+<p><strong>Usage:</strong> <code>-repo info</code></p>
 <h3 id="repo-delete">repo delete</h3>
 <p><strong>Description:</strong> Remove repos and their files.</p>
 <p>Examples:
@@ -2856,7 +2864,7 @@
 <ul>
 <li><code>&lt;repos...&gt;</code> The repo or repos to remove.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,repo delete</code></p>
+<p><strong>Usage:</strong> <code>-repo delete</code></p>
 <h3 id="repo-add">repo add</h3>
 <p><strong>Description:</strong> Add a new repo.</p>
 <p>Examples:
@@ -2870,7 +2878,7 @@
 <li><code>&lt;repo_url&gt;</code> URL to the cog branch. Usually GitHub or GitLab.</li>
 <li><code>[branch]</code> Optional branch to install cogs from.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,repo add</code></p>
+<p><strong>Usage:</strong> <code>-repo add</code></p>
 <h3 id="repo-update">repo update</h3>
 <p><strong>Description:</strong> Update all repos, or ones of your choosing.</p>
 <p>This will <em>not</em> update the cogs installed from those repos.</p>
@@ -2882,10 +2890,10 @@
 <ul>
 <li><code>[repos...]</code> The name or names of repos to update. If omitted, all repos are updated.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,repo update</code></p>
+<p><strong>Usage:</strong> <code>-repo update</code></p>
 <h3 id="cog">cog</h3>
 <p><strong>Description:</strong> Base command for cog installation management commands.</p>
-<p><strong>Usage:</strong> <code>,cog</code></p>
+<p><strong>Usage:</strong> <code>-cog</code></p>
 <h3 id="cog-pin">cog pin</h3>
 <p><strong>Description:</strong> Pin cogs - this will lock cogs on their current version.</p>
 <p>Examples:
@@ -2895,10 +2903,10 @@
 <ul>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to pin. Must already be installed.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog pin</code></p>
+<p><strong>Usage:</strong> <code>-cog pin</code></p>
 <h3 id="cog-listpinned">cog listpinned</h3>
 <p><strong>Description:</strong> List currently pinned cogs.</p>
-<p><strong>Usage:</strong> <code>,cog listpinned</code></p>
+<p><strong>Usage:</strong> <code>-cog listpinned</code></p>
 <h3 id="cog-uninstall">cog uninstall</h3>
 <p><strong>Description:</strong> Uninstall cogs.</p>
 <p>You may only uninstall cogs which were previously installed
@@ -2910,7 +2918,7 @@ by Downloader.</p>
 <ul>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to uninstall.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog uninstall</code></p>
+<p><strong>Usage:</strong> <code>-cog uninstall</code></p>
 <h3 id="cog-updateallfromrepos">cog updateallfromrepos</h3>
 <p><strong>Description:</strong> Update all cogs from repos of your choosing.</p>
 <p>Examples:
@@ -2922,7 +2930,7 @@ by Downloader.</p>
 <li><code>[reload]</code> Whether to reload cogs immediately after update or not.</li>
 <li><code>&lt;repos...&gt;</code> The repo or repos to update all cogs from.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog updateallfromrepos</code></p>
+<p><strong>Usage:</strong> <code>-cog updateallfromrepos</code></p>
 <h3 id="cog-install">cog install</h3>
 <p><strong>Description:</strong> Install a cog from the given repo.</p>
 <p>Examples:
@@ -2933,7 +2941,7 @@ by Downloader.</p>
 <li><code>&lt;repo&gt;</code> The name of the repo to install cogs from.</li>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog install</code></p>
+<p><strong>Usage:</strong> <code>-cog install</code></p>
 <h3 id="cog-list">cog list</h3>
 <p><strong>Description:</strong> List all available cogs from a single repo.</p>
 <p>Example:
@@ -2942,7 +2950,7 @@ by Downloader.</p>
 <ul>
 <li><code>&lt;repo&gt;</code> The repo to list cogs from.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog list</code></p>
+<p><strong>Usage:</strong> <code>-cog list</code></p>
 <h3 id="cog-info">cog info</h3>
 <p><strong>Description:</strong> List information about a single cog.</p>
 <p>Example:
@@ -2952,7 +2960,7 @@ by Downloader.</p>
 <li><code>&lt;repo&gt;</code> The repo to get cog info from.</li>
 <li><code>&lt;cog&gt;</code> The cog to get info on.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog info</code></p>
+<p><strong>Usage:</strong> <code>-cog info</code></p>
 <h3 id="cog-update">cog update</h3>
 <p><strong>Description:</strong> Update all cogs, or ones of your choosing.</p>
 <p>Examples:
@@ -2965,7 +2973,7 @@ by Downloader.</p>
 <li><code>[reload]</code> Whether to reload cogs immediately after update or not.</li>
 <li><code>[cogs...]</code> The cog or cogs to update. If omitted, all cogs are updated.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog update</code></p>
+<p><strong>Usage:</strong> <code>-cog update</code></p>
 <h3 id="cog-installversion">cog installversion</h3>
 <p><strong>Description:</strong> Install a cog from the specified revision of given repo.</p>
 <p>Revisions are "commit ids" that point to the point in the code when a specific change was made.
@@ -2979,7 +2987,7 @@ The latest revision can be found in the URL bar for any GitHub repo by <a href="
 <li><code>&lt;revision&gt;</code> The revision to install from.</li>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to install.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog installversion</code></p>
+<p><strong>Usage:</strong> <code>-cog installversion</code></p>
 <h3 id="cog-updatetoversion">cog updatetoversion</h3>
 <p><strong>Description:</strong> Update all cogs, or ones of your choosing to chosen revision of one repo.</p>
 <p>Note that update doesn't mean downgrade and therefore <code>revision</code>
@@ -2996,7 +3004,7 @@ downgrade the cog, uninstall and install it again.</p>
 <li><code>&lt;revision&gt;</code> The revision to update to.</li>
 <li><code>[cogs...]</code> The cog or cogs to update.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog updatetoversion</code></p>
+<p><strong>Usage:</strong> <code>-cog updatetoversion</code></p>
 <h3 id="cog-unpin">cog unpin</h3>
 <p><strong>Description:</strong> Unpin cogs - this will remove the update lock from those cogs.</p>
 <p>Examples:
@@ -3006,18 +3014,18 @@ downgrade the cog, uninstall and install it again.</p>
 <ul>
 <li><code>&lt;cogs...&gt;</code> The cog or cogs to unpin. Must already be installed and pinned.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,cog unpin</code></p>
+<p><strong>Usage:</strong> <code>-cog unpin</code></p>
 <h3 id="cog-reinstallreqs">cog reinstallreqs</h3>
 <p><strong>Description:</strong> This command should not be used unless Red specifically asks for it.</p>
 <p>This command will reinstall cog requirements and shared libraries for all installed cogs.</p>
 <p>Red might ask the owner to use this when it clears contents of the lib folder
 because of change in minor version of Python.</p>
-<p><strong>Usage:</strong> <code>,cog reinstallreqs</code></p>
+<p><strong>Usage:</strong> <code>-cog reinstallreqs</code></p>
 <h3 id="cog-checkforupdates">cog checkforupdates</h3>
 <p><strong>Description:</strong> Check for available cog updates (including pinned cogs).</p>
 <p>This command doesn't update cogs, it only checks for updates.
 Use <code>[p]cog update</code> to update cogs.</p>
-<p><strong>Usage:</strong> <code>,cog checkforupdates</code></p>
+<p><strong>Usage:</strong> <code>-cog checkforupdates</code></p>
 <h3 id="findcog">findcog</h3>
 <p><strong>Description:</strong> Find which cog a command comes from.</p>
 <p>This will only work with loaded cogs.</p>
@@ -3027,7 +3035,7 @@ Use <code>[p]cog update</code> to update cogs.</p>
 <ul>
 <li><code>&lt;command_name&gt;</code> The command to search for.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,findcog</code></p></p>
+<p><strong>Usage:</strong> <code>-findcog</code></p></p>
     </article>
 </section>
             <!-- endblock -->
