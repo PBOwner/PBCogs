@@ -29,14 +29,19 @@ class MassAction(commands.Cog):
             await ctx.send(f"No members found in the role {role.name}.")
             return
 
+        results = []
+
         for member in members:
             try:
                 await member.ban(reason=f"Banned by {ctx.author} using massban command.")
-                await ctx.send(f"Banned {member.name}.")
+                results.append(f"Banned {member.name}")
             except discord.Forbidden:
-                await ctx.send(f"Failed to ban {member.name}.")
+                results.append(f"Failed to ban {member.name}")
             except discord.HTTPException as e:
-                await ctx.send(f"An error occurred: {e}")
+                results.append(f"An error occurred with {member.name}: {e}")
+
+        embed = discord.Embed(title="Mass Ban Results", description="\n".join(results), color=discord.Color.red())
+        await ctx.send(embed=embed)
 
     @mass.command(name="kick")
     @checks.admin_or_permissions(kick_members=True)
@@ -47,14 +52,19 @@ class MassAction(commands.Cog):
             await ctx.send(f"No members found in the role {role.name}.")
             return
 
+        results = []
+
         for member in members:
             try:
                 await member.kick(reason=f"Kicked by {ctx.author} using masskick command.")
-                await ctx.send(f"Kicked {member.name}.")
+                results.append(f"Kicked {member.name}")
             except discord.Forbidden:
-                await ctx.send(f"Failed to kick {member.name}.")
+                results.append(f"Failed to kick {member.name}")
             except discord.HTTPException as e:
-                await ctx.send(f"An error occurred: {e}")
+                results.append(f"An error occurred with {member.name}: {e}")
+
+        embed = discord.Embed(title="Mass Kick Results", description="\n".join(results), color=discord.Color.orange())
+        await ctx.send(embed=embed)
 
     @mass.command(name="mute")
     @checks.admin_or_permissions(manage_roles=True)
@@ -75,14 +85,19 @@ class MassAction(commands.Cog):
             await ctx.send(f"No members found in the role {role.name}.")
             return
 
+        results = []
+
         for member in members:
             try:
                 await member.add_roles(mute_role, reason=f"Muted by {ctx.author} using massmute command.")
-                await ctx.send(f"Muted {member.name}.")
+                results.append(f"Muted {member.name}")
             except discord.Forbidden:
-                await ctx.send(f"Failed to mute {member.name}.")
+                results.append(f"Failed to mute {member.name}")
             except discord.HTTPException as e:
-                await ctx.send(f"An error occurred: {e}")
+                results.append(f"An error occurred with {member.name}: {e}")
+
+        embed = discord.Embed(title="Mass Mute Results", description="\n".join(results), color=discord.Color.blue())
+        await ctx.send(embed=embed)
 
     @mass.command(name="timeout")
     @checks.admin_or_permissions(moderate_members=True)
@@ -94,15 +109,19 @@ class MassAction(commands.Cog):
             return
 
         timeout_duration = timedelta(minutes=duration)
+        results = []
 
         for member in members:
             try:
                 await member.edit(timed_out_until=discord.utils.utcnow() + timeout_duration, reason=f"Timed out by {ctx.author} using masstimeout command.")
-                await ctx.send(f"Timed out {member.name} for {duration} minutes.")
+                results.append(f"Timed out {member.name} for {duration} minutes")
             except discord.Forbidden:
-                await ctx.send(f"Failed to timeout {member.name}.")
+                results.append(f"Failed to timeout {member.name}")
             except discord.HTTPException as e:
-                await ctx.send(f"An error occurred: {e}")
+                results.append(f"An error occurred with {member.name}: {e}")
+
+        embed = discord.Embed(title="Mass Timeout Results", description="\n".join(results), color=discord.Color.purple())
+        await ctx.send(embed=embed)
 
     @mass.command(name="setmute")
     @checks.admin_or_permissions(manage_roles=True)
