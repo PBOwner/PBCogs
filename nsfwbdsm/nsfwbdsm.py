@@ -112,8 +112,11 @@ class NSFWBDSM(commands.Cog):
             except discord.Forbidden:
                 await ctx.send(f"Could not send a DM to {target.display_name}.")
 
+    def nsfw_check(ctx):
+        return ctx.channel.is_nsfw()
+
     @commands.group(invoke_without_command=True)
-    @commands.is_nsfw()
+    @commands.check(nsfw_check)
     async def nsfw(self, ctx, target: discord.Member = None, *, custom_message: str = None):
         """NSFW BDSM commands."""
         if target is None and custom_message is None:
@@ -124,7 +127,7 @@ class NSFWBDSM(commands.Cog):
         await self.send_embed(ctx, target, f"NSFW for {target.display_name}", custom_message, gif_url)
 
     @nsfw.command()
-    @commands.is_nsfw()
+    @commands.check(nsfw_check)
     async def bdsm(self, ctx, kink: str, target: discord.Member, *, custom_message: str = None):
         """Send a BDSM command to a user with a default or custom NSFW message."""
         if kink not in self.bdsms:
@@ -136,7 +139,7 @@ class NSFWBDSM(commands.Cog):
         await self.send_embed(ctx, target, f"NSFW {kink.capitalize()} for {target.display_name}", description, gif_url)
 
     @nsfw.command()
-    @commands.is_nsfw()
+    @commands.check(nsfw_check)
     async def add(self, ctx, kink: str, *, new_message: str):
         """Add a new NSFW message to a kink."""
         if kink not in self.bdsms:
@@ -148,7 +151,7 @@ class NSFWBDSM(commands.Cog):
         await ctx.send(f"Added new message to {kink} with ID {message_id}: {new_message}")
 
     @nsfw.command()
-    @commands.is_nsfw()
+    @commands.check(nsfw_check)
     async def remove(self, ctx, kink: str, message_id: str):
         """Remove an NSFW message by its UUID from a kink."""
         if kink not in self.bdsms:
@@ -162,7 +165,7 @@ class NSFWBDSM(commands.Cog):
             await ctx.send(f"No message found with ID {message_id} in {kink}")
 
     @nsfw.command()
-    @commands.is_nsfw()
+    @commands.check(nsfw_check)
     async def list(self, ctx, kink: str = None):
         """List all NSFW messages in a kink."""
         if kink is not None and kink not in self.bdsms:
