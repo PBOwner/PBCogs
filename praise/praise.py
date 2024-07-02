@@ -5,7 +5,7 @@ from redbot.core.bot import Red
 import discord
 
 class Praise(commands.Cog):
-    """Praise Kink style cog for FuturoBot"""
+    """Praise Kink style cog for Red-DiscordBot"""
 
     def __init__(self, bot: Red):
         self.bot = bot
@@ -50,12 +50,30 @@ class Praise(commands.Cog):
 
         elif isinstance(target, discord.Role):
             # Create the embed message for the role
-            title = f"Praising {target.name}s"
+            title = f"Praising {target.name}"
             description = custom_message if custom_message else random.choice(list(self.praises.values()))
             embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
             # Send the embed message and ping the role
             await ctx.send(content=target.mention, embed=embed)
+
+            # Praise each member in the role
+            for member in target.members:
+                # Fetch the member's most recent message
+                async for message in ctx.channel.history(limit=100):
+                    if message.author == member:
+                        await message.add_reaction("⭐")
+                        break
+                else:
+                    continue
+
+                # Create the embed message for the member
+                title = f"Praising {member.display_name}"
+                description = custom_message if custom_message else random.choice(list(self.praises.values()))
+                embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
+
+                # Send the embed message
+                await ctx.send(embed=embed)
         else:
             await ctx.send("Please mention a valid user or role.")
 
