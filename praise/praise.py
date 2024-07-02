@@ -74,7 +74,7 @@ class Praise(commands.Cog):
             return
 
         # Create the embed message for the role
-        title = f"Praising {target.name}"
+        title = f"Praising {target.name}s"
         description = custom_message if custom_message else random.choice(self.praises)
         embed = discord.Embed(title=title, description=description, color=discord.Color.gold())
 
