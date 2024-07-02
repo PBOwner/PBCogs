@@ -6,5 +6,5 @@ nav:
 site_name: IsItDown's Documentation
 site_url: https://docs.prismbot.icu/IsItDown/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

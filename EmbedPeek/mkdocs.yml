@@ -6,5 +6,5 @@ nav:
 site_name: EmbedPeek's Documentation
 site_url: https://docs.prismbot.icu/EmbedPeek/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

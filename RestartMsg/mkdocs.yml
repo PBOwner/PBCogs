@@ -6,5 +6,5 @@ nav:
 site_name: RestartMsg's Documentation
 site_url: https://docs.prismbot.icu/RestartMsg/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

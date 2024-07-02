@@ -6,5 +6,5 @@ nav:
 site_name: InstaDelete's Documentation
 site_url: https://docs.prismbot.icu/InstaDelete/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

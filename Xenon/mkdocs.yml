@@ -6,5 +6,5 @@ nav:
 site_name: Xenon's Documentation
 site_url: https://docs.prismbot.icu/Xenon/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

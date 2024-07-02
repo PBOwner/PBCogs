@@ -6,5 +6,5 @@ nav:
 site_name: InRole's Documentation
 site_url: https://docs.prismbot.icu/InRole/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

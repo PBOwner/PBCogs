@@ -6,5 +6,5 @@ nav:
 site_name: Availability's Documentation
 site_url: https://docs.prismbot.icu/Availability/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

@@ -6,5 +6,5 @@ nav:
 site_name: RandomEmoji's Documentation
 site_url: https://docs.prismbot.icu/RandomEmoji/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false

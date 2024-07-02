@@ -6,5 +6,5 @@ nav:
 site_name: EmbedUtils's Documentation
 site_url: https://docs.prismbot.icu/EmbedUtils/
 theme:
-  name: cinder
+  name: dracula
 use_directory_urls: false
