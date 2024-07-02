@@ -255,3 +255,7 @@ class SlashRequest(commands.Cog):
         """Set the channel for slash feature requests."""
         await self.config.request_channel.set(channel.id)
         await ctx.send(f"Request channel set to: {channel.mention}")
+
+def setup(bot: Red):
+    bot.add_cog(FeatureRequest(bot))
+    bot.add_cog(SlashRequest(bot))
