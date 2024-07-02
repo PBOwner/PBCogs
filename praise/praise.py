@@ -30,13 +30,11 @@ class Praise(commands.Cog):
             return
 
         # Fetch the target's most recent message
+        last_message = None
         async for message in ctx.channel.history(limit=100):
             if message.author == target:
-                await message.add_reaction("⭐")
+                last_message = message
                 break
-        else:
-            await ctx.send(f"Could not find a recent message from {target.display_name} in this channel.")
-            return
 
         # Create the embed message for the user
         title = f"Praising {target.display_name}"
@@ -45,6 +43,17 @@ class Praise(commands.Cog):
 
         # Send the embed message
         await ctx.send(embed=embed)
+
+        # Add a reaction to the last message if found
+        if last_message:
+            await last_message.add_reaction("⭐")
+
+        # Send a DM to the user if they are not actively in the server
+        if not ctx.guild.get_member(target.id):
+            try:
+                await target.send(embed=embed)
+            except discord.Forbidden:
+                await ctx.send(f"Could not send a DM to {target.display_name}.")
 
     @praise.command(name="role")
     async def praise_role(self, ctx, target: discord.Role, *, custom_message: str = None):
@@ -64,12 +73,23 @@ class Praise(commands.Cog):
         # Praise each member in the role
         for member in target.members:
             # Fetch the member's most recent message
+            last_message = None
             async for message in ctx.channel.history(limit=100):
                 if message.author == member:
-                    await message.add_reaction("⭐")
+                    last_message = message
                     break
-            else:
+
+            # Send a DM to the member if they are not actively in the server
+            if not ctx.guild.get_member(member.id):
+                try:
+                    await member.send(embed=embed)
+                except discord.Forbidden:
+                    await ctx.send(f"Could not send a DM to {member.display_name}.")
                 continue
+
+            # Add a reaction to the last message if found
+            if last_message:
+                await last_message.add_reaction("⭐")
 
             # Create the embed message for the member
             title = f"Praising {member.display_name}"
