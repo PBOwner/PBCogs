@@ -99,20 +99,29 @@ class AdWarn(commands.Cog):
                 if timeout_duration:
                     await self.schedule_untimeout(ctx, user, timeout_duration)
 
-            # Add more actions as needed
+        # Add more actions as needed
 
     async def timeout_user(self, ctx, user: discord.Member, duration: int = None):
         if duration:
             timeout_until = datetime.utcnow() + timedelta(minutes=duration)
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
             await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
+
+            # Create and send embed with timeout details
+            timeout_hours = duration / 60
+            embed = discord.Embed(
+                title="User Timed Out",
+                description=f"{user.mention} has been timed out for {timeout_hours:.2f} hours.",
+                color=discord.Color.orange()
+            )
+            await ctx.send(embed=embed)
         else:
             await user.edit(timed_out_until=None, reason="Reached warning threshold")
 
     async def schedule_untimeout(self, ctx, user, duration):
         untimeout_time = datetime.utcnow() + timedelta(minutes=duration)
         await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
-        await ctx.send(f"{user.mention} will be untimed out in {duration} minutes.")
+        await ctx.send(f"{user.mention} will be untimed out in {duration / 60:.2f} hours.")
 
     @commands.Cog.listener()
     async def on_ready(self):
