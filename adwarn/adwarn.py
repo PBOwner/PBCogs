@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -57,7 +57,7 @@ class AdWarn(commands.Cog):
                 await self.check_thresholds(ctx, user, len(warnings))
             else:
                 error_embed = discord.Embed(
-                    title="ErRoR 404",
+                    title="Error 404",
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
@@ -65,7 +65,7 @@ class AdWarn(commands.Cog):
                 await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
-                title="ErRoR 404",
+                title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
@@ -86,10 +86,40 @@ class AdWarn(commands.Cog):
             elif action == "ban":
                 await ctx.guild.ban(user, reason="Reached warning threshold")
                 await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
-            elif action == "mute":
+            elif action.startswith("mute"):
+                # Mute logic with optional time range
+                mute_duration = None
+                if " " in action:
+                    try:
+                        mute_duration = int(action.split(" ")[1])
+                    except ValueError:
+                        pass
+
                 # Implement your mute logic here
                 await ctx.send(f"{user.mention} has been muted for reaching {warning_count} warnings.")
+                if mute_duration:
+                    await self.schedule_unmute(ctx, user, mute_duration)
+
             # Add more actions as needed
+
+    async def schedule_unmute(self, ctx, user, duration):
+        unmute_time = datetime.utcnow() + timedelta(minutes=duration)
+        await self.config.member(user).unmute_time.set(unmute_time.isoformat())
+        await ctx.send(f"{user.mention} will be unmuted in {duration} minutes.")
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.check_unmute_times()
+
+    async def check_unmute_times(self):
+        for guild in self.bot.guilds:
+            for member in guild.members:
+                unmute_time = await self.config.member(member).unmute_time()
+                if unmute_time:
+                    unmute_time = datetime.fromisoformat(unmute_time)
+                    if datetime.utcnow() >= unmute_time:
+                        # Implement your unmute logic here
+                        await self.config.member(member).unmute_time.clear()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -115,21 +145,21 @@ class AdWarn(commands.Cog):
                     await warn_channel.send(embed=embed)
                 else:
                     error_embed = discord.Embed(
-                        title="ErRoR 404",
+                        title="Error 404",
                         description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                         color=discord.Color.red()
                     )
                     await ctx.send(embed=error_embed)
             else:
                 error_embed = discord.Embed(
-                    title="ErRoR 404",
+                    title="Error 404",
                     description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
                 await ctx.send(embed=error_embed)
         else:
             error_embed = discord.Embed(
-                title="ErRoR 404",
+                title="Error 404",
                 description=f"Invalid warning index. {user.mention} has {len(warnings)} warnings.",
                 color=discord.Color.red()
             )
@@ -166,14 +196,14 @@ class AdWarn(commands.Cog):
                 await warn_channel.send(embed=embed)
             else:
                 error_embed = discord.Embed(
-                    title="ErRoR 404",
+                    title="Error 404",
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
                 await ctx.send(embed=error_embed)
         else:
             error_embed = discord.Embed(
-                title="ErRoR 404",
+                title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
@@ -203,21 +233,21 @@ class AdWarn(commands.Cog):
                     await warn_channel.send(embed=embed)
                 else:
                     error_embed = discord.Embed(
-                        title="ErRoR 404",
+                        title="Error 404",
                         description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                         color=discord.Color.red()
                     )
                     await ctx.send(embed=error_embed)
             else:
                 error_embed = discord.Embed(
-                    title="ErRoR 404",
+                    title="Error 404",
                     description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
                 await ctx.send(embed=error_embed)
         else:
             error_embed = discord.Embed(
-                title="ErRoR 404",
+                title="Error 404",
                 description=f"{user.mention} has no warnings.",
                 color=discord.Color.red()
             )
@@ -243,30 +273,35 @@ class AdWarn(commands.Cog):
 
     @warnset.command()
     async def show(self, ctx):
-        """Show the current warning channel."""
+        """Show the current warning channel and thresholds."""
         channel_id = await self.config.guild(ctx.guild).warn_channel()
+        thresholds = await self.config.guild(ctx.guild).thresholds()
+
+        embed = discord.Embed(
+            title="Warning System Configuration",
+            color=discord.Color.blue()
+        )
+
         if channel_id:
             channel = self.bot.get_channel(channel_id)
-            embed = discord.Embed(
-                title="Current Warning Channel",
-                description=f"The current warning channel is {channel.mention}",
-                color=discord.Color.blue()
-            )
-            await ctx.send(embed=embed)
+            embed.add_field(name="Current Warning Channel", value=channel.mention, inline=False)
         else:
-            embed = discord.Embed(
-                title="No Warning Channel Set",
-                description="No warning channel has been set.",
-                color=discord.Color.red()
-            )
-            await ctx.send(embed=embed)
+            embed.add_field(name="Current Warning Channel", value="Not set", inline=False)
+
+        if thresholds:
+            threshold_list = "\n".join([f"{count}: {action}" for count, action in thresholds.items()])
+            embed.add_field(name="Warning Thresholds", value=threshold_list, inline=False)
+        else:
+            embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
+
+        await ctx.send(embed=embed)
 
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str):
         """Set an action for a specific warning count threshold."""
         valid_actions = ["kick", "ban", "mute"]  # Add more actions as needed
-        if action not in valid_actions:
-            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)}")
+        if action not in valid_actions and not action.startswith("mute "):
+            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <minutes>'")
             return
 
         thresholds = await self.config.guild(ctx.guild).thresholds()
