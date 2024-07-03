@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime, timedelta
+import re
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -87,12 +88,7 @@ class AdWarn(commands.Cog):
                 await ctx.guild.ban(user, reason="Reached warning threshold")
                 await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
             elif action.startswith("mute"):
-                timeout_duration = None
-                if " " in action:
-                    try:
-                        timeout_duration = int(action.split(" ")[1])
-                    except ValueError:
-                        pass
+                timeout_duration = self.parse_duration(action.split(" ")[1]) if " " in action else None
 
                 await self.timeout_user(ctx, user, timeout_duration)
                 await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
@@ -100,6 +96,18 @@ class AdWarn(commands.Cog):
                     await self.schedule_untimeout(ctx, user, timeout_duration)
 
         # Add more actions as needed
+
+    def parse_duration(self, duration_str):
+        """Parse a duration string and return the duration in minutes."""
+        match = re.match(r"(\d+)([mh])", duration_str)
+        if match:
+            value, unit = match.groups()
+            value = int(value)
+            if unit == "h":
+                return value * 60  # Convert hours to minutes
+            elif unit == "m":
+                return value  # Minutes
+        return None
 
     async def timeout_user(self, ctx, user: discord.Member, duration: int = None):
         if duration:
@@ -316,14 +324,32 @@ class AdWarn(commands.Cog):
         await ctx.send(embed=embed)
 
     @warnset.command()
-    async def threshold(self, ctx, warning_count: int, action: str):
+    async def threshold(self, ctx, warning_count: int, action: str, duration: str = None):
         """Set an action for a specific warning count threshold."""
         valid_actions = ["kick", "ban", "mute"]  # Add more actions as needed
-        if action not in valid_actions and not action.startswith("mute "):
-            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <minutes>'")
+        if action not in valid_actions and not action.startswith("mute"):
+            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <duration>'")
             return
+
+        if action == "mute" and duration:
+            parsed_duration = self.parse_duration(duration)
+            if parsed_duration is None:
+                await ctx.send("Invalid duration format. Use 'Xm' for minutes or 'Xh' for hours.")
+                return
+            action = f"mute {parsed_duration}"
 
         thresholds = await self.config.guild(ctx.guild).thresholds()
         thresholds[warning_count] = action
         await self.config.guild(ctx.guild).thresholds.set(thresholds)
         await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
+
+    @warnset.command()
+    async def delthreshold(self, ctx, warning_count: int):
+        """Delete a specific warning count threshold."""
+        thresholds = await self.config.guild(ctx.guild).thresholds()
+        if warning_count in thresholds:
+            del thresholds[warning_count]
+            await self.config.guild(ctx.guild).thresholds.set(thresholds)
+            await ctx.send(f"Deleted threshold for {warning_count} warnings.")
+        else:
+            await ctx.send(f"No threshold set for {warning_count} warnings.")
