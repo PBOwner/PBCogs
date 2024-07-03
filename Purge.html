@@ -1555,6 +1555,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MassAction.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MassAction
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Massmove.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1703,14 +1711,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="NoFuckYou.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            NoFuckYou
         </a>
     </li>
                             
@@ -2255,6 +2255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Skyrim
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="SlashRequest.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlashRequest
         </a>
     </li>
                             
@@ -2838,7 +2846,7 @@
 <p><strong>Example:</strong>
 - <code>[p]purge 10</code>
 - <code>[p] purge 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge</code></p>
+<p><strong>Usage:</strong> <code>,purge</code></p>
 <h3 id="purge-bot">purge bot</h3>
 <p><strong>Description:</strong> Removes bot messages, optionally takes a prefix argument.</p>
 <p><strong>Arguments:</strong>
@@ -2848,7 +2856,7 @@
 <p><strong>Examples:</strong>
 - <code>[p]purge bot</code>
 - <code>[p]purge bot ? 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge bot</code></p>
+<p><strong>Usage:</strong> <code>,purge bot</code></p>
 <h3 id="purge-between">purge between</h3>
 <p><strong>Description:</strong> Delete the messages between Message One and Message Two, providing the messages IDs.</p>
 <p>The first message ID should be the older message and the second one the newer.</p>
@@ -2858,7 +2866,7 @@
 - <code>&lt;delete_pinned&gt;</code> Whether to delete pinned messages or not. Defaults to False.</p>
 <p><strong>Example:</strong>
 - <code>[p]cleanup between 123456789123456789 987654321987654321</code></p>
-<p><strong>Usage:</strong> <code>-purge between</code></p>
+<p><strong>Usage:</strong> <code>,purge between</code></p>
 <h3 id="purge-contains">purge contains</h3>
 <p><strong>Description:</strong> Removes all messages containing a text.
 The text must be at least 3 characters long.</p>
@@ -2868,7 +2876,7 @@ The text must be at least 3 characters long.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge contains hi</code>
 - <code>[p]purge contains bye</code></p>
-<p><strong>Usage:</strong> <code>-purge contains</code></p>
+<p><strong>Usage:</strong> <code>,purge contains</code></p>
 <h3 id="purge-after">purge after</h3>
 <p><strong>Description:</strong> Delete all messages after a specified message.</p>
 <p>To get a message id, enable developer mode in Discord's
@@ -2878,7 +2886,7 @@ Replying to a message will cleanup all messages after it.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;message_id&gt;</code> The id of the message to cleanup after. This message won't be deleted.
 - <code>&lt;delete_pinned&gt;</code> Whether to delete pinned messages or not. Defaults to False</p>
-<p><strong>Usage:</strong> <code>-purge after</code></p>
+<p><strong>Usage:</strong> <code>,purge after</code></p>
 <h3 id="purge-before">purge before</h3>
 <p><strong>Description:</strong> Deletes X messages before the specified message.</p>
 <p>To get a message id, enable developer mode in Discord's
@@ -2889,7 +2897,7 @@ Replying to a message will cleanup all messages before it.</p>
 - <code>&lt;message_id&gt;</code> The id of the message to cleanup before. This message won't be deleted.
 - <code>&lt;number&gt;</code> The max number of messages to cleanup. Must be a positive integer.
 - <code>&lt;delete_pinned&gt;</code> Whether to delete pinned messages or not. Defaults to False</p>
-<p><strong>Usage:</strong> <code>-purge before</code></p>
+<p><strong>Usage:</strong> <code>,purge before</code></p>
 <h3 id="purge-custom">purge custom</h3>
 <p><strong>Description:</strong> Remove messages that meet a criteria from the flags.</p>
 <p>The following flags are valid.</p>
@@ -2906,7 +2914,7 @@ Replying to a message will cleanup all messages before it.</p>
 <code>emoji: yes</code> Remove messages that have custom emoji.
 <code>reactions: yes</code> Remove messages that have reactions.
 <code>require: any or all</code> Whether any or all flags should be met before deleting messages.</p>
-<p><strong>Usage:</strong> <code>-purge custom</code></p>
+<p><strong>Usage:</strong> <code>,purge custom</code></p>
 <h3 id="purge-emoji">purge emoji</h3>
 <p><strong>Description:</strong> Removes all messages containing custom emoji.</p>
 <p><strong>Arguments:</strong>
@@ -2915,7 +2923,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge emoji 10</code>
 - <code>[p]purge emoji 200</code></p>
-<p><strong>Usage:</strong> <code>-purge emoji</code></p>
+<p><strong>Usage:</strong> <code>,purge emoji</code></p>
 <h3 id="purge-self">purge self</h3>
 <p><strong>Description:</strong> Removes your messages from the channel.</p>
 <p><strong>Arguments:</strong>
@@ -2924,7 +2932,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge self 10</code>
 - <code>[p]purge self 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge self</code></p>
+<p><strong>Usage:</strong> <code>,purge self</code></p>
 <h3 id="purge-user">purge user</h3>
 <p><strong>Description:</strong> Removes all messages by the member.</p>
 <p><strong>Arguments:</strong>
@@ -2934,7 +2942,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge user @member</code>
 - <code>[p]purge user @member 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge user</code></p>
+<p><strong>Usage:</strong> <code>,purge user</code></p>
 <h3 id="purge-files">purge files</h3>
 <p><strong>Description:</strong> Removes messages that have attachments in them.</p>
 <p><strong>Arguments:</strong>
@@ -2943,7 +2951,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge files 10</code>
 - <code>[p]purge files 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge files</code></p>
+<p><strong>Usage:</strong> <code>,purge files</code></p>
 <h3 id="purge-links">purge links</h3>
 <p><strong>Description:</strong> Removes all messages containing a link.</p>
 <p><strong>Arguments:</strong>
@@ -2952,7 +2960,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge links 10</code>
 - <code>[p]purge links 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge links</code></p>
+<p><strong>Usage:</strong> <code>,purge links</code></p>
 <h3 id="purge-images">purge images</h3>
 <p><strong>Description:</strong> Removes messages that have embeds or attachments.</p>
 <p><strong>Arguments:</strong>
@@ -2961,7 +2969,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge images 10</code>
 - <code>[p]purge images 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge images</code></p>
+<p><strong>Usage:</strong> <code>,purge images</code></p>
 <h3 id="purge-reactions">purge reactions</h3>
 <p><strong>Description:</strong> Removes all reactions from messages that have them.</p>
 <p><strong>Arguments:</strong>
@@ -2970,7 +2978,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge reactions 10</code>
 - <code>[p]purge reactions 200</code></p>
-<p><strong>Usage:</strong> <code>-purge reactions</code></p>
+<p><strong>Usage:</strong> <code>,purge reactions</code></p>
 <h3 id="purge-regex">purge regex</h3>
 <p><strong>Description:</strong> Removes messages that matches the regex pattern.</p>
 <p><strong>Arguments:</strong>
@@ -2980,7 +2988,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge regex (?i)(h(?:appy) 1</code>
 - <code>[p]purge regex (?i)(h(?:appy) 10</code></p>
-<p><strong>Usage:</strong> <code>-purge regex</code></p>
+<p><strong>Usage:</strong> <code>,purge regex</code></p>
 <h3 id="purge-mine">purge mine</h3>
 <p><strong>Description:</strong> Removes my messages from the channel.</p>
 <p><strong>Arguments:</strong>
@@ -2989,12 +2997,12 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge mine 10</code>
 - <code>[p]purge mine 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge mine</code></p>
+<p><strong>Usage:</strong> <code>,purge mine</code></p>
 <h3 id="purge-duplicates">purge duplicates</h3>
 <p><strong>Description:</strong> Deletes duplicate messages in the channel from the last X messages and keeps only one copy.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;number&gt;</code> The number of messages to check for duplicates. Must be a positive integer.</p>
-<p><strong>Usage:</strong> <code>-purge duplicates</code></p>
+<p><strong>Usage:</strong> <code>,purge duplicates</code></p>
 <h3 id="purge-embeds">purge embeds</h3>
 <p><strong>Description:</strong> Removes messages that have embeds in them.</p>
 <p><strong>Arguments:</strong>
@@ -3003,7 +3011,7 @@ Replying to a message will cleanup all messages before it.</p>
 <p><strong>Examples:</strong>
 - <code>[p]purge embeds 10</code>
 - <code>[p]purge embeds 2000</code></p>
-<p><strong>Usage:</strong> <code>-purge embeds</code></p></p>
+<p><strong>Usage:</strong> <code>,purge embeds</code></p></p>
     </article>
 </section>
             <!-- endblock -->

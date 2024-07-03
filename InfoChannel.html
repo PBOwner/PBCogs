@@ -1555,6 +1555,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MassAction.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MassAction
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Massmove.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1703,14 +1711,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="NoFuckYou.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            NoFuckYou
         </a>
     </li>
                             
@@ -2255,6 +2255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Skyrim
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="SlashRequest.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlashRequest
         </a>
     </li>
                             
@@ -2831,10 +2839,10 @@
 <p>Create a channel with updating server info<br/><br/>This relies on editing channels, which is a strictly rate-limited activity.<br/>As such, updates will not be frequent. Currently capped at 1 per 5 minutes per server.</p>
 <h3 id="infochannel">infochannel</h3>
 <p><strong>Description:</strong> Toggle info channel for this server</p>
-<p><strong>Usage:</strong> <code>-infochannel</code></p>
+<p><strong>Usage:</strong> <code>,infochannel</code></p>
 <h3 id="infochannelset">infochannelset</h3>
 <p><strong>Description:</strong> Toggle different types of infochannels</p>
-<p><strong>Usage:</strong> <code>-infochannelset</code></p>
+<p><strong>Usage:</strong> <code>,infochannelset</code></p>
 <h3 id="infochannelset-rolename">infochannelset rolename</h3>
 <p><strong>Description:</strong> Change the name of the infochannel for specific roles.</p>
 <p>{count} must be used to display number members with the given role.
@@ -2846,7 +2854,7 @@ Leave blank to set back to default.</p>
 - <code>[p]infochannelset rolename Elite {count} members with {role} role</code>
 - <code>[p]infochannelset rolename "Space Role" Total boosters: {count}</code></p>
 <p>Warning: This command counts against the channel update rate limit and may be queued.</p>
-<p><strong>Usage:</strong> <code>-infochannelset rolename</code></p>
+<p><strong>Usage:</strong> <code>,infochannelset rolename</code></p>
 <h3 id="infochannelset-name">infochannelset name</h3>
 <p><strong>Description:</strong> Change the name of the infochannel for the specified channel type.</p>
 <p>{count} must be used to display number of total members in the server.
@@ -2864,10 +2872,10 @@ Leave blank to set back to default.</p>
 - <code>online</code>: Total online members
 - <code>offline</code>: Total offline members</p>
 <p>Warning: This command counts against the channel update rate limit and may be queued.</p>
-<p><strong>Usage:</strong> <code>-infochannelset name</code></p>
+<p><strong>Usage:</strong> <code>,infochannelset name</code></p>
 <h3 id="infochannelset-togglerole">infochannelset togglerole</h3>
 <p><strong>Description:</strong> Toggle an infochannel that shows the count of users with the specified role</p>
-<p><strong>Usage:</strong> <code>-infochannelset togglerole</code></p>
+<p><strong>Usage:</strong> <code>,infochannelset togglerole</code></p>
 <h3 id="infochannelset-togglechannel">infochannelset togglechannel</h3>
 <p><strong>Description:</strong> Toggles the infochannel for the specified channel type.</p>
 <p>Valid Types are:
@@ -2879,7 +2887,7 @@ Leave blank to set back to default.</p>
 - <code>channels</code>: Total number of channels excluding infochannels,
 - <code>online</code>: Total online members,
 - <code>offline</code>: Total offline members,</p>
-<p><strong>Usage:</strong> <code>-infochannelset togglechannel</code></p></p>
+<p><strong>Usage:</strong> <code>,infochannelset togglechannel</code></p></p>
     </article>
 </section>
             <!-- endblock -->

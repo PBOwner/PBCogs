@@ -1555,6 +1555,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MassAction.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MassAction
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Massmove.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1703,14 +1711,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="NoFuckYou.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            NoFuckYou
         </a>
     </li>
                             
@@ -2255,6 +2255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Skyrim
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="SlashRequest.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlashRequest
         </a>
     </li>
                             
@@ -2831,16 +2839,16 @@
 <p>Quote any Discord message from its link!</p>
 <h3 id="linkquote">linkquote</h3>
 <p><strong>Description:</strong> Quote a message from a link.</p>
-<p><strong>Usage:</strong> <code>-linkquote</code></p>
+<p><strong>Usage:</strong> <code>,linkquote</code></p>
 <h3 id="setlinkquoter">setlinkquoter</h3>
 <p><strong>Description:</strong> Commands to configure LinkQuoter.</p>
-<p><strong>Usage:</strong> <code>-setlinkquoter</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter</code></p>
 <h3 id="setlinkquoter-crossserver">setlinkquoter crossserver</h3>
 <p><strong>Description:</strong>  Toggle cross-server quoting.</p>
 <p>Turning this setting on will allow this server to quote other servers, and other servers to quote this one.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter crossserver</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter crossserver</code></p>
 <h3 id="setlinkquoter-enabled">setlinkquoter enabled</h3>
 <p><strong>Description:</strong> Toggle automatic link-quoting.</p>
 <p>Enabling this will make [botname] attempt to quote any message link that is sent in this server.
@@ -2850,50 +2858,50 @@ If the user doesn't have permission to view the channel that they link, it will 
 <p>To prevent spam, links can be automatically quoted 3 times every 10 seconds.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter enabled</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter enabled</code></p>
 <h3 id="setlinkquoter-deletemessage">setlinkquoter deletemessage</h3>
 <p><strong>Description:</strong> Toggle deleting of messages for automatic quoting.</p>
 <p>If automatic quoting is enabled, then [botname] will also delete messages that contain links in them.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter deletemessage</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter deletemessage</code></p>
 <h3 id="setlinkquoter-whitelistchannels">setlinkquoter whitelistchannels</h3>
 <p><strong>Description:</strong> Set the channels in which auto-quoting will be enabled.</p>
 <p>Default value: <code>[]</code>
 Dev: <code>Greedy[GuildChannel]</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter whitelistchannels</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter whitelistchannels</code></p>
 <h3 id="setlinkquoter-deletemessagebutton">setlinkquoter deletemessagebutton</h3>
 <p><strong>Description:</strong> Toggle the delete message button on the quote messages.</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter deletemessagebutton</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter deletemessagebutton</code></p>
 <h3 id="setlinkquoter-modalconfig">setlinkquoter modalconfig</h3>
 <p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
-<p><strong>Usage:</strong> <code>-setlinkquoter modalconfig</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter modalconfig</code></p>
 <h3 id="setlinkquoter-deleteafter">setlinkquoter deleteafter</h3>
 <p><strong>Description:</strong> Set the time in seconds to delete the message after.</p>
 <p>Default value: <code>0</code>
 Dev: <code>&lt;class 'int'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter deleteafter</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter deleteafter</code></p>
 <h3 id="setlinkquoter-migratefromphen">setlinkquoter migratefromphen</h3>
 <p><strong>Description:</strong> Migrate config from LinkQuoter by Phen.</p>
-<p><strong>Usage:</strong> <code>-setlinkquoter migratefromphen</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter migratefromphen</code></p>
 <h3 id="setlinkquoter-blacklistchannels">setlinkquoter blacklistchannels</h3>
 <p><strong>Description:</strong> Set the channels in which auto-quoting will be disabled.</p>
 <p>Default value: <code>[]</code>
 Dev: <code>Greedy[GuildChannel]</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter blacklistchannels</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter blacklistchannels</code></p>
 <h3 id="setlinkquoter-showsettings">setlinkquoter showsettings</h3>
 <p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
-<p><strong>Usage:</strong> <code>-setlinkquoter showsettings</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter showsettings</code></p>
 <h3 id="setlinkquoter-webhooks">setlinkquoter webhooks</h3>
 <p><strong>Description:</strong> Toggle sending message with the name and avatar of the Author of the quote (with webhooks)</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>-setlinkquoter webhooks</code></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter webhooks</code></p>
 <h3 id="setlinkquoter-resetsetting">setlinkquoter resetsetting</h3>
 <p><strong>Description:</strong> Reset a setting.</p>
-<p><strong>Usage:</strong> <code>-setlinkquoter resetsetting</code></p></p>
+<p><strong>Usage:</strong> <code>,setlinkquoter resetsetting</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -1555,6 +1555,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="MassAction.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            MassAction
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Massmove.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1703,14 +1711,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="NoFuckYou.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            NoFuckYou
         </a>
     </li>
                             
@@ -2255,6 +2255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Skyrim
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="SlashRequest.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            SlashRequest
         </a>
     </li>
                             
@@ -2833,13 +2841,13 @@
 <p><strong>Description:</strong> Toggle various extended modlog notifications</p>
 <p>Requires the channel to be setup with <code>[p]modlogset modlog #channel</code>
 Or can be sent to separate channels with <code>[p]modlog channel #channel event_name</code></p>
-<p><strong>Usage:</strong> <code>-modlog</code></p>
+<p><strong>Usage:</strong> <code>,modlog</code></p>
 <h3 id="modlog-all">modlog all</h3>
 <p><strong>Description:</strong> Turn all logging options on or off.</p>
 <ul>
 <li><code>&lt;true_or_false&gt;</code> True of False, what to set all loggable settings to.</li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog all</code></p>
+<p><strong>Usage:</strong> <code>,modlog all</code></p>
 <h3 id="modlog-embeds">modlog embeds</h3>
 <p><strong>Description:</strong>     Set modlog events to use embeds or text</p>
 <pre><code>- `&lt;true_or_false&gt;` The desired embed setting either on or off.
@@ -2868,7 +2876,7 @@ Or can be sent to separate channels with <code>[p]modlog channel #channel event_
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog embeds</code></p>
+<p><strong>Usage:</strong> <code>,modlog embeds</code></p>
 <h3 id="modlog-commandlevel">modlog commandlevel</h3>
 <p><strong>Description:</strong> Set the level of commands to be logged.</p>
 <ul>
@@ -2882,24 +2890,24 @@ Or can be sent to separate channels with <code>[p]modlog channel #channel event_
 <p>These are the basic levels commands check for in permissions.
 <code>NONE</code> is a command anyone has permission to use, where as <code>MOD</code>
 can be <code>mod or permissions</code></p>
-<p><strong>Usage:</strong> <code>-modlog commandlevel</code></p>
+<p><strong>Usage:</strong> <code>,modlog commandlevel</code></p>
 <h3 id="modlog-delete">modlog delete</h3>
 <p><strong>Description:</strong> Delete logging settings.</p>
-<p><strong>Usage:</strong> <code>-modlog delete</code></p>
+<p><strong>Usage:</strong> <code>,modlog delete</code></p>
 <h3 id="modlog-delete-bulkdelete">modlog delete bulkdelete</h3>
 <p><strong>Description:</strong> Toggle bulk message delete notifications.</p>
-<p><strong>Usage:</strong> <code>-modlog delete bulkdelete</code></p>
+<p><strong>Usage:</strong> <code>,modlog delete bulkdelete</code></p>
 <h3 id="modlog-delete-individual">modlog delete individual</h3>
 <p><strong>Description:</strong> Toggle individual message delete notifications for bulk message delete.</p>
-<p><strong>Usage:</strong> <code>-modlog delete individual</code></p>
+<p><strong>Usage:</strong> <code>,modlog delete individual</code></p>
 <h3 id="modlog-delete-cachedonly">modlog delete cachedonly</h3>
 <p><strong>Description:</strong> Toggle message delete notifications for non-cached messages.</p>
 <p>Delete notifications for non-cached messages
 will only show channel info without content of deleted message or its author.</p>
-<p><strong>Usage:</strong> <code>-modlog delete cachedonly</code></p>
+<p><strong>Usage:</strong> <code>,modlog delete cachedonly</code></p>
 <h3 id="modlog-delete-ignorecommands">modlog delete ignorecommands</h3>
 <p><strong>Description:</strong> Toggle message delete notifications for valid bot command messages.</p>
-<p><strong>Usage:</strong> <code>-modlog delete ignorecommands</code></p>
+<p><strong>Usage:</strong> <code>,modlog delete ignorecommands</code></p>
 <h3 id="modlog-colour">modlog colour</h3>
 <p><strong>Description:</strong>     Set custom colours for modlog events</p>
 <pre><code>- `&lt;colour&gt;` must be a hex code or a [built colour.](https://discordpy.readthedocs.io/en/latest/api.html#colour)
@@ -2928,7 +2936,7 @@ will only show channel info without content of deleted message or its author.</p
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog colour</code></p>
+<p><strong>Usage:</strong> <code>,modlog colour</code></p>
 <h3 id="modlog-resetchannel">modlog resetchannel</h3>
 <p><strong>Description:</strong>     Reset the modlog event to the default modlog channel.</p>
 <ul>
@@ -2955,7 +2963,7 @@ will only show channel info without content of deleted message or its author.</p
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog resetchannel</code></p>
+<p><strong>Usage:</strong> <code>,modlog resetchannel</code></p>
 <h3 id="modlog-toggle">modlog toggle</h3>
 <p><strong>Description:</strong>     Turn on and off specific modlog actions</p>
 <pre><code>- `&lt;true_or_false&gt;` Either on or off.
@@ -2984,27 +2992,27 @@ will only show channel info without content of deleted message or its author.</p
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog toggle</code></p>
+<p><strong>Usage:</strong> <code>,modlog toggle</code></p>
 <h3 id="modlog-member">modlog member</h3>
 <p><strong>Description:</strong> Toggle individual member update settings.</p>
-<p><strong>Usage:</strong> <code>-modlog member</code></p>
+<p><strong>Usage:</strong> <code>,modlog member</code></p>
 <h3 id="modlog-member-nickname">modlog member nickname</h3>
 <p><strong>Description:</strong> Toggle nickname updates for member changes.</p>
-<p><strong>Usage:</strong> <code>-modlog member nickname</code></p>
+<p><strong>Usage:</strong> <code>,modlog member nickname</code></p>
 <h3 id="modlog-member-pending">modlog member pending</h3>
 <p><strong>Description:</strong> Toggle pending updates for members.</p>
-<p><strong>Usage:</strong> <code>-modlog member pending</code></p>
+<p><strong>Usage:</strong> <code>,modlog member pending</code></p>
 <h3 id="modlog-member-timeout">modlog member timeout</h3>
 <p><strong>Description:</strong> Toggle timeout updates for members.</p>
 <p>Note: Due to a discord limitation this will not update when a members
 timeout has expired and may display a before timeout in the past.</p>
-<p><strong>Usage:</strong> <code>-modlog member timeout</code></p>
+<p><strong>Usage:</strong> <code>,modlog member timeout</code></p>
 <h3 id="modlog-member-all">modlog member all</h3>
 <p><strong>Description:</strong> Set all member update settings.</p>
 <ul>
 <li><code>&lt;set_to&gt;</code> True or False what to set all the member update settings to.</li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog member all</code></p>
+<p><strong>Usage:</strong> <code>,modlog member all</code></p>
 <h3 id="modlog-member-flags">modlog member flags</h3>
 <p><strong>Description:</strong> Toggle flags updates for members.</p>
 <p>This includes things like:
@@ -3012,42 +3020,42 @@ timeout has expired and may display a before timeout in the past.</p>
 - <code>completed_onboarding</code>
 - <code>bypasses_verification</code>
 - <code>started_onboarding</code></p>
-<p><strong>Usage:</strong> <code>-modlog member flags</code></p>
+<p><strong>Usage:</strong> <code>,modlog member flags</code></p>
 <h3 id="modlog-member-roles">modlog member roles</h3>
 <p><strong>Description:</strong> Toggle role updates for members.</p>
-<p><strong>Usage:</strong> <code>-modlog member roles</code></p>
+<p><strong>Usage:</strong> <code>,modlog member roles</code></p>
 <h3 id="modlog-member-avatar">modlog member avatar</h3>
 <p><strong>Description:</strong> Toggle avatar updates for member changes.</p>
-<p><strong>Usage:</strong> <code>-modlog member avatar</code></p>
+<p><strong>Usage:</strong> <code>,modlog member avatar</code></p>
 <h3 id="modlog-member-settings">modlog member settings</h3>
 <p><strong>Description:</strong> Show the current settings on member updates.</p>
-<p><strong>Usage:</strong> <code>-modlog member settings</code></p>
+<p><strong>Usage:</strong> <code>,modlog member settings</code></p>
 <h3 id="modlog-bot">modlog bot</h3>
 <p><strong>Description:</strong> Bot filter settings.</p>
-<p><strong>Usage:</strong> <code>-modlog bot</code></p>
+<p><strong>Usage:</strong> <code>,modlog bot</code></p>
 <h3 id="modlog-bot-voice">modlog bot voice</h3>
 <p><strong>Description:</strong> Toggle bots from being logged in voice state updates.</p>
-<p><strong>Usage:</strong> <code>-modlog bot voice</code></p>
+<p><strong>Usage:</strong> <code>,modlog bot voice</code></p>
 <h3 id="modlog-bot-deletes">modlog bot deletes</h3>
 <p><strong>Description:</strong> Toggle message delete notifications for bot users.</p>
 <p>This will not affect delete notifications for messages that aren't in bot's cache.</p>
-<p><strong>Usage:</strong> <code>-modlog bot deletes</code></p>
+<p><strong>Usage:</strong> <code>,modlog bot deletes</code></p>
 <h3 id="modlog-bot-change">modlog bot change</h3>
 <p><strong>Description:</strong> Toggle bots from being logged in user updates.</p>
 <p>This includes roles and nickname.</p>
-<p><strong>Usage:</strong> <code>-modlog bot change</code></p>
+<p><strong>Usage:</strong> <code>,modlog bot change</code></p>
 <h3 id="modlog-bot-edits">modlog bot edits</h3>
 <p><strong>Description:</strong> Toggle message edit notifications for bot users.</p>
-<p><strong>Usage:</strong> <code>-modlog bot edits</code></p>
+<p><strong>Usage:</strong> <code>,modlog bot edits</code></p>
 <h3 id="modlog-unignore">modlog unignore</h3>
 <p><strong>Description:</strong> Unignore a channel from message delete/edit events and bot commands.</p>
 <ul>
 <li><code>&lt;channel&gt;</code> the channel to unignore message delete/edit events.</li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog unignore</code></p>
+<p><strong>Usage:</strong> <code>,modlog unignore</code></p>
 <h3 id="modlog-settings">modlog settings</h3>
 <p><strong>Description:</strong> Show the servers current ExtendedModlog settings</p>
-<p><strong>Usage:</strong> <code>-modlog settings</code></p>
+<p><strong>Usage:</strong> <code>,modlog settings</code></p>
 <h3 id="modlog-channel">modlog channel</h3>
 <p><strong>Description:</strong>     Set the channel for modlogs.</p>
 <pre><code>- `&lt;channel&gt;` The text channel to send the events to.
@@ -3076,13 +3084,13 @@ timeout has expired and may display a before timeout in the past.</p>
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog channel</code></p>
+<p><strong>Usage:</strong> <code>,modlog channel</code></p>
 <h3 id="modlog-ignore">modlog ignore</h3>
 <p><strong>Description:</strong> Ignore a channel from message delete/edit events and bot commands.</p>
 <ul>
 <li><code>&lt;channel&gt;</code> the channel or category to ignore events in</li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog ignore</code></p>
+<p><strong>Usage:</strong> <code>,modlog ignore</code></p>
 <h3 id="modlog-emojiset">modlog emojiset</h3>
 <p><strong>Description:</strong>     Set the emoji used in text modlogs.</p>
 <pre><code>- `&lt;new_emoji&gt;` can be any discord emoji or unicode emoji the bot has access to use.
@@ -3111,7 +3119,7 @@ timeout has expired and may display a before timeout in the past.</p>
 <li><code>thread_change</code></li>
 <li><code>stickers_change</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>-modlog emojiset</code></p></p>
+<p><strong>Usage:</strong> <code>,modlog emojiset</code></p></p>
     </article>
 </section>
             <!-- endblock -->
