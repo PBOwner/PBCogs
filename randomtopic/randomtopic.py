@@ -87,7 +87,10 @@ class RandomTopic(commands.Cog):
                     await channel.send("Failed to retrieve a random topic. Please try again later.")
                     return
                 data = await resp.json()
-                question = data[0]['question']
+                question_data = data[0]
+                question = question_data['question']
+                choices = question_data.get('incorrectAnswers', []) + [question_data['correctAnswer']]
+                random.shuffle(choices)
         except aiohttp.ClientError:
             await channel.send("There was an error connecting to the random topic service. Please try again later.")
             return
@@ -99,6 +102,10 @@ class RandomTopic(commands.Cog):
             color=random.randint(0, 0xFFFFFF)
         )
         embed.add_field(name="Question", value=question, inline=False)
+
+        if choices:
+            for i, choice in enumerate(choices, 1):
+                embed.add_field(name=f"Choice {i}", value=choice, inline=True)
 
         try:
             if role_mention:
@@ -127,6 +134,3 @@ class RandomTopic(commands.Cog):
     async def on_ready(self):
         for guild in self.bot.guilds:
             self.tasks[guild.id] = self.bot.loop.create_task(self.scheduled_task(guild.id))
-
-def setup(bot: Red):
-    bot.add_cog(RandomTopic(bot))
