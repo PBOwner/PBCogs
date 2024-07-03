@@ -9,7 +9,7 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, thresholds={})
+        self.config.register_guild(warn_channel=None, threshold={})
         self.config.register_member(warnings=[], untimeout_time=None)
 
     @commands.command()
