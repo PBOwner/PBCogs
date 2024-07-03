@@ -9,7 +9,7 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, threshold={})
+        self.config.register_guild(warn_channel=None, thresholds={})
         self.config.register_member(warnings=[], untimeout_time=None)
 
     @commands.command()
@@ -20,10 +20,12 @@ class AdWarn(commands.Cog):
         if warn_channel_id:
             warn_channel = self.bot.get_channel(warn_channel_id)
             if warn_channel:
-                # Store the warning
+                # Store the warning with a UUID
                 warnings = await self.config.member(user).warnings()
                 warning_time = datetime.utcnow().isoformat()
+                warning_id = str(uuid.uuid4())
                 warnings.append({
+                    "id": warning_id,
                     "reason": reason,
                     "moderator": ctx.author.id,
                     "time": warning_time,
@@ -152,11 +154,13 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def removewarn(self, ctx, user: discord.Member, index: int):
-        """Remove a specific warning from a user."""
+    async def removewarn(self, ctx, user: discord.Member, warning_id: str):
+        """Remove a specific warning from a user by its UUID."""
         warnings = await self.config.member(user).warnings()
-        if 0 <= index < len(warnings):
-            removed_warning = warnings.pop(index)
+        warning_to_remove = next((warning for warning in warnings if warning["id"] == warning_id), None)
+
+        if warning_to_remove:
+            warnings.remove(warning_to_remove)
             await self.config.member(user).warnings.set(warnings)
 
             warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
@@ -165,7 +169,7 @@ class AdWarn(commands.Cog):
                 if warn_channel:
                     # Create the embed message
                     embed = discord.Embed(title="AdWarn Removed", color=discord.Color.green())
-                    embed.add_field(name="Warning", value=removed_warning["reason"], inline=False)
+                    embed.add_field(name="Warning", value=warning_to_remove["reason"], inline=False)
                     embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                     embed.add_field(name="Removed Time", value=datetime.utcnow().isoformat(), inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
@@ -189,7 +193,7 @@ class AdWarn(commands.Cog):
         else:
             error_embed = discord.Embed(
                 title="Error 404",
-                description=f"Invalid warning index. {user.mention} has {len(warnings)} warnings.",
+                description=f"Warning with ID {warning_id} not found.",
                 color=discord.Color.red()
             )
             await ctx.send(embed=error_embed)
@@ -204,6 +208,14 @@ class AdWarn(commands.Cog):
             description=f"{user.mention} has {len(warnings)} warnings.",
             color=discord.Color.blue()
         )
+
+        for warning in warnings:
+            embed.add_field(
+                name=f"Warning ID: {warning['id']}",
+                value=f"Reason: {warning['reason']}\nModerator: <@{warning['moderator']}>\nTime: {warning['time']}",
+                inline=False
+            )
+
         await ctx.send(embed=embed)
 
     @commands.command()
