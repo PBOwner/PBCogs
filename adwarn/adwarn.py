@@ -3,6 +3,7 @@ from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime, timedelta
 import re
+import uuid
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -79,23 +80,24 @@ class AdWarn(commands.Cog):
     async def check_thresholds(self, ctx, user, warning_count):
         thresholds = await self.config.guild(ctx.guild).thresholds()
 
-        if warning_count in thresholds:
-            action = thresholds[warning_count]
-            if action == "kick":
-                await ctx.guild.kick(user, reason="Reached warning threshold")
-                await ctx.send(f"{user.mention} has been kicked for reaching {warning_count} warnings.")
-            elif action == "ban":
-                await ctx.guild.ban(user, reason="Reached warning threshold")
-                await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
-            elif action.startswith("mute"):
-                timeout_duration = self.parse_duration(action.split(" ")[1]) if " " in action else None
+        for threshold_id, threshold in thresholds.items():
+            if threshold["count"] == warning_count:
+                action = threshold["action"]
+                if action == "kick":
+                    await ctx.guild.kick(user, reason="Reached warning threshold")
+                    await ctx.send(f"{user.mention} has been kicked for reaching {warning_count} warnings.")
+                elif action == "ban":
+                    await ctx.guild.ban(user, reason="Reached warning threshold")
+                    await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
+                elif action.startswith("mute"):
+                    timeout_duration = self.parse_duration(action.split(" ")[1]) if " " in action else None
 
-                await self.timeout_user(ctx, user, timeout_duration)
-                await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
-                if timeout_duration:
-                    await self.schedule_untimeout(ctx, user, timeout_duration)
+                    await self.timeout_user(ctx, user, timeout_duration)
+                    await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
+                    if timeout_duration:
+                        await self.schedule_untimeout(ctx, user, timeout_duration)
 
-        # Add more actions as needed
+                # Add more actions as needed
 
     def parse_duration(self, duration_str):
         """Parse a duration string and return the duration in minutes."""
@@ -316,7 +318,7 @@ class AdWarn(commands.Cog):
             embed.add_field(name="Current Warning Channel", value="Not set", inline=False)
 
         if thresholds:
-            threshold_list = "\n".join([f"{count}: {action}" for count, action in thresholds.items()])
+            threshold_list = "\n".join([f"{threshold_id}: {threshold['count']} warnings -> {threshold['action']}" for threshold_id, threshold in thresholds.items()])
             embed.add_field(name="Warning Thresholds", value=threshold_list, inline=False)
         else:
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
@@ -339,17 +341,21 @@ class AdWarn(commands.Cog):
             action = f"mute {parsed_duration}"
 
         thresholds = await self.config.guild(ctx.guild).thresholds()
-        thresholds[warning_count] = action
+        threshold_id = str(uuid.uuid4())
+        thresholds[threshold_id] = {
+            "count": warning_count,
+            "action": action
+        }
         await self.config.guild(ctx.guild).thresholds.set(thresholds)
         await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
 
     @warnset.command()
-    async def delthreshold(self, ctx, warning_count: int):
-        """Delete a specific warning count threshold."""
+    async def delthreshold(self, ctx, threshold_id: str):
+        """Delete a specific warning count threshold by its UUID."""
         thresholds = await self.config.guild(ctx.guild).thresholds()
-        if warning_count in thresholds:
-            del thresholds[warning_count]
+        if threshold_id in thresholds:
+            del thresholds[threshold_id]
             await self.config.guild(ctx.guild).thresholds.set(thresholds)
-            await ctx.send(f"Deleted threshold for {warning_count} warnings.")
+            await ctx.send(f"Deleted threshold with ID {threshold_id}.")
         else:
-            await ctx.send(f"No threshold set for {warning_count} warnings.")
+            await ctx.send(f"No threshold set with ID {threshold_id}.")
