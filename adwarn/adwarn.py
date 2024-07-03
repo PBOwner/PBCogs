@@ -9,8 +9,15 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, thresholds={})
+        self.config.register_guild(warn_channel=None, tholds={})
         self.config.register_member(warnings=[], untimeout_time=None)
+
+        # Clear the current thresholds
+        self.bot.loop.create_task(self.clear_current_thresholds())
+
+    async def clear_current_thresholds(self):
+        for guild in self.bot.guilds:
+            await self.config.guild(guild).tholds.set({})
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -80,9 +87,9 @@ class AdWarn(commands.Cog):
         await ctx.message.delete(delay=3)
 
     async def check_thresholds(self, ctx, user, warning_count):
-        thresholds = await self.config.guild(ctx.guild).thresholds()
+        tholds = await self.config.guild(ctx.guild).tholds()
 
-        for threshold_id, threshold in thresholds.items():
+        for threshold_id, threshold in tholds.items():
             if threshold["count"] == warning_count:
                 action = threshold["action"]
                 if action == "kick":
@@ -224,7 +231,7 @@ class AdWarn(commands.Cog):
         """Clear all warnings for a user."""
         await self.config.member(user).warnings.set([])
         warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
-        if warn_channel_id:
+        if (warn_channel_id):
             warn_channel = self.bot.get_channel(warn_channel_id)
             if warn_channel:
                 # Create the embed message
@@ -316,7 +323,7 @@ class AdWarn(commands.Cog):
     async def show(self, ctx):
         """Show the current warning channel and thresholds."""
         channel_id = await self.config.guild(ctx.guild).warn_channel()
-        thresholds = await self.config.guild(ctx.guild).thresholds()
+        tholds = await self.config.guild(ctx.guild).tholds()
 
         embed = discord.Embed(
             title="Warning System Configuration",
@@ -329,8 +336,8 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="Current Warning Channel", value="Not set", inline=False)
 
-        if thresholds:
-            threshold_list = "\n".join([f"{threshold_id}: {threshold['count']} warnings -> {threshold['action']}" for threshold_id, threshold in thresholds.items()])
+        if tholds:
+            threshold_list = "\n".join([f"{threshold_id}: {threshold['count']} warnings -> {threshold['action']}" for threshold_id, threshold in tholds.items()])
             embed.add_field(name="Warning Thresholds", value=threshold_list, inline=False)
         else:
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
@@ -352,22 +359,22 @@ class AdWarn(commands.Cog):
                 return
             action = f"mute {parsed_duration}"
 
-        thresholds = await self.config.guild(ctx.guild).thresholds()
+        tholds = await self.config.guild(ctx.guild).tholds()
         threshold_id = str(uuid.uuid4())
-        thresholds[threshold_id] = {
+        tholds[threshold_id] = {
             "count": warning_count,
             "action": action
         }
-        await self.config.guild(ctx.guild).thresholds.set(thresholds)
+        await self.config.guild(ctx.guild).tholds.set(tholds)
         await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
 
     @warnset.command()
     async def delthreshold(self, ctx, threshold_id: str):
         """Delete a specific warning count threshold by its UUID."""
-        thresholds = await self.config.guild(ctx.guild).thresholds()
-        if threshold_id in thresholds:
-            del thresholds[threshold_id]
-            await self.config.guild(ctx.guild).thresholds.set(thresholds)
+        tholds = await self.config.guild(ctx.guild).tholds()
+        if threshold_id in tholds:
+            del tholds[threshold_id]
+            await self.config.guild(ctx.guild).tholds.set(tholds)
             await ctx.send(f"Deleted threshold with ID {threshold_id}.")
         else:
             await ctx.send(f"No threshold set with ID {threshold_id}.")
