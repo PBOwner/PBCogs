@@ -8,7 +8,7 @@ class AdWarn(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
         self.config.register_guild(warn_channel=None, thresholds={})
-        self.config.register_member(warnings=[])
+        self.config.register_member(warnings=[], untimeout_time=None)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -87,39 +87,49 @@ class AdWarn(commands.Cog):
                 await ctx.guild.ban(user, reason="Reached warning threshold")
                 await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
             elif action.startswith("mute"):
-                # Mute logic with optional time range
-                mute_duration = None
+                timeout_duration = None
                 if " " in action:
                     try:
-                        mute_duration = int(action.split(" ")[1])
+                        timeout_duration = int(action.split(" ")[1])
                     except ValueError:
                         pass
 
-                # Implement your mute logic here
-                await ctx.send(f"{user.mention} has been muted for reaching {warning_count} warnings.")
-                if mute_duration:
-                    await self.schedule_unmute(ctx, user, mute_duration)
+                await self.timeout_user(ctx, user, timeout_duration)
+                await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
+                if timeout_duration:
+                    await self.schedule_untimeout(ctx, user, timeout_duration)
 
             # Add more actions as needed
 
-    async def schedule_unmute(self, ctx, user, duration):
-        unmute_time = datetime.utcnow() + timedelta(minutes=duration)
-        await self.config.member(user).unmute_time.set(unmute_time.isoformat())
-        await ctx.send(f"{user.mention} will be unmuted in {duration} minutes.")
+    async def timeout_user(self, ctx, user: discord.Member, duration: int = None):
+        if duration:
+            timeout_until = datetime.utcnow() + timedelta(minutes=duration)
+            await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
+            await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
+        else:
+            await user.edit(timed_out_until=None, reason="Reached warning threshold")
+
+    async def schedule_untimeout(self, ctx, user, duration):
+        untimeout_time = datetime.utcnow() + timedelta(minutes=duration)
+        await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
+        await ctx.send(f"{user.mention} will be untimed out in {duration} minutes.")
 
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.check_unmute_times()
+        await self.check_untimeout_times()
 
-    async def check_unmute_times(self):
+    async def check_untimeout_times(self):
         for guild in self.bot.guilds:
             for member in guild.members:
-                unmute_time = await self.config.member(member).unmute_time()
-                if unmute_time:
-                    unmute_time = datetime.fromisoformat(unmute_time)
-                    if datetime.utcnow() >= unmute_time:
-                        # Implement your unmute logic here
-                        await self.config.member(member).unmute_time.clear()
+                untimeout_time = await self.config.member(member).untimeout_time()
+                if untimeout_time:
+                    untimeout_time = datetime.fromisoformat(untimeout_time)
+                    if datetime.utcnow() >= untimeout_time:
+                        await self.untimeout_user(member)
+                        await self.config.member(member).untimeout_time.clear()
+
+    async def untimeout_user(self, user: discord.Member):
+        await user.edit(timed_out_until=None, reason="Timeout duration expired")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
