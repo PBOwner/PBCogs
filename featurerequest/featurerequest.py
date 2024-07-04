@@ -51,6 +51,8 @@ class FeatureRequest(commands.Cog):
         async with self.config.requests() as requests:
             requests[message.id] = request_data
 
+        await ctx.send("Your feature request has been successfully submitted!")
+
     async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color, reason: str = None):
         async with self.config.requests() as requests:
             request_data = next((req for req in requests.values() if req["feature"] == feature), None)
@@ -177,6 +179,8 @@ class SlashRequest(commands.Cog):
 
         async with self.config.requests() as requests:
             requests[message.id] = request_data
+
+        await ctx.send("Your slash feature request has been successfully submitted!")
 
     async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color, reason: str = None):
         async with self.config.requests() as requests:
