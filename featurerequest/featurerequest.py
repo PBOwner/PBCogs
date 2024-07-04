@@ -1,4 +1,5 @@
 import discord
+import uuid
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 
@@ -32,6 +33,7 @@ class FeatureRequest(commands.Cog):
             await ctx.send("Request channel not found. Please ask the bot owner to set it again using the frequest channel command.")
             return
 
+        request_id = str(uuid.uuid4())
         embed = discord.Embed(
             title="Feature Request",
             description=f"Feature requested by {ctx.author.mention}",
@@ -39,31 +41,33 @@ class FeatureRequest(commands.Cog):
         )
         embed.add_field(name="Feature", value=feature, inline=True)
         embed.add_field(name="Status", value="Pending", inline=True)
+        embed.add_field(name="Request ID", value=request_id, inline=True)
 
         message = await request_channel.send(embed=embed)
         request_data = {
             "requester_id": ctx.author.id,
             "feature": feature,
             "status": "pending",
-            "message_id": message.id
+            "message_id": message.id,
+            "request_id": request_id
         }
 
         async with self.config.requests() as requests:
-            requests[message.id] = request_data
+            requests[request_id] = request_data
 
-        await ctx.send("Your feature request has been successfully submitted!")
+        await ctx.send(f"Your feature request has been successfully submitted! Your request ID is {request_id}")
 
-    async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color, reason: str = None):
+    async def update_status(self, ctx: commands.Context, request_id: str, status: str, color: discord.Color, reason: str = None):
         async with self.config.requests() as requests:
-            request_data = next((req for req in requests.values() if req["feature"] == feature), None)
+            request_data = requests.get(request_id)
             if not request_data:
-                await ctx.send(f"No feature request found with feature: {feature}")
+                await ctx.send(f"No feature request found with ID: {request_id}")
                 return
 
             request_data["status"] = status
             requester = self.bot.get_user(request_data["requester_id"])
             if requester:
-                description = f"Your feature request of `{feature}` was {status}."
+                description = f"Your feature request with ID `{request_id}` was {status}."
                 if reason:
                     description += f"\n\n**Reason:** {reason}"
                 try:
@@ -88,33 +92,33 @@ class FeatureRequest(commands.Cog):
                 except discord.Forbidden:
                     await ctx.send("I don't have permission to edit the message in the request channel.")
 
-            await ctx.send(f"Feature request with feature `{feature}` has been {status}.")
+            await ctx.send(f"Feature request with ID `{request_id}` has been {status}.")
 
     @frequest.command()
     @commands.is_owner()
-    async def accept(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def accept(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Accept a feature request."""
-        await self.update_status(ctx, feature, "accepted", discord.Color.green(), reason)
+        await self.update_status(ctx, request_id, "accepted", discord.Color.green(), reason)
 
     @frequest.command()
     @commands.is_owner()
-    async def deny(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def deny(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Deny a feature request."""
-        await self.update_status(ctx, feature, "denied", discord.Color.red(), reason)
+        await self.update_status(ctx, request_id, "denied", discord.Color.red(), reason)
 
     @frequest.command()
     @commands.is_owner()
-    async def consider(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def consider(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Consider a feature request."""
-        await self.update_status(ctx, feature, "considering", discord.Color.blue(), reason)
+        await self.update_status(ctx, request_id, "considering", discord.Color.blue(), reason)
 
     @frequest.command()
-    async def status(self, ctx: commands.Context, *, feature: str):
+    async def status(self, ctx: commands.Context, request_id: str):
         """Check the status of a feature request."""
         async with self.config.requests() as requests:
-            request_data = next((req for req in requests.values() if req["feature"] == feature), None)
+            request_data = requests.get(request_id)
             if not request_data:
-                await ctx.send(f"No feature request found with feature: {feature}")
+                await ctx.send(f"No feature request found with ID: {request_id}")
                 return
 
             status = request_data["status"]
@@ -161,6 +165,7 @@ class SlashRequest(commands.Cog):
             await ctx.send("Request channel not found. Please ask the bot owner to set it again using the srequest channel command.")
             return
 
+        request_id = str(uuid.uuid4())
         embed = discord.Embed(
             title="Slash Feature Request",
             description=f"Slash feature requested by {ctx.author.mention}",
@@ -168,31 +173,33 @@ class SlashRequest(commands.Cog):
         )
         embed.add_field(name="Feature", value=feature, inline=True)
         embed.add_field(name="Status", value="Pending", inline=True)
+        embed.add_field(name="Request ID", value=request_id, inline=True)
 
         message = await request_channel.send(embed=embed)
         request_data = {
             "requester_id": ctx.author.id,
             "feature": feature,
             "status": "pending",
-            "message_id": message.id
+            "message_id": message.id,
+            "request_id": request_id
         }
 
         async with self.config.requests() as requests:
-            requests[message.id] = request_data
+            requests[request_id] = request_data
 
-        await ctx.send("Your slash feature request has been successfully submitted!")
+        await ctx.send(f"Your slash feature request has been successfully submitted! Your request ID is {request_id}")
 
-    async def update_status(self, ctx: commands.Context, feature: str, status: str, color: discord.Color, reason: str = None):
+    async def update_status(self, ctx: commands.Context, request_id: str, status: str, color: discord.Color, reason: str = None):
         async with self.config.requests() as requests:
-            request_data = next((req for req in requests.values() if req["feature"] == feature), None)
+            request_data = requests.get(request_id)
             if not request_data:
-                await ctx.send(f"No slash feature request found with feature: {feature}")
+                await ctx.send(f"No slash feature request found with ID: {request_id}")
                 return
 
             request_data["status"] = status
             requester = self.bot.get_user(request_data["requester_id"])
             if requester:
-                description = f"Your slash feature request of `{feature}` was {status}."
+                description = f"Your slash feature request with ID `{request_id}` was {status}."
                 if reason:
                     description += f"\n\n**Reason:** {reason}"
                 try:
@@ -217,33 +224,33 @@ class SlashRequest(commands.Cog):
                 except discord.Forbidden:
                     await ctx.send("I don't have permission to edit the message in the request channel.")
 
-            await ctx.send(f"Slash feature request with feature `{feature}` has been {status}.")
+            await ctx.send(f"Slash feature request with ID `{request_id}` has been {status}.")
 
     @srequest.command()
     @commands.is_owner()
-    async def accept(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def accept(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Accept a slash feature request."""
-        await self.update_status(ctx, feature, "accepted", discord.Color.green(), reason)
+        await self.update_status(ctx, request_id, "accepted", discord.Color.green(), reason)
 
     @srequest.command()
     @commands.is_owner()
-    async def deny(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def deny(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Deny a slash feature request."""
-        await self.update_status(ctx, feature, "denied", discord.Color.red(), reason)
+        await self.update_status(ctx, request_id, "denied", discord.Color.red(), reason)
 
     @srequest.command()
     @commands.is_owner()
-    async def consider(self, ctx: commands.Context, feature: str, *, reason: str = None):
+    async def consider(self, ctx: commands.Context, request_id: str, *, reason: str = None):
         """Consider a slash feature request."""
-        await self.update_status(ctx, feature, "considering", discord.Color.blue(), reason)
+        await self.update_status(ctx, request_id, "considering", discord.Color.blue(), reason)
 
     @srequest.command()
-    async def status(self, ctx: commands.Context, *, feature: str):
+    async def status(self, ctx: commands.Context, request_id: str):
         """Check the status of a slash feature request."""
         async with self.config.requests() as requests:
-            request_data = next((req for req in requests.values() if req["feature"] == feature), None)
+            request_data = requests.get(request_id)
             if not request_data:
-                await ctx.send(f"No slash feature request found with feature: {feature}")
+                await ctx.send(f"No slash feature request found with ID: {request_id}")
                 return
 
             status = request_data["status"]
