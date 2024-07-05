@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2839,9 +2871,52 @@
 <h3 id="inviteblock">inviteblock</h3>
 <p><strong>Description:</strong> Settings for managing invite link blocking</p>
 <p><strong>Usage:</strong> <code>,inviteblock</code></p>
+<h3 id="inviteblock-blocklist">inviteblock blocklist</h3>
+<p><strong>Description:</strong> Commands for setting the blocklist</p>
+<p><strong>Usage:</strong> <code>,inviteblock blocklist</code></p>
+<h3 id="inviteblock-blocklist-add">inviteblock blocklist add</h3>
+<p><strong>Description:</strong> Add a guild ID to the blocklist, providing an invite link will also work</p>
+<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you want to have
+invite links blocked from.</p>
+<p><strong>Usage:</strong> <code>,inviteblock blocklist add</code></p>
+<h3 id="inviteblock-blocklist-info">inviteblock blocklist info</h3>
+<p><strong>Description:</strong> Show what guild ID's are in the invite link blocklist</p>
+<p><strong>Usage:</strong> <code>,inviteblock blocklist info</code></p>
+<h3 id="inviteblock-blocklist-list">inviteblock blocklist list</h3>
+<p><strong>Description:</strong> Show which servers were added to the blocklist and who added them</p>
+<p><strong>Usage:</strong> <code>,inviteblock blocklist list</code></p>
+<h3 id="inviteblock-blocklist-remove">inviteblock blocklist remove</h3>
+<p><strong>Description:</strong> Add a guild ID to the blocklist, providing an invite link will also work</p>
+<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you not longer want to have
+invite links blocked from.</p>
+<p><strong>Usage:</strong> <code>,inviteblock blocklist remove</code></p>
+<h3 id="inviteblock-blockall">inviteblock blockall</h3>
+<p><strong>Description:</strong> Automatically remove all invites regardless of their destination</p>
+<p><strong>Usage:</strong> <code>,inviteblock blockall</code></p>
+<h3 id="inviteblock-immunity">inviteblock immunity</h3>
+<p><strong>Description:</strong> Commands for fine tuning allowed channels, users, or roles</p>
+<p><strong>Usage:</strong> <code>,inviteblock immunity</code></p>
+<h3 id="inviteblock-immunity-info">inviteblock immunity info</h3>
+<p><strong>Description:</strong> Show what channels, users, and roles are in the invite link allowlist</p>
+<p><strong>Usage:</strong> <code>,inviteblock immunity info</code></p>
+<h3 id="inviteblock-immunity-remove">inviteblock immunity remove</h3>
+<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the whitelist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,inviteblock immunity remove</code></p>
+<h3 id="inviteblock-immunity-add">inviteblock immunity add</h3>
+<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to whitelist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,inviteblock immunity add</code></p>
 <h3 id="inviteblock-allowlist">inviteblock allowlist</h3>
 <p><strong>Description:</strong> Commands for setting the blocklist</p>
 <p><strong>Usage:</strong> <code>,inviteblock allowlist</code></p>
+<h3 id="inviteblock-allowlist-remove">inviteblock allowlist remove</h3>
+<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
+<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you not longer want to have
+invites allowed from.</p>
+<p><strong>Usage:</strong> <code>,inviteblock allowlist remove</code></p>
 <h3 id="inviteblock-allowlist-add">inviteblock allowlist add</h3>
 <p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
 <p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you want to have
@@ -2849,50 +2924,7 @@ invites allowed from.</p>
 <p><strong>Usage:</strong> <code>,inviteblock allowlist add</code></p>
 <h3 id="inviteblock-allowlist-info">inviteblock allowlist info</h3>
 <p><strong>Description:</strong> Show what guild ID's are in the invite link allowlist</p>
-<p><strong>Usage:</strong> <code>,inviteblock allowlist info</code></p>
-<h3 id="inviteblock-allowlist-remove">inviteblock allowlist remove</h3>
-<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
-<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you not longer want to have
-invites allowed from.</p>
-<p><strong>Usage:</strong> <code>,inviteblock allowlist remove</code></p>
-<h3 id="inviteblock-immunity">inviteblock immunity</h3>
-<p><strong>Description:</strong> Commands for fine tuning allowed channels, users, or roles</p>
-<p><strong>Usage:</strong> <code>,inviteblock immunity</code></p>
-<h3 id="inviteblock-immunity-add">inviteblock immunity add</h3>
-<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to whitelist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,inviteblock immunity add</code></p>
-<h3 id="inviteblock-immunity-remove">inviteblock immunity remove</h3>
-<p><strong>Description:</strong> Add a guild ID to the allowlist, providing an invite link will also work</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the whitelist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,inviteblock immunity remove</code></p>
-<h3 id="inviteblock-immunity-info">inviteblock immunity info</h3>
-<p><strong>Description:</strong> Show what channels, users, and roles are in the invite link allowlist</p>
-<p><strong>Usage:</strong> <code>,inviteblock immunity info</code></p>
-<h3 id="inviteblock-blockall">inviteblock blockall</h3>
-<p><strong>Description:</strong> Automatically remove all invites regardless of their destination</p>
-<p><strong>Usage:</strong> <code>,inviteblock blockall</code></p>
-<h3 id="inviteblock-blocklist">inviteblock blocklist</h3>
-<p><strong>Description:</strong> Commands for setting the blocklist</p>
-<p><strong>Usage:</strong> <code>,inviteblock blocklist</code></p>
-<h3 id="inviteblock-blocklist-info">inviteblock blocklist info</h3>
-<p><strong>Description:</strong> Show what guild ID's are in the invite link blocklist</p>
-<p><strong>Usage:</strong> <code>,inviteblock blocklist info</code></p>
-<h3 id="inviteblock-blocklist-add">inviteblock blocklist add</h3>
-<p><strong>Description:</strong> Add a guild ID to the blocklist, providing an invite link will also work</p>
-<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you want to have
-invite links blocked from.</p>
-<p><strong>Usage:</strong> <code>,inviteblock blocklist add</code></p>
-<h3 id="inviteblock-blocklist-remove">inviteblock blocklist remove</h3>
-<p><strong>Description:</strong> Add a guild ID to the blocklist, providing an invite link will also work</p>
-<p><code>[invite_or_guild_id]</code> The guild ID or invite to the guild you not longer want to have
-invite links blocked from.</p>
-<p><strong>Usage:</strong> <code>,inviteblock blocklist remove</code></p>
-<h3 id="inviteblock-blocklist-list">inviteblock blocklist list</h3>
-<p><strong>Description:</strong> Show which servers were added to the blocklist and who added them</p>
-<p><strong>Usage:</strong> <code>,inviteblock blocklist list</code></p></p>
+<p><strong>Usage:</strong> <code>,inviteblock allowlist info</code></p></p>
     </article>
 </section>
             <!-- endblock -->

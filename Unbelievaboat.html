@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2840,25 +2872,28 @@
 <h3 id="unbset">unbset</h3>
 <p><strong>Description:</strong> Manage various settings for Unbelievaboat.</p>
 <p><strong>Usage:</strong> <code>,unbset</code></p>
-<h3 id="unbset-del-reply">unbset del-reply</h3>
-<p><strong>Description:</strong> Delete a custom reply.</p>
-<p><strong>Usage:</strong> <code>,unbset del-reply</code></p>
-<h3 id="unbset-failure-rate">unbset failure-rate</h3>
-<p><strong>Description:</strong> Set the failure rate for crimes and robbing.</p>
-<p><strong>Usage:</strong> <code>,unbset failure-rate</code></p>
-<h3 id="unbset-default-replies">unbset default-replies</h3>
-<p><strong>Description:</strong> Whether to use the default replies to work and crime.</p>
-<p><strong>Usage:</strong> <code>,unbset default-replies</code></p>
-<h3 id="unbset-betting">unbset betting</h3>
-<p><strong>Description:</strong> Set the min or max betting amounts.</p>
-<p><strong>Usage:</strong> <code>,unbset betting</code></p>
+<h3 id="unbset-payout">unbset payout</h3>
+<p><strong>Description:</strong> Set the min or max payout for working or crimes.</p>
+<p><strong>Usage:</strong> <code>,unbset payout</code></p>
+<h3 id="unbset-add-reply">unbset add-reply</h3>
+<p><strong>Description:</strong> Add a custom reply for working or crime.</p>
+<p>Put {amount} in place of where you want the amount earned to be.</p>
+<p><strong>Usage:</strong> <code>,unbset add-reply</code></p>
 <h3 id="unbset-interest-rate">unbset interest-rate</h3>
 <p><strong>Description:</strong> Set the interest rate if unable to pay a fine from wallet.</p>
 <p><strong>Usage:</strong> <code>,unbset interest-rate</code></p>
-<h3 id="unbset-cooldown">unbset cooldown</h3>
-<p><strong>Description:</strong> Set the cooldown for the work, crime or rob commands. Minimum cooldown is 30 seconds.</p>
-<p>The time can be formatted as so <code>1h30m</code> etc. Valid times are hours, minutes and seconds.</p>
-<p><strong>Usage:</strong> <code>,unbset cooldown</code></p>
+<h3 id="unbset-settings">unbset settings</h3>
+<p><strong>Description:</strong> Current unbelievaboat settings.</p>
+<p><strong>Usage:</strong> <code>,unbset settings</code></p>
+<h3 id="unbset-fine-rate">unbset fine-rate</h3>
+<p><strong>Description:</strong> Set the min or max fine rate for crimes.</p>
+<p><strong>Usage:</strong> <code>,unbset fine-rate</code></p>
+<h3 id="unbset-default-replies">unbset default-replies</h3>
+<p><strong>Description:</strong> Whether to use the default replies to work and crime.</p>
+<p><strong>Usage:</strong> <code>,unbset default-replies</code></p>
+<h3 id="unbset-del-reply">unbset del-reply</h3>
+<p><strong>Description:</strong> Delete a custom reply.</p>
+<p><strong>Usage:</strong> <code>,unbset del-reply</code></p>
 <h3 id="unbset-wallet">unbset wallet</h3>
 <p><strong>Description:</strong> Wallet Settings.</p>
 <p><strong>Usage:</strong> <code>,unbset wallet</code></p>
@@ -2868,22 +2903,19 @@
 <h3 id="unbset-wallet-toggle">unbset wallet toggle</h3>
 <p><strong>Description:</strong> Toggle the wallet system.</p>
 <p><strong>Usage:</strong> <code>,unbset wallet toggle</code></p>
-<h3 id="unbset-add-reply">unbset add-reply</h3>
-<p><strong>Description:</strong> Add a custom reply for working or crime.</p>
-<p>Put {amount} in place of where you want the amount earned to be.</p>
-<p><strong>Usage:</strong> <code>,unbset add-reply</code></p>
-<h3 id="unbset-settings">unbset settings</h3>
-<p><strong>Description:</strong> Current unbelievaboat settings.</p>
-<p><strong>Usage:</strong> <code>,unbset settings</code></p>
+<h3 id="unbset-cooldown">unbset cooldown</h3>
+<p><strong>Description:</strong> Set the cooldown for the work, crime or rob commands. Minimum cooldown is 30 seconds.</p>
+<p>The time can be formatted as so <code>1h30m</code> etc. Valid times are hours, minutes and seconds.</p>
+<p><strong>Usage:</strong> <code>,unbset cooldown</code></p>
+<h3 id="unbset-failure-rate">unbset failure-rate</h3>
+<p><strong>Description:</strong> Set the failure rate for crimes and robbing.</p>
+<p><strong>Usage:</strong> <code>,unbset failure-rate</code></p>
 <h3 id="unbset-list-replies">unbset list-replies</h3>
 <p><strong>Description:</strong> List custom replies.</p>
 <p><strong>Usage:</strong> <code>,unbset list-replies</code></p>
-<h3 id="unbset-payout">unbset payout</h3>
-<p><strong>Description:</strong> Set the min or max payout for working or crimes.</p>
-<p><strong>Usage:</strong> <code>,unbset payout</code></p>
-<h3 id="unbset-fine-rate">unbset fine-rate</h3>
-<p><strong>Description:</strong> Set the min or max fine rate for crimes.</p>
-<p><strong>Usage:</strong> <code>,unbset fine-rate</code></p>
+<h3 id="unbset-betting">unbset betting</h3>
+<p><strong>Description:</strong> Set the min or max betting amounts.</p>
+<p><strong>Usage:</strong> <code>,unbset betting</code></p>
 <h3 id="cooldowns">cooldowns</h3>
 <p><strong>Description:</strong> List your remaining cooldowns..</p>
 <p><strong>Usage:</strong> <code>,cooldowns</code></p>

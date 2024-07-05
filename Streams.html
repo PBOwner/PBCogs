@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2849,12 +2881,21 @@
 <h3 id="streamalert">streamalert</h3>
 <p><strong>Description:</strong> Manage automated stream alerts.</p>
 <p><strong>Usage:</strong> <code>,streamalert</code></p>
+<h3 id="streamalert-list">streamalert list</h3>
+<p><strong>Description:</strong> List all active stream alerts in this server.</p>
+<p><strong>Usage:</strong> <code>,streamalert list</code></p>
+<h3 id="streamalert-youtube">streamalert youtube</h3>
+<p><strong>Description:</strong> Toggle alerts in this channel for a YouTube stream.</p>
+<p><strong>Usage:</strong> <code>,streamalert youtube</code></p>
 <h3 id="streamalert-twitch">streamalert twitch</h3>
 <p><strong>Description:</strong> Manage Twitch stream notifications.</p>
 <p><strong>Usage:</strong> <code>,streamalert twitch</code></p>
 <h3 id="streamalert-twitch-channel">streamalert twitch channel</h3>
 <p><strong>Description:</strong> Toggle alerts in this or the given channel for a Twitch stream.</p>
 <p><strong>Usage:</strong> <code>,streamalert twitch channel</code></p>
+<h3 id="streamalert-picarto">streamalert picarto</h3>
+<p><strong>Description:</strong> Toggle alerts in this channel for a Picarto stream.</p>
+<p><strong>Usage:</strong> <code>,streamalert picarto</code></p>
 <h3 id="streamalert-stop">streamalert stop</h3>
 <p><strong>Description:</strong> Disable all stream alerts in this channel or server.</p>
 <p><code>[p]streamalert stop</code> will disable this channel's stream
@@ -2862,18 +2903,43 @@ alerts.</p>
 <p>Do <code>[p]streamalert stop yes</code> to disable all stream alerts in
 this server.</p>
 <p><strong>Usage:</strong> <code>,streamalert stop</code></p>
-<h3 id="streamalert-list">streamalert list</h3>
-<p><strong>Description:</strong> List all active stream alerts in this server.</p>
-<p><strong>Usage:</strong> <code>,streamalert list</code></p>
-<h3 id="streamalert-youtube">streamalert youtube</h3>
-<p><strong>Description:</strong> Toggle alerts in this channel for a YouTube stream.</p>
-<p><strong>Usage:</strong> <code>,streamalert youtube</code></p>
-<h3 id="streamalert-picarto">streamalert picarto</h3>
-<p><strong>Description:</strong> Toggle alerts in this channel for a Picarto stream.</p>
-<p><strong>Usage:</strong> <code>,streamalert picarto</code></p>
 <h3 id="streamset">streamset</h3>
 <p><strong>Description:</strong> Manage stream alert settings.</p>
 <p><strong>Usage:</strong> <code>,streamset</code></p>
+<h3 id="streamset-twitchtoken">streamset twitchtoken</h3>
+<p><strong>Description:</strong> Explain how to set the twitch token.</p>
+<p><strong>Usage:</strong> <code>,streamset twitchtoken</code></p>
+<h3 id="streamset-ignoreschedule">streamset ignoreschedule</h3>
+<p><strong>Description:</strong> Toggle excluding YouTube streams schedules from alerts.</p>
+<p><strong>Usage:</strong> <code>,streamset ignoreschedule</code></p>
+<h3 id="streamset-youtubekey">streamset youtubekey</h3>
+<p><strong>Description:</strong> Explain how to set the YouTube token.</p>
+<p><strong>Usage:</strong> <code>,streamset youtubekey</code></p>
+<h3 id="streamset-usebuttons">streamset usebuttons</h3>
+<p><strong>Description:</strong> Toggle whether to use buttons for stream alerts.</p>
+<p><strong>Usage:</strong> <code>,streamset usebuttons</code></p>
+<h3 id="streamset-message">streamset message</h3>
+<p><strong>Description:</strong> Manage custom messages for stream alerts.</p>
+<p><strong>Usage:</strong> <code>,streamset message</code></p>
+<h3 id="streamset-message-mention">streamset message mention</h3>
+<p><strong>Description:</strong> Set stream alert message when mentions are enabled.</p>
+<p>Use <code>{mention}</code> in the message to insert the selected mentions.
+Use <code>{stream}</code> in the message to insert the channel or username.
+Use <code>{stream.display_name}</code> in the message to insert the channel's display name (on Twitch, this may be different from <code>{stream}</code>).</p>
+<p>For example: <code>[p]streamset message mention {mention}, {stream.display_name} is live!</code></p>
+<p><strong>Usage:</strong> <code>,streamset message mention</code></p>
+<h3 id="streamset-message-nomention">streamset message nomention</h3>
+<p><strong>Description:</strong> Set stream alert message when mentions are disabled.</p>
+<p>Use <code>{stream}</code> in the message to insert the channel or username.
+Use <code>{stream.display_name}</code> in the message to insert the channel's display name (on Twitch, this may be different from <code>{stream}</code>).</p>
+<p>For example: <code>[p]streamset message nomention {stream.display_name} is live!</code></p>
+<p><strong>Usage:</strong> <code>,streamset message nomention</code></p>
+<h3 id="streamset-message-clear">streamset message clear</h3>
+<p><strong>Description:</strong> Reset the stream alert messages in this server.</p>
+<p><strong>Usage:</strong> <code>,streamset message clear</code></p>
+<h3 id="streamset-autodelete">streamset autodelete</h3>
+<p><strong>Description:</strong> Toggle alert deletion for when streams go offline.</p>
+<p><strong>Usage:</strong> <code>,streamset autodelete</code></p>
 <h3 id="streamset-mention">streamset mention</h3>
 <p><strong>Description:</strong> Manage mention settings for stream alerts.</p>
 <p><strong>Usage:</strong> <code>,streamset mention</code></p>
@@ -2886,46 +2952,12 @@ this server.</p>
 <h3 id="streamset-mention-all">streamset mention all</h3>
 <p><strong>Description:</strong> Toggle the <code>@​everyone</code> mention.</p>
 <p><strong>Usage:</strong> <code>,streamset mention all</code></p>
-<h3 id="streamset-ignorereruns">streamset ignorereruns</h3>
-<p><strong>Description:</strong> Toggle excluding rerun streams from alerts.</p>
-<p><strong>Usage:</strong> <code>,streamset ignorereruns</code></p>
-<h3 id="streamset-autodelete">streamset autodelete</h3>
-<p><strong>Description:</strong> Toggle alert deletion for when streams go offline.</p>
-<p><strong>Usage:</strong> <code>,streamset autodelete</code></p>
 <h3 id="streamset-timer">streamset timer</h3>
 <p><strong>Description:</strong> Set stream check refresh time.</p>
 <p><strong>Usage:</strong> <code>,streamset timer</code></p>
-<h3 id="streamset-message">streamset message</h3>
-<p><strong>Description:</strong> Manage custom messages for stream alerts.</p>
-<p><strong>Usage:</strong> <code>,streamset message</code></p>
-<h3 id="streamset-message-clear">streamset message clear</h3>
-<p><strong>Description:</strong> Reset the stream alert messages in this server.</p>
-<p><strong>Usage:</strong> <code>,streamset message clear</code></p>
-<h3 id="streamset-message-nomention">streamset message nomention</h3>
-<p><strong>Description:</strong> Set stream alert message when mentions are disabled.</p>
-<p>Use <code>{stream}</code> in the message to insert the channel or username.
-Use <code>{stream.display_name}</code> in the message to insert the channel's display name (on Twitch, this may be different from <code>{stream}</code>).</p>
-<p>For example: <code>[p]streamset message nomention {stream.display_name} is live!</code></p>
-<p><strong>Usage:</strong> <code>,streamset message nomention</code></p>
-<h3 id="streamset-message-mention">streamset message mention</h3>
-<p><strong>Description:</strong> Set stream alert message when mentions are enabled.</p>
-<p>Use <code>{mention}</code> in the message to insert the selected mentions.
-Use <code>{stream}</code> in the message to insert the channel or username.
-Use <code>{stream.display_name}</code> in the message to insert the channel's display name (on Twitch, this may be different from <code>{stream}</code>).</p>
-<p>For example: <code>[p]streamset message mention {mention}, {stream.display_name} is live!</code></p>
-<p><strong>Usage:</strong> <code>,streamset message mention</code></p>
-<h3 id="streamset-twitchtoken">streamset twitchtoken</h3>
-<p><strong>Description:</strong> Explain how to set the twitch token.</p>
-<p><strong>Usage:</strong> <code>,streamset twitchtoken</code></p>
-<h3 id="streamset-usebuttons">streamset usebuttons</h3>
-<p><strong>Description:</strong> Toggle whether to use buttons for stream alerts.</p>
-<p><strong>Usage:</strong> <code>,streamset usebuttons</code></p>
-<h3 id="streamset-youtubekey">streamset youtubekey</h3>
-<p><strong>Description:</strong> Explain how to set the YouTube token.</p>
-<p><strong>Usage:</strong> <code>,streamset youtubekey</code></p>
-<h3 id="streamset-ignoreschedule">streamset ignoreschedule</h3>
-<p><strong>Description:</strong> Toggle excluding YouTube streams schedules from alerts.</p>
-<p><strong>Usage:</strong> <code>,streamset ignoreschedule</code></p></p>
+<h3 id="streamset-ignorereruns">streamset ignorereruns</h3>
+<p><strong>Description:</strong> Toggle excluding rerun streams from alerts.</p>
+<p><strong>Usage:</strong> <code>,streamset ignorereruns</code></p></p>
     </article>
 </section>
             <!-- endblock -->

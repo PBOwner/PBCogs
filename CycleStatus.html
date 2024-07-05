@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class=" active 
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2798,7 +2830,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="Dashboard.html"
+                    <a href="DallE.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
@@ -2840,18 +2872,23 @@
 <h3 id="cyclestatus">cyclestatus</h3>
 <p><strong>Description:</strong> Commands working with the status</p>
 <p><strong>Usage:</strong> <code>,cyclestatus</code></p>
+<h3 id="cyclestatus-usehelp">cyclestatus usehelp</h3>
+<p><strong>Description:</strong> Change whether the status should have <code>| [p]help</code></p>
+<p><strong>Arguments</strong>
+    - <code>toggle</code> Whether help should be used or not.</p>
+<p><strong>Usage:</strong> <code>,cyclestatus usehelp</code></p>
 <h3 id="cyclestatus-settings">cyclestatus settings</h3>
 <p><strong>Description:</strong> Show your current settings for the cycle status cog</p>
 <p><strong>Usage:</strong> <code>,cyclestatus settings</code></p>
 <h3 id="cyclestatus-forcenext">cyclestatus forcenext</h3>
 <p><strong>Description:</strong> Force the next status to display on the bot</p>
 <p><strong>Usage:</strong> <code>,cyclestatus forcenext</code></p>
-<h3 id="cyclestatus-toggle">cyclestatus toggle</h3>
-<p><strong>Description:</strong> Toggle whether the status should be cycled.</p>
-<p>This is handy for if you want to keep your statuses but don't want them displayed at the moment</p>
+<h3 id="cyclestatus-mode">cyclestatus mode</h3>
+<p><strong>Description:</strong> Change [botname]'s status mode</p>
 <p><strong>Arguments</strong>
-    - <code>value</code> Whether to toggle cycling statues</p>
-<p><strong>Usage:</strong> <code>,cyclestatus toggle</code></p>
+    - <code>mode</code> The mode type. Valid types are:
+    <code>online, idle, dnd, and do not disturb</code></p>
+<p><strong>Usage:</strong> <code>,cyclestatus mode</code></p>
 <h3 id="cyclestatus-add">cyclestatus add</h3>
 <p><strong>Description:</strong> Add a status to the list</p>
 <p>Put <code>{bot_guild_count}</code> or <code>{bot_member_count}</code> in your message to have the user count and guild count of your bot!
@@ -2859,24 +2896,12 @@ You can also put <code>{bot_prefix}</code> in your message to have the bot's pre
 <p><strong>Arguments</strong>
     - <code>status</code> The status to add to the cycle.</p>
 <p><strong>Usage:</strong> <code>,cyclestatus add</code></p>
-<h3 id="cyclestatus-list">cyclestatus list</h3>
-<p><strong>Description:</strong> List the available statuses</p>
-<p><strong>Usage:</strong> <code>,cyclestatus list</code></p>
-<h3 id="cyclestatus-clear">cyclestatus clear</h3>
-<p><strong>Description:</strong> Clear all of the statuses</p>
-<p><strong>Usage:</strong> <code>,cyclestatus clear</code></p>
-<h3 id="cyclestatus-mode">cyclestatus mode</h3>
-<p><strong>Description:</strong> Change [botname]'s status mode</p>
+<h3 id="cyclestatus-toggle">cyclestatus toggle</h3>
+<p><strong>Description:</strong> Toggle whether the status should be cycled.</p>
+<p>This is handy for if you want to keep your statuses but don't want them displayed at the moment</p>
 <p><strong>Arguments</strong>
-    - <code>mode</code> The mode type. Valid types are:
-    <code>online, idle, dnd, and do not disturb</code></p>
-<p><strong>Usage:</strong> <code>,cyclestatus mode</code></p>
-<h3 id="cyclestatus-type">cyclestatus type</h3>
-<p><strong>Description:</strong> Change the type of [botname]'s status</p>
-<p><strong>Arguments</strong>
-    - <code>status</code> The status type. Valid types are
-    <code>playing, listening, watching, custom, and competing</code></p>
-<p><strong>Usage:</strong> <code>,cyclestatus type</code></p>
+    - <code>value</code> Whether to toggle cycling statues</p>
+<p><strong>Usage:</strong> <code>,cyclestatus toggle</code></p>
 <h3 id="cyclestatus-remove">cyclestatus remove</h3>
 <p><strong>Description:</strong> Remove a status from the list</p>
 <p><strong>Arguments</strong>
@@ -2887,11 +2912,18 @@ You can also put <code>{bot_prefix}</code> in your message to have the bot's pre
 <p><strong>Arguments</strong>
     - <code>value</code> Whether to have random statuses be enabled or not</p>
 <p><strong>Usage:</strong> <code>,cyclestatus random</code></p>
-<h3 id="cyclestatus-usehelp">cyclestatus usehelp</h3>
-<p><strong>Description:</strong> Change whether the status should have <code>| [p]help</code></p>
+<h3 id="cyclestatus-clear">cyclestatus clear</h3>
+<p><strong>Description:</strong> Clear all of the statuses</p>
+<p><strong>Usage:</strong> <code>,cyclestatus clear</code></p>
+<h3 id="cyclestatus-type">cyclestatus type</h3>
+<p><strong>Description:</strong> Change the type of [botname]'s status</p>
 <p><strong>Arguments</strong>
-    - <code>toggle</code> Whether help should be used or not.</p>
-<p><strong>Usage:</strong> <code>,cyclestatus usehelp</code></p></p>
+    - <code>status</code> The status type. Valid types are
+    <code>playing, listening, watching, custom, and competing</code></p>
+<p><strong>Usage:</strong> <code>,cyclestatus type</code></p>
+<h3 id="cyclestatus-list">cyclestatus list</h3>
+<p><strong>Description:</strong> List the available statuses</p>
+<p><strong>Usage:</strong> <code>,cyclestatus list</code></p></p>
     </article>
 </section>
             <!-- endblock -->

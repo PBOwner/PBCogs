@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2873,18 +2905,23 @@ Use the optional parameter "min_total" to change the minimum number of words a u
 <h3 id="wordstatsset">wordstatsset</h3>
 <p><strong>Description:</strong> Config options for wordstats.</p>
 <p><strong>Usage:</strong> <code>,wordstatsset</code></p>
-<h3 id="wordstatsset-channel">wordstatsset channel</h3>
-<p><strong>Description:</strong> Set if wordstats should record stats for this channel.</p>
-<p>Defaults to True.
-This value is channel specific.</p>
-<p><strong>Usage:</strong> <code>,wordstatsset channel</code></p>
-<h3 id="wordstatsset-minlength">wordstatsset minlength</h3>
-<p><strong>Description:</strong> Set the minimum length a word has to be in order to be displayed.</p>
-<p>Shorter words will still be included in numerical counts, they will only be hidden from list displays.
-Set to 0 to disable.
-Defaults to 0.
+<h3 id="wordstatsset-stopwords">wordstatsset stopwords</h3>
+<p><strong>Description:</strong> Set if stopwords should be included in outputs.</p>
+<p>Stopwords are common words such as "a", "it" and "the".
+Stopwords will still be included in numerical counts, they will only be hidden from list displays.
+Defaults to True.
 This value is server specific.</p>
-<p><strong>Usage:</strong> <code>,wordstatsset minlength</code></p>
+<p><strong>Usage:</strong> <code>,wordstatsset stopwords</code></p>
+<h3 id="wordstatsset-server">wordstatsset server</h3>
+<p><strong>Description:</strong> Set if wordstats should record stats for this server.</p>
+<p>Defaults to True.
+This value is server specific.</p>
+<p><strong>Usage:</strong> <code>,wordstatsset server</code></p>
+<h3 id="wordstatsset-forgetme">wordstatsset forgetme</h3>
+<p><strong>Description:</strong> Make wordstats forget all data about you.</p>
+<p>This is equivalent to <code>[p]mydata forgetme</code>, but only for wordstats.
+This cannot be undone.</p>
+<p><strong>Usage:</strong> <code>,wordstatsset forgetme</code></p>
 <h3 id="wordstatsset-user">wordstatsset user</h3>
 <p><strong>Description:</strong> Set if wordstats should record stats for you.</p>
 <p>Defaults to True.
@@ -2895,23 +2932,18 @@ This value is user specific.</p>
 <p>This removes all existing data, creating a blank state.
 This cannot be undone.</p>
 <p><strong>Usage:</strong> <code>,wordstatsset deleteall</code></p>
-<h3 id="wordstatsset-forgetme">wordstatsset forgetme</h3>
-<p><strong>Description:</strong> Make wordstats forget all data about you.</p>
-<p>This is equivalent to <code>[p]mydata forgetme</code>, but only for wordstats.
-This cannot be undone.</p>
-<p><strong>Usage:</strong> <code>,wordstatsset forgetme</code></p>
-<h3 id="wordstatsset-server">wordstatsset server</h3>
-<p><strong>Description:</strong> Set if wordstats should record stats for this server.</p>
+<h3 id="wordstatsset-minlength">wordstatsset minlength</h3>
+<p><strong>Description:</strong> Set the minimum length a word has to be in order to be displayed.</p>
+<p>Shorter words will still be included in numerical counts, they will only be hidden from list displays.
+Set to 0 to disable.
+Defaults to 0.
+This value is server specific.</p>
+<p><strong>Usage:</strong> <code>,wordstatsset minlength</code></p>
+<h3 id="wordstatsset-channel">wordstatsset channel</h3>
+<p><strong>Description:</strong> Set if wordstats should record stats for this channel.</p>
 <p>Defaults to True.
-This value is server specific.</p>
-<p><strong>Usage:</strong> <code>,wordstatsset server</code></p>
-<h3 id="wordstatsset-stopwords">wordstatsset stopwords</h3>
-<p><strong>Description:</strong> Set if stopwords should be included in outputs.</p>
-<p>Stopwords are common words such as "a", "it" and "the".
-Stopwords will still be included in numerical counts, they will only be hidden from list displays.
-Defaults to True.
-This value is server specific.</p>
-<p><strong>Usage:</strong> <code>,wordstatsset stopwords</code></p></p>
+This value is channel specific.</p>
+<p><strong>Usage:</strong> <code>,wordstatsset channel</code></p></p>
     </article>
 </section>
             <!-- endblock -->

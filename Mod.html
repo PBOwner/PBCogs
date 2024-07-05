@@ -195,6 +195,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Animal.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Animal
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AnnounceDaily.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -439,6 +447,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             Birthday
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Bl.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Bl
         </a>
     </li>
                             
@@ -727,6 +743,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DallE.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DallE
         </a>
     </li>
                             
@@ -1595,14 +1619,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="MentionPrefix.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            MentionPrefix
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Message.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1711,6 +1727,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             NitroRole
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="NoFuckYou.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            NoFuckYou
         </a>
     </li>
                             
@@ -1863,6 +1887,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             PlantTycoon
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Praise.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Praise
         </a>
     </li>
                             
@@ -2925,15 +2957,33 @@ Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be use
 <h3 id="modset-showsettings">modset showsettings</h3>
 <p><strong>Description:</strong> Show the current server administration settings.</p>
 <p><strong>Usage:</strong> <code>,modset showsettings</code></p>
-<h3 id="modset-trackallnames">modset trackallnames</h3>
-<p><strong>Description:</strong> Toggle whether all name changes should be tracked.</p>
-<p>Toggling this off also overrides the tracknicknames setting.</p>
-<p><strong>Usage:</strong> <code>,modset trackallnames</code></p>
+<h3 id="modset-defaultdays">modset defaultdays</h3>
+<p><strong>Description:</strong> Set the default number of days worth of messages to be deleted when a user is banned.</p>
+<p>The number of days must be between 0 and 7.</p>
+<p><strong>Usage:</strong> <code>,modset defaultdays</code></p>
+<h3 id="modset-deletenames">modset deletenames</h3>
+<p><strong>Description:</strong> Delete all stored usernames, display names, and nicknames.</p>
+<p>Examples:
+- <code>[p]modset deletenames</code> - Did not confirm. Shows the help message.
+- <code>[p]modset deletenames yes</code> - Deletes all stored usernames, display names, and nicknames.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,modset deletenames</code></p>
 <h3 id="modset-deleterepeats">modset deleterepeats</h3>
 <p><strong>Description:</strong> Enable auto-deletion of repeated messages.</p>
 <p>Must be between 2 and 20.</p>
 <p>Set to -1 to disable this feature.</p>
 <p><strong>Usage:</strong> <code>,modset deleterepeats</code></p>
+<h3 id="modset-defaultduration">modset defaultduration</h3>
+<p><strong>Description:</strong> Set the default time to be used when a user is tempbanned.</p>
+<p>Accepts: seconds, minutes, hours, days, weeks
+<code>duration</code> must be greater than zero.</p>
+<p>Examples:
+    <code>[p]modset defaultduration 7d12h10m</code>
+    <code>[p]modset defaultduration 7 days 12 hours 10 minutes</code></p>
+<p><strong>Usage:</strong> <code>,modset defaultduration</code></p>
 <h3 id="modset-hierarchy">modset hierarchy</h3>
 <p><strong>Description:</strong> Toggle role hierarchy check for mods and admins.</p>
 <p><strong>WARNING</strong>: Disabling this setting will allow mods to take
@@ -2945,6 +2995,10 @@ actions on users above them in the role hierarchy!</p>
 <p>If this is True, the bot will attempt to create and send a single-use invite
 to the newly-unbanned user.</p>
 <p><strong>Usage:</strong> <code>,modset reinvite</code></p>
+<h3 id="modset-tracknicknames">modset tracknicknames</h3>
+<p><strong>Description:</strong> Toggle whether nickname changes should be tracked.</p>
+<p>This setting will be overridden if trackallnames is disabled.</p>
+<p><strong>Usage:</strong> <code>,modset tracknicknames</code></p>
 <h3 id="modset-mentionspam">modset mentionspam</h3>
 <p><strong>Description:</strong> Manage the automoderation settings for mentionspam.</p>
 <p><strong>Usage:</strong> <code>,modset mentionspam</code></p>
@@ -2972,37 +3026,15 @@ If disabled only unique mentions will count.</p>
 <code>&lt;max_mentions&gt;</code> mentions.</p>
 <p><code>&lt;max_mentions&gt;</code> Must be 0 or greater. Set to 0 to disable this feature.</p>
 <p><strong>Usage:</strong> <code>,modset mentionspam ban</code></p>
-<h3 id="modset-tracknicknames">modset tracknicknames</h3>
-<p><strong>Description:</strong> Toggle whether nickname changes should be tracked.</p>
-<p>This setting will be overridden if trackallnames is disabled.</p>
-<p><strong>Usage:</strong> <code>,modset tracknicknames</code></p>
 <h3 id="modset-dm">modset dm</h3>
 <p><strong>Description:</strong> Toggle whether a message should be sent to a user when they are kicked/banned.</p>
 <p>If this option is enabled, the bot will attempt to DM the user with the guild name
 and reason as to why they were kicked/banned.</p>
 <p><strong>Usage:</strong> <code>,modset dm</code></p>
-<h3 id="modset-defaultduration">modset defaultduration</h3>
-<p><strong>Description:</strong> Set the default time to be used when a user is tempbanned.</p>
-<p>Accepts: seconds, minutes, hours, days, weeks
-<code>duration</code> must be greater than zero.</p>
-<p>Examples:
-    <code>[p]modset defaultduration 7d12h10m</code>
-    <code>[p]modset defaultduration 7 days 12 hours 10 minutes</code></p>
-<p><strong>Usage:</strong> <code>,modset defaultduration</code></p>
-<h3 id="modset-defaultdays">modset defaultdays</h3>
-<p><strong>Description:</strong> Set the default number of days worth of messages to be deleted when a user is banned.</p>
-<p>The number of days must be between 0 and 7.</p>
-<p><strong>Usage:</strong> <code>,modset defaultdays</code></p>
-<h3 id="modset-deletenames">modset deletenames</h3>
-<p><strong>Description:</strong> Delete all stored usernames, display names, and nicknames.</p>
-<p>Examples:
-- <code>[p]modset deletenames</code> - Did not confirm. Shows the help message.
-- <code>[p]modset deletenames yes</code> - Deletes all stored usernames, display names, and nicknames.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,modset deletenames</code></p>
+<h3 id="modset-trackallnames">modset trackallnames</h3>
+<p><strong>Description:</strong> Toggle whether all name changes should be tracked.</p>
+<p>Toggling this off also overrides the tracknicknames setting.</p>
+<p><strong>Usage:</strong> <code>,modset trackallnames</code></p>
 <h3 id="moveignoredchannels">moveignoredchannels</h3>
 <p><strong>Description:</strong> Move ignored channels and servers to core</p>
 <p><strong>Usage:</strong> <code>,moveignoredchannels</code></p>
