@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2872,18 +2856,18 @@
 <h3 id="queue">queue</h3>
 <p><strong>Description:</strong> List the songs in the queue.</p>
 <p><strong>Usage:</strong> <code>,queue</code></p>
-<h3 id="queue-search">queue search</h3>
-<p><strong>Description:</strong> Search the queue.</p>
-<p><strong>Usage:</strong> <code>,queue search</code></p>
-<h3 id="queue-cleanself">queue cleanself</h3>
-<p><strong>Description:</strong> Removes all tracks you requested from the queue.</p>
-<p><strong>Usage:</strong> <code>,queue cleanself</code></p>
-<h3 id="queue-shuffle">queue shuffle</h3>
-<p><strong>Description:</strong> Shuffles the queue.</p>
-<p><strong>Usage:</strong> <code>,queue shuffle</code></p>
 <h3 id="queue-clean">queue clean</h3>
 <p><strong>Description:</strong> Removes songs from the queue if the requester is not in the voice channel.</p>
 <p><strong>Usage:</strong> <code>,queue clean</code></p>
+<h3 id="queue-shuffle">queue shuffle</h3>
+<p><strong>Description:</strong> Shuffles the queue.</p>
+<p><strong>Usage:</strong> <code>,queue shuffle</code></p>
+<h3 id="queue-cleanself">queue cleanself</h3>
+<p><strong>Description:</strong> Removes all tracks you requested from the queue.</p>
+<p><strong>Usage:</strong> <code>,queue cleanself</code></p>
+<h3 id="queue-search">queue search</h3>
+<p><strong>Description:</strong> Search the queue.</p>
+<p><strong>Usage:</strong> <code>,queue search</code></p>
 <h3 id="queue-clear">queue clear</h3>
 <p><strong>Description:</strong> Clears the queue.</p>
 <p><strong>Usage:</strong> <code>,queue clear</code></p>
@@ -2900,6 +2884,34 @@
 ​ ​ ​ ​ ​ ​ ​ ​ Visible to all bot users, if --author is passed.
 ​ ​ ​ ​ ​ ​ ​ ​ Editable by bot owner and the playlist creator.</p>
 <p><strong>Usage:</strong> <code>,playlist</code></p>
+<h3 id="playlist-copy">playlist copy</h3>
+<p><strong>Description:</strong> Copy a playlist from one scope to another.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist copy playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --from-scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --from-author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --from-guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p>​ ​ ​ ​ ​ ​ ​ ​ --to-scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --to-author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --to-guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist copy MyGuildPlaylist --from-scope Guild --to-scope Global</code>
+​ ​ ​ ​ <code>[p]playlist copy MyGlobalPlaylist --from-scope Global --to-author Draper#6666 --to-scope User</code>
+​ ​ ​ ​ <code>[p]playlist copy MyPersonalPlaylist --from-scope user --to-author Draper#6666 --to-scope Guild --to-guild Red - Discord Bot</code></p>
+<p><strong>Usage:</strong> <code>,playlist copy</code></p>
 <h3 id="playlist-remove">playlist remove</h3>
 <p><strong>Description:</strong> Remove a track from a playlist by url.</p>
 <p><strong>Usage</strong>:
@@ -2978,32 +2990,6 @@ for the v2 variable.</p>
 ​ ​ ​ ​ <code>[p]playlist download MyGlobalPlaylist False --scope Global</code>
 ​ ​ ​ ​ <code>[p]playlist download MyPersonalPlaylist --scope User</code></p>
 <p><strong>Usage:</strong> <code>,playlist download</code></p>
-<h3 id="playlist-append">playlist append</h3>
-<p><strong>Description:</strong> Add a track URL, playlist link, or quick search to a playlist.</p>
-<p>The track(s) will be appended to the end of the playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist append playlist_name_OR_id track_name_OR_url [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist append MyGuildPlaylist Hello by Adele</code>
-​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global --Author Draper#6666</code></p>
-<p><strong>Usage:</strong> <code>,playlist append</code></p>
 <h3 id="playlist-update">playlist update</h3>
 <p><strong>Description:</strong> Updates all tracks in a playlist.</p>
 <p><strong>Usage</strong>:
@@ -3179,6 +3165,57 @@ for the v2 variable.</p>
 ​ ​ ​ ​ <code>[p]playlist save MyGlobalPlaylist https://www.youtube.com/playlist?list=PLx0sYbCqOb8Q_CLZC2BdBSKEEB59BOPUM --scope Global</code>
 ​ ​ ​ ​ <code>[p]playlist save MyPersonalPlaylist https://open.spotify.com/playlist/1RyeIbyFeIJVnNzlGr5KkR --scope User</code></p>
 <p><strong>Usage:</strong> <code>,playlist save</code></p>
+<h3 id="playlist-append">playlist append</h3>
+<p><strong>Description:</strong> Add a track URL, playlist link, or quick search to a playlist.</p>
+<p>The track(s) will be appended to the end of the playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist append playlist_name_OR_id track_name_OR_url [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist append MyGuildPlaylist Hello by Adele</code>
+​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global --Author Draper#6666</code></p>
+<p><strong>Usage:</strong> <code>,playlist append</code></p>
+<h3 id="playlist-queue">playlist queue</h3>
+<p><strong>Description:</strong> Save the queue to a playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist queue playlist_name [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist queue MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist queue MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist queue MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist queue</code></p>
 <h3 id="playlist-upload">playlist upload</h3>
 <p><strong>Description:</strong> Uploads a playlist file as a playlist for the bot.</p>
 <p>V2 and old V3 playlist will be slow.
@@ -3206,31 +3243,6 @@ V3 Playlist made with <code>[p]playlist download</code> will load a lot faster.<
 ​ ​ ​ ​ <code>[p]playlist upload --scope Global</code>
 ​ ​ ​ ​ <code>[p]playlist upload --scope User</code></p>
 <p><strong>Usage:</strong> <code>,playlist upload</code></p>
-<h3 id="playlist-queue">playlist queue</h3>
-<p><strong>Description:</strong> Save the queue to a playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist queue playlist_name [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist queue MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist queue MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist queue MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist queue</code></p>
 <h3 id="playlist-dedupe">playlist dedupe</h3>
 <p><strong>Description:</strong> Remove duplicate tracks from a saved playlist.</p>
 <p><strong>Usage</strong>:
@@ -3256,34 +3268,6 @@ V3 Playlist made with <code>[p]playlist download</code> will load a lot faster.<
 ​ ​ ​ ​ <code>[p]playlist dedupe MyGlobalPlaylist --scope Global</code>
 ​ ​ ​ ​ <code>[p]playlist dedupe MyPersonalPlaylist --scope User</code></p>
 <p><strong>Usage:</strong> <code>,playlist dedupe</code></p>
-<h3 id="playlist-copy">playlist copy</h3>
-<p><strong>Description:</strong> Copy a playlist from one scope to another.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist copy playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --from-scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --from-author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --from-guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p>​ ​ ​ ​ ​ ​ ​ ​ --to-scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --to-author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --to-guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist copy MyGuildPlaylist --from-scope Guild --to-scope Global</code>
-​ ​ ​ ​ <code>[p]playlist copy MyGlobalPlaylist --from-scope Global --to-author Draper#6666 --to-scope User</code>
-​ ​ ​ ​ <code>[p]playlist copy MyPersonalPlaylist --from-scope user --to-author Draper#6666 --to-scope Guild --to-guild Red - Discord Bot</code></p>
-<p><strong>Usage:</strong> <code>,playlist copy</code></p>
 <h3 id="play">play</h3>
 <p><strong>Description:</strong> Play the specified track or search for a close match.</p>
 <p>To play a local track, the query should be <code>&lt;parentfolder&gt;\&lt;filename&gt;</code>.
@@ -3315,9 +3299,6 @@ If you are the bot owner, use <code>[p]audioset info</code> to display your loca
 <h3 id="local">local</h3>
 <p><strong>Description:</strong> Local playback commands.</p>
 <p><strong>Usage:</strong> <code>,local</code></p>
-<h3 id="local-search">local search</h3>
-<p><strong>Description:</strong> Search for songs across all localtracks folders.</p>
-<p><strong>Usage:</strong> <code>,local search</code></p>
 <h3 id="local-folder">local folder</h3>
 <p><strong>Description:</strong> Play all songs in a localtracks folder.</p>
 <p><strong>Usage</strong>:
@@ -3326,6 +3307,9 @@ If you are the bot owner, use <code>[p]audioset info</code> to display your loca
 <p>​ ​ <code>[p]local folder folder_name</code>
 ​ ​ ​ ​ ​ ​ ​ ​ Queues all of the tracks inside the folder_name folder.</p>
 <p><strong>Usage:</strong> <code>,local folder</code></p>
+<h3 id="local-search">local search</h3>
+<p><strong>Description:</strong> Search for songs across all localtracks folders.</p>
+<p><strong>Usage:</strong> <code>,local search</code></p>
 <h3 id="local-play">local play</h3>
 <p><strong>Description:</strong> Play a local track.</p>
 <p>To play a local track, either use the menu to choose a track or enter in the track path directly with the play command.
@@ -3344,6 +3328,12 @@ To play an entire folder, use <code>[p]help local folder</code> for instructions
 i.e. been told by someone in the Red-Discord Bot support server to do so.
 All the commands in here have the potential to break the Audio cog.</p>
 <p><strong>Usage:</strong> <code>,llset</code></p>
+<h3 id="llset-heapsize">llset heapsize</h3>
+<p><strong>Description:</strong> Set the managed Lavalink node maximum heap-size.</p>
+<p>By default, this value is 50% of available RAM in the host machine represented by [1-1024][M|G] (256M, 256G for example)</p>
+<p>This value only represents the maximum amount of RAM allowed to be used at any given point, and does not mean that the managed Lavalink node will always use this amount of RAM.</p>
+<p>To reset this value to the default, run the command without any input.</p>
+<p><strong>Usage:</strong> <code>,llset heapsize</code></p>
 <h3 id="llset-unmanaged">llset unmanaged</h3>
 <p><strong>Description:</strong> Toggle using external (unmanaged) Lavalink nodes - requires an existing Lavalink node for Audio to work, if enabled.</p>
 <p>This command disables the managed Lavalink server. If you do not have another Lavalink node set up, you will be unable to use Audio while this is enabled.</p>
@@ -3381,6 +3371,14 @@ Set port to -1 to disable the port and connect to the specified host via ports 8
 <p><strong>Description:</strong> <code>Dangerous command</code> Toggle audio sources on/off.</p>
 <p>By default, all sources are enabled, you should only use commands here to disable a specific source if you have been advised to, disabling sources without background knowledge can cause Audio to break.</p>
 <p><strong>Usage:</strong> <code>,llset config source</code></p>
+<h3 id="llset-config-source-twitch">llset config source twitch</h3>
+<p><strong>Description:</strong> Toggle Twitch source on or off.</p>
+<p>This toggle controls the playback of all Twitch related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source twitch</code></p>
+<h3 id="llset-config-source-soundcloud">llset config source soundcloud</h3>
+<p><strong>Description:</strong> Toggle Soundcloud source on or off.</p>
+<p>This toggle controls the playback of all SoundCloud related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source soundcloud</code></p>
 <h3 id="llset-config-source-local">llset config source local</h3>
 <p><strong>Description:</strong> Toggle local file usage on or off.</p>
 <p>This toggle controls the playback of all local track content, usually found inside the <code>localtracks</code> folder.</p>
@@ -3401,14 +3399,6 @@ Set port to -1 to disable the port and connect to the specified host via ports 8
 <p><strong>Description:</strong> Toggle Bandcamp source on or off.</p>
 <p>This toggle controls the playback of all Bandcamp related content.</p>
 <p><strong>Usage:</strong> <code>,llset config source bandcamp</code></p>
-<h3 id="llset-config-source-twitch">llset config source twitch</h3>
-<p><strong>Description:</strong> Toggle Twitch source on or off.</p>
-<p>This toggle controls the playback of all Twitch related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source twitch</code></p>
-<h3 id="llset-config-source-soundcloud">llset config source soundcloud</h3>
-<p><strong>Description:</strong> Toggle Soundcloud source on or off.</p>
-<p>This toggle controls the playback of all SoundCloud related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source soundcloud</code></p>
 <h3 id="llset-config-token">llset config token</h3>
 <p><strong>Description:</strong> Set the managed Lavalink node's connection password.</p>
 <p>This is the password required for Audio to connect to the managed Lavalink node.
@@ -3417,23 +3407,17 @@ The value by default is <code>youshallnotpass</code>.</p>
 <h3 id="llset-config-server">llset config server</h3>
 <p><strong>Description:</strong> Configure the managed node authorization and connection settings.</p>
 <p><strong>Usage:</strong> <code>,llset config server</code></p>
-<h3 id="llset-config-server-framebuffer">llset config server framebuffer</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node framebuffer size.</p>
-<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
-<p><strong>Usage:</strong> <code>,llset config server framebuffer</code></p>
 <h3 id="llset-config-server-buffer">llset config server buffer</h3>
 <p><strong>Description:</strong> <code>Dangerous command</code>  Set the managed Lavalink node JDA-NAS buffer size.</p>
 <p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
 <p><strong>Usage:</strong> <code>,llset config server buffer</code></p>
+<h3 id="llset-config-server-framebuffer">llset config server framebuffer</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node framebuffer size.</p>
+<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
+<p><strong>Usage:</strong> <code>,llset config server framebuffer</code></p>
 <h3 id="llset-info">llset info</h3>
 <p><strong>Description:</strong> Display Lavalink connection settings.</p>
 <p><strong>Usage:</strong> <code>,llset info</code></p>
-<h3 id="llset-heapsize">llset heapsize</h3>
-<p><strong>Description:</strong> Set the managed Lavalink node maximum heap-size.</p>
-<p>By default, this value is 50% of available RAM in the host machine represented by [1-1024][M|G] (256M, 256G for example)</p>
-<p>This value only represents the maximum amount of RAM allowed to be used at any given point, and does not mean that the managed Lavalink node will always use this amount of RAM.</p>
-<p>To reset this value to the default, run the command without any input.</p>
-<p><strong>Usage:</strong> <code>,llset heapsize</code></p>
 <h3 id="llset-host">llset host</h3>
 <p><strong>Description:</strong> Set the Lavalink node host.</p>
 <p>This command sets the connection host which Audio will use to connect to an unmanaged Lavalink node.</p>
@@ -3525,6 +3509,10 @@ over <code>[p]shuffle</code>.</p>
 <h3 id="audioset">audioset</h3>
 <p><strong>Description:</strong> Music configuration options.</p>
 <p><strong>Usage:</strong> <code>,audioset</code></p>
+<h3 id="audioset-dj">audioset dj</h3>
+<p><strong>Description:</strong> Toggle DJ mode.</p>
+<p>DJ mode allows users with the DJ role to use audio commands.</p>
+<p><strong>Usage:</strong> <code>,audioset dj</code></p>
 <h3 id="audioset-vote">audioset vote</h3>
 <p><strong>Description:</strong> Percentage needed for non-mods to skip tracks, 0 to disable.</p>
 <p><strong>Usage:</strong> <code>,audioset vote</code></p>
@@ -3553,6 +3541,9 @@ over <code>[p]shuffle</code>.</p>
 <h3 id="audioset-autoplay">audioset autoplay</h3>
 <p><strong>Description:</strong> Change auto-play setting.</p>
 <p><strong>Usage:</strong> <code>,audioset autoplay</code></p>
+<h3 id="audioset-autoplay-reset">audioset autoplay reset</h3>
+<p><strong>Description:</strong> Resets auto-play to the default playlist.</p>
+<p><strong>Usage:</strong> <code>,audioset autoplay reset</code></p>
 <h3 id="audioset-autoplay-playlist">audioset autoplay playlist</h3>
 <p><strong>Description:</strong> Set a playlist to auto-play songs from.</p>
 <p><strong>Usage</strong>:
@@ -3581,9 +3572,6 @@ over <code>[p]shuffle</code>.</p>
 <h3 id="audioset-autoplay-toggle">audioset autoplay toggle</h3>
 <p><strong>Description:</strong> Toggle auto-play when there no songs in queue.</p>
 <p><strong>Usage:</strong> <code>,audioset autoplay toggle</code></p>
-<h3 id="audioset-autoplay-reset">audioset autoplay reset</h3>
-<p><strong>Description:</strong> Resets auto-play to the default playlist.</p>
-<p><strong>Usage:</strong> <code>,audioset autoplay reset</code></p>
 <h3 id="audioset-mycountrycode">audioset mycountrycode</h3>
 <p><strong>Description:</strong> Set the country code for Spotify searches.</p>
 <p><strong>Usage:</strong> <code>,audioset mycountrycode</code></p>
@@ -3596,58 +3584,34 @@ over <code>[p]shuffle</code>.</p>
 <p>Accepts seconds or a value formatted like 00:00:00 (<code>hh:mm:ss</code>) or 00:00 (<code>mm:ss</code>). Invalid
 input will turn the max length setting off.</p>
 <p><strong>Usage:</strong> <code>,audioset maxlength</code></p>
+<h3 id="audioset-cache">audioset cache</h3>
+<p><strong>Description:</strong> Sets the caching level.</p>
+<p>Level can be one of the following:</p>
+<p>0: Disables all caching
+1: Enables Spotify Cache
+2: Enables YouTube Cache
+3: Enables Lavalink Cache
+5: Enables all Caches</p>
+<p>If you wish to disable a specific cache use a negative number.</p>
+<p><strong>Usage:</strong> <code>,audioset cache</code></p>
 <h3 id="audioset-restrictions">audioset restrictions</h3>
 <p><strong>Description:</strong> Manages the keyword whitelist and blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions</code></p>
-<h3 id="audioset-restrictions-global">audioset restrictions global</h3>
-<p><strong>Description:</strong> Manages the global keyword whitelist/blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global</code></p>
-<h3 id="audioset-restrictions-global-whitelist">audioset restrictions global whitelist</h3>
-<p><strong>Description:</strong> Manages the global keyword whitelist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist</code></p>
-<h3 id="audioset-restrictions-global-whitelist-clear">audioset restrictions global whitelist clear</h3>
-<p><strong>Description:</strong> Clear all keywords from the whitelist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist clear</code></p>
-<h3 id="audioset-restrictions-global-whitelist-add">audioset restrictions global whitelist add</h3>
-<p><strong>Description:</strong> Adds a keyword to the whitelist.</p>
-<p>If anything is added to whitelist, it will blacklist everything else.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist add</code></p>
-<h3 id="audioset-restrictions-global-whitelist-list">audioset restrictions global whitelist list</h3>
-<p><strong>Description:</strong> List all keywords added to the whitelist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist list</code></p>
-<h3 id="audioset-restrictions-global-whitelist-delete">audioset restrictions global whitelist delete</h3>
-<p><strong>Description:</strong> Removes a keyword from the whitelist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist delete</code></p>
-<h3 id="audioset-restrictions-global-blacklist">audioset restrictions global blacklist</h3>
-<p><strong>Description:</strong> Manages the global keyword blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist</code></p>
-<h3 id="audioset-restrictions-global-blacklist-clear">audioset restrictions global blacklist clear</h3>
-<p><strong>Description:</strong> Clear all keywords added to the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist clear</code></p>
-<h3 id="audioset-restrictions-global-blacklist-add">audioset restrictions global blacklist add</h3>
-<p><strong>Description:</strong> Adds a keyword to the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist add</code></p>
-<h3 id="audioset-restrictions-global-blacklist-list">audioset restrictions global blacklist list</h3>
-<p><strong>Description:</strong> List all keywords added to the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist list</code></p>
-<h3 id="audioset-restrictions-global-blacklist-delete">audioset restrictions global blacklist delete</h3>
-<p><strong>Description:</strong> Removes a keyword from the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist delete</code></p>
 <h3 id="audioset-restrictions-blacklist">audioset restrictions blacklist</h3>
 <p><strong>Description:</strong> Manages the keyword blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist</code></p>
-<h3 id="audioset-restrictions-blacklist-clear">audioset restrictions blacklist clear</h3>
-<p><strong>Description:</strong> Clear all keywords added to the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions blacklist clear</code></p>
 <h3 id="audioset-restrictions-blacklist-add">audioset restrictions blacklist add</h3>
 <p><strong>Description:</strong> Adds a keyword to the blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist add</code></p>
-<h3 id="audioset-restrictions-blacklist-list">audioset restrictions blacklist list</h3>
-<p><strong>Description:</strong> List all keywords added to the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions blacklist list</code></p>
+<h3 id="audioset-restrictions-blacklist-clear">audioset restrictions blacklist clear</h3>
+<p><strong>Description:</strong> Clear all keywords added to the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions blacklist clear</code></p>
 <h3 id="audioset-restrictions-blacklist-delete">audioset restrictions blacklist delete</h3>
 <p><strong>Description:</strong> Removes a keyword from the blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist delete</code></p>
+<h3 id="audioset-restrictions-blacklist-list">audioset restrictions blacklist list</h3>
+<p><strong>Description:</strong> List all keywords added to the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions blacklist list</code></p>
 <h3 id="audioset-restrictions-whitelist">audioset restrictions whitelist</h3>
 <p><strong>Description:</strong> Manages the keyword whitelist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions whitelist</code></p>
@@ -3664,16 +3628,40 @@ input will turn the max length setting off.</p>
 <h3 id="audioset-restrictions-whitelist-delete">audioset restrictions whitelist delete</h3>
 <p><strong>Description:</strong> Removes a keyword from the whitelist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions whitelist delete</code></p>
-<h3 id="audioset-cache">audioset cache</h3>
-<p><strong>Description:</strong> Sets the caching level.</p>
-<p>Level can be one of the following:</p>
-<p>0: Disables all caching
-1: Enables Spotify Cache
-2: Enables YouTube Cache
-3: Enables Lavalink Cache
-5: Enables all Caches</p>
-<p>If you wish to disable a specific cache use a negative number.</p>
-<p><strong>Usage:</strong> <code>,audioset cache</code></p>
+<h3 id="audioset-restrictions-global">audioset restrictions global</h3>
+<p><strong>Description:</strong> Manages the global keyword whitelist/blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global</code></p>
+<h3 id="audioset-restrictions-global-whitelist">audioset restrictions global whitelist</h3>
+<p><strong>Description:</strong> Manages the global keyword whitelist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist</code></p>
+<h3 id="audioset-restrictions-global-whitelist-delete">audioset restrictions global whitelist delete</h3>
+<p><strong>Description:</strong> Removes a keyword from the whitelist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist delete</code></p>
+<h3 id="audioset-restrictions-global-whitelist-clear">audioset restrictions global whitelist clear</h3>
+<p><strong>Description:</strong> Clear all keywords from the whitelist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist clear</code></p>
+<h3 id="audioset-restrictions-global-whitelist-add">audioset restrictions global whitelist add</h3>
+<p><strong>Description:</strong> Adds a keyword to the whitelist.</p>
+<p>If anything is added to whitelist, it will blacklist everything else.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist add</code></p>
+<h3 id="audioset-restrictions-global-whitelist-list">audioset restrictions global whitelist list</h3>
+<p><strong>Description:</strong> List all keywords added to the whitelist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist list</code></p>
+<h3 id="audioset-restrictions-global-blacklist">audioset restrictions global blacklist</h3>
+<p><strong>Description:</strong> Manages the global keyword blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist</code></p>
+<h3 id="audioset-restrictions-global-blacklist-list">audioset restrictions global blacklist list</h3>
+<p><strong>Description:</strong> List all keywords added to the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist list</code></p>
+<h3 id="audioset-restrictions-global-blacklist-add">audioset restrictions global blacklist add</h3>
+<p><strong>Description:</strong> Adds a keyword to the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist add</code></p>
+<h3 id="audioset-restrictions-global-blacklist-clear">audioset restrictions global blacklist clear</h3>
+<p><strong>Description:</strong> Clear all keywords added to the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist clear</code></p>
+<h3 id="audioset-restrictions-global-blacklist-delete">audioset restrictions global blacklist delete</h3>
+<p><strong>Description:</strong> Removes a keyword from the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global blacklist delete</code></p>
 <h3 id="audioset-cacheage">audioset cacheage</h3>
 <p><strong>Description:</strong> Sets the cache max age.</p>
 <p>This commands allows you to set the max number of days before an entry in the cache becomes
@@ -3727,11 +3715,7 @@ Bandcamp links.</p>
 <p><strong>Usage:</strong> <code>,audioset dc</code></p>
 <h3 id="audioset-thumbnail">audioset thumbnail</h3>
 <p><strong>Description:</strong> Toggle displaying a thumbnail on audio messages.</p>
-<p><strong>Usage:</strong> <code>,audioset thumbnail</code></p>
-<h3 id="audioset-dj">audioset dj</h3>
-<p><strong>Description:</strong> Toggle DJ mode.</p>
-<p>DJ mode allows users with the DJ role to use audio commands.</p>
-<p><strong>Usage:</strong> <code>,audioset dj</code></p></p>
+<p><strong>Usage:</strong> <code>,audioset thumbnail</code></p></p>
     </article>
 </section>
             <!-- endblock -->

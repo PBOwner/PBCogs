@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2872,19 +2856,6 @@
 <h3 id="welcomecount">welcomecount</h3>
 <p><strong>Description:</strong> Manage settings for WelcomeCount.</p>
 <p><strong>Usage:</strong> <code>,welcomecount</code></p>
-<h3 id="welcomecount-joinrole">welcomecount joinrole</h3>
-<p><strong>Description:</strong> Set a role which a user must receive before they're welcomed.</p>
-<p>This means that, instead of the welcome message being sent when
-the user joins the server, the welcome message will be sent when
-they receive a particular role.</p>
-<p>Use <code>[p]welcomecount joinrole disable</code> to revert to the default
-behaviour.</p>
-<p><strong>Usage:</strong> <code>,welcomecount joinrole</code></p>
-<h3 id="welcomecount-deletelast">welcomecount deletelast</h3>
-<p><strong>Description:</strong> Toggle deleting the previous welcome message in this channel.</p>
-<p>When enabled, the last message is deleted <em>only</em> if it was sent on
-the same day as the new welcome message.</p>
-<p><strong>Usage:</strong> <code>,welcomecount deletelast</code></p>
 <h3 id="welcomecount-message">welcomecount message</h3>
 <p><strong>Description:</strong> Set the bot's welcome message.</p>
 <p>This message can be formatted using these parameters:
@@ -2899,7 +2870,20 @@ in your message surrounded by curly braces {}.</p>
 <p><strong>Usage:</strong> <code>,welcomecount message</code></p>
 <h3 id="welcomecount-toggle">welcomecount toggle</h3>
 <p><strong>Description:</strong> Toggle welcome messages in this channel.</p>
-<p><strong>Usage:</strong> <code>,welcomecount toggle</code></p></p>
+<p><strong>Usage:</strong> <code>,welcomecount toggle</code></p>
+<h3 id="welcomecount-deletelast">welcomecount deletelast</h3>
+<p><strong>Description:</strong> Toggle deleting the previous welcome message in this channel.</p>
+<p>When enabled, the last message is deleted <em>only</em> if it was sent on
+the same day as the new welcome message.</p>
+<p><strong>Usage:</strong> <code>,welcomecount deletelast</code></p>
+<h3 id="welcomecount-joinrole">welcomecount joinrole</h3>
+<p><strong>Description:</strong> Set a role which a user must receive before they're welcomed.</p>
+<p>This means that, instead of the welcome message being sent when
+the user joins the server, the welcome message will be sent when
+they receive a particular role.</p>
+<p>Use <code>[p]welcomecount joinrole disable</code> to revert to the default
+behaviour.</p>
+<p><strong>Usage:</strong> <code>,welcomecount joinrole</code></p></p>
     </article>
 </section>
             <!-- endblock -->

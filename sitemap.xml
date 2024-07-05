@@ -121,11 +121,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://docs.prismbot.icu/Assistant.html</loc>
-         <lastmod>2024-07-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://docs.prismbot.icu/AssistantUtils.html</loc>
          <lastmod>2024-07-05</lastmod>
          <changefreq>daily</changefreq>
@@ -422,11 +417,6 @@
     </url>
     <url>
          <loc>https://docs.prismbot.icu/DMAffiliates.html</loc>
-         <lastmod>2024-07-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://docs.prismbot.icu/DallE.html</loc>
          <lastmod>2024-07-05</lastmod>
          <changefreq>daily</changefreq>
     </url>

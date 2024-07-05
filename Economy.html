@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2955,6 +2939,37 @@
 <li><code>&lt;bid&gt;</code> The new maximum bid for using the slot machine. Default is 100.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset slotmax</code></p>
+<h3 id="economyset-slottime">economyset slottime</h3>
+<p><strong>Description:</strong> Set the cooldown for the slot machine.</p>
+<p>Examples:
+- <code>[p]economyset slottime 10</code>
+- <code>[p]economyset slottime 10m</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of the slot machine. Default is 5 seconds.
+Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
+</ul>
+<p><strong>Usage:</strong> <code>,economyset slottime</code></p>
+<h3 id="economyset-paydayamount">economyset paydayamount</h3>
+<p><strong>Description:</strong> Set the amount earned each payday.</p>
+<p>Example:
+- <code>[p]economyset paydayamount 400</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;creds&gt;</code> The new amount to give when using the payday command. Default is 120.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,economyset paydayamount</code></p>
+<h3 id="economyset-paydaytime">economyset paydaytime</h3>
+<p><strong>Description:</strong> Set the cooldown for the payday command.</p>
+<p>Examples:
+- <code>[p]economyset paydaytime 86400</code>
+- <code>[p]economyset paydaytime 1d</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of payday. Default is 5 minutes.
+Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
+</ul>
+<p><strong>Usage:</strong> <code>,economyset paydaytime</code></p>
 <h3 id="economyset-rolepaydayamount">economyset rolepaydayamount</h3>
 <p><strong>Description:</strong> Set the amount earned each payday for a role.</p>
 <p>Set to <code>0</code> to remove the payday amount you set for that role.</p>
@@ -2967,31 +2982,6 @@
 <li><code>&lt;creds&gt;</code> The new amount to give when using the payday command.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset rolepaydayamount</code></p>
-<h3 id="economyset-slottime">economyset slottime</h3>
-<p><strong>Description:</strong> Set the cooldown for the slot machine.</p>
-<p>Examples:
-- <code>[p]economyset slottime 10</code>
-- <code>[p]economyset slottime 10m</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of the slot machine. Default is 5 seconds.
-Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
-</ul>
-<p><strong>Usage:</strong> <code>,economyset slottime</code></p>
-<h3 id="economyset-showsettings">economyset showsettings</h3>
-<p><strong>Description:</strong> Shows the current economy settings</p>
-<p><strong>Usage:</strong> <code>,economyset showsettings</code></p>
-<h3 id="economyset-paydaytime">economyset paydaytime</h3>
-<p><strong>Description:</strong> Set the cooldown for the payday command.</p>
-<p>Examples:
-- <code>[p]economyset paydaytime 86400</code>
-- <code>[p]economyset paydaytime 1d</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;duration&gt;</code> The new duration to wait in between uses of payday. Default is 5 minutes.
-Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
-</ul>
-<p><strong>Usage:</strong> <code>,economyset paydaytime</code></p>
 <h3 id="economyset-slotmin">economyset slotmin</h3>
 <p><strong>Description:</strong> Set the minimum slot machine bid.</p>
 <p>Example:
@@ -3001,15 +2991,9 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <li><code>&lt;bid&gt;</code> The new minimum bid for using the slot machine. Default is 5.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,economyset slotmin</code></p>
-<h3 id="economyset-paydayamount">economyset paydayamount</h3>
-<p><strong>Description:</strong> Set the amount earned each payday.</p>
-<p>Example:
-- <code>[p]economyset paydayamount 400</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;creds&gt;</code> The new amount to give when using the payday command. Default is 120.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,economyset paydayamount</code></p></p>
+<h3 id="economyset-showsettings">economyset showsettings</h3>
+<p><strong>Description:</strong> Shows the current economy settings</p>
+<p><strong>Usage:</strong> <code>,economyset showsettings</code></p></p>
     </article>
 </section>
             <!-- endblock -->

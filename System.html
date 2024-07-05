@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2874,12 +2858,10 @@
 <p>Most commands work on all OSes or omit certian information.
 See the help for individual commands for detailed limitations.</p>
 <p><strong>Usage:</strong> <code>,system</code></p>
-<h3 id="system-mem">system mem</h3>
-<p><strong>Description:</strong> Get infomation about memory usage.</p>
-<p>This will show memory available as a percent, memory used and available as well
-as the total amount. Data is provided for both physical and SWAP RAM.</p>
+<h3 id="system-network">system network</h3>
+<p><strong>Description:</strong> Get network stats. They may have overflowed and reset at some point.</p>
 <p>Platforms: Windows, Linux, Mac OS</p>
-<p><strong>Usage:</strong> <code>,system mem</code></p>
+<p><strong>Usage:</strong> <code>,system network</code></p>
 <h3 id="system-disk">system disk</h3>
 <p><strong>Description:</strong> Get infomation about disks connected to the system.</p>
 <p>This will show the space used, total space, filesystem and
@@ -2890,28 +2872,21 @@ sensitive if running the command a public space).</p>
 Note: Mount point is basically useless on Windows as it's the
 same as the drive name, though it's still shown.</p>
 <p><strong>Usage:</strong> <code>,system disk</code></p>
-<h3 id="system-sensors">system sensors</h3>
-<p><strong>Description:</strong> Get sensor metrics.</p>
-<p>This will return any data about temperature and fan sensors it can find.
-If there is no name for an individual sensor, it will use the name of the
-group instead.</p>
-<p>Platforms: Linux</p>
-<p><strong>Usage:</strong> <code>,system sensors</code></p>
-<h3 id="system-users">system users</h3>
-<p><strong>Description:</strong> Get information about logged in users.</p>
-<p>This will show the user name, what terminal they're logged in at,
-and when they logged in.</p>
+<h3 id="system-processes">system processes</h3>
+<p><strong>Description:</strong> Get an overview of the status of currently running processes.</p>
+<p>Platforms: Windows, Linux, Mac OS</p>
+<p><strong>Usage:</strong> <code>,system processes</code></p>
+<h3 id="system-mem">system mem</h3>
+<p><strong>Description:</strong> Get infomation about memory usage.</p>
+<p>This will show memory available as a percent, memory used and available as well
+as the total amount. Data is provided for both physical and SWAP RAM.</p>
+<p>Platforms: Windows, Linux, Mac OS</p>
+<p><strong>Usage:</strong> <code>,system mem</code></p>
+<h3 id="system-red">system red</h3>
+<p><strong>Description:</strong> See what resources [botname] is using.</p>
 <p>Platforms: Windows, Linux, Mac OS
-Note: PID is not available on Windows. Terminal is usually <code>Unknown</code></p>
-<p><strong>Usage:</strong> <code>,system users</code></p>
-<h3 id="system-network">system network</h3>
-<p><strong>Description:</strong> Get network stats. They may have overflowed and reset at some point.</p>
-<p>Platforms: Windows, Linux, Mac OS</p>
-<p><strong>Usage:</strong> <code>,system network</code></p>
-<h3 id="system-uptime">system uptime</h3>
-<p><strong>Description:</strong> Get the system boot time and how long ago it was.</p>
-<p>Platforms: Windows, Linux, Mac OS</p>
-<p><strong>Usage:</strong> <code>,system uptime</code></p>
+Note: SWAP memory information is only available on Linux.</p>
+<p><strong>Usage:</strong> <code>,system red</code></p>
 <h3 id="system-cpu">system cpu</h3>
 <p><strong>Description:</strong> Get metrics about the CPU.</p>
 <p>This will show the CPU usage as a percent for each core, and frequency depending on
@@ -2921,6 +2896,13 @@ It will also show the time spent idle, user and system as well as uptime.</p>
 Note: CPU frequency is nominal and overall on Windows and Mac OS,
 on Linux it's current and per-core.</p>
 <p><strong>Usage:</strong> <code>,system cpu</code></p>
+<h3 id="system-users">system users</h3>
+<p><strong>Description:</strong> Get information about logged in users.</p>
+<p>This will show the user name, what terminal they're logged in at,
+and when they logged in.</p>
+<p>Platforms: Windows, Linux, Mac OS
+Note: PID is not available on Windows. Terminal is usually <code>Unknown</code></p>
+<p><strong>Usage:</strong> <code>,system users</code></p>
 <h3 id="system-all">system all</h3>
 <p><strong>Description:</strong> Get an overview of the current system metrics, similar to <code>top</code>.</p>
 <p>This will show CPU utilisation, RAM usage and uptime as well as
@@ -2928,15 +2910,17 @@ active processes.</p>
 <p>Platforms: Windows, Linux, Mac OS
 Note: This command appears to be very slow in Windows.</p>
 <p><strong>Usage:</strong> <code>,system all</code></p>
-<h3 id="system-processes">system processes</h3>
-<p><strong>Description:</strong> Get an overview of the status of currently running processes.</p>
+<h3 id="system-sensors">system sensors</h3>
+<p><strong>Description:</strong> Get sensor metrics.</p>
+<p>This will return any data about temperature and fan sensors it can find.
+If there is no name for an individual sensor, it will use the name of the
+group instead.</p>
+<p>Platforms: Linux</p>
+<p><strong>Usage:</strong> <code>,system sensors</code></p>
+<h3 id="system-uptime">system uptime</h3>
+<p><strong>Description:</strong> Get the system boot time and how long ago it was.</p>
 <p>Platforms: Windows, Linux, Mac OS</p>
-<p><strong>Usage:</strong> <code>,system processes</code></p>
-<h3 id="system-red">system red</h3>
-<p><strong>Description:</strong> See what resources [botname] is using.</p>
-<p>Platforms: Windows, Linux, Mac OS
-Note: SWAP memory information is only available on Linux.</p>
-<p><strong>Usage:</strong> <code>,system red</code></p></p>
+<p><strong>Usage:</strong> <code>,system uptime</code></p></p>
     </article>
 </section>
             <!-- endblock -->

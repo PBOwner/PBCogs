@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2894,9 +2878,6 @@ Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
 <h3 id="reminder">reminder</h3>
 <p><strong>Description:</strong> List, edit and delete existing reminders, or create FIFO/commands or Say reminders.</p>
 <p><strong>Usage:</strong> <code>,reminder</code></p>
-<h3 id="reminder-timetips">reminder timetips</h3>
-<p><strong>Description:</strong> Show time parsing tips.</p>
-<p><strong>Usage:</strong> <code>,reminder timetips</code></p>
 <h3 id="reminder-remove">reminder remove</h3>
 <p><strong>Description:</strong> Remove existing Reminder(s) from their IDs.</p>
 <ul>
@@ -2904,34 +2885,9 @@ Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
 <li>Use <code>next</code> to remove your next triggered reminder.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,reminder remove</code></p>
-<h3 id="reminder-say">reminder say</h3>
-<p><strong>Description:</strong> Create a reminder who will say/send text.</p>
-<p>The specified time can be fuzzy parsed or use the kwargs <code>in</code>, <code>on</code> and <code>every</code> to find a repeat rule and your text.
-You don't have to put quotes around the <code>time</code> argument. For more precise parsing, you can place quotation marks around the text. Put quotation marks around the time too, if it contains spaces.
-Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
-<p>Examples:
-- `[p]reminder say #destination "at 9h every day" Hello everyone!</p>
-<p><strong>Usage:</strong> <code>,reminder say</code></p>
-<h3 id="reminder-edit">reminder edit</h3>
-<p><strong>Description:</strong> Edit an existing Reminder from its ID.</p>
-<ul>
-<li>Use <code>last</code> to edit your last created reminder.</li>
-<li>Use <code>next</code> to edit your next triggered reminder.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,reminder edit</code></p>
-<h3 id="reminder-text">reminder text</h3>
-<p><strong>Description:</strong> Edit the text of an existing Reminder from its ID.</p>
-<ul>
-<li>Use <code>last</code> to edit your last created reminder.</li>
-<li>Use <code>next</code> to edit your next triggered reminder.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,reminder text</code></p>
-<h3 id="reminder-timezone">reminder timezone</h3>
-<p><strong>Description:</strong> Set your timezone for the time converter.</p>
-<p>Timezone should be specified in the format: <code>Continent/City</code>.
-Example: <code>Europe/Paris</code>, <code>America/New_York</code>...
-You can find a list of valid timezones at: https://timezonedb.com/time-zones.</p>
-<p><strong>Usage:</strong> <code>,reminder timezone</code></p>
+<h3 id="reminder-clear">reminder clear</h3>
+<p><strong>Description:</strong> Clear all your existing reminders.</p>
+<p><strong>Usage:</strong> <code>,reminder clear</code></p>
 <h3 id="reminder-repeat">reminder repeat</h3>
 <p><strong>Description:</strong> Edit the repeat of an existing Reminder from its ID.</p>
 <ul>
@@ -2948,21 +2904,29 @@ You can find a list of valid timezones at: https://timezonedb.com/time-zones.</p
 <p>You can combine <strong>relative intervals</strong> like this:
 • <code>1y 1mo 2 days -5h</code></p>
 <p><strong>Usage:</strong> <code>,reminder repeat</code></p>
-<h3 id="reminder-fifo">reminder fifo</h3>
-<p><strong>Description:</strong> Create a FIFO/command reminder. The chosen command will be executed with you as invoker. Don't provide the prefix.</p>
+<h3 id="reminder-say">reminder say</h3>
+<p><strong>Description:</strong> Create a reminder who will say/send text.</p>
 <p>The specified time can be fuzzy parsed or use the kwargs <code>in</code>, <code>on</code> and <code>every</code> to find a repeat rule and your text.
 You don't have to put quotes around the <code>time</code> argument. For more precise parsing, you can place quotation marks around the text. Put quotation marks around the time too, if it contains spaces.
 Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
 <p>Examples:
-- `[p]reminder fifo #destination "at 10h every day" ping</p>
-<p><strong>Usage:</strong> <code>,reminder fifo</code></p>
-<h3 id="reminder-list">reminder list</h3>
-<p><strong>Description:</strong> List your existing reminders.</p>
-<p>Sort options:
-- <code>expire</code>: Display them in order of next triggering.
-- <code>created</code>: Display them in order of creating.
-- <code>id</code>: Display them in order of their ID.</p>
-<p><strong>Usage:</strong> <code>,reminder list</code></p>
+- `[p]reminder say #destination "at 9h every day" Hello everyone!</p>
+<p><strong>Usage:</strong> <code>,reminder say</code></p>
+<h3 id="reminder-timetips">reminder timetips</h3>
+<p><strong>Description:</strong> Show time parsing tips.</p>
+<p><strong>Usage:</strong> <code>,reminder timetips</code></p>
+<h3 id="reminder-timestamps">reminder timestamps</h3>
+<p><strong>Description:</strong> Get a list of Discord timestamps for a given time. You can provide a repeat.</p>
+<p>The specified time can be fuzzy parsed or use the kwargs <code>in</code>, <code>on</code> and <code>every</code> to find a repeat rule.
+You don't have to put quotes around the <code>time</code> argument.
+Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
+<p><strong>Usage:</strong> <code>,reminder timestamps</code></p>
+<h3 id="reminder-timezone">reminder timezone</h3>
+<p><strong>Description:</strong> Set your timezone for the time converter.</p>
+<p>Timezone should be specified in the format: <code>Continent/City</code>.
+Example: <code>Europe/Paris</code>, <code>America/New_York</code>...
+You can find a list of valid timezones at: https://timezonedb.com/time-zones.</p>
+<p><strong>Usage:</strong> <code>,reminder timezone</code></p>
 <h3 id="reminder-expires">reminder expires</h3>
 <p><strong>Description:</strong> Edit the expires time of an existing Reminder from its ID.</p>
 <ul>
@@ -2971,18 +2935,49 @@ Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
 It's the same converter as for creation, but without the option of repetition.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,reminder expires</code></p>
-<h3 id="reminder-clear">reminder clear</h3>
-<p><strong>Description:</strong> Clear all your existing reminders.</p>
-<p><strong>Usage:</strong> <code>,reminder clear</code></p>
-<h3 id="reminder-timestamps">reminder timestamps</h3>
-<p><strong>Description:</strong> Get a list of Discord timestamps for a given time. You can provide a repeat.</p>
-<p>The specified time can be fuzzy parsed or use the kwargs <code>in</code>, <code>on</code> and <code>every</code> to find a repeat rule.
-You don't have to put quotes around the <code>time</code> argument.
+<h3 id="reminder-text">reminder text</h3>
+<p><strong>Description:</strong> Edit the text of an existing Reminder from its ID.</p>
+<ul>
+<li>Use <code>last</code> to edit your last created reminder.</li>
+<li>Use <code>next</code> to edit your next triggered reminder.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,reminder text</code></p>
+<h3 id="reminder-edit">reminder edit</h3>
+<p><strong>Description:</strong> Edit an existing Reminder from its ID.</p>
+<ul>
+<li>Use <code>last</code> to edit your last created reminder.</li>
+<li>Use <code>next</code> to edit your next triggered reminder.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,reminder edit</code></p>
+<h3 id="reminder-list">reminder list</h3>
+<p><strong>Description:</strong> List your existing reminders.</p>
+<p>Sort options:
+- <code>expire</code>: Display them in order of next triggering.
+- <code>created</code>: Display them in order of creating.
+- <code>id</code>: Display them in order of their ID.</p>
+<p><strong>Usage:</strong> <code>,reminder list</code></p>
+<h3 id="reminder-fifo">reminder fifo</h3>
+<p><strong>Description:</strong> Create a FIFO/command reminder. The chosen command will be executed with you as invoker. Don't provide the prefix.</p>
+<p>The specified time can be fuzzy parsed or use the kwargs <code>in</code>, <code>on</code> and <code>every</code> to find a repeat rule and your text.
+You don't have to put quotes around the <code>time</code> argument. For more precise parsing, you can place quotation marks around the text. Put quotation marks around the time too, if it contains spaces.
 Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
-<p><strong>Usage:</strong> <code>,reminder timestamps</code></p>
+<p>Examples:
+- `[p]reminder fifo #destination "at 10h every day" ping</p>
+<p><strong>Usage:</strong> <code>,reminder fifo</code></p>
 <h3 id="setreminders">setreminders</h3>
 <p><strong>Description:</strong> Configure Reminders.</p>
 <p><strong>Usage:</strong> <code>,setreminders</code></p>
+<h3 id="setreminders-clearuserreminders">setreminders clearuserreminders</h3>
+<p><strong>Description:</strong> Clear all existing reminders for a user.</p>
+<p><strong>Usage:</strong> <code>,setreminders clearuserreminders</code></p>
+<h3 id="setreminders-snoozeview">setreminders snoozeview</h3>
+<p><strong>Description:</strong> Send Snooze view/buttons when reminders sending.</p>
+<p>Default value: <code>True</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,setreminders snoozeview</code></p>
+<h3 id="setreminders-migratefromfifo">setreminders migratefromfifo</h3>
+<p><strong>Description:</strong> Migrate Reminders from FIFO by Fox.</p>
+<p><strong>Usage:</strong> <code>,setreminders migratefromfifo</code></p>
 <h3 id="setreminders-modalconfig">setreminders modalconfig</h3>
 <p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
 <p><strong>Usage:</strong> <code>,setreminders modalconfig</code></p>
@@ -2991,43 +2986,35 @@ Use <code>[p]reminder timetips</code> to display tips for time parsing.</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setreminders secondsallowed</code></p>
-<h3 id="setreminders-metoo">setreminders metoo</h3>
-<p><strong>Description:</strong> Show a <code>Me too</code> button in reminders.</p>
-<p>Default value: <code>True</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setreminders metoo</code></p>
 <h3 id="setreminders-repeatallowed">setreminders repeatallowed</h3>
 <p><strong>Description:</strong> Enable or disabled repeat option for users (except bot owners).</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setreminders repeatallowed</code></p>
+<h3 id="setreminders-metoo">setreminders metoo</h3>
+<p><strong>Description:</strong> Show a <code>Me too</code> button in reminders.</p>
+<p>Default value: <code>True</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,setreminders metoo</code></p>
 <h3 id="setreminders-migratefromremindme">setreminders migratefromremindme</h3>
 <p><strong>Description:</strong> Migrate Reminders from RemindMe by PhasecoreX.</p>
 <p><strong>Usage:</strong> <code>,setreminders migratefromremindme</code></p>
-<h3 id="setreminders-migratefromfifo">setreminders migratefromfifo</h3>
-<p><strong>Description:</strong> Migrate Reminders from FIFO by Fox.</p>
-<p><strong>Usage:</strong> <code>,setreminders migratefromfifo</code></p>
-<h3 id="setreminders-showsettings">setreminders showsettings</h3>
-<p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
-<p><strong>Usage:</strong> <code>,setreminders showsettings</code></p>
 <h3 id="setreminders-minimumrepeat">setreminders minimumrepeat</h3>
 <p><strong>Description:</strong> Change the minimum minutes number for a repeat time.</p>
 <p>Default value: <code>60</code>
 Dev: <code>Range[int, 10, None]</code></p>
 <p><strong>Usage:</strong> <code>,setreminders minimumrepeat</code></p>
-<h3 id="setreminders-snoozeview">setreminders snoozeview</h3>
-<p><strong>Description:</strong> Send Snooze view/buttons when reminders sending.</p>
-<p>Default value: <code>True</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setreminders snoozeview</code></p>
-<h3 id="setreminders-resetsetting">setreminders resetsetting</h3>
-<p><strong>Description:</strong> Reset a setting.</p>
-<p><strong>Usage:</strong> <code>,setreminders resetsetting</code></p>
+<h3 id="setreminders-showsettings">setreminders showsettings</h3>
+<p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
+<p><strong>Usage:</strong> <code>,setreminders showsettings</code></p>
 <h3 id="setreminders-fifoallowed">setreminders fifoallowed</h3>
 <p><strong>Description:</strong> Allow or deny commands reminders for users (except bot owners).</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,setreminders fifoallowed</code></p>
+<h3 id="setreminders-resetsetting">setreminders resetsetting</h3>
+<p><strong>Description:</strong> Reset a setting.</p>
+<p><strong>Usage:</strong> <code>,setreminders resetsetting</code></p>
 <h3 id="setreminders-maximumuserreminders">setreminders maximumuserreminders</h3>
 <p><strong>Description:</strong> Change the reminders limit for each user (except bot owners).</p>
 <p>Default value: <code>20</code>
@@ -3037,10 +3024,7 @@ Dev: <code>Range[int, 1, 125]</code></p>
 <p><strong>Description:</strong> Send Creation view/buttons when reminders creation.</p>
 <p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,setreminders creationview</code></p>
-<h3 id="setreminders-clearuserreminders">setreminders clearuserreminders</h3>
-<p><strong>Description:</strong> Clear all existing reminders for a user.</p>
-<p><strong>Usage:</strong> <code>,setreminders clearuserreminders</code></p></p>
+<p><strong>Usage:</strong> <code>,setreminders creationview</code></p></p>
     </article>
 </section>
             <!-- endblock -->

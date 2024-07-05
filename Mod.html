@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2954,9 +2938,15 @@ Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be use
 <h3 id="modset">modset</h3>
 <p><strong>Description:</strong> Manage server administration settings.</p>
 <p><strong>Usage:</strong> <code>,modset</code></p>
-<h3 id="modset-showsettings">modset showsettings</h3>
-<p><strong>Description:</strong> Show the current server administration settings.</p>
-<p><strong>Usage:</strong> <code>,modset showsettings</code></p>
+<h3 id="modset-dm">modset dm</h3>
+<p><strong>Description:</strong> Toggle whether a message should be sent to a user when they are kicked/banned.</p>
+<p>If this option is enabled, the bot will attempt to DM the user with the guild name
+and reason as to why they were kicked/banned.</p>
+<p><strong>Usage:</strong> <code>,modset dm</code></p>
+<h3 id="modset-trackallnames">modset trackallnames</h3>
+<p><strong>Description:</strong> Toggle whether all name changes should be tracked.</p>
+<p>Toggling this off also overrides the tracknicknames setting.</p>
+<p><strong>Usage:</strong> <code>,modset trackallnames</code></p>
 <h3 id="modset-defaultdays">modset defaultdays</h3>
 <p><strong>Description:</strong> Set the default number of days worth of messages to be deleted when a user is banned.</p>
 <p>The number of days must be between 0 and 7.</p>
@@ -2971,6 +2961,9 @@ Minimum 0 days, maximum 7. If not specified, the defaultdays setting will be use
 <li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,modset deletenames</code></p>
+<h3 id="modset-showsettings">modset showsettings</h3>
+<p><strong>Description:</strong> Show the current server administration settings.</p>
+<p><strong>Usage:</strong> <code>,modset showsettings</code></p>
 <h3 id="modset-deleterepeats">modset deleterepeats</h3>
 <p><strong>Description:</strong> Enable auto-deletion of repeated messages.</p>
 <p>Must be between 2 and 20.</p>
@@ -3026,15 +3019,6 @@ If disabled only unique mentions will count.</p>
 <code>&lt;max_mentions&gt;</code> mentions.</p>
 <p><code>&lt;max_mentions&gt;</code> Must be 0 or greater. Set to 0 to disable this feature.</p>
 <p><strong>Usage:</strong> <code>,modset mentionspam ban</code></p>
-<h3 id="modset-dm">modset dm</h3>
-<p><strong>Description:</strong> Toggle whether a message should be sent to a user when they are kicked/banned.</p>
-<p>If this option is enabled, the bot will attempt to DM the user with the guild name
-and reason as to why they were kicked/banned.</p>
-<p><strong>Usage:</strong> <code>,modset dm</code></p>
-<h3 id="modset-trackallnames">modset trackallnames</h3>
-<p><strong>Description:</strong> Toggle whether all name changes should be tracked.</p>
-<p>Toggling this off also overrides the tracknicknames setting.</p>
-<p><strong>Usage:</strong> <code>,modset trackallnames</code></p>
 <h3 id="moveignoredchannels">moveignoredchannels</h3>
 <p><strong>Description:</strong> Move ignored channels and servers to core</p>
 <p><strong>Usage:</strong> <code>,moveignoredchannels</code></p>

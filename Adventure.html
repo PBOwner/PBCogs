@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -3040,12 +3024,12 @@ Trade 25 epic chests for 1 legendary chest.</p>
 <h3 id="loadout">loadout</h3>
 <p><strong>Description:</strong> Set up gear sets or loadouts.</p>
 <p><strong>Usage:</strong> <code>,loadout</code></p>
-<h3 id="loadout-delete">loadout delete</h3>
-<p><strong>Description:</strong> Delete a saved loadout.</p>
-<p><strong>Usage:</strong> <code>,loadout delete</code></p>
 <h3 id="loadout-equip">loadout equip</h3>
 <p><strong>Description:</strong> Equip a saved loadout.</p>
 <p><strong>Usage:</strong> <code>,loadout equip</code></p>
+<h3 id="loadout-delete">loadout delete</h3>
+<p><strong>Description:</strong> Delete a saved loadout.</p>
+<p><strong>Usage:</strong> <code>,loadout delete</code></p>
 <h3 id="loadout-show">loadout show</h3>
 <p><strong>Description:</strong> Show saved loadouts.</p>
 <p><strong>Usage:</strong> <code>,loadout show</code></p>
@@ -3067,15 +3051,15 @@ Trade 25 epic chests for 1 legendary chest.</p>
 <h3 id="atransfer">atransfer</h3>
 <p><strong>Description:</strong> Transfer currency between players/economies.</p>
 <p><strong>Usage:</strong> <code>,atransfer</code></p>
-<h3 id="atransfer-withdraw">atransfer withdraw</h3>
-<p><strong>Description:</strong> Convert gold to bank currency.</p>
-<p><strong>Usage:</strong> <code>,atransfer withdraw</code></p>
-<h3 id="atransfer-player">atransfer player</h3>
-<p><strong>Description:</strong> Transfer gold to another player.</p>
-<p><strong>Usage:</strong> <code>,atransfer player</code></p>
 <h3 id="atransfer-give">atransfer give</h3>
 <p><strong>Description:</strong> [Owner] Give gold to adventurers.</p>
 <p><strong>Usage:</strong> <code>,atransfer give</code></p>
+<h3 id="atransfer-player">atransfer player</h3>
+<p><strong>Description:</strong> Transfer gold to another player.</p>
+<p><strong>Usage:</strong> <code>,atransfer player</code></p>
+<h3 id="atransfer-withdraw">atransfer withdraw</h3>
+<p><strong>Description:</strong> Convert gold to bank currency.</p>
+<p><strong>Usage:</strong> <code>,atransfer withdraw</code></p>
 <h3 id="atransfer-deposit">atransfer deposit</h3>
 <p><strong>Description:</strong> Convert bank currency to gold.</p>
 <p><strong>Usage:</strong> <code>,atransfer deposit</code></p>
@@ -3201,12 +3185,12 @@ Sell All:    <code>[p]backpack sellall rarity slot</code>
 Disassemble: <code>[p]backpack disassemble item_name</code></p>
 <p>Note: An item <strong>degrade</strong> level is how many rebirths it will last, before it is broken down.</p>
 <p><strong>Usage:</strong> <code>,backpack</code></p>
-<h3 id="backpack-equip">backpack equip</h3>
-<p><strong>Description:</strong> Equip an item from your backpack.</p>
-<p><strong>Usage:</strong> <code>,backpack equip</code></p>
 <h3 id="backpack-sellall">backpack sellall</h3>
 <p><strong>Description:</strong> Sell all items in your backpack. Optionally specify rarity or slot.</p>
 <p><strong>Usage:</strong> <code>,backpack sellall</code></p>
+<h3 id="backpack-equip">backpack equip</h3>
+<p><strong>Description:</strong> Equip an item from your backpack.</p>
+<p><strong>Usage:</strong> <code>,backpack equip</code></p>
 <h3 id="backpack-trade">backpack trade</h3>
 <p><strong>Description:</strong> Trade an item from your backpack to another user.</p>
 <p><strong>Usage:</strong> <code>,backpack trade</code></p>
@@ -3248,82 +3232,6 @@ or the item might break while you are handling it...</p>
 <h3 id="adventureset">adventureset</h3>
 <p><strong>Description:</strong> Setup various adventure settings.</p>
 <p><strong>Usage:</strong> <code>,adventureset</code></p>
-<h3 id="adventureset-theme">adventureset theme</h3>
-<p><strong>Description:</strong> [Owner] Change the theme for adventure.</p>
-<p>The default theme is <code>default</code>.
-More info can be found at: <a href="https://github.com/aikaterna/gobcog#make-your-own-adventure-theme">https://github.com/aikaterna/gobcog#make-your-own-adventure-theme</a></p>
-<p><strong>Usage:</strong> <code>,adventureset theme</code></p>
-<h3 id="adventureset-sepcurrency">adventureset sepcurrency</h3>
-<p><strong>Description:</strong> [Owner] Toggle whether the currency should be separated from main bot currency.</p>
-<p><strong>Usage:</strong> <code>,adventureset sepcurrency</code></p>
-<h3 id="adventureset-cart">adventureset cart</h3>
-<p><strong>Description:</strong> [Admin] Add or remove a text channel that the Trader cart can appear in.</p>
-<p>If the channel is already in the list, it will be removed.
-Use <code>[p]adventureset cart</code> with no arguments to show the channel list.</p>
-<p><strong>Usage:</strong> <code>,adventureset cart</code></p>
-<h3 id="adventureset-easymode">adventureset easymode</h3>
-<p><strong>Description:</strong> [Owner] Set whether or not Adventure will be in easy mode.</p>
-<p>Easy mode gives less rewards, but monster information is shown.</p>
-<p><strong>Usage:</strong> <code>,adventureset easymode</code></p>
-<h3 id="adventureset-showsettings">adventureset showsettings</h3>
-<p><strong>Description:</strong> Display current settings.</p>
-<p><strong>Usage:</strong> <code>,adventureset showsettings</code></p>
-<h3 id="adventureset-dailybonus">adventureset dailybonus</h3>
-<p><strong>Description:</strong> [Owner] Set the daily xp and currency bonus.</p>
-<p><strong>percentage</strong> must be between 0% and 100%.</p>
-<p><strong>Usage:</strong> <code>,adventureset dailybonus</code></p>
-<h3 id="adventureset-restrict">adventureset restrict</h3>
-<p><strong>Description:</strong> [Owner] Set whether or not adventurers are restricted to one adventure at a time.</p>
-<p><strong>Usage:</strong> <code>,adventureset restrict</code></p>
-<h3 id="adventureset-version">adventureset version</h3>
-<p><strong>Description:</strong> Display the version of adventure being used.</p>
-<p><strong>Usage:</strong> <code>,adventureset version</code></p>
-<h3 id="adventureset-god">adventureset god</h3>
-<p><strong>Description:</strong> [Admin] Set the server's name of the god.</p>
-<p><strong>Usage:</strong> <code>,adventureset god</code></p>
-<h3 id="adventureset-globalgod">adventureset globalgod</h3>
-<p><strong>Description:</strong> [Owner] Set the default name of the god.</p>
-<p><strong>Usage:</strong> <code>,adventureset globalgod</code></p>
-<h3 id="adventureset-embeds">adventureset embeds</h3>
-<p><strong>Description:</strong> [Admin] Set whether or not to use embeds for the adventure game.</p>
-<p><strong>Usage:</strong> <code>,adventureset embeds</code></p>
-<h3 id="adventureset-economy">adventureset economy</h3>
-<p><strong>Description:</strong> [Admin] Manages the adventure economy.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy</code></p>
-<h3 id="adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</h3>
-<p><strong>Description:</strong> [Admin] Set how much players are allowed to withdraw.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy maxwithdraw</code></p>
-<h3 id="adventureset-economy-withdraw">adventureset economy withdraw</h3>
-<p><strong>Description:</strong> [Admin] Toggle whether users are allowed to withdraw from adventure currency to main currency.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy withdraw</code></p>
-<h3 id="adventureset-economy-tax">adventureset economy tax</h3>
-<p><strong>Description:</strong> [Owner] Set the tax thresholds.</p>
-<p><strong>gold</strong> must be positive
-<strong>tax</strong> must be between 0 and 1.</p>
-<p>Example: <code>[p]adventureset economy tax 10000,0.1 20000,0.2 ...</code></p>
-<p><strong>Usage:</strong> <code>,adventureset economy tax</code></p>
-<h3 id="adventureset-economy-rate">adventureset economy rate</h3>
-<p><strong>Description:</strong> [Owner] Set how much 1 bank credit is worth in adventure.</p>
-<p><strong>rate_in</strong>: Is how much gold you will get for 1 bank credit. Default is 10
-<strong>rate_out</strong>: Is how much gold is needed to convert to 1 bank credit. Default is 11</p>
-<p><strong>Usage:</strong> <code>,adventureset economy rate</code></p>
-<h3 id="adventureset-cartname">adventureset cartname</h3>
-<p><strong>Description:</strong> [Admin] Set the server's name of the cart.</p>
-<p><strong>Usage:</strong> <code>,adventureset cartname</code></p>
-<h3 id="adventureset-carttime">adventureset carttime</h3>
-<p><strong>Description:</strong> [Admin] Set the cooldown of the cart.
-Time can be in seconds, minutes, hours, or days.
-Examples: <code>1h 30m</code>, <code>2 days</code>, <code>300 seconds</code></p>
-<p><strong>Usage:</strong> <code>,adventureset carttime</code></p>
-<h3 id="adventureset-locks">adventureset locks</h3>
-<p><strong>Description:</strong> [Admin] Reset Adventure locks.</p>
-<p><strong>Usage:</strong> <code>,adventureset locks</code></p>
-<h3 id="adventureset-locks-user">adventureset locks user</h3>
-<p><strong>Description:</strong> [Owner] Reset a multiple adventurers lock.</p>
-<p><strong>Usage:</strong> <code>,adventureset locks user</code></p>
-<h3 id="adventureset-locks-adventure">adventureset locks adventure</h3>
-<p><strong>Description:</strong> [Admin] Reset the adventure game lock for the server.</p>
-<p><strong>Usage:</strong> <code>,adventureset locks adventure</code></p>
 <h3 id="adventureset-clear">adventureset clear</h3>
 <p><strong>Description:</strong> [Owner] Lets you clear multiple users character sheets.</p>
 <p><strong>Usage:</strong> <code>,adventureset clear</code></p>
@@ -3341,6 +3249,82 @@ Examples: <code>1h 30m</code>, <code>2 days</code>, <code>300 seconds</code></p>
 <h3 id="adventureset-globalcartname">adventureset globalcartname</h3>
 <p><strong>Description:</strong> [Owner] Set the default name of the cart.</p>
 <p><strong>Usage:</strong> <code>,adventureset globalcartname</code></p>
+<h3 id="adventureset-locks">adventureset locks</h3>
+<p><strong>Description:</strong> [Admin] Reset Adventure locks.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks</code></p>
+<h3 id="adventureset-locks-adventure">adventureset locks adventure</h3>
+<p><strong>Description:</strong> [Admin] Reset the adventure game lock for the server.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks adventure</code></p>
+<h3 id="adventureset-locks-user">adventureset locks user</h3>
+<p><strong>Description:</strong> [Owner] Reset a multiple adventurers lock.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks user</code></p>
+<h3 id="adventureset-theme">adventureset theme</h3>
+<p><strong>Description:</strong> [Owner] Change the theme for adventure.</p>
+<p>The default theme is <code>default</code>.
+More info can be found at: <a href="https://github.com/aikaterna/gobcog#make-your-own-adventure-theme">https://github.com/aikaterna/gobcog#make-your-own-adventure-theme</a></p>
+<p><strong>Usage:</strong> <code>,adventureset theme</code></p>
+<h3 id="adventureset-cart">adventureset cart</h3>
+<p><strong>Description:</strong> [Admin] Add or remove a text channel that the Trader cart can appear in.</p>
+<p>If the channel is already in the list, it will be removed.
+Use <code>[p]adventureset cart</code> with no arguments to show the channel list.</p>
+<p><strong>Usage:</strong> <code>,adventureset cart</code></p>
+<h3 id="adventureset-showsettings">adventureset showsettings</h3>
+<p><strong>Description:</strong> Display current settings.</p>
+<p><strong>Usage:</strong> <code>,adventureset showsettings</code></p>
+<h3 id="adventureset-dailybonus">adventureset dailybonus</h3>
+<p><strong>Description:</strong> [Owner] Set the daily xp and currency bonus.</p>
+<p><strong>percentage</strong> must be between 0% and 100%.</p>
+<p><strong>Usage:</strong> <code>,adventureset dailybonus</code></p>
+<h3 id="adventureset-version">adventureset version</h3>
+<p><strong>Description:</strong> Display the version of adventure being used.</p>
+<p><strong>Usage:</strong> <code>,adventureset version</code></p>
+<h3 id="adventureset-god">adventureset god</h3>
+<p><strong>Description:</strong> [Admin] Set the server's name of the god.</p>
+<p><strong>Usage:</strong> <code>,adventureset god</code></p>
+<h3 id="adventureset-restrict">adventureset restrict</h3>
+<p><strong>Description:</strong> [Owner] Set whether or not adventurers are restricted to one adventure at a time.</p>
+<p><strong>Usage:</strong> <code>,adventureset restrict</code></p>
+<h3 id="adventureset-globalgod">adventureset globalgod</h3>
+<p><strong>Description:</strong> [Owner] Set the default name of the god.</p>
+<p><strong>Usage:</strong> <code>,adventureset globalgod</code></p>
+<h3 id="adventureset-easymode">adventureset easymode</h3>
+<p><strong>Description:</strong> [Owner] Set whether or not Adventure will be in easy mode.</p>
+<p>Easy mode gives less rewards, but monster information is shown.</p>
+<p><strong>Usage:</strong> <code>,adventureset easymode</code></p>
+<h3 id="adventureset-embeds">adventureset embeds</h3>
+<p><strong>Description:</strong> [Admin] Set whether or not to use embeds for the adventure game.</p>
+<p><strong>Usage:</strong> <code>,adventureset embeds</code></p>
+<h3 id="adventureset-sepcurrency">adventureset sepcurrency</h3>
+<p><strong>Description:</strong> [Owner] Toggle whether the currency should be separated from main bot currency.</p>
+<p><strong>Usage:</strong> <code>,adventureset sepcurrency</code></p>
+<h3 id="adventureset-economy">adventureset economy</h3>
+<p><strong>Description:</strong> [Admin] Manages the adventure economy.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy</code></p>
+<h3 id="adventureset-economy-tax">adventureset economy tax</h3>
+<p><strong>Description:</strong> [Owner] Set the tax thresholds.</p>
+<p><strong>gold</strong> must be positive
+<strong>tax</strong> must be between 0 and 1.</p>
+<p>Example: <code>[p]adventureset economy tax 10000,0.1 20000,0.2 ...</code></p>
+<p><strong>Usage:</strong> <code>,adventureset economy tax</code></p>
+<h3 id="adventureset-economy-rate">adventureset economy rate</h3>
+<p><strong>Description:</strong> [Owner] Set how much 1 bank credit is worth in adventure.</p>
+<p><strong>rate_in</strong>: Is how much gold you will get for 1 bank credit. Default is 10
+<strong>rate_out</strong>: Is how much gold is needed to convert to 1 bank credit. Default is 11</p>
+<p><strong>Usage:</strong> <code>,adventureset economy rate</code></p>
+<h3 id="adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</h3>
+<p><strong>Description:</strong> [Admin] Set how much players are allowed to withdraw.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy maxwithdraw</code></p>
+<h3 id="adventureset-economy-withdraw">adventureset economy withdraw</h3>
+<p><strong>Description:</strong> [Admin] Toggle whether users are allowed to withdraw from adventure currency to main currency.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy withdraw</code></p>
+<h3 id="adventureset-cartname">adventureset cartname</h3>
+<p><strong>Description:</strong> [Admin] Set the server's name of the cart.</p>
+<p><strong>Usage:</strong> <code>,adventureset cartname</code></p>
+<h3 id="adventureset-carttime">adventureset carttime</h3>
+<p><strong>Description:</strong> [Admin] Set the cooldown of the cart.
+Time can be in seconds, minutes, hours, or days.
+Examples: <code>1h 30m</code>, <code>2 days</code>, <code>300 seconds</code></p>
+<p><strong>Usage:</strong> <code>,adventureset carttime</code></p>
 <h3 id="adventure">adventure</h3>
 <p><strong>Description:</strong> This will send you on an adventure!</p>
 <p>You play by reacting with the offered emojis.</p>

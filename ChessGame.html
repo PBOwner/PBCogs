@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2875,15 +2859,6 @@
 <h3 id="chess-scoreboard">chess scoreboard</h3>
 <p><strong>Description:</strong> scoreboard related commands</p>
 <p><strong>Usage:</strong> <code>,chess scoreboard</code></p>
-<h3 id="chess-scoreboard-clear">chess scoreboard clear</h3>
-<p><strong>Description:</strong> allows bot owner clear the scoreboard</p>
-<p><strong>Usage:</strong> <code>,chess scoreboard clear</code></p>
-<h3 id="chess-scoreboard-clear-player">chess scoreboard clear player</h3>
-<p><strong>Description:</strong> removes a particular player (or nonexistant id) from the scoreboard</p>
-<p><strong>Usage:</strong> <code>,chess scoreboard clear player</code></p>
-<h3 id="chess-scoreboard-clear-all">chess scoreboard clear all</h3>
-<p><strong>Description:</strong> remove <strong>ALL</strong> scores from the scoreboard</p>
-<p><strong>Usage:</strong> <code>,chess scoreboard clear all</code></p>
 <h3 id="chess-scoreboard-list">chess scoreboard list</h3>
 <p><strong>Description:</strong> list users scoreboard from highest to lowest</p>
 <p>Scoreboard can be sorted by elo, wins, losses, or ties.
@@ -2892,9 +2867,39 @@ Scoreboard is sorted by wins by default.</p>
 <h3 id="chess-scoreboard-find">chess scoreboard find</h3>
 <p><strong>Description:</strong> find a player's score. If none is provided this will look for the requester's score</p>
 <p><strong>Usage:</strong> <code>,chess scoreboard find</code></p>
+<h3 id="chess-scoreboard-clear">chess scoreboard clear</h3>
+<p><strong>Description:</strong> allows bot owner clear the scoreboard</p>
+<p><strong>Usage:</strong> <code>,chess scoreboard clear</code></p>
+<h3 id="chess-scoreboard-clear-all">chess scoreboard clear all</h3>
+<p><strong>Description:</strong> remove <strong>ALL</strong> scores from the scoreboard</p>
+<p><strong>Usage:</strong> <code>,chess scoreboard clear all</code></p>
+<h3 id="chess-scoreboard-clear-player">chess scoreboard clear player</h3>
+<p><strong>Description:</strong> removes a particular player (or nonexistant id) from the scoreboard</p>
+<p><strong>Usage:</strong> <code>,chess scoreboard clear player</code></p>
 <h3 id="chess-scoreboard-increment">chess scoreboard increment</h3>
 <p><strong>Description:</strong> allows bot owner to increment (decrement if negative value passed) a player's score</p>
 <p><strong>Usage:</strong> <code>,chess scoreboard increment</code></p>
+<h3 id="chess-move">chess move</h3>
+<p><strong>Description:</strong> move the next game piece, using Standard Algebraic Notation</p>
+<p><strong>Usage:</strong> <code>,chess move</code></p>
+<h3 id="chess-list">chess list</h3>
+<p><strong>Description:</strong> list all available games</p>
+<p><strong>Usage:</strong> <code>,chess list</code></p>
+<h3 id="chess-show">chess show</h3>
+<p><strong>Description:</strong> reposts the last gameboard state</p>
+<p><strong>Usage:</strong> <code>,chess show</code></p>
+<h3 id="chess-draw">chess draw</h3>
+<p><strong>Description:</strong> draw related commands</p>
+<p><strong>Usage:</strong> <code>,chess draw</code></p>
+<h3 id="chess-draw-claim">chess draw claim</h3>
+<p><strong>Description:</strong> if valid claim made to draw the game will end with no victor</p>
+<p><strong>Usage:</strong> <code>,chess draw claim</code></p>
+<h3 id="chess-draw-byagreement">chess draw byagreement</h3>
+<p><strong>Description:</strong> Offer draw by agreement</p>
+<p><strong>Usage:</strong> <code>,chess draw byagreement</code></p>
+<h3 id="chess-close">chess close</h3>
+<p><strong>Description:</strong> sub command to close a game</p>
+<p><strong>Usage:</strong> <code>,chess close</code></p>
 <h3 id="chess-start">chess start</h3>
 <p><strong>Description:</strong> start a new game</p>
 <p><em>Standard is the default when no game type is given</em>
@@ -2909,9 +2914,6 @@ Scoreboard is sorted by wins by default.</p>
 <strong><strong>9</strong></strong>: Three-check, Three check, Threecheck, Three check chess, 3-check, 3 check, 3check
 <strong><strong>10</strong></strong>: Crazyhouse, Crazy House, House, ZH</p>
 <p><strong>Usage:</strong> <code>,chess start</code></p>
-<h3 id="chess-close">chess close</h3>
-<p><strong>Description:</strong> sub command to close a game</p>
-<p><strong>Usage:</strong> <code>,chess close</code></p>
 <h3 id="chess-launch">chess launch</h3>
 <p><strong>Description:</strong> start a new game</p>
 <p><em>Standard is the default when no game type is given</em>
@@ -2925,25 +2927,7 @@ Scoreboard is sorted by wins by default.</p>
 <strong><strong>8</strong></strong>: Horde, Horde chess
 <strong><strong>9</strong></strong>: Three-check, Three check, Threecheck, Three check chess, 3-check, 3 check, 3check
 <strong><strong>10</strong></strong>: Crazyhouse, Crazy House, House, ZH</p>
-<p><strong>Usage:</strong> <code>,chess launch</code></p>
-<h3 id="chess-move">chess move</h3>
-<p><strong>Description:</strong> move the next game piece, using Standard Algebraic Notation</p>
-<p><strong>Usage:</strong> <code>,chess move</code></p>
-<h3 id="chess-list">chess list</h3>
-<p><strong>Description:</strong> list all available games</p>
-<p><strong>Usage:</strong> <code>,chess list</code></p>
-<h3 id="chess-show">chess show</h3>
-<p><strong>Description:</strong> reposts the last gameboard state</p>
-<p><strong>Usage:</strong> <code>,chess show</code></p>
-<h3 id="chess-draw">chess draw</h3>
-<p><strong>Description:</strong> draw related commands</p>
-<p><strong>Usage:</strong> <code>,chess draw</code></p>
-<h3 id="chess-draw-byagreement">chess draw byagreement</h3>
-<p><strong>Description:</strong> Offer draw by agreement</p>
-<p><strong>Usage:</strong> <code>,chess draw byagreement</code></p>
-<h3 id="chess-draw-claim">chess draw claim</h3>
-<p><strong>Description:</strong> if valid claim made to draw the game will end with no victor</p>
-<p><strong>Usage:</strong> <code>,chess draw claim</code></p></p>
+<p><strong>Usage:</strong> <code>,chess launch</code></p></p>
     </article>
 </section>
             <!-- endblock -->

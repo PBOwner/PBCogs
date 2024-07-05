@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2872,6 +2856,23 @@
 <h3 id="stattrack">stattrack</h3>
 <p><strong>Description:</strong> View my stats.</p>
 <p><strong>Usage:</strong> <code>,stattrack</code></p>
+<h3 id="stattrack-users">stattrack users</h3>
+<p><strong>Description:</strong> Get user stats.</p>
+<p>You can just run this command on its own to see all metrics,
+or specify some metrics - see below.</p>
+<p><strong>Arguments</strong></p>
+<p><code>[timespan]</code> How long to look for, or <code>all</code> for all-time data. Defaults to 1 day. Must be
+at least 1 hour.</p>
+<p><code>[metrics]</code> The metrics to show. Valid options: <code>total</code>, <code>unique</code>, <code>humans</code>, <code>bots</code>.
+Defaults to all of them.</p>
+<p>Note that <code>total</code> will count users multiple times if they share multiple servers with the
+[botname], while <code>unique</code> will only count them once.</p>
+<p><strong>Examples:</strong>
+- <code>[p]stattrack users</code> - show all metrics, 1 day
+- <code>[p]stattrack users 3w2d</code> - show all metrics, 3 weeks 2 days
+- <code>[p]stattrack users 5d total unique</code> - show total &amp; unique, 5 days
+- <code>[p]stattrack users all humans bots</code> - show humans &amp; bots, all time</p>
+<p><strong>Usage:</strong> <code>,stattrack users</code></p>
 <h3 id="stattrack-commands">stattrack commands</h3>
 <p><strong>Description:</strong> Get command usage stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2882,6 +2883,20 @@ at least 1 hour.</p>
 - <code>[p]stattrack commands 5d</code>
 - <code>[p]stattrack commands all</code></p>
 <p><strong>Usage:</strong> <code>,stattrack commands</code></p>
+<h3 id="stattrack-maxpoints">stattrack maxpoints</h3>
+<p><strong>Description:</strong> Set the maximum number of points to plot. This affects the speed of graph plotting.</p>
+<p>The default value is 25k (25000).</p>
+<p>The more points you plot, the slower the plotting time will be.</p>
+<p>This setting only affects graphs that are a longer timespan (1 month+).</p>
+<p>Set maxpoints to -1 to disable this feature, therefore always plotting all points.</p>
+<p>Otherwise, maxpoints must be at least 1k (1440).</p>
+<p><strong>Examples:</strong>
+- <code>[p]stattrack maxpoints 10000</code> - plot up to 10k points
+- <code>[p]stattrack maxpoints 75000</code> - plot up to 75k points
+- <code>[p]stattrack maxpoints 1440</code> - the minimum value possible
+- <code>[p]stattrack maxpoints 25000</code> - the default value
+- <code>[p]stattrack maxpoints -1</code> - disable, always plot all points</p>
+<p><strong>Usage:</strong> <code>,stattrack maxpoints</code></p>
 <h3 id="stattrack-channels">stattrack channels</h3>
 <p><strong>Description:</strong> Get channel stats.</p>
 <p>You can just run this command on its own to see all metrics,
@@ -2900,29 +2915,6 @@ Defaults to all of them.</p>
 - <code>[p]stattrack servers 5d</code>
 - <code>[p]stattrack servers all</code></p>
 <p><strong>Usage:</strong> <code>,stattrack channels</code></p>
-<h3 id="stattrack-maxpoints">stattrack maxpoints</h3>
-<p><strong>Description:</strong> Set the maximum number of points to plot. This affects the speed of graph plotting.</p>
-<p>The default value is 25k (25000).</p>
-<p>The more points you plot, the slower the plotting time will be.</p>
-<p>This setting only affects graphs that are a longer timespan (1 month+).</p>
-<p>Set maxpoints to -1 to disable this feature, therefore always plotting all points.</p>
-<p>Otherwise, maxpoints must be at least 1k (1440).</p>
-<p><strong>Examples:</strong>
-- <code>[p]stattrack maxpoints 10000</code> - plot up to 10k points
-- <code>[p]stattrack maxpoints 75000</code> - plot up to 75k points
-- <code>[p]stattrack maxpoints 1440</code> - the minimum value possible
-- <code>[p]stattrack maxpoints 25000</code> - the default value
-- <code>[p]stattrack maxpoints -1</code> - disable, always plot all points</p>
-<p><strong>Usage:</strong> <code>,stattrack maxpoints</code></p>
-<h3 id="stattrack-export">stattrack export</h3>
-<p><strong>Description:</strong> Export stattrack data.</p>
-<p><strong>Usage:</strong> <code>,stattrack export</code></p>
-<h3 id="stattrack-export-json">stattrack export json</h3>
-<p><strong>Description:</strong> Export as JSON with pandas orient "split" </p>
-<p><strong>Usage:</strong> <code>,stattrack export json</code></p>
-<h3 id="stattrack-export-csv">stattrack export csv</h3>
-<p><strong>Description:</strong> Export as CSV</p>
-<p><strong>Usage:</strong> <code>,stattrack export csv</code></p>
 <h3 id="stattrack-looptime">stattrack looptime</h3>
 <p><strong>Description:</strong> Get my loop time stats.</p>
 <p><strong>Arguments</strong></p>
@@ -2933,6 +2925,15 @@ at least 1 hour.</p>
 - <code>[p]stattrack looptime 5d</code>
 - <code>[p]stattrack looptime all</code></p>
 <p><strong>Usage:</strong> <code>,stattrack looptime</code></p>
+<h3 id="stattrack-export">stattrack export</h3>
+<p><strong>Description:</strong> Export stattrack data.</p>
+<p><strong>Usage:</strong> <code>,stattrack export</code></p>
+<h3 id="stattrack-export-csv">stattrack export csv</h3>
+<p><strong>Description:</strong> Export as CSV</p>
+<p><strong>Usage:</strong> <code>,stattrack export csv</code></p>
+<h3 id="stattrack-export-json">stattrack export json</h3>
+<p><strong>Description:</strong> Export as JSON with pandas orient "split" </p>
+<p><strong>Usage:</strong> <code>,stattrack export json</code></p>
 <h3 id="stattrack-system">stattrack system</h3>
 <p><strong>Description:</strong> Get system metrics.</p>
 <p><strong>Usage:</strong> <code>,stattrack system</code></p>
@@ -3000,24 +3001,7 @@ at least 1 hour.</p>
 - <code>[p]stattrack latency 3w2d</code>
 - <code>[p]stattrack latency 5d</code>
 - <code>[p]stattrack latency all</code></p>
-<p><strong>Usage:</strong> <code>,stattrack latency</code></p>
-<h3 id="stattrack-users">stattrack users</h3>
-<p><strong>Description:</strong> Get user stats.</p>
-<p>You can just run this command on its own to see all metrics,
-or specify some metrics - see below.</p>
-<p><strong>Arguments</strong></p>
-<p><code>[timespan]</code> How long to look for, or <code>all</code> for all-time data. Defaults to 1 day. Must be
-at least 1 hour.</p>
-<p><code>[metrics]</code> The metrics to show. Valid options: <code>total</code>, <code>unique</code>, <code>humans</code>, <code>bots</code>.
-Defaults to all of them.</p>
-<p>Note that <code>total</code> will count users multiple times if they share multiple servers with the
-[botname], while <code>unique</code> will only count them once.</p>
-<p><strong>Examples:</strong>
-- <code>[p]stattrack users</code> - show all metrics, 1 day
-- <code>[p]stattrack users 3w2d</code> - show all metrics, 3 weeks 2 days
-- <code>[p]stattrack users 5d total unique</code> - show total &amp; unique, 5 days
-- <code>[p]stattrack users all humans bots</code> - show humans &amp; bots, all time</p>
-<p><strong>Usage:</strong> <code>,stattrack users</code></p></p>
+<p><strong>Usage:</strong> <code>,stattrack latency</code></p></p>
     </article>
 </section>
             <!-- endblock -->

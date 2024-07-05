@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2875,31 +2859,26 @@
 <h3 id="fifo">fifo</h3>
 <p><strong>Description:</strong> Base command for handling scheduling of tasks</p>
 <p><strong>Usage:</strong> <code>,fifo</code></p>
-<h3 id="fifo-details">fifo details</h3>
-<p><strong>Description:</strong> Provide all the details on the specified task name</p>
-<p><strong>Usage:</strong> <code>,fifo details</code></p>
-<h3 id="fifo-add">fifo add</h3>
-<p><strong>Description:</strong> Add a new task to this guild's task list</p>
-<p><strong>Usage:</strong> <code>,fifo add</code></p>
-<h3 id="fifo-delete">fifo delete</h3>
-<p><strong>Description:</strong> Deletes a task from this guild's task list</p>
-<p><strong>Usage:</strong> <code>,fifo delete</code></p>
-<h3 id="fifo-cleartriggers">fifo cleartriggers</h3>
-<p><strong>Description:</strong> Removes all triggers from specified task</p>
-<p>Useful to start over with new trigger</p>
-<p><strong>Usage:</strong> <code>,fifo cleartriggers</code></p>
-<h3 id="fifo-checktask">fifo checktask</h3>
-<p><strong>Description:</strong> Returns the next 10 scheduled executions of the task</p>
-<p><strong>Usage:</strong> <code>,fifo checktask</code></p>
+<h3 id="fifo-list">fifo list</h3>
+<p><strong>Description:</strong> Lists all current tasks and their triggers.</p>
+<p>Do <code>[p]fifo list True</code> to see tasks from all guilds</p>
+<p><strong>Usage:</strong> <code>,fifo list</code></p>
+<h3 id="fifo-pause">fifo pause</h3>
+<p><strong>Description:</strong> Provide a task name to pause execution of a task</p>
+<p>Otherwise pauses execution of all tasks on all guilds</p>
+<p><strong>Usage:</strong> <code>,fifo pause</code></p>
 <h3 id="fifo-resume">fifo resume</h3>
 <p><strong>Description:</strong> Provide a task name to resume execution of a task.</p>
 <p>Otherwise resumes execution of all tasks on all guilds
 If the task isn't currently scheduled, will schedule it</p>
 <p><strong>Usage:</strong> <code>,fifo resume</code></p>
-<h3 id="fifo-pause">fifo pause</h3>
-<p><strong>Description:</strong> Provide a task name to pause execution of a task</p>
-<p>Otherwise pauses execution of all tasks on all guilds</p>
-<p><strong>Usage:</strong> <code>,fifo pause</code></p>
+<h3 id="fifo-set">fifo set</h3>
+<p><strong>Description:</strong> Sets a different author or in a different channel for execution of a task.</p>
+<p><strong>Usage:</strong> <code>,fifo set</code></p>
+<h3 id="fifo-printschedule">fifo printschedule</h3>
+<p><strong>Description:</strong> Print the current schedule of execution.</p>
+<p>Useful for debugging.</p>
+<p><strong>Usage:</strong> <code>,fifo printschedule</code></p>
 <h3 id="fifo-addtrigger">fifo addtrigger</h3>
 <p><strong>Description:</strong> Add a new trigger for a task from the current guild.</p>
 <p><strong>Usage:</strong> <code>,fifo addtrigger</code></p>
@@ -2909,29 +2888,34 @@ If the task isn't currently scheduled, will schedule it</p>
 <h3 id="fifo-addtrigger-interval">fifo addtrigger interval</h3>
 <p><strong>Description:</strong> Add an interval trigger to the specified task</p>
 <p><strong>Usage:</strong> <code>,fifo addtrigger interval</code></p>
-<h3 id="fifo-addtrigger-relative">fifo addtrigger relative</h3>
-<p><strong>Description:</strong> Add a "run once" trigger at a time relative from now to the specified task</p>
-<p><strong>Usage:</strong> <code>,fifo addtrigger relative</code></p>
 <h3 id="fifo-addtrigger-cron">fifo addtrigger cron</h3>
 <p><strong>Description:</strong> Add a cron "time of day" trigger to the specified task</p>
 <p>See https://crontab.guru/ for help generating the cron_str</p>
 <p><strong>Usage:</strong> <code>,fifo addtrigger cron</code></p>
-<h3 id="fifo-list">fifo list</h3>
-<p><strong>Description:</strong> Lists all current tasks and their triggers.</p>
-<p>Do <code>[p]fifo list True</code> to see tasks from all guilds</p>
-<p><strong>Usage:</strong> <code>,fifo list</code></p>
-<h3 id="fifo-printschedule">fifo printschedule</h3>
-<p><strong>Description:</strong> Print the current schedule of execution.</p>
-<p>Useful for debugging.</p>
-<p><strong>Usage:</strong> <code>,fifo printschedule</code></p>
+<h3 id="fifo-addtrigger-relative">fifo addtrigger relative</h3>
+<p><strong>Description:</strong> Add a "run once" trigger at a time relative from now to the specified task</p>
+<p><strong>Usage:</strong> <code>,fifo addtrigger relative</code></p>
+<h3 id="fifo-cleartriggers">fifo cleartriggers</h3>
+<p><strong>Description:</strong> Removes all triggers from specified task</p>
+<p>Useful to start over with new trigger</p>
+<p><strong>Usage:</strong> <code>,fifo cleartriggers</code></p>
+<h3 id="fifo-checktask">fifo checktask</h3>
+<p><strong>Description:</strong> Returns the next 10 scheduled executions of the task</p>
+<p><strong>Usage:</strong> <code>,fifo checktask</code></p>
 <h3 id="fifo-wakeup">fifo wakeup</h3>
 <p><strong>Description:</strong> Debug command to fix missed executions.</p>
 <p>If you see a negative "Next run time" when adding a trigger, this may help resolve it.
 Check the logs when using this command.</p>
 <p><strong>Usage:</strong> <code>,fifo wakeup</code></p>
-<h3 id="fifo-set">fifo set</h3>
-<p><strong>Description:</strong> Sets a different author or in a different channel for execution of a task.</p>
-<p><strong>Usage:</strong> <code>,fifo set</code></p></p>
+<h3 id="fifo-delete">fifo delete</h3>
+<p><strong>Description:</strong> Deletes a task from this guild's task list</p>
+<p><strong>Usage:</strong> <code>,fifo delete</code></p>
+<h3 id="fifo-details">fifo details</h3>
+<p><strong>Description:</strong> Provide all the details on the specified task name</p>
+<p><strong>Usage:</strong> <code>,fifo details</code></p>
+<h3 id="fifo-add">fifo add</h3>
+<p><strong>Description:</strong> Add a new task to this guild's task list</p>
+<p><strong>Usage:</strong> <code>,fifo add</code></p></p>
     </article>
 </section>
             <!-- endblock -->

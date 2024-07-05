@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2873,32 +2857,24 @@
 <p><strong>Description:</strong> Message Count Settings.</p>
 <p>Members are allowed to deny permission from being tracked for privacy reasons unless the Bot Owner sets differently.</p>
 <p><strong>Usage:</strong> <code>,mtset</code></p>
-<h3 id="mtset-enable">mtset enable</h3>
-<p><strong>Description:</strong> Enables / Disables system.</p>
-<p>This will do it automatically based on what the previous setting is.</p>
-<p><strong>Usage:</strong> <code>,mtset enable</code></p>
-<h3 id="mtset-channellist">mtset channellist</h3>
-<p><strong>Description:</strong> Displays channels that are being ignored from tracking.</p>
+<h3 id="mtset-userlist">mtset userlist</h3>
+<p><strong>Description:</strong> Displays users who are being ignored from tracking.</p>
 <p><a href="https://github.com/Cog-Creators/Red-DiscordBot/blob/e24379973cc4373a20a528543d21b1194e788800/redbot/core/core_commands.py#L2880-L2898">Thank you Core Red</a></p>
-<p><strong>Usage:</strong> <code>,mtset channellist</code></p>
+<p><strong>Usage:</strong> <code>,mtset userlist</code></p>
 <h3 id="mtset-admin">mtset admin</h3>
 <p><strong>Description:</strong> Administration commands.</p>
 <p>Allows you to nuke someone's history from record or adjust their count.</p>
 <p><strong>Usage:</strong> <code>,mtset admin</code></p>
-<h3 id="mtset-admin-deletecount">mtset admin deletecount</h3>
-<p><strong>Description:</strong> Will delete the member's entire record.</p>
-<p>Will ask for confirmation if you want to do this.</p>
-<p><strong>Usage:</strong> <code>,mtset admin deletecount</code></p>
 <h3 id="mtset-admin-cache">mtset admin cache</h3>
 <p><strong>Description:</strong> [BOT OWNER] Check cached messages counter for this server.</p>
 <p><strong>Usage:</strong> <code>,mtset admin cache</code></p>
+<h3 id="mtset-admin-updateconfig">mtset admin updateconfig</h3>
+<p><strong>Description:</strong> [BOT OWNER] Updates to config manually</p>
+<p><strong>Usage:</strong> <code>,mtset admin updateconfig</code></p>
 <h3 id="mtset-admin-resetguild">mtset admin resetguild</h3>
 <p><strong>Description:</strong> Will delete Guild's recorded members.</p>
 <p>Will ask for confirmation if you want to do this.</p>
 <p><strong>Usage:</strong> <code>,mtset admin resetguild</code></p>
-<h3 id="mtset-admin-updateconfig">mtset admin updateconfig</h3>
-<p><strong>Description:</strong> [BOT OWNER] Updates to config manually</p>
-<p><strong>Usage:</strong> <code>,mtset admin updateconfig</code></p>
 <h3 id="mtset-admin-nukeconfig">mtset admin nukeconfig</h3>
 <p><strong>Description:</strong> [BOT OWNER] Nukes all recorded counters.</p>
 <p>This will nuke every messages that's been counted. Do so at your own risk.</p>
@@ -2909,15 +2885,14 @@
 <h3 id="mtset-admin-blockignore">mtset admin blockignore</h3>
 <p><strong>Description:</strong> [BOT OWNER] Disables <code>[p]trackignore</code> command for users</p>
 <p><strong>Usage:</strong> <code>,mtset admin blockignore</code></p>
-<h3 id="mtset-showsettings">mtset showsettings</h3>
-<p><strong>Description:</strong> Display guild specific settings.</p>
-<p>This will not display blocked users, please use <code>[p]mtset ignorelist</code>.
-This will not display ignored channels, please use <code>[p]mtset channellist</code>.</p>
-<p><strong>Usage:</strong> <code>,mtset showsettings</code></p>
-<h3 id="mtset-userlist">mtset userlist</h3>
-<p><strong>Description:</strong> Displays users who are being ignored from tracking.</p>
-<p><a href="https://github.com/Cog-Creators/Red-DiscordBot/blob/e24379973cc4373a20a528543d21b1194e788800/redbot/core/core_commands.py#L2880-L2898">Thank you Core Red</a></p>
-<p><strong>Usage:</strong> <code>,mtset userlist</code></p>
+<h3 id="mtset-admin-deletecount">mtset admin deletecount</h3>
+<p><strong>Description:</strong> Will delete the member's entire record.</p>
+<p>Will ask for confirmation if you want to do this.</p>
+<p><strong>Usage:</strong> <code>,mtset admin deletecount</code></p>
+<h3 id="mtset-enable">mtset enable</h3>
+<p><strong>Description:</strong> Enables / Disables system.</p>
+<p>This will do it automatically based on what the previous setting is.</p>
+<p><strong>Usage:</strong> <code>,mtset enable</code></p>
 <h3 id="mtset-ignore">mtset ignore</h3>
 <p><strong>Description:</strong> Ignore users / channels from message tracking.</p>
 <p><strong>Usage:</strong> <code>,mtset ignore</code></p>
@@ -2934,6 +2909,15 @@ This will not display ignored channels, please use <code>[p]mtset channellist</c
 <p><strong>Description:</strong> Ignores/Unignores staff of a server.</p>
 <p>This will do it automatically based on what the previous setting is.</p>
 <p><strong>Usage:</strong> <code>,mtset ignore mods</code></p>
+<h3 id="mtset-channellist">mtset channellist</h3>
+<p><strong>Description:</strong> Displays channels that are being ignored from tracking.</p>
+<p><a href="https://github.com/Cog-Creators/Red-DiscordBot/blob/e24379973cc4373a20a528543d21b1194e788800/redbot/core/core_commands.py#L2880-L2898">Thank you Core Red</a></p>
+<p><strong>Usage:</strong> <code>,mtset channellist</code></p>
+<h3 id="mtset-showsettings">mtset showsettings</h3>
+<p><strong>Description:</strong> Display guild specific settings.</p>
+<p>This will not display blocked users, please use <code>[p]mtset ignorelist</code>.
+This will not display ignored channels, please use <code>[p]mtset channellist</code>.</p>
+<p><strong>Usage:</strong> <code>,mtset showsettings</code></p>
 <h3 id="trackignore">trackignore</h3>
 <p><strong>Description:</strong> Ignore yourself from message tracking.</p>
 <p>If you want to be tracked for your message count, you will need to contact the staff of the current server.</p>

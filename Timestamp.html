@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2872,6 +2856,20 @@
 <h3 id="timestamp">timestamp</h3>
 <p><strong>Description:</strong> Make your very own discord timestamp!</p>
 <p><strong>Usage:</strong> <code>,timestamp</code></p>
+<h3 id="timestamp-absolute">timestamp absolute</h3>
+<p><strong>Description:</strong> Produce an absolute timestamp.</p>
+<p>See <code>[p]timestamp timezone</code> to set your timezone so this is accurate for you.
+Usage:
+- <code>year:</code> The year you want the timestamp to be for. Defaults to current year if not provided.
+- <code>month:</code> The month you want the timestamp to be for. Defaults to current month if not provided.
+- <code>day:</code> The day you want the timestamp to be for. Defaults to current day if not provided.
+- <code>hour:</code> The hour you want the timestamp to be for. Defaults to current hour if not provided.
+- <code>minute:</code> The minute you want the timestamp to be for. Defaults to 0 if not provided.
+- <code>second:</code> The second you want the timestamp to be for. Defaults to 0 if not provided.
+Example:
+    <code>[p]ts a year: 2023 month: 7 day: 11 hour: 12</code>
+    Will produce <t:1689076800:F> with no timezone set.</p>
+<p><strong>Usage:</strong> <code>,timestamp absolute</code></p>
 <h3 id="timestamp-relative">timestamp relative</h3>
 <p><strong>Description:</strong> Produce a timestamp relative to right now.</p>
 <p>Accepts: <code>years</code>, <code>months</code>, <code>weeks</code>, <code>days</code>, <code>hours</code>, <code>minutes</code>, and <code>seconds</code>.</p>
@@ -2893,20 +2891,6 @@ a timezone like <code>America/Pacific</code> Will automatically adjust
 for timezones in your location. Unless, of course, you always
 follow a timezone like MST.</p>
 <p><strong>Usage:</strong> <code>,timestamp timezone set</code></p>
-<h3 id="timestamp-absolute">timestamp absolute</h3>
-<p><strong>Description:</strong> Produce an absolute timestamp.</p>
-<p>See <code>[p]timestamp timezone</code> to set your timezone so this is accurate for you.
-Usage:
-- <code>year:</code> The year you want the timestamp to be for. Defaults to current year if not provided.
-- <code>month:</code> The month you want the timestamp to be for. Defaults to current month if not provided.
-- <code>day:</code> The day you want the timestamp to be for. Defaults to current day if not provided.
-- <code>hour:</code> The hour you want the timestamp to be for. Defaults to current hour if not provided.
-- <code>minute:</code> The minute you want the timestamp to be for. Defaults to 0 if not provided.
-- <code>second:</code> The second you want the timestamp to be for. Defaults to 0 if not provided.
-Example:
-    <code>[p]ts a year: 2023 month: 7 day: 11 hour: 12</code>
-    Will produce <t:1689076800:F> with no timezone set.</p>
-<p><strong>Usage:</strong> <code>,timestamp absolute</code></p>
 <h3 id="timestamp-snowflake">timestamp snowflake</h3>
 <p><strong>Description:</strong> Produce a snowflake's timestamp</p>
 <p>Snowflakes are discord ID's and contain the time of creation within them.

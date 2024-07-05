@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2875,9 +2859,55 @@
 <h3 id="cleverbotset">cleverbotset</h3>
 <p><strong>Description:</strong> Settings for cleverbot</p>
 <p><strong>Usage:</strong> <code>,cleverbotset</code></p>
+<h3 id="cleverbotset-toggle">cleverbotset toggle</h3>
+<p><strong>Description:</strong> Toggles reply when the bot is mentioned</p>
+<p><strong>Usage:</strong> <code>,cleverbotset toggle</code></p>
+<h3 id="cleverbotset-channel">cleverbotset channel</h3>
+<p><strong>Description:</strong> Toggles channel for automatic replies</p>
+<p>do <code>[p]cleverbot channel</code> after a channel is set to disable.</p>
+<p><strong>Usage:</strong> <code>,cleverbotset channel</code></p>
+<h3 id="cleverbotset-guildtweaks">cleverbotset guildtweaks</h3>
+<p><strong>Description:</strong> Set the response tweaks from cleverbot</p>
+<p><code>&lt;tweak1&gt;</code> a number from 0-100 varies replies from sensible to wacky
+<code>&lt;tweak2&gt;</code> a number from 0-100 varies replies from shy to talkative
+<code>&lt;tweak3&gt;</code> a number from 0-100 varies replies from self-centered to attentive</p>
+<p>Setting any tweak to -1 will default to the bots global tweaks.</p>
+<p><strong>Usage:</strong> <code>,cleverbotset guildtweaks</code></p>
+<h3 id="cleverbotset-blocklist">cleverbotset blocklist</h3>
+<p><strong>Description:</strong> Blacklist settings for cleverbot</p>
+<p><strong>Usage:</strong> <code>,cleverbotset blocklist</code></p>
+<h3 id="cleverbotset-blocklist-info">cleverbotset blocklist info</h3>
+<p><strong>Description:</strong> Show what's currently in cleverbots blacklist</p>
+<p><strong>Usage:</strong> <code>,cleverbotset blocklist info</code></p>
+<h3 id="cleverbotset-blocklist-remove">cleverbotset blocklist remove</h3>
+<p><strong>Description:</strong> Remove a channel, user, or role from cleverbots blacklist</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the blacklist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,cleverbotset blocklist remove</code></p>
+<h3 id="cleverbotset-blocklist-add">cleverbotset blocklist add</h3>
+<p><strong>Description:</strong> Add a channel, user, or role to cleverbots blacklist</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to blacklist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,cleverbotset blocklist add</code></p>
 <h3 id="cleverbotset-mention">cleverbotset mention</h3>
 <p><strong>Description:</strong> Toggles mention on reply</p>
 <p><strong>Usage:</strong> <code>,cleverbotset mention</code></p>
+<h3 id="cleverbotset-allowlist">cleverbotset allowlist</h3>
+<p><strong>Description:</strong> Whitelist settings for cleverbot</p>
+<p><strong>Usage:</strong> <code>,cleverbotset allowlist</code></p>
+<h3 id="cleverbotset-allowlist-add">cleverbotset allowlist add</h3>
+<p><strong>Description:</strong> Add a channel, user, or role to cleverbots whitelist</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to whitelist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,cleverbotset allowlist add</code></p>
+<h3 id="cleverbotset-allowlist-info">cleverbotset allowlist info</h3>
+<p><strong>Description:</strong> Show what's currently in cleverbots whitelist</p>
+<p><strong>Usage:</strong> <code>,cleverbotset allowlist info</code></p>
+<h3 id="cleverbotset-allowlist-remove">cleverbotset allowlist remove</h3>
+<p><strong>Description:</strong> Remove a channel, user, or role from cleverbots whitelist</p>
+<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the whitelist
+(You can supply more than one of any at a time)</p>
+<p><strong>Usage:</strong> <code>,cleverbotset allowlist remove</code></p>
 <h3 id="cleverbotset-apikey">cleverbotset apikey</h3>
 <p><strong>Description:</strong> Sets token to be used with cleverbot.com
 You can get it from https://www.cleverbot.com/api/
@@ -2905,53 +2935,7 @@ token secret</p>
 <p><strong>Usage:</strong> <code>,cleverbotset reply</code></p>
 <h3 id="cleverbotset-dm">cleverbotset dm</h3>
 <p><strong>Description:</strong> Toggles reply in DM</p>
-<p><strong>Usage:</strong> <code>,cleverbotset dm</code></p>
-<h3 id="cleverbotset-channel">cleverbotset channel</h3>
-<p><strong>Description:</strong> Toggles channel for automatic replies</p>
-<p>do <code>[p]cleverbot channel</code> after a channel is set to disable.</p>
-<p><strong>Usage:</strong> <code>,cleverbotset channel</code></p>
-<h3 id="cleverbotset-toggle">cleverbotset toggle</h3>
-<p><strong>Description:</strong> Toggles reply when the bot is mentioned</p>
-<p><strong>Usage:</strong> <code>,cleverbotset toggle</code></p>
-<h3 id="cleverbotset-blocklist">cleverbotset blocklist</h3>
-<p><strong>Description:</strong> Blacklist settings for cleverbot</p>
-<p><strong>Usage:</strong> <code>,cleverbotset blocklist</code></p>
-<h3 id="cleverbotset-blocklist-add">cleverbotset blocklist add</h3>
-<p><strong>Description:</strong> Add a channel, user, or role to cleverbots blacklist</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to blacklist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,cleverbotset blocklist add</code></p>
-<h3 id="cleverbotset-blocklist-info">cleverbotset blocklist info</h3>
-<p><strong>Description:</strong> Show what's currently in cleverbots blacklist</p>
-<p><strong>Usage:</strong> <code>,cleverbotset blocklist info</code></p>
-<h3 id="cleverbotset-blocklist-remove">cleverbotset blocklist remove</h3>
-<p><strong>Description:</strong> Remove a channel, user, or role from cleverbots blacklist</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the blacklist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,cleverbotset blocklist remove</code></p>
-<h3 id="cleverbotset-allowlist">cleverbotset allowlist</h3>
-<p><strong>Description:</strong> Whitelist settings for cleverbot</p>
-<p><strong>Usage:</strong> <code>,cleverbotset allowlist</code></p>
-<h3 id="cleverbotset-allowlist-remove">cleverbotset allowlist remove</h3>
-<p><strong>Description:</strong> Remove a channel, user, or role from cleverbots whitelist</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to remove from the whitelist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,cleverbotset allowlist remove</code></p>
-<h3 id="cleverbotset-allowlist-info">cleverbotset allowlist info</h3>
-<p><strong>Description:</strong> Show what's currently in cleverbots whitelist</p>
-<p><strong>Usage:</strong> <code>,cleverbotset allowlist info</code></p>
-<h3 id="cleverbotset-allowlist-add">cleverbotset allowlist add</h3>
-<p><strong>Description:</strong> Add a channel, user, or role to cleverbots whitelist</p>
-<p><code>[channel_user_role...]</code> is the channel, user or role to whitelist
-(You can supply more than one of any at a time)</p>
-<p><strong>Usage:</strong> <code>,cleverbotset allowlist add</code></p>
-<h3 id="cleverbotset-guildtweaks">cleverbotset guildtweaks</h3>
-<p><strong>Description:</strong> Set the response tweaks from cleverbot</p>
-<p><code>&lt;tweak1&gt;</code> a number from 0-100 varies replies from sensible to wacky
-<code>&lt;tweak2&gt;</code> a number from 0-100 varies replies from shy to talkative
-<code>&lt;tweak3&gt;</code> a number from 0-100 varies replies from self-centered to attentive</p>
-<p>Setting any tweak to -1 will default to the bots global tweaks.</p>
-<p><strong>Usage:</strong> <code>,cleverbotset guildtweaks</code></p></p>
+<p><strong>Usage:</strong> <code>,cleverbotset dm</code></p></p>
     </article>
 </section>
             <!-- endblock -->

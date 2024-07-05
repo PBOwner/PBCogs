@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2881,18 +2865,10 @@
 <h3 id="triviaset-override">triviaset override</h3>
 <p><strong>Description:</strong> Allow/disallow trivia lists to override settings.</p>
 <p><strong>Usage:</strong> <code>,triviaset override</code></p>
-<h3 id="triviaset-custom">triviaset custom</h3>
-<p><strong>Description:</strong> Manage Custom Trivia lists.</p>
-<p><strong>Usage:</strong> <code>,triviaset custom</code></p>
-<h3 id="triviaset-custom-delete">triviaset custom delete</h3>
-<p><strong>Description:</strong> Delete a trivia file.</p>
-<p><strong>Usage:</strong> <code>,triviaset custom delete</code></p>
-<h3 id="triviaset-custom-list">triviaset custom list</h3>
-<p><strong>Description:</strong> List uploaded custom trivia.</p>
-<p><strong>Usage:</strong> <code>,triviaset custom list</code></p>
-<h3 id="triviaset-custom-upload">triviaset custom upload</h3>
-<p><strong>Description:</strong> Upload a trivia file.</p>
-<p><strong>Usage:</strong> <code>,triviaset custom upload</code></p>
+<h3 id="triviaset-usespoilers">triviaset usespoilers</h3>
+<p><strong>Description:</strong> Set if bot will display the answers in spoilers.</p>
+<p>If enabled, the bot will use spoilers to hide answers.</p>
+<p><strong>Usage:</strong> <code>,triviaset usespoilers</code></p>
 <h3 id="triviaset-payout">triviaset payout</h3>
 <p><strong>Description:</strong> Set the payout multiplier.</p>
 <p>This can be any positive decimal number. If a user wins trivia when at
@@ -2908,10 +2884,18 @@ this multiplier.</p>
 <p><strong>Description:</strong> Set whether or not the bot gains points.</p>
 <p>If enabled, the bot will gain a point if no one guesses correctly.</p>
 <p><strong>Usage:</strong> <code>,triviaset botplays</code></p>
-<h3 id="triviaset-usespoilers">triviaset usespoilers</h3>
-<p><strong>Description:</strong> Set if bot will display the answers in spoilers.</p>
-<p>If enabled, the bot will use spoilers to hide answers.</p>
-<p><strong>Usage:</strong> <code>,triviaset usespoilers</code></p>
+<h3 id="triviaset-custom">triviaset custom</h3>
+<p><strong>Description:</strong> Manage Custom Trivia lists.</p>
+<p><strong>Usage:</strong> <code>,triviaset custom</code></p>
+<h3 id="triviaset-custom-delete">triviaset custom delete</h3>
+<p><strong>Description:</strong> Delete a trivia file.</p>
+<p><strong>Usage:</strong> <code>,triviaset custom delete</code></p>
+<h3 id="triviaset-custom-list">triviaset custom list</h3>
+<p><strong>Description:</strong> List uploaded custom trivia.</p>
+<p><strong>Usage:</strong> <code>,triviaset custom list</code></p>
+<h3 id="triviaset-custom-upload">triviaset custom upload</h3>
+<p><strong>Description:</strong> Upload a trivia file.</p>
+<p><strong>Usage:</strong> <code>,triviaset custom upload</code></p>
 <h3 id="triviaset-timelimit">triviaset timelimit</h3>
 <p><strong>Description:</strong> Set the maximum seconds permitted to answer a question.</p>
 <p><strong>Usage:</strong> <code>,triviaset timelimit</code></p>
@@ -2925,29 +2909,20 @@ in time.</p>
 <p>You may list multiple categories, in which case the trivia will involve
 questions from all of them.</p>
 <p><strong>Usage:</strong> <code>,trivia</code></p>
-<h3 id="trivia-info">trivia info</h3>
-<p><strong>Description:</strong> Get information about a trivia category.</p>
-<p><strong>Usage:</strong> <code>,trivia info</code></p>
-<h3 id="trivia-list">trivia list</h3>
-<p><strong>Description:</strong> List available trivia categories.</p>
-<p><strong>Usage:</strong> <code>,trivia list</code></p>
 <h3 id="trivia-stop">trivia stop</h3>
 <p><strong>Description:</strong> Stop an ongoing trivia session.</p>
 <p><strong>Usage:</strong> <code>,trivia stop</code></p>
+<h3 id="trivia-list">trivia list</h3>
+<p><strong>Description:</strong> List available trivia categories.</p>
+<p><strong>Usage:</strong> <code>,trivia list</code></p>
+<h3 id="trivia-info">trivia info</h3>
+<p><strong>Description:</strong> Get information about a trivia category.</p>
+<p><strong>Usage:</strong> <code>,trivia info</code></p>
 <h3 id="trivia-leaderboard">trivia leaderboard</h3>
 <p><strong>Description:</strong> Leaderboard for trivia.</p>
 <p>Defaults to the top 10 of this server, sorted by total wins. Use
 subcommands for a more customised leaderboard.</p>
 <p><strong>Usage:</strong> <code>,trivia leaderboard</code></p>
-<h3 id="trivia-leaderboard-global">trivia leaderboard global</h3>
-<p><strong>Description:</strong> Global trivia leaderboard.</p>
-<p><code>&lt;sort_by&gt;</code> can be any of the following fields:
- - <code>wins</code>  : total wins
- - <code>avg</code>   : average score
- - <code>total</code> : total correct answers from all sessions
- - <code>games</code> : total games played</p>
-<p><code>&lt;top&gt;</code> is the number of ranks to show on the leaderboard.</p>
-<p><strong>Usage:</strong> <code>,trivia leaderboard global</code></p>
 <h3 id="trivia-leaderboard-server">trivia leaderboard server</h3>
 <p><strong>Description:</strong> Leaderboard for this server.</p>
 <p><code>&lt;sort_by&gt;</code> can be any of the following fields:
@@ -2956,7 +2931,16 @@ subcommands for a more customised leaderboard.</p>
  - <code>total</code> : total correct answers
  - <code>games</code> : total games played</p>
 <p><code>&lt;top&gt;</code> is the number of ranks to show on the leaderboard.</p>
-<p><strong>Usage:</strong> <code>,trivia leaderboard server</code></p></p>
+<p><strong>Usage:</strong> <code>,trivia leaderboard server</code></p>
+<h3 id="trivia-leaderboard-global">trivia leaderboard global</h3>
+<p><strong>Description:</strong> Global trivia leaderboard.</p>
+<p><code>&lt;sort_by&gt;</code> can be any of the following fields:
+ - <code>wins</code>  : total wins
+ - <code>avg</code>   : average score
+ - <code>total</code> : total correct answers from all sessions
+ - <code>games</code> : total games played</p>
+<p><code>&lt;top&gt;</code> is the number of ranks to show on the leaderboard.</p>
+<p><strong>Usage:</strong> <code>,trivia leaderboard global</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -267,14 +267,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Assistant.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Assistant
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -743,14 +735,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             CycleStatus
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="DallE.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DallE
         </a>
     </li>
                             
@@ -2872,17 +2856,16 @@
 <h3 id="bankdecay">bankdecay</h3>
 <p><strong>Description:</strong> Setup economy credit decay for your server</p>
 <p><strong>Usage:</strong> <code>,bankdecay</code></p>
-<h3 id="bankdecay-cleanup">bankdecay cleanup</h3>
-<p><strong>Description:</strong> Remove users from the config that are no longer in the server or have no balance</p>
-<p><strong>Usage:</strong> <code>,bankdecay cleanup</code></p>
-<h3 id="bankdecay-setpercent">bankdecay setpercent</h3>
-<p><strong>Description:</strong> Set the percentage of decay that occurs after the inactive period.</p>
-<p><strong>Example</strong>
-If decay is 5%, then after the set days of inactivity they will lose 5% of their balance every day.</p>
-<p><strong>Usage:</strong> <code>,bankdecay setpercent</code></p>
+<h3 id="bankdecay-view">bankdecay view</h3>
+<p><strong>Description:</strong> View Bank Decay Settings</p>
+<p><strong>Usage:</strong> <code>,bankdecay view</code></p>
 <h3 id="bankdecay-resettotal">bankdecay resettotal</h3>
 <p><strong>Description:</strong> Reset the total amount decayed to zero.</p>
 <p><strong>Usage:</strong> <code>,bankdecay resettotal</code></p>
+<h3 id="bankdecay-bulkrempercent">bankdecay bulkrempercent</h3>
+<p><strong>Description:</strong> Remove a percentage from all member balances.</p>
+<p>Accidentally refunded too many credits with bulkaddpercent? Bulk remove from every user's balance in the server based on a percentage of their current balance.</p>
+<p><strong>Usage:</strong> <code>,bankdecay bulkrempercent</code></p>
 <h3 id="bankdecay-ignorerole">bankdecay ignorerole</h3>
 <p><strong>Description:</strong> Add/Remove a role from the ignore list</p>
 <p>Users with an ignored role will not have their balance decay</p>
@@ -2895,16 +2878,9 @@ If decay is 5%, then after the set days of inactivity they will lose 5% of their
 <h3 id="bankdecay-toggle">bankdecay toggle</h3>
 <p><strong>Description:</strong> Toggle the bank decay feature on or off.</p>
 <p><strong>Usage:</strong> <code>,bankdecay toggle</code></p>
-<h3 id="bankdecay-bulkrempercent">bankdecay bulkrempercent</h3>
-<p><strong>Description:</strong> Remove a percentage from all member balances.</p>
-<p>Accidentally refunded too many credits with bulkaddpercent? Bulk remove from every user's balance in the server based on a percentage of their current balance.</p>
-<p><strong>Usage:</strong> <code>,bankdecay bulkrempercent</code></p>
 <h3 id="bankdecay-decaynow">bankdecay decaynow</h3>
 <p><strong>Description:</strong> Run a decay cycle on this server right now</p>
 <p><strong>Usage:</strong> <code>,bankdecay decaynow</code></p>
-<h3 id="bankdecay-setdays">bankdecay setdays</h3>
-<p><strong>Description:</strong> Set the number of inactive days before decay starts.</p>
-<p><strong>Usage:</strong> <code>,bankdecay setdays</code></p>
 <h3 id="bankdecay-logchannel">bankdecay logchannel</h3>
 <p><strong>Description:</strong> Set the log channel, each time the decay cycle runs this will be updated</p>
 <p><strong>Usage:</strong> <code>,bankdecay logchannel</code></p>
@@ -2914,13 +2890,21 @@ If decay is 5%, then after the set days of inactivity they will lose 5% of their
 <h3 id="bankdecay-getexpired">bankdecay getexpired</h3>
 <p><strong>Description:</strong> Get a list of users who are currently expired and how much they will lose if decayed</p>
 <p><strong>Usage:</strong> <code>,bankdecay getexpired</code></p>
+<h3 id="bankdecay-setdays">bankdecay setdays</h3>
+<p><strong>Description:</strong> Set the number of inactive days before decay starts.</p>
+<p><strong>Usage:</strong> <code>,bankdecay setdays</code></p>
 <h3 id="bankdecay-bulkaddpercent">bankdecay bulkaddpercent</h3>
 <p><strong>Description:</strong> Add a percentage to all member balances.</p>
 <p>Accidentally decayed too many credits? Bulk add to every user's balance in the server based on a percentage of their current balance.</p>
 <p><strong>Usage:</strong> <code>,bankdecay bulkaddpercent</code></p>
-<h3 id="bankdecay-view">bankdecay view</h3>
-<p><strong>Description:</strong> View Bank Decay Settings</p>
-<p><strong>Usage:</strong> <code>,bankdecay view</code></p></p>
+<h3 id="bankdecay-cleanup">bankdecay cleanup</h3>
+<p><strong>Description:</strong> Remove users from the config that are no longer in the server or have no balance</p>
+<p><strong>Usage:</strong> <code>,bankdecay cleanup</code></p>
+<h3 id="bankdecay-setpercent">bankdecay setpercent</h3>
+<p><strong>Description:</strong> Set the percentage of decay that occurs after the inactive period.</p>
+<p><strong>Example</strong>
+If decay is 5%, then after the set days of inactivity they will lose 5% of their balance every day.</p>
+<p><strong>Usage:</strong> <code>,bankdecay setpercent</code></p></p>
     </article>
 </section>
             <!-- endblock -->
