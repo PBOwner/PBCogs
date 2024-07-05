@@ -43,7 +43,7 @@ class AdWarn(commands.Cog):
                 # Create the embed message
                 embed = discord.Embed(title="You were warned!", color=discord.Color.red())
                 embed.add_field(name="User", value=user.mention, inline=True)
-                embed.add_field(name="In", value=ctx.channel.mention, inline=True)
+                embed.add_field(name="Warned In", value=ctx.channel.mention, inline=True)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                 embed.add_field(name="Time", value=warning_time, inline=False)
