@@ -83,9 +83,15 @@ class Jail(commands.Cog):
             return
 
     # Save user's roles
-        original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
-        await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "roles", value=original_roles)
-
+    original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
+    
+    jailed_users_data = await self.config.guild(ctx.guild).jailed_users()
+    jailed_user_data = jailed_users_data.get(str(user.id), {})
+    jailed_user_data["roles"] = original_roles
+    
+    await self.config.guild(ctx.guild).jailed_users.set(str(user.id), jailed_user_data)
+    
+    await self.config.guild(ctx.guild).jailed_users.set(str(user.id), jailed_user_data)
     # Remove all roles and add the jail role
         try:
             await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
