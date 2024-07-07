@@ -76,11 +76,14 @@ class Jail(commands.Cog):
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
         
         jailed_users_data = await self.config.guild(ctx.guild).jailed_users()
+        if not isinstance(jailed_users_data, dict):
+            jailed_users_data = {}
+        
         jailed_user_data = jailed_users_data.get(str(user.id), {})
         jailed_user_data["roles"] = original_roles
         
-        await self.config.guild(ctx.guild).jailed_users.set(str(user.id), jailed_user_data)
-
+        await self.config.guild(ctx.guild).jailed_users.set_raw(str(user.id), value=jailed_user_data)
+        
         # Add jail role and remove original roles
         await user.add_roles(jail_role)
         await user.remove_roles(*[ctx.guild.get_role(role_id) for role_id in original_roles])
@@ -95,44 +98,6 @@ class Jail(commands.Cog):
         await user.add_roles(*[ctx.guild.get_role(role_id) for role_id in original_roles])
 
         await ctx.send(f"{user.mention} has been released from jail.")
-
-    async def parse_time(self, time_str):
-        """Parse a time string like '1h', '30m' into seconds."""
-        units = {'h': 3600, 'm': 60, 's': 1}
-        try:
-            return int(time_str[:-1]) * units[time_str[-1]]
-        except (ValueError, KeyError):
-            return None
-    
-    # Remove all roles and add the jail role
-        try:
-            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
-            await user.add_roles(jail_role)
-        except discord.Forbidden:
-            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
-            return
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to jail the user. HTTPException: {e}")
-            return
-
-    # Calculate the release time
-        release_time = datetime.utcnow() + timedelta(seconds=time_seconds)
-
-    # Send a message to the jail channel
-        jail_channel = ctx.guild.get_channel(jail_channel_id)
-        embed = discord.Embed(title="You were jailed", description="Because you were breaking rules, or are under investigation", color=discord.Color.red())
-        embed.add_field(name="Reason", value=reason, inline=False)
-        embed.add_field(name="Release Time", value=f"<t:{release_time.timestamp()}:R>", inline=False)
-        jail_message = await jail_channel.send(content=user.mention, embed=embed)
-        await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "jail_message_id", value=jail_message.id)
-
-        await ctx.send(f"{user.mention} has been jailed for {humanize_timedelta(seconds=time_seconds)}.")
-
-    # Wait for the specified time
-        await asyncio.sleep(time_seconds)
-
-    # Free the user after the time is up
-        await self.free_user(ctx.guild, user)
 
     @commands.command()
     @commands.guild_only()
@@ -186,6 +151,3 @@ class Jail(commands.Cog):
             return int(time_str[:-1]) * units[time_str[-1]]
         except (ValueError, KeyError):
             return None
-            
-def setup(bot):
-    bot.add_cog(Jail(bot))
