@@ -1,9 +1,6 @@
 import discord
 from redbot.core import commands, Config
-from redbot.core.utils.chat_formatting import humanize_timedelta
 import asyncio
-import aiohttp
-from datetime import datetime, timedelta
 
 class Jail(commands.Cog):
     def __init__(self, bot):
@@ -80,6 +77,7 @@ class Jail(commands.Cog):
             jailed_users_data = {}
         
         jailed_users_data[str(user.id)] = {"roles": original_roles}
+        
         await self.config.guild(ctx.guild).jailed_users.set(jailed_users_data)
         
         # Add jail role and remove original roles
@@ -91,11 +89,8 @@ class Jail(commands.Cog):
         # Wait for the specified time
         await asyncio.sleep(time_seconds)
 
-        # Restore original roles and remove jail role
-        await user.remove_roles(jail_role)
-        await user.add_roles(*[ctx.guild.get_role(role_id) for role_id in original_roles])
-
-        await ctx.send(f"{user.mention} has been released from jail.")
+        # Free the user after the time has passed
+        await self.free_user(ctx.guild, user)
 
     @commands.command()
     @commands.guild_only()
@@ -116,14 +111,14 @@ class Jail(commands.Cog):
         # Remove jail role and restore original roles
         try:
             await user.remove_roles(jail_role)
-            original_roles = await self.config.guild(guild).jailed_users.get_raw(user.id, default=[])
+            original_roles = await self.config.guild(guild).jailed_users.get_raw(str(user.id), "roles", default=[])
             roles = [guild.get_role(role_id) for role_id in original_roles if guild.get_role(role_id)]
             await user.add_roles(*roles)
 
             jail_channel_id = await self.config.guild(guild).jail_channel()
             jail_channel = guild.get_channel(jail_channel_id)
             if jail_channel:
-                jail_message_id = await self.config.guild(guild).jailed_users.get_raw(user.id, "jail_message_id", default=None)
+                jail_message_id = await self.config.guild(guild).jailed_users.get_raw(str(user.id), "jail_message_id", default=None)
                 if jail_message_id:
                     try:
                         jail_message = await jail_channel.fetch_message(jail_message_id)
@@ -141,7 +136,7 @@ class Jail(commands.Cog):
             await guild.system_channel.send(f"Failed to remove jail role from {user.mention}. HTTPException: {e}")
 
         # Remove user from jailed users list
-        await self.config.guild(guild).jailed_users.clear_raw(user.id)
+        await self.config.guild(guild).jailed_users.clear_raw(str(user.id))
 
     def parse_time(self, time_str):
         units = {'h': 3600, 'm': 60, 's': 1}
