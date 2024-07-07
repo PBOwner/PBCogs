@@ -49,6 +49,15 @@ class Jail(commands.Cog):
 
         await ctx.send(f"Jail channel set to {channel.name} and permissions updated.")
 
+
+
+    # Remove all roles and add the jail role
+        try:
+            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
+            await user.add_roles(jail_role)
+        except discord.Forbidden:
+            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
+            return
     @commands.command()
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
@@ -56,6 +65,7 @@ class Jail(commands.Cog):
         """Jail a user for a specified time."""
         jail_role_id = await self.config.guild(ctx.guild).jail_role()
         jail_channel_id = await self.config.guild(ctx.guild).jail_channel()
+    
         if not jail_role_id or not jail_channel_id:
             await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
             return
@@ -73,15 +83,8 @@ class Jail(commands.Cog):
 
     # Save user's roles
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
-        await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, value=original_roles)
+        await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "roles", value=original_roles)
 
-    # Remove all roles and add the jail role
-        try:
-            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
-            await user.add_roles(jail_role)
-        except discord.Forbidden:
-            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
-            return
         except discord.HTTPException as e:
             await ctx.send(f"Failed to jail the user. HTTPException: {e}")
             return
