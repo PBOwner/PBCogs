@@ -96,7 +96,7 @@ class Jail(commands.Cog):
 
         await ctx.send(f"{user.mention} has been released from jail.")
 
-    def parse_time(self, time_str):
+    async def parse_time(self, time_str):
         """Parse a time string like '1h', '30m' into seconds."""
         units = {'h': 3600, 'm': 60, 's': 1}
         try:
@@ -105,15 +105,15 @@ class Jail(commands.Cog):
             return None
     
     # Remove all roles and add the jail role
-    try:
-        await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
-        await user.add_roles(jail_role)
-    except discord.Forbidden:
-        await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
-        return
-    except discord.HTTPException as e:
-        await ctx.send(f"Failed to jail the user. HTTPException: {e}")
-        return
+        try:
+            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
+            await user.add_roles(jail_role)
+        except discord.Forbidden:
+            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
+            return
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to jail the user. HTTPException: {e}")
+            return
 
     # Calculate the release time
         release_time = datetime.utcnow() + timedelta(seconds=time_seconds)
