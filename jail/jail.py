@@ -58,7 +58,7 @@ class Jail(commands.Cog):
         jail_channel_id = await self.config.guild(ctx.guild).jail_channel()
     
         if not jail_role_id or not jail_channel_id:
-await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
+            await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
             return
 
         jail_role = ctx.guild.get_role(jail_role_id)
