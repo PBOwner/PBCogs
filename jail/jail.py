@@ -59,10 +59,10 @@ class Jail(commands.Cog):
         if not jail_role_id or not jail_channel_id:
             await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
             return
-        jail_role = ctx.guild.get_role(jail_role_id)
-        if not jail_role:
-            await ctx.send("Jail role not found. Please set it again using `setrole`.")
-            return
+            jail_role = ctx.guild.get_role(jail_role_id)
+            if not jail_role:
+                await ctx.send("Jail role not found. Please set it again using `setrole`.")
+                return
 
         # Parse time
         time_seconds = self.parse_time(time)
@@ -74,7 +74,7 @@ class Jail(commands.Cog):
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, value=original_roles)
 
-        # Remove all roles and add jail role
+        # Remove all roles and add the jail role
         try:
             await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
             await user.add_roles(jail_role)
@@ -85,23 +85,23 @@ class Jail(commands.Cog):
             await ctx.send(f"Failed to jail the user. HTTPException: {e}")
             return
 
-            
-            unix_timestamp = int((datetime.utcnow() + timedelta(seconds=time_seconds)).timestamp())
+    # Calculate the release time
+        release_time = datetime.utcnow() + timedelta(seconds=time_seconds)
 
-        # Send a message to the jail channel
+    # Send a message to the jail channel
         jail_channel = ctx.guild.get_channel(jail_channel_id)
         embed = discord.Embed(title="You were jailed", description="Because you were breaking rules, or are under investigation", color=discord.Color.red())
         embed.add_field(name="Reason", value=reason, inline=False)
-        embed.add_field(name="Time Remaining", value=f"<t:{unix_timestamp}:R>", inline=False)
+        embed.add_field(name="Release Time", value=f"<t:{release_time.timestamp()}:R>", inline=False)
         jail_message = await jail_channel.send(content=user.mention, embed=embed)
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "jail_message_id", value=jail_message.id)
 
         await ctx.send(f"{user.mention} has been jailed for {humanize_timedelta(seconds=time_seconds)}.")
 
-        # Wait for the specified time
+    # Wait for the specified time
         await asyncio.sleep(time_seconds)
 
-        # Free the user after the time is up
+    # Free the user after the time is up
         await self.free_user(ctx.guild, user)
 
     @commands.command()
