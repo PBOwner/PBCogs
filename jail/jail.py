@@ -48,16 +48,6 @@ class Jail(commands.Cog):
                 await ctx.send(f"Failed to update permissions for {chan.name}. HTTPException: {e}")
 
         await ctx.send(f"Jail channel set to {channel.name} and permissions updated.")
-
-
-
-    # Remove all roles and add the jail role
-        try:
-            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
-            await user.add_roles(jail_role)
-        except discord.Forbidden:
-            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
-            return
             
     @commands.command()
     @commands.guild_only()
@@ -68,7 +58,7 @@ class Jail(commands.Cog):
         jail_channel_id = await self.config.guild(ctx.guild).jail_channel()
     
         if not jail_role_id or not jail_channel_id:
-            await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
+await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
             return
 
         jail_role = ctx.guild.get_role(jail_role_id)
@@ -76,11 +66,43 @@ class Jail(commands.Cog):
             await ctx.send("Jail role not found. Please set it again using `setrole`.")
             return
 
-    # Parse time
+        # Parse time
         time_seconds = self.parse_time(time)
         if time_seconds is None:
             await ctx.send("Invalid time format. Please use a valid format like `1h`, `30m`, etc.")
             return
+
+        # Save user's roles
+        original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
+        
+        jailed_users_data = await self.config.guild(ctx.guild).jailed_users()
+        jailed_user_data = jailed_users_data.get(str(user.id), {})
+        jailed_user_data["roles"] = original_roles
+        
+        await self.config.guild(ctx.guild).jailed_users.set(str(user.id), jailed_user_data)
+
+        # Add jail role and remove original roles
+        await user.add_roles(jail_role)
+        await user.remove_roles(*[ctx.guild.get_role(role_id) for role_id in original_roles])
+
+        await ctx.send(f"{user.mention} has been jailed for {time} for: {reason}")
+
+        # Wait for the specified time
+        await asyncio.sleep(time_seconds)
+
+        # Restore original roles and remove jail role
+        await user.remove_roles(jail_role)
+        await user.add_roles(*[ctx.guild.get_role(role_id) for role_id in original_roles])
+
+        await ctx.send(f"{user.mention} has been released from jail.")
+
+    def parse_time(self, time_str):
+        """Parse a time string like '1h', '30m' into seconds."""
+        units = {'h': 3600, 'm': 60, 's': 1}
+        try:
+            return int(time_str[:-1]) * units[time_str[-1]]
+        except (ValueError, KeyError):
+            return None
 
     # Save user's roles
     original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
@@ -143,7 +165,7 @@ class Jail(commands.Cog):
             await user.remove_roles(jail_role)
             original_roles = await self.config.guild(guild).jailed_users.get_raw(user.id, default=[])
             roles = [guild.get_role(role_id) for role_id in original_roles if guild.get_role(role_id)]
-ail_channel_id:
+            jail_channel_id:
             jail_channel = guild.get_channel(jail_channel_id)
             if jail_channel:
                 jail_message_id = await self.config.guild(guild).jailed_users.get_raw(user.id, "jail_message_id", default=None)
