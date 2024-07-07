@@ -58,6 +58,7 @@ class Jail(commands.Cog):
         except discord.Forbidden:
             await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
             return
+            
     @commands.command()
     @commands.guild_only()
     @commands.admin_or_permissions(manage_roles=True)
@@ -85,9 +86,16 @@ class Jail(commands.Cog):
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "roles", value=original_roles)
 
-            except discord.HTTPException as e:
-                await ctx.send(f"Failed to jail the user. HTTPException: {e}")
-                return
+    # Remove all roles and add the jail role
+        try:
+            await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
+            await user.add_roles(jail_role)
+        except discord.Forbidden:
+            await ctx.send("Failed to jail the user. Missing permissions: Manage Roles.")
+            return
+        except discord.HTTPException as e:
+            await ctx.send(f"Failed to jail the user. HTTPException: {e}")
+            return
 
     # Calculate the release time
         release_time = datetime.utcnow() + timedelta(seconds=time_seconds)
