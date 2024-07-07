@@ -85,9 +85,9 @@ class Jail(commands.Cog):
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, "roles", value=original_roles)
 
-        except discord.HTTPException as e:
-            await ctx.send(f"Failed to jail the user. HTTPException: {e}")
-            return
+            except discord.HTTPException as e:
+                await ctx.send(f"Failed to jail the user. HTTPException: {e}")
+                return
 
     # Calculate the release time
         release_time = datetime.utcnow() + timedelta(seconds=time_seconds)
