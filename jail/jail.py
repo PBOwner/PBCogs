@@ -79,10 +79,8 @@ class Jail(commands.Cog):
         if not isinstance(jailed_users_data, dict):
             jailed_users_data = {}
         
-        jailed_user_data = jailed_users_data.get(str(user.id), {})
-        jailed_user_data["roles"] = original_roles
-        
-        await self.config.guild(ctx.guild).jailed_users.set_raw(str(user.id), value=jailed_user_data)
+        jailed_users_data[str(user.id)] = {"roles": original_roles}
+        await self.config.guild(ctx.guild).jailed_users.set(jailed_users_data)
         
         # Add jail role and remove original roles
         await user.add_roles(jail_role)
