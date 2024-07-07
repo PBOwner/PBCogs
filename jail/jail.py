@@ -59,22 +59,23 @@ class Jail(commands.Cog):
         if not jail_role_id or not jail_channel_id:
             await ctx.send("Jail role or jail channel is not set. Please set them using `setrole` and `setjail`.")
             return
-            jail_role = ctx.guild.get_role(jail_role_id)
-            if not jail_role:
-                await ctx.send("Jail role not found. Please set it again using `setrole`.")
-                return
 
-        # Parse time
+        jail_role = ctx.guild.get_role(jail_role_id)
+        if not jail_role:
+            await ctx.send("Jail role not found. Please set it again using `setrole`.")
+            return
+
+    # Parse time
         time_seconds = self.parse_time(time)
         if time_seconds is None:
             await ctx.send("Invalid time format. Please use a valid format like `1h`, `30m`, etc.")
             return
 
-        # Save user's roles
+    # Save user's roles
         original_roles = [role.id for role in user.roles if role != ctx.guild.default_role]
         await self.config.guild(ctx.guild).jailed_users.set_raw(user.id, value=original_roles)
 
-        # Remove all roles and add the jail role
+    # Remove all roles and add the jail role
         try:
             await user.remove_roles(*[role for role in user.roles if role != ctx.guild.default_role])
             await user.add_roles(jail_role)
