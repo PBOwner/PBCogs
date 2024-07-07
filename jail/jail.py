@@ -165,7 +165,9 @@ class Jail(commands.Cog):
             await user.remove_roles(jail_role)
             original_roles = await self.config.guild(guild).jailed_users.get_raw(user.id, default=[])
             roles = [guild.get_role(role_id) for role_id in original_roles if guild.get_role(role_id)]
-            jail_channel_id:
+            await user.add_roles(*roles)
+
+            jail_channel_id = await self.config.guild(guild).jail_channel()
             jail_channel = guild.get_channel(jail_channel_id)
             if jail_channel:
                 jail_message_id = await self.config.guild(guild).jailed_users.get_raw(user.id, "jail_message_id", default=None)
@@ -180,6 +182,11 @@ class Jail(commands.Cog):
                     except discord.HTTPException as e:
                         await guild.system_channel.send(f"Failed to delete jail message for {user.mention}. HTTPException: {e}")
 
+        except discord.Forbidden:
+            await guild.system_channel.send(f"Failed to remove jail role from {user.mention}. Missing permissions: Manage Roles.")
+        except discord.HTTPException as e:
+            await guild.system_channel.send(f"Failed to remove jail role from {user.mention}. HTTPException: {e}")
+
         # Remove user from jailed users list
         await self.config.guild(guild).jailed_users.clear_raw(user.id)
 
@@ -189,6 +196,6 @@ class Jail(commands.Cog):
             return int(time_str[:-1]) * units[time_str[-1]]
         except (ValueError, KeyError):
             return None
-
+            
 def setup(bot):
     bot.add_cog(Jail(bot))
