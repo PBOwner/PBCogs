@@ -144,7 +144,7 @@ class Jail(commands.Cog):
 
         # Remove the jail message
         jail_channel_id = await self.config.guild(guild).jail_channel()
-        if jimport discord
+        if import discord
 from redbot.core import commands, Config
 from redbot.core.utils.chat_formatting import humanize_timedelta
 import asyncio
