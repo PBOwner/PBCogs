@@ -77,6 +77,8 @@ class Jail(commands.Cog):
         
         jailed_users_data = await self.config.guild(ctx.guild).jailed_users()
         if not isinstance(jailed_users_data, dict):
+            jailed_users_data = {}
+        
         jailed_user_data = jailed_users_data.get(str(user.id), {})
         jailed_user_data["roles"] = original_roles
         
