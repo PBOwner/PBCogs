@@ -675,14 +675,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="CommandTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            CommandTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Converters.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1143,14 +1135,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             GameTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="GCC.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            GCC
         </a>
     </li>
                             
@@ -2475,6 +2459,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Tickets.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Tickets
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="TicketTool.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2879,9 +2871,28 @@ is provided the mute will use the set default time or indefinite if not set.</p>
 <h3 id="muteset">muteset</h3>
 <p><strong>Description:</strong> Mute settings.</p>
 <p><strong>Usage:</strong> <code>,muteset</code></p>
+<h3 id="muteset-settings">muteset settings</h3>
+<p><strong>Description:</strong> Shows the current mute settings for this guild.</p>
+<p><strong>Usage:</strong> <code>,muteset settings</code></p>
 <h3 id="muteset-senddm">muteset senddm</h3>
 <p><strong>Description:</strong> Set whether mute notifications should be sent to users in DMs.</p>
 <p><strong>Usage:</strong> <code>,muteset senddm</code></p>
+<h3 id="muteset-makerole">muteset makerole</h3>
+<p><strong>Description:</strong> Create a Muted role.</p>
+<p>This will create a role and apply overwrites to all available channels
+to more easily setup muting a user.</p>
+<p>If you already have a muted role created on the server use
+<code>[p]muteset role ROLE_NAME_HERE</code></p>
+<p><strong>Usage:</strong> <code>,muteset makerole</code></p>
+<h3 id="muteset-notification">muteset notification</h3>
+<p><strong>Description:</strong> Set the notification channel for automatic unmute issues.</p>
+<p>If no channel is provided this will be cleared and notifications
+about issues when unmuting users will not be sent anywhere.</p>
+<p><strong>Usage:</strong> <code>,muteset notification</code></p>
+<h3 id="muteset-defaulttime">muteset defaulttime</h3>
+<p><strong>Description:</strong> Set the default mute time for the mute command.</p>
+<p>If no time interval is provided this will be cleared.</p>
+<p><strong>Usage:</strong> <code>,muteset defaulttime</code></p>
 <h3 id="muteset-role">muteset role</h3>
 <p><strong>Description:</strong> Sets the role to be applied when muting a user.</p>
 <p>If no role is setup the bot will attempt to mute a user
@@ -2892,25 +2903,6 @@ and rejoin no longer being muted.</p>
 <h3 id="muteset-showmoderator">muteset showmoderator</h3>
 <p><strong>Description:</strong> Decide whether the name of the moderator muting a user should be included in the DM to that user.</p>
 <p><strong>Usage:</strong> <code>,muteset showmoderator</code></p>
-<h3 id="muteset-settings">muteset settings</h3>
-<p><strong>Description:</strong> Shows the current mute settings for this guild.</p>
-<p><strong>Usage:</strong> <code>,muteset settings</code></p>
-<h3 id="muteset-makerole">muteset makerole</h3>
-<p><strong>Description:</strong> Create a Muted role.</p>
-<p>This will create a role and apply overwrites to all available channels
-to more easily setup muting a user.</p>
-<p>If you already have a muted role created on the server use
-<code>[p]muteset role ROLE_NAME_HERE</code></p>
-<p><strong>Usage:</strong> <code>,muteset makerole</code></p>
-<h3 id="muteset-defaulttime">muteset defaulttime</h3>
-<p><strong>Description:</strong> Set the default mute time for the mute command.</p>
-<p>If no time interval is provided this will be cleared.</p>
-<p><strong>Usage:</strong> <code>,muteset defaulttime</code></p>
-<h3 id="muteset-notification">muteset notification</h3>
-<p><strong>Description:</strong> Set the notification channel for automatic unmute issues.</p>
-<p>If no channel is provided this will be cleared and notifications
-about issues when unmuting users will not be sent anywhere.</p>
-<p><strong>Usage:</strong> <code>,muteset notification</code></p>
 <h3 id="activemutes">activemutes</h3>
 <p><strong>Description:</strong> Displays active mutes on this server.</p>
 <p><strong>Usage:</strong> <code>,activemutes</code></p>

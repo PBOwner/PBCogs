@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-        <title>CommandTracker - FuturoBot's Documentation</title>
+        <title>Tickets - FuturoBot's Documentation</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         
-        <link rel="canonical" href="https://docs.prismbot.icu/CommandTracker.html">
+        <link rel="canonical" href="https://docs.prismbot.icu/Tickets.html">
         
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -675,14 +675,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="CommandTracker.html"
-            class=" active 
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            CommandTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Converters.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1143,14 +1135,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             GameTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="GCC.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            GCC
         </a>
     </li>
                             
@@ -2475,6 +2459,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Tickets.html"
+            class=" active 
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Tickets
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="TicketTool.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2816,13 +2808,13 @@
         <div class="container">
             <div class="row row-preview">
                 <div class="col">
-                    <a href="CommandsButtons.html"
+                    <a href="ThreadOpener.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </div>
                 <div class="col">
-                    <a href="Converters.html"
+                    <a href="TicketTool.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
@@ -2859,17 +2851,210 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p><h1 id="commandtracker-help">CommandTracker Help</h1>
-<p>A cog to track and display popular commands and total command count.</p>
-<h3 id="commandtracker">commandtracker</h3>
-<p><strong>Description:</strong> Group command for managing command tracking settings.</p>
-<p><strong>Usage:</strong> <code>,commandtracker</code></p>
-<h3 id="commandtracker-setchannel">commandtracker setchannel</h3>
-<p><strong>Description:</strong> Set the channel for displaying the command usage embed.</p>
-<p><strong>Usage:</strong> <code>,commandtracker setchannel</code></p>
-<h3 id="commandtracker-status">commandtracker status</h3>
-<p><strong>Description:</strong> Check the current settings for command tracking.</p>
-<p><strong>Usage:</strong> <code>,commandtracker status</code></p></p>
+        <p><h1 id="tickets-help">Tickets Help</h1>
+<p>Support ticket system with multi-panel functionality</p>
+<h3 id="add">add</h3>
+<p><strong>Description:</strong> Add a user to your ticket</p>
+<p><strong>Usage:</strong> <code>,add</code></p>
+<h3 id="renameticket">renameticket</h3>
+<p><strong>Description:</strong> Rename your ticket channel</p>
+<p><strong>Usage:</strong> <code>,renameticket</code></p>
+<h3 id="close">close</h3>
+<p><strong>Description:</strong> Close your ticket</p>
+<p><strong>Examples</strong>
+<code>[p]close</code> - closes ticket with no reason attached
+<code>[p]close thanks for helping!</code> - closes with reason "thanks for helping!"
+<code>[p]close 1h</code> - closes in 1 hour with no reason attached
+<code>[p]close 1m thanks for helping!</code> - closes in 1 minute with reason "thanks for helping!"</p>
+<p><strong>Usage:</strong> <code>,close</code></p>
+<h3 id="tickets">tickets</h3>
+<p><strong>Description:</strong> Base support ticket settings</p>
+<p><strong>Usage:</strong> <code>,tickets</code></p>
+<h3 id="tickets-altchannel">tickets altchannel</h3>
+<p><strong>Description:</strong> Set an alternate channel that tickets will be opened under for a panel</p>
+<p>If the panel uses threads, this needs to be a normal text channel.
+If the panel uses channels, this needs to be a category.</p>
+<p>If the panel is a channel type and a channel is used, the bot will use the category associated with the channel.</p>
+<p>To remove the alt channel, specify the existing one</p>
+<p><strong>Usage:</strong> <code>,tickets altchannel</code></p>
+<h3 id="tickets-noresponse">tickets noresponse</h3>
+<p><strong>Description:</strong> Auto-close ticket if opener doesn't say anything after X hours of opening</p>
+<p>Set to 0 to disable this</p>
+<p>If using thread tickets, this translates to the thread's "Hide after inactivity" setting.
+Your options are:
+- 1 hour
+- 24 hours (1 day)
+- 72 hours (3 days)
+- 168 hours (1 week)
+Tickets will default to the closest value you select.</p>
+<p><strong>Usage:</strong> <code>,tickets noresponse</code></p>
+<h3 id="tickets-panels">tickets panels</h3>
+<p><strong>Description:</strong> View/Delete currently configured support ticket panels</p>
+<p><strong>Usage:</strong> <code>,tickets panels</code></p>
+<h3 id="tickets-selfrename">tickets selfrename</h3>
+<p><strong>Description:</strong> (Toggle) If users can rename their own tickets</p>
+<p><strong>Usage:</strong> <code>,tickets selfrename</code></p>
+<h3 id="tickets-dm">tickets dm</h3>
+<p><strong>Description:</strong> (Toggle) The bot sending DM's for ticket alerts</p>
+<p><strong>Usage:</strong> <code>,tickets dm</code></p>
+<h3 id="tickets-viewmessages">tickets viewmessages</h3>
+<p><strong>Description:</strong> View/Delete a ticket message for a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets viewmessages</code></p>
+<h3 id="tickets-overviewmention">tickets overviewmention</h3>
+<p><strong>Description:</strong> Toggle whether channels are mentioned in the active ticket overview</p>
+<p><strong>Usage:</strong> <code>,tickets overviewmention</code></p>
+<h3 id="tickets-addmodal">tickets addmodal</h3>
+<p><strong>Description:</strong> Add a modal field a ticket panel</p>
+<p>Ticket panels can have up to 5 fields per modal for the user to fill out before opening a ticket.
+If modal fields are added and have required fields,
+the user will have to fill them out before they can open a ticket.</p>
+<p>There is no toggle for modals, if a panel has them it will use them, if they don't then it just opens the ticket
+When the ticket is opened, it sends the modal field responses in an embed below the ticket message</p>
+<p><strong>Note</strong>
+<code>field_name</code> is just the name of the field stored in config,
+it won't be shown in the modal and should not have spaces in it</p>
+<p>Specify an existing field name to delete a modal field (non-case-sensitive)</p>
+<p><strong>Usage:</strong> <code>,tickets addmodal</code></p>
+<h3 id="tickets-transcript">tickets transcript</h3>
+<p><strong>Description:</strong> (Toggle) Ticket transcripts</p>
+<p>Closed tickets will have their transcripts uploaded to the log channel</p>
+<p><strong>Usage:</strong> <code>,tickets transcript</code></p>
+<h3 id="tickets-blacklist">tickets blacklist</h3>
+<p><strong>Description:</strong> Add/Remove users or roles from the blacklist</p>
+<p>Users and roles in the blacklist will not be able to create a ticket</p>
+<p><strong>Usage:</strong> <code>,tickets blacklist</code></p>
+<h3 id="tickets-panelrole">tickets panelrole</h3>
+<p><strong>Description:</strong> Add/Remove roles for a specific panel</p>
+<p>To remove a role, simply run this command with it again to remove it</p>
+<p><strong>Optional</strong>: include <code>true</code> for mention to have that role mentioned when a ticket is opened</p>
+<p>These roles are a specialized subset of the main support roles.
+Use this role type if you want to isolate specific groups to a certain panel.</p>
+<p><strong>Usage:</strong> <code>,tickets panelrole</code></p>
+<h3 id="tickets-modaltitle">tickets modaltitle</h3>
+<p><strong>Description:</strong> Set a title for a ticket panel's modal</p>
+<p><strong>Usage:</strong> <code>,tickets modaltitle</code></p>
+<h3 id="tickets-autoadd">tickets autoadd</h3>
+<p><strong>Description:</strong> (Toggle) Auto-add support and panel roles to thread tickets</p>
+<p>Adding a user to a thread pings them, so this is off by default</p>
+<p><strong>Usage:</strong> <code>,tickets autoadd</code></p>
+<h3 id="tickets-interactivetranscript">tickets interactivetranscript</h3>
+<p><strong>Description:</strong> (Toggle) Interactive transcripts</p>
+<p>Transcripts will be an interactive html file to visualize the conversation from your browser.</p>
+<p><strong>Usage:</strong> <code>,tickets interactivetranscript</code></p>
+<h3 id="tickets-selfmanage">tickets selfmanage</h3>
+<p><strong>Description:</strong> (Toggle) If users can manage their own tickets</p>
+<p>Users will be able to add/remove others to their support ticket</p>
+<p><strong>Usage:</strong> <code>,tickets selfmanage</code></p>
+<h3 id="tickets-maxclaims">tickets maxclaims</h3>
+<p><strong>Description:</strong> Set how many staff members can claim/join a ticket before the join button is disabled (If using threads)</p>
+<p><strong>Usage:</strong> <code>,tickets maxclaims</code></p>
+<h3 id="tickets-row">tickets row</h3>
+<p><strong>Description:</strong> Set the row of a panel's button (0 - 4)</p>
+<p><strong>Usage:</strong> <code>,tickets row</code></p>
+<h3 id="tickets-closemodal">tickets closemodal</h3>
+<p><strong>Description:</strong> Throw a modal when the close button is clicked to enter a reason</p>
+<p><strong>Usage:</strong> <code>,tickets closemodal</code></p>
+<h3 id="tickets-ticketname">tickets ticketname</h3>
+<p><strong>Description:</strong> Set the default ticket channel name for a panel</p>
+<p>You can include the following in the name
+<code>{num}</code> - Ticket number
+<code>{user}</code> - user's name
+<code>{displayname}</code> - user's display name
+<code>{id}</code> - user's ID
+<code>{shortdate}</code> - mm-dd
+<code>{longdate}</code> - mm-dd-yyyy
+<code>{time}</code> - hh-mm AM/PM according to bot host system time</p>
+<p>You can set this to {default} to use default "Ticket-Username</p>
+<p><strong>Usage:</strong> <code>,tickets ticketname</code></p>
+<h3 id="tickets-channel">tickets channel</h3>
+<p><strong>Description:</strong> Set the channel ID where a ticket panel is located</p>
+<p><strong>Usage:</strong> <code>,tickets channel</code></p>
+<h3 id="tickets-threadclose">tickets threadclose</h3>
+<p><strong>Description:</strong> (Toggle) Thread tickets being closed &amp; archived instead of deleted</p>
+<p><strong>Usage:</strong> <code>,tickets threadclose</code></p>
+<h3 id="tickets-openrole">tickets openrole</h3>
+<p><strong>Description:</strong> Add/Remove roles required to open a ticket for a specific panel</p>
+<p>Specify the same role to remove it</p>
+<p><strong>Usage:</strong> <code>,tickets openrole</code></p>
+<h3 id="tickets-usethreads">tickets usethreads</h3>
+<p><strong>Description:</strong> Toggle whether a certain panel uses threads or channels</p>
+<p><strong>Usage:</strong> <code>,tickets usethreads</code></p>
+<h3 id="tickets-setuphelp">tickets setuphelp</h3>
+<p><strong>Description:</strong> Ticket Setup Guide</p>
+<p><strong>Usage:</strong> <code>,tickets setuphelp</code></p>
+<h3 id="tickets-viewmodal">tickets viewmodal</h3>
+<p><strong>Description:</strong> View/Delete a ticket message for a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets viewmodal</code></p>
+<h3 id="tickets-toggle">tickets toggle</h3>
+<p><strong>Description:</strong> Toggle a panel on/off</p>
+<p>Disabled panels will still show the button but it will be disabled</p>
+<p><strong>Usage:</strong> <code>,tickets toggle</code></p>
+<h3 id="tickets-priority">tickets priority</h3>
+<p><strong>Description:</strong> Set the priority order of a panel's button</p>
+<p><strong>Usage:</strong> <code>,tickets priority</code></p>
+<h3 id="tickets-logchannel">tickets logchannel</h3>
+<p><strong>Description:</strong> Set the logging channel for each panel's tickets</p>
+<p><strong>Usage:</strong> <code>,tickets logchannel</code></p>
+<h3 id="tickets-supportrole">tickets supportrole</h3>
+<p><strong>Description:</strong> Add/Remove ticket support roles (one at a time)</p>
+<p><strong>Optional</strong>: include <code>true</code> for mention to have that role mentioned when a ticket is opened</p>
+<p>To remove a role, simply run this command with it again to remove it</p>
+<p><strong>Usage:</strong> <code>,tickets supportrole</code></p>
+<h3 id="tickets-buttonemoji">tickets buttonemoji</h3>
+<p><strong>Description:</strong> Set the button emoji for a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets buttonemoji</code></p>
+<h3 id="tickets-updatemessage">tickets updatemessage</h3>
+<p><strong>Description:</strong> Update a message with another message (Target gets updated using the source)</p>
+<p><strong>Usage:</strong> <code>,tickets updatemessage</code></p>
+<h3 id="tickets-addpanel">tickets addpanel</h3>
+<p><strong>Description:</strong> Add a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets addpanel</code></p>
+<h3 id="tickets-buttoncolor">tickets buttoncolor</h3>
+<p><strong>Description:</strong> Set the button color for a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets buttoncolor</code></p>
+<h3 id="tickets-maxtickets">tickets maxtickets</h3>
+<p><strong>Description:</strong> Set the max tickets a user can have open at one time of any kind</p>
+<p><strong>Usage:</strong> <code>,tickets maxtickets</code></p>
+<h3 id="tickets-embed">tickets embed</h3>
+<p><strong>Description:</strong> Create an embed for ticket panel buttons to be added to</p>
+<p><strong>Usage:</strong> <code>,tickets embed</code></p>
+<h3 id="tickets-selfclose">tickets selfclose</h3>
+<p><strong>Description:</strong> (Toggle) If users can close their own tickets</p>
+<p><strong>Usage:</strong> <code>,tickets selfclose</code></p>
+<h3 id="tickets-buttontext">tickets buttontext</h3>
+<p><strong>Description:</strong> Set the button text for a support ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets buttontext</code></p>
+<h3 id="tickets-category">tickets category</h3>
+<p><strong>Description:</strong> Set the category ID for a ticket panel</p>
+<p><strong>Usage:</strong> <code>,tickets category</code></p>
+<h3 id="tickets-view">tickets view</h3>
+<p><strong>Description:</strong> View support ticket settings</p>
+<p><strong>Usage:</strong> <code>,tickets view</code></p>
+<h3 id="tickets-getlink">tickets getlink</h3>
+<p><strong>Description:</strong> Refetch the transcript link for a ticket</p>
+<p><strong>Usage:</strong> <code>,tickets getlink</code></p>
+<h3 id="tickets-addmessage">tickets addmessage</h3>
+<p><strong>Description:</strong> Add a message embed to be sent when a ticket is opened</p>
+<p>You can include any of these in the embed to be replaced by their value when the message is sent
+<code>{username}</code> - Person's Discord username
+<code>{mention}</code> - This will mention the user
+<code>{id}</code> - This is the ID of the user that created the ticket</p>
+<p>The bot will walk you through a few steps to set up the embed</p>
+<p><strong>Usage:</strong> <code>,tickets addmessage</code></p>
+<h3 id="tickets-cleanup">tickets cleanup</h3>
+<p><strong>Description:</strong> Cleanup tickets that no longer exist</p>
+<p><strong>Usage:</strong> <code>,tickets cleanup</code></p>
+<h3 id="tickets-overview">tickets overview</h3>
+<p><strong>Description:</strong> Set a channel for the live overview message</p>
+<p>The overview message shows all active tickets across all configured panels for a server.</p>
+<p><strong>Usage:</strong> <code>,tickets overview</code></p>
+<h3 id="tickets-panelmessage">tickets panelmessage</h3>
+<p><strong>Description:</strong> Set the message ID of a ticket panel
+Run this command in the same channel as the ticket panel message</p>
+<p><strong>Usage:</strong> <code>,tickets panelmessage</code></p>
+<h3 id="openfor">openfor</h3>
+<p><strong>Description:</strong> Open a ticket for another user</p>
+<p><strong>Usage:</strong> <code>,openfor</code></p></p>
     </article>
 </section>
             <!-- endblock -->

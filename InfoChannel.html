@@ -675,14 +675,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="CommandTracker.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            CommandTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Converters.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1143,14 +1135,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             GameTracker
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="GCC.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            GCC
         </a>
     </li>
                             
@@ -2475,6 +2459,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Tickets.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Tickets
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="TicketTool.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2885,6 +2877,18 @@ Leave blank to set back to default.</p>
 - <code>offline</code>: Total offline members</p>
 <p>Warning: This command counts against the channel update rate limit and may be queued.</p>
 <p><strong>Usage:</strong> <code>,infochannelset name</code></p>
+<h3 id="infochannelset-rolename">infochannelset rolename</h3>
+<p><strong>Description:</strong> Change the name of the infochannel for specific roles.</p>
+<p>{count} must be used to display number members with the given role.
+{role} can be used for the roles name.
+Leave blank to set back to default.</p>
+<p>Default is set to: <code>{role}: {count}</code></p>
+<p>Examples:
+- <code>[p]infochannelset rolename @Patrons {role}: {count}</code>
+- <code>[p]infochannelset rolename Elite {count} members with {role} role</code>
+- <code>[p]infochannelset rolename "Space Role" Total boosters: {count}</code></p>
+<p>Warning: This command counts against the channel update rate limit and may be queued.</p>
+<p><strong>Usage:</strong> <code>,infochannelset rolename</code></p>
 <h3 id="infochannelset-togglerole">infochannelset togglerole</h3>
 <p><strong>Description:</strong> Toggle an infochannel that shows the count of users with the specified role</p>
 <p><strong>Usage:</strong> <code>,infochannelset togglerole</code></p>
@@ -2899,19 +2903,7 @@ Leave blank to set back to default.</p>
 - <code>channels</code>: Total number of channels excluding infochannels,
 - <code>online</code>: Total online members,
 - <code>offline</code>: Total offline members,</p>
-<p><strong>Usage:</strong> <code>,infochannelset togglechannel</code></p>
-<h3 id="infochannelset-rolename">infochannelset rolename</h3>
-<p><strong>Description:</strong> Change the name of the infochannel for specific roles.</p>
-<p>{count} must be used to display number members with the given role.
-{role} can be used for the roles name.
-Leave blank to set back to default.</p>
-<p>Default is set to: <code>{role}: {count}</code></p>
-<p>Examples:
-- <code>[p]infochannelset rolename @Patrons {role}: {count}</code>
-- <code>[p]infochannelset rolename Elite {count} members with {role} role</code>
-- <code>[p]infochannelset rolename "Space Role" Total boosters: {count}</code></p>
-<p>Warning: This command counts against the channel update rate limit and may be queued.</p>
-<p><strong>Usage:</strong> <code>,infochannelset rolename</code></p></p>
+<p><strong>Usage:</strong> <code>,infochannelset togglechannel</code></p></p>
     </article>
 </section>
             <!-- endblock -->
