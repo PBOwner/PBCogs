@@ -301,6 +301,52 @@ class AdWarn(commands.Cog):
             )
             await ctx.send(embed=error_embed)
 
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def editaw(self, ctx, user: discord.Member, warning_id: str, *, new_reason: str):
+        """Edit a specific warning by its UUID."""
+        warnings = await self.config.member(user).warnings()
+        warning_to_edit = next((warning for warning in warnings if warning["id"] == warning_id), None)
+
+        if warning_to_edit:
+            warning_to_edit["reason"] = new_reason
+            await self.config.member(user).warnings.set(warnings)
+
+            warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
+            if warn_channel_id:
+                warn_channel = self.bot.get_channel(warn_channel_id)
+                if warn_channel:
+                    # Create the embed message
+                    embed = discord.Embed(title="AdWarn Edited", color=discord.Color.orange())
+                    embed.add_field(name="Warning", value=new_reason, inline=False)
+                    embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
+                    embed.add_field(name="Edited Time", value=datetime.utcnow().isoformat(), inline=True)
+                    embed.set_footer(text=f"Total warnings: {len(warnings)}")
+
+                    # Send the embed to the specified warning channel
+                    await warn_channel.send(embed=embed)
+                else:
+                    error_embed = discord.Embed(
+                        title="Error 404",
+                        description="Warning channel not found. Please set it again using `[p]warnset channel`.",
+                        color=discord.Color.red()
+                    )
+                    await ctx.send(embed=error_embed)
+            else:
+                error_embed = discord.Embed(
+                    title="Error 404",
+                    description="No warning channel has been set. Please set it using `[p]warnset channel`.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=error_embed)
+        else:
+            error_embed = discord.Embed(
+                title="Error 404",
+                description=f"Warning with ID {warning_id} not found.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=error_embed)
+
     @commands.group()
     @commands.guild_only()
     @commands.has_permissions(administrator=True)
