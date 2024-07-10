@@ -227,6 +227,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Assistant.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Assistant
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="AssistantUtils.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -247,6 +255,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             AutoDelete
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AutoDisconnect.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoDisconnect
         </a>
     </li>
                             
@@ -279,6 +295,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             AutoMod
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="AutoPing.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            AutoPing
         </a>
     </li>
                             
@@ -827,6 +851,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Forward.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Forward
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Fun.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1355,6 +1387,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="PayDay.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            PayDay
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Perform.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -1559,6 +1599,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             RoleSync
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="RoleSyncer.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            RoleSyncer
         </a>
     </li>
                             
@@ -1835,6 +1883,22 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="Trigger.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Trigger
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="Triggered.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            Triggered
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Trivia.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2075,6 +2139,22 @@
 Although setting prices for pure slash commands works, there is no refund mechanism in place for them.</p>
 <p>Should a hybrid or text command fail due to an unhandled exception, the user will be refunded.</p>
 <p><strong>Usage:</strong> <code>,extendedeconomy</code></p>
+<h3 id="extendedeconomy-eventlog">extendedeconomy eventlog</h3>
+<p><strong>Description:</strong> Set an event log channel</p>
+<p><strong>Events:</strong>
+- set_balance
+- transfer_credits
+- bank_wipe
+- prune
+- set_global
+- payday_claim</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy eventlog</code></p>
+<h3 id="extendedeconomy-autopayday">extendedeconomy autopayday</h3>
+<p><strong>Description:</strong> Toggle whether paydays are claimed automatically (Global bank)</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy autopayday</code></p>
+<h3 id="extendedeconomy-disableautopayday">extendedeconomy disableautopayday</h3>
+<p><strong>Description:</strong> (Owner Only) Toggle auto payday claim globally</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy disableautopayday</code></p>
 <h3 id="extendedeconomy-deleteafter">extendedeconomy deleteafter</h3>
 <p><strong>Description:</strong> Set the delete after time for cost check messages</p>
 <ul>
@@ -2082,6 +2162,18 @@ Although setting prices for pure slash commands works, there is no refund mechan
 <li>Default is 0 (disabled)</li>
 </ul>
 <p><strong>Usage:</strong> <code>,extendedeconomy deleteafter</code></p>
+<h3 id="extendedeconomy-autopaydayrole">extendedeconomy autopaydayrole</h3>
+<p><strong>Description:</strong> Add/Remove auto payday roles</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy autopaydayrole</code></p>
+<h3 id="extendedeconomy-view">extendedeconomy view</h3>
+<p><strong>Description:</strong> View the current settings</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy view</code></p>
+<h3 id="extendedeconomy-autoclaimchannel">extendedeconomy autoclaimchannel</h3>
+<p><strong>Description:</strong> Set the auto claim channel</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy autoclaimchannel</code></p>
+<h3 id="extendedeconomy-stackpaydays">extendedeconomy stackpaydays</h3>
+<p><strong>Description:</strong> Toggle whether payday roles stack or not</p>
+<p><strong>Usage:</strong> <code>,extendedeconomy stackpaydays</code></p>
 <h3 id="extendedeconomy-rolebonus">extendedeconomy rolebonus</h3>
 <p><strong>Description:</strong> Add/Remove Payday role bonuses</p>
 <p>Example: <code>[p]ecoset rolebonus @role 0.1</code> - Adds a 10% bonus to the user's payday if they have the role.</p>
@@ -2095,37 +2187,9 @@ Although setting prices for pure slash commands works, there is no refund mechan
 <li>Default is 0</li>
 </ul>
 <p><strong>Usage:</strong> <code>,extendedeconomy transfertax</code></p>
-<h3 id="extendedeconomy-view">extendedeconomy view</h3>
-<p><strong>Description:</strong> View the current settings</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy view</code></p>
-<h3 id="extendedeconomy-autopayday">extendedeconomy autopayday</h3>
-<p><strong>Description:</strong> Toggle whether paydays are claimed automatically (Global bank)</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy autopayday</code></p>
 <h3 id="extendedeconomy-mainlog">extendedeconomy mainlog</h3>
 <p><strong>Description:</strong> Set the main log channel</p>
 <p><strong>Usage:</strong> <code>,extendedeconomy mainlog</code></p>
-<h3 id="extendedeconomy-autoclaimchannel">extendedeconomy autoclaimchannel</h3>
-<p><strong>Description:</strong> Set the auto claim channel</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy autoclaimchannel</code></p>
-<h3 id="extendedeconomy-disableautopayday">extendedeconomy disableautopayday</h3>
-<p><strong>Description:</strong> (Owner Only) Toggle auto payday claim globally</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy disableautopayday</code></p>
-<h3 id="extendedeconomy-eventlog">extendedeconomy eventlog</h3>
-<p><strong>Description:</strong> Set an event log channel</p>
-<p><strong>Events:</strong>
-- set_balance
-- transfer_credits
-- bank_wipe
-- prune
-- set_global
-- payday_claim</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy eventlog</code></p>
-<h3 id="extendedeconomy-autopaydayrole">extendedeconomy autopaydayrole</h3>
-<p><strong>Description:</strong> Add/Remove auto payday roles</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy autopaydayrole</code></p>
-<h3 id="extendedeconomy-stackpaydays">extendedeconomy stackpaydays</h3>
-<p><strong>Description:</strong> Toggle whether payday roles stack or not</p>
-<p><strong>Usage:</strong> <code>,extendedeconomy stackpaydays</code></p>
 <h3 id="addcost">addcost</h3>
 <p><strong>Description:</strong> Add a cost to a command</p>
 <p><strong>Usage:</strong> <code>,addcost</code></p>

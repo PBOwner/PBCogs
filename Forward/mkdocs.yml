@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- Forward: Forward.md
+site_name: Forward's Documentation
+site_url: https://docs.prismbot.icu/Forward/
+theme:
+  name: dracula
+use_directory_urls: false
