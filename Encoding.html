@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,9 +2144,6 @@
 <h3 id="hash">hash</h3>
 <p><strong>Description:</strong> Various hashing commands</p>
 <p><strong>Usage:</strong> <code>,hash</code></p>
-<h3 id="hash-sha1">hash sha1</h3>
-<p><strong>Description:</strong> SHA1 Hash some Text</p>
-<p><strong>Usage:</strong> <code>,hash sha1</code></p>
 <h3 id="hash-sha256">hash sha256</h3>
 <p><strong>Description:</strong> SHA256 Hash some Text</p>
 <p><strong>Usage:</strong> <code>,hash sha256</code></p>
@@ -2148,18 +2153,27 @@
 <h3 id="hash-md5">hash md5</h3>
 <p><strong>Description:</strong> MD5 Hash some Text</p>
 <p><strong>Usage:</strong> <code>,hash md5</code></p>
+<h3 id="hash-sha1">hash sha1</h3>
+<p><strong>Description:</strong> SHA1 Hash some Text</p>
+<p><strong>Usage:</strong> <code>,hash sha1</code></p>
 <h3 id="encode">encode</h3>
 <p><strong>Description:</strong> Encode a string.</p>
 <p><strong>Usage:</strong> <code>,encode</code></p>
-<h3 id="encode-b16">encode b16</h3>
-<p><strong>Description:</strong> Encode text into base 16</p>
-<p><strong>Usage:</strong> <code>,encode b16</code></p>
+<h3 id="encode-dna">encode dna</h3>
+<p><strong>Description:</strong> Encodes a string into DNA 4 byte ACGT format</p>
+<p><strong>Usage:</strong> <code>,encode dna</code></p>
+<h3 id="encode-hex">encode hex</h3>
+<p><strong>Description:</strong> Encode text into hexadecimal</p>
+<p><strong>Usage:</strong> <code>,encode hex</code></p>
 <h3 id="encode-b64">encode b64</h3>
 <p><strong>Description:</strong> Encode text into base 64</p>
 <p><strong>Usage:</strong> <code>,encode b64</code></p>
 <h3 id="encode-binary">encode binary</h3>
 <p><strong>Description:</strong> Encode text into binary sequences of 8</p>
 <p><strong>Usage:</strong> <code>,encode binary</code></p>
+<h3 id="encode-b16">encode b16</h3>
+<p><strong>Description:</strong> Encode text into base 16</p>
+<p><strong>Usage:</strong> <code>,encode b16</code></p>
 <h3 id="encode-rot">encode rot</h3>
 <p><strong>Description:</strong> Encode a caeser cipher message with specified key</p>
 <p><strong>Usage:</strong> <code>,encode rot</code></p>
@@ -2172,15 +2186,18 @@
 <h3 id="encode-chr">encode chr</h3>
 <p><strong>Description:</strong> Encode message into character numbers</p>
 <p><strong>Usage:</strong> <code>,encode chr</code></p>
-<h3 id="encode-dna">encode dna</h3>
-<p><strong>Description:</strong> Encodes a string into DNA 4 byte ACGT format</p>
-<p><strong>Usage:</strong> <code>,encode dna</code></p>
-<h3 id="encode-hex">encode hex</h3>
-<p><strong>Description:</strong> Encode text into hexadecimal</p>
-<p><strong>Usage:</strong> <code>,encode hex</code></p>
 <h3 id="decode">decode</h3>
 <p><strong>Description:</strong> Decode a string.</p>
 <p><strong>Usage:</strong> <code>,decode</code></p>
+<h3 id="decode-b32">decode b32</h3>
+<p><strong>Description:</strong> Decode base32 text</p>
+<p><strong>Usage:</strong> <code>,decode b32</code></p>
+<h3 id="decode-braille">decode braille</h3>
+<p><strong>Description:</strong> Decide braille unicode characters to ascii</p>
+<p><strong>Usage:</strong> <code>,decode braille</code></p>
+<h3 id="decode-chr">decode chr</h3>
+<p><strong>Description:</strong> Decode character numbers to a message</p>
+<p><strong>Usage:</strong> <code>,decode chr</code></p>
 <h3 id="decode-dna">decode dna</h3>
 <p><strong>Description:</strong> Decodes a string of DNA in 4 byte ACGT format.</p>
 <p><strong>Usage:</strong> <code>,decode dna</code></p>
@@ -2198,16 +2215,7 @@
 <p><strong>Usage:</strong> <code>,decode b64</code></p>
 <h3 id="decode-binary">decode binary</h3>
 <p><strong>Description:</strong> Decode binary sequences of 8</p>
-<p><strong>Usage:</strong> <code>,decode binary</code></p>
-<h3 id="decode-b32">decode b32</h3>
-<p><strong>Description:</strong> Decode base32 text</p>
-<p><strong>Usage:</strong> <code>,decode b32</code></p>
-<h3 id="decode-braille">decode braille</h3>
-<p><strong>Description:</strong> Decide braille unicode characters to ascii</p>
-<p><strong>Usage:</strong> <code>,decode braille</code></p>
-<h3 id="decode-chr">decode chr</h3>
-<p><strong>Description:</strong> Decode character numbers to a message</p>
-<p><strong>Usage:</strong> <code>,decode chr</code></p></p>
+<p><strong>Usage:</strong> <code>,decode binary</code></p></p>
     </article>
 </section>
             <!-- endblock -->

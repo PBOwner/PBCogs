@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2152,6 +2160,12 @@
 <h3 id="listpermissions-channel">listpermissions channel</h3>
 <p><strong>Description:</strong> Generates the permissions of a channel for either a member or a role.</p>
 <p><strong>Usage:</strong> <code>,listpermissions channel</code></p>
+<h3 id="listpermissions-channel-member">listpermissions channel member</h3>
+<p><strong>Description:</strong> Generates the permissions for a member in a channel.</p>
+<p>Permissions Values:
+    True: means that the person has that permission
+    False: means that the person does not have that permission</p>
+<p><strong>Usage:</strong> <code>,listpermissions channel member</code></p>
 <h3 id="listpermissions-channel-role">listpermissions channel role</h3>
 <p><strong>Description:</strong> Generates the basic permissions for a role in a channel.  Note that these are only the basic permissions, True or False will only show when the permissions is different from the default permissions of a role.</p>
 <p>Role name can be the name of the role (or at least close to it) or the ID of it.</p>
@@ -2160,12 +2174,6 @@
     True: means that a person can explicitly do that, despite role permissions
     False: means that a person can explicitly not do that, despite role permissions</p>
 <p><strong>Usage:</strong> <code>,listpermissions channel role</code></p>
-<h3 id="listpermissions-channel-member">listpermissions channel member</h3>
-<p><strong>Description:</strong> Generates the permissions for a member in a channel.</p>
-<p>Permissions Values:
-    True: means that the person has that permission
-    False: means that the person does not have that permission</p>
-<p><strong>Usage:</strong> <code>,listpermissions channel member</code></p>
 <h3 id="availablepermissions">availablepermissions</h3>
 <p><strong>Description:</strong> Generates the permissions of a certain object and puts them in a nice table for you.  Only shows the available permissions.</p>
 <p><strong>Usage:</strong> <code>,availablepermissions</code></p>
@@ -2185,6 +2193,12 @@
 <h3 id="availablepermissions-channel">availablepermissions channel</h3>
 <p><strong>Description:</strong> Generates the permissions of a channel for either a member or a role.</p>
 <p><strong>Usage:</strong> <code>,availablepermissions channel</code></p>
+<h3 id="availablepermissions-channel-member">availablepermissions channel member</h3>
+<p><strong>Description:</strong> Generates the permissions for a member in a channel.</p>
+<p>Permissions Values:
+    True: means that the person has that permission
+    False: means that the person does not have that permission</p>
+<p><strong>Usage:</strong> <code>,availablepermissions channel member</code></p>
 <h3 id="availablepermissions-channel-role">availablepermissions channel role</h3>
 <p><strong>Description:</strong> Generates the basic permissions for a role in a channel.  Note that these are only the basic permissions, True or False will only show when the permissions is different from the default permissions of a role.</p>
 <p>Role name can be the name of the role (or at least close to it) or the ID of it.</p>
@@ -2193,28 +2207,9 @@
     True: means that a person can explicitly do that, despite role permissions
     False: means that a person can explicitly not do that, despite role permissions</p>
 <p><strong>Usage:</strong> <code>,availablepermissions channel role</code></p>
-<h3 id="availablepermissions-channel-member">availablepermissions channel member</h3>
-<p><strong>Description:</strong> Generates the permissions for a member in a channel.</p>
-<p>Permissions Values:
-    True: means that the person has that permission
-    False: means that the person does not have that permission</p>
-<p><strong>Usage:</strong> <code>,availablepermissions channel member</code></p>
 <h3 id="deniedpermissions">deniedpermissions</h3>
 <p><strong>Description:</strong> Generates the permissions of a certain object and puts them in a nice table for you.  Only shows the denied permissions.</p>
 <p><strong>Usage:</strong> <code>,deniedpermissions</code></p>
-<h3 id="deniedpermissions-guild">deniedpermissions guild</h3>
-<p><strong>Description:</strong> Generates the permissions for a role or member guild wide.  These will change between channels.</p>
-<p><strong>Usage:</strong> <code>,deniedpermissions guild</code></p>
-<h3 id="deniedpermissions-guild-member">deniedpermissions guild member</h3>
-<p><strong>Description:</strong> Generates the guild wide permissions for a member.  This only takes into account their guild permissions, not any for specific channels.</p>
-<p><strong>Usage:</strong> <code>,deniedpermissions guild member</code></p>
-<h3 id="deniedpermissions-guild-role">deniedpermissions guild role</h3>
-<p><strong>Description:</strong> Generates the permissions of a role.</p>
-<p>Role name can be the name of the role (or at least close to it) or the ID of it.</p>
-<p>Permissions Values:
-    True: means that the role has that permission
-    False: means that the role does not have that permission</p>
-<p><strong>Usage:</strong> <code>,deniedpermissions guild role</code></p>
 <h3 id="deniedpermissions-channel">deniedpermissions channel</h3>
 <p><strong>Description:</strong> Generates the permissions of a channel for either a member or a role.</p>
 <p><strong>Usage:</strong> <code>,deniedpermissions channel</code></p>
@@ -2231,7 +2226,20 @@
     None: means that it depends on the role permissions
     True: means that a person can explicitly do that, despite role permissions
     False: means that a person can explicitly not do that, despite role permissions</p>
-<p><strong>Usage:</strong> <code>,deniedpermissions channel role</code></p></p>
+<p><strong>Usage:</strong> <code>,deniedpermissions channel role</code></p>
+<h3 id="deniedpermissions-guild">deniedpermissions guild</h3>
+<p><strong>Description:</strong> Generates the permissions for a role or member guild wide.  These will change between channels.</p>
+<p><strong>Usage:</strong> <code>,deniedpermissions guild</code></p>
+<h3 id="deniedpermissions-guild-member">deniedpermissions guild member</h3>
+<p><strong>Description:</strong> Generates the guild wide permissions for a member.  This only takes into account their guild permissions, not any for specific channels.</p>
+<p><strong>Usage:</strong> <code>,deniedpermissions guild member</code></p>
+<h3 id="deniedpermissions-guild-role">deniedpermissions guild role</h3>
+<p><strong>Description:</strong> Generates the permissions of a role.</p>
+<p>Role name can be the name of the role (or at least close to it) or the ID of it.</p>
+<p>Permissions Values:
+    True: means that the role has that permission
+    False: means that the role does not have that permission</p>
+<p><strong>Usage:</strong> <code>,deniedpermissions guild role</code></p></p>
     </article>
 </section>
             <!-- endblock -->

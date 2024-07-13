@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2235,6 +2243,30 @@
 <h3 id="themeset">themeset</h3>
 <p><strong>Description:</strong> [Admin] Modify themes.</p>
 <p><strong>Usage:</strong> <code>,themeset</code></p>
+<h3 id="themeset-delete">themeset delete</h3>
+<p><strong>Description:</strong> [Owner] Remove objects in the specified theme.</p>
+<p><strong>Usage:</strong> <code>,themeset delete</code></p>
+<h3 id="themeset-delete-pet">themeset delete pet</h3>
+<p><strong>Description:</strong> [Owner] Remove a pet object in the specified theme.</p>
+<p>The default theme is <code>default</code>.</p>
+<p><strong>Usage:</strong> <code>,themeset delete pet</code></p>
+<h3 id="themeset-delete-monster">themeset delete monster</h3>
+<p><strong>Description:</strong> [Owner] Remove a monster object in the specified theme.</p>
+<p>The default theme is <code>default</code>.</p>
+<p><strong>Usage:</strong> <code>,themeset delete monster</code></p>
+<h3 id="themeset-list">themeset list</h3>
+<p><strong>Description:</strong> [Admin] Show custom objects in the specified theme.</p>
+<p><strong>Usage:</strong> <code>,themeset list</code></p>
+<h3 id="themeset-list-pet">themeset list pet</h3>
+<p><strong>Description:</strong> [Admin] Show pet objects in the specified theme.</p>
+<p>The default theme is <code>default</code>.
+This will only display custom pets added through the <code>themeset</code> command.</p>
+<p><strong>Usage:</strong> <code>,themeset list pet</code></p>
+<h3 id="themeset-list-monster">themeset list monster</h3>
+<p><strong>Description:</strong> [Admin] Show monster objects in the specified theme.</p>
+<p>The default theme is <code>default</code>.
+This will only display custom monsters added through the <code>themeset</code> command.</p>
+<p><strong>Usage:</strong> <code>,themeset list monster</code></p>
 <h3 id="themeset-add">themeset add</h3>
 <p><strong>Description:</strong> [Owner] Add/Update objects in the specified theme.</p>
 <p><strong>Usage:</strong> <code>,themeset add</code></p>
@@ -2261,30 +2293,6 @@
 <code>crit_chance</code> is the chance to have a critical strike, between <code>1</code> and <code>100</code> percent.
 <code>always_crit</code> is <code>True</code> or <code>False</code> for whether the pet will always have a critical strike when attacking.</p>
 <p><strong>Usage:</strong> <code>,themeset add pet</code></p>
-<h3 id="themeset-list">themeset list</h3>
-<p><strong>Description:</strong> [Admin] Show custom objects in the specified theme.</p>
-<p><strong>Usage:</strong> <code>,themeset list</code></p>
-<h3 id="themeset-list-pet">themeset list pet</h3>
-<p><strong>Description:</strong> [Admin] Show pet objects in the specified theme.</p>
-<p>The default theme is <code>default</code>.
-This will only display custom pets added through the <code>themeset</code> command.</p>
-<p><strong>Usage:</strong> <code>,themeset list pet</code></p>
-<h3 id="themeset-list-monster">themeset list monster</h3>
-<p><strong>Description:</strong> [Admin] Show monster objects in the specified theme.</p>
-<p>The default theme is <code>default</code>.
-This will only display custom monsters added through the <code>themeset</code> command.</p>
-<p><strong>Usage:</strong> <code>,themeset list monster</code></p>
-<h3 id="themeset-delete">themeset delete</h3>
-<p><strong>Description:</strong> [Owner] Remove objects in the specified theme.</p>
-<p><strong>Usage:</strong> <code>,themeset delete</code></p>
-<h3 id="themeset-delete-monster">themeset delete monster</h3>
-<p><strong>Description:</strong> [Owner] Remove a monster object in the specified theme.</p>
-<p>The default theme is <code>default</code>.</p>
-<p><strong>Usage:</strong> <code>,themeset delete monster</code></p>
-<h3 id="themeset-delete-pet">themeset delete pet</h3>
-<p><strong>Description:</strong> [Owner] Remove a pet object in the specified theme.</p>
-<p>The default theme is <code>default</code>.</p>
-<p><strong>Usage:</strong> <code>,themeset delete pet</code></p>
 <h3 id="rebirth">rebirth</h3>
 <p><strong>Description:</strong> Resets your character level and increases your rebirths by 1.</p>
 <p><strong>Usage:</strong> <code>,rebirth</code></p>
@@ -2304,18 +2312,18 @@ Trade 25 epic chests for 1 legendary chest.</p>
 <h3 id="loadout">loadout</h3>
 <p><strong>Description:</strong> Set up gear sets or loadouts.</p>
 <p><strong>Usage:</strong> <code>,loadout</code></p>
-<h3 id="loadout-delete">loadout delete</h3>
-<p><strong>Description:</strong> Delete a saved loadout.</p>
-<p><strong>Usage:</strong> <code>,loadout delete</code></p>
-<h3 id="loadout-show">loadout show</h3>
-<p><strong>Description:</strong> Show saved loadouts.</p>
-<p><strong>Usage:</strong> <code>,loadout show</code></p>
 <h3 id="loadout-equip">loadout equip</h3>
 <p><strong>Description:</strong> Equip a saved loadout.</p>
 <p><strong>Usage:</strong> <code>,loadout equip</code></p>
+<h3 id="loadout-delete">loadout delete</h3>
+<p><strong>Description:</strong> Delete a saved loadout.</p>
+<p><strong>Usage:</strong> <code>,loadout delete</code></p>
 <h3 id="loadout-save">loadout save</h3>
 <p><strong>Description:</strong> Save your current equipment as a loadout.</p>
 <p><strong>Usage:</strong> <code>,loadout save</code></p>
+<h3 id="loadout-show">loadout show</h3>
+<p><strong>Description:</strong> Show saved loadouts.</p>
+<p><strong>Usage:</strong> <code>,loadout show</code></p>
 <h3 id="aleaderboard">aleaderboard</h3>
 <p><strong>Description:</strong> Print the leaderboard.</p>
 <p><strong>Usage:</strong> <code>,aleaderboard</code></p>
@@ -2331,9 +2339,6 @@ Trade 25 epic chests for 1 legendary chest.</p>
 <h3 id="atransfer">atransfer</h3>
 <p><strong>Description:</strong> Transfer currency between players/economies.</p>
 <p><strong>Usage:</strong> <code>,atransfer</code></p>
-<h3 id="atransfer-give">atransfer give</h3>
-<p><strong>Description:</strong> [Owner] Give gold to adventurers.</p>
-<p><strong>Usage:</strong> <code>,atransfer give</code></p>
 <h3 id="atransfer-player">atransfer player</h3>
 <p><strong>Description:</strong> Transfer gold to another player.</p>
 <p><strong>Usage:</strong> <code>,atransfer player</code></p>
@@ -2343,6 +2348,9 @@ Trade 25 epic chests for 1 legendary chest.</p>
 <h3 id="atransfer-deposit">atransfer deposit</h3>
 <p><strong>Description:</strong> Convert bank currency to gold.</p>
 <p><strong>Usage:</strong> <code>,atransfer deposit</code></p>
+<h3 id="atransfer-give">atransfer give</h3>
+<p><strong>Description:</strong> [Owner] Give gold to adventurers.</p>
+<p><strong>Usage:</strong> <code>,atransfer give</code></p>
 <h3 id="mysets">mysets</h3>
 <p><strong>Description:</strong> Show your sets.</p>
 <p><strong>Usage:</strong> <code>,mysets</code></p>
@@ -2465,26 +2473,26 @@ Sell All:    <code>[p]backpack sellall rarity slot</code>
 Disassemble: <code>[p]backpack disassemble item_name</code></p>
 <p>Note: An item <strong>degrade</strong> level is how many rebirths it will last, before it is broken down.</p>
 <p><strong>Usage:</strong> <code>,backpack</code></p>
-<h3 id="backpack-equip">backpack equip</h3>
-<p><strong>Description:</strong> Equip an item from your backpack.</p>
-<p><strong>Usage:</strong> <code>,backpack equip</code></p>
 <h3 id="backpack-sell">backpack sell</h3>
 <p><strong>Description:</strong> Sell an item from your backpack.</p>
 <p><strong>Usage:</strong> <code>,backpack sell</code></p>
+<h3 id="backpack-sellall">backpack sellall</h3>
+<p><strong>Description:</strong> Sell all items in your backpack. Optionally specify rarity or slot.</p>
+<p><strong>Usage:</strong> <code>,backpack sellall</code></p>
 <h3 id="backpack-trade">backpack trade</h3>
 <p><strong>Description:</strong> Trade an item from your backpack to another user.</p>
 <p><strong>Usage:</strong> <code>,backpack trade</code></p>
+<h3 id="backpack-eset">backpack eset</h3>
+<p><strong>Description:</strong> Equip all parts of a set that you own.</p>
+<p><strong>Usage:</strong> <code>,backpack eset</code></p>
 <h3 id="backpack-disassemble">backpack disassemble</h3>
 <p><strong>Description:</strong> Disassemble items from your backpack.</p>
 <p>This will provide a chance for a chest,
 or the item might break while you are handling it...</p>
 <p><strong>Usage:</strong> <code>,backpack disassemble</code></p>
-<h3 id="backpack-eset">backpack eset</h3>
-<p><strong>Description:</strong> Equip all parts of a set that you own.</p>
-<p><strong>Usage:</strong> <code>,backpack eset</code></p>
-<h3 id="backpack-sellall">backpack sellall</h3>
-<p><strong>Description:</strong> Sell all items in your backpack. Optionally specify rarity or slot.</p>
-<p><strong>Usage:</strong> <code>,backpack sellall</code></p>
+<h3 id="backpack-equip">backpack equip</h3>
+<p><strong>Description:</strong> Equip an item from your backpack.</p>
+<p><strong>Usage:</strong> <code>,backpack equip</code></p>
 <h3 id="ebackpack">ebackpack</h3>
 <p><strong>Description:</strong> This shows the contents of your backpack that can be equipped.</p>
 <p>Give it a rarity and/or slot to filter what backpack items to show.</p>
@@ -2494,12 +2502,6 @@ or the item might break while you are handling it...</p>
 <p><strong>Description:</strong> Complex backpack management tools.</p>
 <p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
 <p><strong>Usage:</strong> <code>,cbackpack</code></p>
-<h3 id="cbackpack-disassemble">cbackpack disassemble</h3>
-<p><strong>Description:</strong> Disassemble items from your backpack.</p>
-<p>This will provide a chance for a chest,
-or the item might break while you are handling it...</p>
-<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
-<p><strong>Usage:</strong> <code>,cbackpack disassemble</code></p>
 <h3 id="cbackpack-show">cbackpack show</h3>
 <p><strong>Description:</strong> This shows the contents of your backpack.</p>
 <p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
@@ -2509,32 +2511,15 @@ or the item might break while you are handling it...</p>
 <p>Forged items cannot be sold using this command.</p>
 <p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
 <p><strong>Usage:</strong> <code>,cbackpack sell</code></p>
+<h3 id="cbackpack-disassemble">cbackpack disassemble</h3>
+<p><strong>Description:</strong> Disassemble items from your backpack.</p>
+<p>This will provide a chance for a chest,
+or the item might break while you are handling it...</p>
+<p>Please read the usage instructions <a href="https://github.com/aikaterna/gobcog/blob/master/docs/cbackpack.md">here</a></p>
+<p><strong>Usage:</strong> <code>,cbackpack disassemble</code></p>
 <h3 id="adventureset">adventureset</h3>
 <p><strong>Description:</strong> Setup various adventure settings.</p>
 <p><strong>Usage:</strong> <code>,adventureset</code></p>
-<h3 id="adventureset-economy">adventureset economy</h3>
-<p><strong>Description:</strong> [Admin] Manages the adventure economy.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy</code></p>
-<h3 id="adventureset-economy-withdraw">adventureset economy withdraw</h3>
-<p><strong>Description:</strong> [Admin] Toggle whether users are allowed to withdraw from adventure currency to main currency.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy withdraw</code></p>
-<h3 id="adventureset-economy-rate">adventureset economy rate</h3>
-<p><strong>Description:</strong> [Owner] Set how much 1 bank credit is worth in adventure.</p>
-<p><strong>rate_in</strong>: Is how much gold you will get for 1 bank credit. Default is 10
-<strong>rate_out</strong>: Is how much gold is needed to convert to 1 bank credit. Default is 11</p>
-<p><strong>Usage:</strong> <code>,adventureset economy rate</code></p>
-<h3 id="adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</h3>
-<p><strong>Description:</strong> [Admin] Set how much players are allowed to withdraw.</p>
-<p><strong>Usage:</strong> <code>,adventureset economy maxwithdraw</code></p>
-<h3 id="adventureset-economy-tax">adventureset economy tax</h3>
-<p><strong>Description:</strong> [Owner] Set the tax thresholds.</p>
-<p><strong>gold</strong> must be positive
-<strong>tax</strong> must be between 0 and 1.</p>
-<p>Example: <code>[p]adventureset economy tax 10000,0.1 20000,0.2 ...</code></p>
-<p><strong>Usage:</strong> <code>,adventureset economy tax</code></p>
-<h3 id="adventureset-cartname">adventureset cartname</h3>
-<p><strong>Description:</strong> [Admin] Set the server's name of the cart.</p>
-<p><strong>Usage:</strong> <code>,adventureset cartname</code></p>
 <h3 id="adventureset-carttime">adventureset carttime</h3>
 <p><strong>Description:</strong> [Admin] Set the cooldown of the cart.
 Time can be in seconds, minutes, hours, or days.
@@ -2560,12 +2545,12 @@ Examples: <code>1h 30m</code>, <code>2 days</code>, <code>300 seconds</code></p>
 <h3 id="adventureset-locks">adventureset locks</h3>
 <p><strong>Description:</strong> [Admin] Reset Adventure locks.</p>
 <p><strong>Usage:</strong> <code>,adventureset locks</code></p>
-<h3 id="adventureset-locks-adventure">adventureset locks adventure</h3>
-<p><strong>Description:</strong> [Admin] Reset the adventure game lock for the server.</p>
-<p><strong>Usage:</strong> <code>,adventureset locks adventure</code></p>
 <h3 id="adventureset-locks-user">adventureset locks user</h3>
 <p><strong>Description:</strong> [Owner] Reset a multiple adventurers lock.</p>
 <p><strong>Usage:</strong> <code>,adventureset locks user</code></p>
+<h3 id="adventureset-locks-adventure">adventureset locks adventure</h3>
+<p><strong>Description:</strong> [Admin] Reset the adventure game lock for the server.</p>
+<p><strong>Usage:</strong> <code>,adventureset locks adventure</code></p>
 <h3 id="adventureset-theme">adventureset theme</h3>
 <p><strong>Description:</strong> [Owner] Change the theme for adventure.</p>
 <p>The default theme is <code>default</code>.
@@ -2605,6 +2590,29 @@ Use <code>[p]adventureset cart</code> with no arguments to show the channel list
 <h3 id="adventureset-sepcurrency">adventureset sepcurrency</h3>
 <p><strong>Description:</strong> [Owner] Toggle whether the currency should be separated from main bot currency.</p>
 <p><strong>Usage:</strong> <code>,adventureset sepcurrency</code></p>
+<h3 id="adventureset-economy">adventureset economy</h3>
+<p><strong>Description:</strong> [Admin] Manages the adventure economy.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy</code></p>
+<h3 id="adventureset-economy-rate">adventureset economy rate</h3>
+<p><strong>Description:</strong> [Owner] Set how much 1 bank credit is worth in adventure.</p>
+<p><strong>rate_in</strong>: Is how much gold you will get for 1 bank credit. Default is 10
+<strong>rate_out</strong>: Is how much gold is needed to convert to 1 bank credit. Default is 11</p>
+<p><strong>Usage:</strong> <code>,adventureset economy rate</code></p>
+<h3 id="adventureset-economy-maxwithdraw">adventureset economy maxwithdraw</h3>
+<p><strong>Description:</strong> [Admin] Set how much players are allowed to withdraw.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy maxwithdraw</code></p>
+<h3 id="adventureset-economy-withdraw">adventureset economy withdraw</h3>
+<p><strong>Description:</strong> [Admin] Toggle whether users are allowed to withdraw from adventure currency to main currency.</p>
+<p><strong>Usage:</strong> <code>,adventureset economy withdraw</code></p>
+<h3 id="adventureset-economy-tax">adventureset economy tax</h3>
+<p><strong>Description:</strong> [Owner] Set the tax thresholds.</p>
+<p><strong>gold</strong> must be positive
+<strong>tax</strong> must be between 0 and 1.</p>
+<p>Example: <code>[p]adventureset economy tax 10000,0.1 20000,0.2 ...</code></p>
+<p><strong>Usage:</strong> <code>,adventureset economy tax</code></p>
+<h3 id="adventureset-cartname">adventureset cartname</h3>
+<p><strong>Description:</strong> [Admin] Set the server's name of the cart.</p>
+<p><strong>Usage:</strong> <code>,adventureset cartname</code></p>
 <h3 id="adventure">adventure</h3>
 <p><strong>Description:</strong> This will send you on an adventure!</p>
 <p>You play by reacting with the offered emojis.</p>

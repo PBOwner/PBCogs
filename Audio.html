@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,21 +2144,21 @@
 <h3 id="queue">queue</h3>
 <p><strong>Description:</strong> List the songs in the queue.</p>
 <p><strong>Usage:</strong> <code>,queue</code></p>
-<h3 id="queue-clear">queue clear</h3>
-<p><strong>Description:</strong> Clears the queue.</p>
-<p><strong>Usage:</strong> <code>,queue clear</code></p>
-<h3 id="queue-clean">queue clean</h3>
-<p><strong>Description:</strong> Removes songs from the queue if the requester is not in the voice channel.</p>
-<p><strong>Usage:</strong> <code>,queue clean</code></p>
-<h3 id="queue-shuffle">queue shuffle</h3>
-<p><strong>Description:</strong> Shuffles the queue.</p>
-<p><strong>Usage:</strong> <code>,queue shuffle</code></p>
 <h3 id="queue-cleanself">queue cleanself</h3>
 <p><strong>Description:</strong> Removes all tracks you requested from the queue.</p>
 <p><strong>Usage:</strong> <code>,queue cleanself</code></p>
 <h3 id="queue-search">queue search</h3>
 <p><strong>Description:</strong> Search the queue.</p>
 <p><strong>Usage:</strong> <code>,queue search</code></p>
+<h3 id="queue-clean">queue clean</h3>
+<p><strong>Description:</strong> Removes songs from the queue if the requester is not in the voice channel.</p>
+<p><strong>Usage:</strong> <code>,queue clean</code></p>
+<h3 id="queue-shuffle">queue shuffle</h3>
+<p><strong>Description:</strong> Shuffles the queue.</p>
+<p><strong>Usage:</strong> <code>,queue shuffle</code></p>
+<h3 id="queue-clear">queue clear</h3>
+<p><strong>Description:</strong> Clears the queue.</p>
+<p><strong>Usage:</strong> <code>,queue clear</code></p>
 <h3 id="playlist">playlist</h3>
 <p><strong>Description:</strong> Playlist configuration options.</p>
 <p>Scope info:
@@ -2164,6 +2172,235 @@
 ​ ​ ​ ​ ​ ​ ​ ​ Visible to all bot users, if --author is passed.
 ​ ​ ​ ​ ​ ​ ​ ​ Editable by bot owner and the playlist creator.</p>
 <p><strong>Usage:</strong> <code>,playlist</code></p>
+<h3 id="playlist-rename">playlist rename</h3>
+<p><strong>Description:</strong> Rename an existing playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist rename playlist_name_OR_id new_name [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist rename MyGuildPlaylist RenamedGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist rename MyGlobalPlaylist RenamedGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist rename MyPersonalPlaylist RenamedPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist rename</code></p>
+<h3 id="playlist-download">playlist download</h3>
+<p><strong>Description:</strong> Download a copy of a playlist.</p>
+<p>These files can be used with the <code>[p]playlist upload</code> command.
+Red v2-compatible playlists can be generated by passing True
+for the v2 variable.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist download playlist_name_OR_id [v2=True_OR_False] [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist download MyGuildPlaylist True</code>
+​ ​ ​ ​ <code>[p]playlist download MyGlobalPlaylist False --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist download MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist download</code></p>
+<h3 id="playlist-update">playlist update</h3>
+<p><strong>Description:</strong> Updates all tracks in a playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist update playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist update MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist update MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist update MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist update</code></p>
+<h3 id="playlist-create">playlist create</h3>
+<p><strong>Description:</strong> Create an empty playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist create playlist_name [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist create MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist create MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist create MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist create</code></p>
+<h3 id="playlist-list">playlist list</h3>
+<p><strong>Description:</strong> List saved playlists.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist list [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist list</code>
+​ ​ ​ ​ <code>[p]playlist list --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist list --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist list</code></p>
+<h3 id="playlist-info">playlist info</h3>
+<p><strong>Description:</strong> Retrieve information from a saved playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist info playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist info MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist info MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist info MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist info</code></p>
+<h3 id="playlist-start">playlist start</h3>
+<p><strong>Description:</strong> Load a playlist into the queue.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​<code>[p]playlist start playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist start MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist start MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist start MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist start</code></p>
+<h3 id="playlist-append">playlist append</h3>
+<p><strong>Description:</strong> Add a track URL, playlist link, or quick search to a playlist.</p>
+<p>The track(s) will be appended to the end of the playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist append playlist_name_OR_id track_name_OR_url [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist append MyGuildPlaylist Hello by Adele</code>
+​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global --Author Draper#6666</code></p>
+<p><strong>Usage:</strong> <code>,playlist append</code></p>
+<h3 id="playlist-delete">playlist delete</h3>
+<p><strong>Description:</strong> Delete a saved playlist.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]playlist delete playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+​ ​ ​ ​ Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]playlist delete MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]playlist delete MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist delete MyPersonalPlaylist --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist delete</code></p>
 <h3 id="playlist-save">playlist save</h3>
 <p><strong>Description:</strong> Save a playlist from a url.</p>
 <p><strong>Usage</strong>:
@@ -2266,160 +2503,6 @@ V3 Playlist made with <code>[p]playlist download</code> will load a lot faster.<
 ​ ​ ​ ​ <code>[p]playlist dedupe MyGlobalPlaylist --scope Global</code>
 ​ ​ ​ ​ <code>[p]playlist dedupe MyPersonalPlaylist --scope User</code></p>
 <p><strong>Usage:</strong> <code>,playlist dedupe</code></p>
-<h3 id="playlist-remove">playlist remove</h3>
-<p><strong>Description:</strong> Remove a track from a playlist by url.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist remove playlist_name_OR_id url [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist remove MyGuildPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU</code>
-​ ​ ​ ​ <code>[p]playlist remove MyGlobalPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist remove MyPersonalPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist remove</code></p>
-<h3 id="playlist-append">playlist append</h3>
-<p><strong>Description:</strong> Add a track URL, playlist link, or quick search to a playlist.</p>
-<p>The track(s) will be appended to the end of the playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist append playlist_name_OR_id track_name_OR_url [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist append MyGuildPlaylist Hello by Adele</code>
-​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist append MyGlobalPlaylist Hello by Adele --scope Global --Author Draper#6666</code></p>
-<p><strong>Usage:</strong> <code>,playlist append</code></p>
-<h3 id="playlist-download">playlist download</h3>
-<p><strong>Description:</strong> Download a copy of a playlist.</p>
-<p>These files can be used with the <code>[p]playlist upload</code> command.
-Red v2-compatible playlists can be generated by passing True
-for the v2 variable.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist download playlist_name_OR_id [v2=True_OR_False] [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist download MyGuildPlaylist True</code>
-​ ​ ​ ​ <code>[p]playlist download MyGlobalPlaylist False --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist download MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist download</code></p>
-<h3 id="playlist-update">playlist update</h3>
-<p><strong>Description:</strong> Updates all tracks in a playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist update playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist update MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist update MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist update MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist update</code></p>
-<h3 id="playlist-rename">playlist rename</h3>
-<p><strong>Description:</strong> Rename an existing playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist rename playlist_name_OR_id new_name [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist rename MyGuildPlaylist RenamedGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist rename MyGlobalPlaylist RenamedGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist rename MyPersonalPlaylist RenamedPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist rename</code></p>
-<h3 id="playlist-list">playlist list</h3>
-<p><strong>Description:</strong> List saved playlists.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist list [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist list</code>
-​ ​ ​ ​ <code>[p]playlist list --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist list --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist list</code></p>
 <h3 id="playlist-copy">playlist copy</h3>
 <p><strong>Description:</strong> Copy a playlist from one scope to another.</p>
 <p><strong>Usage</strong>:
@@ -2448,10 +2531,10 @@ for the v2 variable.</p>
 ​ ​ ​ ​ <code>[p]playlist copy MyGlobalPlaylist --from-scope Global --to-author Draper#6666 --to-scope User</code>
 ​ ​ ​ ​ <code>[p]playlist copy MyPersonalPlaylist --from-scope user --to-author Draper#6666 --to-scope Guild --to-guild Red - Discord Bot</code></p>
 <p><strong>Usage:</strong> <code>,playlist copy</code></p>
-<h3 id="playlist-create">playlist create</h3>
-<p><strong>Description:</strong> Create an empty playlist.</p>
+<h3 id="playlist-remove">playlist remove</h3>
+<p><strong>Description:</strong> Remove a track from a playlist by url.</p>
 <p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist create playlist_name [args]</code></p>
+​ ​ ​ ​ <code>[p]playlist remove playlist_name_OR_id url [args]</code></p>
 <p><strong>Args</strong>:
 ​ ​ ​ ​ The following are all optional:
 ​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
@@ -2469,85 +2552,10 @@ for the v2 variable.</p>
 ​ ​ ​ ​ Guild ID
 ​ ​ ​ ​ Exact guild name</p>
 <p>Example use:
-​ ​ ​ ​ <code>[p]playlist create MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist create MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist create MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist create</code></p>
-<h3 id="playlist-info">playlist info</h3>
-<p><strong>Description:</strong> Retrieve information from a saved playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist info playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist info MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist info MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist info MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist info</code></p>
-<h3 id="playlist-start">playlist start</h3>
-<p><strong>Description:</strong> Load a playlist into the queue.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​<code>[p]playlist start playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist start MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist start MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist start MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist start</code></p>
-<h3 id="playlist-delete">playlist delete</h3>
-<p><strong>Description:</strong> Delete a saved playlist.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]playlist delete playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-​ ​ ​ ​ Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]playlist delete MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]playlist delete MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]playlist delete MyPersonalPlaylist --scope User</code></p>
-<p><strong>Usage:</strong> <code>,playlist delete</code></p>
+​ ​ ​ ​ <code>[p]playlist remove MyGuildPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU</code>
+​ ​ ​ ​ <code>[p]playlist remove MyGlobalPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU --scope Global</code>
+​ ​ ​ ​ <code>[p]playlist remove MyPersonalPlaylist https://www.youtube.com/watch?v=MN3x-kAbgFU --scope User</code></p>
+<p><strong>Usage:</strong> <code>,playlist remove</code></p>
 <h3 id="play">play</h3>
 <p><strong>Description:</strong> Play the specified track or search for a close match.</p>
 <p>To play a local track, the query should be <code>&lt;parentfolder&gt;\&lt;filename&gt;</code>.
@@ -2579,6 +2587,17 @@ If you are the bot owner, use <code>[p]audioset info</code> to display your loca
 <h3 id="local">local</h3>
 <p><strong>Description:</strong> Local playback commands.</p>
 <p><strong>Usage:</strong> <code>,local</code></p>
+<h3 id="local-folder">local folder</h3>
+<p><strong>Description:</strong> Play all songs in a localtracks folder.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]local folder</code>
+​ ​ ​ ​ ​ ​ ​ ​ Open a menu to pick a folder to queue.</p>
+<p>​ ​ <code>[p]local folder folder_name</code>
+​ ​ ​ ​ ​ ​ ​ ​ Queues all of the tracks inside the folder_name folder.</p>
+<p><strong>Usage:</strong> <code>,local folder</code></p>
+<h3 id="local-search">local search</h3>
+<p><strong>Description:</strong> Search for songs across all localtracks folders.</p>
+<p><strong>Usage:</strong> <code>,local search</code></p>
 <h3 id="local-play">local play</h3>
 <p><strong>Description:</strong> Play a local track.</p>
 <p>To play a local track, either use the menu to choose a track or enter in the track path directly with the play command.
@@ -2590,17 +2609,6 @@ To play an entire folder, use <code>[p]help local folder</code> for instructions
 ​ ​ ​ ​ <code>[p]play album_folder\song_name.mp3</code>
 ​ ​ ​ ​ ​ ​ ​ ​ Use a direct link relative to the localtracks folder.</p>
 <p><strong>Usage:</strong> <code>,local play</code></p>
-<h3 id="local-search">local search</h3>
-<p><strong>Description:</strong> Search for songs across all localtracks folders.</p>
-<p><strong>Usage:</strong> <code>,local search</code></p>
-<h3 id="local-folder">local folder</h3>
-<p><strong>Description:</strong> Play all songs in a localtracks folder.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]local folder</code>
-​ ​ ​ ​ ​ ​ ​ ​ Open a menu to pick a folder to queue.</p>
-<p>​ ​ <code>[p]local folder folder_name</code>
-​ ​ ​ ​ ​ ​ ​ ​ Queues all of the tracks inside the folder_name folder.</p>
-<p><strong>Usage:</strong> <code>,local folder</code></p>
 <h3 id="llset">llset</h3>
 <p><strong>Description:</strong> <code>Dangerous commands</code> Manage Lavalink node configuration settings.</p>
 <p>This command block holds all commands to configure an unmanaged (user maintained) or managed (bot maintained) Lavalink node.</p>
@@ -2608,6 +2616,92 @@ To play an entire folder, use <code>[p]help local folder</code> for instructions
 i.e. been told by someone in the Red-Discord Bot support server to do so.
 All the commands in here have the potential to break the Audio cog.</p>
 <p><strong>Usage:</strong> <code>,llset</code></p>
+<h3 id="llset-secured">llset secured</h3>
+<p><strong>Description:</strong> Set the Lavalink node connection to secured.</p>
+<p>This toggle sets the connection type to secured or unsecured when connecting to an unmanaged Lavalink node.</p>
+<p><strong>Usage:</strong> <code>,llset secured</code></p>
+<h3 id="llset-reset">llset reset</h3>
+<p><strong>Description:</strong> Reset all <code>llset</code> changes back to their default values.</p>
+<p><strong>Usage:</strong> <code>,llset reset</code></p>
+<h3 id="llset-password">llset password</h3>
+<p><strong>Description:</strong> Set the Lavalink node password.</p>
+<p>This command sets the connection password which Audio will use to connect to an unmanaged Lavalink node.</p>
+<p><strong>Usage:</strong> <code>,llset password</code></p>
+<h3 id="llset-port">llset port</h3>
+<p><strong>Description:</strong> Set the Lavalink node port.</p>
+<p>This command sets the connection port which Audio will use to connect to an unmanaged Lavalink node.
+Set port to -1 to disable the port and connect to the specified host via ports 80/443.</p>
+<p><strong>Usage:</strong> <code>,llset port</code></p>
+<h3 id="llset-config">llset config</h3>
+<p><strong>Description:</strong> Configure the managed Lavalink node runtime options.</p>
+<p>All settings under this group will likely cause Audio to malfunction if changed from their defaults, only change settings here if you have been advised to by support.</p>
+<p><strong>Usage:</strong> <code>,llset config</code></p>
+<h3 id="llset-config-bind">llset config bind</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node's binding IP address.</p>
+<p>This value by default is <code>localhost</code> which will restrict the server to only localhost apps by default, changing this will likely break the managed Lavalink node if you don't know what you are doing.</p>
+<p><strong>Usage:</strong> <code>,llset config bind</code></p>
+<h3 id="llset-config-source">llset config source</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Toggle audio sources on/off.</p>
+<p>By default, all sources are enabled, you should only use commands here to disable a specific source if you have been advised to, disabling sources without background knowledge can cause Audio to break.</p>
+<p><strong>Usage:</strong> <code>,llset config source</code></p>
+<h3 id="llset-config-source-local">llset config source local</h3>
+<p><strong>Description:</strong> Toggle local file usage on or off.</p>
+<p>This toggle controls the playback of all local track content, usually found inside the <code>localtracks</code> folder.</p>
+<p><strong>Usage:</strong> <code>,llset config source local</code></p>
+<h3 id="llset-config-source-vimeo">llset config source vimeo</h3>
+<p><strong>Description:</strong> Toggle Vimeo source on or off.</p>
+<p>This toggle controls the playback of all Vimeo related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source vimeo</code></p>
+<h3 id="llset-config-source-youtube">llset config source youtube</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Toggle YouTube source on or off (this includes Spotify).</p>
+<p>This toggle controls the playback of all YouTube and Spotify related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source youtube</code></p>
+<h3 id="llset-config-source-http">llset config source http</h3>
+<p><strong>Description:</strong> Toggle HTTP direct URL usage on or off.</p>
+<p>This source is used to allow playback from direct HTTP streams (this does not affect direct URL playback for the other sources).</p>
+<p><strong>Usage:</strong> <code>,llset config source http</code></p>
+<h3 id="llset-config-source-soundcloud">llset config source soundcloud</h3>
+<p><strong>Description:</strong> Toggle Soundcloud source on or off.</p>
+<p>This toggle controls the playback of all SoundCloud related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source soundcloud</code></p>
+<h3 id="llset-config-source-bandcamp">llset config source bandcamp</h3>
+<p><strong>Description:</strong> Toggle Bandcamp source on or off.</p>
+<p>This toggle controls the playback of all Bandcamp related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source bandcamp</code></p>
+<h3 id="llset-config-source-twitch">llset config source twitch</h3>
+<p><strong>Description:</strong> Toggle Twitch source on or off.</p>
+<p>This toggle controls the playback of all Twitch related content.</p>
+<p><strong>Usage:</strong> <code>,llset config source twitch</code></p>
+<h3 id="llset-config-token">llset config token</h3>
+<p><strong>Description:</strong> Set the managed Lavalink node's connection password.</p>
+<p>This is the password required for Audio to connect to the managed Lavalink node.
+The value by default is <code>youshallnotpass</code>.</p>
+<p><strong>Usage:</strong> <code>,llset config token</code></p>
+<h3 id="llset-config-server">llset config server</h3>
+<p><strong>Description:</strong> Configure the managed node authorization and connection settings.</p>
+<p><strong>Usage:</strong> <code>,llset config server</code></p>
+<h3 id="llset-config-server-framebuffer">llset config server framebuffer</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node framebuffer size.</p>
+<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
+<p><strong>Usage:</strong> <code>,llset config server framebuffer</code></p>
+<h3 id="llset-config-server-buffer">llset config server buffer</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code>  Set the managed Lavalink node JDA-NAS buffer size.</p>
+<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
+<p><strong>Usage:</strong> <code>,llset config server buffer</code></p>
+<h3 id="llset-config-port">llset config port</h3>
+<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node's connection port.</p>
+<p>This port is the port the managed Lavalink node binds to, you should only change this if there is a conflict with the default port because you already have an application using port 2333 on this device.</p>
+<p>The value by default is <code>2333</code>.</p>
+<p><strong>Usage:</strong> <code>,llset config port</code></p>
+<h3 id="llset-info">llset info</h3>
+<p><strong>Description:</strong> Display Lavalink connection settings.</p>
+<p><strong>Usage:</strong> <code>,llset info</code></p>
+<h3 id="llset-heapsize">llset heapsize</h3>
+<p><strong>Description:</strong> Set the managed Lavalink node maximum heap-size.</p>
+<p>By default, this value is 50% of available RAM in the host machine represented by [1-1024][M|G] (256M, 256G for example)</p>
+<p>This value only represents the maximum amount of RAM allowed to be used at any given point, and does not mean that the managed Lavalink node will always use this amount of RAM.</p>
+<p>To reset this value to the default, run the command without any input.</p>
+<p><strong>Usage:</strong> <code>,llset heapsize</code></p>
 <h3 id="llset-host">llset host</h3>
 <p><strong>Description:</strong> Set the Lavalink node host.</p>
 <p>This command sets the connection host which Audio will use to connect to an unmanaged Lavalink node.</p>
@@ -2626,92 +2720,6 @@ The current supported versions are Java 11 and 17.</p>
 <p><strong>Description:</strong> Toggle using external (unmanaged) Lavalink nodes - requires an existing Lavalink node for Audio to work, if enabled.</p>
 <p>This command disables the managed Lavalink server. If you do not have another Lavalink node set up, you will be unable to use Audio while this is enabled.</p>
 <p><strong>Usage:</strong> <code>,llset unmanaged</code></p>
-<h3 id="llset-secured">llset secured</h3>
-<p><strong>Description:</strong> Set the Lavalink node connection to secured.</p>
-<p>This toggle sets the connection type to secured or unsecured when connecting to an unmanaged Lavalink node.</p>
-<p><strong>Usage:</strong> <code>,llset secured</code></p>
-<h3 id="llset-reset">llset reset</h3>
-<p><strong>Description:</strong> Reset all <code>llset</code> changes back to their default values.</p>
-<p><strong>Usage:</strong> <code>,llset reset</code></p>
-<h3 id="llset-heapsize">llset heapsize</h3>
-<p><strong>Description:</strong> Set the managed Lavalink node maximum heap-size.</p>
-<p>By default, this value is 50% of available RAM in the host machine represented by [1-1024][M|G] (256M, 256G for example)</p>
-<p>This value only represents the maximum amount of RAM allowed to be used at any given point, and does not mean that the managed Lavalink node will always use this amount of RAM.</p>
-<p>To reset this value to the default, run the command without any input.</p>
-<p><strong>Usage:</strong> <code>,llset heapsize</code></p>
-<h3 id="llset-password">llset password</h3>
-<p><strong>Description:</strong> Set the Lavalink node password.</p>
-<p>This command sets the connection password which Audio will use to connect to an unmanaged Lavalink node.</p>
-<p><strong>Usage:</strong> <code>,llset password</code></p>
-<h3 id="llset-port">llset port</h3>
-<p><strong>Description:</strong> Set the Lavalink node port.</p>
-<p>This command sets the connection port which Audio will use to connect to an unmanaged Lavalink node.
-Set port to -1 to disable the port and connect to the specified host via ports 80/443.</p>
-<p><strong>Usage:</strong> <code>,llset port</code></p>
-<h3 id="llset-config">llset config</h3>
-<p><strong>Description:</strong> Configure the managed Lavalink node runtime options.</p>
-<p>All settings under this group will likely cause Audio to malfunction if changed from their defaults, only change settings here if you have been advised to by support.</p>
-<p><strong>Usage:</strong> <code>,llset config</code></p>
-<h3 id="llset-config-port">llset config port</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node's connection port.</p>
-<p>This port is the port the managed Lavalink node binds to, you should only change this if there is a conflict with the default port because you already have an application using port 2333 on this device.</p>
-<p>The value by default is <code>2333</code>.</p>
-<p><strong>Usage:</strong> <code>,llset config port</code></p>
-<h3 id="llset-config-bind">llset config bind</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node's binding IP address.</p>
-<p>This value by default is <code>localhost</code> which will restrict the server to only localhost apps by default, changing this will likely break the managed Lavalink node if you don't know what you are doing.</p>
-<p><strong>Usage:</strong> <code>,llset config bind</code></p>
-<h3 id="llset-config-source">llset config source</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Toggle audio sources on/off.</p>
-<p>By default, all sources are enabled, you should only use commands here to disable a specific source if you have been advised to, disabling sources without background knowledge can cause Audio to break.</p>
-<p><strong>Usage:</strong> <code>,llset config source</code></p>
-<h3 id="llset-config-source-soundcloud">llset config source soundcloud</h3>
-<p><strong>Description:</strong> Toggle Soundcloud source on or off.</p>
-<p>This toggle controls the playback of all SoundCloud related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source soundcloud</code></p>
-<h3 id="llset-config-source-bandcamp">llset config source bandcamp</h3>
-<p><strong>Description:</strong> Toggle Bandcamp source on or off.</p>
-<p>This toggle controls the playback of all Bandcamp related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source bandcamp</code></p>
-<h3 id="llset-config-source-twitch">llset config source twitch</h3>
-<p><strong>Description:</strong> Toggle Twitch source on or off.</p>
-<p>This toggle controls the playback of all Twitch related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source twitch</code></p>
-<h3 id="llset-config-source-local">llset config source local</h3>
-<p><strong>Description:</strong> Toggle local file usage on or off.</p>
-<p>This toggle controls the playback of all local track content, usually found inside the <code>localtracks</code> folder.</p>
-<p><strong>Usage:</strong> <code>,llset config source local</code></p>
-<h3 id="llset-config-source-vimeo">llset config source vimeo</h3>
-<p><strong>Description:</strong> Toggle Vimeo source on or off.</p>
-<p>This toggle controls the playback of all Vimeo related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source vimeo</code></p>
-<h3 id="llset-config-source-youtube">llset config source youtube</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Toggle YouTube source on or off (this includes Spotify).</p>
-<p>This toggle controls the playback of all YouTube and Spotify related content.</p>
-<p><strong>Usage:</strong> <code>,llset config source youtube</code></p>
-<h3 id="llset-config-source-http">llset config source http</h3>
-<p><strong>Description:</strong> Toggle HTTP direct URL usage on or off.</p>
-<p>This source is used to allow playback from direct HTTP streams (this does not affect direct URL playback for the other sources).</p>
-<p><strong>Usage:</strong> <code>,llset config source http</code></p>
-<h3 id="llset-config-token">llset config token</h3>
-<p><strong>Description:</strong> Set the managed Lavalink node's connection password.</p>
-<p>This is the password required for Audio to connect to the managed Lavalink node.
-The value by default is <code>youshallnotpass</code>.</p>
-<p><strong>Usage:</strong> <code>,llset config token</code></p>
-<h3 id="llset-config-server">llset config server</h3>
-<p><strong>Description:</strong> Configure the managed node authorization and connection settings.</p>
-<p><strong>Usage:</strong> <code>,llset config server</code></p>
-<h3 id="llset-config-server-framebuffer">llset config server framebuffer</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code> Set the managed Lavalink node framebuffer size.</p>
-<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
-<p><strong>Usage:</strong> <code>,llset config server framebuffer</code></p>
-<h3 id="llset-config-server-buffer">llset config server buffer</h3>
-<p><strong>Description:</strong> <code>Dangerous command</code>  Set the managed Lavalink node JDA-NAS buffer size.</p>
-<p>Only change this if you have been directly advised to, changing it can cause significant playback issues.</p>
-<p><strong>Usage:</strong> <code>,llset config server buffer</code></p>
-<h3 id="llset-info">llset info</h3>
-<p><strong>Description:</strong> Display Lavalink connection settings.</p>
-<p><strong>Usage:</strong> <code>,llset info</code></p>
 <h3 id="eq">eq</h3>
 <p><strong>Description:</strong> Equalizer management.</p>
 <p>Band positions are 1-15 and values have a range of -0.25 to 1.0.
@@ -2719,6 +2727,9 @@ Band names are 25, 40, 63, 100, 160, 250, 400, 630, 1k, 1.6k, 2.5k, 4k,
 6.3k, 10k, and 16k Hz.
 Setting a band value to -0.25 nullifies it while +0.25 is double.</p>
 <p><strong>Usage:</strong> <code>,eq</code></p>
+<h3 id="eq-save">eq save</h3>
+<p><strong>Description:</strong> Save the current eq settings to a preset.</p>
+<p><strong>Usage:</strong> <code>,eq save</code></p>
 <h3 id="eq-set">eq set</h3>
 <p><strong>Description:</strong> Set an eq band with a band number or name and value.</p>
 <p>Band positions are 1-15 and values have a range of -0.25 to 1.0.
@@ -2729,18 +2740,15 @@ Setting a band value to -0.25 nullifies it while +0.25 is double.</p>
 <h3 id="eq-list">eq list</h3>
 <p><strong>Description:</strong> List saved eq presets.</p>
 <p><strong>Usage:</strong> <code>,eq list</code></p>
-<h3 id="eq-save">eq save</h3>
-<p><strong>Description:</strong> Save the current eq settings to a preset.</p>
-<p><strong>Usage:</strong> <code>,eq save</code></p>
-<h3 id="eq-delete">eq delete</h3>
-<p><strong>Description:</strong> Delete a saved eq preset.</p>
-<p><strong>Usage:</strong> <code>,eq delete</code></p>
 <h3 id="eq-load">eq load</h3>
 <p><strong>Description:</strong> Load a saved eq preset.</p>
 <p><strong>Usage:</strong> <code>,eq load</code></p>
 <h3 id="eq-reset">eq reset</h3>
 <p><strong>Description:</strong> Reset the eq to 0 across all bands.</p>
 <p><strong>Usage:</strong> <code>,eq reset</code></p>
+<h3 id="eq-delete">eq delete</h3>
+<p><strong>Description:</strong> Delete a saved eq preset.</p>
+<p><strong>Usage:</strong> <code>,eq delete</code></p>
 <h3 id="disconnect">disconnect</h3>
 <p><strong>Description:</strong> Disconnects the bot from the voice channel.</p>
 <p><strong>Usage:</strong> <code>,disconnect</code></p>
@@ -2789,72 +2797,6 @@ over <code>[p]shuffle</code>.</p>
 <h3 id="audioset">audioset</h3>
 <p><strong>Description:</strong> Music configuration options.</p>
 <p><strong>Usage:</strong> <code>,audioset</code></p>
-<h3 id="audioset-thumbnail">audioset thumbnail</h3>
-<p><strong>Description:</strong> Toggle displaying a thumbnail on audio messages.</p>
-<p><strong>Usage:</strong> <code>,audioset thumbnail</code></p>
-<h3 id="audioset-dj">audioset dj</h3>
-<p><strong>Description:</strong> Toggle DJ mode.</p>
-<p>DJ mode allows users with the DJ role to use audio commands.</p>
-<p><strong>Usage:</strong> <code>,audioset dj</code></p>
-<h3 id="audioset-vote">audioset vote</h3>
-<p><strong>Description:</strong> Percentage needed for non-mods to skip tracks, 0 to disable.</p>
-<p><strong>Usage:</strong> <code>,audioset vote</code></p>
-<h3 id="audioset-emptydisconnect">audioset emptydisconnect</h3>
-<p><strong>Description:</strong> Auto-disconnect from channel when bot is alone in it for x seconds, 0 to disable.</p>
-<p><code>[p]audioset dc</code> takes precedence over this setting.</p>
-<p><strong>Usage:</strong> <code>,audioset emptydisconnect</code></p>
-<h3 id="audioset-youtubeapi">audioset youtubeapi</h3>
-<p><strong>Description:</strong> Instructions to set the YouTube API key.</p>
-<p><strong>Usage:</strong> <code>,audioset youtubeapi</code></p>
-<h3 id="audioset-emptypause">audioset emptypause</h3>
-<p><strong>Description:</strong> Auto-pause after x seconds when room is empty, 0 to disable.</p>
-<p><strong>Usage:</strong> <code>,audioset emptypause</code></p>
-<h3 id="audioset-spotifyapi">audioset spotifyapi</h3>
-<p><strong>Description:</strong> Instructions to set the Spotify API tokens.</p>
-<p><strong>Usage:</strong> <code>,audioset spotifyapi</code></p>
-<h3 id="audioset-lyrics">audioset lyrics</h3>
-<p><strong>Description:</strong> Prioritise tracks with lyrics.</p>
-<p><strong>Usage:</strong> <code>,audioset lyrics</code></p>
-<h3 id="audioset-countrycode">audioset countrycode</h3>
-<p><strong>Description:</strong> Set the country code for Spotify searches.</p>
-<p><strong>Usage:</strong> <code>,audioset countrycode</code></p>
-<h3 id="audioset-jukebox">audioset jukebox</h3>
-<p><strong>Description:</strong> Set a price for queueing tracks for non-mods, 0 to disable.</p>
-<p><strong>Usage:</strong> <code>,audioset jukebox</code></p>
-<h3 id="audioset-autoplay">audioset autoplay</h3>
-<p><strong>Description:</strong> Change auto-play setting.</p>
-<p><strong>Usage:</strong> <code>,audioset autoplay</code></p>
-<h3 id="audioset-autoplay-reset">audioset autoplay reset</h3>
-<p><strong>Description:</strong> Resets auto-play to the default playlist.</p>
-<p><strong>Usage:</strong> <code>,audioset autoplay reset</code></p>
-<h3 id="audioset-autoplay-toggle">audioset autoplay toggle</h3>
-<p><strong>Description:</strong> Toggle auto-play when there no songs in queue.</p>
-<p><strong>Usage:</strong> <code>,audioset autoplay toggle</code></p>
-<h3 id="audioset-autoplay-playlist">audioset autoplay playlist</h3>
-<p><strong>Description:</strong> Set a playlist to auto-play songs from.</p>
-<p><strong>Usage</strong>:
-​ ​ ​ ​ <code>[p]audioset autoplay playlist playlist_name_OR_id [args]</code></p>
-<p><strong>Args</strong>:
-​ ​ ​ ​ The following are all optional:
-​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
-​ ​ ​ ​ ​ ​ ​ ​ --author [user]
-​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
-<p><strong>Scope</strong> is one of the following:
-    ​Global
-​ ​ ​ ​ Guild
-​ ​ ​ ​ User</p>
-<p><strong>Author</strong> can be one of the following:
-​ ​ ​ ​ User ID
-​ ​ ​ ​ User Mention
-​ ​ ​ ​ User Name#123</p>
-<p><strong>Guild</strong> can be one of the following:
-​ ​ ​ ​ Guild ID
-​ ​ ​ ​ Exact guild name</p>
-<p>Example use:
-​ ​ ​ ​ <code>[p]audioset autoplay playlist MyGuildPlaylist</code>
-​ ​ ​ ​ <code>[p]audioset autoplay playlist MyGlobalPlaylist --scope Global</code>
-​ ​ ​ ​ <code>[p]audioset autoplay playlist PersonalPlaylist --scope User --author Draper</code></p>
-<p><strong>Usage:</strong> <code>,audioset autoplay playlist</code></p>
 <h3 id="audioset-mycountrycode">audioset mycountrycode</h3>
 <p><strong>Description:</strong> Set the country code for Spotify searches.</p>
 <p><strong>Usage:</strong> <code>,audioset mycountrycode</code></p>
@@ -2876,13 +2818,13 @@ input will turn the max length setting off.</p>
 <h3 id="audioset-restrictions-global-whitelist">audioset restrictions global whitelist</h3>
 <p><strong>Description:</strong> Manages the global keyword whitelist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions global whitelist</code></p>
+<h3 id="audioset-restrictions-global-whitelist-clear">audioset restrictions global whitelist clear</h3>
+<p><strong>Description:</strong> Clear all keywords from the whitelist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist clear</code></p>
 <h3 id="audioset-restrictions-global-whitelist-add">audioset restrictions global whitelist add</h3>
 <p><strong>Description:</strong> Adds a keyword to the whitelist.</p>
 <p>If anything is added to whitelist, it will blacklist everything else.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions global whitelist add</code></p>
-<h3 id="audioset-restrictions-global-whitelist-clear">audioset restrictions global whitelist clear</h3>
-<p><strong>Description:</strong> Clear all keywords from the whitelist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions global whitelist clear</code></p>
 <h3 id="audioset-restrictions-global-whitelist-list">audioset restrictions global whitelist list</h3>
 <p><strong>Description:</strong> List all keywords added to the whitelist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions global whitelist list</code></p>
@@ -2923,6 +2865,9 @@ input will turn the max length setting off.</p>
 <h3 id="audioset-restrictions-blacklist">audioset restrictions blacklist</h3>
 <p><strong>Description:</strong> Manages the keyword blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist</code></p>
+<h3 id="audioset-restrictions-blacklist-delete">audioset restrictions blacklist delete</h3>
+<p><strong>Description:</strong> Removes a keyword from the blacklist.</p>
+<p><strong>Usage:</strong> <code>,audioset restrictions blacklist delete</code></p>
 <h3 id="audioset-restrictions-blacklist-clear">audioset restrictions blacklist clear</h3>
 <p><strong>Description:</strong> Clear all keywords added to the blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist clear</code></p>
@@ -2932,9 +2877,6 @@ input will turn the max length setting off.</p>
 <h3 id="audioset-restrictions-blacklist-list">audioset restrictions blacklist list</h3>
 <p><strong>Description:</strong> List all keywords added to the blacklist.</p>
 <p><strong>Usage:</strong> <code>,audioset restrictions blacklist list</code></p>
-<h3 id="audioset-restrictions-blacklist-delete">audioset restrictions blacklist delete</h3>
-<p><strong>Description:</strong> Removes a keyword from the blacklist.</p>
-<p><strong>Usage:</strong> <code>,audioset restrictions blacklist delete</code></p>
 <h3 id="audioset-cache">audioset cache</h3>
 <p><strong>Description:</strong> Sets the caching level.</p>
 <p>Level can be one of the following:</p>
@@ -2950,6 +2892,9 @@ input will turn the max length setting off.</p>
 <p>This commands allows you to set the max number of days before an entry in the cache becomes
 invalid.</p>
 <p><strong>Usage:</strong> <code>,audioset cacheage</code></p>
+<h3 id="audioset-countrycode">audioset countrycode</h3>
+<p><strong>Description:</strong> Set the country code for Spotify searches.</p>
+<p><strong>Usage:</strong> <code>,audioset countrycode</code></p>
 <h3 id="audioset-notify">audioset notify</h3>
 <p><strong>Description:</strong> Toggle track announcement and other bot messages.</p>
 <p><strong>Usage:</strong> <code>,audioset notify</code></p>
@@ -2995,7 +2940,70 @@ Bandcamp links.</p>
 <h3 id="audioset-dc">audioset dc</h3>
 <p><strong>Description:</strong> Toggle the bot auto-disconnecting when done playing.</p>
 <p>This setting takes precedence over <code>[p]audioset emptydisconnect</code>.</p>
-<p><strong>Usage:</strong> <code>,audioset dc</code></p></p>
+<p><strong>Usage:</strong> <code>,audioset dc</code></p>
+<h3 id="audioset-thumbnail">audioset thumbnail</h3>
+<p><strong>Description:</strong> Toggle displaying a thumbnail on audio messages.</p>
+<p><strong>Usage:</strong> <code>,audioset thumbnail</code></p>
+<h3 id="audioset-dj">audioset dj</h3>
+<p><strong>Description:</strong> Toggle DJ mode.</p>
+<p>DJ mode allows users with the DJ role to use audio commands.</p>
+<p><strong>Usage:</strong> <code>,audioset dj</code></p>
+<h3 id="audioset-vote">audioset vote</h3>
+<p><strong>Description:</strong> Percentage needed for non-mods to skip tracks, 0 to disable.</p>
+<p><strong>Usage:</strong> <code>,audioset vote</code></p>
+<h3 id="audioset-emptydisconnect">audioset emptydisconnect</h3>
+<p><strong>Description:</strong> Auto-disconnect from channel when bot is alone in it for x seconds, 0 to disable.</p>
+<p><code>[p]audioset dc</code> takes precedence over this setting.</p>
+<p><strong>Usage:</strong> <code>,audioset emptydisconnect</code></p>
+<h3 id="audioset-youtubeapi">audioset youtubeapi</h3>
+<p><strong>Description:</strong> Instructions to set the YouTube API key.</p>
+<p><strong>Usage:</strong> <code>,audioset youtubeapi</code></p>
+<h3 id="audioset-emptypause">audioset emptypause</h3>
+<p><strong>Description:</strong> Auto-pause after x seconds when room is empty, 0 to disable.</p>
+<p><strong>Usage:</strong> <code>,audioset emptypause</code></p>
+<h3 id="audioset-spotifyapi">audioset spotifyapi</h3>
+<p><strong>Description:</strong> Instructions to set the Spotify API tokens.</p>
+<p><strong>Usage:</strong> <code>,audioset spotifyapi</code></p>
+<h3 id="audioset-lyrics">audioset lyrics</h3>
+<p><strong>Description:</strong> Prioritise tracks with lyrics.</p>
+<p><strong>Usage:</strong> <code>,audioset lyrics</code></p>
+<h3 id="audioset-autoplay">audioset autoplay</h3>
+<p><strong>Description:</strong> Change auto-play setting.</p>
+<p><strong>Usage:</strong> <code>,audioset autoplay</code></p>
+<h3 id="audioset-autoplay-toggle">audioset autoplay toggle</h3>
+<p><strong>Description:</strong> Toggle auto-play when there no songs in queue.</p>
+<p><strong>Usage:</strong> <code>,audioset autoplay toggle</code></p>
+<h3 id="audioset-autoplay-reset">audioset autoplay reset</h3>
+<p><strong>Description:</strong> Resets auto-play to the default playlist.</p>
+<p><strong>Usage:</strong> <code>,audioset autoplay reset</code></p>
+<h3 id="audioset-autoplay-playlist">audioset autoplay playlist</h3>
+<p><strong>Description:</strong> Set a playlist to auto-play songs from.</p>
+<p><strong>Usage</strong>:
+​ ​ ​ ​ <code>[p]audioset autoplay playlist playlist_name_OR_id [args]</code></p>
+<p><strong>Args</strong>:
+​ ​ ​ ​ The following are all optional:
+​ ​ ​ ​ ​ ​ ​ ​ --scope <scope>
+​ ​ ​ ​ ​ ​ ​ ​ --author [user]
+​ ​ ​ ​ ​ ​ ​ ​ --guild [guild] <strong>Only the bot owner can use this</strong></p>
+<p><strong>Scope</strong> is one of the following:
+    ​Global
+​ ​ ​ ​ Guild
+​ ​ ​ ​ User</p>
+<p><strong>Author</strong> can be one of the following:
+​ ​ ​ ​ User ID
+​ ​ ​ ​ User Mention
+​ ​ ​ ​ User Name#123</p>
+<p><strong>Guild</strong> can be one of the following:
+​ ​ ​ ​ Guild ID
+​ ​ ​ ​ Exact guild name</p>
+<p>Example use:
+​ ​ ​ ​ <code>[p]audioset autoplay playlist MyGuildPlaylist</code>
+​ ​ ​ ​ <code>[p]audioset autoplay playlist MyGlobalPlaylist --scope Global</code>
+​ ​ ​ ​ <code>[p]audioset autoplay playlist PersonalPlaylist --scope User --author Draper</code></p>
+<p><strong>Usage:</strong> <code>,audioset autoplay playlist</code></p>
+<h3 id="audioset-jukebox">audioset jukebox</h3>
+<p><strong>Description:</strong> Set a price for queueing tracks for non-mods, 0 to disable.</p>
+<p><strong>Usage:</strong> <code>,audioset jukebox</code></p></p>
     </article>
 </section>
             <!-- endblock -->

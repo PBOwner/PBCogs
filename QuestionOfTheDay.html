@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2135,16 +2143,6 @@
 <h3 id="qotd">qotd</h3>
 <p><strong>Description:</strong> Base for all question of the day commands.</p>
 <p><strong>Usage:</strong> <code>,qotd</code></p>
-<h3 id="qotd-postat">qotd postat</h3>
-<p><strong>Description:</strong> Set the time to post a QOTD every day in this server.</p>
-<p><strong>Usage:</strong> <code>,qotd postat</code></p>
-<h3 id="qotd-approve">qotd approve</h3>
-<p><strong>Description:</strong> Approve a suggestion using its id (see qotd suggestions).</p>
-<p>This adds the suggestion to the main queue.</p>
-<p><strong>Usage:</strong> <code>,qotd approve</code></p>
-<h3 id="qotd-posthere">qotd posthere</h3>
-<p><strong>Description:</strong> Set the current channel as where QOTDs should be posted.</p>
-<p><strong>Usage:</strong> <code>,qotd posthere</code></p>
 <h3 id="qotd-suggest">qotd suggest</h3>
 <p><strong>Description:</strong> Add a question to the suggestion queue (it can be approved or denied by moderators).</p>
 <p><strong>Usage:</strong> <code>,qotd suggest</code></p>
@@ -2152,25 +2150,35 @@
 <p><strong>Description:</strong> Post a question immediately.</p>
 <p>A question will still be sent at the scheduled time if automatic posting is enabled.</p>
 <p><strong>Usage:</strong> <code>,qotd post</code></p>
-<h3 id="qotd-list">qotd list</h3>
-<p><strong>Description:</strong> Show questions in the main queue.</p>
-<p><strong>Usage:</strong> <code>,qotd list</code></p>
-<h3 id="qotd-add">qotd add</h3>
-<p><strong>Description:</strong> Add a question directly to the main queue (requires elevated permissions).</p>
-<p><strong>Usage:</strong> <code>,qotd add</code></p>
-<h3 id="qotd-toggle">qotd toggle</h3>
-<p><strong>Description:</strong> Turn on or off automatic posting of questions of the day in this server.</p>
-<p><strong>Usage:</strong> <code>,qotd toggle</code></p>
-<h3 id="qotd-remove">qotd remove</h3>
-<p><strong>Description:</strong> Remove a question from the queue using its id (see <code>qotd list</code>).</p>
-<p><strong>Usage:</strong> <code>,qotd remove</code></p>
-<h3 id="qotd-suggestions">qotd suggestions</h3>
-<p><strong>Description:</strong> View all questions in the suggestion queue.</p>
-<p><strong>Usage:</strong> <code>,qotd suggestions</code></p>
 <h3 id="qotd-deny">qotd deny</h3>
 <p><strong>Description:</strong> Decline a suggestion and remove it from the suggestion queue.</p>
 <p>For the suggestion's id, see qotd suggestions.</p>
-<p><strong>Usage:</strong> <code>,qotd deny</code></p></p>
+<p><strong>Usage:</strong> <code>,qotd deny</code></p>
+<h3 id="qotd-list">qotd list</h3>
+<p><strong>Description:</strong> Show questions in the main queue.</p>
+<p><strong>Usage:</strong> <code>,qotd list</code></p>
+<h3 id="qotd-posthere">qotd posthere</h3>
+<p><strong>Description:</strong> Set the current channel as where QOTDs should be posted.</p>
+<p><strong>Usage:</strong> <code>,qotd posthere</code></p>
+<h3 id="qotd-approve">qotd approve</h3>
+<p><strong>Description:</strong> Approve a suggestion using its id (see qotd suggestions).</p>
+<p>This adds the suggestion to the main queue.</p>
+<p><strong>Usage:</strong> <code>,qotd approve</code></p>
+<h3 id="qotd-toggle">qotd toggle</h3>
+<p><strong>Description:</strong> Turn on or off automatic posting of questions of the day in this server.</p>
+<p><strong>Usage:</strong> <code>,qotd toggle</code></p>
+<h3 id="qotd-postat">qotd postat</h3>
+<p><strong>Description:</strong> Set the time to post a QOTD every day in this server.</p>
+<p><strong>Usage:</strong> <code>,qotd postat</code></p>
+<h3 id="qotd-remove">qotd remove</h3>
+<p><strong>Description:</strong> Remove a question from the queue using its id (see <code>qotd list</code>).</p>
+<p><strong>Usage:</strong> <code>,qotd remove</code></p>
+<h3 id="qotd-add">qotd add</h3>
+<p><strong>Description:</strong> Add a question directly to the main queue (requires elevated permissions).</p>
+<p><strong>Usage:</strong> <code>,qotd add</code></p>
+<h3 id="qotd-suggestions">qotd suggestions</h3>
+<p><strong>Description:</strong> View all questions in the suggestion queue.</p>
+<p><strong>Usage:</strong> <code>,qotd suggestions</code></p></p>
     </article>
 </section>
             <!-- endblock -->

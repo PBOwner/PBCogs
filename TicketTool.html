@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,16 +2144,19 @@
 <h3 id="settickettool">settickettool</h3>
 <p><strong>Description:</strong> Configure TicketTool for your server.</p>
 <p><strong>Usage:</strong> <code>,settickettool</code></p>
+<h3 id="settickettool-renamechanneldropdown">settickettool renamechanneldropdown</h3>
+<p><strong>Description:</strong> With Dropdowns feature, rename the ticket channel with chosen reason.</p>
+<p>Default value: <code>False</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,settickettool renamechanneldropdown</code></p>
+<h3 id="settickettool-showsettings">settickettool showsettings</h3>
+<p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
+<p><strong>Usage:</strong> <code>,settickettool showsettings</code></p>
 <h3 id="settickettool-enable">settickettool enable</h3>
 <p><strong>Description:</strong> Enable the system.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,settickettool enable</code></p>
-<h3 id="settickettool-usercanclose">settickettool usercanclose</h3>
-<p><strong>Description:</strong> Can the author of the ticket, if he/she does not have a role set up for the system, close the ticket himself?</p>
-<p>Default value: <code>True</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,settickettool usercanclose</code></p>
 <h3 id="settickettool-categoryopen">settickettool categoryopen</h3>
 <p><strong>Description:</strong> Set the category where the opened tickets will be.</p>
 <p>Default value: <code>None</code>
@@ -2164,20 +2175,6 @@ Dev: <code>&lt;class 'bool'&gt;</code></p>
 <h3 id="settickettool-profileadd">settickettool profileadd</h3>
 <p><strong>Description:</strong> Create a new profile with defaults settings.</p>
 <p><strong>Usage:</strong> <code>,settickettool profileadd</code></p>
-<h3 id="settickettool-resetsetting">settickettool resetsetting</h3>
-<p><strong>Description:</strong> Reset a setting.</p>
-<p><strong>Usage:</strong> <code>,settickettool resetsetting</code></p>
-<h3 id="settickettool-ticketrole">settickettool ticketrole</h3>
-<p><strong>Description:</strong> This role will be added automatically to open tickets owners.</p>
-<p>Default value: <code>None</code>
-Dev: <code>&lt;class 'discord.role.Role'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,settickettool ticketrole</code></p>
-<h3 id="settickettool-message">settickettool message</h3>
-<p><strong>Description:</strong> Send a message with a button to open a ticket or dropdown with possible reasons.</p>
-<p>Examples:
-- <code>[p]settickettool message &lt;profile&gt; #general "🐛|Report a bug|If you find a bug, report it here.|bug" "⚠️|Report a user|If you find a malicious user, report it here.|user"</code>
-- <code>[p]settickettool &lt;profile&gt; 1234567890-0987654321</code></p>
-<p><strong>Usage:</strong> <code>,settickettool message</code></p>
 <h3 id="settickettool-custommodal">settickettool custommodal</h3>
 <p><strong>Description:</strong> Ask a maximum of 5 questions to the user who opens a ticket, with a Discord Modal.</p>
 <p><strong>Example:</strong></p>
@@ -2193,6 +2190,11 @@ Dev: <code>&lt;class 'discord.role.Role'&gt;</code></p>
 <p>Default value: <code>None</code>
 Dev: <code>&lt;class 'tickettool.utils.CustomModalConverter'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,settickettool custommodal</code></p>
+<h3 id="settickettool-ticketrole">settickettool ticketrole</h3>
+<p><strong>Description:</strong> This role will be added automatically to open tickets owners.</p>
+<p>Default value: <code>None</code>
+Dev: <code>&lt;class 'discord.role.Role'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,settickettool ticketrole</code></p>
 <h3 id="settickettool-custommessage">settickettool custommessage</h3>
 <p><strong>Description:</strong> This message will be sent in the ticket channel when the ticket is opened.</p>
 <p><code>{ticket_id}</code> - Ticket number
@@ -2229,24 +2231,27 @@ Dev: <code>typing.Union[discord.channel.ForumChannel, discord.channel.TextChanne
 <p>Default value: <code>[]</code>
 Dev: <code>Greedy[Role]</code></p>
 <p><strong>Usage:</strong> <code>,settickettool adminroles</code></p>
+<h3 id="settickettool-resetsetting">settickettool resetsetting</h3>
+<p><strong>Description:</strong> Reset a setting.</p>
+<p><strong>Usage:</strong> <code>,settickettool resetsetting</code></p>
+<h3 id="settickettool-modalconfig">settickettool modalconfig</h3>
+<p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
+<p><strong>Usage:</strong> <code>,settickettool modalconfig</code></p>
 <h3 id="settickettool-pingroles">settickettool pingroles</h3>
 <p><strong>Description:</strong> This role will be pinged automatically when the ticket is created, but does not give any additional permissions.</p>
 <p>Default value: <code>[]</code>
 Dev: <code>Greedy[Role]</code></p>
 <p><strong>Usage:</strong> <code>,settickettool pingroles</code></p>
-<h3 id="settickettool-modalconfig">settickettool modalconfig</h3>
-<p><strong>Description:</strong> Set all settings for the cog with a Discord Modal.</p>
-<p><strong>Usage:</strong> <code>,settickettool modalconfig</code></p>
-<h3 id="settickettool-createonreact">settickettool createonreact</h3>
-<p><strong>Description:</strong> Create a ticket when the reaction 🎟️ is set on any message on the server.</p>
-<p>Default value: <code>False</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,settickettool createonreact</code></p>
 <h3 id="settickettool-nbmax">settickettool nbmax</h3>
 <p><strong>Description:</strong> Sets the maximum number of open tickets a user can have on the system at any one time (for a profile only).</p>
 <p>Default value: <code>5</code>
 Dev: <code>Range[int, 1, None]</code></p>
 <p><strong>Usage:</strong> <code>,settickettool nbmax</code></p>
+<h3 id="settickettool-createonreact">settickettool createonreact</h3>
+<p><strong>Description:</strong> Create a ticket when the reaction 🎟️ is set on any message on the server.</p>
+<p>Default value: <code>False</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,settickettool createonreact</code></p>
 <h3 id="settickettool-closeconfirmation">settickettool closeconfirmation</h3>
 <p><strong>Description:</strong> Should the bot ask for confirmation before closing the ticket (deletion will necessarily have a confirmation)?</p>
 <p>Default value: <code>False</code>
@@ -2255,27 +2260,30 @@ Dev: <code>&lt;class 'bool'&gt;</code></p>
 <h3 id="settickettool-profileslist">settickettool profileslist</h3>
 <p><strong>Description:</strong> List the existing profiles.</p>
 <p><strong>Usage:</strong> <code>,settickettool profileslist</code></p>
-<h3 id="settickettool-showsettings">settickettool showsettings</h3>
-<p><strong>Description:</strong> Show all settings for the cog with defaults and values.</p>
-<p><strong>Usage:</strong> <code>,settickettool showsettings</code></p>
-<h3 id="settickettool-profileclone">settickettool profileclone</h3>
-<p><strong>Description:</strong> Clone an existing profile with his settings.</p>
-<p><strong>Usage:</strong> <code>,settickettool profileclone</code></p>
 <h3 id="settickettool-logschannel">settickettool logschannel</h3>
 <p><strong>Description:</strong> Set the channel where the logs will be sent/saved.</p>
 <p>Default value: <code>None</code>
 Dev: <code>typing.Union[discord.channel.TextChannel, discord.channel.VoiceChannel, discord.threads.Thread]</code></p>
 <p><strong>Usage:</strong> <code>,settickettool logschannel</code></p>
-<h3 id="settickettool-modlog">settickettool modlog</h3>
-<p><strong>Description:</strong> Does the bot create an action in the bot modlog when a ticket is created?</p>
-<p>Default value: <code>False</code>
-Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,settickettool modlog</code></p>
+<h3 id="settickettool-profileclone">settickettool profileclone</h3>
+<p><strong>Description:</strong> Clone an existing profile with his settings.</p>
+<p><strong>Usage:</strong> <code>,settickettool profileclone</code></p>
 <h3 id="settickettool-categoryclose">settickettool categoryclose</h3>
 <p><strong>Description:</strong> Set the category where the closed tickets will be.</p>
 <p>Default value: <code>None</code>
 Dev: <code>&lt;class 'discord.channel.CategoryChannel'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,settickettool categoryclose</code></p>
+<h3 id="settickettool-modlog">settickettool modlog</h3>
+<p><strong>Description:</strong> Does the bot create an action in the bot modlog when a ticket is created?</p>
+<p>Default value: <code>False</code>
+Dev: <code>&lt;class 'bool'&gt;</code></p>
+<p><strong>Usage:</strong> <code>,settickettool modlog</code></p>
+<h3 id="settickettool-message">settickettool message</h3>
+<p><strong>Description:</strong> Send a message with a button to open a ticket or dropdown with possible reasons.</p>
+<p>Examples:
+- <code>[p]settickettool message &lt;profile&gt; #general "🐛|Report a bug|If you find a bug, report it here.|bug" "⚠️|Report a user|If you find a malicious user, report it here.|user"</code>
+- <code>[p]settickettool &lt;profile&gt; 1234567890-0987654321</code></p>
+<p><strong>Usage:</strong> <code>,settickettool message</code></p>
 <h3 id="settickettool-viewroles">settickettool viewroles</h3>
 <p><strong>Description:</strong> Users with this role will only be able to read messages from the ticket, but not send them.</p>
 <p>Default value: <code>[]</code>
@@ -2299,27 +2307,58 @@ Dev: <code>Greedy[Role]</code></p>
 <p>Default value: <code>{emoji}-ticket-{ticket_id}</code>
 Dev: <code>&lt;class 'str'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,settickettool dynamicchannelname</code></p>
-<h3 id="settickettool-profilerename">settickettool profilerename</h3>
-<p><strong>Description:</strong> Rename an existing profile.</p>
-<p><strong>Usage:</strong> <code>,settickettool profilerename</code></p>
-<h3 id="settickettool-renamechanneldropdown">settickettool renamechanneldropdown</h3>
-<p><strong>Description:</strong> With Dropdowns feature, rename the ticket channel with chosen reason.</p>
-<p>Default value: <code>False</code>
+<h3 id="settickettool-usercanclose">settickettool usercanclose</h3>
+<p><strong>Description:</strong> Can the author of the ticket, if he/she does not have a role set up for the system, close the ticket himself?</p>
+<p>Default value: <code>True</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
-<p><strong>Usage:</strong> <code>,settickettool renamechanneldropdown</code></p>
+<p><strong>Usage:</strong> <code>,settickettool usercanclose</code></p>
 <h3 id="settickettool-closeonleave">settickettool closeonleave</h3>
 <p><strong>Description:</strong> If a user leaves the server, will all their open tickets be closed?</p>
 <p>If the user then returns to the server, even if their ticket is still open, the bot will not automatically add them to the ticket.</p>
 <p>Default value: <code>False</code>
 Dev: <code>&lt;class 'bool'&gt;</code></p>
 <p><strong>Usage:</strong> <code>,settickettool closeonleave</code></p>
+<h3 id="settickettool-profilerename">settickettool profilerename</h3>
+<p><strong>Description:</strong> Rename an existing profile.</p>
+<p><strong>Usage:</strong> <code>,settickettool profilerename</code></p>
 <h3 id="ticket">ticket</h3>
 <p><strong>Description:</strong> Commands for using the Tickets system.</p>
 <p>Many commands to manage tickets appear when you run help in a ticket channel.</p>
 <p><strong>Usage:</strong> <code>,ticket</code></p>
+<h3 id="ticket-list">ticket list</h3>
+<p><strong>Description:</strong> List the existing Tickets for a profile. You can provide a status and/or a ticket owner.</p>
+<p><strong>Usage:</strong> <code>,ticket list</code></p>
+<h3 id="ticket-open">ticket open</h3>
+<p><strong>Description:</strong> Open an existing Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket open</code></p>
+<h3 id="ticket-delete">ticket delete</h3>
+<p><strong>Description:</strong> Delete an existing Ticket.</p>
+<p>If a logs channel is defined, an html file containing all the messages of this ticket will be generated.
+(Attachments are not supported, as they are saved with their Discord link)</p>
+<p><strong>Usage:</strong> <code>,ticket delete</code></p>
+<h3 id="ticket-unlock">ticket unlock</h3>
+<p><strong>Description:</strong> Unlock an existing locked Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket unlock</code></p>
+<h3 id="ticket-createfor">ticket createfor</h3>
+<p><strong>Description:</strong> Create a Ticket for a member.</p>
+<p>If only one profile has been created on this server, you don't need to specify its name.</p>
+<p><strong>Usage:</strong> <code>,ticket createfor</code></p>
+<h3 id="ticket-claim">ticket claim</h3>
+<p><strong>Description:</strong> Claim an existing Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket claim</code></p>
+<h3 id="ticket-export">ticket export</h3>
+<p><strong>Description:</strong> Export all the messages of an existing Ticket in html format.
+Please note: all attachments and user avatars are saved with the Discord link in this file.</p>
+<p><strong>Usage:</strong> <code>,ticket export</code></p>
+<h3 id="ticket-lock">ticket lock</h3>
+<p><strong>Description:</strong> Lock an existing Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket lock</code></p>
 <h3 id="ticket-rename">ticket rename</h3>
 <p><strong>Description:</strong> Rename an existing Ticket.</p>
 <p><strong>Usage:</strong> <code>,ticket rename</code></p>
+<h3 id="ticket-addmember">ticket addmember</h3>
+<p><strong>Description:</strong> Add a member to an existing Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket addmember</code></p>
 <h3 id="ticket-close">ticket close</h3>
 <p><strong>Description:</strong> Close an existing Ticket.</p>
 <p><strong>Usage:</strong> <code>,ticket close</code></p>
@@ -2329,44 +2368,13 @@ Dev: <code>&lt;class 'bool'&gt;</code></p>
 <h3 id="ticket-removemember">ticket removemember</h3>
 <p><strong>Description:</strong> Remove a member to an existing Ticket.</p>
 <p><strong>Usage:</strong> <code>,ticket removemember</code></p>
-<h3 id="ticket-owner">ticket owner</h3>
-<p><strong>Description:</strong> Change the owner of an existing Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket owner</code></p>
-<h3 id="ticket-addmember">ticket addmember</h3>
-<p><strong>Description:</strong> Add a member to an existing Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket addmember</code></p>
-<h3 id="ticket-list">ticket list</h3>
-<p><strong>Description:</strong> List the existing Tickets for a profile. You can provide a status and/or a ticket owner.</p>
-<p><strong>Usage:</strong> <code>,ticket list</code></p>
-<h3 id="ticket-delete">ticket delete</h3>
-<p><strong>Description:</strong> Delete an existing Ticket.</p>
-<p>If a logs channel is defined, an html file containing all the messages of this ticket will be generated.
-(Attachments are not supported, as they are saved with their Discord link)</p>
-<p><strong>Usage:</strong> <code>,ticket delete</code></p>
-<h3 id="ticket-createfor">ticket createfor</h3>
-<p><strong>Description:</strong> Create a Ticket for a member.</p>
-<p>If only one profile has been created on this server, you don't need to specify its name.</p>
-<p><strong>Usage:</strong> <code>,ticket createfor</code></p>
-<h3 id="ticket-unlock">ticket unlock</h3>
-<p><strong>Description:</strong> Unlock an existing locked Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket unlock</code></p>
-<h3 id="ticket-claim">ticket claim</h3>
-<p><strong>Description:</strong> Claim an existing Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket claim</code></p>
 <h3 id="ticket-create">ticket create</h3>
 <p><strong>Description:</strong> Create a Ticket.</p>
 <p>If only one profile has been created on this server, you don't need to specify its name.</p>
 <p><strong>Usage:</strong> <code>,ticket create</code></p>
-<h3 id="ticket-export">ticket export</h3>
-<p><strong>Description:</strong> Export all the messages of an existing Ticket in html format.
-Please note: all attachments and user avatars are saved with the Discord link in this file.</p>
-<p><strong>Usage:</strong> <code>,ticket export</code></p>
-<h3 id="ticket-open">ticket open</h3>
-<p><strong>Description:</strong> Open an existing Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket open</code></p>
-<h3 id="ticket-lock">ticket lock</h3>
-<p><strong>Description:</strong> Lock an existing Ticket.</p>
-<p><strong>Usage:</strong> <code>,ticket lock</code></p></p>
+<h3 id="ticket-owner">ticket owner</h3>
+<p><strong>Description:</strong> Change the owner of an existing Ticket.</p>
+<p><strong>Usage:</strong> <code>,ticket owner</code></p></p>
     </article>
 </section>
             <!-- endblock -->

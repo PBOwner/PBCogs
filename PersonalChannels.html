@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,6 +2144,16 @@
 <h3 id="mychannel">mychannel</h3>
 <p><strong>Description:</strong> Control of personal channels.</p>
 <p><strong>Usage:</strong> <code>,mychannel</code></p>
+<h3 id="mychannel-position">mychannel position</h3>
+<p><strong>Description:</strong> Edit the channel position for someone's personal channel.</p>
+<p><strong>Usage:</strong> <code>,mychannel position</code></p>
+<h3 id="mychannel-category">mychannel category</h3>
+<p><strong>Description:</strong> Configure the category every personal text channel should be under.</p>
+<p><strong>Usage:</strong> <code>,mychannel category</code></p>
+<h3 id="mychannel-pin">mychannel pin</h3>
+<p><strong>Description:</strong> Pin a message in the personal channel.</p>
+<p>You can also reply to the message with invoking the command.</p>
+<p><strong>Usage:</strong> <code>,mychannel pin</code></p>
 <h3 id="mychannel-friends">mychannel friends</h3>
 <p><strong>Description:</strong> Add or remove friends from your channel.</p>
 <p><code>&lt;add_or_remove&gt;</code> should be either <code>add</code> to add or <code>remove</code> to remove friends.</p>
@@ -2150,6 +2168,9 @@
 <h3 id="mychannel-list">mychannel list</h3>
 <p><strong>Description:</strong> Assigned channels list.</p>
 <p><strong>Usage:</strong> <code>,mychannel list</code></p>
+<h3 id="mychannel-assign">mychannel assign</h3>
+<p><strong>Description:</strong> Assign a personal text channel to someone.</p>
+<p><strong>Usage:</strong> <code>,mychannel assign</code></p>
 <h3 id="mychannel-topic">mychannel topic</h3>
 <p><strong>Description:</strong> Change the topic of personal channel.</p>
 <p>You can't use blacklisted words.</p>
@@ -2158,9 +2179,6 @@
 <p><strong>Description:</strong> Unpin a message from the personal channel.</p>
 <p>You can also reply to the message with invoking the command.</p>
 <p><strong>Usage:</strong> <code>,mychannel unpin</code></p>
-<h3 id="mychannel-assign">mychannel assign</h3>
-<p><strong>Description:</strong> Assign a personal text channel to someone.</p>
-<p><strong>Usage:</strong> <code>,mychannel assign</code></p>
 <h3 id="mychannel-blacklist">mychannel blacklist</h3>
 <p><strong>Description:</strong> Manage blacklisted names.</p>
 <p><strong>Usage:</strong> <code>,mychannel blacklist</code></p>
@@ -2174,6 +2192,9 @@
 <h3 id="mychannel-blacklist-list">mychannel blacklist list</h3>
 <p><strong>Description:</strong> List of blacklisted channel names.</p>
 <p><strong>Usage:</strong> <code>,mychannel blacklist list</code></p>
+<h3 id="mychannel-remove">mychannel remove</h3>
+<p><strong>Description:</strong> Delete member's personal channel.</p>
+<p><strong>Usage:</strong> <code>,mychannel remove</code></p>
 <h3 id="mychannel-delete">mychannel delete</h3>
 <p><strong>Description:</strong> Delete your personal channel.</p>
 <p><strong>Usage:</strong> <code>,mychannel delete</code></p>
@@ -2189,20 +2210,7 @@
 <p><strong>Usage:</strong> <code>,mychannel create</code></p>
 <h3 id="mychannel-unassign">mychannel unassign</h3>
 <p><strong>Description:</strong> Unassign personal text channel from someone.</p>
-<p><strong>Usage:</strong> <code>,mychannel unassign</code></p>
-<h3 id="mychannel-remove">mychannel remove</h3>
-<p><strong>Description:</strong> Delete member's personal channel.</p>
-<p><strong>Usage:</strong> <code>,mychannel remove</code></p>
-<h3 id="mychannel-position">mychannel position</h3>
-<p><strong>Description:</strong> Edit the channel position for someone's personal channel.</p>
-<p><strong>Usage:</strong> <code>,mychannel position</code></p>
-<h3 id="mychannel-category">mychannel category</h3>
-<p><strong>Description:</strong> Configure the category every personal text channel should be under.</p>
-<p><strong>Usage:</strong> <code>,mychannel category</code></p>
-<h3 id="mychannel-pin">mychannel pin</h3>
-<p><strong>Description:</strong> Pin a message in the personal channel.</p>
-<p>You can also reply to the message with invoking the command.</p>
-<p><strong>Usage:</strong> <code>,mychannel pin</code></p></p>
+<p><strong>Usage:</strong> <code>,mychannel unassign</code></p></p>
     </article>
 </section>
             <!-- endblock -->

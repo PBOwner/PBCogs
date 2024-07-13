@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,18 +2144,31 @@
 <h3 id="cyclestatus">cyclestatus</h3>
 <p><strong>Description:</strong> Commands working with the status</p>
 <p><strong>Usage:</strong> <code>,cyclestatus</code></p>
-<h3 id="cyclestatus-mode">cyclestatus mode</h3>
-<p><strong>Description:</strong> Change [botname]'s status mode</p>
+<h3 id="cyclestatus-usehelp">cyclestatus usehelp</h3>
+<p><strong>Description:</strong> Change whether the status should have <code>| [p]help</code></p>
 <p><strong>Arguments</strong>
-    - <code>mode</code> The mode type. Valid types are:
-    <code>online, idle, dnd, and do not disturb</code></p>
-<p><strong>Usage:</strong> <code>,cyclestatus mode</code></p>
+    - <code>toggle</code> Whether help should be used or not.</p>
+<p><strong>Usage:</strong> <code>,cyclestatus usehelp</code></p>
+<h3 id="cyclestatus-random">cyclestatus random</h3>
+<p><strong>Description:</strong> Have the bot cycle to a random status</p>
+<p><strong>Arguments</strong>
+    - <code>value</code> Whether to have random statuses be enabled or not</p>
+<p><strong>Usage:</strong> <code>,cyclestatus random</code></p>
 <h3 id="cyclestatus-type">cyclestatus type</h3>
 <p><strong>Description:</strong> Change the type of [botname]'s status</p>
 <p><strong>Arguments</strong>
     - <code>status</code> The status type. Valid types are
     <code>playing, listening, watching, custom, and competing</code></p>
 <p><strong>Usage:</strong> <code>,cyclestatus type</code></p>
+<h3 id="cyclestatus-mode">cyclestatus mode</h3>
+<p><strong>Description:</strong> Change [botname]'s status mode</p>
+<p><strong>Arguments</strong>
+    - <code>mode</code> The mode type. Valid types are:
+    <code>online, idle, dnd, and do not disturb</code></p>
+<p><strong>Usage:</strong> <code>,cyclestatus mode</code></p>
+<h3 id="cyclestatus-settings">cyclestatus settings</h3>
+<p><strong>Description:</strong> Show your current settings for the cycle status cog</p>
+<p><strong>Usage:</strong> <code>,cyclestatus settings</code></p>
 <h3 id="cyclestatus-clear">cyclestatus clear</h3>
 <p><strong>Description:</strong> Clear all of the statuses</p>
 <p><strong>Usage:</strong> <code>,cyclestatus clear</code></p>
@@ -2161,33 +2182,20 @@ You can also put <code>{bot_prefix}</code> in your message to have the bot's pre
 <h3 id="cyclestatus-list">cyclestatus list</h3>
 <p><strong>Description:</strong> List the available statuses</p>
 <p><strong>Usage:</strong> <code>,cyclestatus list</code></p>
-<h3 id="cyclestatus-toggle">cyclestatus toggle</h3>
-<p><strong>Description:</strong> Toggle whether the status should be cycled.</p>
-<p>This is handy for if you want to keep your statuses but don't want them displayed at the moment</p>
-<p><strong>Arguments</strong>
-    - <code>value</code> Whether to toggle cycling statues</p>
-<p><strong>Usage:</strong> <code>,cyclestatus toggle</code></p>
 <h3 id="cyclestatus-remove">cyclestatus remove</h3>
 <p><strong>Description:</strong> Remove a status from the list</p>
 <p><strong>Arguments</strong>
     - <code>num</code> The index of the status you want to remove.</p>
 <p><strong>Usage:</strong> <code>,cyclestatus remove</code></p>
-<h3 id="cyclestatus-usehelp">cyclestatus usehelp</h3>
-<p><strong>Description:</strong> Change whether the status should have <code>| [p]help</code></p>
-<p><strong>Arguments</strong>
-    - <code>toggle</code> Whether help should be used or not.</p>
-<p><strong>Usage:</strong> <code>,cyclestatus usehelp</code></p>
-<h3 id="cyclestatus-random">cyclestatus random</h3>
-<p><strong>Description:</strong> Have the bot cycle to a random status</p>
-<p><strong>Arguments</strong>
-    - <code>value</code> Whether to have random statuses be enabled or not</p>
-<p><strong>Usage:</strong> <code>,cyclestatus random</code></p>
 <h3 id="cyclestatus-forcenext">cyclestatus forcenext</h3>
 <p><strong>Description:</strong> Force the next status to display on the bot</p>
 <p><strong>Usage:</strong> <code>,cyclestatus forcenext</code></p>
-<h3 id="cyclestatus-settings">cyclestatus settings</h3>
-<p><strong>Description:</strong> Show your current settings for the cycle status cog</p>
-<p><strong>Usage:</strong> <code>,cyclestatus settings</code></p></p>
+<h3 id="cyclestatus-toggle">cyclestatus toggle</h3>
+<p><strong>Description:</strong> Toggle whether the status should be cycled.</p>
+<p>This is handy for if you want to keep your statuses but don't want them displayed at the moment</p>
+<p><strong>Arguments</strong>
+    - <code>value</code> Whether to toggle cycling statues</p>
+<p><strong>Usage:</strong> <code>,cyclestatus toggle</code></p></p>
     </article>
 </section>
             <!-- endblock -->

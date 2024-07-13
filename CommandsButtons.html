@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-        <title>BanOnLeave - FuturoBot's Documentation</title>
+        <title>CommandsButtons - FuturoBot's Documentation</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         
-        <link rel="canonical" href="https://docs.prismbot.icu/BanOnLeave.html">
+        <link rel="canonical" href="https://docs.prismbot.icu/CommandsButtons.html">
         
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -143,14 +143,6 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             AdWarn
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
         </a>
     </li>
                             
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class=" active 
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class=" active 
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2088,13 +2096,13 @@
         <div class="container">
             <div class="row row-preview">
                 <div class="col">
-                    <a href="BannedCount.html"
+                    <a href="Color.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </div>
                 <div class="col">
-                    <a href="Bl.html"
+                    <a href="Cooldown.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
@@ -2131,19 +2139,39 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p><h1 id="banonleave-help">BanOnLeave Help</h1>
-<h3 id="banonleave">banonleave</h3>
-<p><strong>Description:</strong> Ban On Leave</p>
-<p><strong>Usage:</strong> <code>,banonleave</code></p>
-<h3 id="banonleave-toggle">banonleave toggle</h3>
-<p><strong>Description:</strong> Toggle ban on leave</p>
-<p><strong>Usage:</strong> <code>,banonleave toggle</code></p>
-<h3 id="banonleave-log">banonleave log</h3>
-<p><strong>Description:</strong> Set the log channel where ban on leave messages will be sent</p>
-<p><strong>Usage:</strong> <code>,banonleave log</code></p>
-<h3 id="banonleave-showsettings">banonleave showsettings</h3>
-<p><strong>Description:</strong> Show current settings</p>
-<p><strong>Usage:</strong> <code>,banonleave showsettings</code></p></p>
+        <p><h1 id="commandsbuttons-help">CommandsButtons Help</h1>
+<p>A cog to allow a user to execute a command by clicking on a button!</p>
+<h3 id="commandsbuttons">commandsbuttons</h3>
+<p><strong>Description:</strong> Group of commands to use CommandsButtons.</p>
+<p><strong>Usage:</strong> <code>,commandsbuttons</code></p>
+<h3 id="commandsbuttons-list">commandsbuttons list</h3>
+<p><strong>Description:</strong> List all commands-buttons of this server or display the settings for a specific one.</p>
+<p><strong>Usage:</strong> <code>,commandsbuttons list</code></p>
+<h3 id="commandsbuttons-clear">commandsbuttons clear</h3>
+<p><strong>Description:</strong> Clear all commands-buttons for a message.</p>
+<p><strong>Usage:</strong> <code>,commandsbuttons clear</code></p>
+<h3 id="commandsbuttons-bulk">commandsbuttons bulk</h3>
+<p><strong>Description:</strong> Add commands-buttons for a message.</p>
+<p><code>[p]commandsbuttons bulk &lt;message&gt; ":reaction1:|ping" ":reaction2:|ping" :reaction3:|ping"</code></p>
+<p><strong>Usage:</strong> <code>,commandsbuttons bulk</code></p>
+<h3 id="commandsbuttons-add">commandsbuttons add</h3>
+<p><strong>Description:</strong> Add a command-button for a message.</p>
+<p>(Use the number for the color.)
+• <code>primary</code>: 1
+• <code>secondary</code>: 2
+• <code>success</code>: 3
+• <code>danger</code>: 4</p>
+<h1 id="aliases">Aliases</h1>
+<p>• <code>blurple</code>: 1
+• <code>grey</code>: 2
+• <code>gray</code>: 2
+• <code>green</code>: 3
+• <code>red</code>: 4</p>
+<p><strong>Usage:</strong> <code>,commandsbuttons add</code></p>
+<h3 id="commandsbuttons-remove">commandsbuttons remove</h3>
+<p><strong>Description:</strong> Remove a command-button for a message.</p>
+<p>Use <code>[p]commandsbuttons list &lt;message&gt;</code> to find the config identifier.</p>
+<p><strong>Usage:</strong> <code>,commandsbuttons remove</code></p></p>
     </article>
 </section>
             <!-- endblock -->

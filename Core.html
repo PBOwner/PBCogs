@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2143,12 +2151,12 @@ Typing: Time that bot taken to send message with ping.</p>
 <h3 id="info">info</h3>
 <p><strong>Description:</strong> Shows info about something</p>
 <p><strong>Usage:</strong> <code>,info</code></p>
-<h3 id="info-credits">info credits</h3>
-<p><strong>Description:</strong> Shows my credits.</p>
-<p><strong>Usage:</strong> <code>,info credits</code></p>
 <h3 id="info-bot">info bot</h3>
 <p><strong>Description:</strong> Shows info about me.</p>
 <p><strong>Usage:</strong> <code>,info bot</code></p>
+<h3 id="info-credits">info credits</h3>
+<p><strong>Description:</strong> Shows my credits.</p>
+<p><strong>Usage:</strong> <code>,info credits</code></p>
 <h3 id="uptime">uptime</h3>
 <p><strong>Description:</strong> Shows my uptime.</p>
 <p><strong>Usage:</strong> <code>,uptime</code></p>
@@ -2156,6 +2164,12 @@ Typing: Time that bot taken to send message with ping.</p>
 <p><strong>Description:</strong> Commands which interact with the data [botname] has about you.</p>
 <p>More information can be found in the <a href="https://docs.discord.red/en/stable/red_core_data_statement.html">End User Data Documentation.</a></p>
 <p><strong>Usage:</strong> <code>,mydata</code></p>
+<h3 id="mydata-3rdparty">mydata 3rdparty</h3>
+<p><strong>Description:</strong> View the End User Data statements of each 3rd-party module.</p>
+<p>This will send an attachment with the End User Data statements of all loaded 3rd party cogs.</p>
+<p><strong>Example:</strong>
+- <code>[p]mydata 3rdparty</code></p>
+<p><strong>Usage:</strong> <code>,mydata 3rdparty</code></p>
 <h3 id="mydata-forgetme">mydata forgetme</h3>
 <p><strong>Description:</strong> Have [botname] forget what it knows about you.</p>
 <p>This may not remove all data about you, data needed for operation,
@@ -2175,6 +2189,22 @@ such as command cooldowns will be kept until no longer necessary.</p>
 <h3 id="mydata-ownermanagement">mydata ownermanagement</h3>
 <p><strong>Description:</strong> Commands for more complete data handling.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement</code></p>
+<h3 id="mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</h3>
+<p><strong>Description:</strong> Handle a deletion request from Discord.</p>
+<p>This will cause the bot to get rid of or disassociate all data from the specified user ID.
+You should not use this unless Discord has specifically requested this with regard to a deleted user.
+This will remove the user from various anti-abuse measures.
+If you are processing a manual request from a user, you may want <code>[p]mydata ownermanagement deleteforuser</code> instead.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement processdiscordrequest</code></p>
+<h3 id="mydata-ownermanagement-allowuserdeletions">mydata ownermanagement allowuserdeletions</h3>
+<p><strong>Description:</strong> Set the bot to allow users to request a data deletion.</p>
+<p>This is on by default.
+Opposite of <code>[p]mydata ownermanagement disallowuserdeletions</code></p>
+<p><strong>Example:</strong>
+- <code>[p]mydata ownermanagement allowuserdeletions</code></p>
+<p><strong>Usage:</strong> <code>,mydata ownermanagement allowuserdeletions</code></p>
 <h3 id="mydata-ownermanagement-setuserdeletionlevel">mydata ownermanagement setuserdeletionlevel</h3>
 <p><strong>Description:</strong> Sets how user deletions are treated.</p>
 <p><strong>Example:</strong>
@@ -2185,13 +2215,6 @@ such as command cooldowns will be kept until no longer necessary.</p>
 - <code>0</code>: What users can delete is left entirely up to each cog.
 - <code>1</code>: Cogs should delete anything the cog doesn't need about the user.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement setuserdeletionlevel</code></p>
-<h3 id="mydata-ownermanagement-allowuserdeletions">mydata ownermanagement allowuserdeletions</h3>
-<p><strong>Description:</strong> Set the bot to allow users to request a data deletion.</p>
-<p>This is on by default.
-Opposite of <code>[p]mydata ownermanagement disallowuserdeletions</code></p>
-<p><strong>Example:</strong>
-- <code>[p]mydata ownermanagement allowuserdeletions</code></p>
-<p><strong>Usage:</strong> <code>,mydata ownermanagement allowuserdeletions</code></p>
 <h3 id="mydata-ownermanagement-disallowuserdeletions">mydata ownermanagement disallowuserdeletions</h3>
 <p><strong>Description:</strong> Set the bot to not allow users to request a data deletion.</p>
 <p>Opposite of <code>[p]mydata ownermanagement allowuserdeletions</code></p>
@@ -2213,21 +2236,6 @@ This may include more than just end user data, including anti abuse records.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
 <p><strong>Usage:</strong> <code>,mydata ownermanagement deleteuserasowner</code></p>
-<h3 id="mydata-ownermanagement-processdiscordrequest">mydata ownermanagement processdiscordrequest</h3>
-<p><strong>Description:</strong> Handle a deletion request from Discord.</p>
-<p>This will cause the bot to get rid of or disassociate all data from the specified user ID.
-You should not use this unless Discord has specifically requested this with regard to a deleted user.
-This will remove the user from various anti-abuse measures.
-If you are processing a manual request from a user, you may want <code>[p]mydata ownermanagement deleteforuser</code> instead.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;user_id&gt;</code> - The id of the user whose data would be deleted.</p>
-<p><strong>Usage:</strong> <code>,mydata ownermanagement processdiscordrequest</code></p>
-<h3 id="mydata-3rdparty">mydata 3rdparty</h3>
-<p><strong>Description:</strong> View the End User Data statements of each 3rd-party module.</p>
-<p>This will send an attachment with the End User Data statements of all loaded 3rd party cogs.</p>
-<p><strong>Example:</strong>
-- <code>[p]mydata 3rdparty</code></p>
-<p><strong>Usage:</strong> <code>,mydata 3rdparty</code></p>
 <h3 id="embedset">embedset</h3>
 <p><strong>Description:</strong> Commands for toggling embeds on or off.</p>
 <p>This setting determines whether or not to use embeds as a response to a command (for commands that support it).
@@ -2288,6 +2296,13 @@ The default is to use embeds.</p>
 <h3 id="inviteset">inviteset</h3>
 <p><strong>Description:</strong> Commands to setup [botname]'s invite settings.</p>
 <p><strong>Usage:</strong> <code>,inviteset</code></p>
+<h3 id="inviteset-support">inviteset support</h3>
+<p><strong>Description:</strong> Set the support server invite for the bot.</p>
+<p><strong>Example:</strong>
+- <code>[p]inviteset support https://discord.gg/shiro</code> - Sets the support server url to https://discord.gg/shiro.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;support_server&gt;</code> - The invite URL to the support server.</p>
+<p><strong>Usage:</strong> <code>,inviteset support</code></p>
 <h3 id="inviteset-public">inviteset public</h3>
 <p><strong>Description:</strong> Toggles if <code>[p]invite</code> should be accessible for the average user.</p>
 <p>The bot must be made into a <code>Public bot</code> in the developer dashboard for public invites to work.</p>
@@ -2305,13 +2320,6 @@ You can generate one here: https://discordapi.com/permissions.html</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;level&gt;</code> - The permission level to require for the bot in the generated invite.</p>
 <p><strong>Usage:</strong> <code>,inviteset perms</code></p>
-<h3 id="inviteset-support">inviteset support</h3>
-<p><strong>Description:</strong> Set the support server invite for the bot.</p>
-<p><strong>Example:</strong>
-- <code>[p]inviteset support https://discord.gg/shiro</code> - Sets the support server url to https://discord.gg/shiro.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;support_server&gt;</code> - The invite URL to the support server.</p>
-<p><strong>Usage:</strong> <code>,inviteset support</code></p>
 <h3 id="leave">leave</h3>
 <p><strong>Description:</strong> Leaves servers.</p>
 <p>If no server IDs are passed the local server will be left instead.</p>
@@ -2431,6 +2439,20 @@ The restart is not guaranteed: it must be dealt with by the process manager in u
 <h3 id="bankset">bankset</h3>
 <p><strong>Description:</strong> Base command for bank settings.</p>
 <p><strong>Usage:</strong> <code>,bankset</code></p>
+<h3 id="bankset-toggleglobal">bankset toggleglobal</h3>
+<p><strong>Description:</strong> Toggle whether the bank is global or not.</p>
+<p>If the bank is global, it will become per-server.
+If the bank is per-server, it will become global.</p>
+<p><strong>Usage:</strong> <code>,bankset toggleglobal</code></p>
+<h3 id="bankset-registeramount">bankset registeramount</h3>
+<p><strong>Description:</strong> Set the initial balance for new bank accounts.</p>
+<p>Example:
+- <code>[p]bankset registeramount 5000</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;creds&gt;</code> The new initial balance amount. Default is 0.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset registeramount</code></p>
 <h3 id="bankset-bankname">bankset bankname</h3>
 <p><strong>Description:</strong> Set the bank's name.</p>
 <p><strong>Usage:</strong> <code>,bankset bankname</code></p>
@@ -2453,17 +2475,6 @@ The restart is not guaranteed: it must be dealt with by the process manager in u
 <h3 id="bankset-prune">bankset prune</h3>
 <p><strong>Description:</strong> Base command for pruning bank accounts.</p>
 <p><strong>Usage:</strong> <code>,bankset prune</code></p>
-<h3 id="bankset-prune-server">bankset prune server</h3>
-<p><strong>Description:</strong> Prune bank accounts for users no longer in the server.</p>
-<p>Cannot be used with a global bank. See <code>[p]bankset prune global</code>.</p>
-<p>Examples:
-- <code>[p]bankset prune server</code> - Did not confirm. Shows the help message.
-- <code>[p]bankset prune server yes</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,bankset prune server</code></p>
 <h3 id="bankset-prune-global">bankset prune global</h3>
 <p><strong>Description:</strong> Prune bank accounts for users who no longer share a server with the bot.</p>
 <p>Cannot be used without a global bank. See <code>[p]bankset prune server</code>.</p>
@@ -2486,23 +2497,20 @@ The restart is not guaranteed: it must be dealt with by the process manager in u
 <li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
 </ul>
 <p><strong>Usage:</strong> <code>,bankset prune user</code></p>
+<h3 id="bankset-prune-server">bankset prune server</h3>
+<p><strong>Description:</strong> Prune bank accounts for users no longer in the server.</p>
+<p>Cannot be used with a global bank. See <code>[p]bankset prune global</code>.</p>
+<p>Examples:
+- <code>[p]bankset prune server</code> - Did not confirm. Shows the help message.
+- <code>[p]bankset prune server yes</code></p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>&lt;confirmation&gt;</code> This will default to false unless specified.</li>
+</ul>
+<p><strong>Usage:</strong> <code>,bankset prune server</code></p>
 <h3 id="bankset-maxbal">bankset maxbal</h3>
 <p><strong>Description:</strong> Set the maximum balance a user can get.</p>
 <p><strong>Usage:</strong> <code>,bankset maxbal</code></p>
-<h3 id="bankset-toggleglobal">bankset toggleglobal</h3>
-<p><strong>Description:</strong> Toggle whether the bank is global or not.</p>
-<p>If the bank is global, it will become per-server.
-If the bank is per-server, it will become global.</p>
-<p><strong>Usage:</strong> <code>,bankset toggleglobal</code></p>
-<h3 id="bankset-registeramount">bankset registeramount</h3>
-<p><strong>Description:</strong> Set the initial balance for new bank accounts.</p>
-<p>Example:
-- <code>[p]bankset registeramount 5000</code></p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><code>&lt;creds&gt;</code> The new initial balance amount. Default is 0.</li>
-</ul>
-<p><strong>Usage:</strong> <code>,bankset registeramount</code></p>
 <h3 id="modlogset">modlogset</h3>
 <p><strong>Description:</strong> Manage modlog settings.</p>
 <p><strong>Usage:</strong> <code>,modlogset</code></p>
@@ -2521,6 +2529,153 @@ If the bank is per-server, it will become global.</p>
 <h3 id="set">set</h3>
 <p><strong>Description:</strong> Commands for changing [botname]'s settings.</p>
 <p><strong>Usage:</strong> <code>,set</code></p>
+<h3 id="set-showsettings">set showsettings</h3>
+<p><strong>Description:</strong> Show the current settings for [botname].</p>
+<p>Accepts optional server parameter to allow prefix recovery.</p>
+<p><strong>Usage:</strong> <code>,set showsettings</code></p>
+<h3 id="set-fuzzy">set fuzzy</h3>
+<p><strong>Description:</strong> Toggle whether to enable fuzzy command search in DMs.</p>
+<p>This allows the bot to identify potential misspelled commands and offer corrections.</p>
+<p>Default is for fuzzy command search to be disabled.</p>
+<p><strong>Example:</strong>
+- <code>[p]set fuzzy</code></p>
+<p><strong>Usage:</strong> <code>,set fuzzy</code></p>
+<h3 id="set-roles">set roles</h3>
+<p><strong>Description:</strong> Set server's admin and mod roles for [botname].</p>
+<p><strong>Usage:</strong> <code>,set roles</code></p>
+<h3 id="set-roles-addmodrole">set roles addmodrole</h3>
+<p><strong>Description:</strong> Adds a moderator role for this server.</p>
+<p>This grants access to moderator level commands like:
+- <code>[p]mute</code>
+- <code>[p]cleanup</code>
+- <code>[p]customcommand create</code></p>
+<p>And more.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles addmodrole @Mods</code>
+- <code>[p]set roles addmodrole Loyal Helpers</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to add as a moderator.</p>
+<p><strong>Usage:</strong> <code>,set roles addmodrole</code></p>
+<h3 id="set-roles-removeadminrole">set roles removeadminrole</h3>
+<p><strong>Description:</strong> Removes an admin role for this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles removeadminrole @Admins</code>
+- <code>[p]set roles removeadminrole Super Admins</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to remove from being an admin.</p>
+<p><strong>Usage:</strong> <code>,set roles removeadminrole</code></p>
+<h3 id="set-roles-removemodrole">set roles removemodrole</h3>
+<p><strong>Description:</strong> Removes a mod role for this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles removemodrole @Mods</code>
+- <code>[p]set roles removemodrole Loyal Helpers</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to remove from being a moderator.</p>
+<p><strong>Usage:</strong> <code>,set roles removemodrole</code></p>
+<h3 id="set-roles-addadminrole">set roles addadminrole</h3>
+<p><strong>Description:</strong> Adds an admin role for this server.</p>
+<p>Admins have the same access as Mods, plus additional admin level commands like:
+- <code>[p]set serverprefix</code>
+- <code>[p]addrole</code>
+- <code>[p]ban</code>
+- <code>[p]ignore guild</code></p>
+<p>And more.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set roles addadminrole @Admins</code>
+- <code>[p]set roles addadminrole Super Admins</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;role&gt;</code> - The role to add as an admin.</p>
+<p><strong>Usage:</strong> <code>,set roles addadminrole</code></p>
+<h3 id="set-status">set status</h3>
+<p><strong>Description:</strong> Commands for setting [botname]'s status.</p>
+<p><strong>Usage:</strong> <code>,set status</code></p>
+<h3 id="set-status-watching">set status watching</h3>
+<p><strong>Description:</strong> Sets [botname]'s watching status.</p>
+<p>This will appear as <code>Watching &lt;watching&gt;</code>.</p>
+<p>Maximum length for a watching status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status watching</code> - Clears the activity status.
+- <code>[p]set status watching [p]help</code></p>
+<p><strong>Arguments:</strong>
+- <code>[watching]</code> - The text to follow <code>Watching</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status watching</code></p>
+<h3 id="set-status-idle">set status idle</h3>
+<p><strong>Description:</strong> Set [botname]'s status to idle.</p>
+<p><strong>Usage:</strong> <code>,set status idle</code></p>
+<h3 id="set-status-playing">set status playing</h3>
+<p><strong>Description:</strong> Sets [botname]'s playing status.</p>
+<p>This will appear as <code>Playing &lt;game&gt;</code> or <code>PLAYING A GAME: &lt;game&gt;</code> depending on the context.</p>
+<p>Maximum length for a playing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status playing</code> - Clears the activity status.
+- <code>[p]set status playing the keyboard</code></p>
+<p><strong>Arguments:</strong>
+- <code>[game]</code> - The text to follow <code>Playing</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status playing</code></p>
+<h3 id="set-status-competing">set status competing</h3>
+<p><strong>Description:</strong> Sets [botname]'s competing status.</p>
+<p>This will appear as <code>Competing in &lt;competing&gt;</code>.</p>
+<p>Maximum length for a competing status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status competing</code> - Clears the activity status.
+- <code>[p]set status competing London 2012 Olympic Games</code></p>
+<p><strong>Arguments:</strong>
+- <code>[competing]</code> - The text to follow <code>Competing in</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status competing</code></p>
+<h3 id="set-status-invisible">set status invisible</h3>
+<p><strong>Description:</strong> Set [botname]'s status to invisible.</p>
+<p><strong>Usage:</strong> <code>,set status invisible</code></p>
+<h3 id="set-status-dnd">set status dnd</h3>
+<p><strong>Description:</strong> Set [botname]'s status to do not disturb.</p>
+<p><strong>Usage:</strong> <code>,set status dnd</code></p>
+<h3 id="set-status-custom">set status custom</h3>
+<p><strong>Description:</strong> Sets [botname]'s custom status.</p>
+<p>This will appear as <code>&lt;text&gt;</code>.</p>
+<p>Maximum length for a custom status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status custom</code> - Clears the activity status.
+- <code>[p]set status custom Running cogs...</code></p>
+<p><strong>Arguments:</strong>
+- <code>[text]</code> - The custom status text. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status custom</code></p>
+<h3 id="set-status-listening">set status listening</h3>
+<p><strong>Description:</strong> Sets [botname]'s listening status.</p>
+<p>This will appear as <code>Listening to &lt;listening&gt;</code>.</p>
+<p>Maximum length for a listening status is 128 characters.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status listening</code> - Clears the activity status.
+- <code>[p]set status listening jams</code></p>
+<p><strong>Arguments:</strong>
+- <code>[listening]</code> - The text to follow <code>Listening to</code>. Leave blank to clear the current activity status.</p>
+<p><strong>Usage:</strong> <code>,set status listening</code></p>
+<h3 id="set-status-streaming">set status streaming</h3>
+<p><strong>Description:</strong> Sets [botname]'s streaming status to a twitch stream.</p>
+<p>This will appear as <code>Streaming &lt;stream_title&gt;</code> or <code>LIVE ON TWITCH</code> depending on the context.
+It will also include a <code>Watch</code> button with a twitch.tv url for the provided streamer.</p>
+<p>Maximum length for a stream title is 128 characters.</p>
+<p>Leaving both streamer and stream_title empty will clear it.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set status stream</code> - Clears the activity status.
+- <code>[p]set status stream 26 Rosie is streaming</code> - Sets the stream to <code>https://www.twitch.tv/26</code>.
+- <code>[p]set status stream https://twitch.tv/26 Rosie is streaming</code> - Sets the URL manually.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;streamer&gt;</code> - The twitch streamer to provide a link to. This can be their twitch name or the entire URL.
+- <code>&lt;stream_title&gt;</code> - The text to follow <code>Streaming</code> in the status.</p>
+<p><strong>Usage:</strong> <code>,set status streaming</code></p>
+<h3 id="set-status-online">set status online</h3>
+<p><strong>Description:</strong> Set [botname]'s status to online.</p>
+<p><strong>Usage:</strong> <code>,set status online</code></p>
+<h3 id="set-usebuttons">set usebuttons</h3>
+<p><strong>Description:</strong> Set a global bot variable for using buttons in menus.</p>
+<p>When enabled, all usage of cores menus API will use buttons instead of reactions.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set usebuttons</code> - Toggles the value.
+- <code>[p]set usebuttons True</code> - Enables using buttons.</p>
+<p><strong>Arguments:</strong>
+- <code>[use_buttons]</code> - Whether to use buttons. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,set usebuttons</code></p>
 <h3 id="set-prefix">set prefix</h3>
 <p><strong>Description:</strong> Sets [botname]'s global prefix(es).</p>
 <p>Warning: This is not additive. It will replace all current prefixes.</p>
@@ -2662,19 +2817,6 @@ list of key,values as described by the cog requesting this command.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
 <p><strong>Usage:</strong> <code>,set locale</code></p>
-<h3 id="set-locale-global">set locale global</h3>
-<p><strong>Description:</strong> Changes [botname]'s default locale.</p>
-<p>This will be used when a server has not set a locale, or in DMs.</p>
-<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
-<p>To reset to English, use "en-US".</p>
-<p><strong>Examples:</strong>
-- <code>[p]set locale global en-US</code>
-- <code>[p]set locale global de-DE</code>
-- <code>[p]set locale global fr-FR</code>
-- <code>[p]set locale global pl-PL</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
-<p><strong>Usage:</strong> <code>,set locale global</code></p>
 <h3 id="set-locale-server">set locale server</h3>
 <p><strong>Description:</strong> Changes [botname]'s locale in this server.</p>
 <p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
@@ -2688,6 +2830,19 @@ list of key,values as described by the cog requesting this command.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
 <p><strong>Usage:</strong> <code>,set locale server</code></p>
+<h3 id="set-locale-global">set locale global</h3>
+<p><strong>Description:</strong> Changes [botname]'s default locale.</p>
+<p>This will be used when a server has not set a locale, or in DMs.</p>
+<p>Go to <a href="https://translate.discord.red">Red's Crowdin page</a> to see locales that are available with translations.</p>
+<p>To reset to English, use "en-US".</p>
+<p><strong>Examples:</strong>
+- <code>[p]set locale global en-US</code>
+- <code>[p]set locale global de-DE</code>
+- <code>[p]set locale global fr-FR</code>
+- <code>[p]set locale global pl-PL</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;language_code&gt;</code> - The default locale to use for the bot. This can be any language code with country code included.</p>
+<p><strong>Usage:</strong> <code>,set locale global</code></p>
 <h3 id="set-regionalformat">set regionalformat</h3>
 <p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
 <p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
@@ -2700,17 +2855,6 @@ Pass "reset" to <code>language_code</code> to base regional formatting on bot's 
 <p><strong>Arguments:</strong>
 - <code>[language_code]</code> - The region format to use for the bot in this server.</p>
 <p><strong>Usage:</strong> <code>,set regionalformat</code></p>
-<h3 id="set-regionalformat-server">set regionalformat server</h3>
-<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
-<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
-Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set regionalformat server en-US</code>
-- <code>[p]set region local de-DE</code>
-- <code>[p]set regionalformat server reset</code> - Resets to the locale.</p>
-<p><strong>Arguments:</strong>
-- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
-<p><strong>Usage:</strong> <code>,set regionalformat server</code></p>
 <h3 id="set-regionalformat-global">set regionalformat global</h3>
 <p><strong>Description:</strong> Changes the bot's regional format. This is used for formatting date, time and numbers.</p>
 <p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
@@ -2722,6 +2866,17 @@ Pass "reset" to <code>language_code</code> to base regional formatting on bot's 
 <p><strong>Arguments:</strong>
 - <code>[language_code]</code> - The default region format to use for the bot.</p>
 <p><strong>Usage:</strong> <code>,set regionalformat global</code></p>
+<h3 id="set-regionalformat-server">set regionalformat server</h3>
+<p><strong>Description:</strong> Changes the bot's regional format in this server. This is used for formatting date, time and numbers.</p>
+<p><code>language_code</code> can be any language code with country code included, e.g. <code>en-US</code>, <code>de-DE</code>, <code>fr-FR</code>, <code>pl-PL</code>, etc.
+Pass "reset" to <code>language_code</code> to base regional formatting on bot's locale in this server.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set regionalformat server en-US</code>
+- <code>[p]set region local de-DE</code>
+- <code>[p]set regionalformat server reset</code> - Resets to the locale.</p>
+<p><strong>Arguments:</strong>
+- <code>[language_code]</code> - The region format to use for the bot in this server.</p>
+<p><strong>Usage:</strong> <code>,set regionalformat server</code></p>
 <h3 id="set-usebotcolour">set usebotcolour</h3>
 <p><strong>Description:</strong> Toggle whether to use the bot owner-configured colour for embeds.</p>
 <p>Default is to use the bot's configured colour.
@@ -2737,17 +2892,6 @@ Otherwise, the colour used will be the colour of the bot's top role.</p>
 <p><strong>Example:</strong>
 - <code>[p]set serverfuzzy</code></p>
 <p><strong>Usage:</strong> <code>,set serverfuzzy</code></p>
-<h3 id="set-usebuttons">set usebuttons</h3>
-<p><strong>Description:</strong> Set a global bot variable for using buttons in menus.</p>
-<p>When enabled, all usage of cores menus API will use buttons instead of reactions.</p>
-<p>This defaults to True.
-Using this without a setting will toggle.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set usebuttons</code> - Toggles the value.
-- <code>[p]set usebuttons True</code> - Enables using buttons.</p>
-<p><strong>Arguments:</strong>
-- <code>[use_buttons]</code> - Whether to use buttons. Leave blank to toggle.</p>
-<p><strong>Usage:</strong> <code>,set usebuttons</code></p>
 <h3 id="set-serverprefix">set serverprefix</h3>
 <p><strong>Description:</strong> Sets [botname]'s server prefix(es).</p>
 <p>Warning: This will override global prefixes, the bot will not respond to any global prefixes in this server.
@@ -2767,6 +2911,14 @@ Using this without a setting will toggle.</p>
 <p><strong>Description:</strong> Commands for configuring owner notifications.</p>
 <p>Owner notifications include usage of <code>[p]contact</code> and available Red updates.</p>
 <p><strong>Usage:</strong> <code>,set ownernotifications</code></p>
+<h3 id="set-ownernotifications-adddestination">set ownernotifications adddestination</h3>
+<p><strong>Description:</strong> Adds a destination text channel to receive owner notifications.</p>
+<p><strong>Examples:</strong>
+- <code>[p]set ownernotifications adddestination #owner-notifications</code>
+- <code>[p]set ownernotifications adddestination 168091848718417920</code> - Accepts channel IDs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;channel&gt;</code> - The channel to send owner notifications to.</p>
+<p><strong>Usage:</strong> <code>,set ownernotifications adddestination</code></p>
 <h3 id="set-ownernotifications-removedestination">set ownernotifications removedestination</h3>
 <p><strong>Description:</strong> Removes a destination text channel from receiving owner notifications.</p>
 <p><strong>Examples:</strong>
@@ -2795,154 +2947,55 @@ Using this without a setting will toggle.</p>
 <p><strong>Example:</strong>
 - <code>[p]set ownernotifications optout</code></p>
 <p><strong>Usage:</strong> <code>,set ownernotifications optout</code></p>
-<h3 id="set-ownernotifications-adddestination">set ownernotifications adddestination</h3>
-<p><strong>Description:</strong> Adds a destination text channel to receive owner notifications.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set ownernotifications adddestination #owner-notifications</code>
-- <code>[p]set ownernotifications adddestination 168091848718417920</code> - Accepts channel IDs.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;channel&gt;</code> - The channel to send owner notifications to.</p>
-<p><strong>Usage:</strong> <code>,set ownernotifications adddestination</code></p>
-<h3 id="set-showsettings">set showsettings</h3>
-<p><strong>Description:</strong> Show the current settings for [botname].</p>
-<p>Accepts optional server parameter to allow prefix recovery.</p>
-<p><strong>Usage:</strong> <code>,set showsettings</code></p>
-<h3 id="set-fuzzy">set fuzzy</h3>
-<p><strong>Description:</strong> Toggle whether to enable fuzzy command search in DMs.</p>
-<p>This allows the bot to identify potential misspelled commands and offer corrections.</p>
-<p>Default is for fuzzy command search to be disabled.</p>
-<p><strong>Example:</strong>
-- <code>[p]set fuzzy</code></p>
-<p><strong>Usage:</strong> <code>,set fuzzy</code></p>
-<h3 id="set-roles">set roles</h3>
-<p><strong>Description:</strong> Set server's admin and mod roles for [botname].</p>
-<p><strong>Usage:</strong> <code>,set roles</code></p>
-<h3 id="set-roles-removemodrole">set roles removemodrole</h3>
-<p><strong>Description:</strong> Removes a mod role for this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles removemodrole @Mods</code>
-- <code>[p]set roles removemodrole Loyal Helpers</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to remove from being a moderator.</p>
-<p><strong>Usage:</strong> <code>,set roles removemodrole</code></p>
-<h3 id="set-roles-addadminrole">set roles addadminrole</h3>
-<p><strong>Description:</strong> Adds an admin role for this server.</p>
-<p>Admins have the same access as Mods, plus additional admin level commands like:
-- <code>[p]set serverprefix</code>
-- <code>[p]addrole</code>
-- <code>[p]ban</code>
-- <code>[p]ignore guild</code></p>
-<p>And more.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles addadminrole @Admins</code>
-- <code>[p]set roles addadminrole Super Admins</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to add as an admin.</p>
-<p><strong>Usage:</strong> <code>,set roles addadminrole</code></p>
-<h3 id="set-roles-addmodrole">set roles addmodrole</h3>
-<p><strong>Description:</strong> Adds a moderator role for this server.</p>
-<p>This grants access to moderator level commands like:
-- <code>[p]mute</code>
-- <code>[p]cleanup</code>
-- <code>[p]customcommand create</code></p>
-<p>And more.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles addmodrole @Mods</code>
-- <code>[p]set roles addmodrole Loyal Helpers</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to add as a moderator.</p>
-<p><strong>Usage:</strong> <code>,set roles addmodrole</code></p>
-<h3 id="set-roles-removeadminrole">set roles removeadminrole</h3>
-<p><strong>Description:</strong> Removes an admin role for this server.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set roles removeadminrole @Admins</code>
-- <code>[p]set roles removeadminrole Super Admins</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> - The role to remove from being an admin.</p>
-<p><strong>Usage:</strong> <code>,set roles removeadminrole</code></p>
-<h3 id="set-status">set status</h3>
-<p><strong>Description:</strong> Commands for setting [botname]'s status.</p>
-<p><strong>Usage:</strong> <code>,set status</code></p>
-<h3 id="set-status-competing">set status competing</h3>
-<p><strong>Description:</strong> Sets [botname]'s competing status.</p>
-<p>This will appear as <code>Competing in &lt;competing&gt;</code>.</p>
-<p>Maximum length for a competing status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status competing</code> - Clears the activity status.
-- <code>[p]set status competing London 2012 Olympic Games</code></p>
-<p><strong>Arguments:</strong>
-- <code>[competing]</code> - The text to follow <code>Competing in</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status competing</code></p>
-<h3 id="set-status-invisible">set status invisible</h3>
-<p><strong>Description:</strong> Set [botname]'s status to invisible.</p>
-<p><strong>Usage:</strong> <code>,set status invisible</code></p>
-<h3 id="set-status-dnd">set status dnd</h3>
-<p><strong>Description:</strong> Set [botname]'s status to do not disturb.</p>
-<p><strong>Usage:</strong> <code>,set status dnd</code></p>
-<h3 id="set-status-custom">set status custom</h3>
-<p><strong>Description:</strong> Sets [botname]'s custom status.</p>
-<p>This will appear as <code>&lt;text&gt;</code>.</p>
-<p>Maximum length for a custom status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status custom</code> - Clears the activity status.
-- <code>[p]set status custom Running cogs...</code></p>
-<p><strong>Arguments:</strong>
-- <code>[text]</code> - The custom status text. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status custom</code></p>
-<h3 id="set-status-listening">set status listening</h3>
-<p><strong>Description:</strong> Sets [botname]'s listening status.</p>
-<p>This will appear as <code>Listening to &lt;listening&gt;</code>.</p>
-<p>Maximum length for a listening status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status listening</code> - Clears the activity status.
-- <code>[p]set status listening jams</code></p>
-<p><strong>Arguments:</strong>
-- <code>[listening]</code> - The text to follow <code>Listening to</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status listening</code></p>
-<h3 id="set-status-streaming">set status streaming</h3>
-<p><strong>Description:</strong> Sets [botname]'s streaming status to a twitch stream.</p>
-<p>This will appear as <code>Streaming &lt;stream_title&gt;</code> or <code>LIVE ON TWITCH</code> depending on the context.
-It will also include a <code>Watch</code> button with a twitch.tv url for the provided streamer.</p>
-<p>Maximum length for a stream title is 128 characters.</p>
-<p>Leaving both streamer and stream_title empty will clear it.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status stream</code> - Clears the activity status.
-- <code>[p]set status stream 26 Rosie is streaming</code> - Sets the stream to <code>https://www.twitch.tv/26</code>.
-- <code>[p]set status stream https://twitch.tv/26 Rosie is streaming</code> - Sets the URL manually.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;streamer&gt;</code> - The twitch streamer to provide a link to. This can be their twitch name or the entire URL.
-- <code>&lt;stream_title&gt;</code> - The text to follow <code>Streaming</code> in the status.</p>
-<p><strong>Usage:</strong> <code>,set status streaming</code></p>
-<h3 id="set-status-online">set status online</h3>
-<p><strong>Description:</strong> Set [botname]'s status to online.</p>
-<p><strong>Usage:</strong> <code>,set status online</code></p>
-<h3 id="set-status-watching">set status watching</h3>
-<p><strong>Description:</strong> Sets [botname]'s watching status.</p>
-<p>This will appear as <code>Watching &lt;watching&gt;</code>.</p>
-<p>Maximum length for a watching status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status watching</code> - Clears the activity status.
-- <code>[p]set status watching [p]help</code></p>
-<p><strong>Arguments:</strong>
-- <code>[watching]</code> - The text to follow <code>Watching</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status watching</code></p>
-<h3 id="set-status-idle">set status idle</h3>
-<p><strong>Description:</strong> Set [botname]'s status to idle.</p>
-<p><strong>Usage:</strong> <code>,set status idle</code></p>
-<h3 id="set-status-playing">set status playing</h3>
-<p><strong>Description:</strong> Sets [botname]'s playing status.</p>
-<p>This will appear as <code>Playing &lt;game&gt;</code> or <code>PLAYING A GAME: &lt;game&gt;</code> depending on the context.</p>
-<p>Maximum length for a playing status is 128 characters.</p>
-<p><strong>Examples:</strong>
-- <code>[p]set status playing</code> - Clears the activity status.
-- <code>[p]set status playing the keyboard</code></p>
-<p><strong>Arguments:</strong>
-- <code>[game]</code> - The text to follow <code>Playing</code>. Leave blank to clear the current activity status.</p>
-<p><strong>Usage:</strong> <code>,set status playing</code></p>
 <h3 id="helpset">helpset</h3>
 <p><strong>Description:</strong> Commands to manage settings for the help command.</p>
 <p>All help settings are applied globally.</p>
 <p><strong>Usage:</strong> <code>,helpset</code></p>
+<h3 id="helpset-pagecharlimit">helpset pagecharlimit</h3>
+<p><strong>Description:</strong> Set the character limit for each page in the help message.</p>
+<p>Note: This setting only applies to embedded help.</p>
+<p>The default value is 1000 characters. The minimum value is 500.
+The maximum is based on the lower of what you provide and what discord allows.</p>
+<p>Please note that setting a relatively small character limit may
+mean some pages will exceed this limit.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset pagecharlimit 1500</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;limit&gt;</code> - The max amount of characters to show per page in the help message.</p>
+<p><strong>Usage:</strong> <code>,helpset pagecharlimit</code></p>
+<h3 id="helpset-showaliases">helpset showaliases</h3>
+<p><strong>Description:</strong> This allows the help command to show existing commands aliases if there is any.</p>
+<p>This defaults to True.
+Using this without a setting will toggle.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset showaliases False</code> - Disables showing aliases on this server.
+- <code>[p]helpset showaliases</code> - Toggles the value.</p>
+<p><strong>Arguments:</strong>
+- <code>[show_aliases]</code> - Whether to include aliases in help. Leave blank to toggle.</p>
+<p><strong>Usage:</strong> <code>,helpset showaliases</code></p>
+<h3 id="helpset-showsettings">helpset showsettings</h3>
+<p><strong>Description:</strong> Show the current help settings.</p>
+<p>Warning: These settings may not be accurate if the default formatter is not in use.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset showsettings</code></p>
+<p><strong>Usage:</strong> <code>,helpset showsettings</code></p>
+<h3 id="helpset-reacttimeout">helpset reacttimeout</h3>
+<p><strong>Description:</strong> Set the timeout for reactions, if menus are enabled.</p>
+<p>The default is 30 seconds.
+The timeout has to be between 15 and 300 seconds.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset reacttimeout 30</code> - The default timeout.
+- <code>[p]helpset reacttimeout 60</code> - Timeout of 1 minute.
+- <code>[p]helpset reacttimeout 15</code> - Minimum allowed timeout.
+- <code>[p]helpset reacttimeout 300</code> - Max allowed timeout (5 mins).</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;seconds&gt;</code> - The timeout, in seconds, of the reactions.</p>
+<p><strong>Usage:</strong> <code>,helpset reacttimeout</code></p>
+<h3 id="helpset-resetformatter">helpset resetformatter</h3>
+<p><strong>Description:</strong> This resets [botname]'s help formatter to the default formatter.</p>
+<p><strong>Example:</strong>
+- <code>[p]helpset resetformatter</code></p>
+<p><strong>Usage:</strong> <code>,helpset resetformatter</code></p>
 <h3 id="helpset-verifyexists">helpset verifyexists</h3>
 <p><strong>Description:</strong> Sets whether the bot should respond to help commands for nonexistent topics.</p>
 <p>When enabled, this will indicate the existence of help topics, even if the user can't use it.</p>
@@ -2955,12 +3008,6 @@ Using this without a setting will toggle.</p>
 <p><strong>Arguments:</strong>
 - <code>[verify]</code> - Whether to respond to help for nonexistent topics. Leave blank to toggle.</p>
 <p><strong>Usage:</strong> <code>,helpset verifyexists</code></p>
-<h3 id="helpset-resetsettings">helpset resetsettings</h3>
-<p><strong>Description:</strong> This resets [botname]'s help settings to their defaults.</p>
-<p>This may not have an impact when using custom formatters from 3rd party cogs</p>
-<p><strong>Example:</strong>
-- <code>[p]helpset resetsettings</code></p>
-<p><strong>Usage:</strong> <code>,helpset resetsettings</code></p>
 <h3 id="helpset-showhidden">helpset showhidden</h3>
 <p><strong>Description:</strong> This allows the help command to show hidden commands.</p>
 <p>This defaults to False.
@@ -2971,11 +3018,12 @@ Using this without a setting will toggle.</p>
 <p><strong>Arguments:</strong>
 - <code>[show_hidden]</code> - Whether to use show hidden commands in help. Leave blank to toggle.</p>
 <p><strong>Usage:</strong> <code>,helpset showhidden</code></p>
-<h3 id="helpset-resetformatter">helpset resetformatter</h3>
-<p><strong>Description:</strong> This resets [botname]'s help formatter to the default formatter.</p>
+<h3 id="helpset-resetsettings">helpset resetsettings</h3>
+<p><strong>Description:</strong> This resets [botname]'s help settings to their defaults.</p>
+<p>This may not have an impact when using custom formatters from 3rd party cogs</p>
 <p><strong>Example:</strong>
-- <code>[p]helpset resetformatter</code></p>
-<p><strong>Usage:</strong> <code>,helpset resetformatter</code></p>
+- <code>[p]helpset resetsettings</code></p>
+<p><strong>Usage:</strong> <code>,helpset resetsettings</code></p>
 <h3 id="helpset-tagline">helpset tagline</h3>
 <p><strong>Description:</strong> Set the tagline to be used.</p>
 <p>The maximum tagline length is 2048 characters.
@@ -2988,24 +3036,6 @@ This setting only applies to embedded help. If no tagline is specified, the defa
 <p><strong>Arguments:</strong>
 - <code>[tagline]</code> - The tagline to appear at the bottom of help embeds. Leave blank to reset.</p>
 <p><strong>Usage:</strong> <code>,helpset tagline</code></p>
-<h3 id="helpset-showsettings">helpset showsettings</h3>
-<p><strong>Description:</strong> Show the current help settings.</p>
-<p>Warning: These settings may not be accurate if the default formatter is not in use.</p>
-<p><strong>Example:</strong>
-- <code>[p]helpset showsettings</code></p>
-<p><strong>Usage:</strong> <code>,helpset showsettings</code></p>
-<h3 id="helpset-maxpages">helpset maxpages</h3>
-<p><strong>Description:</strong> Set the maximum number of help pages sent in a server channel.</p>
-<p>If a help message contains more pages than this value, the help message will
-be sent to the command author via DM. This is to help reduce spam in server
-text channels.</p>
-<p>The default value is 2 pages.</p>
-<p><strong>Examples:</strong>
-- <code>[p]helpset maxpages 50</code> - Basically never send help to DMs.
-- <code>[p]helpset maxpages 0</code> - Always send help to DMs.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;limit&gt;</code> - The max pages allowed to send per help in a server.</p>
-<p><strong>Usage:</strong> <code>,helpset maxpages</code></p>
 <h3 id="helpset-usemenus">helpset usemenus</h3>
 <p><strong>Description:</strong> Allows the help command to be sent as a paginated menu instead of separate messages.</p>
 <p>When "reactions", "buttons", "select", or "selectonly" is passed,
@@ -3021,6 +3051,18 @@ and will use the associated control scheme to navigate between pages.</p>
 - <code>&lt;"buttons"|"reactions"|"select"|"selectonly"|"disable"&gt;</code> - Whether to use <code>buttons</code>,
     <code>reactions</code>, <code>select</code>, <code>selectonly</code>, or no menus.</p>
 <p><strong>Usage:</strong> <code>,helpset usemenus</code></p>
+<h3 id="helpset-maxpages">helpset maxpages</h3>
+<p><strong>Description:</strong> Set the maximum number of help pages sent in a server channel.</p>
+<p>If a help message contains more pages than this value, the help message will
+be sent to the command author via DM. This is to help reduce spam in server
+text channels.</p>
+<p>The default value is 2 pages.</p>
+<p><strong>Examples:</strong>
+- <code>[p]helpset maxpages 50</code> - Basically never send help to DMs.
+- <code>[p]helpset maxpages 0</code> - Always send help to DMs.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;limit&gt;</code> - The max pages allowed to send per help in a server.</p>
+<p><strong>Usage:</strong> <code>,helpset maxpages</code></p>
 <h3 id="helpset-verifychecks">helpset verifychecks</h3>
 <p><strong>Description:</strong> Sets if commands which can't be run in the current context should be filtered from help.</p>
 <p>Defaults to True.
@@ -3057,40 +3099,6 @@ Setting the delay to 0 disables this feature.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;seconds&gt;</code> - The seconds to wait before deleting help pages.</p>
 <p><strong>Usage:</strong> <code>,helpset deletedelay</code></p>
-<h3 id="helpset-pagecharlimit">helpset pagecharlimit</h3>
-<p><strong>Description:</strong> Set the character limit for each page in the help message.</p>
-<p>Note: This setting only applies to embedded help.</p>
-<p>The default value is 1000 characters. The minimum value is 500.
-The maximum is based on the lower of what you provide and what discord allows.</p>
-<p>Please note that setting a relatively small character limit may
-mean some pages will exceed this limit.</p>
-<p><strong>Example:</strong>
-- <code>[p]helpset pagecharlimit 1500</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;limit&gt;</code> - The max amount of characters to show per page in the help message.</p>
-<p><strong>Usage:</strong> <code>,helpset pagecharlimit</code></p>
-<h3 id="helpset-showaliases">helpset showaliases</h3>
-<p><strong>Description:</strong> This allows the help command to show existing commands aliases if there is any.</p>
-<p>This defaults to True.
-Using this without a setting will toggle.</p>
-<p><strong>Examples:</strong>
-- <code>[p]helpset showaliases False</code> - Disables showing aliases on this server.
-- <code>[p]helpset showaliases</code> - Toggles the value.</p>
-<p><strong>Arguments:</strong>
-- <code>[show_aliases]</code> - Whether to include aliases in help. Leave blank to toggle.</p>
-<p><strong>Usage:</strong> <code>,helpset showaliases</code></p>
-<h3 id="helpset-reacttimeout">helpset reacttimeout</h3>
-<p><strong>Description:</strong> Set the timeout for reactions, if menus are enabled.</p>
-<p>The default is 30 seconds.
-The timeout has to be between 15 and 300 seconds.</p>
-<p><strong>Examples:</strong>
-- <code>[p]helpset reacttimeout 30</code> - The default timeout.
-- <code>[p]helpset reacttimeout 60</code> - Timeout of 1 minute.
-- <code>[p]helpset reacttimeout 15</code> - Minimum allowed timeout.
-- <code>[p]helpset reacttimeout 300</code> - Max allowed timeout (5 mins).</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;seconds&gt;</code> - The timeout, in seconds, of the reactions.</p>
-<p><strong>Usage:</strong> <code>,helpset reacttimeout</code></p>
 <h3 id="contact">contact</h3>
 <p><strong>Description:</strong> Sends a message to the owners.</p>
 <p><strong>Example:</strong>
@@ -3127,19 +3135,6 @@ you can do so by using the command in DMs.</p>
 <p>Warning: When the allowlist is in use, the bot will ignore commands from everyone not on the list.</p>
 <p>Use <code>[p]allowlist clear</code> to disable the allowlist</p>
 <p><strong>Usage:</strong> <code>,allowlist</code></p>
-<h3 id="allowlist-add">allowlist add</h3>
-<p><strong>Description:</strong> Adds users to the allowlist.</p>
-<p><strong>Examples:</strong>
-- <code>[p]allowlist add @26 @Will</code> - Adds two users to the allowlist.
-- <code>[p]allowlist add 262626262626262626</code> - Adds a user by ID.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users...&gt;</code> - The user or users to add to the allowlist.</p>
-<p><strong>Usage:</strong> <code>,allowlist add</code></p>
-<h3 id="allowlist-list">allowlist list</h3>
-<p><strong>Description:</strong> Lists users on the allowlist.</p>
-<p><strong>Example:</strong>
-- <code>[p]allowlist list</code></p>
-<p><strong>Usage:</strong> <code>,allowlist list</code></p>
 <h3 id="allowlist-clear">allowlist clear</h3>
 <p><strong>Description:</strong> Clears the allowlist.</p>
 <p>This disables the allowlist.</p>
@@ -3155,10 +3150,33 @@ you can do so by using the command in DMs.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;users...&gt;</code> - The user or users to remove from the allowlist.</p>
 <p><strong>Usage:</strong> <code>,allowlist remove</code></p>
+<h3 id="allowlist-add">allowlist add</h3>
+<p><strong>Description:</strong> Adds users to the allowlist.</p>
+<p><strong>Examples:</strong>
+- <code>[p]allowlist add @26 @Will</code> - Adds two users to the allowlist.
+- <code>[p]allowlist add 262626262626262626</code> - Adds a user by ID.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users...&gt;</code> - The user or users to add to the allowlist.</p>
+<p><strong>Usage:</strong> <code>,allowlist add</code></p>
+<h3 id="allowlist-list">allowlist list</h3>
+<p><strong>Description:</strong> Lists users on the allowlist.</p>
+<p><strong>Example:</strong>
+- <code>[p]allowlist list</code></p>
+<p><strong>Usage:</strong> <code>,allowlist list</code></p>
 <h3 id="blocklist">blocklist</h3>
 <p><strong>Description:</strong> Commands to manage the blocklist.</p>
 <p>Use <code>[p]blocklist clear</code> to disable the blocklist</p>
 <p><strong>Usage:</strong> <code>,blocklist</code></p>
+<h3 id="blocklist-list">blocklist list</h3>
+<p><strong>Description:</strong> Lists users on the blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]blocklist list</code></p>
+<p><strong>Usage:</strong> <code>,blocklist list</code></p>
+<h3 id="blocklist-clear">blocklist clear</h3>
+<p><strong>Description:</strong> Clears the blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]blocklist clear</code></p>
+<p><strong>Usage:</strong> <code>,blocklist clear</code></p>
 <h3 id="blocklist-remove">blocklist remove</h3>
 <p><strong>Description:</strong> Removes users from the blocklist.</p>
 <p><strong>Examples:</strong>
@@ -3175,31 +3193,11 @@ you can do so by using the command in DMs.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;users...&gt;</code> - The user or users to add to the blocklist.</p>
 <p><strong>Usage:</strong> <code>,blocklist add</code></p>
-<h3 id="blocklist-list">blocklist list</h3>
-<p><strong>Description:</strong> Lists users on the blocklist.</p>
-<p><strong>Example:</strong>
-- <code>[p]blocklist list</code></p>
-<p><strong>Usage:</strong> <code>,blocklist list</code></p>
-<h3 id="blocklist-clear">blocklist clear</h3>
-<p><strong>Description:</strong> Clears the blocklist.</p>
-<p><strong>Example:</strong>
-- <code>[p]blocklist clear</code></p>
-<p><strong>Usage:</strong> <code>,blocklist clear</code></p>
 <h3 id="localallowlist">localallowlist</h3>
 <p><strong>Description:</strong> Commands to manage the server specific allowlist.</p>
 <p>Warning: When the allowlist is in use, the bot will ignore commands from everyone not on the list in the server.</p>
 <p>Use <code>[p]localallowlist clear</code> to disable the allowlist</p>
 <p><strong>Usage:</strong> <code>,localallowlist</code></p>
-<h3 id="localallowlist-remove">localallowlist remove</h3>
-<p><strong>Description:</strong> Removes user or role from the allowlist.</p>
-<p>The local allowlist will be disabled if all users are removed.</p>
-<p><strong>Examples:</strong>
-- <code>[p]localallowlist remove @26 @Will</code> - Removes two users from the local allowlist.
-- <code>[p]localallowlist remove 262626262626262626</code> - Removes a user by ID.
-- <code>[p]localallowlist remove "Super Admins"</code> - Removes a role with a space in the name without mentioning.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
-<p><strong>Usage:</strong> <code>,localallowlist remove</code></p>
 <h3 id="localallowlist-add">localallowlist add</h3>
 <p><strong>Description:</strong> Adds a user or role to the server allowlist.</p>
 <p><strong>Examples:</strong>
@@ -3220,15 +3218,26 @@ you can do so by using the command in DMs.</p>
 <p><strong>Example:</strong>
 - <code>[p]localallowlist list</code></p>
 <p><strong>Usage:</strong> <code>,localallowlist list</code></p>
+<h3 id="localallowlist-remove">localallowlist remove</h3>
+<p><strong>Description:</strong> Removes user or role from the allowlist.</p>
+<p>The local allowlist will be disabled if all users are removed.</p>
+<p><strong>Examples:</strong>
+- <code>[p]localallowlist remove @26 @Will</code> - Removes two users from the local allowlist.
+- <code>[p]localallowlist remove 262626262626262626</code> - Removes a user by ID.
+- <code>[p]localallowlist remove "Super Admins"</code> - Removes a role with a space in the name without mentioning.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local allowlist.</p>
+<p><strong>Usage:</strong> <code>,localallowlist remove</code></p>
 <h3 id="localblocklist">localblocklist</h3>
 <p><strong>Description:</strong> Commands to manage the server specific blocklist.</p>
 <p>Use <code>[p]localblocklist clear</code> to disable the blocklist</p>
 <p><strong>Usage:</strong> <code>,localblocklist</code></p>
-<h3 id="localblocklist-list">localblocklist list</h3>
-<p><strong>Description:</strong> Lists users and roles on the server blocklist.</p>
+<h3 id="localblocklist-clear">localblocklist clear</h3>
+<p><strong>Description:</strong> Clears the server blocklist.</p>
+<p>This disables the server blocklist and clears all entries.</p>
 <p><strong>Example:</strong>
-- <code>[p]localblocklist list</code></p>
-<p><strong>Usage:</strong> <code>,localblocklist list</code></p>
+- <code>[p]blocklist clear</code></p>
+<p><strong>Usage:</strong> <code>,localblocklist clear</code></p>
 <h3 id="localblocklist-remove">localblocklist remove</h3>
 <p><strong>Description:</strong> Removes user or role from local blocklist.</p>
 <p><strong>Examples:</strong>
@@ -3238,6 +3247,11 @@ you can do so by using the command in DMs.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;users_or_roles...&gt;</code> - The users or roles to remove from the local blocklist.</p>
 <p><strong>Usage:</strong> <code>,localblocklist remove</code></p>
+<h3 id="localblocklist-list">localblocklist list</h3>
+<p><strong>Description:</strong> Lists users and roles on the server blocklist.</p>
+<p><strong>Example:</strong>
+- <code>[p]localblocklist list</code></p>
+<p><strong>Usage:</strong> <code>,localblocklist list</code></p>
 <h3 id="localblocklist-add">localblocklist add</h3>
 <p><strong>Description:</strong> Adds a user or role to the local blocklist.</p>
 <p><strong>Examples:</strong>
@@ -3247,15 +3261,29 @@ you can do so by using the command in DMs.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;users_or_roles...&gt;</code> - The users or roles to add to the local blocklist.</p>
 <p><strong>Usage:</strong> <code>,localblocklist add</code></p>
-<h3 id="localblocklist-clear">localblocklist clear</h3>
-<p><strong>Description:</strong> Clears the server blocklist.</p>
-<p>This disables the server blocklist and clears all entries.</p>
-<p><strong>Example:</strong>
-- <code>[p]blocklist clear</code></p>
-<p><strong>Usage:</strong> <code>,localblocklist clear</code></p>
 <h3 id="command">command</h3>
 <p><strong>Description:</strong> Commands to enable and disable commands and cogs.</p>
 <p><strong>Usage:</strong> <code>,command</code></p>
+<h3 id="command-disablecog">command disablecog</h3>
+<p><strong>Description:</strong> Disable a cog in this server.</p>
+<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disablecog Economy</code>
+- <code>[p]command disablecog ModLog</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;cog&gt;</code> - The name of the cog to disable on this server. Must be title-case.</p>
+<p><strong>Usage:</strong> <code>,command disablecog</code></p>
+<h3 id="command-disabledmsg">command disabledmsg</h3>
+<p><strong>Description:</strong> Set the bot's response to disabled commands.</p>
+<p>Leave blank to send nothing.</p>
+<p>To include the command name in the message, include the <code>{command}</code> placeholder.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disabledmsg This command is disabled</code>
+- <code>[p]command disabledmsg {command} is disabled</code>
+- <code>[p]command disabledmsg</code> - Sends nothing when a disabled command is attempted.</p>
+<p><strong>Arguments:</strong>
+- <code>[message]</code> - The message to send when a disabled command is attempted.</p>
+<p><strong>Usage:</strong> <code>,command disabledmsg</code></p>
 <h3 id="command-disable">command disable</h3>
 <p><strong>Description:</strong> Disable a command.</p>
 <p>If you're the bot owner, this will disable commands globally by default.
@@ -3266,14 +3294,6 @@ Otherwise, this will disable commands on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;command&gt;</code> - The command to disable.</p>
 <p><strong>Usage:</strong> <code>,command disable</code></p>
-<h3 id="command-disable-server">command disable server</h3>
-<p><strong>Description:</strong> Disable a command in this server only.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disable server userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
-- <code>[p]command disable server urban</code> - Disables the <code>urban</code> command in the General cog.</p>
-<p><strong>Arguments:</strong>
-- <code>&lt;command&gt;</code> - The command to disable for the current server.</p>
-<p><strong>Usage:</strong> <code>,command disable server</code></p>
 <h3 id="command-disable-global">command disable global</h3>
 <p><strong>Description:</strong> Disable a command globally.</p>
 <p><strong>Examples:</strong>
@@ -3282,6 +3302,14 @@ Otherwise, this will disable commands on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;command&gt;</code> - The command to disable globally.</p>
 <p><strong>Usage:</strong> <code>,command disable global</code></p>
+<h3 id="command-disable-server">command disable server</h3>
+<p><strong>Description:</strong> Disable a command in this server only.</p>
+<p><strong>Examples:</strong>
+- <code>[p]command disable server userinfo</code> - Disables the <code>userinfo</code> command in the Mod cog.
+- <code>[p]command disable server urban</code> - Disables the <code>urban</code> command in the General cog.</p>
+<p><strong>Arguments:</strong>
+- <code>&lt;command&gt;</code> - The command to disable for the current server.</p>
+<p><strong>Usage:</strong> <code>,command disable server</code></p>
 <h3 id="command-defaultdisablecog">command defaultdisablecog</h3>
 <p><strong>Description:</strong> Set the default state for a cog as disabled.</p>
 <p>This will disable the cog for all servers by default.
@@ -3361,30 +3389,23 @@ Otherwise, this will show disabled commands on the current server.</p>
 <p><strong>Example:</strong>
 - <code>[p]command listdisabled guild</code></p>
 <p><strong>Usage:</strong> <code>,command listdisabled guild</code></p>
-<h3 id="command-disablecog">command disablecog</h3>
-<p><strong>Description:</strong> Disable a cog in this server.</p>
-<p>Note: This will only work on loaded cogs, and must reference the title-case cog name.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disablecog Economy</code>
-- <code>[p]command disablecog ModLog</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;cog&gt;</code> - The name of the cog to disable on this server. Must be title-case.</p>
-<p><strong>Usage:</strong> <code>,command disablecog</code></p>
-<h3 id="command-disabledmsg">command disabledmsg</h3>
-<p><strong>Description:</strong> Set the bot's response to disabled commands.</p>
-<p>Leave blank to send nothing.</p>
-<p>To include the command name in the message, include the <code>{command}</code> placeholder.</p>
-<p><strong>Examples:</strong>
-- <code>[p]command disabledmsg This command is disabled</code>
-- <code>[p]command disabledmsg {command} is disabled</code>
-- <code>[p]command disabledmsg</code> - Sends nothing when a disabled command is attempted.</p>
-<p><strong>Arguments:</strong>
-- <code>[message]</code> - The message to send when a disabled command is attempted.</p>
-<p><strong>Usage:</strong> <code>,command disabledmsg</code></p>
 <h3 id="autoimmune">autoimmune</h3>
 <p><strong>Description:</strong> Commands to manage server settings for immunity from automated actions.</p>
 <p>This includes duplicate message deletion and mention spam from the Mod cog, and filters from the Filter cog.</p>
 <p><strong>Usage:</strong> <code>,autoimmune</code></p>
+<h3 id="autoimmune-isimmune">autoimmune isimmune</h3>
+<p><strong>Description:</strong> Checks if a user or role would be considered immune from automated actions.</p>
+<p><strong>Examples:</strong>
+- <code>[p]autoimmune isimmune @Rosie</code>
+- <code>[p]autoimmune isimmune @Mods</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;user_or_role&gt;</code> - The user or role to check the immunity of.</p>
+<p><strong>Usage:</strong> <code>,autoimmune isimmune</code></p>
+<h3 id="autoimmune-list">autoimmune list</h3>
+<p><strong>Description:</strong> Gets the current members and roles configured for automatic moderation action immunity.</p>
+<p><strong>Example:</strong>
+- <code>[p]autoimmune list</code></p>
+<p><strong>Usage:</strong> <code>,autoimmune list</code></p>
 <h3 id="autoimmune-add">autoimmune add</h3>
 <p><strong>Description:</strong> Makes a user or role immune from automated moderation actions.</p>
 <p><strong>Examples:</strong>
@@ -3401,19 +3422,6 @@ Otherwise, this will show disabled commands on the current server.</p>
 <p><strong>Arguments:</strong>
 - <code>&lt;user_or_role&gt;</code> - The user or role to remove immunity from.</p>
 <p><strong>Usage:</strong> <code>,autoimmune remove</code></p>
-<h3 id="autoimmune-isimmune">autoimmune isimmune</h3>
-<p><strong>Description:</strong> Checks if a user or role would be considered immune from automated actions.</p>
-<p><strong>Examples:</strong>
-- <code>[p]autoimmune isimmune @Rosie</code>
-- <code>[p]autoimmune isimmune @Mods</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;user_or_role&gt;</code> - The user or role to check the immunity of.</p>
-<p><strong>Usage:</strong> <code>,autoimmune isimmune</code></p>
-<h3 id="autoimmune-list">autoimmune list</h3>
-<p><strong>Description:</strong> Gets the current members and roles configured for automatic moderation action immunity.</p>
-<p><strong>Example:</strong>
-- <code>[p]autoimmune list</code></p>
-<p><strong>Usage:</strong> <code>,autoimmune list</code></p>
 <h3 id="ignore">ignore</h3>
 <p><strong>Description:</strong> Commands to add servers or channels to the ignore list.</p>
 <p>The ignore list will prevent the bot from responding to commands in the configured locations.</p>

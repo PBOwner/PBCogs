@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2143,25 +2151,6 @@
 <p>Due to Discord limitations, you will have to create a webhook yourself in the channel you want the welcome message in. See <strong><code>[p]hellohook setgreethook</code></strong> for more details.</p>
 <p><a href="https://coffeebank.github.io/coffee-cogs/hellohook">See Documentation &gt;</a></p>
 <p><strong>Usage:</strong> <code>,hellohook</code></p>
-<h3 id="hellohook-setleave">hellohook setleave</h3>
-<p><strong>Description:</strong> Set the Leave message</p>
-<pre><code>    The message must be a `{ "content": …, "embeds": [{}] }` object.
-
-    You can use variables to put the info of users into the message automatically.
-
-    [Create a webhook message here &gt;
-</code></pre>
-<p>See Hellohook help documentation &gt;](https://coffeebank.github.io/coffee-cogs/hellohook)</p>
-<pre><code>    When you are done on Discohook:
-    - Scroll to the bottom
-    - Click "JSON Data Editor"
-    - Click "Copy to Clipboard"
-    - Paste it into this bot command
-</code></pre>
-<p><strong>Usage:</strong> <code>,hellohook setleave</code></p>
-<h3 id="hellohook-settings">hellohook settings</h3>
-<p><strong>Description:</strong> List current Hellohook settings</p>
-<p><strong>Usage:</strong> <code>,hellohook settings</code></p>
 <h3 id="hellohook-invite">hellohook invite</h3>
 <p><strong>Description:</strong> Send custom Hellohook welcomes based on invite URLs (beta)</p>
 <p>-
@@ -2169,11 +2158,6 @@
 Data loss is possible. Use at your own risk.
 <a href="https://coffeebank.github.io/coffee-cogs/hellohook">See Documentation &gt;</a></strong></p>
 <p><strong>Usage:</strong> <code>,hellohook invite</code></p>
-<h3 id="hellohook-invite-sync">hellohook invite sync</h3>
-<p><strong>Description:</strong> Re-sync the invite tracker if bot's been offline</p>
-<p>If the bot has gone offline before, run this command to ensure the bot is tracking the right invites.</p>
-<p>Will also remove all server invites that have expired or disappeared.</p>
-<p><strong>Usage:</strong> <code>,hellohook invite sync</code></p>
 <h3 id="hellohook-invite-add">hellohook invite add</h3>
 <p><strong>Description:</strong> Add a custom invite-based welcome</p>
 <p><strong>Usage:</strong> <code>,hellohook invite add</code></p>
@@ -2184,16 +2168,21 @@ Data loss is possible. Use at your own risk.
   channel - for webhook URL
   message - for Discohook JSON</p>
 <p><strong>Usage:</strong> <code>,hellohook invite edit</code></p>
-<h3 id="hellohook-invite-settings">hellohook invite settings</h3>
-<p><strong>Description:</strong> List all invite-based welcomes</p>
-<p><strong>Usage:</strong> <code>,hellohook invite settings</code></p>
 <h3 id="hellohook-invite-test">hellohook invite test</h3>
 <p><strong>Description:</strong> Test all invite-based welcomes</p>
 <p><strong>Usage:</strong> <code>,hellohook invite test</code></p>
+<h3 id="hellohook-invite-settings">hellohook invite settings</h3>
+<p><strong>Description:</strong> List all invite-based welcomes</p>
+<p><strong>Usage:</strong> <code>,hellohook invite settings</code></p>
 <h3 id="hellohook-invite-remove">hellohook invite remove</h3>
 <p><strong>Description:</strong> Remove a custom invite-based welcome</p>
 <p>Please input only the ##### part of your <a href="https://discord.gg/#####">https://discord.gg/#####</a> invite.</p>
 <p><strong>Usage:</strong> <code>,hellohook invite remove</code></p>
+<h3 id="hellohook-invite-sync">hellohook invite sync</h3>
+<p><strong>Description:</strong> Re-sync the invite tracker if bot's been offline</p>
+<p>If the bot has gone offline before, run this command to ensure the bot is tracking the right invites.</p>
+<p>Will also remove all server invites that have expired or disappeared.</p>
+<p><strong>Usage:</strong> <code>,hellohook invite sync</code></p>
 <h3 id="hellohook-setgreet">hellohook setgreet</h3>
 <p><strong>Description:</strong> Set the Greet message</p>
 <pre><code>    The message must be a `{ "content": …, "embeds": [{}] }` object.
@@ -2227,6 +2216,9 @@ Data loss is possible. Use at your own risk.
 <p>[p]hellohook toggle leave true -&gt; enable Leave messages
 [p]hellohook toggle leave false -&gt; disable Leave messages</p>
 <p><strong>Usage:</strong> <code>,hellohook toggle</code></p>
+<h3 id="hellohook-settings">hellohook settings</h3>
+<p><strong>Description:</strong> List current Hellohook settings</p>
+<p><strong>Usage:</strong> <code>,hellohook settings</code></p>
 <h3 id="hellohook-setgreethook">hellohook setgreethook</h3>
 <p><strong>Description:</strong> Set the webhook URL/channel for Greet messages</p>
 <p>Must be webhook URL. Due to Discord limitations, you will have to make the webhook yourself. You can create a webhook in your desired channel by:</p>
@@ -2236,7 +2228,23 @@ Data loss is possible. Use at your own risk.
 <p><strong>Usage:</strong> <code>,hellohook setgreethook</code></p>
 <h3 id="hellohook-reset">hellohook reset</h3>
 <p><strong>Description:</strong> ⚠️ Reset all settings</p>
-<p><strong>Usage:</strong> <code>,hellohook reset</code></p></p>
+<p><strong>Usage:</strong> <code>,hellohook reset</code></p>
+<h3 id="hellohook-setleave">hellohook setleave</h3>
+<p><strong>Description:</strong> Set the Leave message</p>
+<pre><code>    The message must be a `{ "content": …, "embeds": [{}] }` object.
+
+    You can use variables to put the info of users into the message automatically.
+
+    [Create a webhook message here &gt;
+</code></pre>
+<p>See Hellohook help documentation &gt;](https://coffeebank.github.io/coffee-cogs/hellohook)</p>
+<pre><code>    When you are done on Discohook:
+    - Scroll to the bottom
+    - Click "JSON Data Editor"
+    - Click "Copy to Clipboard"
+    - Paste it into this bot command
+</code></pre>
+<p><strong>Usage:</strong> <code>,hellohook setleave</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2145,13 +2153,11 @@ You can also add user or role to this module's ignore list,
 if you want to ignore going over limit while not raising user limit for channel
 or you can ignore chosen channels to stop bot from kicking users from it.</p>
 <p><strong>Usage:</strong> <code>,voicetools forcelimit</code></p>
-<h3 id="voicetools-forcelimit-unignore">voicetools forcelimit unignore</h3>
-<p><strong>Description:</strong> Adds members, roles or voice channels to ignorelist of ForceLimit module</p>
-<p>Members and roles on ignorelist will bypass forcelimit
-(meaning - not getting kicked)</p>
-<p>Voice channels on ignorelist won't be checked
-(as if ForceLimit module was disabled for them)</p>
-<p><strong>Usage:</strong> <code>,voicetools forcelimit unignore</code></p>
+<h3 id="voicetools-forcelimit-ignorelist">voicetools forcelimit ignorelist</h3>
+<p><strong>Description:</strong> Shows ignorelist of ForceLimit module.</p>
+<p>This can include members and roles which bypass forcelimit
+and voice channels which won't be checked.</p>
+<p><strong>Usage:</strong> <code>,voicetools forcelimit ignorelist</code></p>
 <h3 id="voicetools-forcelimit-ignore">voicetools forcelimit ignore</h3>
 <p><strong>Description:</strong> Adds members, roles or voice channels to ignorelist of ForceLimit module.</p>
 <p>Members and roles on ignorelist will bypass forcelimit
@@ -2159,29 +2165,24 @@ or you can ignore chosen channels to stop bot from kicking users from it.</p>
 <p>Voice channels on ignorelist won't be checked
 (as if ForceLimit module was disabled for them)</p>
 <p><strong>Usage:</strong> <code>,voicetools forcelimit ignore</code></p>
-<h3 id="voicetools-forcelimit-disable">voicetools forcelimit disable</h3>
-<p><strong>Description:</strong> Disables ForceLimit module.</p>
-<p><strong>Usage:</strong> <code>,voicetools forcelimit disable</code></p>
-<h3 id="voicetools-forcelimit-ignorelist">voicetools forcelimit ignorelist</h3>
-<p><strong>Description:</strong> Shows ignorelist of ForceLimit module.</p>
-<p>This can include members and roles which bypass forcelimit
-and voice channels which won't be checked.</p>
-<p><strong>Usage:</strong> <code>,voicetools forcelimit ignorelist</code></p>
 <h3 id="voicetools-forcelimit-enable">voicetools forcelimit enable</h3>
 <p><strong>Description:</strong> Enables ForceLimit module.</p>
 <p><strong>Usage:</strong> <code>,voicetools forcelimit enable</code></p>
+<h3 id="voicetools-forcelimit-unignore">voicetools forcelimit unignore</h3>
+<p><strong>Description:</strong> Adds members, roles or voice channels to ignorelist of ForceLimit module</p>
+<p>Members and roles on ignorelist will bypass forcelimit
+(meaning - not getting kicked)</p>
+<p>Voice channels on ignorelist won't be checked
+(as if ForceLimit module was disabled for them)</p>
+<p><strong>Usage:</strong> <code>,voicetools forcelimit unignore</code></p>
+<h3 id="voicetools-forcelimit-disable">voicetools forcelimit disable</h3>
+<p><strong>Description:</strong> Disables ForceLimit module.</p>
+<p><strong>Usage:</strong> <code>,voicetools forcelimit disable</code></p>
 <h3 id="voicetools-vip">voicetools vip</h3>
 <p><strong>Description:</strong> Settings for VIP module.</p>
 <p>Set members and roles to not count to user limit in voice channel
 (limit will be raised accordingly after they join to make it possible)</p>
 <p><strong>Usage:</strong> <code>,voicetools vip</code></p>
-<h3 id="voicetools-vip-remove">voicetools vip remove</h3>
-<p><strong>Description:</strong> Removes members and roles to vip list of VIP module.</p>
-<p>VIP members and roles will not count to user limit in voice channel.</p>
-<p><strong>Usage:</strong> <code>,voicetools vip remove</code></p>
-<h3 id="voicetools-vip-disable">voicetools vip disable</h3>
-<p><strong>Description:</strong> Disables VIP module.</p>
-<p><strong>Usage:</strong> <code>,voicetools vip disable</code></p>
 <h3 id="voicetools-vip-list">voicetools vip list</h3>
 <p><strong>Description:</strong> Shows vip list of VIP module.</p>
 <p>Members and roles specified here will not count to user limit in voice channel.</p>
@@ -2192,7 +2193,14 @@ and voice channels which won't be checked.</p>
 <p><strong>Usage:</strong> <code>,voicetools vip add</code></p>
 <h3 id="voicetools-vip-enable">voicetools vip enable</h3>
 <p><strong>Description:</strong> Enables VIP module.</p>
-<p><strong>Usage:</strong> <code>,voicetools vip enable</code></p></p>
+<p><strong>Usage:</strong> <code>,voicetools vip enable</code></p>
+<h3 id="voicetools-vip-remove">voicetools vip remove</h3>
+<p><strong>Description:</strong> Removes members and roles to vip list of VIP module.</p>
+<p>VIP members and roles will not count to user limit in voice channel.</p>
+<p><strong>Usage:</strong> <code>,voicetools vip remove</code></p>
+<h3 id="voicetools-vip-disable">voicetools vip disable</h3>
+<p><strong>Description:</strong> Disables VIP module.</p>
+<p><strong>Usage:</strong> <code>,voicetools vip disable</code></p></p>
     </article>
 </section>
             <!-- endblock -->

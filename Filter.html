@@ -147,14 +147,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="AffiliatedServers.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            AffiliatedServers
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="AFK.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -371,14 +363,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="BanOnLeave.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            BanOnLeave
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="Bl.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -515,6 +499,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="CommandsButtons.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            CommandsButtons
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Cooldown.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -599,6 +591,14 @@
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
             DiscordEdit
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
+        <a href="DiscordModals.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            DiscordModals
         </a>
     </li>
                             
@@ -2011,6 +2011,14 @@
     </li>
                             
     <li class="drac-box-ternary">
+        <a href="VrtUtils.html"
+            class="
+            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+            VrtUtils
+        </a>
+    </li>
+                            
+    <li class="drac-box-ternary">
         <a href="Warnings.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2136,13 +2144,6 @@
 <h3 id="filterset">filterset</h3>
 <p><strong>Description:</strong> Base command to manage filter settings.</p>
 <p><strong>Usage:</strong> <code>,filterset</code></p>
-<h3 id="filterset-removeimmune">filterset removeimmune</h3>
-<p><strong>Description:</strong> Remove a role from the filter immune list.</p>
-<p>Example:
-- <code>[p]filterset removeimmune @RoleName</code></p>
-<p><strong>Arguments:</strong>
-- <code>&lt;role&gt;</code> The role to remove from the immune list.</p>
-<p><strong>Usage:</strong> <code>,filterset removeimmune</code></p>
 <h3 id="filterset-addimmune">filterset addimmune</h3>
 <p><strong>Description:</strong> Add a role to the filter immune list.</p>
 <p>Users with this role will not have their messages filtered.</p>
@@ -2151,6 +2152,16 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;role&gt;</code> The role to add to the immune list.</p>
 <p><strong>Usage:</strong> <code>,filterset addimmune</code></p>
+<h3 id="filterset-defaultname">filterset defaultname</h3>
+<p><strong>Description:</strong> Set the nickname for users with a filtered name.</p>
+<p>Note that this has no effect if filtering names is disabled
+(to toggle, run <code>[p]filter names</code>).</p>
+<p>The default name used is <em>John Doe</em>.</p>
+<p>Example:
+- <code>[p]filterset defaultname Missingno</code></p>
+<p><strong>Arguments:</strong>
+- <code>&lt;name&gt;</code> The new nickname to assign.</p>
+<p><strong>Usage:</strong> <code>,filterset defaultname</code></p>
 <h3 id="filterset-ban">filterset ban</h3>
 <p><strong>Description:</strong> Set the filter's autoban conditions.</p>
 <p>Users will be banned if they send <code>&lt;count&gt;</code> filtered words in
@@ -2163,16 +2174,13 @@
 - <code>&lt;count&gt;</code> The amount of filtered words required to trigger a ban.
 - <code>&lt;timeframe&gt;</code> The period of time in which too many filtered words will trigger a ban.</p>
 <p><strong>Usage:</strong> <code>,filterset ban</code></p>
-<h3 id="filterset-defaultname">filterset defaultname</h3>
-<p><strong>Description:</strong> Set the nickname for users with a filtered name.</p>
-<p>Note that this has no effect if filtering names is disabled
-(to toggle, run <code>[p]filter names</code>).</p>
-<p>The default name used is <em>John Doe</em>.</p>
+<h3 id="filterset-removeimmune">filterset removeimmune</h3>
+<p><strong>Description:</strong> Remove a role from the filter immune list.</p>
 <p>Example:
-- <code>[p]filterset defaultname Missingno</code></p>
+- <code>[p]filterset removeimmune @RoleName</code></p>
 <p><strong>Arguments:</strong>
-- <code>&lt;name&gt;</code> The new nickname to assign.</p>
-<p><strong>Usage:</strong> <code>,filterset defaultname</code></p>
+- <code>&lt;role&gt;</code> The role to remove from the immune list.</p>
+<p><strong>Usage:</strong> <code>,filterset removeimmune</code></p>
 <h3 id="filter">filter</h3>
 <p><strong>Description:</strong> Base command to add or remove words from the server filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
@@ -2206,6 +2214,12 @@
 <p><strong>Description:</strong> Base command to add or remove words from the channel filter.</p>
 <p>Use double quotes to add or remove sentences.</p>
 <p><strong>Usage:</strong> <code>,filter channel</code></p>
+<h3 id="filter-channel-list">filter channel list</h3>
+<p><strong>Description:</strong> Send a list of the channel's filtered words.</p>
+<p><strong>Usage:</strong> <code>,filter channel list</code></p>
+<h3 id="filter-channel-clear">filter channel clear</h3>
+<p><strong>Description:</strong> Clears this channel's filter list.</p>
+<p><strong>Usage:</strong> <code>,filter channel clear</code></p>
 <h3 id="filter-channel-delete">filter channel delete</h3>
 <p><strong>Description:</strong> Remove words from the filter.</p>
 <p>Use double quotes to remove sentences.</p>
@@ -2216,12 +2230,6 @@
 - <code>&lt;channel&gt;</code> The text, voice, stage, or forum channel to add filtered words to.
 - <code>[words...]</code> The words or sentences to no longer filter.</p>
 <p><strong>Usage:</strong> <code>,filter channel delete</code></p>
-<h3 id="filter-channel-list">filter channel list</h3>
-<p><strong>Description:</strong> Send a list of the channel's filtered words.</p>
-<p><strong>Usage:</strong> <code>,filter channel list</code></p>
-<h3 id="filter-channel-clear">filter channel clear</h3>
-<p><strong>Description:</strong> Clears this channel's filter list.</p>
-<p><strong>Usage:</strong> <code>,filter channel clear</code></p>
 <h3 id="filter-channel-add">filter channel add</h3>
 <p><strong>Description:</strong> Add words to the filter.</p>
 <p>Use double quotes to add sentences.</p>
