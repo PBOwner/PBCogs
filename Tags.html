@@ -2143,53 +2143,53 @@
 <p>Create and use tags.<br/><br/>The TagScript documentation can be found <a href="https://seina-cogs.readthedocs.io/en/latest/">here</a>.</p>
 <h3 id="tagsettings">tagsettings</h3>
 <p><strong>Description:</strong> Manage Tags cog settings.</p>
-<p><strong>Usage:</strong> <code>,tagsettings</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings</code></p>
 <h3 id="tagsettings-async">tagsettings async</h3>
 <p><strong>Description:</strong> Toggle using the asynchronous TagScript interpreter.</p>
 <p>If you aren't a developer or don't know what this is, there's no reason for you to change it.</p>
-<p><strong>Usage:</strong> <code>,tagsettings async</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings async</code></p>
 <h3 id="tagsettings-settings">tagsettings settings</h3>
 <p><strong>Description:</strong> View Tags settings.</p>
-<p><strong>Usage:</strong> <code>,tagsettings settings</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings settings</code></p>
 <h3 id="tagsettings-block">tagsettings block</h3>
 <p><strong>Description:</strong> Manage custom TagScript blocks.</p>
-<p><strong>Usage:</strong> <code>,tagsettings block</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings block</code></p>
 <h3 id="tagsettings-block-remove">tagsettings block remove</h3>
 <p><strong>Description:</strong> Remove a custom block from the TagScript interpreter.</p>
-<p><strong>Usage:</strong> <code>,tagsettings block remove</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings block remove</code></p>
 <h3 id="tagsettings-block-show">tagsettings block show</h3>
 <p><strong>Description:</strong> Show the code of a custom block.</p>
-<p><strong>Usage:</strong> <code>,tagsettings block show</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings block show</code></p>
 <h3 id="tagsettings-block-add">tagsettings block add</h3>
 <p><strong>Description:</strong> Add a custom block to the TagScript interpreter.</p>
 <p>The passed code must return a block class that inherits from <code>TagScriptEngine.Block</code>.</p>
-<p><strong>Usage:</strong> <code>,tagsettings block add</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings block add</code></p>
 <h3 id="tagsettings-block-list">tagsettings block list</h3>
 <p><strong>Description:</strong> List all custom blocks in the TagScript interpreter.</p>
-<p><strong>Usage:</strong> <code>,tagsettings block list</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings block list</code></p>
 <h3 id="tagsettings-limit">tagsettings limit</h3>
 <p><strong>Description:</strong> Change the global and guild limit for tags.</p>
-<p><strong>Usage:</strong> <code>,tagsettings limit</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings limit</code></p>
 <h3 id="tagsettings-limit-guild">tagsettings limit guild</h3>
 <p><strong>Description:</strong> Change the guild limit for tags.</p>
-<p><strong>Usage:</strong> <code>,tagsettings limit guild</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings limit guild</code></p>
 <h3 id="tagsettings-limit-global">tagsettings limit global</h3>
 <p><strong>Description:</strong> Change the global limit for tags.</p>
-<p><strong>Usage:</strong> <code>,tagsettings limit global</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings limit global</code></p>
 <h3 id="tagsettings-dotparam">tagsettings dotparam</h3>
 <p><strong>Description:</strong> Toggle the TagScript parsing style.</p>
 <p>If <code>dot_parameter</code> is enabled, TagScript blocks will parse like this:
 <code>{declaration.parameter:payload}</code>
 instead of:
 <code>{declaration(parameter):payload}</code></p>
-<p><strong>Usage:</strong> <code>,tagsettings dotparam</code></p>
+<p><strong>Usage:</strong> <code>?tagsettings dotparam</code></p>
 <h3 id="migratealias">migratealias</h3>
 <p><strong>Description:</strong> Migrate the Alias cog's global and server aliases into tags.</p>
 <p>This converts all aliases created with the Alias cog into tags with command blocks.
 This action cannot be undone.</p>
 <p><strong>Example:</strong>
 <code>[p]migratealias</code></p>
-<p><strong>Usage:</strong> <code>,migratealias</code></p>
+<p><strong>Usage:</strong> <code>?migratealias</code></p>
 <h3 id="migratecustomcom">migratecustomcom</h3>
 <p><strong>Description:</strong> Migrate the CustomCommand cog's server commands into tags.</p>
 <p>This converts all custom commands created into tags with the command text as TagScript.
@@ -2198,44 +2198,44 @@ Commands with converters are converted into indexed args blocks.
 This action cannot be undone.</p>
 <p><strong>Example:</strong>
 <code>[p]migratecustomcom</code></p>
-<p><strong>Usage:</strong> <code>,migratecustomcom</code></p>
+<p><strong>Usage:</strong> <code>?migratecustomcom</code></p>
 <h3 id="invoketag">invoketag</h3>
 <p><strong>Description:</strong> Manually invoke a tag with its name and arguments.</p>
 <p>Restricting this command with permissions in servers will restrict all members from invoking tags.</p>
 <p><strong>Examples:</strong>
 <code>[p]invoketag searchitem trophy</code>
 <code>[p]invoketag donate</code></p>
-<p><strong>Usage:</strong> <code>,invoketag</code></p>
+<p><strong>Usage:</strong> <code>?invoketag</code></p>
 <h3 id="tags">tags</h3>
 <p><strong>Description:</strong> View all tags and aliases.</p>
 <p>This command will show global tags if run in DMs.</p>
 <p><strong>Example:</strong>
 <code>[p]tags</code></p>
-<p><strong>Usage:</strong> <code>,tags</code></p>
+<p><strong>Usage:</strong> <code>?tags</code></p>
 <h3 id="tag">tag</h3>
 <p><strong>Description:</strong> Tag management with TagScript.</p>
 <p>These commands use TagScriptEngine.
 Read the <a href="https://seina-cogs.readthedocs.io/en/latest/">TagScript documentation</a> to learn how to use TagScript blocks.</p>
-<p><strong>Usage:</strong> <code>,tag</code></p>
+<p><strong>Usage:</strong> <code>?tag</code></p>
 <h3 id="tag-global">tag global</h3>
 <p><strong>Description:</strong> Global Tag management with TagScript.</p>
 <p>These commands use TagScriptEngine.
 Read the <a href="https://seina-cogs.readthedocs.io/en/latest/">TagScript documentation</a> to learn how to use TagScript blocks.</p>
-<p><strong>Usage:</strong> <code>,tag global</code></p>
+<p><strong>Usage:</strong> <code>?tag global</code></p>
 <h3 id="tag-global-restore">tag global restore</h3>
 <p><strong>Description:</strong> No description provided.</p>
-<p><strong>Usage:</strong> <code>,tag global restore</code></p>
+<p><strong>Usage:</strong> <code>?tag global restore</code></p>
 <h3 id="tag-global-append">tag global append</h3>
 <p><strong>Description:</strong> Add text to a global tag's TagScript.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global append rickroll Never gonna let you down!</code></p>
-<p><strong>Usage:</strong> <code>,tag global append</code></p>
+<p><strong>Usage:</strong> <code>?tag global append</code></p>
 <h3 id="tag-global-list">tag global list</h3>
 <p><strong>Description:</strong> View all stored global tags on this server.</p>
 <p>To view info on a specific global tag, use <code>[p]tag global info</code>.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global list</code></p>
-<p><strong>Usage:</strong> <code>,tag global list</code></p>
+<p><strong>Usage:</strong> <code>?tag global list</code></p>
 <h3 id="tag-global-alias">tag global alias</h3>
 <p><strong>Description:</strong> Add an alias for a global tag.</p>
 <pre><code>    Adding an alias to the global tag will make the global tag invokable using the alias or the global tag name.
@@ -2244,122 +2244,122 @@ Read the <a href="https://seina-cogs.readthedocs.io/en/latest/">TagScript docume
 <p>​
         <strong>Example:</strong>
         <code>[p]tag global alias donate donation</code></p>
-<p><strong>Usage:</strong> <code>,tag global alias</code></p>
+<p><strong>Usage:</strong> <code>?tag global alias</code></p>
 <h3 id="tag-global-add">tag global add</h3>
 <p><strong>Description:</strong> Add a global tag with TagScript.</p>
 <p><a href="https://seina-cogs.readthedocs.io/en/latest/global tags/blocks.html#usage">Global Tag usage guide</a></p>
 <p><strong>Example:</strong>
 <code>[p]tag global add lawsofmotion {embed(title):Newton's Laws of motion}
 {embed(description): According to all known laws of aviation, there is no way a bee should be able to fly.}</code></p>
-<p><strong>Usage:</strong> <code>,tag global add</code></p>
+<p><strong>Usage:</strong> <code>?tag global add</code></p>
 <h3 id="tag-global-usage">tag global usage</h3>
 <p><strong>Description:</strong> See global tag usage stats.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global usage</code></p>
-<p><strong>Usage:</strong> <code>,tag global usage</code></p>
+<p><strong>Usage:</strong> <code>?tag global usage</code></p>
 <h3 id="tag-global-unalias">tag global unalias</h3>
 <p><strong>Description:</strong> Remove an alias for a global tag.</p>
 <p>​The global tag will still be able to be used under its original name.
 You can delete the original global tag with the <code>[p]tag global remove</code> command.</p>
 <p><strong>Example:</strong>
 <code>global tag unalias donate donation</code></p>
-<p><strong>Usage:</strong> <code>,tag global unalias</code></p>
+<p><strong>Usage:</strong> <code>?tag global unalias</code></p>
 <h3 id="tag-global-pastebin">tag global pastebin</h3>
 <p><strong>Description:</strong> Add a global tag with a Pastebin link.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global pastebin starwarsopeningcrawl https://pastebin.com/CKjn6uYv</code></p>
-<p><strong>Usage:</strong> <code>,tag global pastebin</code></p>
+<p><strong>Usage:</strong> <code>?tag global pastebin</code></p>
 <h3 id="tag-global-raw">tag global raw</h3>
 <p><strong>Description:</strong> Get a global tag's raw content.</p>
 <p>The sent TagScript will be escaped from Discord style formatting characters.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global raw noping</code></p>
-<p><strong>Usage:</strong> <code>,tag global raw</code></p>
+<p><strong>Usage:</strong> <code>?tag global raw</code></p>
 <h3 id="tag-global-edit">tag global edit</h3>
 <p><strong>Description:</strong> Edit a global tag's TagScript.</p>
 <p>The passed tagscript will replace the global tag's current tagscript.
 View the <a href="https://seina-cogs.readthedocs.io/en/latest/blocks.html">TagScript docs</a> to find information on how to write valid tagscript.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global edit rickroll Never gonna give you up!</code></p>
-<p><strong>Usage:</strong> <code>,tag global edit</code></p>
+<p><strong>Usage:</strong> <code>?tag global edit</code></p>
 <h3 id="tag-global-backup">tag global backup</h3>
 <p><strong>Description:</strong> Backup all the global tag data.</p>
-<p><strong>Usage:</strong> <code>,tag global backup</code></p>
+<p><strong>Usage:</strong> <code>?tag global backup</code></p>
 <h3 id="tag-global-search">tag global search</h3>
 <p><strong>Description:</strong> Search for global tags by name.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global search notsupport</code></p>
-<p><strong>Usage:</strong> <code>,tag global search</code></p>
+<p><strong>Usage:</strong> <code>?tag global search</code></p>
 <h3 id="tag-global-remove">tag global remove</h3>
 <p><strong>Description:</strong> Permanently delete a global tag.</p>
 <p>If you want to remove a global tag's alias, use <code>[p]tag global unalias</code>.</p>
 <p><strong>Example:</strong>
 <code>[p]tag global remove RickRoll</code></p>
-<p><strong>Usage:</strong> <code>,tag global remove</code></p>
+<p><strong>Usage:</strong> <code>?tag global remove</code></p>
 <h3 id="tag-remove">tag remove</h3>
 <p><strong>Description:</strong> Permanently delete a tag.</p>
 <p>If you want to remove a tag's alias, use <code>[p]tag unalias</code>.</p>
 <p><strong>Example:</strong>
 <code>[p]tag remove RickRoll</code></p>
-<p><strong>Usage:</strong> <code>,tag remove</code></p>
+<p><strong>Usage:</strong> <code>?tag remove</code></p>
 <h3 id="tag-edit">tag edit</h3>
 <p><strong>Description:</strong> Edit a tag's TagScript.</p>
 <p>The passed tagscript will replace the tag's current tagscript.
 View the <a href="https://seina-cogs.readthedocs.io/en/latest/blocks.html">TagScript docs</a> to find information on how to write valid tagscript.</p>
 <p><strong>Example:</strong>
 <code>[p]tag edit rickroll Never gonna give you up!</code></p>
-<p><strong>Usage:</strong> <code>,tag edit</code></p>
+<p><strong>Usage:</strong> <code>?tag edit</code></p>
 <h3 id="tag-search">tag search</h3>
 <p><strong>Description:</strong> Search for tags by name.</p>
 <p><strong>Example:</strong>
 <code>[p]tag search notsupport</code></p>
-<p><strong>Usage:</strong> <code>,tag search</code></p>
+<p><strong>Usage:</strong> <code>?tag search</code></p>
 <h3 id="tag-run">tag run</h3>
 <p><strong>Description:</strong> Execute TagScript without storing.</p>
 <p>The variables and actions fields display debugging information.</p>
 <p><strong>Example:</strong>
 <code>[p]tag run {#:yes,no}</code></p>
-<p><strong>Usage:</strong> <code>,tag run</code></p>
+<p><strong>Usage:</strong> <code>?tag run</code></p>
 <h3 id="tag-add">tag add</h3>
 <p><strong>Description:</strong> Add a tag with TagScript.</p>
 <p><a href="https://seina-cogs.readthedocs.io/en/latest/tags/blocks.html#usage">Tag usage guide</a></p>
 <p><strong>Example:</strong>
 <code>[p]tag add lawsofmotion {embed(title):Newton's Laws of motion}
 {embed(description): According to all known laws of aviation, there is no way a bee should be able to fly.}</code></p>
-<p><strong>Usage:</strong> <code>,tag add</code></p>
+<p><strong>Usage:</strong> <code>?tag add</code></p>
 <h3 id="tag-info">tag info</h3>
 <p><strong>Description:</strong> Show information about a tag.</p>
 <p>You can view meta information for a tag on this server or a global tag.
 If a tag on this server has the same name as a global tag, it will show the server tag.</p>
 <p><strong>Example:</strong>
 <code>[p]tag info notsupport</code></p>
-<p><strong>Usage:</strong> <code>,tag info</code></p>
+<p><strong>Usage:</strong> <code>?tag info</code></p>
 <h3 id="tag-pastebin">tag pastebin</h3>
 <p><strong>Description:</strong> Add a tag with a Pastebin link.</p>
 <p><strong>Example:</strong>
 <code>[p]tag pastebin starwarsopeningcrawl https://pastebin.com/CKjn6uYv</code></p>
-<p><strong>Usage:</strong> <code>,tag pastebin</code></p>
+<p><strong>Usage:</strong> <code>?tag pastebin</code></p>
 <h3 id="tag-append">tag append</h3>
 <p><strong>Description:</strong> Add text to a tag's TagScript.</p>
 <p><strong>Example:</strong>
 <code>[p]tag append rickroll Never gonna let you down!</code></p>
-<p><strong>Usage:</strong> <code>,tag append</code></p>
+<p><strong>Usage:</strong> <code>?tag append</code></p>
 <h3 id="tag-raw">tag raw</h3>
 <p><strong>Description:</strong> Get a tag's raw content.</p>
 <p>The sent TagScript will be escaped from Discord style formatting characters.</p>
 <p><strong>Example:</strong>
 <code>[p]tag raw noping</code></p>
-<p><strong>Usage:</strong> <code>,tag raw</code></p>
+<p><strong>Usage:</strong> <code>?tag raw</code></p>
 <h3 id="tag-unalias">tag unalias</h3>
 <p><strong>Description:</strong> Remove an alias for a tag.</p>
 <p>​The tag will still be able to be used under its original name.
 You can delete the original tag with the <code>[p]tag remove</code> command.</p>
 <p><strong>Example:</strong>
 <code>tag unalias donate donation</code></p>
-<p><strong>Usage:</strong> <code>,tag unalias</code></p>
+<p><strong>Usage:</strong> <code>?tag unalias</code></p>
 <h3 id="tag-backup">tag backup</h3>
 <p><strong>Description:</strong> Backup all the tag data for your server.</p>
-<p><strong>Usage:</strong> <code>,tag backup</code></p>
+<p><strong>Usage:</strong> <code>?tag backup</code></p>
 <h3 id="tag-alias">tag alias</h3>
 <p><strong>Description:</strong>         Add an alias for a tag.</p>
 <pre><code>    Adding an alias to the tag will make the tag invokable using the alias or the tag name.
@@ -2368,14 +2368,14 @@ You can delete the original tag with the <code>[p]tag remove</code> command.</p>
 <p>​
         <strong>Example:</strong>
         <code>[p]tag alias donate donation</code></p>
-<p><strong>Usage:</strong> <code>,tag alias</code></p>
+<p><strong>Usage:</strong> <code>?tag alias</code></p>
 <h3 id="tag-process">tag process</h3>
 <p><strong>Description:</strong> Process a temporary Tag without storing.</p>
 <p>This differs from <code>[p]tag run</code> as it creates a fake tag and properly handles actions for all blocks.
 The <code>{args}</code> block is not supported.</p>
 <p><strong>Example:</strong>
 <code>[p]tag run {require(Admin):You must be admin to use this tag.} Congrats on being an admin!</code></p>
-<p><strong>Usage:</strong> <code>,tag process</code></p>
+<p><strong>Usage:</strong> <code>?tag process</code></p>
 <h3 id="tag-restore">tag restore</h3>
 <p><strong>Description:</strong> Restore all tag data for your server.</p>
 <p>This command will restore all data from the backup file.
@@ -2385,24 +2385,24 @@ not present in the backup file.</p>
 to the <code>message</code> argument.
 Alternatively, if you want to reply to a message, pass anything to the
 message argument while replying to a message.</p>
-<p><strong>Usage:</strong> <code>,tag restore</code></p>
+<p><strong>Usage:</strong> <code>?tag restore</code></p>
 <h3 id="tag-usage">tag usage</h3>
 <p><strong>Description:</strong> See tag usage stats.</p>
 <p><strong>Example:</strong>
 <code>[p]tag usage</code></p>
-<p><strong>Usage:</strong> <code>,tag usage</code></p>
+<p><strong>Usage:</strong> <code>?tag usage</code></p>
 <h3 id="tag-list">tag list</h3>
 <p><strong>Description:</strong> View all stored tags on this server.</p>
 <p>To view info on a specific tag, use <code>[p]tag info</code>.</p>
 <p><strong>Example:</strong>
 <code>[p]tag list</code></p>
-<p><strong>Usage:</strong> <code>,tag list</code></p>
+<p><strong>Usage:</strong> <code>?tag list</code></p>
 <h3 id="tag-docs">tag docs</h3>
 <p><strong>Description:</strong> Search the TagScript documentation for a block.</p>
 <p>https://seina-cogs.readthedocs.io/en/latest/</p>
 <p><strong>Example:</strong>
 <code>[p]tag docs embed</code></p>
-<p><strong>Usage:</strong> <code>,tag docs</code></p></p>
+<p><strong>Usage:</strong> <code>?tag docs</code></p></p>
     </article>
 </section>
             <!-- endblock -->

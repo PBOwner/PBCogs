@@ -2150,50 +2150,50 @@ is provided the mute will use the set default time or indefinite if not set.</p>
 <p>Examples:
 <code>[p]voicemute @member1 @member2 spam 5 hours</code>
 <code>[p]voicemute @member1 3 days</code></p>
-<p><strong>Usage:</strong> <code>,voicemute</code></p>
+<p><strong>Usage:</strong> <code>?voicemute</code></p>
 <h3 id="voiceunmute">voiceunmute</h3>
 <p><strong>Description:</strong> Unmute a user in their current voice channel.</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
 <code>[reason]</code> is the reason for the unmute.</p>
-<p><strong>Usage:</strong> <code>,voiceunmute</code></p>
+<p><strong>Usage:</strong> <code>?voiceunmute</code></p>
 <h3 id="muteset">muteset</h3>
 <p><strong>Description:</strong> Mute settings.</p>
-<p><strong>Usage:</strong> <code>,muteset</code></p>
+<p><strong>Usage:</strong> <code>?muteset</code></p>
 <h3 id="muteset-makerole">muteset makerole</h3>
 <p><strong>Description:</strong> Create a Muted role.</p>
 <p>This will create a role and apply overwrites to all available channels
 to more easily setup muting a user.</p>
 <p>If you already have a muted role created on the server use
 <code>[p]muteset role ROLE_NAME_HERE</code></p>
-<p><strong>Usage:</strong> <code>,muteset makerole</code></p>
+<p><strong>Usage:</strong> <code>?muteset makerole</code></p>
 <h3 id="muteset-defaulttime">muteset defaulttime</h3>
 <p><strong>Description:</strong> Set the default mute time for the mute command.</p>
 <p>If no time interval is provided this will be cleared.</p>
-<p><strong>Usage:</strong> <code>,muteset defaulttime</code></p>
+<p><strong>Usage:</strong> <code>?muteset defaulttime</code></p>
 <h3 id="muteset-notification">muteset notification</h3>
 <p><strong>Description:</strong> Set the notification channel for automatic unmute issues.</p>
 <p>If no channel is provided this will be cleared and notifications
 about issues when unmuting users will not be sent anywhere.</p>
-<p><strong>Usage:</strong> <code>,muteset notification</code></p>
+<p><strong>Usage:</strong> <code>?muteset notification</code></p>
 <h3 id="muteset-senddm">muteset senddm</h3>
 <p><strong>Description:</strong> Set whether mute notifications should be sent to users in DMs.</p>
-<p><strong>Usage:</strong> <code>,muteset senddm</code></p>
+<p><strong>Usage:</strong> <code>?muteset senddm</code></p>
 <h3 id="muteset-role">muteset role</h3>
 <p><strong>Description:</strong> Sets the role to be applied when muting a user.</p>
 <p>If no role is setup the bot will attempt to mute a user
 by utilizing server timeouts.</p>
 <p>Note: If no role is setup a user may be able to leave the server
 and rejoin no longer being muted.</p>
-<p><strong>Usage:</strong> <code>,muteset role</code></p>
+<p><strong>Usage:</strong> <code>?muteset role</code></p>
 <h3 id="muteset-showmoderator">muteset showmoderator</h3>
 <p><strong>Description:</strong> Decide whether the name of the moderator muting a user should be included in the DM to that user.</p>
-<p><strong>Usage:</strong> <code>,muteset showmoderator</code></p>
+<p><strong>Usage:</strong> <code>?muteset showmoderator</code></p>
 <h3 id="muteset-settings">muteset settings</h3>
 <p><strong>Description:</strong> Shows the current mute settings for this guild.</p>
-<p><strong>Usage:</strong> <code>,muteset settings</code></p>
+<p><strong>Usage:</strong> <code>?muteset settings</code></p>
 <h3 id="activemutes">activemutes</h3>
 <p><strong>Description:</strong> Displays active mutes on this server.</p>
-<p><strong>Usage:</strong> <code>,activemutes</code></p>
+<p><strong>Usage:</strong> <code>?activemutes</code></p>
 <h3 id="timeout">timeout</h3>
 <p><strong>Description:</strong> Timeout users.</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
@@ -2203,7 +2203,7 @@ is provided the mute will use the set default time or indefinite if not set.</p>
 <p>Examples:
 <code>[p]mute @member1 @member2 spam 5 hours</code>
 <code>[p]mute @member1 3 days</code></p>
-<p><strong>Usage:</strong> <code>,timeout</code></p>
+<p><strong>Usage:</strong> <code>?timeout</code></p>
 <h3 id="mute">mute</h3>
 <p><strong>Description:</strong> Mute users.</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
@@ -2213,7 +2213,7 @@ is provided the mute will use the set default time or indefinite if not set.</p>
 <p>Examples:
 <code>[p]mute @member1 @member2 spam 5 hours</code>
 <code>[p]mute @member1 3 days</code></p>
-<p><strong>Usage:</strong> <code>,mute</code></p>
+<p><strong>Usage:</strong> <code>?mute</code></p>
 <h3 id="mutechannel">mutechannel</h3>
 <p><strong>Description:</strong> Mute a user in the current text channel (or in the parent of the current thread).</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
@@ -2223,17 +2223,17 @@ is provided the mute will use the set default time or indefinite if not set.</p>
 <p>Examples:
 <code>[p]mutechannel @member1 @member2 spam 5 hours</code>
 <code>[p]mutechannel @member1 3 days</code></p>
-<p><strong>Usage:</strong> <code>,mutechannel</code></p>
+<p><strong>Usage:</strong> <code>?mutechannel</code></p>
 <h3 id="unmute">unmute</h3>
 <p><strong>Description:</strong> Unmute users.</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
 <code>[reason]</code> is the reason for the unmute.</p>
-<p><strong>Usage:</strong> <code>,unmute</code></p>
+<p><strong>Usage:</strong> <code>?unmute</code></p>
 <h3 id="unmutechannel">unmutechannel</h3>
 <p><strong>Description:</strong> Unmute a user in this channel (or in the parent of this thread).</p>
 <p><code>&lt;users...&gt;</code> is a space separated list of usernames, ID's, or mentions.
 <code>[reason]</code> is the reason for the unmute.</p>
-<p><strong>Usage:</strong> <code>,unmutechannel</code></p></p>
+<p><strong>Usage:</strong> <code>?unmutechannel</code></p></p>
     </article>
 </section>
             <!-- endblock -->

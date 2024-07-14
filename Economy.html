@@ -2150,7 +2150,7 @@
 <ul>
 <li><code>&lt;user&gt;</code> The user to check the balance of. If omitted, defaults to your own balance.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,balance</code></p>
+<p><strong>Usage:</strong> <code>?balance</code></p>
 <h3 id="share">share</h3>
 <p><strong>Description:</strong> Share coins to other users.</p>
 <p>This will come out of your balance, so make sure you have enough.</p>
@@ -2159,7 +2159,7 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;amount&gt;</code> The amount of coins to give.
 - <code>&lt;to&gt;</code> The user to give coins to.</p>
-<p><strong>Usage:</strong> <code>,share</code></p>
+<p><strong>Usage:</strong> <code>?share</code></p>
 <h3 id="setbalance">setbalance</h3>
 <p><strong>Description:</strong> Set the balance of a user's coins.</p>
 <p>Putting + or - signs before the amount will add/remove user's coins instead.</p>
@@ -2170,7 +2170,7 @@
 <p><strong>Arguments:</strong>
 - <code>&lt;to&gt;</code> The user to set the currency of.
 - <code>&lt;creds&gt;</code> The amount of currency to set their balance to.</p>
-<p><strong>Usage:</strong> <code>,setbalance</code></p>
+<p><strong>Usage:</strong> <code>?setbalance</code></p>
 <h3 id="bankreset">bankreset</h3>
 <p><strong>Description:</strong> Delete all bank accounts.</p>
 <p>Examples:
@@ -2178,7 +2178,7 @@
 - <code>[p]bankreset yes</code></p>
 <p><strong>Arguments:</strong>
 - <code>&lt;confirmation&gt;</code> This will default to false unless specified.</p>
-<p><strong>Usage:</strong> <code>,bankreset</code></p>
+<p><strong>Usage:</strong> <code>?bankreset</code></p>
 <h3 id="bankprune">bankprune</h3>
 <p><strong>Description:</strong> Prune bank accounts for users who no longer share a server with the bot.</p>
 <p>Examples:
@@ -2186,10 +2186,10 @@
 - <code>[p]bankprune yes</code></p>
 <p><strong>Arguments:</strong>
 - <code>&lt;confirmation&gt;</code> This will default to false unless specified.</p>
-<p><strong>Usage:</strong> <code>,bankprune</code></p>
+<p><strong>Usage:</strong> <code>?bankprune</code></p>
 <h3 id="daily">daily</h3>
 <p><strong>Description:</strong> No description provided.</p>
-<p><strong>Usage:</strong> <code>,daily</code></p>
+<p><strong>Usage:</strong> <code>?daily</code></p>
 <h3 id="leaderboard">leaderboard</h3>
 <p><strong>Description:</strong> Print the leaderboard.</p>
 <p>Defaults to top 10.</p>
@@ -2202,10 +2202,10 @@
 <li><code>&lt;top&gt;</code> How many positions on the leaderboard to show. Defaults to 10 if omitted.</li>
 <li><code>&lt;show_global&gt;</code> Whether to include results from all servers. This will default to false unless specified.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,leaderboard</code></p>
+<p><strong>Usage:</strong> <code>?leaderboard</code></p>
 <h3 id="payouts">payouts</h3>
 <p><strong>Description:</strong> Show the payouts for the slot machine.</p>
-<p><strong>Usage:</strong> <code>,payouts</code></p>
+<p><strong>Usage:</strong> <code>?payouts</code></p>
 <h3 id="slot">slot</h3>
 <p><strong>Description:</strong> Use the slot machine.</p>
 <p>Example:
@@ -2214,10 +2214,10 @@
 <ul>
 <li><code>&lt;bid&gt;</code> The amount to bet on the slot machine. Winning payouts are higher when you bet more.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,slot</code></p>
+<p><strong>Usage:</strong> <code>?slot</code></p>
 <h3 id="economyset">economyset</h3>
 <p><strong>Description:</strong> Base command to manage Economy settings.</p>
-<p><strong>Usage:</strong> <code>,economyset</code></p>
+<p><strong>Usage:</strong> <code>?economyset</code></p>
 <h3 id="economyset-slotmax">economyset slotmax</h3>
 <p><strong>Description:</strong> Set the maximum slot machine bid.</p>
 <p>Example:
@@ -2226,7 +2226,7 @@
 <ul>
 <li><code>&lt;bid&gt;</code> The new maximum bid for using the slot machine. Default is 100.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset slotmax</code></p>
+<p><strong>Usage:</strong> <code>?economyset slotmax</code></p>
 <h3 id="economyset-rolepaydayamount">economyset rolepaydayamount</h3>
 <p><strong>Description:</strong> Set the amount earned each payday for a role.</p>
 <p>Set to <code>0</code> to remove the payday amount you set for that role.</p>
@@ -2238,7 +2238,7 @@
 <li><code>&lt;role&gt;</code> The role to assign a custom payday amount to.</li>
 <li><code>&lt;creds&gt;</code> The new amount to give when using the payday command.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset rolepaydayamount</code></p>
+<p><strong>Usage:</strong> <code>?economyset rolepaydayamount</code></p>
 <h3 id="economyset-slottime">economyset slottime</h3>
 <p><strong>Description:</strong> Set the cooldown for the slot machine.</p>
 <p>Examples:
@@ -2249,10 +2249,10 @@
 <li><code>&lt;duration&gt;</code> The new duration to wait in between uses of the slot machine. Default is 5 seconds.
 Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset slottime</code></p>
+<p><strong>Usage:</strong> <code>?economyset slottime</code></p>
 <h3 id="economyset-showsettings">economyset showsettings</h3>
 <p><strong>Description:</strong> Shows the current economy settings</p>
-<p><strong>Usage:</strong> <code>,economyset showsettings</code></p>
+<p><strong>Usage:</strong> <code>?economyset showsettings</code></p>
 <h3 id="economyset-paydaytime">economyset paydaytime</h3>
 <p><strong>Description:</strong> Set the cooldown for the payday command.</p>
 <p>Examples:
@@ -2263,7 +2263,7 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <li><code>&lt;duration&gt;</code> The new duration to wait in between uses of payday. Default is 5 minutes.
 Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the duration is assumed to be given in seconds)</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset paydaytime</code></p>
+<p><strong>Usage:</strong> <code>?economyset paydaytime</code></p>
 <h3 id="economyset-slotmin">economyset slotmin</h3>
 <p><strong>Description:</strong> Set the minimum slot machine bid.</p>
 <p>Example:
@@ -2272,7 +2272,7 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <ul>
 <li><code>&lt;bid&gt;</code> The new minimum bid for using the slot machine. Default is 5.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset slotmin</code></p>
+<p><strong>Usage:</strong> <code>?economyset slotmin</code></p>
 <h3 id="economyset-paydayamount">economyset paydayamount</h3>
 <p><strong>Description:</strong> Set the amount earned each payday.</p>
 <p>Example:
@@ -2281,7 +2281,7 @@ Accepts: seconds, minutes, hours, days, weeks (if no unit is specified, the dura
 <ul>
 <li><code>&lt;creds&gt;</code> The new amount to give when using the payday command. Default is 120.</li>
 </ul>
-<p><strong>Usage:</strong> <code>,economyset paydayamount</code></p></p>
+<p><strong>Usage:</strong> <code>?economyset paydayamount</code></p></p>
     </article>
 </section>
             <!-- endblock -->

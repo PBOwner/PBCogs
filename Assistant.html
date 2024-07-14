@@ -2143,7 +2143,7 @@
 <p>Set up and configure an AI assistant (or chat) cog for your server with one of OpenAI's ChatGPT language models.<br/><br/>Features include configurable prompt injection, dynamic embeddings, custom function calling, and more!<br/><br/>- <strong>[p]assistant</strong>: base command for setting up the assistant<br/>- <strong>[p]chat</strong>: talk with the assistant<br/>- <strong>[p]convostats</strong>: view a user's token usage/conversation message count for the channel<br/>- <strong>[p]clearconvo</strong>: reset your conversation with the assistant in the channel</p>
 <h3 id="chathelp">chathelp</h3>
 <p><strong>Description:</strong> Get help using assistant</p>
-<p><strong>Usage:</strong> <code>,chathelp</code></p>
+<p><strong>Usage:</strong> <code>?chathelp</code></p>
 <h3 id="chat">chat</h3>
 <p><strong>Description:</strong> Chat with [botname]!</p>
 <p>Conversations are <em>Per</em> user <em>Per</em> channel, meaning a conversation you have in one channel will be kept in memory separately from another conversation in a separate channel</p>
@@ -2156,147 +2156,147 @@
 - Including <code>--outputfile hello.py</code> will output a file containing the whole response.
 - Including <code>--outputfile hello.py --extract</code> will output a file containing just the code blocks and send the rest as text.
 - Including <code>--extract</code> will send the code separately from the reply</p>
-<p><strong>Usage:</strong> <code>,chat</code></p>
+<p><strong>Usage:</strong> <code>?chat</code></p>
 <h3 id="convostats">convostats</h3>
 <p><strong>Description:</strong> Check the token and message count of yourself or another user's conversation for this channel</p>
 <p>Conversations are <em>Per</em> user <em>Per</em> channel, meaning a conversation you have in one channel will be kept in memory separately from another conversation in a separate channel</p>
 <p>Conversations are only stored in memory until the bot restarts or the cog reloads</p>
-<p><strong>Usage:</strong> <code>,convostats</code></p>
+<p><strong>Usage:</strong> <code>?convostats</code></p>
 <h3 id="convoclear">convoclear</h3>
 <p><strong>Description:</strong> Reset your conversation with the bot</p>
 <p>This will clear all message history between you and the bot for this channel</p>
-<p><strong>Usage:</strong> <code>,convoclear</code></p>
+<p><strong>Usage:</strong> <code>?convoclear</code></p>
 <h3 id="convopop">convopop</h3>
 <p><strong>Description:</strong> Pop the last message from your conversation</p>
-<p><strong>Usage:</strong> <code>,convopop</code></p>
+<p><strong>Usage:</strong> <code>?convopop</code></p>
 <h3 id="convocopy">convocopy</h3>
 <p><strong>Description:</strong> Copy the conversation to another channel, thread, or forum</p>
-<p><strong>Usage:</strong> <code>,convocopy</code></p>
+<p><strong>Usage:</strong> <code>?convocopy</code></p>
 <h3 id="convoprompt">convoprompt</h3>
 <p><strong>Description:</strong> Set a system prompt for this conversation!</p>
 <p>This allows customization of assistant behavior on a per channel basis!</p>
 <p>Check out <a href="https://platform.openai.com/docs/guides/prompt-engineering">This Guide</a> for prompting help.</p>
-<p><strong>Usage:</strong> <code>,convoprompt</code></p>
+<p><strong>Usage:</strong> <code>?convoprompt</code></p>
 <h3 id="convoshow">convoshow</h3>
 <p><strong>Description:</strong> View the current transcript of a conversation</p>
 <p>This is mainly here for moderation purposes</p>
-<p><strong>Usage:</strong> <code>,convoshow</code></p>
+<p><strong>Usage:</strong> <code>?convoshow</code></p>
 <h3 id="query">query</h3>
 <p><strong>Description:</strong> Fetch related embeddings according to the current topn setting along with their scores</p>
 <p>You can use this to fine-tune the minimum relatedness for your assistant</p>
-<p><strong>Usage:</strong> <code>,query</code></p>
+<p><strong>Usage:</strong> <code>?query</code></p>
 <h3 id="assistant">assistant</h3>
 <p><strong>Description:</strong> Setup the assistant</p>
 <p>You will need an <strong><a href="https://platform.openai.com/account/api-keys">api key</a></strong> from OpenAI to use ChatGPT and their other models.</p>
-<p><strong>Usage:</strong> <code>,assistant</code></p>
+<p><strong>Usage:</strong> <code>?assistant</code></p>
 <h3 id="assistant-resetconversations">assistant resetconversations</h3>
 <p><strong>Description:</strong> Wipe saved conversations for the assistant in this server</p>
 <p>This will delete any and all saved conversations for the assistant.</p>
-<p><strong>Usage:</strong> <code>,assistant resetconversations</code></p>
+<p><strong>Usage:</strong> <code>?assistant resetconversations</code></p>
 <h3 id="assistant-maxtime">assistant maxtime</h3>
 <p><strong>Description:</strong> Set the conversation expiration time</p>
 <p>Regardless of this number, the initial prompt and internal system message are always included,
 this only applies to any conversation between the user and bot after that.</p>
 <p>Set to 0 to store conversations indefinitely or until the bot restarts or cog is reloaded</p>
-<p><strong>Usage:</strong> <code>,assistant maxtime</code></p>
+<p><strong>Usage:</strong> <code>?assistant maxtime</code></p>
 <h3 id="assistant-wipecog">assistant wipecog</h3>
 <p><strong>Description:</strong> Wipe all settings and data for entire cog</p>
-<p><strong>Usage:</strong> <code>,assistant wipecog</code></p>
+<p><strong>Usage:</strong> <code>?assistant wipecog</code></p>
 <h3 id="assistant-refreshembeds">assistant refreshembeds</h3>
 <p><strong>Description:</strong> Refresh embedding weights</p>
 <p><em>This command can be used when changing the embedding model</em></p>
 <p>Embeddings that were created using OpenAI cannot be use with the self-hosted model and vice versa</p>
-<p><strong>Usage:</strong> <code>,assistant refreshembeds</code></p>
+<p><strong>Usage:</strong> <code>?assistant refreshembeds</code></p>
 <h3 id="assistant-backupcog">assistant backupcog</h3>
 <p><strong>Description:</strong> Take a backup of the cog</p>
 <ul>
 <li>This does not backup conversation data</li>
 </ul>
-<p><strong>Usage:</strong> <code>,assistant backupcog</code></p>
+<p><strong>Usage:</strong> <code>?assistant backupcog</code></p>
 <h3 id="assistant-topn">assistant topn</h3>
 <p><strong>Description:</strong> Set the embedding inclusion amout</p>
 <p>Top N is the amount of embeddings to include with the initial prompt</p>
-<p><strong>Usage:</strong> <code>,assistant topn</code></p>
+<p><strong>Usage:</strong> <code>?assistant topn</code></p>
 <h3 id="assistant-temperature">assistant temperature</h3>
 <p><strong>Description:</strong> Set the temperature for the model (0.0 - 2.0)
 - Defaults is 1</p>
 <p>Closer to 0 is more concise and accurate while closer to 2 is more imaginative</p>
-<p><strong>Usage:</strong> <code>,assistant temperature</code></p>
+<p><strong>Usage:</strong> <code>?assistant temperature</code></p>
 <h3 id="assistant-channelpromptshow">assistant channelpromptshow</h3>
 <p><strong>Description:</strong> Show the channel specific system prompt</p>
-<p><strong>Usage:</strong> <code>,assistant channelpromptshow</code></p>
+<p><strong>Usage:</strong> <code>?assistant channelpromptshow</code></p>
 <h3 id="assistant-channelprompt">assistant channelprompt</h3>
 <p><strong>Description:</strong> Set a channel specific system prompt</p>
-<p><strong>Usage:</strong> <code>,assistant channelprompt</code></p>
+<p><strong>Usage:</strong> <code>?assistant channelprompt</code></p>
 <h3 id="assistant-restorecog">assistant restorecog</h3>
 <p><strong>Description:</strong> Restore the cog from a backup</p>
-<p><strong>Usage:</strong> <code>,assistant restorecog</code></p>
+<p><strong>Usage:</strong> <code>?assistant restorecog</code></p>
 <h3 id="assistant-relatedness">assistant relatedness</h3>
 <p><strong>Description:</strong> Set the minimum relatedness an embedding must be to include with the prompt</p>
 <p>Relatedness threshold between 0 and 1 to include in embeddings during chat</p>
 <p>Questions are converted to embeddings and compared against stored embeddings to pull the most relevant, this is the score that is derived from that comparison</p>
 <p><strong>Hint</strong>: The closer to 1 you get, the more deterministic and accurate the results may be, just don't be <em>too</em> strict or there wont be any results.</p>
-<p><strong>Usage:</strong> <code>,assistant relatedness</code></p>
+<p><strong>Usage:</strong> <code>?assistant relatedness</code></p>
 <h3 id="assistant-frequency">assistant frequency</h3>
 <p><strong>Description:</strong> Set the frequency penalty for the model (-2.0 to 2.0)
 - Defaults is 0</p>
 <p>Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.</p>
-<p><strong>Usage:</strong> <code>,assistant frequency</code></p>
+<p><strong>Usage:</strong> <code>?assistant frequency</code></p>
 <h3 id="assistant-blacklist">assistant blacklist</h3>
 <p><strong>Description:</strong> Add/Remove items from the blacklist</p>
 <p><code>channel_role_member</code> can be a member, role, channel, or category channel</p>
-<p><strong>Usage:</strong> <code>,assistant blacklist</code></p>
+<p><strong>Usage:</strong> <code>?assistant blacklist</code></p>
 <h3 id="assistant-resetglobalconversations">assistant resetglobalconversations</h3>
 <p><strong>Description:</strong> Wipe saved conversations for the assistant in all servers</p>
 <p>This will delete any and all saved conversations for the assistant.</p>
-<p><strong>Usage:</strong> <code>,assistant resetglobalconversations</code></p>
+<p><strong>Usage:</strong> <code>?assistant resetglobalconversations</code></p>
 <h3 id="assistant-regexblacklist">assistant regexblacklist</h3>
 <p><strong>Description:</strong> Remove certain words/phrases in the bot's responses</p>
-<p><strong>Usage:</strong> <code>,assistant regexblacklist</code></p>
+<p><strong>Usage:</strong> <code>?assistant regexblacklist</code></p>
 <h3 id="assistant-presence">assistant presence</h3>
 <p><strong>Description:</strong> Set the presence penalty for the model (-2.0 to 2.0)
 - Defaults is 0</p>
 <p>Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.</p>
-<p><strong>Usage:</strong> <code>,assistant presence</code></p>
+<p><strong>Usage:</strong> <code>?assistant presence</code></p>
 <h3 id="assistant-override">assistant override</h3>
 <p><strong>Description:</strong> Override settings for specific roles</p>
 <p><strong>NOTE</strong>
 If a user has two roles with override settings, override associated with the higher role will be used.</p>
-<p><strong>Usage:</strong> <code>,assistant override</code></p>
+<p><strong>Usage:</strong> <code>?assistant override</code></p>
 <h3 id="assistant-override-maxtokens">assistant override maxtokens</h3>
 <p><strong>Description:</strong> Assign a max token override to a role</p>
 <p><em>Specify same role and token count to remove the override</em></p>
-<p><strong>Usage:</strong> <code>,assistant override maxtokens</code></p>
+<p><strong>Usage:</strong> <code>?assistant override maxtokens</code></p>
 <h3 id="assistant-override-maxresponsetokens">assistant override maxresponsetokens</h3>
 <p><strong>Description:</strong> Assign a max response token override to a role</p>
 <p>Set to 0 for response tokens to be dynamic</p>
 <p><em>Specify same role and token count to remove the override</em></p>
-<p><strong>Usage:</strong> <code>,assistant override maxresponsetokens</code></p>
+<p><strong>Usage:</strong> <code>?assistant override maxresponsetokens</code></p>
 <h3 id="assistant-override-maxretention">assistant override maxretention</h3>
 <p><strong>Description:</strong> Assign a max message retention override to a role</p>
 <p><em>Specify same role and retention amount to remove the override</em></p>
-<p><strong>Usage:</strong> <code>,assistant override maxretention</code></p>
+<p><strong>Usage:</strong> <code>?assistant override maxretention</code></p>
 <h3 id="assistant-override-model">assistant override model</h3>
 <p><strong>Description:</strong> Assign a role to use a model</p>
 <p><em>Specify same role and model to remove the override</em></p>
-<p><strong>Usage:</strong> <code>,assistant override model</code></p>
+<p><strong>Usage:</strong> <code>?assistant override model</code></p>
 <h3 id="assistant-override-maxtime">assistant override maxtime</h3>
 <p><strong>Description:</strong> Assign a max retention time override to a role</p>
 <p><em>Specify same role and time to remove the override</em></p>
-<p><strong>Usage:</strong> <code>,assistant override maxtime</code></p>
+<p><strong>Usage:</strong> <code>?assistant override maxtime</code></p>
 <h3 id="assistant-persist">assistant persist</h3>
 <p><strong>Description:</strong> Toggle persistent conversations</p>
-<p><strong>Usage:</strong> <code>,assistant persist</code></p>
+<p><strong>Usage:</strong> <code>?assistant persist</code></p>
 <h3 id="assistant-regexfailblock">assistant regexfailblock</h3>
 <p><strong>Description:</strong> Toggle whether failed regex blocks the assistant's reply</p>
 <p>Some regexes can cause <a href="https://www.rexegg.com/regex-explosive-quantifiers.html">catastrophically backtracking</a>
 The bot can safely handle if this happens and will either continue on, or block the response.</p>
-<p><strong>Usage:</strong> <code>,assistant regexfailblock</code></p>
+<p><strong>Usage:</strong> <code>?assistant regexfailblock</code></p>
 <h3 id="assistant-seed">assistant seed</h3>
 <p><strong>Description:</strong> Make the model more deterministic by setting a seed for the model.
 - Default is None</p>
 <p>If specified, the system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result.</p>
-<p><strong>Usage:</strong> <code>,assistant seed</code></p>
+<p><strong>Usage:</strong> <code>?assistant seed</code></p>
 <h3 id="assistant-functioncalls">assistant functioncalls</h3>
 <p><strong>Description:</strong> Toggle whether GPT can call functions</p>
 <p>Only the following models can call functions at the moment (With OpenAI key only)
@@ -2304,22 +2304,22 @@ The bot can safely handle if this happens and will either continue on, or block 
 - gpt-3.5-turbo-16k
 - gpt-4
 - gpt-4-32k</p>
-<p><strong>Usage:</strong> <code>,assistant functioncalls</code></p>
+<p><strong>Usage:</strong> <code>?assistant functioncalls</code></p>
 <h3 id="assistant-questionmode">assistant questionmode</h3>
 <p><strong>Description:</strong> Toggle question mode</p>
 <p>If question mode is on, embeddings will only be sourced during the first message of a conversation and messages that end in <strong>?</strong></p>
-<p><strong>Usage:</strong> <code>,assistant questionmode</code></p>
+<p><strong>Usage:</strong> <code>?assistant questionmode</code></p>
 <h3 id="assistant-resetglobalembeddings">assistant resetglobalembeddings</h3>
 <p><strong>Description:</strong> Wipe saved embeddings for all servers</p>
 <p>This will delete any and all saved embedding training data for the assistant.</p>
-<p><strong>Usage:</strong> <code>,assistant resetglobalembeddings</code></p>
+<p><strong>Usage:</strong> <code>?assistant resetglobalembeddings</code></p>
 <h3 id="assistant-listentobots">assistant listentobots</h3>
 <p><strong>Description:</strong> Toggle whether the assistant listens to other bots</p>
 <p><strong>NOT RECOMMENDED FOR PUBLIC BOTS!</strong></p>
-<p><strong>Usage:</strong> <code>,assistant listentobots</code></p>
+<p><strong>Usage:</strong> <code>?assistant listentobots</code></p>
 <h3 id="assistant-channel">assistant channel</h3>
 <p><strong>Description:</strong> Set the channel for the assistant</p>
-<p><strong>Usage:</strong> <code>,assistant channel</code></p>
+<p><strong>Usage:</strong> <code>?assistant channel</code></p>
 <h3 id="assistant-embedmethod">assistant embedmethod</h3>
 <p><strong>Description:</strong> Cycle between embedding methods</p>
 <p><strong>Dynamic</strong> embeddings mean that the embeddings pulled are dynamically appended to the initial prompt for each individual question.
@@ -2328,16 +2328,16 @@ When each time the user asks a question, the previous embedding is replaced with
 <p><strong>Hybrid</strong> embeddings are a combination, with the first embedding being stored in the conversation and the rest being dynamic, this saves a bit on token usage.</p>
 <p><strong>User</strong> embeddings are injected into the beginning of the prompt as the first user message.</p>
 <p>Dynamic embeddings are helpful for Q&amp;A, but not so much for chat when you need to retain the context pulled from the embeddings. The hybrid method is a good middle ground</p>
-<p><strong>Usage:</strong> <code>,assistant embedmethod</code></p>
+<p><strong>Usage:</strong> <code>?assistant embedmethod</code></p>
 <h3 id="assistant-sysoverride">assistant sysoverride</h3>
 <p><strong>Description:</strong> Toggle allowing per-conversation system prompt overriding</p>
-<p><strong>Usage:</strong> <code>,assistant sysoverride</code></p>
+<p><strong>Usage:</strong> <code>?assistant sysoverride</code></p>
 <h3 id="assistant-importcsv">assistant importcsv</h3>
 <p><strong>Description:</strong> Import embeddings to use with the assistant</p>
 <p>Args:
     overwrite (bool): overwrite embeddings with existing entry names</p>
 <p>This will read excel files too</p>
-<p><strong>Usage:</strong> <code>,assistant importcsv</code></p>
+<p><strong>Usage:</strong> <code>?assistant importcsv</code></p>
 <h3 id="assistant-maxrecursion">assistant maxrecursion</h3>
 <p><strong>Description:</strong> Set the maximum function calls allowed in a row</p>
 <p>This sets how many times the model can call functions in a row</p>
@@ -2346,31 +2346,31 @@ When each time the user asks a question, the previous embedding is replaced with
 - gpt-3.5-turbo-16k
 - gpt-4
 - gpt-4-32k</p>
-<p><strong>Usage:</strong> <code>,assistant maxrecursion</code></p>
+<p><strong>Usage:</strong> <code>?assistant maxrecursion</code></p>
 <h3 id="assistant-toggle">assistant toggle</h3>
 <p><strong>Description:</strong> Toggle the assistant on or off</p>
-<p><strong>Usage:</strong> <code>,assistant toggle</code></p>
+<p><strong>Usage:</strong> <code>?assistant toggle</code></p>
 <h3 id="assistant-importjson">assistant importjson</h3>
 <p><strong>Description:</strong> Import embeddings to use with the assistant</p>
 <p>Args:
     overwrite (bool): overwrite embeddings with existing entry names</p>
-<p><strong>Usage:</strong> <code>,assistant importjson</code></p>
+<p><strong>Usage:</strong> <code>?assistant importjson</code></p>
 <h3 id="assistant-minlength">assistant minlength</h3>
 <p><strong>Description:</strong> set min character length for questions</p>
 <p>Set to 0 to respond to anything</p>
-<p><strong>Usage:</strong> <code>,assistant minlength</code></p>
+<p><strong>Usage:</strong> <code>?assistant minlength</code></p>
 <h3 id="assistant-resolution">assistant resolution</h3>
 <p><strong>Description:</strong> Switch vision resolution between high and low for relevant GPT-4-Turbo models</p>
-<p><strong>Usage:</strong> <code>,assistant resolution</code></p>
+<p><strong>Usage:</strong> <code>?assistant resolution</code></p>
 <h3 id="assistant-importexcel">assistant importexcel</h3>
 <p><strong>Description:</strong> Import embeddings from an .xlsx file</p>
 <p>Args:
     overwrite (bool): overwrite embeddings with existing entry names</p>
-<p><strong>Usage:</strong> <code>,assistant importexcel</code></p>
+<p><strong>Usage:</strong> <code>?assistant importexcel</code></p>
 <h3 id="assistant-view">assistant view</h3>
 <p><strong>Description:</strong> View current settings</p>
 <p>To send in current channel, use <code>[p]assistant view false</code></p>
-<p><strong>Usage:</strong> <code>,assistant view</code></p>
+<p><strong>Usage:</strong> <code>?assistant view</code></p>
 <h3 id="assistant-maxtokens">assistant maxtokens</h3>
 <p><strong>Description:</strong> Set the max tokens that the bot will send to the model</p>
 <p><strong>Tips</strong>
@@ -2378,34 +2378,34 @@ When each time the user asks a question, the previous embedding is replaced with
 - If you set max tokens too high the cog will auto-adjust to 100 less than the models natural cap
 - Ideally set max to 500 less than that models maximum, to allow adequate responses</p>
 <p>Using more than the model can handle will raise exceptions.</p>
-<p><strong>Usage:</strong> <code>,assistant maxtokens</code></p>
+<p><strong>Usage:</strong> <code>?assistant maxtokens</code></p>
 <h3 id="assistant-questionmark">assistant questionmark</h3>
 <p><strong>Description:</strong> Toggle whether questions need to end with <strong><strong>?</strong></strong></p>
-<p><strong>Usage:</strong> <code>,assistant questionmark</code></p>
+<p><strong>Usage:</strong> <code>?assistant questionmark</code></p>
 <h3 id="assistant-openaikey">assistant openaikey</h3>
 <p><strong>Description:</strong> Set your OpenAI key</p>
-<p><strong>Usage:</strong> <code>,assistant openaikey</code></p>
+<p><strong>Usage:</strong> <code>?assistant openaikey</code></p>
 <h3 id="assistant-exportexcel">assistant exportexcel</h3>
 <p><strong>Description:</strong> Export embeddings to an .xlsx file</p>
 <p><strong>Note:</strong> csv exports do not include the embedding values</p>
-<p><strong>Usage:</strong> <code>,assistant exportexcel</code></p>
+<p><strong>Usage:</strong> <code>?assistant exportexcel</code></p>
 <h3 id="assistant-timezone">assistant timezone</h3>
 <p><strong>Description:</strong> Set the timezone used for prompt placeholders</p>
-<p><strong>Usage:</strong> <code>,assistant timezone</code></p>
+<p><strong>Usage:</strong> <code>?assistant timezone</code></p>
 <h3 id="assistant-maxresponsetokens">assistant maxresponsetokens</h3>
 <p><strong>Description:</strong> Set the max response tokens the model can respond with</p>
 <p>Set to 0 for response tokens to be dynamic</p>
-<p><strong>Usage:</strong> <code>,assistant maxresponsetokens</code></p>
+<p><strong>Usage:</strong> <code>?assistant maxresponsetokens</code></p>
 <h3 id="assistant-mentionrespond">assistant mentionrespond</h3>
 <p><strong>Description:</strong> Toggle whether the bot responds to mentions in any channel</p>
-<p><strong>Usage:</strong> <code>,assistant mentionrespond</code></p>
+<p><strong>Usage:</strong> <code>?assistant mentionrespond</code></p>
 <h3 id="assistant-exportcsv">assistant exportcsv</h3>
 <p><strong>Description:</strong> Export embeddings to a .csv file</p>
 <p><strong>Note:</strong> csv exports do not include the embedding values</p>
-<p><strong>Usage:</strong> <code>,assistant exportcsv</code></p>
+<p><strong>Usage:</strong> <code>?assistant exportcsv</code></p>
 <h3 id="assistant-usage">assistant usage</h3>
 <p><strong>Description:</strong> View the token usage stats for this server</p>
-<p><strong>Usage:</strong> <code>,assistant usage</code></p>
+<p><strong>Usage:</strong> <code>?assistant usage</code></p>
 <h3 id="assistant-prompt">assistant prompt</h3>
 <p><strong>Description:</strong> Set the initial prompt for GPT to use</p>
 <p>Check out <a href="https://platform.openai.com/docs/guides/prompt-engineering">This Guide</a> for prompting help.</p>
@@ -2436,29 +2436,29 @@ When each time the user asks a question, the previous embedding is replaced with
 - <strong>currency</strong>: currency name
 - <strong>bank</strong>: bank name
 - <strong>balance</strong>: the user's current balance</p>
-<p><strong>Usage:</strong> <code>,assistant prompt</code></p>
+<p><strong>Usage:</strong> <code>?assistant prompt</code></p>
 <h3 id="assistant-model">assistant model</h3>
 <p><strong>Description:</strong> Set the OpenAI model to use</p>
 <p><strong>NOTE</strong>
 Specifying a model without it's identifier (like <code>gpt-3.5-turbo</code> instead of <code>gpt-3.5-turbo-0125</code>)
 will sometimes lose the ability to call functions in parallel for some reason, this is an OpenAI issue.</p>
-<p><strong>Usage:</strong> <code>,assistant model</code></p>
+<p><strong>Usage:</strong> <code>?assistant model</code></p>
 <h3 id="assistant-mention">assistant mention</h3>
 <p><strong>Description:</strong> Toggle whether to ping the user on replies</p>
-<p><strong>Usage:</strong> <code>,assistant mention</code></p>
+<p><strong>Usage:</strong> <code>?assistant mention</code></p>
 <h3 id="assistant-exportjson">assistant exportjson</h3>
 <p><strong>Description:</strong> Export embeddings to a json file</p>
-<p><strong>Usage:</strong> <code>,assistant exportjson</code></p>
+<p><strong>Usage:</strong> <code>?assistant exportjson</code></p>
 <h3 id="assistant-resetusage">assistant resetusage</h3>
 <p><strong>Description:</strong> Reset the token usage stats for this server</p>
-<p><strong>Usage:</strong> <code>,assistant resetusage</code></p>
+<p><strong>Usage:</strong> <code>?assistant resetusage</code></p>
 <h3 id="assistant-embedmodel">assistant embedmodel</h3>
 <p><strong>Description:</strong> Set the OpenAI Embedding model to use</p>
-<p><strong>Usage:</strong> <code>,assistant embedmodel</code></p>
+<p><strong>Usage:</strong> <code>?assistant embedmodel</code></p>
 <h3 id="assistant-collab">assistant collab</h3>
 <p><strong>Description:</strong> Toggle collaborative conversations</p>
 <p>Multiple people speaking in a channel will be treated as a single conversation.</p>
-<p><strong>Usage:</strong> <code>,assistant collab</code></p>
+<p><strong>Usage:</strong> <code>?assistant collab</code></p>
 <h3 id="assistant-system">assistant system</h3>
 <p><strong>Description:</strong> Set the system prompt for GPT to use</p>
 <p>Check out <a href="https://platform.openai.com/docs/guides/prompt-engineering">This Guide</a> for prompting help.</p>
@@ -2489,16 +2489,16 @@ will sometimes lose the ability to call functions in parallel for some reason, t
 - <strong>currency</strong>: currency name
 - <strong>bank</strong>: bank name
 - <strong>balance</strong>: the user's current balance</p>
-<p><strong>Usage:</strong> <code>,assistant system</code></p>
+<p><strong>Usage:</strong> <code>?assistant system</code></p>
 <h3 id="assistant-resetembeddings">assistant resetembeddings</h3>
 <p><strong>Description:</strong> Wipe saved embeddings for the assistant</p>
 <p>This will delete any and all saved embedding training data for the assistant.</p>
-<p><strong>Usage:</strong> <code>,assistant resetembeddings</code></p>
+<p><strong>Usage:</strong> <code>?assistant resetembeddings</code></p>
 <h3 id="assistant-tutor">assistant tutor</h3>
 <p><strong>Description:</strong> Add/Remove items from the tutor list.</p>
 <p>If using OpenAI's function calling and talking to a tutor, the AI is able to create its own embeddings to remember later</p>
 <p><code>role_or_member</code> can be a member or role</p>
-<p><strong>Usage:</strong> <code>,assistant tutor</code></p>
+<p><strong>Usage:</strong> <code>?assistant tutor</code></p>
 <h3 id="assistant-maxretention">assistant maxretention</h3>
 <p><strong>Description:</strong> Set the max messages for a conversation</p>
 <p>Conversation retention is cached and gets reset when the bot restarts or the cog reloads.</p>
@@ -2506,14 +2506,14 @@ will sometimes lose the ability to call functions in parallel for some reason, t
 this only applies to any conversation between the user and bot after that.</p>
 <p>Set to 0 to disable conversation retention</p>
 <p><strong>Note:</strong> <em>actual message count may exceed the max retention during an API call</em></p>
-<p><strong>Usage:</strong> <code>,assistant maxretention</code></p>
+<p><strong>Usage:</strong> <code>?assistant maxretention</code></p>
 <h3 id="embeddings">embeddings</h3>
 <p><strong>Description:</strong> Manage embeddings for training</p>
 <p>Embeddings are used to optimize training of the assistant and minimize token usage.</p>
 <p>By using this the bot can store vast amounts of contextual information without going over the token limit.</p>
 <p><strong>Note</strong>
 You can enter a search query with this command to bring up the menu and go directly to that embedding selection.</p>
-<p><strong>Usage:</strong> <code>,embeddings</code></p>
+<p><strong>Usage:</strong> <code>?embeddings</code></p>
 <h3 id="customfunctions">customfunctions</h3>
 <p><strong>Description:</strong> Add custom function calls for Assistant to use</p>
 <p><strong>READ</strong>
@@ -2536,7 +2536,7 @@ You can enter a search query with this command to bring up the menu and go direc
 async def func(*args, **kwargs) -&gt; str:
 </code></pre>
 <p>Only bot owner can manage this, guild owners can see descriptions but not code</p>
-<p><strong>Usage:</strong> <code>,customfunctions</code></p></p>
+<p><strong>Usage:</strong> <code>?customfunctions</code></p></p>
     </article>
 </section>
             <!-- endblock -->
