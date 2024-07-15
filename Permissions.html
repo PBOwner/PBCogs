@@ -587,14 +587,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DiscordEdit.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DiscordEdit
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DiscordModals.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2027,14 +2019,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Weather.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Weather
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="WelcomeCount.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2143,25 +2127,24 @@
 <p>Customise permissions for commands and cogs.</p>
 <h3 id="permissions">permissions</h3>
 <p><strong>Description:</strong> Command permission management tools.</p>
-<p><strong>Usage:</strong> <code>?permissions</code></p>
+<p><strong>Usage:</strong> <code>,permissions</code></p>
+<h3 id="permissions-canrun">permissions canrun</h3>
+<p><strong>Description:</strong> Check if a user can run a command.</p>
+<p>This will take the current context into account, such as the
+server and text channel.</p>
+<p><strong>Usage:</strong> <code>,permissions canrun</code></p>
 <h3 id="permissions-removeglobalrule">permissions removeglobalrule</h3>
 <p><strong>Description:</strong> Remove a global rule from a command.</p>
 <p><code>&lt;cog_or_command&gt;</code> is the cog or command to remove the rule
 from. This is case sensitive.</p>
 <p><code>&lt;who_or_what...&gt;</code> is one or more users, channels or roles the rule is for.</p>
-<p><strong>Usage:</strong> <code>?permissions removeglobalrule</code></p>
-<h3 id="permissions-clearserverrules">permissions clearserverrules</h3>
-<p><strong>Description:</strong> Reset all rules in this server.</p>
-<p><strong>Usage:</strong> <code>?permissions clearserverrules</code></p>
+<p><strong>Usage:</strong> <code>,permissions removeglobalrule</code></p>
 <h3 id="permissions-removeserverrule">permissions removeserverrule</h3>
 <p><strong>Description:</strong> Remove a server rule from a command.</p>
 <p><code>&lt;cog_or_command&gt;</code> is the cog or command to remove the rule
 from. This is case sensitive.</p>
 <p><code>&lt;who_or_what...&gt;</code> is one or more users, channels or roles the rule is for.</p>
-<p><strong>Usage:</strong> <code>?permissions removeserverrule</code></p>
-<h3 id="permissions-clearglobalrules">permissions clearglobalrules</h3>
-<p><strong>Description:</strong> Reset all global rules.</p>
-<p><strong>Usage:</strong> <code>?permissions clearglobalrules</code></p>
+<p><strong>Usage:</strong> <code>,permissions removeserverrule</code></p>
 <h3 id="permissions-setdefaultglobalrule">permissions setdefaultglobalrule</h3>
 <p><strong>Description:</strong> Set the default global rule for a command.</p>
 <p>This is the rule a command will default to when no other rule
@@ -2170,7 +2153,14 @@ is found.</p>
 "clear" will reset the default rule.</p>
 <p><code>&lt;cog_or_command&gt;</code> is the cog or command to set the default
 rule for. This is case sensitive.</p>
-<p><strong>Usage:</strong> <code>?permissions setdefaultglobalrule</code></p>
+<p><strong>Usage:</strong> <code>,permissions setdefaultglobalrule</code></p>
+<h3 id="permissions-addglobalrule">permissions addglobalrule</h3>
+<p><strong>Description:</strong> Add a global rule to a command.</p>
+<p><code>&lt;allow_or_deny&gt;</code> should be one of "allow" or "deny".</p>
+<p><code>&lt;cog_or_command&gt;</code> is the cog or command to add the rule to.
+This is case sensitive.</p>
+<p><code>&lt;who_or_what...&gt;</code> is one or more users, channels or roles the rule is for.</p>
+<p><strong>Usage:</strong> <code>,permissions addglobalrule</code></p>
 <h3 id="permissions-setdefaultserverrule">permissions setdefaultserverrule</h3>
 <p><strong>Description:</strong> Set the default rule for a command in this server.</p>
 <p>This is the rule a command will default to when no other rule
@@ -2179,63 +2169,57 @@ is found.</p>
 "clear" will reset the default rule.</p>
 <p><code>&lt;cog_or_command&gt;</code> is the cog or command to set the default
 rule for. This is case sensitive.</p>
-<p><strong>Usage:</strong> <code>?permissions setdefaultserverrule</code></p>
-<h3 id="permissions-addglobalrule">permissions addglobalrule</h3>
-<p><strong>Description:</strong> Add a global rule to a command.</p>
-<p><code>&lt;allow_or_deny&gt;</code> should be one of "allow" or "deny".</p>
-<p><code>&lt;cog_or_command&gt;</code> is the cog or command to add the rule to.
-This is case sensitive.</p>
-<p><code>&lt;who_or_what...&gt;</code> is one or more users, channels or roles the rule is for.</p>
-<p><strong>Usage:</strong> <code>?permissions addglobalrule</code></p>
-<h3 id="permissions-canrun">permissions canrun</h3>
-<p><strong>Description:</strong> Check if a user can run a command.</p>
-<p>This will take the current context into account, such as the
-server and text channel.</p>
-<p><strong>Usage:</strong> <code>?permissions canrun</code></p>
+<p><strong>Usage:</strong> <code>,permissions setdefaultserverrule</code></p>
 <h3 id="permissions-addserverrule">permissions addserverrule</h3>
 <p><strong>Description:</strong> Add a rule to a command in this server.</p>
 <p><code>&lt;allow_or_deny&gt;</code> should be one of "allow" or "deny".</p>
 <p><code>&lt;cog_or_command&gt;</code> is the cog or command to add the rule to.
 This is case sensitive.</p>
 <p><code>&lt;who_or_what...&gt;</code> is one or more users, channels or roles the rule is for.</p>
-<p><strong>Usage:</strong> <code>?permissions addserverrule</code></p>
+<p><strong>Usage:</strong> <code>,permissions addserverrule</code></p>
+<h3 id="permissions-clearglobalrules">permissions clearglobalrules</h3>
+<p><strong>Description:</strong> Reset all global rules.</p>
+<p><strong>Usage:</strong> <code>,permissions clearglobalrules</code></p>
 <h3 id="permissions-acl">permissions acl</h3>
 <p><strong>Description:</strong> Manage permissions with YAML files.</p>
-<p><strong>Usage:</strong> <code>?permissions acl</code></p>
+<p><strong>Usage:</strong> <code>,permissions acl</code></p>
 <h3 id="permissions-acl-updateglobal">permissions acl updateglobal</h3>
 <p><strong>Description:</strong> Update global rules with a YAML file.</p>
 <p>This won't touch any rules not specified in the YAML
 file.</p>
-<p><strong>Usage:</strong> <code>?permissions acl updateglobal</code></p>
-<h3 id="permissions-acl-getserver">permissions acl getserver</h3>
-<p><strong>Description:</strong> Get a YAML file detailing all rules in this server.</p>
-<p><strong>Usage:</strong> <code>?permissions acl getserver</code></p>
-<h3 id="permissions-acl-setserver">permissions acl setserver</h3>
-<p><strong>Description:</strong> Set rules for this server with a YAML file.</p>
-<p><strong>WARNING</strong>: This will override reset <em>all</em> rules in this
-server to the rules specified in the uploaded file.</p>
-<p><strong>Usage:</strong> <code>?permissions acl setserver</code></p>
-<h3 id="permissions-acl-updateserver">permissions acl updateserver</h3>
-<p><strong>Description:</strong> Update rules for this server with a YAML file.</p>
-<p>This won't touch any rules not specified in the YAML
-file.</p>
-<p><strong>Usage:</strong> <code>?permissions acl updateserver</code></p>
-<h3 id="permissions-acl-getglobal">permissions acl getglobal</h3>
-<p><strong>Description:</strong> Get a YAML file detailing all global rules.</p>
-<p><strong>Usage:</strong> <code>?permissions acl getglobal</code></p>
-<h3 id="permissions-acl-yamlexample">permissions acl yamlexample</h3>
-<p><strong>Description:</strong> Sends an example of the yaml layout for permissions</p>
-<p><strong>Usage:</strong> <code>?permissions acl yamlexample</code></p>
+<p><strong>Usage:</strong> <code>,permissions acl updateglobal</code></p>
 <h3 id="permissions-acl-setglobal">permissions acl setglobal</h3>
 <p><strong>Description:</strong> Set global rules with a YAML file.</p>
 <p><strong>WARNING</strong>: This will override reset <em>all</em> global rules
 to the rules specified in the uploaded file.</p>
 <p>This does not validate the names of commands and cogs before
 setting the new rules.</p>
-<p><strong>Usage:</strong> <code>?permissions acl setglobal</code></p>
+<p><strong>Usage:</strong> <code>,permissions acl setglobal</code></p>
+<h3 id="permissions-acl-updateserver">permissions acl updateserver</h3>
+<p><strong>Description:</strong> Update rules for this server with a YAML file.</p>
+<p>This won't touch any rules not specified in the YAML
+file.</p>
+<p><strong>Usage:</strong> <code>,permissions acl updateserver</code></p>
+<h3 id="permissions-acl-yamlexample">permissions acl yamlexample</h3>
+<p><strong>Description:</strong> Sends an example of the yaml layout for permissions</p>
+<p><strong>Usage:</strong> <code>,permissions acl yamlexample</code></p>
+<h3 id="permissions-acl-getserver">permissions acl getserver</h3>
+<p><strong>Description:</strong> Get a YAML file detailing all rules in this server.</p>
+<p><strong>Usage:</strong> <code>,permissions acl getserver</code></p>
+<h3 id="permissions-acl-setserver">permissions acl setserver</h3>
+<p><strong>Description:</strong> Set rules for this server with a YAML file.</p>
+<p><strong>WARNING</strong>: This will override reset <em>all</em> rules in this
+server to the rules specified in the uploaded file.</p>
+<p><strong>Usage:</strong> <code>,permissions acl setserver</code></p>
+<h3 id="permissions-acl-getglobal">permissions acl getglobal</h3>
+<p><strong>Description:</strong> Get a YAML file detailing all global rules.</p>
+<p><strong>Usage:</strong> <code>,permissions acl getglobal</code></p>
+<h3 id="permissions-clearserverrules">permissions clearserverrules</h3>
+<p><strong>Description:</strong> Reset all rules in this server.</p>
+<p><strong>Usage:</strong> <code>,permissions clearserverrules</code></p>
 <h3 id="permissions-explain">permissions explain</h3>
 <p><strong>Description:</strong> Explain how permissions works.</p>
-<p><strong>Usage:</strong> <code>?permissions explain</code></p></p>
+<p><strong>Usage:</strong> <code>,permissions explain</code></p></p>
     </article>
 </section>
             <!-- endblock -->

@@ -587,14 +587,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DiscordEdit.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DiscordEdit
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DiscordModals.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2027,14 +2019,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Weather.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Weather
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="WelcomeCount.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2145,15 +2129,43 @@
 <p><strong>Description:</strong> Get automatic status updates in a channel, eg Discord.</p>
 <p>Get started with <code>[p]statusset preview</code> to see what they look like,
 then <code>[p]statusset add</code> to set up automatic updates.</p>
-<p><strong>Usage:</strong> <code>?statusset</code></p>
-<h3 id="statusset-list">statusset list</h3>
-<p><strong>Description:</strong> List that available services and ones are used in this server.</p>
-<p>Optionally add a service at the end of the command to view detailed settings for that
-service.</p>
+<p><strong>Usage:</strong> <code>,statusset</code></p>
+<h3 id="statusset-edit">statusset edit</h3>
+<p><strong>Description:</strong> Edit services you've already set up.</p>
+<p><strong>Usage:</strong> <code>,statusset edit</code></p>
+<h3 id="statusset-edit-mode">statusset edit mode</h3>
+<p><strong>Description:</strong> Change what mode to use for status updates.</p>
+<p><strong>All</strong>: Every time the service posts an update on an incident, I will send a new message
+containing the previous updates as well as the new update. Best used in a fast-moving
+channel with other users.</p>
+<p><strong>Latest</strong>: Every time the service posts an update on an incident, I will send a new
+message containing only the latest update. Best used in a dedicated status channel.</p>
+<p><strong>Edit</strong>: When a new incident is created, I will sent a new message. When this incident is
+updated, I will then add the update to the original message. Best used in a dedicated
+status channel.</p>
+<p>If you don't specify a channel, I will use the current channel.</p>
 <p><strong>Examples:</strong>
-- <code>[p]statusset list discord</code>
-- <code>[p]statusset list</code></p>
-<p><strong>Usage:</strong> <code>?statusset list</code></p>
+- <code>[p]statusset edit mode #testing discord latest</code>
+- <code>[p]statusset edit mode discord edit</code> (for current channel)</p>
+<p><strong>Usage:</strong> <code>,statusset edit mode</code></p>
+<h3 id="statusset-edit-webhook">statusset edit webhook</h3>
+<p><strong>Description:</strong> Set whether or not to use webhooks for status updates.</p>
+<p>Using a webhook means that the status updates will be sent with the avatar as the service's
+logo and the name will be <code>[service] Status Update</code>, instead of my avatar and name.</p>
+<p>If you don't specify a channel, I will use the current channel.</p>
+<p><strong>Examples:</strong>
+- <code>[p]statusset edit webhook #testing discord true</code>
+- <code>[p]statusset edit webhook discord false</code> (for current channel)</p>
+<p><strong>Usage:</strong> <code>,statusset edit webhook</code></p>
+<h3 id="statusset-edit-restrict">statusset edit restrict</h3>
+<p><strong>Description:</strong> Restrict access to the service in the <code>status</code> command.</p>
+<p>Enabling this will reduce spam. Instead of sending the whole update
+(if there's an incident) members will instead be redirected to channels
+that automatically receive the status updates, that they have permission to to view.</p>
+<p><strong>Examples:</strong>
+- <code>[p]statusset edit restrict #testing discord true</code>
+- <code>[p]statusset edit restrict discord false</code> (for current channel)</p>
+<p><strong>Usage:</strong> <code>,statusset edit restrict</code></p>
 <h3 id="statusset-preview">statusset preview</h3>
 <p><strong>Description:</strong> Preview what status updates will look like.</p>
 <p>You can also see this at https://go.vexcodes.com/c/statusref</p>
@@ -2184,7 +2196,29 @@ of my avatar and name.
 <p><strong>Examples:</strong>
 - <code>[p]statusset preview discord all true</code>
 - <code>[p]statusset preview discord latest false</code></p>
-<p><strong>Usage:</strong> <code>?statusset preview</code></p>
+<p><strong>Usage:</strong> <code>,statusset preview</code></p>
+<h3 id="statusset-list">statusset list</h3>
+<p><strong>Description:</strong> List that available services and ones are used in this server.</p>
+<p>Optionally add a service at the end of the command to view detailed settings for that
+service.</p>
+<p><strong>Examples:</strong>
+- <code>[p]statusset list discord</code>
+- <code>[p]statusset list</code></p>
+<p><strong>Usage:</strong> <code>,statusset list</code></p>
+<h3 id="statusset-remove">statusset remove</h3>
+<p><strong>Description:</strong> Stop status updates for a specific service in this server.</p>
+<p>If you don't specify a channel, I will use the current channel.</p>
+<p><strong>Examples:</strong>
+- <code>[p]statusset remove discord #testing</code>
+- <code>[p]statusset remove discord</code> (for using current channel)</p>
+<p><strong>Usage:</strong> <code>,statusset remove</code></p>
+<h3 id="statusset-clear">statusset clear</h3>
+<p><strong>Description:</strong> Remove all feeds from a channel.</p>
+<p>If you don't specify a channel, I will use the current channel</p>
+<p><strong>Examples:</strong>
+- <code>[p]statusset clear #testing</code>
+- <code>[p]statusset clear</code> (for using current channel)</p>
+<p><strong>Usage:</strong> <code>,statusset clear</code></p>
 <h3 id="statusset-add">statusset add</h3>
 <p><strong>Description:</strong> Start getting status updates for the chosen service!</p>
 <p>There is a list of services you can use in the <code>[p]statusset list</code> command.</p>
@@ -2193,62 +2227,12 @@ want to use a webhook. You can use the <code>[p]statusset preview</code> command
 different options look or take a look at
 https://go.vexcodes.com/c/statusref</p>
 <p>If you don't specify a specific channel, I will use the current channel.</p>
-<p><strong>Usage:</strong> <code>?statusset add</code></p>
-<h3 id="statusset-edit">statusset edit</h3>
-<p><strong>Description:</strong> Edit services you've already set up.</p>
-<p><strong>Usage:</strong> <code>?statusset edit</code></p>
-<h3 id="statusset-edit-restrict">statusset edit restrict</h3>
-<p><strong>Description:</strong> Restrict access to the service in the <code>status</code> command.</p>
-<p>Enabling this will reduce spam. Instead of sending the whole update
-(if there's an incident) members will instead be redirected to channels
-that automatically receive the status updates, that they have permission to to view.</p>
-<p><strong>Examples:</strong>
-- <code>[p]statusset edit restrict #testing discord true</code>
-- <code>[p]statusset edit restrict discord false</code> (for current channel)</p>
-<p><strong>Usage:</strong> <code>?statusset edit restrict</code></p>
-<h3 id="statusset-edit-webhook">statusset edit webhook</h3>
-<p><strong>Description:</strong> Set whether or not to use webhooks for status updates.</p>
-<p>Using a webhook means that the status updates will be sent with the avatar as the service's
-logo and the name will be <code>[service] Status Update</code>, instead of my avatar and name.</p>
-<p>If you don't specify a channel, I will use the current channel.</p>
-<p><strong>Examples:</strong>
-- <code>[p]statusset edit webhook #testing discord true</code>
-- <code>[p]statusset edit webhook discord false</code> (for current channel)</p>
-<p><strong>Usage:</strong> <code>?statusset edit webhook</code></p>
-<h3 id="statusset-edit-mode">statusset edit mode</h3>
-<p><strong>Description:</strong> Change what mode to use for status updates.</p>
-<p><strong>All</strong>: Every time the service posts an update on an incident, I will send a new message
-containing the previous updates as well as the new update. Best used in a fast-moving
-channel with other users.</p>
-<p><strong>Latest</strong>: Every time the service posts an update on an incident, I will send a new
-message containing only the latest update. Best used in a dedicated status channel.</p>
-<p><strong>Edit</strong>: When a new incident is created, I will sent a new message. When this incident is
-updated, I will then add the update to the original message. Best used in a dedicated
-status channel.</p>
-<p>If you don't specify a channel, I will use the current channel.</p>
-<p><strong>Examples:</strong>
-- <code>[p]statusset edit mode #testing discord latest</code>
-- <code>[p]statusset edit mode discord edit</code> (for current channel)</p>
-<p><strong>Usage:</strong> <code>?statusset edit mode</code></p>
-<h3 id="statusset-clear">statusset clear</h3>
-<p><strong>Description:</strong> Remove all feeds from a channel.</p>
-<p>If you don't specify a channel, I will use the current channel</p>
-<p><strong>Examples:</strong>
-- <code>[p]statusset clear #testing</code>
-- <code>[p]statusset clear</code> (for using current channel)</p>
-<p><strong>Usage:</strong> <code>?statusset clear</code></p>
-<h3 id="statusset-remove">statusset remove</h3>
-<p><strong>Description:</strong> Stop status updates for a specific service in this server.</p>
-<p>If you don't specify a channel, I will use the current channel.</p>
-<p><strong>Examples:</strong>
-- <code>[p]statusset remove discord #testing</code>
-- <code>[p]statusset remove discord</code> (for using current channel)</p>
-<p><strong>Usage:</strong> <code>?statusset remove</code></p>
+<p><strong>Usage:</strong> <code>,statusset add</code></p>
 <h3 id="status">status</h3>
 <p><strong>Description:</strong> Check for the status of a variety of services, eg Discord.</p>
 <p><strong>Example:</strong>
 - <code>[p]status discord</code></p>
-<p><strong>Usage:</strong> <code>?status</code></p></p>
+<p><strong>Usage:</strong> <code>,status</code></p></p>
     </article>
 </section>
             <!-- endblock -->

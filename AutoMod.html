@@ -587,14 +587,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DiscordEdit.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DiscordEdit
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DiscordModals.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2027,14 +2019,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Weather.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Weather
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="WelcomeCount.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2143,30 +2127,19 @@
 <p>Interact with and view discord's automod</p>
 <h3 id="automod">automod</h3>
 <p><strong>Description:</strong> Commnads for interacting with automod</p>
-<p><strong>Usage:</strong> <code>?automod</code></p>
+<p><strong>Usage:</strong> <code>,automod</code></p>
 <h3 id="automod-triggers">automod triggers</h3>
 <p><strong>Description:</strong> View the servers saved automod triggers</p>
-<p><strong>Usage:</strong> <code>?automod triggers</code></p>
+<p><strong>Usage:</strong> <code>,automod triggers</code></p>
 <h3 id="automod-actions">automod actions</h3>
 <p><strong>Description:</strong> View the servers saved automod actions</p>
-<p><strong>Usage:</strong> <code>?automod actions</code></p>
+<p><strong>Usage:</strong> <code>,automod actions</code></p>
+<h3 id="automod-rules">automod rules</h3>
+<p><strong>Description:</strong> View the servers current automod rules</p>
+<p><strong>Usage:</strong> <code>,automod rules</code></p>
 <h3 id="automod-create">automod create</h3>
 <p><strong>Description:</strong> Create automod rules, triggers, and actions</p>
-<p><strong>Usage:</strong> <code>?automod create</code></p>
-<h3 id="automod-create-rule">automod create rule</h3>
-<p><strong>Description:</strong> Create an automod rule in the server</p>
-<p>Usage:
-- <code>trigger:</code> The name of a saved trigger.
-- <code>actions:</code> The name(s) of saved actions.
-- <code>enabled:</code> yes/true/t to enable this rule right away.
-- <code>roles:</code> The roles that are exempt from this rule.
-- <code>channels:</code> The channels that are exempt from this rule.
-- <code>reason:</code> An optional reason for creating this rule.</p>
-<p>Example:
-    <code>[p]automod create rule trigger: mytrigger actions: timeoutuser notifymods enabled: true roles: @mods</code>
-    Will create an automod rule with the saved trigger <code>mytrigger</code> and
-    the saved actions <code>timeoutuser</code> and <code>notifymods</code>.</p>
-<p><strong>Usage:</strong> <code>?automod create rule</code></p>
+<p><strong>Usage:</strong> <code>,automod create</code></p>
 <h3 id="automod-create-trigger">automod create trigger</h3>
 <p><strong>Description:</strong> Create a saved trigger for use in automod Rules.</p>
 <ul>
@@ -2183,7 +2156,7 @@ use <code>keywords</code>, <code>regex</code>, or <code>mentions</code>.
 Examples:
     <code>[p]automod create trigger mytrigger regex: ^b(a|@)dw(o|0)rd(s|5)$</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>?automod create trigger</code></p>
+<p><strong>Usage:</strong> <code>,automod create trigger</code></p>
 <h3 id="automod-create-action">automod create action</h3>
 <p><strong>Description:</strong> Create a saved action for use in automod Rules.</p>
 <ul>
@@ -2198,10 +2171,21 @@ Examples:
     <code>[p]automod create action notifymods channel: #modlog</code>
     <code>[p]automod create action 2hrtimeout duration: 2 hours</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>?automod create action</code></p>
-<h3 id="automod-rules">automod rules</h3>
-<p><strong>Description:</strong> View the servers current automod rules</p>
-<p><strong>Usage:</strong> <code>?automod rules</code></p></p>
+<p><strong>Usage:</strong> <code>,automod create action</code></p>
+<h3 id="automod-create-rule">automod create rule</h3>
+<p><strong>Description:</strong> Create an automod rule in the server</p>
+<p>Usage:
+- <code>trigger:</code> The name of a saved trigger.
+- <code>actions:</code> The name(s) of saved actions.
+- <code>enabled:</code> yes/true/t to enable this rule right away.
+- <code>roles:</code> The roles that are exempt from this rule.
+- <code>channels:</code> The channels that are exempt from this rule.
+- <code>reason:</code> An optional reason for creating this rule.</p>
+<p>Example:
+    <code>[p]automod create rule trigger: mytrigger actions: timeoutuser notifymods enabled: true roles: @mods</code>
+    Will create an automod rule with the saved trigger <code>mytrigger</code> and
+    the saved actions <code>timeoutuser</code> and <code>notifymods</code>.</p>
+<p><strong>Usage:</strong> <code>,automod create rule</code></p></p>
     </article>
 </section>
             <!-- endblock -->

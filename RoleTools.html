@@ -587,14 +587,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DiscordEdit.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DiscordEdit
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DiscordModals.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2027,14 +2019,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Weather.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Weather
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="WelcomeCount.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2143,159 +2127,29 @@
 <p>Role related tools for moderation</p>
 <h3 id="roletools">roletools</h3>
 <p><strong>Description:</strong> Commands for creating custom role settings</p>
-<p><strong>Usage:</strong> <code>?roletools</code></p>
-<h3 id="roletools-viewroles">roletools viewroles</h3>
-<p><strong>Description:</strong> View current roletools setup for each role in the server</p>
-<p><code>[role]</code> The role you want to see settings for.</p>
-<p><strong>Usage:</strong> <code>?roletools viewroles</code></p>
-<h3 id="roletools-message">roletools message</h3>
-<p><strong>Description:</strong> Commands for sending/editing messages for roletools</p>
-<p><strong>Usage:</strong> <code>?roletools message</code></p>
-<h3 id="roletools-message-editselect">roletools message editselect</h3>
-<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
-<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
-<code>[menus]...</code> - The names of the select menus you want to include up to a maximum of 5.</p>
-<p><strong>Usage:</strong> <code>?roletools message editselect</code></p>
-<h3 id="roletools-message-send">roletools message send</h3>
-<p><strong>Description:</strong> Send a select menu to a specified channel for role assignment</p>
-<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
-<code>[buttons]...</code> - The names of the buttons you want included in the
-<code>[menus]...</code> - The names of the select menus you want included in the
-message up to a maximum of 5.
-<code>&lt;message&gt;</code> - The message to be included with the select menu.</p>
-<p>Note: There is a maximum of 25 slots available on one message. Each menu
-uses up 5 slots while each button uses up 1 slot.</p>
-<p><strong>Usage:</strong> <code>?roletools message send</code></p>
-<h3 id="roletools-message-editbutton">roletools message editbutton</h3>
-<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
-<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
-<code>[buttons]...</code> - The names of the buttons you want to include up to a maximum of 25.</p>
-<p><strong>Usage:</strong> <code>?roletools message editbutton</code></p>
-<h3 id="roletools-message-sendselect">roletools message sendselect</h3>
-<p><strong>Description:</strong> Send a select menu to a specified channel for role assignment</p>
-<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
-<code>[menus]...</code> - The names of the select menus you want included in the
-message up to a maximum of 5.
-<code>&lt;message&gt;</code> - The message to be included with the select menu.</p>
-<p><strong>Usage:</strong> <code>?roletools message sendselect</code></p>
-<h3 id="roletools-message-sendbutton">roletools message sendbutton</h3>
-<p><strong>Description:</strong> Send buttons to a specified channel with optional message.</p>
-<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
-<code>[buttons]...</code> - The names of the buttons you want included in the
-message up to a maximum of 25.
-<code>&lt;message&gt;</code> - The message to be included with the buttons.</p>
-<p><strong>Usage:</strong> <code>?roletools message sendbutton</code></p>
-<h3 id="roletools-message-edit">roletools message edit</h3>
-<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
-<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
-<code>[buttons]...</code> - The names of the buttons you want to include up to a maximum of 25.
-<code>[menus]...</code> - The names of the select menus you want to include up to a maximum of 5.</p>
-<p>Note: There is a maximum of 25 slots available on one message. Each menu
-uses up 5 slots while each button uses up 1 slot.</p>
-<p><strong>Usage:</strong> <code>?roletools message edit</code></p>
-<h3 id="roletools-selfadd">roletools selfadd</h3>
-<p><strong>Description:</strong> Set whether or not a user can apply the role to themselves.</p>
-<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
-If not provided the current setting will be shown instead.
-<code>&lt;role&gt;</code> The role you want to set.</p>
-<p><strong>Usage:</strong> <code>?roletools selfadd</code></p>
-<h3 id="roletools-reaction">roletools reaction</h3>
-<p><strong>Description:</strong> Reaction role settings</p>
-<p><strong>Usage:</strong> <code>?roletools reaction</code></p>
-<h3 id="roletools-reaction-cleanup">roletools reaction cleanup</h3>
-<p><strong>Description:</strong> Cleanup old/missing reaction roles and settings.</p>
-<p>Note: This will also clear out reaction roles if the bot is just
-missing permissions to see the reactions.</p>
-<p><strong>Usage:</strong> <code>?roletools reaction cleanup</code></p>
-<h3 id="roletools-reaction-bulk">roletools reaction bulk</h3>
-<p><strong>Description:</strong> Create multiple roles reactions for a single message</p>
-<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
-from copying message ID while holding SHIFT or a message link
-<code>[role_emoji...]</code> Must be a role-emoji pair separated by either <code>;</code>, <code>,</code>, <code>|</code>, or <code>-</code>.</p>
-<p>Note: Any spaces will be considered a new set of role-emoji pairs, if you
-want to specify a role with a space in it without pinging it enclose
-the full role-emoji pair in quotes.</p>
-<p>e.g. <code>[p]roletools bulkreact 461417772115558410-821105109097644052 @member-:smile:</code>
-<code>[p]roletools bulkreact 461417772115558410-821105109097644052 "Super Member-:frown:"</code></p>
-<p><strong>Usage:</strong> <code>?roletools reaction bulk</code></p>
-<h3 id="roletools-reaction-clearreact">roletools reaction clearreact</h3>
-<p><strong>Description:</strong> Clear the reactions for reaction roles. This will remove
-all reactions and then re-apply the bots reaction for you.</p>
-<p><code>&lt;message&gt;</code> The message you want to clear reactions on.
-<code>[emojis...]</code> Optional emojis you want to specifically remove.
-If no emojis are provided this will clear all the reaction role
-emojis the bot has for the message provided.</p>
-<p>Note: This will only clear reactions which have a corresponding
-reaction role on it.</p>
-<p><strong>Usage:</strong> <code>?roletools reaction clearreact</code></p>
-<h3 id="roletools-reaction-remove">roletools reaction remove</h3>
-<p><strong>Description:</strong> Remove a reaction role</p>
-<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
-from copying message ID while holding SHIFT or a message link
-<code>&lt;emoji&gt;</code> The emoji you want people to react with to get the role.
-<code>&lt;role&gt;</code> The role you want people to receive for reacting.</p>
-<p>Note: This will not remove the emoji reactions on the message.</p>
-<p><strong>Usage:</strong> <code>?roletools reaction remove</code></p>
-<h3 id="roletools-reaction-reactroles">roletools reaction reactroles</h3>
-<p><strong>Description:</strong> View current bound roles in the server</p>
-<p><strong>Usage:</strong> <code>?roletools reaction reactroles</code></p>
-<h3 id="roletools-reaction-create">roletools reaction create</h3>
-<p><strong>Description:</strong> Create a reaction role</p>
-<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
-from copying message ID while holding SHIFT or a message link
-<code>&lt;emoji&gt;</code> The emoji you want people to react with to get the role.
-<code>&lt;role&gt;</code> The role you want people to receive for reacting.</p>
-<p><strong>Usage:</strong> <code>?roletools reaction create</code></p>
-<h3 id="roletools-autorole">roletools autorole</h3>
-<p><strong>Description:</strong> Set a role to be automatically applied when a user joins the server.</p>
-<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
-If not provided the current setting will be shown instead.
-<code>&lt;role&gt;</code> The role you want to set.</p>
-<p><strong>Usage:</strong> <code>?roletools autorole</code></p>
-<h3 id="roletools-selfrem">roletools selfrem</h3>
-<p><strong>Description:</strong> Set whether or not a user can remove the role from themselves.</p>
-<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
-If not provided the current setting will be shown instead.
-<code>&lt;role&gt;</code> The role you want to set.</p>
-<p><strong>Usage:</strong> <code>?roletools selfrem</code></p>
-<h3 id="roletools-globalatomic">roletools globalatomic</h3>
-<p><strong>Description:</strong> Set the atomicity of role assignment.
-What this means is that when this is <code>True</code> roles will be
-applied inidvidually and not cause any errors. When this
-is set to <code>False</code> roles will be grouped together into one call.</p>
-<p>This can cause race conditions if you have other methods of applying
-roles setup when set to <code>False</code>.</p>
-<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
-If not provided the current setting will be shown instead.</p>
-<p><strong>Usage:</strong> <code>?roletools globalatomic</code></p>
-<h3 id="roletools-forcerole">roletools forcerole</h3>
-<p><strong>Description:</strong> Force a sticky role on one or more users.</p>
-<p><code>&lt;users&gt;</code> The users you want to have a forced stickyrole applied to.
-<code>&lt;roles&gt;</code> The role you want to set.</p>
-<p>Note: The only way to remove this would be to manually remove the role from
-the user.</p>
-<p><strong>Usage:</strong> <code>?roletools forcerole</code></p>
+<p><strong>Usage:</strong> <code>,roletools</code></p>
 <h3 id="roletools-cost">roletools cost</h3>
 <p><strong>Description:</strong> Set the cost to acquire a role.</p>
 <p><code>[cost]</code> The price you want to set the role at in bot credits.
 Setting this to 0 or lower will remove the cost.
 If not provided the current setting will be shown instead.
 <code>&lt;role&gt;</code> The role you want to set.</p>
-<p><strong>Usage:</strong> <code>?roletools cost</code></p>
+<p><strong>Usage:</strong> <code>,roletools cost</code></p>
 <h3 id="roletools-sticky">roletools sticky</h3>
 <p><strong>Description:</strong> Set whether or not a role will be re-applied when a user leaves and rejoins the server.</p>
 <p><code>[true_or_false]</code> optional boolean of what to set the setting to.
 If not provided the current setting will be shown instead.
 <code>&lt;role&gt;</code> The role you want to set.</p>
-<p><strong>Usage:</strong> <code>?roletools sticky</code></p>
+<p><strong>Usage:</strong> <code>,roletools sticky</code></p>
 <h3 id="roletools-exclude">roletools exclude</h3>
 <p><strong>Description:</strong> Set role exclusions</p>
-<p><strong>Usage:</strong> <code>?roletools exclude</code></p>
-<h3 id="roletools-exclude-remove">roletools exclude remove</h3>
-<p><strong>Description:</strong> Remove role exclusion</p>
-<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set exclusions for.
-<code>&lt;exclude&gt;</code> The role(s) currently excluded you no longer wish to have excluded</p>
-<p><strong>Usage:</strong> <code>?roletools exclude remove</code></p>
+<p><strong>Usage:</strong> <code>,roletools exclude</code></p>
+<h3 id="roletools-exclude-mutual">roletools exclude mutual</h3>
+<p><strong>Description:</strong> Allow setting roles mutually exclusive to eachother</p>
+<p>This is equivalent to individually setting each roles exclusive roles to another
+set of roles.</p>
+<p><code>[role...]</code> The roles you want to set as mutually exclusive.</p>
+<p><strong>Usage:</strong> <code>,roletools exclude mutual</code></p>
 <h3 id="roletools-exclude-add">roletools exclude add</h3>
 <p><strong>Description:</strong> Add role exclusion (This will remove if the designated role is acquired
 if the included roles are not selfremovable they will not be removed
@@ -2303,27 +2157,59 @@ and the designated role will not be given)</p>
 <p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set exclusions for.
 <code>&lt;exclude&gt;</code> The role(s) you wish to have removed when a user gains the <code>&lt;role&gt;</code></p>
 <p>Note: This will only work for roles assigned by this cog.</p>
-<p><strong>Usage:</strong> <code>?roletools exclude add</code></p>
-<h3 id="roletools-exclude-mutual">roletools exclude mutual</h3>
-<p><strong>Description:</strong> Allow setting roles mutually exclusive to eachother</p>
-<p>This is equivalent to individually setting each roles exclusive roles to another
-set of roles.</p>
-<p><code>[role...]</code> The roles you want to set as mutually exclusive.</p>
-<p><strong>Usage:</strong> <code>?roletools exclude mutual</code></p>
+<p><strong>Usage:</strong> <code>,roletools exclude add</code></p>
+<h3 id="roletools-exclude-remove">roletools exclude remove</h3>
+<p><strong>Description:</strong> Remove role exclusion</p>
+<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set exclusions for.
+<code>&lt;exclude&gt;</code> The role(s) currently excluded you no longer wish to have excluded</p>
+<p><strong>Usage:</strong> <code>,roletools exclude remove</code></p>
 <h3 id="roletools-selfrole">roletools selfrole</h3>
 <p><strong>Description:</strong> Add or remove a defined selfrole</p>
 <p><code>&lt;role&gt;</code> The role you want to add or remove.
 If you already have the role it will be removed.</p>
-<p><strong>Usage:</strong> <code>?roletools selfrole</code></p>
+<p><strong>Usage:</strong> <code>,roletools selfrole</code></p>
+<h3 id="roletools-atomic">roletools atomic</h3>
+<p><strong>Description:</strong> Set the atomicity of role assignment.
+What this means is that when this is <code>True</code> roles will be
+applied inidvidually and not cause any errors. When this
+is set to <code>False</code> roles will be grouped together into one call.</p>
+<p>This can cause race conditions if you have other methods of applying
+roles setup when set to <code>False</code>.</p>
+<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
+To reset back to the default global rules use <code>clear</code>.
+If not provided the current setting will be shown instead.</p>
+<p><strong>Usage:</strong> <code>,roletools atomic</code></p>
+<h3 id="roletools-required">roletools required</h3>
+<p><strong>Description:</strong> Set role requirements</p>
+<p><strong>Usage:</strong> <code>,roletools required</code></p>
+<h3 id="roletools-required-any">roletools required any</h3>
+<p><strong>Description:</strong> Set the required roles to require any of the roles instead of all of them</p>
+<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
+<code>&lt;require_any&gt;</code> Either <code>True</code> or <code>False</code>. If <code>True</code> any of the required roles will allow
+the user to acquire the <code>&lt;role&gt;</code>.</p>
+<p>Note: This will only work for roles assigned by this cog.</p>
+<p><strong>Usage:</strong> <code>,roletools required any</code></p>
+<h3 id="roletools-required-add">roletools required add</h3>
+<p><strong>Description:</strong> Add role requirements</p>
+<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
+<code>&lt;requires&gt;</code> The role(s) the user requires before being allowed to gain this role.</p>
+<p>Note: This will only work for roles assigned by this cog.</p>
+<p><strong>Usage:</strong> <code>,roletools required add</code></p>
+<h3 id="roletools-required-remove">roletools required remove</h3>
+<p><strong>Description:</strong> Remove role requirements</p>
+<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
+<code>&lt;requires&gt;</code> The role(s) you wish to have added when a user gains the <code>&lt;role&gt;</code></p>
+<p>Note: This will only work for roles assigned by this cog.</p>
+<p><strong>Usage:</strong> <code>,roletools required remove</code></p>
 <h3 id="roletools-include">roletools include</h3>
 <p><strong>Description:</strong> Set role inclusion</p>
-<p><strong>Usage:</strong> <code>?roletools include</code></p>
+<p><strong>Usage:</strong> <code>,roletools include</code></p>
 <h3 id="roletools-include-mutual">roletools include mutual</h3>
 <p><strong>Description:</strong> Allow setting roles mutually inclusive to eachother</p>
 <p>This is equivalent to individually setting each roles inclusive roles to another
 set of roles.</p>
 <p><code>[role...]</code> The roles you want to set as mutually inclusive.</p>
-<p><strong>Usage:</strong> <code>?roletools include mutual</code></p>
+<p><strong>Usage:</strong> <code>,roletools include mutual</code></p>
 <h3 id="roletools-include-add">roletools include add</h3>
 <p><strong>Description:</strong> Add role inclusion (This will add roles if the designated role is acquired
 if the designated role is removed the included roles will also be removed
@@ -2331,34 +2217,12 @@ if the included roles are set to selfremovable)</p>
 <p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set exclusions for.
 <code>&lt;include&gt;</code> The role(s) you wish to have added when a user gains the <code>&lt;role&gt;</code></p>
 <p>Note: This will only work for roles assigned by this cog.</p>
-<p><strong>Usage:</strong> <code>?roletools include add</code></p>
+<p><strong>Usage:</strong> <code>,roletools include add</code></p>
 <h3 id="roletools-include-remove">roletools include remove</h3>
 <p><strong>Description:</strong> Remove role inclusion</p>
 <p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set exclusions for.
 <code>&lt;include&gt;</code> The role(s) currently inclusive you no longer wish to have included</p>
-<p><strong>Usage:</strong> <code>?roletools include remove</code></p>
-<h3 id="roletools-required">roletools required</h3>
-<p><strong>Description:</strong> Set role requirements</p>
-<p><strong>Usage:</strong> <code>?roletools required</code></p>
-<h3 id="roletools-required-remove">roletools required remove</h3>
-<p><strong>Description:</strong> Remove role requirements</p>
-<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
-<code>&lt;requires&gt;</code> The role(s) you wish to have added when a user gains the <code>&lt;role&gt;</code></p>
-<p>Note: This will only work for roles assigned by this cog.</p>
-<p><strong>Usage:</strong> <code>?roletools required remove</code></p>
-<h3 id="roletools-required-any">roletools required any</h3>
-<p><strong>Description:</strong> Set the required roles to require any of the roles instead of all of them</p>
-<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
-<code>&lt;require_any&gt;</code> Either <code>True</code> or <code>False</code>. If <code>True</code> any of the required roles will allow
-the user to acquire the <code>&lt;role&gt;</code>.</p>
-<p>Note: This will only work for roles assigned by this cog.</p>
-<p><strong>Usage:</strong> <code>?roletools required any</code></p>
-<h3 id="roletools-required-add">roletools required add</h3>
-<p><strong>Description:</strong> Add role requirements</p>
-<p><code>&lt;role&gt;</code> This is the role a user may acquire you want to set requirements for.
-<code>&lt;requires&gt;</code> The role(s) the user requires before being allowed to gain this role.</p>
-<p>Note: This will only work for roles assigned by this cog.</p>
-<p><strong>Usage:</strong> <code>?roletools required add</code></p>
+<p><strong>Usage:</strong> <code>,roletools include remove</code></p>
 <h3 id="roletools-giverole">roletools giverole</h3>
 <p><strong>Description:</strong> Gives a role to designated members.</p>
 <p><code>&lt;role&gt;</code> The role you want to give.
@@ -2380,7 +2244,7 @@ which may cause unintended roles to be removed/applied.
 **This command is on a cooldown of 10 seconds per member who receives
 a role up to a maximum of 1 hour.**
 
-**Usage:** `?roletools giverole`
+**Usage:** `,roletools giverole`
 
 ### roletools removerole
 
@@ -2404,40 +2268,22 @@ Or one of the following:
 which may cause unintended roles to be removed/applied.</p>
 <p><strong>This command is on a cooldown of 10 seconds per member who receives
 a role up to a maximum of 1 hour.</strong></p>
-<p><strong>Usage:</strong> <code>?roletools removerole</code></p>
-<h3 id="roletools-atomic">roletools atomic</h3>
-<p><strong>Description:</strong> Set the atomicity of role assignment.
-What this means is that when this is <code>True</code> roles will be
-applied inidvidually and not cause any errors. When this
-is set to <code>False</code> roles will be grouped together into one call.</p>
-<p>This can cause race conditions if you have other methods of applying
-roles setup when set to <code>False</code>.</p>
-<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
-To reset back to the default global rules use <code>clear</code>.
-If not provided the current setting will be shown instead.</p>
-<p><strong>Usage:</strong> <code>?roletools atomic</code></p>
+<p><strong>Usage:</strong> <code>,roletools removerole</code></p>
 <h3 id="roletools-forceroleremove">roletools forceroleremove</h3>
 <p><strong>Description:</strong> Force remove sticky role on one or more users.</p>
 <p><code>&lt;users&gt;</code> The users you want to have a forced stickyrole applied to.
 <code>&lt;roles&gt;</code> The role you want to set.</p>
 <p>Note: This is generally only useful for users who have left the server.</p>
-<p><strong>Usage:</strong> <code>?roletools forceroleremove</code></p>
+<p><strong>Usage:</strong> <code>,roletools forceroleremove</code></p>
 <h3 id="roletools-buttons">roletools buttons</h3>
 <p><strong>Description:</strong> Setup role buttons</p>
-<p><strong>Usage:</strong> <code>?roletools buttons</code></p>
+<p><strong>Usage:</strong> <code>,roletools buttons</code></p>
 <h3 id="roletools-buttons-cleanup">roletools buttons cleanup</h3>
 <p><strong>Description:</strong> Check each button that has registered a message still exists and remove buttons with
 missing messages.</p>
 <h1 id="note-this-will-also-potentially-cause-problems-if-the-button-exists-in-a-thread">Note: This will also potentially cause problems if the button exists in a thread</h1>
 <p>it will not be found if the thread is archived and subsequently removed.</p>
-<p><strong>Usage:</strong> <code>?roletools buttons cleanup</code></p>
-<h3 id="roletools-buttons-delete">roletools buttons delete</h3>
-<p><strong>Description:</strong> Delete a saved button.</p>
-<p><code>&lt;name&gt;</code> - the name of the button you want to delete.</p>
-<p><strong>Usage:</strong> <code>?roletools buttons delete</code></p>
-<h3 id="roletools-buttons-view">roletools buttons view</h3>
-<p><strong>Description:</strong> View current buttons setup for role assign in this server.</p>
-<p><strong>Usage:</strong> <code>?roletools buttons view</code></p>
+<p><strong>Usage:</strong> <code>,roletools buttons cleanup</code></p>
 <h3 id="roletools-buttons-create">roletools buttons create</h3>
 <p><strong>Description:</strong> Create a role button</p>
 <ul>
@@ -2460,38 +2306,28 @@ missing messages.</p>
 This name will not update if the role name is changed.</p>
 <p>Example:
     <code>[p]roletools button create role1 @role label: Super fun role style: blurple emoji: 😀</code></p>
-<p><strong>Usage:</strong> <code>?roletools buttons create</code></p>
+<p><strong>Usage:</strong> <code>,roletools buttons create</code></p>
+<h3 id="roletools-buttons-view">roletools buttons view</h3>
+<p><strong>Description:</strong> View current buttons setup for role assign in this server.</p>
+<p><strong>Usage:</strong> <code>,roletools buttons view</code></p>
+<h3 id="roletools-buttons-delete">roletools buttons delete</h3>
+<p><strong>Description:</strong> Delete a saved button.</p>
+<p><code>&lt;name&gt;</code> - the name of the button you want to delete.</p>
+<p><strong>Usage:</strong> <code>,roletools buttons delete</code></p>
+<h3 id="roletools-viewroles">roletools viewroles</h3>
+<p><strong>Description:</strong> View current roletools setup for each role in the server</p>
+<p><code>[role]</code> The role you want to see settings for.</p>
+<p><strong>Usage:</strong> <code>,roletools viewroles</code></p>
 <h3 id="roletools-select">roletools select</h3>
 <p><strong>Description:</strong> Setup role select menus</p>
-<p><strong>Usage:</strong> <code>?roletools select</code></p>
-<h3 id="roletools-select-viewoptions">roletools select viewoptions</h3>
-<p><strong>Description:</strong> View current select menus setup for role assign in this server.</p>
-<p><strong>Usage:</strong> <code>?roletools select viewoptions</code></p>
-<h3 id="roletools-select-cleanup">roletools select cleanup</h3>
-<p><strong>Description:</strong> Check each select menu that has registered a message still exists and remove buttons with
-missing messages.</p>
-<h1 id="note-this-will-also-potentially-cause-problems-if-the-button-exists-in-a-thread_1">Note: This will also potentially cause problems if the button exists in a thread</h1>
-<p>it will not be found if the thread is archived and subsequently removed.</p>
-<p><strong>Usage:</strong> <code>?roletools select cleanup</code></p>
-<h3 id="roletools-select-createoption">roletools select createoption</h3>
-<p><strong>Description:</strong> Create a select menu option</p>
-<ul>
-<li><code>&lt;name&gt;</code> - The name of the select option for use later in setup.</li>
-<li><code>&lt;role&gt;</code> - The role this select option will assign or remove.</li>
-<li><code>[extras]</code></li>
-<li><code>label:</code> - The optional label for the option, max of 25 characters.</li>
-<li><code>description:</code> - The description for the option, max of 50 characters.</li>
-<li><code>emoji:</code> - The optional emoji used in the select option.</li>
-</ul>
-<p>Note: If no label and no emoji are provided the roles name will be used instead.
-This name will not update if the role name is changed.</p>
-<p>Example:
-    <code>[p]roletools select createoption role1 @role label: Super Fun Role emoji: 😀</code></p>
-<p><strong>Usage:</strong> <code>?roletools select createoption</code></p>
+<p><strong>Usage:</strong> <code>,roletools select</code></p>
 <h3 id="roletools-select-deleteoption">roletools select deleteoption</h3>
 <p><strong>Description:</strong> Delete a saved option.</p>
 <p><code>&lt;name&gt;</code> - the name of the select option you want to delete.</p>
-<p><strong>Usage:</strong> <code>?roletools select deleteoption</code></p>
+<p><strong>Usage:</strong> <code>,roletools select deleteoption</code></p>
+<h3 id="roletools-select-view">roletools select view</h3>
+<p><strong>Description:</strong> View current select menus setup for role assign in this server.</p>
+<p><strong>Usage:</strong> <code>,roletools select view</code></p>
 <h3 id="roletools-select-create">roletools select create</h3>
 <p><strong>Description:</strong> Create a select menu</p>
 <ul>
@@ -2506,14 +2342,162 @@ chosen yet.
 Example:
     <code>[p]roletools select create myrolemenu role1 role2 role3 placeholder: Pick your role!</code></li>
 </ul>
-<p><strong>Usage:</strong> <code>?roletools select create</code></p>
-<h3 id="roletools-select-view">roletools select view</h3>
+<p><strong>Usage:</strong> <code>,roletools select create</code></p>
+<h3 id="roletools-select-viewoptions">roletools select viewoptions</h3>
 <p><strong>Description:</strong> View current select menus setup for role assign in this server.</p>
-<p><strong>Usage:</strong> <code>?roletools select view</code></p>
+<p><strong>Usage:</strong> <code>,roletools select viewoptions</code></p>
+<h3 id="roletools-select-createoption">roletools select createoption</h3>
+<p><strong>Description:</strong> Create a select menu option</p>
+<ul>
+<li><code>&lt;name&gt;</code> - The name of the select option for use later in setup.</li>
+<li><code>&lt;role&gt;</code> - The role this select option will assign or remove.</li>
+<li><code>[extras]</code></li>
+<li><code>label:</code> - The optional label for the option, max of 25 characters.</li>
+<li><code>description:</code> - The description for the option, max of 50 characters.</li>
+<li><code>emoji:</code> - The optional emoji used in the select option.</li>
+</ul>
+<p>Note: If no label and no emoji are provided the roles name will be used instead.
+This name will not update if the role name is changed.</p>
+<p>Example:
+    <code>[p]roletools select createoption role1 @role label: Super Fun Role emoji: 😀</code></p>
+<p><strong>Usage:</strong> <code>,roletools select createoption</code></p>
 <h3 id="roletools-select-delete">roletools select delete</h3>
 <p><strong>Description:</strong> Delete a saved select menu.</p>
 <p><code>&lt;name&gt;</code> - the name of the select menu you want to delete.</p>
-<p><strong>Usage:</strong> <code>?roletools select delete</code></p></p>
+<p><strong>Usage:</strong> <code>,roletools select delete</code></p>
+<h3 id="roletools-select-cleanup">roletools select cleanup</h3>
+<p><strong>Description:</strong> Check each select menu that has registered a message still exists and remove buttons with
+missing messages.</p>
+<h1 id="note-this-will-also-potentially-cause-problems-if-the-button-exists-in-a-thread_1">Note: This will also potentially cause problems if the button exists in a thread</h1>
+<p>it will not be found if the thread is archived and subsequently removed.</p>
+<p><strong>Usage:</strong> <code>,roletools select cleanup</code></p>
+<h3 id="roletools-message">roletools message</h3>
+<p><strong>Description:</strong> Commands for sending/editing messages for roletools</p>
+<p><strong>Usage:</strong> <code>,roletools message</code></p>
+<h3 id="roletools-message-sendselect">roletools message sendselect</h3>
+<p><strong>Description:</strong> Send a select menu to a specified channel for role assignment</p>
+<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
+<code>[menus]...</code> - The names of the select menus you want included in the
+message up to a maximum of 5.
+<code>&lt;message&gt;</code> - The message to be included with the select menu.</p>
+<p><strong>Usage:</strong> <code>,roletools message sendselect</code></p>
+<h3 id="roletools-message-sendbutton">roletools message sendbutton</h3>
+<p><strong>Description:</strong> Send buttons to a specified channel with optional message.</p>
+<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
+<code>[buttons]...</code> - The names of the buttons you want included in the
+message up to a maximum of 25.
+<code>&lt;message&gt;</code> - The message to be included with the buttons.</p>
+<p><strong>Usage:</strong> <code>,roletools message sendbutton</code></p>
+<h3 id="roletools-message-edit">roletools message edit</h3>
+<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
+<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
+<code>[buttons]...</code> - The names of the buttons you want to include up to a maximum of 25.
+<code>[menus]...</code> - The names of the select menus you want to include up to a maximum of 5.</p>
+<p>Note: There is a maximum of 25 slots available on one message. Each menu
+uses up 5 slots while each button uses up 1 slot.</p>
+<p><strong>Usage:</strong> <code>,roletools message edit</code></p>
+<h3 id="roletools-message-send">roletools message send</h3>
+<p><strong>Description:</strong> Send a select menu to a specified channel for role assignment</p>
+<p><code>&lt;channel&gt;</code> - the channel to send the button role buttons to.
+<code>[buttons]...</code> - The names of the buttons you want included in the
+<code>[menus]...</code> - The names of the select menus you want included in the
+message up to a maximum of 5.
+<code>&lt;message&gt;</code> - The message to be included with the select menu.</p>
+<p>Note: There is a maximum of 25 slots available on one message. Each menu
+uses up 5 slots while each button uses up 1 slot.</p>
+<p><strong>Usage:</strong> <code>,roletools message send</code></p>
+<h3 id="roletools-message-editselect">roletools message editselect</h3>
+<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
+<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
+<code>[menus]...</code> - The names of the select menus you want to include up to a maximum of 5.</p>
+<p><strong>Usage:</strong> <code>,roletools message editselect</code></p>
+<h3 id="roletools-message-editbutton">roletools message editbutton</h3>
+<p><strong>Description:</strong> Edit a bots message to include Role Buttons</p>
+<p><code>&lt;message&gt;</code> - The existing message to add role buttons to. Must be a bots message.
+<code>[buttons]...</code> - The names of the buttons you want to include up to a maximum of 25.</p>
+<p><strong>Usage:</strong> <code>,roletools message editbutton</code></p>
+<h3 id="roletools-selfadd">roletools selfadd</h3>
+<p><strong>Description:</strong> Set whether or not a user can apply the role to themselves.</p>
+<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
+If not provided the current setting will be shown instead.
+<code>&lt;role&gt;</code> The role you want to set.</p>
+<p><strong>Usage:</strong> <code>,roletools selfadd</code></p>
+<h3 id="roletools-reaction">roletools reaction</h3>
+<p><strong>Description:</strong> Reaction role settings</p>
+<p><strong>Usage:</strong> <code>,roletools reaction</code></p>
+<h3 id="roletools-reaction-bulk">roletools reaction bulk</h3>
+<p><strong>Description:</strong> Create multiple roles reactions for a single message</p>
+<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
+from copying message ID while holding SHIFT or a message link
+<code>[role_emoji...]</code> Must be a role-emoji pair separated by either <code>;</code>, <code>,</code>, <code>|</code>, or <code>-</code>.</p>
+<p>Note: Any spaces will be considered a new set of role-emoji pairs, if you
+want to specify a role with a space in it without pinging it enclose
+the full role-emoji pair in quotes.</p>
+<p>e.g. <code>[p]roletools bulkreact 461417772115558410-821105109097644052 @member-:smile:</code>
+<code>[p]roletools bulkreact 461417772115558410-821105109097644052 "Super Member-:frown:"</code></p>
+<p><strong>Usage:</strong> <code>,roletools reaction bulk</code></p>
+<h3 id="roletools-reaction-reactroles">roletools reaction reactroles</h3>
+<p><strong>Description:</strong> View current bound roles in the server</p>
+<p><strong>Usage:</strong> <code>,roletools reaction reactroles</code></p>
+<h3 id="roletools-reaction-create">roletools reaction create</h3>
+<p><strong>Description:</strong> Create a reaction role</p>
+<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
+from copying message ID while holding SHIFT or a message link
+<code>&lt;emoji&gt;</code> The emoji you want people to react with to get the role.
+<code>&lt;role&gt;</code> The role you want people to receive for reacting.</p>
+<p><strong>Usage:</strong> <code>,roletools reaction create</code></p>
+<h3 id="roletools-reaction-clearreact">roletools reaction clearreact</h3>
+<p><strong>Description:</strong> Clear the reactions for reaction roles. This will remove
+all reactions and then re-apply the bots reaction for you.</p>
+<p><code>&lt;message&gt;</code> The message you want to clear reactions on.
+<code>[emojis...]</code> Optional emojis you want to specifically remove.
+If no emojis are provided this will clear all the reaction role
+emojis the bot has for the message provided.</p>
+<p>Note: This will only clear reactions which have a corresponding
+reaction role on it.</p>
+<p><strong>Usage:</strong> <code>,roletools reaction clearreact</code></p>
+<h3 id="roletools-reaction-remove">roletools reaction remove</h3>
+<p><strong>Description:</strong> Remove a reaction role</p>
+<p><code>&lt;message&gt;</code> can be the channel_id-message_id pair
+from copying message ID while holding SHIFT or a message link
+<code>&lt;emoji&gt;</code> The emoji you want people to react with to get the role.
+<code>&lt;role&gt;</code> The role you want people to receive for reacting.</p>
+<p>Note: This will not remove the emoji reactions on the message.</p>
+<p><strong>Usage:</strong> <code>,roletools reaction remove</code></p>
+<h3 id="roletools-reaction-cleanup">roletools reaction cleanup</h3>
+<p><strong>Description:</strong> Cleanup old/missing reaction roles and settings.</p>
+<p>Note: This will also clear out reaction roles if the bot is just
+missing permissions to see the reactions.</p>
+<p><strong>Usage:</strong> <code>,roletools reaction cleanup</code></p>
+<h3 id="roletools-autorole">roletools autorole</h3>
+<p><strong>Description:</strong> Set a role to be automatically applied when a user joins the server.</p>
+<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
+If not provided the current setting will be shown instead.
+<code>&lt;role&gt;</code> The role you want to set.</p>
+<p><strong>Usage:</strong> <code>,roletools autorole</code></p>
+<h3 id="roletools-selfrem">roletools selfrem</h3>
+<p><strong>Description:</strong> Set whether or not a user can remove the role from themselves.</p>
+<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
+If not provided the current setting will be shown instead.
+<code>&lt;role&gt;</code> The role you want to set.</p>
+<p><strong>Usage:</strong> <code>,roletools selfrem</code></p>
+<h3 id="roletools-globalatomic">roletools globalatomic</h3>
+<p><strong>Description:</strong> Set the atomicity of role assignment.
+What this means is that when this is <code>True</code> roles will be
+applied inidvidually and not cause any errors. When this
+is set to <code>False</code> roles will be grouped together into one call.</p>
+<p>This can cause race conditions if you have other methods of applying
+roles setup when set to <code>False</code>.</p>
+<p><code>[true_or_false]</code> optional boolean of what to set the setting to.
+If not provided the current setting will be shown instead.</p>
+<p><strong>Usage:</strong> <code>,roletools globalatomic</code></p>
+<h3 id="roletools-forcerole">roletools forcerole</h3>
+<p><strong>Description:</strong> Force a sticky role on one or more users.</p>
+<p><code>&lt;users&gt;</code> The users you want to have a forced stickyrole applied to.
+<code>&lt;roles&gt;</code> The role you want to set.</p>
+<p>Note: The only way to remove this would be to manually remove the role from
+the user.</p>
+<p><strong>Usage:</strong> <code>,roletools forcerole</code></p></p>
     </article>
 </section>
             <!-- endblock -->

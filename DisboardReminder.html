@@ -587,14 +587,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="DiscordEdit.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            DiscordEdit
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="DiscordModals.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2027,14 +2019,6 @@
     </li>
                             
     <li class="drac-box-ternary">
-        <a href="Weather.html"
-            class="
-            drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-            Weather
-        </a>
-    </li>
-                            
-    <li class="drac-box-ternary">
         <a href="WelcomeCount.html"
             class="
             drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
@@ -2102,7 +2086,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="DiscordEdit.html"
+                    <a href="DiscordModals.html"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
@@ -2144,17 +2128,20 @@
 <h3 id="bumpreminder">bumpreminder</h3>
 <p><strong>Description:</strong> Set a reminder to bump on Disboard.</p>
 <p>This sends a reminder to bump in a specified channel 2 hours after someone successfully bumps, thus making it more accurate than a repeating schedule.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder</code></p>
+<p><strong>Usage:</strong> <code>,bumpreminder</code></p>
+<h3 id="bumpreminder-clean">bumpreminder clean</h3>
+<p><strong>Description:</strong> Toggle whether [botname] should keep the bump channel "clean."</p>
+<p>[botname] will remove all failed invoke messages by Disboard.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder clean</code></p>
+<h3 id="bumpreminder-message">bumpreminder message</h3>
+<p><strong>Description:</strong> Change the message used for reminders. Providing no message will reset to the default message.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder message</code></p>
 <h3 id="bumpreminder-settings">bumpreminder settings</h3>
 <p><strong>Description:</strong> Show your Bump Reminder settings.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder settings</code></p>
+<p><strong>Usage:</strong> <code>,bumpreminder settings</code></p>
 <h3 id="bumpreminder-lock">bumpreminder lock</h3>
 <p><strong>Description:</strong> Toggle whether the bot should automatically lock/unlock the bump channel.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder lock</code></p>
-<h3 id="bumpreminder-pingrole">bumpreminder pingrole</h3>
-<p><strong>Description:</strong> Set a role to ping for bump reminders.</p>
-<p>If no role is provided, it will clear the current role.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder pingrole</code></p>
+<p><strong>Usage:</strong> <code>,bumpreminder lock</code></p>
 <h3 id="bumpreminder-thankyou">bumpreminder thankyou</h3>
 <p><strong>Description:</strong> Change the message used for 'Thank You' messages. Providing no message will reset to the default message.</p>
 <p>The thank you message supports TagScript blocks which can customize the message and even add an embed!
@@ -2169,18 +2156,15 @@
 <p><code>[p]bprm ty Thanks {member} for bumping! You earned 10 brownie points from phen!</code>
 <code>[p]bprm ty {embed(description):{member(mention)}, thank you for bumping! Make sure to vote for **{server}** on [our voting page](https://disboard.org/server/{guild(id)}).}</code></p>
 </blockquote>
-<p><strong>Usage:</strong> <code>?bumpreminder thankyou</code></p>
-<h3 id="bumpreminder-clean">bumpreminder clean</h3>
-<p><strong>Description:</strong> Toggle whether [botname] should keep the bump channel "clean."</p>
-<p>[botname] will remove all failed invoke messages by Disboard.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder clean</code></p>
+<p><strong>Usage:</strong> <code>,bumpreminder thankyou</code></p>
+<h3 id="bumpreminder-pingrole">bumpreminder pingrole</h3>
+<p><strong>Description:</strong> Set a role to ping for bump reminders.</p>
+<p>If no role is provided, it will clear the current role.</p>
+<p><strong>Usage:</strong> <code>,bumpreminder pingrole</code></p>
 <h3 id="bumpreminder-channel">bumpreminder channel</h3>
 <p><strong>Description:</strong> Set the channel to send bump reminders to.</p>
 <p>This also works as a toggle, so if no channel is provided, it will disable reminders for this server.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder channel</code></p>
-<h3 id="bumpreminder-message">bumpreminder message</h3>
-<p><strong>Description:</strong> Change the message used for reminders. Providing no message will reset to the default message.</p>
-<p><strong>Usage:</strong> <code>?bumpreminder message</code></p></p>
+<p><strong>Usage:</strong> <code>,bumpreminder channel</code></p></p>
     </article>
 </section>
             <!-- endblock -->
