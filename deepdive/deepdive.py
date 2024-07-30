@@ -42,7 +42,7 @@ class DeepDive(commands.Cog):
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
-        progress_message = await ctx.send(f"Starting deep dive on {username}...")
+        progress_message = await ctx.author.send(f"Starting deep dive on {username}...")
 
         # Setup database
         self.db_path = await self.config.db_path()
@@ -63,7 +63,7 @@ class DeepDive(commands.Cog):
         embeds = self._create_results_embeds(username, aggregated_results)
 
         for embed in embeds:
-            await ctx.send(embed=embed)
+            await ctx.author.send(embed=embed)
         await self._close_db()
 
         await progress_message.edit(content=f"Deep dive complete for {username}.")
@@ -73,7 +73,7 @@ class DeepDive(commands.Cog):
         """Add a bot to the list of other bots"""
         async with self.config.other_bots() as other_bots:
             other_bots.append({'name': name, 'token': token})
-        await ctx.send(f"Bot {name} added successfully.")
+        await ctx.author.send(f"Bot {name} added successfully.")
 
     @commands.command(name="removebot")
     async def remove_bot(self, ctx: commands.Context, name: str):
@@ -82,9 +82,9 @@ class DeepDive(commands.Cog):
             for bot in other_bots:
                 if bot['name'] == name:
                     other_bots.remove(bot)
-                    await ctx.send(f"Bot {name} removed successfully.")
+                    await ctx.author.send(f"Bot {name} removed successfully.")
                     return
-            await ctx.send(f"Bot {name} not found.")
+            await ctx.author.send(f"Bot {name} not found.")
 
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
@@ -113,7 +113,7 @@ class DeepDive(commands.Cog):
             try:
                 await self._perform_local_deep_dive(username, ctx, progress_message, bot_client)
             except Exception as e:
-                await ctx.send(f"Error with bot {bot_info['name']}: {e}")
+                await ctx.author.send(f"Error with bot {bot_info['name']}: {e}")
             finally:
                 await bot_client.close()
 
