@@ -125,8 +125,8 @@ class DeepDive(commands.Cog):
         progress = round((current / total) * size)
         empty_progress = size - progress
 
-        progress_text = '' * progress
-        empty_progress_text = '' * empty_progress
+        progress_text = '█' * progress
+        empty_progress_text = '░' * empty_progress
 
         return f"[{progress_text}{empty_progress_text}] {current}/{total}"
 
