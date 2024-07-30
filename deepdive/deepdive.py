@@ -10,6 +10,7 @@ import os
 import asyncio
 import json
 from collections import defaultdict
+from PIL import Image, ImageDraw
 
 Base = declarative_base()
 
@@ -36,7 +37,8 @@ class DeepDive(commands.Cog):
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
-        progress_message = await ctx.author.send(f"Starting deep dive on {username}...")
+        progress_image_path = self._create_progress_image(0, 1)
+        progress_message = await ctx.send(file=discord.File(progress_image_path), embed=self._create_progress_embed(username, 0, 1, progress_image_path))
 
         # Setup database
         self.db_path = await self.config.db_path()
@@ -56,7 +58,7 @@ class DeepDive(commands.Cog):
         embeds = self._create_results_embeds(username, aggregated_results)
 
         for embed in embeds:
-            await ctx.author.send(embed=embed)
+            await ctx.send(embed=embed)
 
         # Close the database
         await self._close_db()
@@ -68,7 +70,7 @@ class DeepDive(commands.Cog):
         """Add a bot to the list of other bots"""
         async with self.config.other_bots() as other_bots:
             other_bots.append({'name': name, 'token': token})
-        await ctx.author.send(f"Bot {name} added successfully.")
+        await ctx.send(f"Bot {name} added successfully.")
 
     @commands.command(name="removebot")
     async def remove_bot(self, ctx: commands.Context, name: str):
@@ -77,9 +79,9 @@ class DeepDive(commands.Cog):
             for bot in other_bots:
                 if bot['name'] == name:
                     other_bots.remove(bot)
-                    await ctx.author.send(f"Bot {name} removed successfully.")
+                    await ctx.send(f"Bot {name} removed successfully.")
                     return
-            await ctx.author.send(f"Bot {name} not found.")
+            await ctx.send(f"Bot {name} not found.")
 
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
@@ -111,24 +113,39 @@ class DeepDive(commands.Cog):
             try:
                 await self._perform_local_deep_dive(username, ctx, progress_message, bot_client)
             except Exception as e:
-                await ctx.author.send(f"Error with bot {bot_info['name']}: {e}")
+                await ctx.send(f"Error with bot {bot_info['name']}: {e}")
             finally:
                 await bot_client.close()
 
         await bot_client.start(bot_info['token'])
 
         # Update progress
-        progress = self._create_progress_bar(current, total)
-        await progress_message.edit(content=f"Gathering information from {bot_info['name']}...\n**Progress:** {progress}")
+        progress_image_path = self._create_progress_image(current, total)
+        embed = self._create_progress_embed(bot_info['name'], current, total, progress_image_path)
+        await progress_message.edit(embed=embed)
 
-    def _create_progress_bar(self, current, total, size=20):
-        progress = round((current / total) * size)
-        empty_progress = size - progress
+    def _create_progress_embed(self, currentserverchecking, checkedservers, totalservers, progress_image_path, message_count=0, total_messages=0, query=""):
+        embed = discord.Embed(
+            title="Checking",
+            description=f"Out of {totalservers} servers, I have checked {checkedservers} servers. (Phase: Searching {currentserverchecking})",
+            color=0x0099ff
+        )
+        embed.add_field(name="Deep Dive Progress", value="**Progress:**", inline=False)
+        embed.set_image(url=f"attachment://{progress_image_path}")
+        embed.add_field(name="Message Count", value=f"**Checking:** {message_count}/{total_messages} messages", inline=False)
+        embed.add_field(name="Username", value=f"**Query:** {query}", inline=False)
+        embed.set_timestamp()
+        return embed
 
-        progress_text = '█' * progress
-        empty_progress_text = '░' * empty_progress
-
-        return f"[{progress_text}{empty_progress_text}] {current}/{total}"
+    def _create_progress_image(self, current, total, width=400, height=40):
+        progress = current / total
+        image = Image.new('RGB', (width, height), color='white')
+        draw = ImageDraw.Draw(image)
+        draw.rectangle([0, 0, width, height], outline='black', width=2)
+        draw.rectangle([0, 0, int(width * progress), height], fill='green')
+        image_path = f"progress_{current}_{total}.png"
+        image.save(image_path)
+        return image_path
 
     async def _perform_local_deep_dive(self, username, ctx, progress_message, client=None):
         if client is None:
@@ -137,8 +154,9 @@ class DeepDive(commands.Cog):
         total_guilds = len(client.guilds)
         for i, guild in enumerate(client.guilds, start=1):
             await self._search_guild(guild, username, ctx)
-            progress = self._create_progress_bar(i, total_guilds)
-            await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...\n**Progress:** {progress}")
+            progress_image_path = self._create_progress_image(i, total_guilds)
+            embed = self._create_progress_embed(guild.name, i, total_guilds, progress_image_path)
+            await progress_message.edit(embed=embed)
 
     async def _search_guild(self, guild, username, ctx):
         members = [member async for member in guild.fetch_members(limit=None)]
