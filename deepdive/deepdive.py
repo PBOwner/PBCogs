@@ -84,7 +84,18 @@ class DeepDive(commands.Cog):
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
         self.Session = sessionmaker(bind=self.engine)
-        Base.metadata.create_all(self.engine)
+        # Create the results table if it doesn't exist
+        if not self.engine.dialect.has_table(self.engine, 'results'):
+            Base.metadata.create_all(self.engine)
+        else:
+            # Check if the existing table has the correct schema
+            with self.engine.connect() as conn:
+                result = conn.execute("PRAGMA table_info(results)").fetchall()
+                columns = [row[1] for row in result]
+                if 'user_id' not in columns:
+                    # Drop the existing table and recreate it
+                    conn.execute("DROP TABLE results")
+                    Base.metadata.create_all(self.engine)
 
     async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
