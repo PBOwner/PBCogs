@@ -2,7 +2,7 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table
+from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
@@ -84,8 +84,9 @@ class DeepDive(commands.Cog):
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
         self.Session = sessionmaker(bind=self.engine)
+        inspector = inspect(self.engine)
         # Create the results table if it doesn't exist
-        if not self.engine.dialect.has_table(self.engine, 'results'):
+        if not inspector.has_table('results'):
             Base.metadata.create_all(self.engine)
         else:
             # Check if the existing table has the correct schema
