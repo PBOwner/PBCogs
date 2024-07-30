@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands
 from discord.http import Route
 import traceback
+import textwrap
 
 class EvalCog(commands.Cog):
     def __init__(self, bot):
