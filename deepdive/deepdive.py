@@ -2,7 +2,7 @@ import discord
 from redbot.core import commands, Config, bot
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 from textblob import TextBlob
-from natural import TfIdf
+from sklearn.feature_extraction.text import TfidfVectorizer
 import sqlite3
 import os
 import asyncio
@@ -14,8 +14,8 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
-        self.tfidf = TfIdf()
         self.db_path = self.config.db_path()
+        self.tfidf_vectorizer = TfidfVectorizer()
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -175,7 +175,7 @@ class DeepDive(commands.Cog):
 
                             hour = msg['created_at'].hour
                             time_of_day_activity[hour] += 1
-                            self.tfidf.add_document(msg['content'])
+                            self.tfidf_vectorizer.fit_transform([msg['content']])
 
             except Exception as error:
                 print(f"Error searching in guild {guild.name}: {error}")
@@ -276,7 +276,9 @@ class DeepDive(commands.Cog):
         return summary
 
     def _get_top_words(self):
-        top_words = [term['term'] for term in self.tfidf.list_terms(0) if term['tfidf'] > 0.1]
+        tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg['content'] for msg in messages])
+        feature_names = self.tfidf_vectorizer.get_feature_names_out()
+        top_words = [feature_names[i] for i in tfidf_matrix[0].nonzero()[1]]
         return ', '.join(top_words)
 
     def _get_top_entries(self, data, limit):
