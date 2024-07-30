@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, Config
+from redbot.core import commands, Config, app_commands
 from redbot.core.bot import Red
 import sqlite3
 import os
@@ -15,10 +15,14 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path="deepdive_results.sqlite", other_bots=[])
+        self.bot.tree.add_command(self.deepdive_slash)
+        self.bot.tree.add_command(self.addbot_slash)
+        self.bot.tree.add_command(self.removebot_slash)
+        self.bot.tree.add_command(self.listbots_slash)
 
-    @commands.slash_command()
+    @commands.command()
     async def deepdive(self, ctx: commands.Context, username: str):
-        await ctx.send(f"Performing a deep dive on {username}...", ephemeral=True)
+        await ctx.send(f"Performing a deep dive on {username}...")
 
         db_path = await self.config.db_path()
         conn = sqlite3.connect(db_path)
@@ -41,41 +45,118 @@ class DeepDive(commands.Cog):
             for platform, result in results:
                 embed.add_field(name=platform, value=result, inline=False)
 
-            await ctx.send("Deep dive complete!", embed=embed, ephemeral=True)
+            await ctx.send("Deep dive complete!", embed=embed)
         finally:
             conn.close()
             if os.path.exists(db_path):
                 os.remove(db_path)
 
-    @commands.slash_command()
+    @commands.command()
+    @commands.is_owner()
     async def addbot(self, ctx: commands.Context, name: str, token: str):
         """Add a bot to the list of other bots"""
         async with self.config.other_bots() as other_bots:
             other_bots.append({'name': name, 'token': token})
-        await ctx.send(f"Bot {name} added successfully.", ephemeral=True)
+        await ctx.send(f"Bot {name} added successfully.")
 
-    @commands.slash_command()
+    @commands.command()
+    @commands.is_owner()
     async def removebot(self, ctx: commands.Context, name: str):
         """Remove a bot from the list of other bots"""
         async with self.config.other_bots() as other_bots:
             for bot in other_bots:
                 if bot['name'] == name:
                     other_bots.remove(bot)
-                    await ctx.send(f"Bot {name} removed successfully.", ephemeral=True)
+                    await ctx.send(f"Bot {name} removed successfully.")
                     return
-            await ctx.send(f"Bot {name} not found.", ephemeral=True)
+            await ctx.send(f"Bot {name} not found.")
 
-    @commands.slash_command()
+    @commands.command()
+    @commands.is_owner()
     async def listbots(self, ctx: commands.Context):
         """List all added bots"""
         other_bots = await self.config.other_bots()
         if not other_bots:
-            await ctx.send("No bots added.", ephemeral=True)
+            await ctx.send("No bots added.")
         else:
             embed = discord.Embed(title="Added Bots", color=0x0099ff)
             for bot in other_bots:
                 embed.add_field(name=bot['name'], value=bot['token'], inline=False)
-            await ctx.send(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed)
+
+    @app_commands.command(name="deepdive")
+    @app_commands.guild_only()
+    async def deepdive_slash(self, interaction: discord.Interaction, username: str):
+        await interaction.response.send_message(f"Performing a deep dive on {username}...", ephemeral=True)
+
+        db_path = await self.config.db_path()
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Result (
+            platform TEXT NOT NULL,
+            result TEXT NOT NULL
+        )''')
+        conn.commit()
+
+        try:
+            await self.notify_other_bots_sequentially(username, interaction)
+            await self.perform_deep_dive(username, interaction)
+
+            cursor.execute("SELECT platform, result FROM Result")
+            results = cursor.fetchall()
+
+            embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
+            for platform, result in results:
+                embed.add_field(name=platform, value=result, inline=False)
+
+            await interaction.followup.send("Deep dive complete!", embed=embed, ephemeral=True)
+        finally:
+            conn.close()
+            if os.path.exists(db_path):
+                os.remove(db_path)
+
+    @app_commands.command(name="addbot")
+    @app_commands.guild_only()
+    async def addbot_slash(self, interaction: discord.Interaction, name: str, token: str):
+        """Add a bot to the list of other bots"""
+        if not await self.bot.is_owner(interaction.user):
+            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
+            return
+        async with self.config.other_bots() as other_bots:
+            other_bots.append({'name': name, 'token': token})
+        await interaction.response.send_message(f"Bot {name} added successfully.", ephemeral=True)
+
+    @app_commands.command(name="removebot")
+    @app_commands.guild_only()
+    async def removebot_slash(self, interaction: discord.Interaction, name: str):
+        """Remove a bot from the list of other bots"""
+        if not await self.bot.is_owner(interaction.user):
+            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
+            return
+        async with self.config.other_bots() as other_bots:
+            for bot in other_bots:
+                if bot['name'] == name:
+                    other_bots.remove(bot)
+                    await interaction.response.send_message(f"Bot {name} removed successfully.", ephemeral=True)
+                    return
+            await interaction.response.send_message(f"Bot {name} not found.", ephemeral=True)
+
+    @app_commands.command(name="listbots")
+    @app_commands.guild_only()
+    async def listbots_slash(self, interaction: discord.Interaction):
+        """List all added bots"""
+        if not await self.bot.is_owner(interaction.user):
+            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
+            return
+        other_bots = await self.config.other_bots()
+        if not other_bots:
+            await interaction.response.send_message("No bots added.", ephemeral=True)
+        else:
+            embed = discord.Embed(title="Added Bots", color=0x0099ff)
+            for bot in other_bots:
+                embed.add_field(name=bot['name'], value=bot['token'], inline=False)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     async def notify_other_bots_sequentially(self, username, ctx):
         other_bots = await self.config.other_bots()
@@ -85,8 +166,7 @@ class DeepDive(commands.Cog):
             embed = self._create_progress_embed(bot_info['name'], i + 1, len(other_bots), progress_image_path)
             await ctx.send(
                 f"Gathering information from {bot_info['name']}...",
-                embed=embed,
-                ephemeral=True
+                embed=embed
             )
 
             bot_client = discord.Client(intents=discord.Intents.default())
@@ -132,7 +212,7 @@ class DeepDive(commands.Cog):
         search_functions = [self.search_discord]
         for search_function in search_functions:
             platform_name = self.get_platform_name(search_functions.index(search_function))
-            await ctx.send(f"Performing a deep dive on {username}... (Searching {platform_name})", ephemeral=True)
+            await ctx.send(f"Performing a deep dive on {username}... (Searching {platform_name})")
             try:
                 result = await search_function(username, client, ctx)
                 db_path = await self.config.db_path()
@@ -169,8 +249,7 @@ class DeepDive(commands.Cog):
             checked_servers += 1
             progress_image_path = self._create_progress_image(checked_servers, total_servers)
             await ctx.send(
-                embed=self._create_progress_embed(guild.name, checked_servers, total_servers, progress_image_path, message_count, total_messages, query),
-                ephemeral=True
+                embed=self._create_progress_embed(guild.name, checked_servers, total_servers, progress_image_path, message_count, total_messages, query)
             )
 
             try:
@@ -199,8 +278,7 @@ class DeepDive(commands.Cog):
 
                             progress_image_path = self._create_progress_image(checked_servers, total_servers)
                             await ctx.send(
-                                embed=self._create_progress_embed(guild.name, checked_servers, total_servers, progress_image_path, len(user_messages), total_messages, query),
-                                ephemeral=True
+                                embed=self._create_progress_embed(guild.name, checked_servers, total_servers, progress_image_path, len(user_messages), total_messages, query)
                             )
 
                 # Fit and transform the messages for TF-IDF
@@ -313,3 +391,6 @@ class DeepDive(commands.Cog):
 
     def get_time_of_day_summary(self, activity):
         return "\n".join([f"{hour}:00 - {hour + 1}:00: {count}" for hour, count in enumerate(activity)])
+
+def setup(bot: Red):
+    bot.add_cog(DeepDive(bot))
