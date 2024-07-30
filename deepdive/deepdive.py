@@ -139,10 +139,10 @@ class DeepDive(commands.Cog):
 
     async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
-        for bot_info in other_bots:
-            await self._notify_bot(bot_info, username, ctx, progress_message)
+        for i, bot_info in enumerate(other_bots):
+            await self._notify_bot(bot_info, username, ctx, progress_message, i + 1, len(other_bots))
 
-    async def _notify_bot(self, bot_info, username, ctx, progress_message):
+    async def _notify_bot(self, bot_info, username, ctx, progress_message, current, total):
         bot_client = discord.Client(intents=discord.Intents.default())
 
         @bot_client.event
@@ -156,6 +156,19 @@ class DeepDive(commands.Cog):
 
         await bot_client.start(bot_info['token'])
 
+        # Update progress
+        progress = self._create_progress_bar(current, total)
+        await progress_message.edit(content=f"Gathering information from {bot_info['name']}...\n**Progress:** {progress}")
+
+    def _create_progress_bar(self, current, total, size=20):
+        progress = round((current / total) * size)
+        empty_progress = size - progress
+
+        progress_text = '█' * progress
+        empty_progress_text = '░' * empty_progress
+
+        return f"[{progress_text}{empty_progress_text}] {current}/{total}"
+
     async def _perform_local_deep_dive(self, username, ctx, progress_message, table_name, client=None):
         if client is None:
             client = self.bot
@@ -163,7 +176,8 @@ class DeepDive(commands.Cog):
         total_guilds = len(client.guilds)
         for i, guild in enumerate(client.guilds, start=1):
             await self._search_guild(guild, username, ctx, table_name)
-            await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...")
+            progress = self._create_progress_bar(i, total_guilds)
+            await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...\n**Progress:** {progress}")
 
     async def _search_guild(self, guild, username, ctx, table_name):
         members = [member async for member in guild.fetch_members(limit=None)]
