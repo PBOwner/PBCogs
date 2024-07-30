@@ -125,8 +125,8 @@ class DeepDive(commands.Cog):
         progress = round((current / total) * size)
         empty_progress = size - progress
 
-        progress_text = '' * progress
-        empty_progress_text = '' * empty_progress
+        progress_text = '█' * progress
+        empty_progress_text = '░' * empty_progress
 
         return f"[{progress_text}{empty_progress_text}] {current}/{total}"
 
@@ -255,7 +255,11 @@ class DeepDive(commands.Cog):
         return intents
 
     def _get_top_words(self, messages):
-        filtered_messages = [msg.content for msg in messages if msg.content.strip() and not all(word in self.tfidf_vectorizer.get_stop_words() for word in msg.content.split())]
+        stop_words = self.tfidf_vectorizer.get_stop_words()
+        if stop_words is None:
+            stop_words = []
+
+        filtered_messages = [msg.content for msg in messages if msg.content.strip() and not all(word in stop_words for word in msg.content.split())]
         if not filtered_messages:
             return 'No significant words found.'
 
