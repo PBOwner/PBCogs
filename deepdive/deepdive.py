@@ -2,10 +2,10 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, inspect
+from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import text
+from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
 from collections import defaultdict
@@ -91,31 +91,14 @@ class DeepDive(commands.Cog):
         self.Session = sessionmaker(bind=self.engine)
 
     async def _sync_db(self):
-        inspector = inspect(self.engine)
-        if 'results' in inspector.get_table_names():
-            existing_columns = [column['name'] for column in inspector.get_columns('results')]
-            expected_columns = {column.name for column in Result.__table__.columns}
-            missing_columns = expected_columns - set(existing_columns)
-
-            if missing_columns:
-                # Create a new table with the updated schema
-                new_table_name = 'results_new'
-                Result.__table__.name = new_table_name
-                Base.metadata.create_all(self.engine, tables=[Result.__table__])
-
-                # Copy data from the old table to the new table
-                with self.engine.connect() as conn:
-                    conn.execute(text(f'INSERT INTO {new_table_name} ({", ".join(existing_columns)}) SELECT {", ".join(existing_columns)} FROM results'))
-
-                    # Drop the old table and rename the new table
-                    conn.execute(text('DROP TABLE results'))
-                    conn.execute(text(f'ALTER TABLE {new_table_name} RENAME TO results'))
-
-                # Restore the original table name
-                Result.__table__.name = 'results'
-        else:
-            # Create the table if it doesn't exist
+        try:
+            # Drop the existing table if it exists
+            if self.engine.dialect.has_table(self.engine, Result.__tablename__):
+                Base.metadata.drop_all(self.engine, [Base.metadata.tables[Result.__tablename__]])
+            # Create the table with the new schema
             Base.metadata.create_all(self.engine)
+        except SQLAlchemyError as e:
+            print(f"Error syncing database: {e}")
 
     async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
