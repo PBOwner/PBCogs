@@ -2,31 +2,29 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType
+from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, Table, MetaData
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, mapper
 from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
 from collections import defaultdict
-import tempfile
 
 Base = declarative_base()
 
-class Result(Base):
-    __tablename__ = 'results'
-    id = Column(Integer, primary_key=True)
-    platform = Column(String, nullable=False)
-    users = Column(String, nullable=False)
-    servers = Column(PickleType, nullable=False)  # Store list as a pickle
-    trustworthiness = Column(String, nullable=False)
-    intent_summary = Column(PickleType, nullable=False)  # Store dict as a pickle
-    sentiment_summary = Column(String, nullable=False)
-    top_words = Column(Text, nullable=False)
-    avg_message_length = Column(Float, nullable=False)
-    most_active_channels = Column(PickleType, nullable=False)  # Store dict as a pickle
-    most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
-    time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
+class Result:
+    def __init__(self, platform, users, servers, trustworthiness, intent_summary, sentiment_summary, top_words, avg_message_length, most_active_channels, most_mentioned_users, time_of_day_summary):
+        self.platform = platform
+        self.users = users
+        self.servers = servers
+        self.trustworthiness = trustworthiness
+        self.intent_summary = intent_summary
+        self.sentiment_summary = sentiment_summary
+        self.top_words = top_words
+        self.avg_message_length = avg_message_length
+        self.most_active_channels = most_active_channels
+        self.most_mentioned_users = most_mentioned_users
+        self.time_of_day_summary = time_of_day_summary
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -34,8 +32,9 @@ class DeepDive(commands.Cog):
     def __init__(self, bot: bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
-        self.config.register_global(other_bots=[])
+        self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
         self.tfidf_vectorizer = TfidfVectorizer()
+        self.db_path = None
         self.engine = None
         self.Session = None
 
@@ -44,35 +43,32 @@ class DeepDive(commands.Cog):
         """Perform a deep dive to find information about a user"""
         progress_message = await ctx.author.send(f"Starting deep dive on {username}...")
 
-        # Create a temporary database file
-        with tempfile.NamedTemporaryFile(suffix=".sqlite", delete=False) as tmp_db:
-            db_path = tmp_db.name
-
         # Setup database
-        self._setup_db(db_path)
+        self.db_path = await self.config.db_path()
+        self._setup_db()
 
-        # Drop and recreate the table
-        await self._reset_db()
+        # Create a new table for the user
+        user_table_name = f'results_{username.replace(" ", "_")}'
+        await self._reset_db(user_table_name)
 
         await progress_message.edit(content=f"Database setup complete for {username}. Notifying other bots...")
 
         # Notify other bots and perform local deep dive
         await self._notify_other_bots(username, ctx, progress_message)
-        await self._perform_local_deep_dive(username, ctx, progress_message)
+        await self._perform_local_deep_dive(username, ctx, progress_message, user_table_name)
 
         await progress_message.edit(content=f"Deep dive in progress for {username}. Fetching results...")
 
         # Fetch and compile results
-        results = await self._fetch_results()
+        results = await self._fetch_results(user_table_name)
         aggregated_results = self._aggregate_results(results)
         embeds = self._create_results_embeds(username, aggregated_results)
 
         for embed in embeds:
             await ctx.author.send(embed=embed)
 
-        # Close and delete the database
+        # Close the database
         await self._close_db()
-        os.remove(db_path)
 
         await progress_message.edit(content=f"Deep dive complete for {username}.")
 
@@ -94,17 +90,30 @@ class DeepDive(commands.Cog):
                     return
             await ctx.author.send(f"Bot {name} not found.")
 
-    def _setup_db(self, db_path):
-        self.engine = create_engine(f'sqlite:///{db_path}')
+    def _setup_db(self):
+        self.engine = create_engine(f'sqlite:///{self.db_path}')
         self.Session = sessionmaker(bind=self.engine)
 
-    async def _reset_db(self):
+    async def _reset_db(self, table_name):
         try:
-            # Drop the existing table if it exists
-            if self.engine.dialect.has_table(self.engine, Result.__tablename__):
-                Base.metadata.drop_all(self.engine, [Base.metadata.tables[Result.__tablename__]])
-            # Create the table with the new schema
-            Base.metadata.create_all(self.engine)
+            metadata = MetaData(self.engine)
+            user_table = Table(
+                table_name, metadata,
+                Column('id', Integer, primary_key=True),
+                Column('platform', String, nullable=False),
+                Column('users', String, nullable=False),
+                Column('servers', PickleType, nullable=False),  # Store list as a pickle
+                Column('trustworthiness', String, nullable=False),
+                Column('intent_summary', PickleType, nullable=False),  # Store dict as a pickle
+                Column('sentiment_summary', String, nullable=False),
+                Column('top_words', Text, nullable=False),
+                Column('avg_message_length', Float, nullable=False),
+                Column('most_active_channels', PickleType, nullable=False),  # Store dict as a pickle
+                Column('most_mentioned_users', PickleType, nullable=False),  # Store dict as a pickle
+                Column('time_of_day_summary', PickleType, nullable=False)  # Store list as a pickle
+            )
+            metadata.create_all()
+            mapper(Result, user_table)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
 
@@ -127,23 +136,23 @@ class DeepDive(commands.Cog):
 
         await bot_client.start(bot_info['token'])
 
-    async def _perform_local_deep_dive(self, username, ctx, progress_message, client=None):
+    async def _perform_local_deep_dive(self, username, ctx, progress_message, table_name, client=None):
         if client is None:
             client = self.bot
 
         total_guilds = len(client.guilds)
         for i, guild in enumerate(client.guilds, start=1):
-            await self._search_guild(guild, username, ctx)
+            await self._search_guild(guild, username, ctx, table_name)
             await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...")
 
-    async def _search_guild(self, guild, username, ctx):
+    async def _search_guild(self, guild, username, ctx, table_name):
         members = [member async for member in guild.fetch_members(limit=None)]
         users = [member for member in members if self._is_matching_user(member, username)]
 
         if users:
             messages = await self._fetch_user_messages(guild, users)
             result = self._analyze_messages(users, messages, guild.name)
-            await self._save_result('Discord', result)
+            await self._save_result('Discord', result, table_name)
 
     def _is_matching_user(self, member, username):
         if username.startswith('<@') and username.endswith('>'):
@@ -354,7 +363,7 @@ class DeepDive(commands.Cog):
         embeds.append(embed)
         return embeds
 
-    async def _save_result(self, platform, result):
+    async def _save_result(self, platform, result, table_name):
         session = self.Session()
         new_result = Result(
             platform=platform,
@@ -373,7 +382,7 @@ class DeepDive(commands.Cog):
         session.commit()
         session.close()
 
-    async def _fetch_results(self):
+    async def _fetch_results(self, table_name):
         session = self.Session()
         results = session.query(Result).all()
         session.close()
