@@ -1,6 +1,5 @@
 import discord
 from redbot.core import commands, Config, bot
-from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text
@@ -142,17 +141,15 @@ class DeepDive(commands.Cog):
         mention_activity = {}
         time_of_day_activity = [0] * 24
 
-        checked_servers = 0
         total_servers = len(guilds)
 
         embed = discord.Embed(color=0x0099ff, title='Checking')
         message = await ctx.author.send(embed=embed)
 
         for guild in guilds:
-            checked_servers += 1
-            embed.description = f'Out of {total_servers} servers, I have checked {checked_servers} servers. (Phase: Searching {guild.name})'
+            embed.description = f'Checking server: {guild.name}'
             embed.clear_fields()
-            embed.add_field(name='Deep Dive Progress', value=f'**Progress:** {self._create_progress_bar(checked_servers, total_servers)}', inline=False)
+            embed.add_field(name='Deep Dive Progress', value=f'**Progress:** {self._create_progress_bar(guilds.index(guild) + 1, total_servers)}', inline=False)
             embed.add_field(name='Message Count', value=f'**Checking:** {message_count}/{total_messages} messages', inline=False)
             embed.add_field(name='Username', value=f'**Query:** {query}', inline=False)
             embed.set_footer(text=guild.name, icon_url=guild.icon.url)
