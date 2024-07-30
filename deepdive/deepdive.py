@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 import asyncio
+from collections import defaultdict
 
 Base = declarative_base()
 
@@ -44,9 +45,11 @@ class DeepDive(commands.Cog):
 
         # Fetch and compile results
         results = await self._fetch_results()
-        embed = self._create_results_embed(username, results)
+        aggregated_results = self._aggregate_results(results)
+        embeds = self._create_results_embeds(username, aggregated_results)
 
-        await ctx.author.send(embed=embed)
+        for embed in embeds:
+            await ctx.author.send(embed=embed)
         await self._close_db()
 
     @commands.command(name="addbot")
@@ -145,11 +148,17 @@ class DeepDive(commands.Cog):
         most_mentioned_users = self._get_most_mentioned_users(messages)
         time_of_day_summary = self._get_time_of_day_summary(messages)
 
-        return (f"{', '.join([str(user) for user in users])}\n\nTrustworthiness: {trustworthiness}\n\n"
-                f"Intent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\n"
-                f"Top Words: {top_words}\n\nAverage Message Length: {avg_message_length}\n\n"
-                f"Most Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\n"
-                f"Activity by Time of Day: {time_of_day_summary}")
+        return {
+            'users': ', '.join([str(user) for user in users]),
+            'trustworthiness': trustworthiness,
+            'intent_summary': intent_summary,
+            'sentiment_summary': sentiment_summary,
+            'top_words': top_words,
+            'avg_message_length': avg_message_length,
+            'most_active_channels': most_active_channels,
+            'most_mentioned_users': most_mentioned_users,
+            'time_of_day_summary': time_of_day_summary
+        }
 
     def _evaluate_trustworthiness(self, messages):
         positive_keywords = ['thanks', 'please', 'help', 'support']
@@ -194,7 +203,7 @@ class DeepDive(commands.Cog):
                 if any(kw in msg.content.lower() for kw in keywords):
                     intents[intent] += 1
 
-        return '\n'.join([f"{intent}: {count}" for intent, count in intents.items()])
+        return intents
 
     def _get_top_words(self, messages):
         tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg.content for msg in messages])
@@ -207,27 +216,88 @@ class DeepDive(commands.Cog):
         return round(total_length / len(messages), 2) if messages else 0
 
     def _get_most_active_channels(self, messages):
-        channel_activity = {}
+        channel_activity = defaultdict(int)
         for msg in messages:
-            channel_activity[msg.channel.name] = channel_activity.get(msg.channel.name, 0) + 1
-        return self._get_top_entries(channel_activity, 5)
+            channel_activity[msg.channel.name] += 1
+        return channel_activity
 
     def _get_most_mentioned_users(self, messages):
-        mention_activity = {}
+        mention_activity = defaultdict(int)
         for msg in messages:
             for mention in msg.mentions:
-                mention_activity[mention.name] = mention_activity.get(mention.name, 0) + 1
-        return self._get_top_entries(mention_activity, 5)
+                mention_activity[mention.name] += 1
+        return mention_activity
 
     def _get_time_of_day_summary(self, messages):
         time_of_day_activity = [0] * 24
         for msg in messages:
             time_of_day_activity[msg.created_at.hour] += 1
-        return '\n'.join([f"{hour}:00 - {hour+1}:00: {count}" for hour, count in enumerate(time_of_day_activity)])
+        return time_of_day_activity
 
-    def _get_top_entries(self, data, limit):
-        sorted_entries = sorted(data.items(), key=lambda item: item[1], reverse=True)
-        return ', '.join([f"{entry[0]}: {entry[1]}" for entry in sorted_entries[:limit]])
+    def _aggregate_results(self, results):
+        aggregated = {
+            'trustworthiness': defaultdict(int),
+            'intent_summary': defaultdict(int),
+            'sentiment_summary': defaultdict(int),
+            'top_words': [],
+            'avg_message_length': 0,
+            'most_active_channels': defaultdict(int),
+            'most_mentioned_users': defaultdict(int),
+            'time_of_day_summary': [0] * 24
+        }
+        total_messages = 0
+
+        for result in results:
+            data = result.result
+            aggregated['trustworthiness'][data['trustworthiness']] += 1
+            for intent, count in data['intent_summary'].items():
+                aggregated['intent_summary'][intent] += count
+            aggregated['sentiment_summary'][data['sentiment_summary']] += 1
+            aggregated['top_words'].extend(data['top_words'].split(', '))
+            aggregated['avg_message_length'] += data['avg_message_length'] * len(data['top_words'])
+            for channel, count in data['most_active_channels'].items():
+                aggregated['most_active_channels'][channel] += count
+            for user, count in data['most_mentioned_users'].items():
+                aggregated['most_mentioned_users'][user] += count
+            for hour, count in enumerate(data['time_of_day_summary']):
+                aggregated['time_of_day_summary'][hour] += count
+            total_messages += len(data['top_words'])
+
+        aggregated['avg_message_length'] /= total_messages if total_messages else 1
+        aggregated['top_words'] = ', '.join(self.tfidf_vectorizer.get_feature_names_out()[:10])
+        return aggregated
+
+    def _create_results_embeds(self, username, aggregated_results):
+        embeds = []
+        embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
+        total_length = 0
+
+        fields = [
+            ("Trustworthiness", ', '.join([f"{k}: {v}" for k, v in aggregated_results['trustworthiness'].items()])),
+            ("Intent Summary", ', '.join([f"{k}: {v}" for k, v in aggregated_results['intent_summary'].items()])),
+            ("Sentiment Summary", ', '.join([f"{k}: {v}" for k, v in aggregated_results['sentiment_summary'].items()])),
+            ("Top Words", aggregated_results['top_words']),
+            ("Average Message Length", str(aggregated_results['avg_message_length'])),
+            ("Most Active Channels", ', '.join([f"{k}: {v}" for k, v in aggregated_results['most_active_channels'].items()])),
+            ("Most Mentioned Users", ', '.join([f"{k}: {v}" for k, v in aggregated_results['most_mentioned_users'].items()])),
+            ("Activity by Time of Day", ', '.join([f"{hour}:00 - {hour+1}:00: {count}" for hour, count in enumerate(aggregated_results['time_of_day_summary'])]))
+        ]
+
+        for name, value in fields:
+            if len(value) > 1024:
+                value = value[:1021] + "..."
+
+            field_length = len(name) + len(value)
+            if total_length + field_length > 6000:
+                embeds.append(embed)
+                embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
+                total_length = 0
+
+            embed.add_field(name=name, value=value, inline=False)
+            total_length += field_length
+
+        embeds.append(embed)
+        return embeds
 
     async def _save_result(self, platform, result):
         session = self.Session()
@@ -245,15 +315,6 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
-
-    def _create_results_embed(self, username, results):
-        embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
-        for result in results:
-            value = result.result
-            if len(value) > 1024:
-                value = value[:1021] + "..."
-            embed.add_field(name=result.platform, value=value, inline=False)
-        return embed
 
 def setup(bot):
     bot.add_cog(DeepDive(bot))
