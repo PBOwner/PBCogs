@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, Config, bot
+from discord.ext import commands
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table, inspect, text
@@ -23,7 +23,7 @@ class Result(Base):
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
 
-    def __init__(self, bot: bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
@@ -387,6 +387,3 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if self.engine:
             self.engine.dispose()
-
-def setup(bot):
-    bot.add_cog(DeepDive(bot))
