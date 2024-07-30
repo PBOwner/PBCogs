@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 import asyncio
 from collections import defaultdict
+import json
 
 Base = declarative_base()
 
@@ -248,7 +249,7 @@ class DeepDive(commands.Cog):
         total_messages = 0
 
         for result in results:
-            data = result.result
+            data = json.loads(result.result)
             aggregated['trustworthiness'][data['trustworthiness']] += 1
             for intent, count in data['intent_summary'].items():
                 aggregated['intent_summary'][intent] += count
@@ -301,7 +302,7 @@ class DeepDive(commands.Cog):
 
     async def _save_result(self, platform, result):
         session = self.Session()
-        new_result = Result(platform=platform, result=result)
+        new_result = Result(platform=platform, result=json.dumps(result))
         session.add(new_result)
         session.commit()
         session.close()
