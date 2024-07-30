@@ -2,6 +2,7 @@ import discord
 from redbot.core import commands
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import requests
+from datetime import datetime
 
 class QOTD(commands.Cog):
     """
@@ -14,22 +15,20 @@ class QOTD(commands.Cog):
         self.scheduler.add_job(self.post_question_of_the_day, 'cron', hour=6)  # Schedule the job to run daily at 6:00 AM
         self.scheduler.start()
         self.question_channels = {}  # Dictionary to store question channels per server
-        self.api_endpoint = "https://quizapi.io/api/v1/questions"  # QuizAPI endpoint
-        self.api_key = None
+        self.api_endpoint = "https://opentdb.com/api.php?amount=1&type=multiple"  # Open Trivia Database endpoint
 
     def get_random_question(self):
         """
-        Fetches a random question from the QuizAPI.
+        Fetches a random question from the Open Trivia Database.
 
         Returns:
             str: The question text, or an error message if no question is available.
         """
-        if self.api_key and self.api_endpoint:
-            headers = {"Authorization": f"Token {self.api_key}"}
-            response = requests.get(self.api_endpoint, headers=headers)
-            if response.status_code == 200:
-                question_data = response.json()
-                question = question_data[0].get("question")  # Assuming the API returns a list of questions
+        response = requests.get(self.api_endpoint)
+        if response.status_code == 200:
+            question_data = response.json()
+            if question_data["results"]:
+                question = question_data["results"][0].get("question")  # Assuming the API returns a list of questions
                 return question
         return "No question available today. Check back tomorrow!"
 
@@ -46,7 +45,8 @@ class QOTD(commands.Cog):
                         embed.add_field(name="Question", value=question)
                         embed.add_field(name="Answer this question in the attached field!", value="Join the thread to share your answer!")
                         message = await channel.send(embed=embed)  # Ensure channel is a discord.TextChannel
-                        await message.create_thread(name="QOTD Answers", content="Welcome to the thread for answering today's Question of the Day!")
+                        thread_name = f"QOTD Answers {datetime.now().strftime('%Y-%m-%d')}"
+                        await message.create_thread(name=thread_name, content="Welcome to the thread for answering today's Question of the Day!")
                 except AttributeError as e:
                     print(f"Error sending message to channel: {e}")
             else:
@@ -90,20 +90,6 @@ class QOTD(commands.Cog):
         """
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please mention a text channel to set as the question channel.", delete_after=5)
-
-    @commands.command()
-    @commands.has_permissions(manage_channels=True)
-    async def setqotdapi(self, ctx, api_key: str):
-        """
-        Sets the API key for the QuizAPI.
-
-        Args:
-            ctx (commands.Context): The context of the command.
-            api_key (str): The API key to use.
-        """
-        self.api_key = api_key
-        await ctx.message.delete()
-        await ctx.send("API key set successfully.", delete_after=5)
 
 def setup(bot):
     """
