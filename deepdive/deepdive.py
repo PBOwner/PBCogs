@@ -249,7 +249,12 @@ class DeepDive(commands.Cog):
         total_messages = 0
 
         for result in results:
-            data = json.loads(result.result)
+            try:
+                data = json.loads(result.result)
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON: {e}")
+                continue
+
             aggregated['trustworthiness'][data['trustworthiness']] += 1
             for intent, count in data['intent_summary'].items():
                 aggregated['intent_summary'][intent] += count
