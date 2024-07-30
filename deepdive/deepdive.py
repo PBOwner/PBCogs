@@ -9,6 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
 from collections import defaultdict
+import tempfile
 
 Base = declarative_base()
 
@@ -33,9 +34,8 @@ class DeepDive(commands.Cog):
     def __init__(self, bot: bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
-        self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
+        self.config.register_global(other_bots=[])
         self.tfidf_vectorizer = TfidfVectorizer()
-        self.db_path = None
         self.engine = None
         self.Session = None
 
@@ -44,10 +44,15 @@ class DeepDive(commands.Cog):
         """Perform a deep dive to find information about a user"""
         progress_message = await ctx.author.send(f"Starting deep dive on {username}...")
 
+        # Create a temporary database file
+        with tempfile.NamedTemporaryFile(suffix=".sqlite", delete=False) as tmp_db:
+            db_path = tmp_db.name
+
         # Setup database
-        self.db_path = await self.config.db_path()
-        self._setup_db()
-        await self._sync_db()
+        self._setup_db(db_path)
+
+        # Drop and recreate the table
+        await self._reset_db()
 
         await progress_message.edit(content=f"Database setup complete for {username}. Notifying other bots...")
 
@@ -64,7 +69,10 @@ class DeepDive(commands.Cog):
 
         for embed in embeds:
             await ctx.author.send(embed=embed)
+
+        # Close and delete the database
         await self._close_db()
+        os.remove(db_path)
 
         await progress_message.edit(content=f"Deep dive complete for {username}.")
 
@@ -86,11 +94,11 @@ class DeepDive(commands.Cog):
                     return
             await ctx.author.send(f"Bot {name} not found.")
 
-    def _setup_db(self):
-        self.engine = create_engine(f'sqlite:///{self.db_path}')
+    def _setup_db(self, db_path):
+        self.engine = create_engine(f'sqlite:///{db_path}')
         self.Session = sessionmaker(bind=self.engine)
 
-    async def _sync_db(self):
+    async def _reset_db(self):
         try:
             # Drop the existing table if it exists
             if self.engine.dialect.has_table(self.engine, Result.__tablename__):
@@ -98,7 +106,7 @@ class DeepDive(commands.Cog):
             # Create the table with the new schema
             Base.metadata.create_all(self.engine)
         except SQLAlchemyError as e:
-            print(f"Error syncing database: {e}")
+            print(f"Error resetting database: {e}")
 
     async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
@@ -372,8 +380,5 @@ class DeepDive(commands.Cog):
         return results
 
     async def _close_db(self):
-        if os.path.exists(self.db_path):
-            os.remove(self.db_path)
-
-def setup(bot):
-    bot.add_cog(DeepDive(bot))
+        if self.engine:
+            self.engine.dispose()
