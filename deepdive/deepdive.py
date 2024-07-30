@@ -73,11 +73,14 @@ class DeepDive(commands.Cog):
     async def _notify_other_bots_sequentially(self, username, ctx):
         other_bots = await self.config.other_bots()
 
+        embed = discord.Embed(title="Progress", color=0x0099ff)
+        message = await ctx.send(embed=embed)
+
         for i, bot_info in enumerate(other_bots):
             progress = self._create_progress_bar(i + 1, len(other_bots))
 
-            embed = discord.Embed(title="Progress", description=f"**Progress:** {progress}", color=0x0099ff)
-            await ctx.send(f"Gathering information from {bot_info['name']}...", embed=embed)
+            embed.description = f"**Progress:** {progress}\nGathering information from {bot_info['name']}..."
+            await message.edit(embed=embed)
 
             bot_client = discord.Client(intents=discord.Intents.default())
 
@@ -134,18 +137,18 @@ class DeepDive(commands.Cog):
         checked_servers = 0
         total_servers = len(guilds)
 
+        embed = discord.Embed(color=0x0099ff, title='Checking')
+        message = await ctx.send(embed=embed)
+
         for guild in guilds:
             checked_servers += 1
-            embed = discord.Embed(
-                color=0x0099ff,
-                title='Checking',
-                description=f'Out of {total_servers} servers, I have checked {checked_servers} servers. (Phase: Searching {guild.name})'
-            )
+            embed.description = f'Out of {total_servers} servers, I have checked {checked_servers} servers. (Phase: Searching {guild.name})'
+            embed.clear_fields()
             embed.add_field(name='Deep Dive Progress', value=f'**Progress:** {self._create_progress_bar(checked_servers, total_servers)}', inline=False)
             embed.add_field(name='Message Count', value=f'**Checking:** {message_count}/{total_messages} messages', inline=False)
             embed.add_field(name='Username', value=f'**Query:** {query}', inline=False)
             embed.set_footer(text=guild.name, icon_url=guild.icon.url)
-            await ctx.send(embed=embed)
+            await message.edit(embed=embed)
 
             try:
                 members = await guild.fetch_members(limit=None).flatten()
@@ -193,11 +196,13 @@ class DeepDive(commands.Cog):
             most_mentioned_users = self._get_top_entries(mention_activity, 5)
             time_of_day_summary = self._get_time_of_day_summary(time_of_day_activity)
 
-            return f"{', '.join(found_users)}\n\nTrustworthiness: {trustworthiness}\n\nIntent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\nTop Words and Phrases: {top_words}\n\nAverage Message Length: {avg_message_length}\n\nMost Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\nActivity by Time of Day: {time_of_day_summary}"
+            result = f"{', '.join(found_users)}\n\nTrustworthiness: {trustworthiness}\n\nIntent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\nTop Words and Phrases: {top_words}\n\nAverage Message Length: {avg_message_length}\n\nMost Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\nActivity by Time of Day: {time_of_day_summary}"
         elif found_users:
-            return f"{', '.join(found_users)}\n\nNo messages found for this user."
+            result = f"{', '.join(found_users)}\n\nNo messages found for this user."
         else:
-            return 'No Discord user found with that query'
+            result = 'No Discord user found with that query'
+
+        await self._save_result('Discord', result)
 
     async def _fetch_user_messages(self, guild, user_id):
         messages = []
