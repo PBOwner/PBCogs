@@ -249,7 +249,10 @@ class DeepDive(commands.Cog):
     def _create_results_embed(self, username, results):
         embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
         for result in results:
-            embed.add_field(name=result.platform, value=result.result, inline=False)
+            value = result.result
+            if len(value) > 1024:
+                value = value[:1021] + "..."
+            embed.add_field(name=result.platform, value=value, inline=False)
         return embed
 
 def setup(bot):
