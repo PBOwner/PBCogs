@@ -4,7 +4,7 @@ from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, Table, MetaData
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, mapper
+from sqlalchemy.orm import sessionmaker, mapper, clear_mappers
 from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
@@ -37,6 +37,7 @@ class DeepDive(commands.Cog):
         self.db_path = None
         self.engine = None
         self.Session = None
+        self.metadata = MetaData()
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -96,9 +97,12 @@ class DeepDive(commands.Cog):
 
     async def _reset_db(self, table_name):
         try:
-            metadata = MetaData(self.engine)
+            # Clear existing mappers
+            clear_mappers()
+
+            # Define the new table
             user_table = Table(
-                table_name, metadata,
+                table_name, self.metadata,
                 Column('id', Integer, primary_key=True),
                 Column('platform', String, nullable=False),
                 Column('users', String, nullable=False),
@@ -112,7 +116,11 @@ class DeepDive(commands.Cog):
                 Column('most_mentioned_users', PickleType, nullable=False),  # Store dict as a pickle
                 Column('time_of_day_summary', PickleType, nullable=False)  # Store list as a pickle
             )
-            metadata.create_all()
+
+            # Create the table
+            self.metadata.create_all(self.engine)
+
+            # Map the Result class to the new table
             mapper(Result, user_table)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
