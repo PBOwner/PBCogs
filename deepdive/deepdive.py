@@ -101,7 +101,7 @@ class DeepDive(commands.Cog):
             await self._search_guild(guild, username, ctx)
 
     async def _search_guild(self, guild, username, ctx):
-        members = await guild.fetch_members(limit=None).flatten()
+        members = [member async for member in guild.fetch_members(limit=None)]
         users = [member for member in members if self._is_matching_user(member, username)]
 
         if users:
