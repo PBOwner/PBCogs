@@ -30,11 +30,8 @@ class ResultBase:
     most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
     time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
 
-def create_result_class(table_name, metadata):
-    class Result(ResultBase, Base):
-        __tablename__ = table_name
-        __table_args__ = {'extend_existing': True}
-    return Result
+def create_result_class(table_name):
+    return type(table_name, (ResultBase, Base), {})
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -136,7 +133,7 @@ class DeepDive(commands.Cog):
             self.metadata.create_all(self.engine)
 
             # Map the Result class to the new table
-            Result = create_result_class(table_name, self.metadata)
+            Result = create_result_class(table_name)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
 
@@ -283,7 +280,12 @@ class DeepDive(commands.Cog):
         return intents
 
     def _get_top_words(self, messages):
-        tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg.content for msg in messages])
+        # Filter out empty messages and messages with only stop words
+        filtered_messages = [msg.content for msg in messages if msg.content.strip() and not all(word in self.tfidf_vectorizer.get_stop_words() for word in msg.content.split())]
+        if not filtered_messages:
+            return 'No significant words found.'
+
+        tfidf_matrix = self.tfidf_vectorizer.fit_transform(filtered_messages)
         feature_names = self.tfidf_vectorizer.get_feature_names_out()
         top_words = [feature_names[i] for i in tfidf_matrix[0].nonzero()[1]]
         return ', '.join(top_words)
@@ -389,7 +391,7 @@ class DeepDive(commands.Cog):
     async def _save_result(self, platform, result, table_name):
         session = self.Session()
         # Create a new Result class for the user table
-        Result = create_result_class(table_name, self.metadata)
+        Result = create_result_class(table_name)
         new_result = Result(
             platform=platform,
             users=result['users'],
@@ -410,7 +412,7 @@ class DeepDive(commands.Cog):
     async def _fetch_results(self, table_name):
         session = self.Session()
         # Create a new Result class for the user table
-        Result = create_result_class(table_name, self.metadata)
+        Result = create_result_class(table_name)
         results = session.query(Result).all()
         session.close()
         return results
