@@ -2,7 +2,7 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData
+from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.exc import SQLAlchemyError
