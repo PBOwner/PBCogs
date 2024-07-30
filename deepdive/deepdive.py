@@ -269,14 +269,9 @@ class DeepDive(commands.Cog):
                 print(f"Error decoding JSON: {e}")
                 continue
 
-            # Debugging: Print the structure of data
-            print(f"data: {data}")
-
-            # Collect user and server information
             aggregated['users'] = data['users']
             aggregated['servers'].update(data['servers'])
 
-            # Check if 'trustworthiness' is in data and is a valid key
             if 'trustworthiness' in data and isinstance(data['trustworthiness'], str):
                 aggregated['trustworthiness'][data['trustworthiness']] += 1
             else:
