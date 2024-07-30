@@ -44,6 +44,7 @@ class DeepDive(commands.Cog):
         self.db_path = None
         self.engine = None
         self.Session = None
+        self.metadata = MetaData()
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -106,11 +107,32 @@ class DeepDive(commands.Cog):
             # Clear existing mappers
             clear_mappers()
 
-            # Create a new Result class for the user table
-            Result = create_result_class(table_name)
+            # Define the new table
+            user_table = Table(
+                table_name, self.metadata,
+                Column('id', Integer, primary_key=True),
+                Column('platform', String, nullable=False),
+                Column('users', String, nullable=False),
+                Column('servers', PickleType, nullable=False),  # Store list as a pickle
+                Column('trustworthiness', String, nullable=False),
+                Column('intent_summary', PickleType, nullable=False),  # Store dict as a pickle
+                Column('sentiment_summary', String, nullable=False),
+                Column('top_words', Text, nullable=False),
+                Column('avg_message_length', Float, nullable=False),
+                Column('most_active_channels', PickleType, nullable=False),  # Store dict as a pickle
+                Column('most_mentioned_users', PickleType, nullable=False),  # Store dict as a pickle
+                Column('time_of_day_summary', PickleType, nullable=False)  # Store list as a pickle
+            )
+
+            # Drop the table if it exists
+            if self.engine.dialect.has_table(self.engine, table_name):
+                user_table.drop(self.engine)
 
             # Create the table
-            Base.metadata.create_all(self.engine)
+            self.metadata.create_all(self.engine)
+
+            # Map the Result class to the new table
+            mapper(Result, user_table)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
 
@@ -392,6 +414,3 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if self.engine:
             self.engine.dispose()
-
-def setup(bot):
-    bot.add_cog(DeepDive(bot))
