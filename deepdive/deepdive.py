@@ -382,3 +382,6 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if self.engine:
             self.engine.dispose()
+
+def setup(bot):
+    bot.add_cog(DeepDive(bot))
