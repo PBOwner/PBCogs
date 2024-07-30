@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands, Config, bot
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
-from sentiment import Sentiment
+from textblob import TextBlob
 from natural import TfIdf
 import sqlite3
 import os
@@ -14,7 +14,6 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
-        self.sentiment = Sentiment()
         self.tfidf = TfIdf()
         self.db_path = self.config.db_path()
 
@@ -243,8 +242,8 @@ class DeepDive(commands.Cog):
     def _analyze_sentiment(self, messages):
         if not messages:
             return 'Not enough data'
-        sentiment_results = [self.sentiment.analyze(message['content']) for message in messages]
-        average_score = sum(result['score'] for result in sentiment_results) / len(sentiment_results)
+        sentiment_results = [TextBlob(message['content']).sentiment for message in messages]
+        average_score = sum(result.polarity for result in sentiment_results) / len(sentiment_results)
 
         if average_score > 0:
             return 'Overall Positive'
