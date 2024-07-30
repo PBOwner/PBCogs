@@ -3,9 +3,19 @@ from redbot.core import commands, Config, bot
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-import sqlite3
+from sqlalchemy import create_engine, Column, Integer, String, Text
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 import os
 import asyncio
+
+Base = declarative_base()
+
+class Result(Base):
+    __tablename__ = 'results'
+    id = Column(Integer, primary_key=True)
+    platform = Column(String, nullable=False)
+    result = Column(Text, nullable=False)
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -15,6 +25,9 @@ class DeepDive(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
         self.tfidf_vectorizer = TfidfVectorizer()
+        self.db_path = None
+        self.engine = None
+        self.Session = None
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -23,6 +36,7 @@ class DeepDive(commands.Cog):
 
         # Retrieve the db_path asynchronously
         self.db_path = await self.config.db_path()
+        self._setup_db()
 
         await self._sync_db()
 
@@ -34,7 +48,7 @@ class DeepDive(commands.Cog):
 
         # Fetch and compile results
         results = await self._fetch_results()
-        combined_results = [{'platform': result[0], 'result': result[1]} for result in results]
+        combined_results = [{'platform': result.platform, 'result': result.result} for result in results]
 
         embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
         for result in combined_results:
@@ -63,12 +77,12 @@ class DeepDive(commands.Cog):
                     return
             await ctx.send(f"Bot {name} not found.")
 
+    def _setup_db(self):
+        self.engine = create_engine(f'sqlite:///{self.db_path}')
+        self.Session = sessionmaker(bind=self.engine)
+
     async def _sync_db(self):
-        conn = sqlite3.connect(self.db_path)
-        c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS Result (platform TEXT, result TEXT)''')
-        conn.commit()
-        conn.close()
+        Base.metadata.create_all(self.engine)
 
     async def _notify_other_bots_sequentially(self, username, ctx):
         other_bots = await self.config.other_bots()
@@ -296,22 +310,21 @@ class DeepDive(commands.Cog):
         return '\n'.join([f"{hour}:00 - {hour+1}:00: {count}" for hour, count in enumerate(activity)])
 
     async def _save_result(self, platform, result):
-        conn = sqlite3.connect(self.db_path)
-        c = conn.cursor()
-        c.execute("INSERT INTO Result (platform, result) VALUES (?, ?)", (platform, result))
-        conn.commit()
-        conn.close()
+        session = self.Session()
+        new_result = Result(platform=platform, result=result)
+        session.add(new_result)
+        session.commit()
+        session.close()
 
     async def _fetch_results(self):
-        conn = sqlite3.connect(self.db_path)
-        c = conn.cursor()
-        c.execute("SELECT * FROM Result")
-        results = c.fetchall()
-        conn.close()
+        session = self.Session()
+        results = session.query(Result).all()
+        session.close()
         return results
 
     async def _close_db(self):
-        os.remove(self.db_path)
+        if os.path.exists(self.db_path):
+            os.remove(self.db_path)
 
 def setup(bot):
     bot.add_cog(DeepDive(bot))
