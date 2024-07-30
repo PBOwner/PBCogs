@@ -31,26 +31,23 @@ class DeepDive(commands.Cog):
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
-        async with ctx.typing():
-            await ctx.author.send(f"Performing a deep dive on {username}...")
+        await ctx.author.send(f"Starting deep dive on {username}...")
 
-            self.db_path = await self.config.db_path()
-            self._setup_db()
-            await self._sync_db()
+        # Setup database
+        self.db_path = await self.config.db_path()
+        self._setup_db()
+        await self._sync_db()
 
-            await self._notify_other_bots_sequentially(username, ctx)
+        # Notify other bots and perform local deep dive
+        await self._notify_other_bots(username, ctx)
+        await self._perform_local_deep_dive(username, ctx)
 
-            await self._perform_deep_dive(username, ctx)
+        # Fetch and compile results
+        results = await self._fetch_results()
+        embed = self._create_results_embed(username, results)
 
-            results = await self._fetch_results()
-            combined_results = [{'platform': result.platform, 'result': result.result} for result in results]
-
-            embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
-            for result in combined_results:
-                embed.add_field(name=result['platform'], value=result['result'], inline=False)
-
-            await ctx.author.send(embed=embed)
-            await self._close_db()
+        await ctx.author.send(embed=embed)
+        await self._close_db()
 
     @commands.command(name="addbot")
     async def add_bot(self, ctx: commands.Context, name: str, token: str):
@@ -77,172 +74,81 @@ class DeepDive(commands.Cog):
     async def _sync_db(self):
         Base.metadata.create_all(self.engine)
 
-    async def _notify_other_bots_sequentially(self, username, ctx):
+    async def _notify_other_bots(self, username, ctx):
         other_bots = await self.config.other_bots()
+        for bot_info in other_bots:
+            await self._notify_bot(bot_info, username, ctx)
 
-        embed = discord.Embed(title="Progress", color=0x0099ff)
-        message = await ctx.author.send(embed=embed)
+    async def _notify_bot(self, bot_info, username, ctx):
+        bot_client = discord.Client(intents=discord.Intents.default())
 
-        for i, bot_info in enumerate(other_bots):
-            progress = self._create_progress_bar(i + 1, len(other_bots))
-
-            embed.description = f"**Progress:** {progress}\nGathering information from {bot_info['name']}..."
-            await message.edit(embed=embed)
-
-            bot_client = discord.Client(intents=discord.Intents.default())
-
-            @bot_client.event
-            async def on_ready():
-                print(f"{bot_info['name']} is ready!")
-                try:
-                    await self._perform_deep_dive(username, ctx, bot_client)
-                except Exception as error:
-                    print(f"Error performing deep dive with {bot_info['name']}: {error}")
-                finally:
-                    await bot_client.close()
-
-            await bot_client.start(bot_info['token'])
-
-    def _create_progress_bar(self, current, total, size=20):
-        progress = round((current / total) * size)
-        empty_progress = size - progress
-        progress_text = '█' * progress
-        empty_progress_text = '░' * empty_progress
-        return f"[{progress_text}{empty_progress_text}] {current}/{total}"
-
-    async def _perform_deep_dive(self, username, ctx, client=None):
-        search_functions = [self._search_discord]
-
-        for search_function in search_functions:
-            platform_name = self._get_platform_name(search_functions.index(search_function))
-            await ctx.author.send(f"Performing a deep dive on {username}... (Searching {platform_name})")
+        @bot_client.event
+        async def on_ready():
             try:
-                result = await search_function(username, ctx, client)
-                await self._save_result(platform_name, result)
-            except Exception as error:
-                print(f"Error performing search function {platform_name}: {error}")
+                await self._perform_local_deep_dive(username, ctx, bot_client)
+            except Exception as e:
+                print(f"Error with bot {bot_info['name']}: {e}")
+            finally:
+                await bot_client.close()
 
-    def _get_platform_name(self, index):
-        if index == 0:
-            return 'Discord'
-        return 'Unknown'
+        await bot_client.start(bot_info['token'])
 
-    async def _search_discord(self, query, ctx, client):
+    async def _perform_local_deep_dive(self, username, ctx, client=None):
         if client is None:
             client = self.bot
 
-        guilds = client.guilds
-        found_users = []
+        for guild in client.guilds:
+            await self._search_guild(guild, username, ctx)
+
+    async def _search_guild(self, guild, username, ctx):
+        members = await guild.fetch_members(limit=None).flatten()
+        users = [member for member in members if self._is_matching_user(member, username)]
+
+        if users:
+            messages = await self._fetch_user_messages(guild, users)
+            result = self._analyze_messages(users, messages)
+            await self._save_result('Discord', result)
+
+    def _is_matching_user(self, member, username):
+        return (member.name.lower() == username.lower() or
+                str(member) == username or
+                member.id == int(username) or
+                member.mention == username)
+
+    async def _fetch_user_messages(self, guild, users):
         messages = []
-        message_count = 0
-        total_message_length = 0
-        total_messages = 0
-        channel_activity = {}
-        mention_activity = {}
-        time_of_day_activity = [0] * 24
-
-        total_servers = len(guilds)
-
-        embed = discord.Embed(color=0x0099ff, title='Checking')
-        message = await ctx.author.send(embed=embed)
-
-        for guild in guilds:
-            embed.description = f'Checking server: {guild.name}'
-            embed.clear_fields()
-            embed.add_field(name='Deep Dive Progress', value=f'**Progress:** {self._create_progress_bar(guilds.index(guild) + 1, total_servers)}', inline=False)
-            embed.add_field(name='Message Count', value=f'**Checking:** {message_count}/{total_messages} messages', inline=False)
-            embed.add_field(name='Username', value=f'**Query:** {query}', inline=False)
-            embed.set_footer(text=guild.name, icon_url=guild.icon.url)
-            await message.edit(embed=embed)
-
-            try:
-                members = await guild.fetch_members(limit=None).flatten()
-                users = [member for member in members if
-                         member.name.lower() == query.lower() or
-                         str(member) == query or
-                         member.id == int(query) or
-                         member.mention == query]
-
-                if not users:
-                    continue
-
-                for user in users:
-                    found_users.append(f"{user} in guild {guild.name}")
-                    user_messages = await self._fetch_user_messages(guild, user.id)
-
-                    if user_messages:
-                        messages.extend(user_messages)
-                        message_count += len(user_messages)
-                        total_messages += len(user_messages)
-                        total_message_length += sum(len(msg['content']) for msg in user_messages)
-
-                        for msg in user_messages:
-                            channel = msg['channel']
-                            channel_activity[channel] = channel_activity.get(channel, 0) + 1
-
-                            for mention in msg['mentions']:
-                                mention_activity[mention] = mention_activity.get(mention, 0) + 1
-
-                            hour = msg['created_at'].hour
-                            time_of_day_activity[hour] += 1
-                            self.tfidf_vectorizer.fit_transform([msg['content']])
-
-            except Exception as error:
-                print(f"Error searching in guild {guild.name}: {error}")
-                continue
-
-        if found_users and messages:
-            trustworthiness = self._evaluate_trustworthiness(messages)
-            intent_summary = self._analyze_intent(messages)
-            sentiment_summary = self._analyze_sentiment(messages)
-            top_words = self._get_top_words(messages)
-            avg_message_length = round(total_message_length / message_count, 2)
-            most_active_channels = self._get_top_entries(channel_activity, 5)
-            most_mentioned_users = self._get_top_entries(mention_activity, 5)
-            time_of_day_summary = self._get_time_of_day_summary(time_of_day_activity)
-
-            result = (f"{', '.join(found_users)}\n\nTrustworthiness: {trustworthiness}\n\n"
-                      f"Intent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\n"
-                      f"Top Words and Phrases: {top_words}\n\nAverage Message Length: {avg_message_length}\n\n"
-                      f"Most Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\n"
-                      f"Activity by Time of Day: {time_of_day_summary}")
-        elif found_users:
-            result = f"{', '.join(found_users)}\n\nNo messages found for this user."
-        else:
-            result = 'No Discord user found with that query'
-
-        return result
-
-    async def _fetch_user_messages(self, guild, user_id):
-        messages = []
-        channels = [channel for channel in guild.channels if channel.type == discord.ChannelType.text]
-
-        for channel in channels:
-            try:
+        for channel in guild.text_channels:
+            for user in users:
                 async for message in channel.history(limit=100):
-                    if message.author.id == user_id:
-                        messages.append({
-                            'content': message.content,
-                            'created_at': message.created_at,
-                            'channel': channel.name,
-                            'mentions': [mention.name for mention in message.mentions]
-                        })
-            except Exception as error:
-                print(f"Error fetching messages in {channel.name}: {error}")
-                continue
-
-            await asyncio.sleep(1)
-
+                    if message.author == user:
+                        messages.append(message)
         return messages
 
-    def _evaluate_trustworthiness(self, messages):
+    def _analyze_messages(self, users, messages):
         if not messages:
-            return 'Not enough data'
+            return f"{', '.join([str(user) for user in users])}\n\nNo messages found."
+
+        trustworthiness = self._evaluate_trustworthiness(messages)
+        intent_summary = self._analyze_intent(messages)
+        sentiment_summary = self._analyze_sentiment(messages)
+        top_words = self._get_top_words(messages)
+        avg_message_length = self._calculate_avg_message_length(messages)
+        most_active_channels = self._get_most_active_channels(messages)
+        most_mentioned_users = self._get_most_mentioned_users(messages)
+        time_of_day_summary = self._get_time_of_day_summary(messages)
+
+        return (f"{', '.join([str(user) for user in users])}\n\nTrustworthiness: {trustworthiness}\n\n"
+                f"Intent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\n"
+                f"Top Words: {top_words}\n\nAverage Message Length: {avg_message_length}\n\n"
+                f"Most Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\n"
+                f"Activity by Time of Day: {time_of_day_summary}")
+
+    def _evaluate_trustworthiness(self, messages):
         positive_keywords = ['thanks', 'please', 'help', 'support']
         negative_keywords = ['spam', 'scam', 'abuse', 'hate']
 
-        positive_score = sum(1 for message in messages if any(keyword in message['content'].lower() for keyword in positive_keywords))
-        negative_score = sum(1 for message in messages if any(keyword in message['content'].lower() for keyword in negative_keywords))
+        positive_score = sum(1 for msg in messages if any(kw in msg.content.lower() for kw in positive_keywords))
+        negative_score = sum(1 for msg in messages if any(kw in msg.content.lower() for kw in negative_keywords))
 
         total_messages = len(messages)
         positive_ratio = positive_score / total_messages
@@ -256,21 +162,17 @@ class DeepDive(commands.Cog):
             return 'Neutral'
 
     def _analyze_sentiment(self, messages):
-        if not messages:
-            return 'Not enough data'
-        sentiment_results = [TextBlob(message['content']).sentiment for message in messages]
-        average_score = sum(result.polarity for result in sentiment_results) / len(sentiment_results)
+        sentiments = [TextBlob(msg.content).sentiment.polarity for msg in messages]
+        avg_sentiment = sum(sentiments) / len(sentiments) if sentiments else 0
 
-        if average_score > 0:
+        if avg_sentiment > 0:
             return 'Overall Positive'
-        elif average_score < 0:
+        elif avg_sentiment < 0:
             return 'Overall Negative'
         else:
             return 'Neutral'
 
     def _analyze_intent(self, messages):
-        if not messages:
-            return 'Not enough data'
         intent_keywords = {
             'seekingHelp': ['help', 'support', 'assist', 'issue', 'problem'],
             'offeringHelp': ['assist', 'help', 'support', 'aid', 'offer'],
@@ -279,30 +181,45 @@ class DeepDive(commands.Cog):
         }
 
         intents = {intent: 0 for intent in intent_keywords}
-
-        for message in messages:
+        for msg in messages:
             for intent, keywords in intent_keywords.items():
-                if any(keyword in message['content'].lower() for keyword in keywords):
+                if any(kw in msg.content.lower() for kw in keywords):
                     intents[intent] += 1
 
-        summary = 'Intentions:\n'
-        for intent, count in intents.items():
-            summary += f"{intent}: {count} messages\n"
-
-        return summary
+        return '\n'.join([f"{intent}: {count}" for intent, count in intents.items()])
 
     def _get_top_words(self, messages):
-        tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg['content'] for msg in messages])
+        tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg.content for msg in messages])
         feature_names = self.tfidf_vectorizer.get_feature_names_out()
         top_words = [feature_names[i] for i in tfidf_matrix[0].nonzero()[1]]
         return ', '.join(top_words)
 
+    def _calculate_avg_message_length(self, messages):
+        total_length = sum(len(msg.content) for msg in messages)
+        return round(total_length / len(messages), 2) if messages else 0
+
+    def _get_most_active_channels(self, messages):
+        channel_activity = {}
+        for msg in messages:
+            channel_activity[msg.channel.name] = channel_activity.get(msg.channel.name, 0) + 1
+        return self._get_top_entries(channel_activity, 5)
+
+    def _get_most_mentioned_users(self, messages):
+        mention_activity = {}
+        for msg in messages:
+            for mention in msg.mentions:
+                mention_activity[mention.name] = mention_activity.get(mention.name, 0) + 1
+        return self._get_top_entries(mention_activity, 5)
+
+    def _get_time_of_day_summary(self, messages):
+        time_of_day_activity = [0] * 24
+        for msg in messages:
+            time_of_day_activity[msg.created_at.hour] += 1
+        return '\n'.join([f"{hour}:00 - {hour+1}:00: {count}" for hour, count in enumerate(time_of_day_activity)])
+
     def _get_top_entries(self, data, limit):
         sorted_entries = sorted(data.items(), key=lambda item: item[1], reverse=True)
         return ', '.join([f"{entry[0]}: {entry[1]}" for entry in sorted_entries[:limit]])
-
-    def _get_time_of_day_summary(self, activity):
-        return '\n'.join([f"{hour}:00 - {hour+1}:00: {count}" for hour, count in enumerate(activity)])
 
     async def _save_result(self, platform, result):
         session = self.Session()
@@ -320,6 +237,12 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if os.path.exists(self.db_path):
             os.remove(self.db_path)
+
+    def _create_results_embed(self, username, results):
+        embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
+        for result in results:
+            embed.add_field(name=result.platform, value=result.result, inline=False)
+        return embed
 
 def setup(bot):
     bot.add_cog(DeepDive(bot))
