@@ -98,4 +98,4 @@ async def setup(bot):
     Args:
         bot (discord.Bot): The bot instance.
     """
-   await bot.add_cog(QOTD(bot))
+    await bot.add_cog(QOTD(bot))
