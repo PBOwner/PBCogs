@@ -2,13 +2,12 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text
+from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 import asyncio
 from collections import defaultdict
-import json
 
 Base = declarative_base()
 
@@ -16,7 +15,16 @@ class Result(Base):
     __tablename__ = 'results'
     id = Column(Integer, primary_key=True)
     platform = Column(String, nullable=False)
-    result = Column(Text, nullable=False)
+    users = Column(String, nullable=False)
+    servers = Column(PickleType, nullable=False)  # Store list as a pickle
+    trustworthiness = Column(String, nullable=False)
+    intent_summary = Column(PickleType, nullable=False)  # Store dict as a pickle
+    sentiment_summary = Column(String, nullable=False)
+    top_words = Column(Text, nullable=False)
+    avg_message_length = Column(Float, nullable=False)
+    most_active_channels = Column(PickleType, nullable=False)  # Store dict as a pickle
+    most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
+    time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -263,32 +271,25 @@ class DeepDive(commands.Cog):
         total_messages = 0
 
         for result in results:
-            try:
-                data = json.loads(result.result)
-            except json.JSONDecodeError as e:
-                print(f"Error decoding JSON: {e}")
-                continue
+            aggregated['users'] = result.users
+            aggregated['servers'].update(result.servers)
 
-            aggregated['users'] = data['users']
-            aggregated['servers'].update(data['servers'])
+            if result.trustworthiness:
+                aggregated['trustworthiness'][result.trustworthiness] += 1
 
-            if 'trustworthiness' in data and isinstance(data['trustworthiness'], str):
-                aggregated['trustworthiness'][data['trustworthiness']] += 1
-            else:
-                print(f"Unexpected data['trustworthiness']: {data.get('trustworthiness')}")
-
-            for intent, count in data['intent_summary'].items():
+            for intent, count in result.intent_summary.items():
                 aggregated['intent_summary'][intent] += count
-            aggregated['sentiment_summary'][data['sentiment_summary']] += 1
-            aggregated['top_words'].extend(data['top_words'].split(', '))
-            aggregated['avg_message_length'] += data['avg_message_length'] * len(data['top_words'])
-            for channel, count in data['most_active_channels'].items():
+
+            aggregated['sentiment_summary'][result.sentiment_summary] += 1
+            aggregated['top_words'].extend(result.top_words.split(', '))
+            aggregated['avg_message_length'] += result.avg_message_length * len(result.top_words.split(', '))
+            for channel, count in result.most_active_channels.items():
                 aggregated['most_active_channels'][channel] += count
-            for user, count in data['most_mentioned_users'].items():
+            for user, count in result.most_mentioned_users.items():
                 aggregated['most_mentioned_users'][user] += count
-            for hour, count in enumerate(data['time_of_day_summary']):
+            for hour, count in enumerate(result.time_of_day_summary):
                 aggregated['time_of_day_summary'][hour] += count
-            total_messages += len(data['top_words'])
+            total_messages += len(result.top_words.split(', '))
 
         aggregated['avg_message_length'] /= total_messages if total_messages else 1
         aggregated['top_words'] = ', '.join(self.tfidf_vectorizer.get_feature_names_out()[:10])
@@ -331,7 +332,19 @@ class DeepDive(commands.Cog):
 
     async def _save_result(self, platform, result):
         session = self.Session()
-        new_result = Result(platform=platform, result=json.dumps(result))
+        new_result = Result(
+            platform=platform,
+            users=result['users'],
+            servers=result['servers'],
+            trustworthiness=result['trustworthiness'],
+            intent_summary=result['intent_summary'],
+            sentiment_summary=result['sentiment_summary'],
+            top_words=result['top_words'],
+            avg_message_length=result['avg_message_length'],
+            most_active_channels=result['most_active_channels'],
+            most_mentioned_users=result['most_mentioned_users'],
+            time_of_day_summary=result['time_of_day_summary']
+        )
         session.add(new_result)
         session.commit()
         session.close()
