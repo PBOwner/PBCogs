@@ -8,7 +8,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 import asyncio
-import tempfile
 
 Base = declarative_base()
 
@@ -33,39 +32,33 @@ class DeepDive(commands.Cog):
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
-        await ctx.send(f"Performing a deep dive on {username}...")
+        async with ctx.typing():
+            await ctx.author.send(f"Performing a deep dive on {username}...")
 
-        # Retrieve the db_path asynchronously
-        self.db_path = await self.config.db_path()
-        self._setup_db()
+            self.db_path = await self.config.db_path()
+            self._setup_db()
+            await self._sync_db()
 
-        await self._sync_db()
+            await self._notify_other_bots_sequentially(username, ctx)
 
-        # Notify other bots to start their process one by one
-        await self._notify_other_bots_sequentially(username, ctx)
+            await self._perform_deep_dive(username, ctx)
 
-        # Perform the local deep dive
-        await self._perform_deep_dive(username, ctx)
+            results = await self._fetch_results()
+            combined_results = [{'platform': result.platform, 'result': result.result} for result in results]
 
-        # Fetch and compile results
-        results = await self._fetch_results()
-        combined_results = [{'platform': result.platform, 'result': result.result} for result in results]
+            embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
+            for result in combined_results:
+                embed.add_field(name=result['platform'], value=result['result'], inline=False)
 
-        embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
-        for result in combined_results:
-            embed.add_field(name=result['platform'], value=result['result'], inline=False)
-
-        await ctx.send(embed=embed)
-
-        # Delete the database file
-        await self._close_db()
+            await ctx.author.send(embed=embed)
+            await self._close_db()
 
     @commands.command(name="addbot")
     async def add_bot(self, ctx: commands.Context, name: str, token: str):
         """Add a bot to the list of other bots"""
         async with self.config.other_bots() as other_bots:
             other_bots.append({'name': name, 'token': token})
-        await ctx.send(f"Bot {name} added successfully.")
+        await ctx.author.send(f"Bot {name} added successfully.")
 
     @commands.command(name="removebot")
     async def remove_bot(self, ctx: commands.Context, name: str):
@@ -74,9 +67,9 @@ class DeepDive(commands.Cog):
             for bot in other_bots:
                 if bot['name'] == name:
                     other_bots.remove(bot)
-                    await ctx.send(f"Bot {name} removed successfully.")
+                    await ctx.author.send(f"Bot {name} removed successfully.")
                     return
-            await ctx.send(f"Bot {name} not found.")
+            await ctx.author.send(f"Bot {name} not found.")
 
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
@@ -89,7 +82,7 @@ class DeepDive(commands.Cog):
         other_bots = await self.config.other_bots()
 
         embed = discord.Embed(title="Progress", color=0x0099ff)
-        message = await ctx.send(embed=embed)
+        message = await ctx.author.send(embed=embed)
 
         for i, bot_info in enumerate(other_bots):
             progress = self._create_progress_bar(i + 1, len(other_bots))
@@ -116,14 +109,14 @@ class DeepDive(commands.Cog):
         empty_progress = size - progress
         progress_text = '█' * progress
         empty_progress_text = '░' * empty_progress
-        return f"`[{progress_text}{empty_progress_text}] {current}/{total}`"
+        return f"[{progress_text}{empty_progress_text}] {current}/{total}"
 
     async def _perform_deep_dive(self, username, ctx, client=None):
         search_functions = [self._search_discord]
 
         for search_function in search_functions:
             platform_name = self._get_platform_name(search_functions.index(search_function))
-            await ctx.send(f"Performing a deep dive on {username}... (Searching {platform_name})")
+            await ctx.author.send(f"Performing a deep dive on {username}... (Searching {platform_name})")
             try:
                 result = await search_function(username, ctx, client)
                 await self._save_result(platform_name, result)
@@ -153,7 +146,7 @@ class DeepDive(commands.Cog):
         total_servers = len(guilds)
 
         embed = discord.Embed(color=0x0099ff, title='Checking')
-        message = await ctx.send(embed=embed)
+        message = await ctx.author.send(embed=embed)
 
         for guild in guilds:
             checked_servers += 1
@@ -193,9 +186,9 @@ class DeepDive(commands.Cog):
                             for mention in msg['mentions']:
                                 mention_activity[mention] = mention_activity.get(mention, 0) + 1
 
-                            hour = msg.created_at.hour
+                            hour = msg['created_at'].hour
                             time_of_day_activity[hour] += 1
-                            self.tfidf_vectorizer.fit_transform([msg.content])
+                            self.tfidf_vectorizer.fit_transform([msg['content']])
 
             except Exception as error:
                 print(f"Error searching in guild {guild.name}: {error}")
@@ -211,13 +204,17 @@ class DeepDive(commands.Cog):
             most_mentioned_users = self._get_top_entries(mention_activity, 5)
             time_of_day_summary = self._get_time_of_day_summary(time_of_day_activity)
 
-            result = f"{', '.join(found_users)}\n\nTrustworthiness: {trustworthiness}\n\nIntent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\nTop Words and Phrases: {top_words}\n\nAverage Message Length: {avg_message_length}\n\nMost Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\nActivity by Time of Day: {time_of_day_summary}"
+            result = (f"{', '.join(found_users)}\n\nTrustworthiness: {trustworthiness}\n\n"
+                      f"Intent Summary: {intent_summary}\n\nSentiment Summary: {sentiment_summary}\n\n"
+                      f"Top Words and Phrases: {top_words}\n\nAverage Message Length: {avg_message_length}\n\n"
+                      f"Most Active Channels: {most_active_channels}\n\nMost Mentioned Users: {most_mentioned_users}\n\n"
+                      f"Activity by Time of Day: {time_of_day_summary}")
         elif found_users:
             result = f"{', '.join(found_users)}\n\nNo messages found for this user."
         else:
             result = 'No Discord user found with that query'
 
-        await self._save_result('Discord', result)
+        return result
 
     async def _fetch_user_messages(self, guild, user_id):
         messages = []
