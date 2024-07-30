@@ -29,7 +29,6 @@ class DeepDive(commands.Cog):
         self.db_path = None
         self.engine = None
         self.Session = None
-        self.temp_file = tempfile.NamedTemporaryFile(delete=False)
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -60,9 +59,6 @@ class DeepDive(commands.Cog):
 
         # Delete the database file
         await self._close_db()
-
-        # Delete the temporary file
-        os.remove(self.temp_file.name)
 
     @commands.command(name="addbot")
     async def add_bot(self, ctx: commands.Context, name: str, token: str):
@@ -197,9 +193,9 @@ class DeepDive(commands.Cog):
                             for mention in msg['mentions']:
                                 mention_activity[mention] = mention_activity.get(mention, 0) + 1
 
-                            hour = msg['created_at'].hour
+                            hour = msg.created_at.hour
                             time_of_day_activity[hour] += 1
-                            self.tfidf_vectorizer.fit_transform([msg['content']])
+                            self.tfidf_vectorizer.fit_transform([msg.content])
 
             except Exception as error:
                 print(f"Error searching in guild {guild.name}: {error}")
