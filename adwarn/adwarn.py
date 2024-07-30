@@ -9,9 +9,8 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, tholds={})
+        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={})
         self.config.register_member(warnings=[], untimeout_time=None)
-        self.config.register_user(warnings_issued=0)  # Track warnings issued by each moderator
 
         # Clear the current thresholds
         self.bot.loop.create_task(self.clear_current_thresholds())
@@ -41,9 +40,24 @@ class AdWarn(commands.Cog):
                 })
                 await self.config.member(user).warnings.set(warnings)
 
-                # Increment the count of warnings issued by the moderator
-                warnings_issued = await self.config.user(ctx.author).warnings_issued()
-                await self.config.user(ctx.author).warnings_issued.set(warnings_issued + 1)
+                # Increment the count of warnings issued by the moderator for the current server
+                warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
+                if str(ctx.author.id) not in warnings_issued:
+                    warnings_issued[str(ctx.author.id)] = 0
+                warnings_issued[str(ctx.author.id)] += 1
+                await self.config.guild(ctx.guild).warnings_issued.set(warnings_issued)
+
+                # Store the details of the warning issued by the moderator
+                mod_warnings = await self.config.guild(ctx.guild).mod_warnings()
+                if str(ctx.author.id) not in mod_warnings:
+                    mod_warnings[str(ctx.author.id)] = []
+                mod_warnings[str(ctx.author.id)].append({
+                    "user": user.id,
+                    "reason": reason,
+                    "time": warning_time,
+                    "channel": ctx.channel.id
+                })
+                await self.config.guild(ctx.guild).mod_warnings.set(mod_warnings)
 
                 # Create the embed message
                 embed = discord.Embed(title="You were warned!", color=discord.Color.red())
@@ -353,90 +367,12 @@ class AdWarn(commands.Cog):
             )
             await ctx.send(embed=error_embed)
 
-    @commands.group()
-    @commands.guild_only()
-    @commands.has_permissions(administrator=True)
-    async def warnset(self, ctx):
-        """Settings for the warning system."""
-        pass
-
-    @warnset.command()
-    async def channel(self, ctx, channel: discord.TextChannel):
-        """Set the default channel for warnings."""
-        await self.config.guild(ctx.guild).warn_channel.set(channel.id)
-        embed = discord.Embed(
-            title="Warning Channel Set",
-            description=f"Warning channel has been set to {channel.mention}",
-            color=discord.Color.green()
-        )
-        await ctx.send(embed=embed)
-
-    @warnset.command()
-    async def show(self, ctx):
-        """Show the current warning channel and thresholds."""
-        channel_id = await self.config.guild(ctx.guild).warn_channel()
-        tholds = await self.config.guild(ctx.guild).tholds()
-
-        embed = discord.Embed(
-            title="Warning System Configuration",
-            color=discord.Color.blue()
-        )
-
-        if channel_id:
-            channel = self.bot.get_channel(channel_id)
-            embed.add_field(name="Current Warning Channel", value=channel.mention, inline=False)
-        else:
-            embed.add_field(name="Current Warning Channel", value="Not set", inline=False)
-
-        if tholds:
-            threshold_list = "\n".join([f"{threshold_id}: {threshold['count']} warnings -> {threshold['action']}" for threshold_id, threshold in tholds.items()])
-            embed.add_field(name="Warning Thresholds", value=threshold_list, inline=False)
-        else:
-            embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
-
-        await ctx.send(embed=embed)
-
-    @warnset.command()
-    async def threshold(self, ctx, warning_count: int, action: str, duration: str = None):
-        """Set an action for a specific warning count threshold."""
-        valid_actions = ["kick", "ban", "mute"]  # Add more actions as needed
-        if action not in valid_actions and not action.startswith("mute"):
-            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <duration>'")
-            return
-
-        if action == "mute" and duration:
-            parsed_duration = self.parse_duration(duration)
-            if parsed_duration is None:
-                await ctx.send("Invalid duration format. Use 'Xm' for minutes or 'Xh' for hours.")
-                return
-            action = f"mute {parsed_duration}"
-
-        tholds = await self.config.guild(ctx.guild).tholds()
-        threshold_id = str(uuid.uuid4())
-        tholds[threshold_id] = {
-            "count": warning_count,
-            "action": action
-        }
-        await self.config.guild(ctx.guild).tholds.set(tholds)
-        await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
-
-    @warnset.command()
-    async def delthreshold(self, ctx, threshold_id: str):
-        """Delete a specific warning count threshold by its UUID."""
-        tholds = await self.config.guild(ctx.guild).tholds()
-        if threshold_id in tholds:
-            del tholds[threshold_id]
-            await self.config.guild(ctx.guild).tholds.set(tholds)
-            await ctx.send(f"Deleted threshold with ID {threshold_id}.")
-        else:
-            await ctx.send(f"No threshold set with ID {threshold_id}.")
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def topwarners(self, ctx):
-        """Show the top 5 users who have issued the most warnings."""
-        users_data = await self.config.all_users()
-        sorted_users = sorted(users_data.items(), key=lambda item: item[1]['warnings_issued'], reverse=True)
+        """Show the top 5 users who have issued the most warnings in the current server."""
+        warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
+        sorted_users = sorted(warnings_issued.items(), key=lambda item: item[1], reverse=True)
 
         embed = discord.Embed(
             title="Top 5 Warners",
@@ -444,11 +380,64 @@ class AdWarn(commands.Cog):
         )
 
         if sorted_users:
-            for rank, (user_id, data) in enumerate(sorted_users[:5], start=1):
-                user = self.bot.get_user(user_id)
+            for rank, (user_id, count) in enumerate(sorted_users[:5], start=1):
+                user = self.bot.get_user(int(user_id))
                 embed.add_field(
                     name=f"{rank}. {user} (ID: {user_id})",
-                    value=f"Warnings Issued: {data['warnings_issued']}",
+                    value=f"Warnings Issued: {count}",
+                    inline=False
+                )
+        else:
+            embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
+
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def modwarns(self, ctx, moderator: discord.Member):
+        """Show the number of warnings issued by a moderator and who they have warned in the current server."""
+        mod_warnings = await self.config.guild(ctx.guild).mod_warnings()
+        if str(moderator.id) in mod_warnings:
+            warnings = mod_warnings[str(moderator.id)]
+            embed = discord.Embed(
+                title=f"Warnings Issued by {moderator}",
+                color=discord.Color.blue()
+            )
+            embed.add_field(name="Total Warnings Issued", value=len(warnings), inline=False)
+
+            for warning in warnings:
+                warned_user = self.bot.get_user(warning["user"])
+                embed.add_field(
+                    name=f"User Warned: {warned_user} (ID: {warning['user']})",
+                    value=f"Reason: {warning['reason']}\nTime: {warning['time']}\nChannel: <#{warning['channel']}>",
+                    inline=False
+                )
+        else:
+            embed = discord.Embed(
+                title=f"{moderator} has not issued any warnings.",
+                color=discord.Color.red()
+            )
+
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def adboard(self, ctx):
+        """Show all users who have issued warnings and how many they have issued."""
+        warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
+        sorted_users = sorted(warnings_issued.items(), key=lambda item: item[1], reverse=True)
+
+        embed = discord.Embed(
+            title="AdBoard - Warning Issuers",
+            color=discord.Color.purple()
+        )
+
+        if sorted_users:
+            for rank, (user_id, count) in enumerate(sorted_users, start=1):
+                user = self.bot.get_user(int(user_id))
+                embed.add_field(
+                    name=f"{rank}. {user} (ID: {user_id})",
+                    value=f"Warnings Issued: {count}",
                     inline=False
                 )
         else:
