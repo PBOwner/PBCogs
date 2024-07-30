@@ -4,7 +4,7 @@ from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, Table, MetaData
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
-from sqlalchemy.orm import sessionmaker, mapper, clear_mappers
+from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
@@ -30,8 +30,11 @@ class ResultBase:
     most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
     time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
 
-def create_result_class(table_name):
-    return type(table_name, (ResultBase, Base), {})
+def create_result_class(table_name, metadata):
+    class Result(ResultBase, Base):
+        __tablename__ = table_name
+        __table_args__ = {'extend_existing': True}
+    return Result
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -104,8 +107,9 @@ class DeepDive(commands.Cog):
 
     async def _reset_db(self, table_name):
         try:
-            # Clear existing mappers
+            # Clear existing mappers and metadata
             clear_mappers()
+            self.metadata = MetaData()
 
             # Define the new table
             user_table = Table(
@@ -132,7 +136,7 @@ class DeepDive(commands.Cog):
             self.metadata.create_all(self.engine)
 
             # Map the Result class to the new table
-            mapper(Result, user_table)
+            Result = create_result_class(table_name, self.metadata)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
 
@@ -385,7 +389,7 @@ class DeepDive(commands.Cog):
     async def _save_result(self, platform, result, table_name):
         session = self.Session()
         # Create a new Result class for the user table
-        Result = create_result_class(table_name)
+        Result = create_result_class(table_name, self.metadata)
         new_result = Result(
             platform=platform,
             users=result['users'],
@@ -406,7 +410,7 @@ class DeepDive(commands.Cog):
     async def _fetch_results(self, table_name):
         session = self.Session()
         # Create a new Result class for the user table
-        Result = create_result_class(table_name)
+        Result = create_result_class(table_name, self.metadata)
         results = session.query(Result).all()
         session.close()
         return results
@@ -414,3 +418,6 @@ class DeepDive(commands.Cog):
     async def _close_db(self):
         if self.engine:
             self.engine.dispose()
+
+def setup(bot):
+    bot.add_cog(DeepDive(bot))
