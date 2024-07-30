@@ -110,7 +110,7 @@ class DeepDive(commands.Cog):
 
         if users:
             messages = await self._fetch_user_messages(guild, users)
-            result = self._analyze_messages(users, messages)
+            result = self._analyze_messages(users, messages, guild.name)
             await self._save_result('Discord', result)
 
     def _is_matching_user(self, member, username):
@@ -136,9 +136,20 @@ class DeepDive(commands.Cog):
                         messages.append(message)
         return messages
 
-    def _analyze_messages(self, users, messages):
+    def _analyze_messages(self, users, messages, guild_name):
         if not messages:
-            return f"{', '.join([str(user) for user in users])}\n\nNo messages found."
+            return {
+                'users': ', '.join([str(user) for user in users]),
+                'servers': [guild_name],
+                'trustworthiness': 'Neutral',
+                'intent_summary': {},
+                'sentiment_summary': 'Neutral',
+                'top_words': '',
+                'avg_message_length': 0,
+                'most_active_channels': {},
+                'most_mentioned_users': {},
+                'time_of_day_summary': [0] * 24
+            }
 
         trustworthiness = self._evaluate_trustworthiness(messages)
         intent_summary = self._analyze_intent(messages)
@@ -151,6 +162,7 @@ class DeepDive(commands.Cog):
 
         return {
             'users': ', '.join([str(user) for user in users]),
+            'servers': [guild_name],
             'trustworthiness': trustworthiness,
             'intent_summary': intent_summary,
             'sentiment_summary': sentiment_summary,
@@ -237,6 +249,8 @@ class DeepDive(commands.Cog):
 
     def _aggregate_results(self, results):
         aggregated = {
+            'users': '',
+            'servers': set(),
             'trustworthiness': defaultdict(int),
             'intent_summary': defaultdict(int),
             'sentiment_summary': defaultdict(int),
@@ -255,7 +269,19 @@ class DeepDive(commands.Cog):
                 print(f"Error decoding JSON: {e}")
                 continue
 
-            aggregated['trustworthiness'][data['trustworthiness']] += 1
+            # Debugging: Print the structure of data
+            print(f"data: {data}")
+
+            # Collect user and server information
+            aggregated['users'] = data['users']
+            aggregated['servers'].update(data['servers'])
+
+            # Check if 'trustworthiness' is in data and is a valid key
+            if 'trustworthiness' in data and isinstance(data['trustworthiness'], str):
+                aggregated['trustworthiness'][data['trustworthiness']] += 1
+            else:
+                print(f"Unexpected data['trustworthiness']: {data.get('trustworthiness')}")
+
             for intent, count in data['intent_summary'].items():
                 aggregated['intent_summary'][intent] += count
             aggregated['sentiment_summary'][data['sentiment_summary']] += 1
@@ -271,6 +297,7 @@ class DeepDive(commands.Cog):
 
         aggregated['avg_message_length'] /= total_messages if total_messages else 1
         aggregated['top_words'] = ', '.join(self.tfidf_vectorizer.get_feature_names_out()[:10])
+        aggregated['servers'] = ', '.join(aggregated['servers'])
         return aggregated
 
     def _create_results_embeds(self, username, aggregated_results):
@@ -279,6 +306,8 @@ class DeepDive(commands.Cog):
         total_length = 0
 
         fields = [
+            ("Users", aggregated_results['users']),
+            ("Servers", aggregated_results['servers']),
             ("Trustworthiness", ', '.join([f"{k}: {v}" for k, v in aggregated_results['trustworthiness'].items()])),
             ("Intent Summary", ', '.join([f"{k}: {v}" for k, v in aggregated_results['intent_summary'].items()])),
             ("Sentiment Summary", ', '.join([f"{k}: {v}" for k, v in aggregated_results['sentiment_summary'].items()])),
