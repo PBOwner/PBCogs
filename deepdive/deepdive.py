@@ -3,26 +3,22 @@ from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table
-from sqlalchemy.ext.declarative import declarative_base, declared_attr
-from sqlalchemy.orm import sessionmaker, clear_mappers
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
 import json
+from collections import defaultdict
 
 Base = declarative_base()
 
-class ResultBase:
-    @declared_attr
-    def __tablename__(cls):
-        return cls.__name__.lower()
-
+class Result(Base):
+    __tablename__ = 'results'
     id = Column(Integer, primary_key=True)
+    user_id = Column(String, nullable=False)
     platform = Column(String, nullable=False)
     result = Column(Text, nullable=False)
-
-def create_result_class(table_name):
-    return type(table_name, (ResultBase, Base), {})
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -46,20 +42,16 @@ class DeepDive(commands.Cog):
         self.db_path = await self.config.db_path()
         self._setup_db()
 
-        # Create a new table for the user
-        user_table_name = f'results_{username.replace(" ", "_")}'
-        await self._reset_db(user_table_name)
-
         await progress_message.edit(content=f"Database setup complete for {username}. Notifying other bots...")
 
         # Notify other bots and perform local deep dive
         await self._notify_other_bots(username, ctx, progress_message)
-        await self._perform_local_deep_dive(username, ctx, progress_message, user_table_name)
+        await self._perform_local_deep_dive(username, ctx, progress_message)
 
         await progress_message.edit(content=f"Deep dive in progress for {username}. Fetching results...")
 
         # Fetch and compile results
-        results = await self._fetch_results(user_table_name)
+        results = await self._fetch_results(username)
         aggregated_results = self._aggregate_results(results)
         embeds = self._create_results_embeds(username, aggregated_results)
 
@@ -92,32 +84,7 @@ class DeepDive(commands.Cog):
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
         self.Session = sessionmaker(bind=self.engine)
-
-    async def _reset_db(self, table_name):
-        try:
-            # Clear existing mappers and metadata
-            clear_mappers()
-            self.metadata = MetaData()
-
-            # Define the new table
-            user_table = Table(
-                table_name, self.metadata,
-                Column('id', Integer, primary_key=True),
-                Column('platform', String, nullable=False),
-                Column('result', Text, nullable=False)
-            )
-
-            # Drop the table if it exists
-            if self.engine.dialect.has_table(self.engine, table_name):
-                user_table.drop(self.engine)
-
-            # Create the table
-            self.metadata.create_all(self.engine)
-
-            # Map the Result class to the new table
-            Result = create_result_class(table_name)
-        except SQLAlchemyError as e:
-            print(f"Error resetting database: {e}")
+        Base.metadata.create_all(self.engine)
 
     async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
@@ -151,24 +118,24 @@ class DeepDive(commands.Cog):
 
         return f"[{progress_text}{empty_progress_text}] {current}/{total}"
 
-    async def _perform_local_deep_dive(self, username, ctx, progress_message, table_name, client=None):
+    async def _perform_local_deep_dive(self, username, ctx, progress_message, client=None):
         if client is None:
             client = self.bot
 
         total_guilds = len(client.guilds)
         for i, guild in enumerate(client.guilds, start=1):
-            await self._search_guild(guild, username, ctx, table_name)
+            await self._search_guild(guild, username, ctx)
             progress = self._create_progress_bar(i, total_guilds)
             await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...\n**Progress:** {progress}")
 
-    async def _search_guild(self, guild, username, ctx, table_name):
+    async def _search_guild(self, guild, username, ctx):
         members = [member async for member in guild.fetch_members(limit=None)]
         users = [member for member in members if self._is_matching_user(member, username)]
 
         if users:
             messages = await self._fetch_user_messages(guild, users)
             result = self._analyze_messages(users, messages, guild.name)
-            await self._save_result('Discord', result, table_name)
+            await self._save_result(users[0].id, 'Discord', result)
 
     def _is_matching_user(self, member, username):
         if username.startswith('<@') and username.endswith('>'):
@@ -276,7 +243,6 @@ class DeepDive(commands.Cog):
         return intents
 
     def _get_top_words(self, messages):
-        # Filter out empty messages and messages with only stop words
         filtered_messages = [msg.content for msg in messages if msg.content.strip() and not all(word in self.tfidf_vectorizer.get_stop_words() for word in msg.content.split())]
         if not filtered_messages:
             return 'No significant words found.'
@@ -385,11 +351,10 @@ class DeepDive(commands.Cog):
         embeds.append(embed)
         return embeds
 
-    async def _save_result(self, platform, result, table_name):
+    async def _save_result(self, user_id, platform, result):
         session = self.Session()
-        # Create a new Result class for the user table
-        Result = create_result_class(table_name)
         new_result = Result(
+            user_id=user_id,
             platform=platform,
             result=result
         )
@@ -397,11 +362,9 @@ class DeepDive(commands.Cog):
         session.commit()
         session.close()
 
-    async def _fetch_results(self, table_name):
+    async def _fetch_results(self, username):
         session = self.Session()
-        # Create a new Result class for the user table
-        Result = create_result_class(table_name)
-        results = session.query(Result).all()
+        results = session.query(Result).filter(Result.user_id == username).all()
         session.close()
         return results
 
