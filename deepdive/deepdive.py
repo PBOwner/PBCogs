@@ -2,13 +2,13 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, Table, MetaData
+from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.exc import SQLAlchemyError
 import os
 import asyncio
-from collections import defaultdict
+import json
 
 Base = declarative_base()
 
@@ -19,16 +19,7 @@ class ResultBase:
 
     id = Column(Integer, primary_key=True)
     platform = Column(String, nullable=False)
-    users = Column(String, nullable=False)
-    servers = Column(PickleType, nullable=False)  # Store list as a pickle
-    trustworthiness = Column(String, nullable=False)
-    intent_summary = Column(PickleType, nullable=False)  # Store dict as a pickle
-    sentiment_summary = Column(String, nullable=False)
-    top_words = Column(Text, nullable=False)
-    avg_message_length = Column(Float, nullable=False)
-    most_active_channels = Column(PickleType, nullable=False)  # Store dict as a pickle
-    most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
-    time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
+    result = Column(Text, nullable=False)
 
 def create_result_class(table_name):
     return type(table_name, (ResultBase, Base), {})
@@ -113,16 +104,7 @@ class DeepDive(commands.Cog):
                 table_name, self.metadata,
                 Column('id', Integer, primary_key=True),
                 Column('platform', String, nullable=False),
-                Column('users', String, nullable=False),
-                Column('servers', PickleType, nullable=False),  # Store list as a pickle
-                Column('trustworthiness', String, nullable=False),
-                Column('intent_summary', PickleType, nullable=False),  # Store dict as a pickle
-                Column('sentiment_summary', String, nullable=False),
-                Column('top_words', Text, nullable=False),
-                Column('avg_message_length', Float, nullable=False),
-                Column('most_active_channels', PickleType, nullable=False),  # Store dict as a pickle
-                Column('most_mentioned_users', PickleType, nullable=False),  # Store dict as a pickle
-                Column('time_of_day_summary', PickleType, nullable=False)  # Store list as a pickle
+                Column('result', Text, nullable=False)
             )
 
             # Drop the table if it exists
@@ -164,8 +146,8 @@ class DeepDive(commands.Cog):
         progress = round((current / total) * size)
         empty_progress = size - progress
 
-        progress_text = '█' * progress
-        empty_progress_text = '░' * empty_progress
+        progress_text = '' * progress
+        empty_progress_text = '' * empty_progress
 
         return f"[{progress_text}{empty_progress_text}] {current}/{total}"
 
@@ -213,7 +195,7 @@ class DeepDive(commands.Cog):
 
     def _analyze_messages(self, users, messages, guild_name):
         if not messages:
-            return {
+            return json.dumps({
                 'users': ', '.join([str(user) for user in users]),
                 'servers': [guild_name],
                 'trustworthiness': 'Neutral',
@@ -224,7 +206,7 @@ class DeepDive(commands.Cog):
                 'most_active_channels': {},
                 'most_mentioned_users': {},
                 'time_of_day_summary': [0] * 24
-            }
+            })
 
         trustworthiness = self._evaluate_trustworthiness(messages)
         intent_summary = self._analyze_intent(messages)
@@ -235,7 +217,7 @@ class DeepDive(commands.Cog):
         most_mentioned_users = self._get_most_mentioned_users(messages)
         time_of_day_summary = self._get_time_of_day_summary(messages)
 
-        return {
+        return json.dumps({
             'users': ', '.join([str(user) for user in users]),
             'servers': [guild_name],
             'trustworthiness': trustworthiness,
@@ -246,7 +228,7 @@ class DeepDive(commands.Cog):
             'most_active_channels': most_active_channels,
             'most_mentioned_users': most_mentioned_users,
             'time_of_day_summary': time_of_day_summary
-        }
+        })
 
     def _evaluate_trustworthiness(self, messages):
         positive_keywords = ['thanks', 'please', 'help', 'support']
@@ -343,25 +325,26 @@ class DeepDive(commands.Cog):
         total_messages = 0
 
         for result in results:
-            aggregated['users'] = result.users
-            aggregated['servers'].update(result.servers)
+            result_data = json.loads(result.result)
+            aggregated['users'] = result_data['users']
+            aggregated['servers'].update(result_data['servers'])
 
-            if result.trustworthiness:
-                aggregated['trustworthiness'][result.trustworthiness] += 1
+            if result_data['trustworthiness']:
+                aggregated['trustworthiness'][result_data['trustworthiness']] += 1
 
-            for intent, count in result.intent_summary.items():
+            for intent, count in result_data['intent_summary'].items():
                 aggregated['intent_summary'][intent] += count
 
-            aggregated['sentiment_summary'][result.sentiment_summary] += 1
-            aggregated['top_words'].extend(result.top_words.split(', '))
-            aggregated['avg_message_length'] += result.avg_message_length * len(result.top_words.split(', '))
-            for channel, count in result.most_active_channels.items():
+            aggregated['sentiment_summary'][result_data['sentiment_summary']] += 1
+            aggregated['top_words'].extend(result_data['top_words'].split(', '))
+            aggregated['avg_message_length'] += result_data['avg_message_length'] * len(result_data['top_words'].split(', '))
+            for channel, count in result_data['most_active_channels'].items():
                 aggregated['most_active_channels'][channel] += count
-            for user, count in result.most_mentioned_users.items():
+            for user, count in result_data['most_mentioned_users'].items():
                 aggregated['most_mentioned_users'][user] += count
-            for hour, count in enumerate(result.time_of_day_summary):
+            for hour, count in enumerate(result_data['time_of_day_summary']):
                 aggregated['time_of_day_summary'][hour] += count
-            total_messages += len(result.top_words.split(', '))
+            total_messages += len(result_data['top_words'].split(', '))
 
         aggregated['avg_message_length'] /= total_messages if total_messages else 1
         aggregated['top_words'] = ', '.join(self.tfidf_vectorizer.get_feature_names_out()[:10])
@@ -408,16 +391,7 @@ class DeepDive(commands.Cog):
         Result = create_result_class(table_name)
         new_result = Result(
             platform=platform,
-            users=result['users'],
-            servers=result['servers'],
-            trustworthiness=result['trustworthiness'],
-            intent_summary=result['intent_summary'],
-            sentiment_summary=result['sentiment_summary'],
-            top_words=result['top_words'],
-            avg_message_length=result['avg_message_length'],
-            most_active_channels=result['most_active_channels'],
-            most_mentioned_users=result['most_mentioned_users'],
-            time_of_day_summary=result['time_of_day_summary']
+            result=result
         )
         session.add(new_result)
         session.commit()
