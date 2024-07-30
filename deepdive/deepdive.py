@@ -2,7 +2,7 @@ import discord
 from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table, inspect
+from sqlalchemy import create_engine, Column, Integer, String, Text, MetaData, Table, inspect, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
@@ -91,11 +91,11 @@ class DeepDive(commands.Cog):
         else:
             # Check if the existing table has the correct schema
             with self.engine.connect() as conn:
-                result = conn.execute("PRAGMA table_info(results)").fetchall()
+                result = conn.execute(text("PRAGMA table_info(results)")).fetchall()
                 columns = [row[1] for row in result]
                 if 'user_id' not in columns:
                     # Drop the existing table and recreate it
-                    conn.execute("DROP TABLE results")
+                    conn.execute(text("DROP TABLE results"))
                     Base.metadata.create_all(self.engine)
 
     async def _notify_other_bots(self, username, ctx, progress_message):
