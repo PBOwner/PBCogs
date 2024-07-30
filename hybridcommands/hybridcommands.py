@@ -8,7 +8,7 @@ class HybridCommands(red_commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.onetrueslash = self.bot.get_cog("OneTrueSlash")
+        self.onetrueslash = self.bot.get_cog("onetrueslash")
 
     @red_commands.is_owner()
     @red_commands.command()
