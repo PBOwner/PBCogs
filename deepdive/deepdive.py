@@ -41,16 +41,20 @@ class DeepDive(commands.Cog):
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
-        await ctx.author.send(f"Starting deep dive on {username}...")
+        progress_message = await ctx.send(f"Starting deep dive on {username}...")
 
         # Setup database
         self.db_path = await self.config.db_path()
         self._setup_db()
         await self._sync_db()
 
+        await progress_message.edit(content=f"Database setup complete for {username}. Notifying other bots...")
+
         # Notify other bots and perform local deep dive
-        await self._notify_other_bots(username, ctx)
-        await self._perform_local_deep_dive(username, ctx)
+        await self._notify_other_bots(username, ctx, progress_message)
+        await self._perform_local_deep_dive(username, ctx, progress_message)
+
+        await progress_message.edit(content=f"Deep dive in progress for {username}. Fetching results...")
 
         # Fetch and compile results
         results = await self._fetch_results()
@@ -58,15 +62,17 @@ class DeepDive(commands.Cog):
         embeds = self._create_results_embeds(username, aggregated_results)
 
         for embed in embeds:
-            await ctx.author.send(embed=embed)
+            await ctx.send(embed=embed)
         await self._close_db()
+
+        await progress_message.edit(content=f"Deep dive complete for {username}.")
 
     @commands.command(name="addbot")
     async def add_bot(self, ctx: commands.Context, name: str, token: str):
         """Add a bot to the list of other bots"""
         async with self.config.other_bots() as other_bots:
             other_bots.append({'name': name, 'token': token})
-        await ctx.author.send(f"Bot {name} added successfully.")
+        await ctx.send(f"Bot {name} added successfully.")
 
     @commands.command(name="removebot")
     async def remove_bot(self, ctx: commands.Context, name: str):
@@ -75,42 +81,45 @@ class DeepDive(commands.Cog):
             for bot in other_bots:
                 if bot['name'] == name:
                     other_bots.remove(bot)
-                    await ctx.author.send(f"Bot {name} removed successfully.")
+                    await ctx.send(f"Bot {name} removed successfully.")
                     return
-            await ctx.author.send(f"Bot {name} not found.")
+            await ctx.send(f"Bot {name} not found.")
 
     def _setup_db(self):
         self.engine = create_engine(f'sqlite:///{self.db_path}')
         self.Session = sessionmaker(bind=self.engine)
 
     async def _sync_db(self):
+        # Ensure all tables exist
         Base.metadata.create_all(self.engine)
 
-    async def _notify_other_bots(self, username, ctx):
+    async def _notify_other_bots(self, username, ctx, progress_message):
         other_bots = await self.config.other_bots()
         for bot_info in other_bots:
-            await self._notify_bot(bot_info, username, ctx)
+            await self._notify_bot(bot_info, username, ctx, progress_message)
 
-    async def _notify_bot(self, bot_info, username, ctx):
+    async def _notify_bot(self, bot_info, username, ctx, progress_message):
         bot_client = discord.Client(intents=discord.Intents.default())
 
         @bot_client.event
         async def on_ready():
             try:
-                await self._perform_local_deep_dive(username, ctx, bot_client)
+                await self._perform_local_deep_dive(username, ctx, progress_message, bot_client)
             except Exception as e:
-                print(f"Error with bot {bot_info['name']}: {e}")
+                await ctx.send(f"Error with bot {bot_info['name']}: {e}")
             finally:
                 await bot_client.close()
 
         await bot_client.start(bot_info['token'])
 
-    async def _perform_local_deep_dive(self, username, ctx, client=None):
+    async def _perform_local_deep_dive(self, username, ctx, progress_message, client=None):
         if client is None:
             client = self.bot
 
-        for guild in client.guilds:
+        total_guilds = len(client.guilds)
+        for i, guild in enumerate(client.guilds, start=1):
             await self._search_guild(guild, username, ctx)
+            await progress_message.edit(content=f"Deep dive in progress for {username}. Searched {i}/{total_guilds} servers...")
 
     async def _search_guild(self, guild, username, ctx):
         members = [member async for member in guild.fetch_members(limit=None)]
