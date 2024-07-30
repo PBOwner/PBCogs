@@ -110,10 +110,18 @@ class DeepDive(commands.Cog):
             await self._save_result('Discord', result)
 
     def _is_matching_user(self, member, username):
-        return (member.name.lower() == username.lower() or
-                str(member) == username or
-                member.id == int(username) or
-                member.mention == username)
+        if username.startswith('<@') and username.endswith('>'):
+            username = username[2:-1]
+            if username.startswith('!'):
+                username = username[1:]
+
+        try:
+            user_id = int(username)
+            return member.id == user_id
+        except ValueError:
+            return (member.name.lower() == username.lower() or
+                    str(member) == username or
+                    member.mention == username)
 
     async def _fetch_user_messages(self, guild, users):
         messages = []
