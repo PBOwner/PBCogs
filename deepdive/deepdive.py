@@ -14,13 +14,15 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
-        self.db_path = self.bot.loop.run_until_complete(self.config.db_path())
         self.tfidf_vectorizer = TfidfVectorizer()
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         """Perform a deep dive to find information about a user"""
         await ctx.send(f"Performing a deep dive on {username}...")
+
+        # Retrieve the db_path asynchronously
+        self.db_path = await self.config.db_path()
 
         await self._sync_db()
 
