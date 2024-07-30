@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, Config, app_commands
+from redbot.core import commands, Config
 from redbot.core.bot import Red
 import sqlite3
 import os
@@ -15,10 +15,6 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path="deepdive_results.sqlite", other_bots=[])
-        self.bot.tree.add_command(self.deepdive_slash)
-        self.bot.tree.add_command(self.addbot_slash)
-        self.bot.tree.add_command(self.removebot_slash)
-        self.bot.tree.add_command(self.listbots_slash)
 
     @commands.hybrid_command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -83,80 +79,6 @@ class DeepDive(commands.Cog):
             for bot in other_bots:
                 embed.add_field(name=bot['name'], value=bot['token'], inline=False)
             await ctx.send(embed=embed)
-
-    @app_commands.command(name="deepdive")
-    @app_commands.guild_only()
-    async def deepdive_slash(self, interaction: discord.Interaction, username: str):
-        await interaction.response.send_message(f"Performing a deep dive on {username}...", ephemeral=True)
-
-        db_path = await self.config.db_path()
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        cursor.execute('''CREATE TABLE IF NOT EXISTS Result (
-            platform TEXT NOT NULL,
-            result TEXT NOT NULL
-        )''')
-        conn.commit()
-
-        try:
-            await self.notify_other_bots_sequentially(username, interaction)
-            await self.perform_deep_dive(username, interaction)
-
-            cursor.execute("SELECT platform, result FROM Result")
-            results = cursor.fetchall()
-
-            embed = discord.Embed(title=f"Deep Dive Results for {username}", color=0x0099ff)
-            for platform, result in results:
-                embed.add_field(name=platform, value=result, inline=False)
-
-            await interaction.followup.send("Deep dive complete!", embed=embed, ephemeral=True)
-        finally:
-            conn.close()
-            if os.path.exists(db_path):
-                os.remove(db_path)
-
-    @app_commands.command(name="addbot")
-    @app_commands.guild_only()
-    async def addbot_slash(self, interaction: discord.Interaction, name: str, token: str):
-        """Add a bot to the list of other bots"""
-        if not await self.bot.is_owner(interaction.user):
-            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
-            return
-        async with self.config.other_bots() as other_bots:
-            other_bots.append({'name': name, 'token': token})
-        await interaction.response.send_message(f"Bot {name} added successfully.", ephemeral=True)
-
-    @app_commands.command(name="removebot")
-    @app_commands.guild_only()
-    async def removebot_slash(self, interaction: discord.Interaction, name: str):
-        """Remove a bot from the list of other bots"""
-        if not await self.bot.is_owner(interaction.user):
-            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
-            return
-        async with self.config.other_bots() as other_bots:
-            for bot in other_bots:
-                if bot['name'] == name:
-                    other_bots.remove(bot)
-                    await interaction.response.send_message(f"Bot {name} removed successfully.", ephemeral=True)
-                    return
-            await interaction.response.send_message(f"Bot {name} not found.", ephemeral=True)
-
-    @app_commands.command(name="listbots")
-    @app_commands.guild_only()
-    async def listbots_slash(self, interaction: discord.Interaction):
-        """List all added bots"""
-        if not await self.bot.is_owner(interaction.user):
-            await interaction.response.send_message("You do not have permission to use this command.", ephemeral=True)
-            return
-        other_bots = await self.config.other_bots()
-        if not other_bots:
-            await interaction.response.send_message("No bots added.", ephemeral=True)
-        else:
-            embed = discord.Embed(title="Added Bots", color=0x0099ff)
-            for bot in other_bots:
-                embed.add_field(name=bot['name'], value=bot['token'], inline=False)
-            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     async def notify_other_bots_sequentially(self, username, ctx):
         other_bots = await self.config.other_bots()
