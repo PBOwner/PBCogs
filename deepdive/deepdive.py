@@ -6,7 +6,7 @@ import os
 import asyncio
 from collections import defaultdict, Counter
 from datetime import datetime
-from nltk import TfIdf
+from sklearn.feature_extraction.text import TfidfVectorizer
 from textblob import TextBlob
 from PIL import Image, ImageDraw
 
@@ -160,7 +160,7 @@ class DeepDive(commands.Cog):
         channel_activity = defaultdict(int)
         mention_activity = defaultdict(int)
         time_of_day_activity = [0] * 24
-        tfidf = TfIdf()
+        tfidf_vectorizer = TfidfVectorizer()
 
         checked_servers = 0
         total_servers = len(guilds)
@@ -196,13 +196,16 @@ class DeepDive(commands.Cog):
                             for mention in msg['mentions']:
                                 mention_activity[mention] += 1
                             time_of_day_activity[msg['created_at'].hour] += 1
-                            tfidf.add_document(msg['content'])
 
                             progress_image_path = self._create_progress_image(checked_servers, total_servers)
                             await ctx.send(
                                 embed=self._create_progress_embed(guild.name, checked_servers, total_servers, progress_image_path, len(user_messages), total_messages, query),
                                 ephemeral=True
                             )
+
+                # Fit and transform the messages for TF-IDF
+                tfidf_matrix = tfidf_vectorizer.fit_transform([msg['content'] for msg in messages])
+
             except Exception as e:
                 print(f"Error searching in guild {guild.name}: {e}")
                 continue
@@ -211,7 +214,7 @@ class DeepDive(commands.Cog):
             trustworthiness = self.evaluate_trustworthiness(messages)
             intent_summary = self.analyze_intent(messages)
             sentiment_summary = self.analyze_sentiment(messages)
-            top_words = self.get_top_words(tfidf)
+            top_words = self.get_top_words(tfidf_vectorizer, tfidf_matrix)
             avg_message_length = round(total_message_length / message_count, 2)
             most_active_channels = self.get_top_entries(channel_activity, 5)
             most_mentioned_users = self.get_top_entries(mention_activity, 5)
@@ -298,14 +301,15 @@ class DeepDive(commands.Cog):
 
         return "\n".join([f"{intent}: {count} messages" for intent, count in intents.items()])
 
-    def get_top_words(self, tfidf):
-        return ", ".join(term for term, _ in tfidf.items() if _ > 0.1)
+    def get_top_words(self, tfidf_vectorizer, tfidf_matrix):
+        feature_names = tfidf_vectorizer.get_feature_names_out()
+        top_words = []
+        for col in tfidf_matrix.nonzero()[1]:
+            top_words.append(feature_names[col])
+        return ", ".join(top_words)
 
     def get_top_entries(self, dictionary, limit):
         return ", ".join([f"{key}: {value}" for key, value in Counter(dictionary).most_common(limit)])
 
     def get_time_of_day_summary(self, activity):
         return "\n".join([f"{hour}:00 - {hour + 1}:00: {count}" for hour, count in enumerate(activity)])
-
-def setup(bot: Red):
-    bot.add_cog(DeepDive(bot))
