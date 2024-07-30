@@ -14,7 +14,7 @@ class DeepDive(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(db_path='deepdive_results.sqlite', other_bots=[])
-        self.db_path = self.config.db_path()
+        self.db_path = self.bot.loop.run_until_complete(self.config.db_path())
         self.tfidf_vectorizer = TfidfVectorizer()
 
     @commands.command(name="deepdive")
@@ -185,7 +185,7 @@ class DeepDive(commands.Cog):
             trustworthiness = self._evaluate_trustworthiness(messages)
             intent_summary = self._analyze_intent(messages)
             sentiment_summary = self._analyze_sentiment(messages)
-            top_words = self._get_top_words()
+            top_words = self._get_top_words(messages)
             avg_message_length = round(total_message_length / message_count, 2)
             most_active_channels = self._get_top_entries(channel_activity, 5)
             most_mentioned_users = self._get_top_entries(mention_activity, 5)
@@ -275,7 +275,7 @@ class DeepDive(commands.Cog):
 
         return summary
 
-    def _get_top_words(self):
+    def _get_top_words(self, messages):
         tfidf_matrix = self.tfidf_vectorizer.fit_transform([msg['content'] for msg in messages])
         feature_names = self.tfidf_vectorizer.get_feature_names_out()
         top_words = [feature_names[i] for i in tfidf_matrix[0].nonzero()[1]]
