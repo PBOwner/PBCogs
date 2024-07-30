@@ -91,11 +91,11 @@ class QOTD(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please mention a text channel to set as the question channel.", delete_after=5)
 
-def setup(bot):
+await def setup(bot):
     """
     Adds the cog to the bot.
 
     Args:
         bot (discord.Bot): The bot instance.
     """
-    bot.add_cog(QOTD(bot))
+   async bot.add_cog(QOTD(bot))
