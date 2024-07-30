@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
 import os
 import asyncio
 from collections import defaultdict
@@ -104,11 +105,11 @@ class DeepDive(commands.Cog):
 
                 # Copy data from the old table to the new table
                 with self.engine.connect() as conn:
-                    conn.execute(f'INSERT INTO {new_table_name} ({", ".join(existing_columns)}) SELECT {", ".join(existing_columns)} FROM results')
+                    conn.execute(text(f'INSERT INTO {new_table_name} ({", ".join(existing_columns)}) SELECT {", ".join(existing_columns)} FROM results'))
 
                     # Drop the old table and rename the new table
-                    conn.execute('DROP TABLE results')
-                    conn.execute(f'ALTER TABLE {new_table_name} RENAME TO results')
+                    conn.execute(text('DROP TABLE results'))
+                    conn.execute(text(f'ALTER TABLE {new_table_name} RENAME TO results'))
 
                 # Restore the original table name
                 Result.__table__.name = 'results'
