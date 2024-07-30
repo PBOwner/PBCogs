@@ -3,7 +3,7 @@ from redbot.core import commands, Config, bot
 from textblob import TextBlob
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float, PickleType, Table, MetaData
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import sessionmaker, mapper, clear_mappers
 from sqlalchemy.exc import SQLAlchemyError
 import os
@@ -12,19 +12,26 @@ from collections import defaultdict
 
 Base = declarative_base()
 
-class Result:
-    def __init__(self, platform, users, servers, trustworthiness, intent_summary, sentiment_summary, top_words, avg_message_length, most_active_channels, most_mentioned_users, time_of_day_summary):
-        self.platform = platform
-        self.users = users
-        self.servers = servers
-        self.trustworthiness = trustworthiness
-        self.intent_summary = intent_summary
-        self.sentiment_summary = sentiment_summary
-        self.top_words = top_words
-        self.avg_message_length = avg_message_length
-        self.most_active_channels = most_active_channels
-        self.most_mentioned_users = most_mentioned_users
-        self.time_of_day_summary = time_of_day_summary
+class ResultBase:
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    id = Column(Integer, primary_key=True)
+    platform = Column(String, nullable=False)
+    users = Column(String, nullable=False)
+    servers = Column(PickleType, nullable=False)  # Store list as a pickle
+    trustworthiness = Column(String, nullable=False)
+    intent_summary = Column(PickleType, nullable=False)  # Store dict as a pickle
+    sentiment_summary = Column(String, nullable=False)
+    top_words = Column(Text, nullable=False)
+    avg_message_length = Column(Float, nullable=False)
+    most_active_channels = Column(PickleType, nullable=False)  # Store dict as a pickle
+    most_mentioned_users = Column(PickleType, nullable=False)  # Store dict as a pickle
+    time_of_day_summary = Column(PickleType, nullable=False)  # Store list as a pickle
+
+def create_result_class(table_name):
+    return type(table_name, (ResultBase, Base), {})
 
 class DeepDive(commands.Cog):
     """Perform a deep dive to find information about a user"""
@@ -37,7 +44,6 @@ class DeepDive(commands.Cog):
         self.db_path = None
         self.engine = None
         self.Session = None
-        self.metadata = MetaData()
 
     @commands.command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
@@ -100,28 +106,11 @@ class DeepDive(commands.Cog):
             # Clear existing mappers
             clear_mappers()
 
-            # Define the new table
-            user_table = Table(
-                table_name, self.metadata,
-                Column('id', Integer, primary_key=True),
-                Column('platform', String, nullable=False),
-                Column('users', String, nullable=False),
-                Column('servers', PickleType, nullable=False),  # Store list as a pickle
-                Column('trustworthiness', String, nullable=False),
-                Column('intent_summary', PickleType, nullable=False),  # Store dict as a pickle
-                Column('sentiment_summary', String, nullable=False),
-                Column('top_words', Text, nullable=False),
-                Column('avg_message_length', Float, nullable=False),
-                Column('most_active_channels', PickleType, nullable=False),  # Store dict as a pickle
-                Column('most_mentioned_users', PickleType, nullable=False),  # Store dict as a pickle
-                Column('time_of_day_summary', PickleType, nullable=False)  # Store list as a pickle
-            )
+            # Create a new Result class for the user table
+            Result = create_result_class(table_name)
 
             # Create the table
-            self.metadata.create_all(self.engine)
-
-            # Map the Result class to the new table
-            mapper(Result, user_table)
+            Base.metadata.create_all(self.engine)
         except SQLAlchemyError as e:
             print(f"Error resetting database: {e}")
 
@@ -373,6 +362,8 @@ class DeepDive(commands.Cog):
 
     async def _save_result(self, platform, result, table_name):
         session = self.Session()
+        # Create a new Result class for the user table
+        Result = create_result_class(table_name)
         new_result = Result(
             platform=platform,
             users=result['users'],
@@ -392,6 +383,8 @@ class DeepDive(commands.Cog):
 
     async def _fetch_results(self, table_name):
         session = self.Session()
+        # Create a new Result class for the user table
+        Result = create_result_class(table_name)
         results = session.query(Result).all()
         session.close()
         return results
