@@ -21,11 +21,10 @@ class EvalCog(commands.Cog):
                 'Route': Route,
                 '__import__': __import__
             }
-            # Execute the provided code
-            exec(
-                f'async def __eval_func():\n{textwrap.indent(code, "    ")}',
-                env,
-            )
+            # Define a function to execute the code
+            exec_code = f'async def __eval_func():\n{textwrap.indent(code, "    ")}'
+            exec(exec_code, env)
+            # Execute the function and get the result
             result = await env['__eval_func']()
             await ctx.send(f'```{result}```')
         except Exception as e:
