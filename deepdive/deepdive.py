@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, Config, app_commands
+from redbot.core import commands, Config
 from redbot.core.bot import Red
 import sqlite3
 import os
@@ -20,7 +20,7 @@ class DeepDive(commands.Cog):
         self.bot.tree.add_command(self.removebot_slash)
         self.bot.tree.add_command(self.listbots_slash)
 
-    @commands.command()
+    @commands.hybrid_command(name="deepdive")
     async def deepdive(self, ctx: commands.Context, username: str):
         await ctx.send(f"Performing a deep dive on {username}...")
 
@@ -51,7 +51,7 @@ class DeepDive(commands.Cog):
             if os.path.exists(db_path):
                 os.remove(db_path)
 
-    @commands.command()
+    @commands.hybrid_command(name="addbot")
     @commands.is_owner()
     async def addbot(self, ctx: commands.Context, name: str, token: str):
         """Add a bot to the list of other bots"""
@@ -59,7 +59,7 @@ class DeepDive(commands.Cog):
             other_bots.append({'name': name, 'token': token})
         await ctx.send(f"Bot {name} added successfully.")
 
-    @commands.command()
+    @commands.hybrid_command(name="removebot")
     @commands.is_owner()
     async def removebot(self, ctx: commands.Context, name: str):
         """Remove a bot from the list of other bots"""
@@ -71,7 +71,7 @@ class DeepDive(commands.Cog):
                     return
             await ctx.send(f"Bot {name} not found.")
 
-    @commands.command()
+    @commands.hybrid_command(name="listbots")
     @commands.is_owner()
     async def listbots(self, ctx: commands.Context):
         """List all added bots"""
