@@ -1,6 +1,6 @@
 from redbot.core.bot import Red
 
-from .hybridcommands import HybridCommands
+from .hybridcommands import SlashRouter
 
 async def setup(bot: Red):
-    await bot.add_cog(HybridCommands(bot))
+    await bot.add_cog(SlashRouter(bot))
