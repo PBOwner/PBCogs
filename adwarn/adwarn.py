@@ -61,11 +61,11 @@ class AdWarn(commands.Cog):
 
                 # Create the embed message
                 embed = discord.Embed(title="You were warned!", color=discord.Color.red())
-                embed.add_field(name="User", value=user.mention, inline=True)
-                embed.add_field(name="Warned In", value=ctx.channel.mention, inline=True)
-                embed.add_field(name="Reason", value=reason, inline=False)
-                embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
-                embed.add_field(name="Time", value=warning_time, inline=False)
+                embed.add_field(name="<:user:1268083437768671303> | User", value=user.mention, inline=True)
+                embed.add_field(name="<:channel:1268083439651913819> | Warned In", value=ctx.channel.mention, inline=True)
+                embed.add_field(name="<:reason:1268083436598591539> | Reason", value=reason, inline=False)
+                embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
+                embed.add_field(name="<:time:1268083440864198676> | Time", value=warning_time, inline=False)
                 embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                 # Send the embed to the specified warning channel
