@@ -48,6 +48,7 @@ class AutoDocs(commands.Cog):
         super().__init__(*args, **kwargs)
         self.bot = bot
         self.config = {
+            "repo_dir": "/root/PBCogs",  # Add this line to ensure repo_dir is defined
             "custom_domain": "docs.prismbot.icu"  # Add default value or load from a config file
         }
         self.bot.add_listener(self.on_cog_load, "on_cog_load")
@@ -487,7 +488,7 @@ class AutoDocSite(commands.Cog):
         self.config["custom_footer"] = value
         await ctx.send(f"Custom footer set to: {value}")
 
-    @commands.command()
+    @commands.hybrid_command(name="gendocs", description=_("Generate documentation site for every cog"))
     @commands.is_owner()
     async def gendocs(self, ctx: commands.Context):
         """
@@ -517,71 +518,71 @@ class AutoDocSite(commands.Cog):
 
             # Create index.md file with static content
             index_content = f"""
-# Welcome to the Docs
+    # Welcome to the Docs
 
-Welcome to the official documentation site for **{self.config['site_name']}**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
+    Welcome to the official documentation site for **{self.config['site_name']}**! This site provides comprehensive information on how to use and configure the various features and commands available in the bot.
 
-## Introduction
+    ## Introduction
 
-**{self.config['site_name']}** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **{bot_name}** is the perfect addition to any server.
+    **{self.config['site_name']}** is a powerful and versatile bot designed to enhance your Discord server experience. With a wide range of features, including moderation tools, fun commands, and utility functions, **{bot_name}** is the perfect addition to any server.
 
-## Getting Started
+    ## Getting Started
 
-To get started with **{self.config['site_name']}**, follow these simple steps:
+    To get started with **{self.config['site_name']}**, follow these simple steps:
 
-1. **Invite the Bot**: Use the invite link to add the bot to your Discord server.
-2. **Set Up Permissions**: Ensure the bot has the necessary permissions to function correctly.
-3. **Configure the Bot**: Use the configuration commands to set up the bot according to your preferences.
+    1. **Invite the Bot**: Use the invite link to add the bot to your Discord server.
+    2. **Set Up Permissions**: Ensure the bot has the necessary permissions to function correctly.
+    3. **Configure the Bot**: Use the configuration commands to set up the bot according to your preferences.
 
-## Commands
+    ## Commands
 
-### General Commands
+    ### General Commands
 
-**{self.config['site_name']}** offers a variety of general commands to enhance your server experience. These commands include:
+    **{self.config['site_name']}** offers a variety of general commands to enhance your server experience. These commands include:
 
-- `{prefix}help`: Displays a list of available commands.
-- `{prefix}info bot`: Provides information about the bot.
-- `{prefix}ping`: Checks the bot's response time.
+    - `{prefix}help`: Displays a list of available commands.
+    - `{prefix}info bot`: Provides information about the bot.
+    - `{prefix}ping`: Checks the bot's response time.
 
-### Moderation Commands
+    ### Moderation Commands
 
-Moderation commands help you manage your server effectively. These commands include:
+    Moderation commands help you manage your server effectively. These commands include:
 
-- `{prefix}ban [user] [reason]`: Bans a user from the server.
-- `{prefix}kick [user] [reason]`: Kicks a user from the server.
-- `{prefix}mute [user] [duration]`: Mutes a user for a specified duration.
-- There's a ton more, just take a look at the different features!
+    - `{prefix}ban [user] [reason]`: Bans a user from the server.
+    - `{prefix}kick [user] [reason]`: Kicks a user from the server.
+    - `{prefix}mute [user] [duration]`: Mutes a user for a specified duration.
+    - There's a ton more, just take a look at the different features!
 
-### Fun Commands
+    ### Fun Commands
 
-Add some fun to your server with these entertaining commands:
+    Add some fun to your server with these entertaining commands:
 
-- `{prefix}joke`: Tells a random joke.
-- `{prefix}slots`: Play some slots, using the bot's currency.
-- `{prefix}cah`: Play a game of Cards Against Humanity.
-- There's a ton more, just take a look at the different features!
+    - `{prefix}joke`: Tells a random joke.
+    - `{prefix}slots`: Play some slots, using the bot's currency.
+    - `{prefix}cah`: Play a game of Cards Against Humanity.
+    - There's a ton more, just take a look at the different features!
 
-## Configuration
+    ## Configuration
 
-To configure **{self.config['site_name']}**, use the following commands:
+    To configure **{self.config['site_name']}**, use the following commands:
 
-- `{prefix}prefix [prefix]`: Changes the command prefix.
+    - `{prefix}prefix [prefix]`: Changes the command prefix.
 
-## FAQ
+    ## FAQ
 
-### How do I invite the bot to my server?
+    ### How do I invite the bot to my server?
 
-Use the invite link provided [here]({self.config['invite_link']}) to add the bot to your server.
+    Use the invite link provided [here]({self.config['invite_link']}) to add the bot to your server.
 
-### How do I report a bug or request a feature?
+    ### How do I report a bug or request a feature?
 
-To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
+    To report a bug, please join the support server and create a ticket. To request a feature, use `{prefix}fr submit <feature>` where `<feature>` is the feature you desire.
 
-## Support
+    ## Support
 
-If you need assistance or have any questions, please join our [Support Server]({self.config['support_server']}).
+    If you need assistance or have any questions, please join our [Support Server]({self.config['support_server']}).
 
-Thank you for using **{self.config['site_name']}**! We hope you enjoy all the features and functionality it has to offer.
+    Thank you for using **{self.config['site_name']}**! We hope you enjoy all the features and functionality it has to offer.
             """
             with open(os.path.join(docs_dir, "index.md"), "w") as f:
                 f.write(index_content)
