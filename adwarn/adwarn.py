@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
-from datetime import datetime, timedelta
+from datetime import timedelta
 import re
 import uuid
 
@@ -22,7 +22,7 @@ class AdWarn(commands.Cog):
             if warn_channel:
                 # Store the warning with a UUID
                 warnings = await self.config.member(user).warnings()
-                warning_time = datetime.utcnow().isoformat()
+                warning_time = discord.utils.utcnow().isoformat()
                 warning_id = str(uuid.uuid4())
                 warnings.append({
                     "id": warning_id,
@@ -135,7 +135,7 @@ class AdWarn(commands.Cog):
 
     async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
         if duration:
-            timeout_until = datetime.utcnow() + timedelta(minutes=duration)
+            timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
             await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
 
@@ -151,7 +151,7 @@ class AdWarn(commands.Cog):
             await user.edit(timed_out_until=None, reason="Reached warning threshold")
 
     async def schedule_untimeout(self, ctx, user, duration):
-        untimeout_time = datetime.utcnow() + timedelta(minutes=duration)
+        untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
         await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
         await ctx.send(f"{user.mention} will be untimed out in {duration / 60:.2f} hours.")
 
@@ -165,7 +165,7 @@ class AdWarn(commands.Cog):
                 untimeout_time = await self.config.member(member).untimeout_time()
                 if untimeout_time:
                     untimeout_time = datetime.fromisoformat(untimeout_time)
-                    if datetime.utcnow() >= untimeout_time:
+                    if discord.utils.utcnow() >= untimeout_time:
                         await self.untimeout_user(member)
                         await self.config.member(member).untimeout_time.clear()
 
@@ -191,7 +191,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="AdWarn Removed", color=discord.Color.green())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=warning_to_remove["reason"], inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=datetime.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=discord.utils.utcnow().isoformat(), inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
@@ -251,7 +251,7 @@ class AdWarn(commands.Cog):
                 embed = discord.Embed(title="All Warnings Cleared", color=discord.Color.green())
                 embed.add_field(name="<:user:1268083437768671303> | User", value=user.mention, inline=True)
                 embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                embed.add_field(name="<:time:1268083440864198676> | Cleared Time", value=datetime.utcnow().isoformat(), inline=True)
+                embed.add_field(name="<:time:1268083440864198676> | Cleared Time", value=discord.utils.utcnow().isoformat(), inline=True)
 
                 # Send the embed to the specified warning channel
                 await warn_channel.send(embed=embed)
@@ -287,7 +287,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="Most Recent AdWarn Removed", color=discord.Color.green())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=removed_warning["reason"], inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=datetime.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=discord.utils.utcnow().isoformat(), inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
@@ -333,7 +333,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="AdWarn Edited", color=discord.Color.orange())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=new_reason, inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Edited Time", value=datetime.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Edited Time", value=discord.utils.utcnow().isoformat(), inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
