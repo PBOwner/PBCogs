@@ -96,7 +96,7 @@ class AdWarn(commands.Cog):
             await error_message.delete(delay=3)
 
         # Delete the command message after 3 seconds
-        await ctx.message.delete(delay=1)
+        await ctx.message.delete(delay=3)
 
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
@@ -232,7 +232,7 @@ class AdWarn(commands.Cog):
         for warning in warnings:
             embed.add_field(
                 name=f"Warning ID: {warning['id']}",
-                value=f"<:reason:1268083436598591539>Reason: {warning['reason']}\n<:mod:1268083442193662024>Moderator: <@{warning['moderator']}>\n<:time:1268083440864198676?Time: {warning['time']}",
+                value=f"<:reason:1268083436598591539> | Reason: {warning['reason']}\n<:mod:1268083442193662024> | Moderator: <@{warning['moderator']}>\n<:time:1268083440864198676> | Time: {warning['time']}",
                 inline=False
             )
 
@@ -431,6 +431,7 @@ class AdWarn(commands.Cog):
                 embed.add_field(
                     name=f"{rank}. {user} (ID: {user_id})",
                     value=f"Warnings Issued: {count}",
+                    inline=False
                 )
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
