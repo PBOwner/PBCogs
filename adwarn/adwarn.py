@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
-from datetime import timedelta
+from datetime import timedelta, datetime
 import re
 import uuid
 
@@ -22,13 +22,13 @@ class AdWarn(commands.Cog):
             if warn_channel:
                 # Store the warning with a UUID
                 warnings = await self.config.member(user).warnings()
-                warning_time = discord.utils.utcnow().isoformat()
+                warning_time = discord.utils.utcnow()
                 warning_id = str(uuid.uuid4())
                 warnings.append({
                     "id": warning_id,
                     "reason": reason,
                     "moderator": ctx.author.id,
-                    "time": warning_time,
+                    "time": warning_time.isoformat(),
                     "channel": ctx.channel.id
                 })
                 await self.config.member(user).warnings.set(warnings)
@@ -47,18 +47,19 @@ class AdWarn(commands.Cog):
                 mod_warnings[str(ctx.author.id)].append({
                     "user": user.id,
                     "reason": reason,
-                    "time": warning_time,
+                    "time": warning_time.isoformat(),
                     "channel": ctx.channel.id
                 })
                 await self.config.guild(ctx.guild).mod_warnings.set(mod_warnings)
 
                 # Create the embed message
+                timestamp = int(warning_time.timestamp())
                 embed = discord.Embed(title="New AdWarn", color=discord.Color.red())
                 embed.add_field(name="<:user:1268083437768671303> | User", value=user.mention, inline=True)
                 embed.add_field(name="<:channel:1268083439651913819> | Warned In", value=ctx.channel.mention, inline=True)
                 embed.add_field(name="<:reason:1268083436598591539> | Reason", value=reason, inline=False)
                 embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                embed.add_field(name="<:time:1268083440864198676> | Time", value=warning_time, inline=False)
+                embed.add_field(name="<:time:1268083440864198676> | Time", value=f"<t:{timestamp}:F>", inline=False)
                 embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                 # Send the embed to the specified warning channel
@@ -191,7 +192,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="AdWarn Removed", color=discord.Color.green())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=warning_to_remove["reason"], inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=discord.utils.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
@@ -230,9 +231,10 @@ class AdWarn(commands.Cog):
         )
 
         for warning in warnings:
+            timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
             embed.add_field(
                 name=f"Warning ID: {warning['id']}",
-                value=f"<:reason:1268083436598591539> | Reason: {warning['reason']}\n<:mod:1268083442193662024> | Moderator: <@{warning['moderator']}>\n<:time:1268083440864198676> | Time: {warning['time']}",
+                value=f"<:reason:1268083436598591539> | Reason: {warning['reason']}\n<:mod:1268083442193662024> | Moderator: <@{warning['moderator']}>\n<:time:1268083440864198676> | Time: <t:{timestamp}:F>",
                 inline=False
             )
 
@@ -251,7 +253,7 @@ class AdWarn(commands.Cog):
                 embed = discord.Embed(title="All Warnings Cleared", color=discord.Color.green())
                 embed.add_field(name="<:user:1268083437768671303> | User", value=user.mention, inline=True)
                 embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                embed.add_field(name="<:time:1268083440864198676> | Cleared Time", value=discord.utils.utcnow().isoformat(), inline=True)
+                embed.add_field(name="<:time:1268083440864198676> | Cleared Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
 
                 # Send the embed to the specified warning channel
                 await warn_channel.send(embed=embed)
@@ -287,7 +289,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="Most Recent AdWarn Removed", color=discord.Color.green())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=removed_warning["reason"], inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=discord.utils.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Removed Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
@@ -333,7 +335,7 @@ class AdWarn(commands.Cog):
                     embed = discord.Embed(title="AdWarn Edited", color=discord.Color.orange())
                     embed.add_field(name="<:reason:1268083436598591539> | Warning", value=new_reason, inline=False)
                     embed.add_field(name="<:mod:1268083442193662024> | Moderator", value=ctx.author.mention, inline=True)
-                    embed.add_field(name="<:time:1268083440864198676> | Edited Time", value=discord.utils.utcnow().isoformat(), inline=True)
+                    embed.add_field(name="<:time:1268083440864198676> | Edited Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
 
                     # Send the embed to the specified warning channel
@@ -400,9 +402,10 @@ class AdWarn(commands.Cog):
 
             for warning in warnings:
                 warned_user = self.bot.get_user(warning["user"])
+                timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
                 embed.add_field(
                     name=f"<:user:1268083437768671303> | User Warned: {warned_user} (ID: {warning['user']})",
-                    value=f"<:reason:1268083436598591539> | Reason: {warning['reason']}\n<:time:1268083440864198676> | Time: {warning['time']}\n<:channel:1268083439651913819> | Channel: <#{warning['channel']}>",
+                    value=f"<:reason:1268083436598591539> | Reason: {warning['reason']}\n<:time:1268083440864198676> | Time: <t:{timestamp}:F>\n<:channel:1268083439651913819> | Channel: <#{warning['channel']}>",
                     inline=False
                 )
         else:
