@@ -98,6 +98,79 @@ class AdWarn(commands.Cog):
         # Delete the command message after 3 seconds
         await ctx.message.delete(delay=3)
 
+async def check_thresholds(self, ctx, user, warning_count):
+    tholds = await self.config.guild(ctx.guild).tholds()
+
+    for threshold_id, threshold in tholds.items():
+        if threshold["count"] == warning_count:
+            action = threshold["action"]
+            if action == "kick":
+                await ctx.guild.kick(user, reason="Reached warning threshold")
+                await ctx.send(f"{user.mention} has been kicked for reaching {warning_count} warnings.")
+            elif action == "ban":
+                await ctx.guild.ban(user, reason="Reached warning threshold")
+                await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
+            elif action.startswith("mute"):
+                duration_str = action.split(" ")[1] if " " in action else None
+                timeout_duration = self.parse_duration(duration_str) if duration_str else 120  # Default to 120 minutes (2 hours)
+
+                await self.timeout_user(ctx, user, timeout_duration)
+                await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
+                if timeout_duration:
+                    await self.schedule_untimeout(ctx, user, timeout_duration)
+
+            # Add more actions as needed
+
+def parse_duration(self, duration_str):
+    """Parse a duration string and return the duration in minutes."""
+    match = re.match(r"(\d+)([mh])", duration_str)
+    if match:
+        value, unit = match.groups()
+        value = int(value)
+        if unit == "h":
+            return value * 60  # Convert hours to minutes
+        elif unit == "m":
+            return value  # Minutes
+    return None
+
+async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
+    if duration:
+        timeout_until = datetime.utcnow() + timedelta(minutes=duration)
+        await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
+        await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
+
+        # Create and send embed with timeout details
+        timeout_hours = duration / 60
+        embed = discord.Embed(
+            title="User Timed Out",
+            description=f"{user.mention} has been timed out for {timeout_hours:.2f} hours.",
+            color=discord.Color.orange()
+        )
+        await ctx.send(embed=embed)
+    else:
+        await user.edit(timed_out_until=None, reason="Reached warning threshold")
+
+async def schedule_untimeout(self, ctx, user, duration):
+    untimeout_time = datetime.utcnow() + timedelta(minutes=duration)
+    await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
+    await ctx.send(f"{user.mention} will be untimed out in {duration / 60:.2f} hours.")
+
+@commands.Cog.listener()
+async def on_ready(self):
+    await self.check_untimeout_times()
+
+async def check_untimeout_times(self):
+    for guild in self.bot.guilds:
+        for member in guild.members:
+            untimeout_time = await self.config.member(member).untimeout_time()
+            if untimeout_time:
+                untimeout_time = datetime.fromisoformat(untimeout_time)
+                if datetime.utcnow() >= untimeout_time:
+                    await self.untimeout_user(member)
+                    await self.config.member(member).untimeout_time.clear()
+
+async def untimeout_user(self, user: discord.Member):
+    await user.edit(timed_out_until=None, reason="Timeout duration expired")
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
 
@@ -112,7 +185,7 @@ class AdWarn(commands.Cog):
                     await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
                 elif action.startswith("mute"):
                     duration_str = action.split(" ")[1] if " " in action else None
-                    timeout_duration = self.parse_duration(duration_str) if duration_str else None
+                    timeout_duration = self.parse_duration(duration_str) if duration_str else 120  # Default to 120 minutes (2 hours)
 
                     await self.timeout_user(ctx, user, timeout_duration)
                     await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
@@ -133,7 +206,7 @@ class AdWarn(commands.Cog):
                 return value  # Minutes
         return None
 
-    async def timeout_user(self, ctx, user: discord.Member, duration: int = None):
+    async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
         if duration:
             timeout_until = datetime.utcnow() + timedelta(minutes=duration)
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
