@@ -514,4 +514,3 @@ class AdWarn(commands.Cog):
             await ctx.send(f"Deleted threshold with ID {threshold_id}.")
         else:
             await ctx.send(f"No threshold set with ID {threshold_id}.")
-`
