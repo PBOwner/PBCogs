@@ -38,7 +38,7 @@ class EventLogger(commands.Cog):
     async def category(self, ctx, category: str, channel: discord.TextChannel):
         """Set the logging channel for a category of events"""
         event_categories = {
-            "app": ["integration_create", "integration_delete", "application_command_permissions_update"],
+            "app": ["integration_create", "integration_delete", "integration_update"],
             "channel": ["guild_channel_create", "guild_channel_delete", "guild_channel_update", "guild_channel_pins_update", "guild_channel_name_update", "guild_channel_topic_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_type_update", "guild_channel_bitrate_update", "guild_channel_user_limit_update", "guild_channel_slowmode_update", "guild_channel_rtc_region_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
             "voice": ["voice_state_update"],
             "automod": ["automod_rule_create", "automod_rule_delete", "automod_rule_update"],
@@ -84,7 +84,7 @@ class EventLogger(commands.Cog):
     async def categories(self, ctx):
         """View the event categories and their events"""
         event_categories = {
-            "app": ["integration_create", "integration_delete", "application_command_permissions_update"],
+            "app": ["integration_create", "integration_delete", "integration_update"],
             "channel": ["guild_channel_create", "guild_channel_delete", "guild_channel_update", "guild_channel_pins_update", "guild_channel_name_update", "guild_channel_topic_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_type_update", "guild_channel_bitrate_update", "guild_channel_user_limit_update", "guild_channel_slowmode_update", "guild_channel_rtc_region_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
             "voice": ["voice_state_update"],
             "automod": ["automod_rule_create", "automod_rule_delete", "automod_rule_update"],
@@ -118,9 +118,8 @@ class EventLogger(commands.Cog):
         await self.log_event(integration.guild, "integration_delete", f"App removed: {integration.name}")
 
     @commands.Cog.listener()
-    async def on_application_command_permissions_update(self, permissions: discord.ApplicationCommandPermissions):
-        guild = self.bot.get_guild(permissions.guild_id)
-        await self.log_event(guild, "application_command_permissions_update", f"App command permissions updated: {permissions.id}")
+    async def on_integration_update(self, integration: discord.Integration):
+        await self.log_event(integration.guild, "integration_update", f"Integration updated: {integration.name}")
 
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel: discord.abc.GuildChannel):
@@ -300,7 +299,7 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_user_update(self, before: discord.User, after: discord.User):
-        await self.log_event(after.guild, "user_update", f"User updated: {before.name} -> {after.name}")
+        await self.log_event(before.guild, "user_update", f"User updated: {before.name} -> {after.name}")
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
@@ -544,8 +543,10 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_warn_add(self, guild: discord.Guild, user: discord.User):
-        await self.log_event (guild, "warn_add", f"User warned: {user.name}")
+        await self.log_event(guild, "warn_add", f"User warned: {user.name}")
 
+    @commands.Cog.listener()
+    async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
     @commands.Cog.listener()
     async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
         await self.log_event(guild, "warn_remove", f"User warn removed: {user.name}")
