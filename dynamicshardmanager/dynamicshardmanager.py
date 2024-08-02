@@ -50,16 +50,17 @@ class DynamicShardManager(commands.Cog):
                 log.warning(f"Shard {shard_id} is closed. Restarting...")
                 await self.bot.launch_shard(shard_id)
 
-        rate_limit_info = self.bot.http.rate_limiter
-        if rate_limit_info.is_rate_limited():
-            log.warning("Bot is rate limited. Adjusting shard count...")
-            await self.adjust_shard_count()
+        # Check for high latency as a proxy for rate limiting issues
+        high_latency_shards = [shard for shard in self.bot.shards.values() if shard.latency > 1.0]
+        if high_latency_shards:
+            log.warning("High latency detected. Adjusting shard count...")
+            await self.add_shard()
 
         await self.update_logging_channel()
 
-    async def adjust_shard_count(self):
-        """Adjust the shard count to handle rate limiting."""
-        current_shard_count = len(self.bot.shards)
+    async def add_shard(self):
+        """Add a new shard to handle rate limiting."""
+        current_shard_count = await self.config.shard_count()
         new_shard_count = current_shard_count + 1
         log.info(f"Increasing shard count to {new_shard_count}.")
 
@@ -94,7 +95,7 @@ class DynamicShardManager(commands.Cog):
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
-        global_data = await self.config.all_global()
+        global_data = await self.config.all()
         guild_id = global_data.get("guild_id")
         if not guild_id:
             log.error("Guild ID is not set.")
@@ -122,14 +123,18 @@ class DynamicShardManager(commands.Cog):
         )
 
         embed.add_field(name="Shard Count", value=humanize_number(len(self.bot.shards)))
-        embed.add_field(name="API Call Requests", value=humanize_number(self.bot.http.ratelimit.remaining))
-        embed.add_field(name="Rate Limit Reset", value=str(self.bot.http.ratelimit.reset))
 
         for shard_id, shard in self.bot.shards.items():
+            shard_info = (
+                f"Status: {'Closed' if shard.is_closed() else 'Open'}\n"
+                f"Latency: {shard.latency * 1000:.2f} ms\n"
+                f"Guilds: {len([g for g in self.bot.guilds if g.shard_id == shard_id])}\n"
+                f"Users: {len([u for u in self.bot.users if u.mutual_guilds and any(g.shard_id == shard_id for g in u.mutual_guilds)])}\n"
+                f"Channels: {len([c for c in self.bot.get_all_channels() if c.guild and c.guild.shard_id == shard_id])}\n"
+            )
             embed.add_field(
                 name=f"Shard {shard_id}",
-                value=f"Status: {'Closed' if shard.is_closed() else 'Open'}\n"
-                      f"Latency: {shard.latency * 1000:.2f} ms",
+                value=shard_info,
                 inline=False
             )
 
@@ -154,11 +159,8 @@ class DynamicShardManager(commands.Cog):
     @commands.is_owner()
     async def addshard(self, ctx: commands.Context):
         """Manually add a new shard."""
-        current_shard_count = len(self.bot.shards)
-        new_shard_count = current_shard_count + 1
-        await self.config.shard_count.set(new_shard_count)
-        await ctx.send(f"Shard count increased to {new_shard_count}. Restarting bot to apply changes...")
-        await self.restart_bot()
+        await self.add_shard()
+        await ctx.send("Shard count increased. Restarting bot to apply changes...")
 
     @commands.command()
     @commands.guild_only()
