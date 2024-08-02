@@ -22,7 +22,11 @@ class DynamicShardManager(commands.Cog):
         default_guild = {
             "logging_channel": None,
         }
+        default_global = {
+            "shard_count": len(self.bot.shards)
+        }
         self.config.register_guild(**default_guild)
+        self.config.register_global(**default_global)
         self.monitor_shards.start()
 
     def cog_unload(self):
@@ -59,7 +63,7 @@ class DynamicShardManager(commands.Cog):
         new_shard_count = current_shard_count + 1
         log.info(f"Increasing shard count to {new_shard_count}.")
 
-        await self.config.custom("SHARD_COUNT").set(new_shard_count)
+        await self.config.shard_count.set(new_shard_count)
         await self.restart_bot()
 
     async def restart_bot(self):
@@ -122,6 +126,6 @@ class DynamicShardManager(commands.Cog):
         """Manually add a new shard."""
         current_shard_count = len(self.bot.shards)
         new_shard_count = current_shard_count + 1
-        await self.config.custom("SHARD_COUNT").set(new_shard_count)
+        await self.config.shard_count.set(new_shard_count)
         await ctx.send(f"Shard count increased to {new_shard_count}. Restarting bot to apply changes...")
         await self.restart_bot()
