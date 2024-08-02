@@ -547,8 +547,6 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
-    @commands.Cog.listener()
-    async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
         await self.log_event(guild, "warn_remove", f"User warn removed: {user.name}")
 
     @commands.Cog.listener()
