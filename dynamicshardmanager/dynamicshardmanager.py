@@ -1,5 +1,7 @@
 import logging
 import asyncio
+import os
+import subprocess
 from datetime import datetime
 from typing import Optional
 
@@ -57,7 +59,14 @@ class DynamicShardManager(commands.Cog):
         new_shard_count = current_shard_count + 1
         log.info(f"Increasing shard count to {new_shard_count}.")
 
-        await self.bot.change_shard_count(new_shard_count)
+        await self.config.custom("SHARD_COUNT").set(new_shard_count)
+        await self.restart_bot()
+
+    async def restart_bot(self):
+        """Restart the bot using systemctl."""
+        log.info("Restarting the bot to apply new shard count...")
+        await self.bot.logout()
+        subprocess.run(["systemctl", "restart", "red@futurobot"])
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
@@ -113,5 +122,6 @@ class DynamicShardManager(commands.Cog):
         """Manually add a new shard."""
         current_shard_count = len(self.bot.shards)
         new_shard_count = current_shard_count + 1
-        await self.bot.change_shard_count(new_shard_count)
-        await ctx.send(f"Shard count increased to {new_shard_count}.")
+        await self.config.custom("SHARD_COUNT").set(new_shard_count)
+        await ctx.send(f"Shard count increased to {new_shard_count}. Restarting bot to apply changes...")
+        await self.restart_bot()
