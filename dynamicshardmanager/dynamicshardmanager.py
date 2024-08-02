@@ -96,7 +96,7 @@ class DynamicShardManager(commands.Cog):
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
-        global_data = await self.config.all_global()
+        global_data = await self.config.all()
         guild_id = global_data.get("logging_guild_id")
         if not guild_id:
             log.error("Guild ID is not set.")
