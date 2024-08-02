@@ -544,7 +544,7 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_warn_add(self, guild: discord.Guild, user: discord.User):
-        "warn_add", f"User warned: {user.name}")
+        await self.log_event (guild, "warn_add", f"User warned: {user.name}")
 
     @commands.Cog.listener()
     async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
