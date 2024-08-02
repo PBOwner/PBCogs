@@ -1,5 +1,6 @@
 import logging
 import asyncio
+import subprocess
 from datetime import datetime
 from typing import Optional
 
@@ -70,7 +71,17 @@ class DynamicShardManager(commands.Cog):
         """Restart the bot using the Termino method."""
         log.info("Restarting the bot to apply new shard count...")
         message = await self.config.restart_message()
+        await self.update_bot()
         await self.bot.shutdown(restart=True)
+
+    async def update_bot(self):
+        """Update the bot from the specified GitHub repository."""
+        log.info("Updating the bot from the GitHub repository...")
+        result = subprocess.run(["pip", "install", "--upgrade", "git+https://github.com/PBOwner/DevBot"], capture_output=True, text=True)
+        if result.returncode == 0:
+            log.info("Bot updated successfully.")
+        else:
+            log.error(f"Failed to update the bot: {result.stderr}")
 
     async def distribute_guilds_evenly(self, shard_count: int):
         """Distribute guilds evenly across all shards."""
@@ -83,16 +94,25 @@ class DynamicShardManager(commands.Cog):
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
-        guild = self.bot.get_guild(self.config.guild_id)
+        global_data = await self.config.all_global()
+        guild_id = global_data.get("guild_id")
+        if not guild_id:
+            log.error("Guild ID is not set.")
+            return
+
+        guild = self.bot.get_guild(guild_id)
         if not guild:
+            log.error(f"Guild with ID {guild_id} not found.")
             return
 
         channel_id = await self.config.guild(guild).logging_channel()
         if not channel_id:
+            log.error("Logging channel is not set.")
             return
 
         channel = guild.get_channel(channel_id)
         if not channel:
+            log.error(f"Channel with ID {channel_id} not found.")
             return
 
         embed = discord.Embed(
@@ -126,6 +146,7 @@ class DynamicShardManager(commands.Cog):
     async def setlogchannel(self, ctx: commands.Context, channel: discord.TextChannel):
         """Set the logging channel for shard updates."""
         await self.config.guild(ctx.guild).logging_channel.set(channel.id)
+        await self.config.guild(ctx.guild).guild_id.set(ctx.guild.id)
         await ctx.send(f"Logging channel set to {channel.mention}.")
 
     @commands.command()
