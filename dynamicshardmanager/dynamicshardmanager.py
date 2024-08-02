@@ -115,6 +115,3 @@ class DynamicShardManager(commands.Cog):
         new_shard_count = current_shard_count + 1
         await self.bot.change_shard_count(new_shard_count)
         await ctx.send(f"Shard count increased to {new_shard_count}.")
-
-def setup(bot: Red):
-    bot.add_cog(DynamicShardManager(bot))
