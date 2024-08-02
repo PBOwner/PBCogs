@@ -24,7 +24,7 @@ class DynamicShardManager(commands.Cog):
         default_global = {
             "shard_count": len(self.bot.shards),
             "restart_message": "Restarting the bot to add more shards",
-            "guild_id": None
+            "logging_guild_id": None
         }
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
@@ -97,7 +97,7 @@ class DynamicShardManager(commands.Cog):
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
         global_data = await self.config.all_global()
-        guild_id = global_data.get("guild_id")
+        guild_id = global_data.get("logging_guild_id")
         if not guild_id:
             log.error("Guild ID is not set.")
             return
@@ -152,8 +152,7 @@ class DynamicShardManager(commands.Cog):
     async def setlogchannel(self, ctx: commands.Context, channel: discord.TextChannel):
         """Set the logging channel for shard updates."""
         await self.config.guild(ctx.guild).logging_channel.set(channel.id)
-        await self.config.guild(ctx.guild).guild_id.set(ctx.guild.id)
-        await self.config.guild(ctx.guild).guild_id.set(ctx.guild.id)
+        await self.config.logging_guild_id.set(ctx.guild.id)
         await ctx.send(f"Logging channel set to {channel.mention}.")
 
     @commands.command()
