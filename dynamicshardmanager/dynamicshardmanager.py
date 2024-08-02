@@ -1,7 +1,6 @@
 import logging
 import asyncio
 import os
-import subprocess
 from datetime import datetime
 from typing import Optional
 
@@ -67,10 +66,10 @@ class DynamicShardManager(commands.Cog):
         await self.restart_bot()
 
     async def restart_bot(self):
-        """Restart the bot using systemctl."""
+        """Restart the bot using the Termino method."""
         log.info("Restarting the bot to apply new shard count...")
-        await self.bot.logout()
-        subprocess.run(["systemctl", "restart", "red@futurobot"])
+        message = await self.config.restart_message()
+        await self.bot.shutdown(restart=True)
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
