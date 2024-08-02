@@ -18,7 +18,7 @@ class Jail(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    @commands.admin_or_permissions(manage_channels=True)
+    @commands.admin_or_permissions(manage_roles=True)
     async def setjail(self, ctx, channel: discord.TextChannel):
         """Set the jail channel."""
         await self.config.guild(ctx.guild).jail_channel.set(channel.id)
