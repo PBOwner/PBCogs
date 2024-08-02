@@ -23,7 +23,8 @@ class DynamicShardManager(commands.Cog):
         }
         default_global = {
             "shard_count": len(self.bot.shards),
-            "restart_message": "Restarting the bot to add more shards"
+            "restart_message": "Restarting the bot to add more shards",
+            "guild_id": None
         }
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
