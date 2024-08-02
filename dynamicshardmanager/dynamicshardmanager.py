@@ -1,6 +1,5 @@
 import logging
 import asyncio
-import os
 from datetime import datetime
 from typing import Optional
 
@@ -22,7 +21,8 @@ class DynamicShardManager(commands.Cog):
             "logging_channel": None,
         }
         default_global = {
-            "shard_count": len(self.bot.shards)
+            "shard_count": len(self.bot.shards),
+            "restart_message": "Restarting the bot to add more shards"
         }
         self.config.register_guild(**default_guild)
         self.config.register_global(**default_global)
@@ -63,6 +63,7 @@ class DynamicShardManager(commands.Cog):
         log.info(f"Increasing shard count to {new_shard_count}.")
 
         await self.config.shard_count.set(new_shard_count)
+        await self.distribute_guilds_evenly(new_shard_count)
         await self.restart_bot()
 
     async def restart_bot(self):
@@ -70,6 +71,15 @@ class DynamicShardManager(commands.Cog):
         log.info("Restarting the bot to apply new shard count...")
         message = await self.config.restart_message()
         await self.bot.shutdown(restart=True)
+
+    async def distribute_guilds_evenly(self, shard_count: int):
+        """Distribute guilds evenly across all shards."""
+        guilds = list(self.bot.guilds)
+        guilds.sort(key=lambda g: g.id)
+        for i, guild in enumerate(guilds):
+            shard_id = i % shard_count
+            await self.bot.change_presence(shard_id=shard_id, guild=guild)
+        log.info("Distributed guilds evenly across all shards.")
 
     async def update_logging_channel(self):
         """Update the logging channel with shard information."""
@@ -128,3 +138,11 @@ class DynamicShardManager(commands.Cog):
         await self.config.shard_count.set(new_shard_count)
         await ctx.send(f"Shard count increased to {new_shard_count}. Restarting bot to apply changes...")
         await self.restart_bot()
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.is_owner()
+    async def sendstatus(self, ctx: commands.Context):
+        """Send the dynamic shard status embed to the logging channel."""
+        await self.update_logging_channel()
+        await ctx.send("Shard status embed sent to the logging channel.")
