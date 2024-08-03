@@ -566,7 +566,6 @@ class EventLogger(commands.Cog):
             f"**Author ID:** `{before.author.id}`\n"
             f"**Channel:** {before.channel.name}\n"
             f"**Channel ID:** `{before.channel.id}`\n"
-```python
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||"
         )
         await self.log_event(before.guild, "message_edit", description)
