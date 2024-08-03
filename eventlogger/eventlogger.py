@@ -62,7 +62,7 @@ class EventLogger(commands.Cog):
         log.info(f"Logging channel for event '{event}' set to {channel.name} ({channel.id}) in guild {ctx.guild.name} ({ctx.guild.id}) by {ctx.author}")
 
     @setlog.command()
-    async def bot_event(self, ctx, event: str, channel: discord.TextChannel):
+    async def bot_event_log(self, ctx, event: str, channel: discord.TextChannel):
         """Set the logging channel for a specific bot event"""
         async with self.config.guild(ctx.guild).bot_channels() as channels:
             channels[event] = channel.id
@@ -252,7 +252,7 @@ class EventLogger(commands.Cog):
             f"**Channel Type:** {str(channel.type)}\n"
             f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Deleter:** {channel.guild.me.name if channel.guild.me else 'N/A'}\n"
-            f"**Deleter:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||\n"
+            f"**Deleter ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||\n"
             f"**Time:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(channel.guild, "guild_channel_delete", description)
@@ -533,7 +533,7 @@ class EventLogger(commands.Cog):
             f"**Event ID:** `{event.id}`\n"
             f"**Guild:** ||{event.guild.name} ({event.guild.id})||\n"
             f"**Creator:** {event.creator.name if event.creator else 'N/A'}\n"
-            f"**Creator ID:** ||{event.creator.id if event.creator else 'N/A'}||\n"
+            f"**Creator ID:** ||{event.creator.id if event.creator else 'N/A'}\n"
             f"**Time:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(event.guild, "scheduled_event_create", description)
@@ -1458,7 +1458,7 @@ class EventLogger(commands.Cog):
             f"**After Case ID:** `{after.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}\n"
             f"**Time:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "case_update", description)
