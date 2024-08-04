@@ -5,6 +5,7 @@ from datetime import timedelta, datetime
 import re
 import uuid
 import asyncio
+
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
@@ -14,6 +15,7 @@ class AdWarn(commands.Cog):
         self.race_start_time = None
         self.race_end_time = None
         self.race_participants = []
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, ctx, user: discord.Member, *, reason: str):
@@ -98,6 +100,7 @@ class AdWarn(commands.Cog):
             await error_message.delete(delay=3)
         # Delete the command message immediately
         await ctx.message.delete()
+
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
         softban_duration = await self.config.guild(ctx.guild).softban_duration()
@@ -116,6 +119,7 @@ class AdWarn(commands.Cog):
                 elif action == "softban":
                     await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
                     await ctx.guild.unban(user, reason="Softban duration expired")
+
     def parse_duration(self, duration_str):
         """Parse a duration string and return the duration in minutes."""
         match = re.match(r"(\d+)([mh])", duration_str)
@@ -127,17 +131,21 @@ class AdWarn(commands.Cog):
             elif unit == "m":
                 return value  # Minutes
         return None
+
     async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
         if duration:
             timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
             await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
+
     async def schedule_untimeout(self, ctx, user, duration):
         untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
         await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
+
     @commands.Cog.listener()
     async def on_ready(self):
         await self.check_untimeout_times()
+
     async def check_untimeout_times(self):
         for guild in self.bot.guilds:
             for member in guild.members:
@@ -147,8 +155,10 @@ class AdWarn(commands.Cog):
                     if discord.utils.utcnow() >= untimeout_time:
                         await self.untimeout_user(member)
                         await self.config.member(member).untimeout_time.clear()
+
     async def untimeout_user(self, user: discord.Member):
         await user.edit(timed_out_until=None, reason="Timeout duration expired")
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
@@ -196,6 +206,7 @@ class AdWarn(commands.Cog):
             await error_message.delete(delay=3)
         # Delete the command message immediately
         await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def warncount(self, ctx, user: discord.Member):
@@ -215,8 +226,7 @@ class AdWarn(commands.Cog):
             )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clearwarns(self, ctx, user: discord.User):
@@ -249,8 +259,7 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def unadwarn(self, ctx, user: discord.Member):
@@ -295,8 +304,7 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def editaw(self, ctx, user: discord.Member, warning_id: str, *, new_reason: str):
@@ -342,8 +350,7 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def topwarners(self, ctx):
@@ -366,8 +373,7 @@ class AdWarn(commands.Cog):
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def modwarns(self, ctx, moderator: discord.Member):
@@ -397,6 +403,7 @@ class AdWarn(commands.Cog):
         await message.delete(delay=10)
         # Delete the command message immediately
         await ctx.message.delete()
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adboard(self, ctx):
@@ -419,14 +426,14 @@ class AdWarn(commands.Cog):
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-        # Delete the command message immediately
-        await ctx.message.delete()
+
     @commands.group()
     @commands.guild_only()
     @commands.has_permissions(administrator=True)
     async def warnset(self, ctx):
         """Settings for the warning system."""
         pass
+
     @warnset.command()
     async def channel(self, ctx, channel: discord.TextChannel):
         """Set the default channel for warnings."""
@@ -438,6 +445,7 @@ class AdWarn(commands.Cog):
         )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
+
     @warnset.command()
     async def recentadwarnchannel(self, ctx, channel: discord.VoiceChannel):
         """Set the voice channel for displaying the most recent adwarned user."""
@@ -449,6 +457,7 @@ class AdWarn(commands.Cog):
         )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
+
     @warnset.command()
     async def show(self, ctx):
         """Show the current warning channel and thresholds."""
@@ -476,6 +485,7 @@ class AdWarn(commands.Cog):
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
+
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str):
         """Set an action for a specific warning count threshold."""
@@ -492,6 +502,7 @@ class AdWarn(commands.Cog):
         await self.config.guild(ctx.guild).tholds.set(tholds)
         message = await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
         await message.delete(delay=10)
+
     @warnset.command()
     async def delthreshold(self, ctx, threshold_id: str):
         """Delete a specific warning count threshold by its UUID."""
@@ -504,18 +515,21 @@ class AdWarn(commands.Cog):
         else:
             message = await ctx.send(f"No threshold set with ID {threshold_id}.")
             await message.delete(delay=10)
+
     @warnset.command()
     async def softbanduration(self, ctx, days: int):
         """Set the duration (in days) for message deletion during a softban."""
         await self.config.guild(ctx.guild).softban_duration.set(days)
         message = await ctx.send(f"Softban message deletion duration set to {days} days.")
         await message.delete(delay=10)
+
     @warnset.command()
     async def timeoutduration(self, ctx, minutes: int):
         """Set the duration (in minutes) for timeouts."""
         await self.config.guild(ctx.guild).timeout_duration.set(minutes)
         message = await ctx.send(f"Timeout duration set to {minutes} minutes.")
         await message.delete(delay=10)
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adrace(self, ctx, duration: int):
@@ -530,12 +544,14 @@ class AdWarn(commands.Cog):
         )
         join_message = await ctx.send(embed=embed)
         await join_message.add_reaction(custom_emoji)
+
         def check(reaction, user):
             return (
                 str(reaction.emoji) == custom_emoji
                 and reaction.message.id == join_message.id
                 and user != self.bot.user
             )
+
         participants = []
         participants_mentions = ""
         # Countdown for 1 minute
@@ -550,6 +566,7 @@ class AdWarn(commands.Cog):
                     await join_message.edit(embed=embed)
             except asyncio.TimeoutError:
                 break
+
         # Handle reaction removal
         async def handle_reaction_remove(reaction, user):
             if str(reaction.emoji) == custom_emoji and reaction.message.id == join_message.id:
@@ -558,7 +575,9 @@ class AdWarn(commands.Cog):
                     participants_mentions = ", ".join(user.mention for user in participants)
                     embed.description = f"Participants: {participants_mentions}\nYou have until <t:{join_end_timestamp}:R> to join."
                     await join_message.edit(embed=embed)
+
         self.bot.add_listener(handle_reaction_remove, "on_reaction_remove")
+
         # Final update to the join message
         if participants:
             embed.description = f"Participants: {participants_mentions}\nTime's up! The race is starting now."
@@ -569,6 +588,7 @@ class AdWarn(commands.Cog):
         if not participants:
             self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
             return
+
         self.race_start_time = discord.utils.utcnow()
         self.race_end_time = self.race_start_time + timedelta(minutes=duration)
         self.race_participants = [{"user": participant.id, "warnings": 0} for participant in participants]
@@ -631,6 +651,7 @@ class AdWarn(commands.Cog):
         await message.delete(delay=10)
         # Reset weekly stats
         await self.config.guild(ctx.guild).weekly_stats.set({})
+
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def monthlystats(self, ctx):
@@ -655,6 +676,7 @@ class AdWarn(commands.Cog):
         await message.delete(delay=10)
         # Reset monthly stats
         await self.config.guild(ctx.guild).monthly_stats.set({})
+
     @commands.Cog.listener()
     async def on_message(self, message):
         """Listener to update weekly and monthly stats."""
