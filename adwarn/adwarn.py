@@ -4,12 +4,13 @@ from redbot.core.bot import Red
 from datetime import timedelta, datetime
 import re
 import uuid
+import asyncio
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={})
+        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120)
         self.config.register_member(warnings=[], untimeout_time=None)
 
     @commands.command()
@@ -101,6 +102,7 @@ class AdWarn(commands.Cog):
 
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
+        softban_duration = await self.config.guild(ctx.guild).softban_duration()
 
         for threshold_id, threshold in tholds.items():
             if threshold["count"] == warning_count:
@@ -119,8 +121,10 @@ class AdWarn(commands.Cog):
                     await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
                     if timeout_duration:
                         await self.schedule_untimeout(ctx, user, timeout_duration)
-
-                # Add more actions as needed
+                elif action == "softban":
+                    await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
+                    await ctx.guild.unban(user, reason="Softban duration expired")
+                    await ctx.send(f"{user.mention} has been softbanned for reaching {warning_count} warnings and messages deleted for {softban_duration} days.")
 
     def parse_duration(self, duration_str):
         """Parse a duration string and return the duration in minutes."""
@@ -487,7 +491,7 @@ class AdWarn(commands.Cog):
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str, duration: str = None):
         """Set an action for a specific warning count threshold."""
-        valid_actions = ["kick", "ban", "mute"]  # Add more actions as needed
+        valid_actions = ["kick", "ban", "mute", "softban"]  # Add more actions as needed
         if action not in valid_actions and not action.startswith("mute"):
             await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <duration>'")
             return
@@ -518,3 +522,57 @@ class AdWarn(commands.Cog):
             await ctx.send(f"Deleted threshold with ID {threshold_id}.")
         else:
             await ctx.send(f"No threshold set with ID {threshold_id}.")
+
+    @warnset.command()
+    async def softbanduration(self, ctx, days: int):
+        """Set the duration (in days) for message deletion during a softban."""
+        await self.config.guild(ctx.guild).softban_duration.set(days)
+        await ctx.send(f"Softban message deletion duration set to {days} days.")
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def adrace(self, ctx, duration: int):
+        """Start an adwarn race that lasts for a configurable amount of time."""
+        join_message = await ctx.send(
+            "React with 🏁 to join the AdWarn race! You have 1 minute to join."
+        )
+        await join_message.add_reaction("🏁")
+
+        def check(reaction, user):
+            return (
+                str(reaction.emoji) == "🏁"
+                and reaction.message.id == join_message.id
+                and user != self.bot.user
+            )
+
+        participants = []
+
+        try:
+            while True:
+                reaction, user = await self.bot.wait_for("reaction_add", timeout=60.0, check=check)
+                if user not in participants:
+                    participants.append(user)
+        except asyncio.TimeoutError:
+            pass
+
+        if not participants:
+            await ctx.send("No one joined the race.")
+            return
+
+        results = {}
+        for participant in participants:
+            warnings = await self.config.member(participant).warnings()
+            results[participant] = len(warnings)
+
+        sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
+
+        embed = discord.Embed(
+            title="AdWarn Race Results",
+            description=f"The race lasted for {duration} minutes. Here are the results:",
+            color=discord.Color.gold()
+        )
+
+        for rank, (user, count) in enumerate(sorted_results, start=1):
+            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
+
+        await ctx.send(embed=embed)
