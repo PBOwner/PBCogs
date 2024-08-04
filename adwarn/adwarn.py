@@ -441,7 +441,6 @@ class AdWarn(commands.Cog):
                 title=f"{moderator} has not issued any warnings.",
                 color=discord.Color.red()
             )
-    )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
 
