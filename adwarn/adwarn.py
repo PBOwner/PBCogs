@@ -514,14 +514,15 @@ class AdWarn(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def adrace(self, ctx, duration: int):
         """Start an adwarn race that lasts for a configurable amount of time."""
+        custom_emoji = "<a:winner:1269746569872412785>"  # Replace with your custom emoji
         join_message = await ctx.send(
-            "React with  to join the AdWarn race! You have 1 minute to join."
+            "React with your custom emoji to join the AdWarn race! You have 1 minute to join."
         )
-        await join_message.add_reaction("")
+        await join_message.add_reaction(custom_emoji)
 
         def check(reaction, user):
             return (
-                str(reaction.emoji) == "<a:winner:1269746569872412785>"
+                str(reaction.emoji) == custom_emoji
                 and reaction.message.id == join_message.id
                 and user != self.bot.user
             )
@@ -530,7 +531,7 @@ class AdWarn(commands.Cog):
 
         embed = discord.Embed(
             title="AdWarn Race Join",
-            description="React with  to join the AdWarn race! You have 1 minute to join.",
+            description="React with your custom emoji to join the AdWarn race! You have 1 minute to join.",
             color=discord.Color.gold()
         )
         join_message = await ctx.send(embed=embed)
