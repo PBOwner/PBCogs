@@ -516,9 +516,12 @@ class AdWarn(commands.Cog):
         """Start an adwarn race that lasts for a configurable amount of time."""
         custom_emoji = "<a:winner:1269746569872412785>"  # Custom emoji
 
+        join_end_time = discord.utils.utcnow() + timedelta(seconds=60)
+        join_end_timestamp = int(join_end_time.timestamp())
+
         embed = discord.Embed(
             title="AdWarn Race Join",
-            description="React with the custom emoji to join the AdWarn race! You have 1 minute to join.",
+            description=f"React with the custom emoji to join the AdWarn race! You have until <t:{join_end_timestamp}:R> to join.",
             color=discord.Color.gold()
         )
         join_message = await ctx.send(embed=embed)
@@ -535,15 +538,14 @@ class AdWarn(commands.Cog):
         participants_mentions = ""
 
         # Countdown for 1 minute
-        join_end_time = discord.utils.utcnow() + timedelta(seconds=60)
-        while (discord.utils.utcnow() < join_end_time):
+        while discord.utils.utcnow() < join_end_time:
             try:
                 remaining = (join_end_time - discord.utils.utcnow()).total_seconds()
                 reaction, user = await self.bot.wait_for("reaction_add", timeout=remaining, check=check)
                 if user not in participants:
                     participants.append(user)
                     participants_mentions = ", ".join(user.mention for user in participants)
-                    embed.description = f"Participants: {participants_mentions}\nYou have {int(remaining)} seconds to join."
+                    embed.description = f"Participants: {participants_mentions}\nYou have until <t:{join_end_timestamp}:R> to join."
                     await join_message.edit(embed=embed)
             except asyncio.TimeoutError:
                 break
@@ -591,6 +593,7 @@ class AdWarn(commands.Cog):
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
         await race_message.edit(embed=embed)
+
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def weeklystats(self, ctx):
