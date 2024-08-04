@@ -559,7 +559,7 @@ class AdWarn(commands.Cog):
 
         embed = discord.Embed(
             title="AdWarn Race Join",
-            description=f"React with the custom emoji to join the AdWarn race!\nYou have until <t:{join_end_timestamp}:F> to join.",
+            description=f"React with the custom emoji to join the AdWarn race! You have until <t:{join_end_timestamp}:R> to join.",
             color=discord.Color.gold()
         )
         join_message = await ctx.send(embed=embed)
@@ -588,6 +588,17 @@ class AdWarn(commands.Cog):
             except asyncio.TimeoutError:
                 break
 
+        # Handle reaction removal
+        async def handle_reaction_remove(reaction, user):
+            if str(reaction.emoji) == custom_emoji and reaction.message.id == join_message.id:
+                if user in participants:
+                    participants.remove(user)
+                    participants_mentions = ", ".join(user.mention for user in participants)
+                    embed.description = f"Participants: {participants_mentions}\nYou have until <t:{join_end_timestamp}:R> to join."
+                    await join_message.edit(embed=embed)
+
+        self.bot.add_listener(handle_reaction_remove, "on_reaction_remove")
+
         # Final update to the join message
         if participants:
             embed.description = f"Participants: {participants_mentions}\nTime's up! The race is starting now."
@@ -597,6 +608,7 @@ class AdWarn(commands.Cog):
         await join_message.edit(embed=embed)
 
         if not participants:
+            self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
             return
 
         self.race_start_time = discord.utils.utcnow()
@@ -615,18 +627,28 @@ class AdWarn(commands.Cog):
         await asyncio.sleep(duration * 60)
 
         # Compile results as quickly as possible
-        sorted_results = sorted(self.race_participants, key=lambda item: item["warnings"], reverse=True)
+        results = {}
+        for participant in participants:
+            warnings = await self.config.member(participant).warnings()
+            warnings_during_race = [
+                warning for warning in warnings
+                if self.race_start_time <= datetime.fromisoformat(warning["time"]) <= self.race_end_time
+            ]
+            results[participant.id] = len(warnings_during_race)
+
+        sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
         # Edit the race started message to display the results
         embed.title = "AdWarn Race Results"
         embed.description = f"The race lasted for {duration} minutes. Here are the results:"
         embed.clear_fields()
 
-        for rank, participant in enumerate(sorted_results, start=1):
-            user = self.bot.get_user(participant["user"])
-            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {participant['warnings']}", inline=False)
+        for rank, (user_id, count) in enumerate(sorted_results, start=1):
+            user = self.bot.get_user(user_id)
+            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
         await race_message.edit(embed=embed)
+        self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
 
     @commands.command()
     @commands.has_permissions(administrator=True)
