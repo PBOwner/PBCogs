@@ -521,7 +521,7 @@ class AdWarn(commands.Cog):
 
         embed = discord.Embed(
             title="AdWarn Race Join",
-            description=f"React with the custom emoji to join the AdWarn race! You have until <t:{join_end_timestamp}:R> to join.",
+            description=f"React with the custom emoji to join the AdWarn race!\n To join, click the reaction <t:{join_end_timestamp}:R>.",
             color=discord.Color.gold()
         )
         join_message = await ctx.send(embed=embed)
