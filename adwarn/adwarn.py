@@ -91,15 +91,6 @@ class AdWarn(commands.Cog):
                 # Check thresholds and take action if necessary
                 await self.check_thresholds(ctx, user, len(warnings))
 
-                # Update race participants if the race is ongoing
-                if self.race_start_time and self.race_end_time and self.race_start_time <= warning_time <= self.race_end_time:
-                    for participant in self.race_participants:
-                        if participant["user"] == ctx.author.id:
-                            participant["warnings"] += 1
-                            break
-                    else:
-                        self.race_participants.append({"user": ctx.author.id, "warnings": 1})
-
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -559,7 +550,7 @@ class AdWarn(commands.Cog):
 
         embed = discord.Embed(
             title="AdWarn Race Join",
-            description=f"React with the custom emoji to join the AdWarn race!\nYou have until <t:{join_end_timestamp}:F> to join.",
+            description=f"React with the custom emoji to join the AdWarn race! You have until <t:{join_end_timestamp}:R> to join.",
             color=discord.Color.gold()
         )
         join_message = await ctx.send(embed=embed)
