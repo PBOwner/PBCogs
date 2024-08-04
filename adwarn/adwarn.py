@@ -585,14 +585,16 @@ class AdWarn(commands.Cog):
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
-        embed.title = "AdWarn Race Results"
-        embed.description = f"The race lasted for {duration} minutes. Here are the results:"
-        embed.clear_fields()
+        results_embed = discord.Embed(
+            title="AdWarn Race Results",
+            description=f"The race lasted for {duration} minutes. Here are the results:",
+            color=discord.Color.gold()
+        )
 
         for rank, (user, count) in enumerate(sorted_results, start=1):
-            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
+            results_embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await race_message.edit(embed=embed)
+        await ctx.send(embed=results_embed)
 
     @commands.command()
     @commands.has_permissions(administrator=True)
