@@ -77,13 +77,16 @@ class GlobalLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
+        channel_info = f"{ctx.channel.name} ({ctx.channel.mention})" if isinstance(ctx.channel, discord.TextChannel) else f"Direct Message ({ctx.channel.id})"
+        guild_info = f"{ctx.guild.name} ({ctx.guild.id})" if ctx.guild else "Direct Message"
+
         fields = {
             "Command Ran": str(ctx.command),
             "Ran By": f"{ctx.author} ({ctx.author.mention})",
             "User ID": ctx.author.id,
-            "Where": f"{ctx.channel.name} ({ctx.channel.mention})",
+            "Where": channel_info,
             "Channel ID": ctx.channel.id,
-            "Guild": f"{ctx.guild.name} ({ctx.guild.id})",
+            "Guild": guild_info,
             "Timestamp": ctx.message.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"),
             "Message Content": ctx.message.content,
         }
@@ -91,14 +94,17 @@ class GlobalLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        channel_info = f"{ctx.channel.name} ({ctx.channel.mention})" if isinstance(ctx.channel, discord.TextChannel) else f"Direct Message ({ctx.channel.id})"
+        guild_info = f"{ctx.guild.name} ({ctx.guild.id})" if ctx.guild else "Direct Message"
+
         tb = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         fields = {
             "Command Ran": str(ctx.command),
             "Ran By": f"{ctx.author} ({ctx.author.mention})",
             "User ID": ctx.author.id,
-            "Where": f"{ctx.channel.name} ({ctx.channel.mention})",
+            "Where": channel_info,
             "Channel ID": ctx.channel.id,
-            "Guild": f"{ctx.guild.name} ({ctx.guild.id})",
+            "Guild": guild_info,
             "Timestamp": ctx.message.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"),
             "Message Content": ctx.message.content,
             "Error Type": type(error).__name__,
