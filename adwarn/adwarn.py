@@ -432,6 +432,9 @@ class AdWarn(commands.Cog):
                 warned_user = self.bot.get_user(warning["user"])
                 timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
                 embed.add_field(
+                    name=f"User Warned: {                warned_user = self.bot.get_user(warning["user"])
+                timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
+                embed.add_field(
                     name=f"User Warned: {warned_user} (ID: {warning['user']})",
                     value=f"Reason: {warning['reason']}\nTime: <t:{timestamp}:F>\nChannel: <#{warning['channel']}>",
                     inline=False
@@ -653,26 +656,22 @@ class AdWarn(commands.Cog):
         self.race_end_time = self.race_start_time + timedelta(minutes=duration)
         self.race_participants = [{"user": participant.id, "warnings": 0} for participant in participants]
 
-        embed = discord.Embed(
-            title="AdWarn Race Started",
-            color=discord.Color.gold()
-        )
+        embed.title = "AdWarn Race Started"
         embed.add_field(name="Starts", value=f"<t:{int(self.race_start_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Ends", value=f"<t:{int(self.race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
-        race_message = await ctx.send(embed=embed)
+        await join_message.edit(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
         # Compile results as quickly as possible
-        results = {}
-        for participant in participants:
-            warnings = await self.config.member(participant).warnings()
-            warnings_during_race = [
-                warning for warning in warnings
-                if self.race_start_time <= datetime.fromisoformat(warning["time"]) <= self.race_end_time
-            ]
-            results[participant.id] = len(warnings_during_race)
+        results = {participant["user"]: 0 for participant in self.race_participants}
+        for channel in ctx.guild.text_channels:
+            async for message in channel.history(after=self.race_start_time, before=self.race_end_time):
+                if message.content.startswith(ctx.prefix + "adwarn"):
+                    for participant in self.race_participants:
+                        if message.author.id == participant["user"]:
+                            results[participant["user"]] += 1
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
@@ -685,7 +684,7 @@ class AdWarn(commands.Cog):
             user = self.bot.get_user(user_id)
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await race_message.edit(embed=embed)
+        await join_message.edit(embed=embed)
         self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
 
     @commands.command()
