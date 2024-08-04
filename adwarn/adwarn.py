@@ -5,7 +5,6 @@ from datetime import timedelta, datetime
 import re
 import uuid
 import asyncio
-
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
@@ -15,7 +14,6 @@ class AdWarn(commands.Cog):
         self.race_start_time = None
         self.race_end_time = None
         self.race_participants = []
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, ctx, user: discord.Member, *, reason: str):
@@ -37,14 +35,12 @@ class AdWarn(commands.Cog):
                     "channel": ctx.channel.id
                 })
                 await self.config.member(user).warnings.set(warnings)
-
                 # Increment the count of warnings issued by the moderator for the current server
                 warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
                 if str(ctx.author.id) not in warnings_issued:
                     warnings_issued[str(ctx.author.id)] = 0
                 warnings_issued[str(ctx.author.id)] += 1
                 await self.config.guild(ctx.guild).warnings_issued.set(warnings_issued)
-
                 # Store the details of the warning issued by the moderator
                 mod_warnings = await self.config.guild(ctx.guild).mod_warnings()
                 if str(ctx.author.id) not in mod_warnings:
@@ -56,7 +52,6 @@ class AdWarn(commands.Cog):
                     "channel": ctx.channel.id
                 })
                 await self.config.guild(ctx.guild).mod_warnings.set(mod_warnings)
-
                 # Create the embed message
                 timestamp = int(warning_time.timestamp())
                 embed = discord.Embed(title="New AdWarn", color=discord.Color.red())
@@ -66,13 +61,10 @@ class AdWarn(commands.Cog):
                 embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                 embed.add_field(name="Time", value=f"<t:{timestamp}:F>", inline=False)
                 embed.set_footer(text=f"Total warnings: {len(warnings)}")
-
                 # Send the embed to the specified warning channel
                 await warn_channel.send(embed=embed)
-
                 # Send plain text message to the warning channel
                 await warn_channel.send(f"{user.mention}")
-
                 # Send confirmation embed to the command issuer
                 confirmation_embed = discord.Embed(
                     title="Warning Issued",
@@ -81,16 +73,13 @@ class AdWarn(commands.Cog):
                 )
                 confirmation_message = await ctx.send(embed=confirmation_embed)
                 await confirmation_message.delete(delay=3)
-
                 # Update the recent adwarn voice channel
                 if recent_adwarn_channel_id:
                     recent_adwarn_channel = self.bot.get_channel(recent_adwarn_channel_id)
                     if recent_adwarn_channel:
                         await recent_adwarn_channel.edit(name=f"Recent Adwarn: {user.name}")
-
                 # Check thresholds and take action if necessary
                 await self.check_thresholds(ctx, user, len(warnings))
-
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -107,15 +96,12 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
         softban_duration = await self.config.guild(ctx.guild).softban_duration()
         timeout_duration = await self.config.guild(ctx.guild).timeout_duration()
-
         for threshold_id, threshold in tholds.items():
             if threshold["count"] == warning_count:
                 action = threshold["action"]
@@ -130,7 +116,6 @@ class AdWarn(commands.Cog):
                 elif action == "softban":
                     await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
                     await ctx.guild.unban(user, reason="Softban duration expired")
-
     def parse_duration(self, duration_str):
         """Parse a duration string and return the duration in minutes."""
         match = re.match(r"(\d+)([mh])", duration_str)
@@ -142,21 +127,17 @@ class AdWarn(commands.Cog):
             elif unit == "m":
                 return value  # Minutes
         return None
-
     async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
         if duration:
             timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
             await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
-
     async def schedule_untimeout(self, ctx, user, duration):
         untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
         await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
-
     @commands.Cog.listener()
     async def on_ready(self):
         await self.check_untimeout_times()
-
     async def check_untimeout_times(self):
         for guild in self.bot.guilds:
             for member in guild.members:
@@ -166,21 +147,17 @@ class AdWarn(commands.Cog):
                     if discord.utils.utcnow() >= untimeout_time:
                         await self.untimeout_user(member)
                         await self.config.member(member).untimeout_time.clear()
-
     async def untimeout_user(self, user: discord.Member):
         await user.edit(timed_out_until=None, reason="Timeout duration expired")
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
         """Remove a specific warning from a user by its UUID."""
         warnings = await self.config.member(user).warnings()
         warning_to_remove = next((warning for warning in warnings if warning["id"] == warning_id), None)
-
         if warning_to_remove:
             warnings.remove(warning_to_remove)
             await self.config.member(user).warnings.set(warnings)
-
             warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
             if warn_channel_id:
                 warn_channel = self.bot.get_channel(warn_channel_id)
@@ -191,7 +168,6 @@ class AdWarn(commands.Cog):
                     embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                     embed.add_field(name="Removed Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
-
                     # Send the embed to the specified warning channel
                     await warn_channel.send(embed=embed)
                 else:
@@ -218,10 +194,8 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def warncount(self, ctx, user: discord.Member):
@@ -232,7 +206,6 @@ class AdWarn(commands.Cog):
             description=f"{user.mention} has {len(warnings)} warnings.",
             color=discord.Color.blue()
         )
-
         for warning in warnings:
             timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
             embed.add_field(
@@ -240,13 +213,10 @@ class AdWarn(commands.Cog):
                 value=f"Reason: {warning['reason']}\nModerator: <@{warning['moderator']}>\nTime: <t:{timestamp}:F>",
                 inline=False
             )
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clearwarns(self, ctx, user: discord.User):
@@ -261,7 +231,6 @@ class AdWarn(commands.Cog):
                 embed.add_field(name="User", value=user.mention, inline=True)
                 embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                 embed.add_field(name="Cleared Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
-
                 # Send the embed to the specified warning channel
                 await warn_channel.send(embed=embed)
             else:
@@ -280,10 +249,8 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def unadwarn(self, ctx, user: discord.Member):
@@ -292,7 +259,6 @@ class AdWarn(commands.Cog):
         if warnings:
             removed_warning = warnings.pop()
             await self.config.member(user).warnings.set(warnings)
-
             warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
             if warn_channel_id:
                 warn_channel = self.bot.get_channel(warn_channel_id)
@@ -303,7 +269,6 @@ class AdWarn(commands.Cog):
                     embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                     embed.add_field(name="Removed Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
-
                     # Send the embed to the specified warning channel
                     await warn_channel.send(embed=embed)
                 else:
@@ -330,21 +295,17 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def editaw(self, ctx, user: discord.Member, warning_id: str, *, new_reason: str):
         """Edit a specific warning by its UUID."""
         warnings = await self.config.member(user).warnings()
         warning_to_edit = next((warning for warning in warnings if warning["id"] == warning_id), None)
-
         if warning_to_edit:
             warning_to_edit["reason"] = new_reason
             await self.config.member(user).warnings.set(warnings)
-
             warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
             if warn_channel_id:
                 warn_channel = self.bot.get_channel(warn_channel_id)
@@ -355,7 +316,6 @@ class AdWarn(commands.Cog):
                     embed.add_field(name="Moderator", value=ctx.author.mention, inline=True)
                     embed.add_field(name="Edited Time", value=f"<t:{int(discord.utils.utcnow().timestamp())}:F>", inline=True)
                     embed.set_footer(text=f"Total warnings: {len(warnings)}")
-
                     # Send the embed to the specified warning channel
                     await warn_channel.send(embed=embed)
                 else:
@@ -382,22 +342,18 @@ class AdWarn(commands.Cog):
             )
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def topwarners(self, ctx):
         """Show the top 5 users who have issued the most warnings in the current server."""
         warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
         sorted_users = sorted(warnings_issued.items(), key=lambda item: item[1], reverse=True)
-
         embed = discord.Embed(
             title="Top 5 Warners",
             color=discord.Color.gold()
         )
-
         if sorted_users:
             for rank, (user_id, count) in enumerate(sorted_users[:5], start=1):
                 user = self.bot.get_user(int(user_id))
@@ -408,13 +364,10 @@ class AdWarn(commands.Cog):
                 )
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def modwarns(self, ctx, moderator: discord.Member):
@@ -427,7 +380,6 @@ class AdWarn(commands.Cog):
                 color=discord.Color.blue()
             )
             embed.add_field(name="Total Warnings Issued", value=len(warnings), inline=False)
-
             for warning in warnings:
                 warned_user = self.bot.get_user(warning["user"])
                 timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
@@ -443,22 +395,18 @@ class AdWarn(commands.Cog):
             )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adboard(self, ctx):
         """Show all users who have issued warnings and how many they have issued."""
         warnings_issued = await self.config.guild(ctx.guild).warnings_issued()
         sorted_users = sorted(warnings_issued.items(), key=lambda item: item[1], reverse=True)
-
         embed = discord.Embed(
             title="AdBoard - Warning Issuers",
             color=discord.Color.purple()
         )
-
         if sorted_users:
             for rank, (user_id, count) in enumerate(sorted_users, start=1):
                 user = self.bot.get_user(int(user_id))
@@ -469,20 +417,16 @@ class AdWarn(commands.Cog):
                 )
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Delete the command message immediately
         await ctx.message.delete()
-
     @commands.group()
     @commands.guild_only()
     @commands.has_permissions(administrator=True)
     async def warnset(self, ctx):
         """Settings for the warning system."""
         pass
-
     @warnset.command()
     async def channel(self, ctx, channel: discord.TextChannel):
         """Set the default channel for warnings."""
@@ -494,7 +438,6 @@ class AdWarn(commands.Cog):
         )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
     @warnset.command()
     async def recentadwarnchannel(self, ctx, channel: discord.VoiceChannel):
         """Set the voice channel for displaying the most recent adwarned user."""
@@ -506,40 +449,33 @@ class AdWarn(commands.Cog):
         )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
     @warnset.command()
     async def show(self, ctx):
         """Show the current warning channel and thresholds."""
         channel_id = await self.config.guild(ctx.guild).warn_channel()
         recent_adwarn_channel_id = await self.config.guild(ctx.guild).recent_adwarn_channel()
         tholds = await self.config.guild(ctx.guild).tholds()
-
         embed = discord.Embed(
             title="Warning System Configuration",
             color=discord.Color.blue()
         )
-
         if channel_id:
             channel = self.bot.get_channel(channel_id)
             embed.add_field(name="Current Warning Channel", value=channel.mention, inline=False)
         else:
             embed.add_field(name="Current Warning Channel", value="Not set", inline=False)
-
         if recent_adwarn_channel_id:
             recent_adwarn_channel = self.bot.get_channel(recent_adwarn_channel_id)
             embed.add_field(name="Recent Adwarn Channel", value=recent_adwarn_channel.mention, inline=False)
         else:
             embed.add_field(name="Recent Adwarn Channel", value="Not set", inline=False)
-
         if tholds:
             threshold_list = "\n".join([f"{threshold_id}: {threshold['count']} warnings -> {threshold['action']}" for threshold_id, threshold in tholds.items()])
             embed.add_field(name="Warning Thresholds", value=threshold_list, inline=False)
         else:
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str):
         """Set an action for a specific warning count threshold."""
@@ -547,7 +483,6 @@ class AdWarn(commands.Cog):
         if action not in valid_actions:
             await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)}")
             return
-
         tholds = await self.config.guild(ctx.guild).tholds()
         threshold_id = str(uuid.uuid4())
         tholds[threshold_id] = {
@@ -557,7 +492,6 @@ class AdWarn(commands.Cog):
         await self.config.guild(ctx.guild).tholds.set(tholds)
         message = await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
         await message.delete(delay=10)
-
     @warnset.command()
     async def delthreshold(self, ctx, threshold_id: str):
         """Delete a specific warning count threshold by its UUID."""
@@ -570,30 +504,25 @@ class AdWarn(commands.Cog):
         else:
             message = await ctx.send(f"No threshold set with ID {threshold_id}.")
             await message.delete(delay=10)
-
     @warnset.command()
     async def softbanduration(self, ctx, days: int):
         """Set the duration (in days) for message deletion during a softban."""
         await self.config.guild(ctx.guild).softban_duration.set(days)
         message = await ctx.send(f"Softban message deletion duration set to {days} days.")
         await message.delete(delay=10)
-
     @warnset.command()
     async def timeoutduration(self, ctx, minutes: int):
         """Set the duration (in minutes) for timeouts."""
         await self.config.guild(ctx.guild).timeout_duration.set(minutes)
         message = await ctx.send(f"Timeout duration set to {minutes} minutes.")
         await message.delete(delay=10)
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adrace(self, ctx, duration: int):
         """Start an adwarn race that lasts for a configurable amount of time."""
         custom_emoji = "<a:winner:1269746569872412785>"  # Custom emoji
-
         join_end_time = discord.utils.utcnow() + timedelta(seconds=60)
         join_end_timestamp = int(join_end_time.timestamp())
-
         embed = discord.Embed(
             title="AdWarn Race Join",
             description=f"React with the custom emoji to join the AdWarn race! You have until <t:{join_end_timestamp}:R> to join.",
@@ -601,17 +530,14 @@ class AdWarn(commands.Cog):
         )
         join_message = await ctx.send(embed=embed)
         await join_message.add_reaction(custom_emoji)
-
         def check(reaction, user):
             return (
                 str(reaction.emoji) == custom_emoji
                 and reaction.message.id == join_message.id
                 and user != self.bot.user
             )
-
         participants = []
         participants_mentions = ""
-
         # Countdown for 1 minute
         while discord.utils.utcnow() < join_end_time:
             try:
@@ -624,7 +550,6 @@ class AdWarn(commands.Cog):
                     await join_message.edit(embed=embed)
             except asyncio.TimeoutError:
                 break
-
         # Handle reaction removal
         async def handle_reaction_remove(reaction, user):
             if str(reaction.emoji) == custom_emoji and reaction.message.id == join_message.id:
@@ -633,9 +558,7 @@ class AdWarn(commands.Cog):
                     participants_mentions = ", ".join(user.mention for user in participants)
                     embed.description = f"Participants: {participants_mentions}\nYou have until <t:{join_end_timestamp}:R> to join."
                     await join_message.edit(embed=embed)
-
         self.bot.add_listener(handle_reaction_remove, "on_reaction_remove")
-
         # Final update to the join message
         if participants:
             embed.description = f"Participants: {participants_mentions}\nTime's up! The race is starting now."
@@ -643,31 +566,33 @@ class AdWarn(commands.Cog):
             embed.description = "No one joined the race. The race is cancelled."
         await join_message.clear_reactions()
         await join_message.edit(embed=embed)
-
         if not participants:
             self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
             return
-
         self.race_start_time = discord.utils.utcnow()
         self.race_end_time = self.race_start_time + timedelta(minutes=duration)
         self.race_participants = [{"user": participant.id, "warnings": 0} for participant in participants]
 
-        embed.title = "AdWarn Race Started"
+        embed = discord.Embed(
+            title="AdWarn Race Started",
+            color=discord.Color.gold()
+        )
         embed.add_field(name="Starts", value=f"<t:{int(self.race_start_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Ends", value=f"<t:{int(self.race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
-        await join_message.edit(embed=embed)
+        race_message = await ctx.send(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
         # Compile results as quickly as possible
-        results = {participant["user"]: 0 for participant in self.race_participants}
-        for channel in ctx.guild.text_channels:
-            async for message in channel.history(after=self.race_start_time, before=self.race_end_time):
-                if message.content.startswith(ctx.prefix + "adwarn"):
-                    for participant in self.race_participants:
-                        if message.author.id == participant["user"]:
-                            results[participant["user"]] += 1
+        results = {}
+        for participant in participants:
+            warnings = await self.config.member(participant).warnings()
+            warnings_during_race = [
+                warning for warning in warnings
+                if self.race_start_time <= datetime.fromisoformat(warning["time"]) <= self.race_end_time
+            ]
+            results[participant.id] = len(warnings_during_race)
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
@@ -675,12 +600,11 @@ class AdWarn(commands.Cog):
         embed.title = "AdWarn Race Results"
         embed.description = f"The race lasted for {duration} minutes. Here are the results:"
         embed.clear_fields()
-
         for rank, (user_id, count) in enumerate(sorted_results, start=1):
             user = self.bot.get_user(user_id)
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await join_message.edit(embed=embed)
+        await race_message.edit(embed=embed)
         self.bot.remove_listener(handle_reaction_remove, "on_reaction_remove")
 
     @commands.command()
@@ -689,12 +613,10 @@ class AdWarn(commands.Cog):
         """Send an embed with the weekly AdWarn stats sorted by per-issuer."""
         weekly_stats = await self.config.guild(ctx.guild).weekly_stats()
         sorted_stats = sorted(weekly_stats.items(), key=lambda item: item[1], reverse=True)
-
         embed = discord.Embed(
             title="Weekly AdWarn Stats",
             color=discord.Color.blue()
         )
-
         if sorted_stats:
             for rank, (user_id, count) in enumerate(sorted_stats, start=1):
                 user = self.bot.get_user(int(user_id))
@@ -705,25 +627,20 @@ class AdWarn(commands.Cog):
                 )
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this week.", inline=False)
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Reset weekly stats
         await self.config.guild(ctx.guild).weekly_stats.set({})
-
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def monthlystats(self, ctx):
         """Send an embed with the monthly AdWarn stats sorted by per-issuer."""
         monthly_stats = await self.config.guild(ctx.guild).monthly_stats()
         sorted_stats = sorted(monthly_stats.items(), key=lambda item: item[1], reverse=True)
-
         embed = discord.Embed(
             title="Monthly AdWarn Stats",
             color=discord.Color.blue()
         )
-
         if sorted_stats:
             for rank, (user_id, count) in enumerate(sorted_stats, start=1):
                 user = self.bot.get_user(int(user_id))
@@ -734,31 +651,24 @@ class AdWarn(commands.Cog):
                 )
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this month.", inline=False)
-
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-
         # Reset monthly stats
         await self.config.guild(ctx.guild).monthly_stats.set({})
-
     @commands.Cog.listener()
     async def on_message(self, message):
         """Listener to update weekly and monthly stats."""
         if message.author.bot:
             return
-
         if message.content.startswith("!adwarn"):
             author_id = str(message.author.id)
             weekly_stats = await self.config.guild(message.guild).weekly_stats()
             monthly_stats = await self.config.guild(message.guild).monthly_stats()
-
             if author_id not in weekly_stats:
                 weekly_stats[author_id] = 0
             if author_id not in monthly_stats:
                 monthly_stats[author_id] = 0
-
             weekly_stats[author_id] += 1
             monthly_stats[author_id] += 1
-
             await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
             await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
