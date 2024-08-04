@@ -432,9 +432,6 @@ class AdWarn(commands.Cog):
                 warned_user = self.bot.get_user(warning["user"])
                 timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
                 embed.add_field(
-                    name=f"User Warned: {                warned_user = self.bot.get_user(warning["user"])
-                timestamp = int(datetime.fromisoformat(warning['time']).timestamp())
-                embed.add_field(
                     name=f"User Warned: {warned_user} (ID: {warning['user']})",
                     value=f"Reason: {warning['reason']}\nTime: <t:{timestamp}:F>\nChannel: <#{warning['channel']}>",
                     inline=False
@@ -444,7 +441,7 @@ class AdWarn(commands.Cog):
                 title=f"{moderator} has not issued any warnings.",
                 color=discord.Color.red()
             )
-
+    )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
 
