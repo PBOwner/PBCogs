@@ -555,6 +555,7 @@ class AdWarn(commands.Cog):
             embed.description = f"Participants: {participants_mentions}\nTime's up! The race is starting now."
         else:
             embed.description = "No one joined the race. The race is cancelled."
+        await join_message.clear_reactions()
         await join_message.edit(embed=embed)
 
         if not participants:
@@ -563,12 +564,14 @@ class AdWarn(commands.Cog):
         race_start_time = discord.utils.utcnow()
         race_end_time = race_start_time + timedelta(minutes=duration)
 
-        embed.title = "AdWarn Race Started"
-        embed.clear_fields()
+        embed = discord.Embed(
+            title="AdWarn Race Started",
+            color=discord.Color.gold()
+        )
         embed.add_field(name="Starts", value=f"<t:{int(race_start_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Ends", value=f"<t:{int(race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
-        await join_message.edit(embed=embed)
+        race_message = await ctx.send(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
@@ -584,7 +587,7 @@ class AdWarn(commands.Cog):
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
-        # Edit the initial start message to display the results
+        # Edit the race started message to display the results
         embed.title = "AdWarn Race Results"
         embed.description = f"The race lasted for {duration} minutes. Here are the results:"
         embed.clear_fields()
@@ -592,7 +595,7 @@ class AdWarn(commands.Cog):
         for rank, (user, count) in enumerate(sorted_results, start=1):
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await join_message.edit(embed=embed)
+        await race_message.edit(embed=embed)
 
     @commands.command()
     @commands.has_permissions(administrator=True)
