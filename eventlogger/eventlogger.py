@@ -1,11 +1,7 @@
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 import discord
-import logging
 from datetime import datetime
-
-# Set up logging
-log = logging.getLogger("red.EventLogger")
 
 class EventLogger(commands.Cog):
     """Cog to log various Discord events"""
@@ -27,7 +23,6 @@ class EventLogger(commands.Cog):
             if channel:
                 embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
                 await channel.send(embed=embed)
-        log.info(f"Event: {event} | Guild: {guild.name} ({guild.id}) | Description: {description}")
 
     async def log_command(self, ctx, command_name: str):
         command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
@@ -42,13 +37,11 @@ class EventLogger(commands.Cog):
                 )
                 embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
                 await channel.send(embed=embed)
-        log.info(f"Command: {command_name} | User: {ctx.author} ({ctx.author.id}) | Channel: {ctx.channel} ({ctx.channel.id}) | Guild: {ctx.guild.name} ({ctx.guild.id})")
 
     # Commands to configure logging channels
     @commands.group()
     async def setlog(self, ctx):
         """Configure logging channels for events"""
-        log.info(f"Command 'setlog' invoked by {ctx.author} in guild {ctx.guild.name} ({ctx.guild.id})")
         pass
 
     @setlog.command()
@@ -57,7 +50,6 @@ class EventLogger(commands.Cog):
         async with self.config.guild(ctx.guild).channels() as channels:
             channels[event] = channel.id
         await ctx.send(f"Logging channel for {event} set to {channel.mention}")
-        log.info(f"Logging channel for event '{event}' set to {channel.name} ({channel.id}) in guild {ctx.guild.name} ({ctx.guild.id}) by {ctx.author}")
 
     @setlog.command()
     async def category(self, ctx, category: str, channel: discord.TextChannel):
@@ -85,20 +77,17 @@ class EventLogger(commands.Cog):
         events = event_categories.get(category)
         if not events:
             await ctx.send(f"Invalid category: {category}")
-            log.warning(f"Invalid category '{category}' specified by {ctx.author} in guild {ctx.guild.name} ({ctx.guild.id})")
             return
         async with self.config.guild(ctx.guild).channels() as channels:
             for event in events:
                 channels[event] = channel.id
         await ctx.send(f"Logging channel for category {category} set to {channel.mention}")
-        log.info(f"Logging channel for category '{category}' set to {channel.name} ({channel.id}) in guild {ctx.guild.name} ({ctx.guild.id}) by {ctx.author}")
 
     @setlog.command()
     async def commandlog(self, ctx, channel: discord.TextChannel):
         """Set the logging channel for commands"""
         await self.config.guild(ctx.guild).command_log_channel.set(channel.id)
         await ctx.send(f"Command logging channel set to {channel.mention}")
-        log.info(f"Command logging channel set to {channel.name} ({channel.id}) in guild {ctx.guild.name} ({ctx.guild.id}) by {ctx.author}")
 
     @setlog.command()
     async def view(self, ctx):
@@ -107,7 +96,6 @@ class EventLogger(commands.Cog):
         command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
         if not channels and not command_log_channel_id:
             await ctx.send("No logging channels set.")
-            log.info(f"No logging channels set in guild {ctx.guild.name} ({ctx.guild.id})")
             return
         message = "Current logging channels:\n"
         for event, channel_id in channels.items():
@@ -119,7 +107,6 @@ class EventLogger(commands.Cog):
             if command_log_channel:
                 message += f"Command Log: {command_log_channel.mention}\n"
         await ctx.send(message)
-        log.info(f"Current logging channels viewed by {ctx.author} in guild {ctx.guild.name} ({ctx.guild.id})")
 
     @setlog.command()
     async def categories(self, ctx):
@@ -148,7 +135,6 @@ class EventLogger(commands.Cog):
         for category, events in event_categories.items():
             embed.add_field(name=category.capitalize(), value="\n".join(events), inline=False)
         await ctx.send(embed=embed)
-        log.info(f"Event categories viewed by {ctx.author} in guild {ctx.guild.name} ({ctx.guild.id})")
 
     # Event listeners
     @commands.Cog.listener()
