@@ -566,8 +566,12 @@ class AdWarn(commands.Cog):
 
         results = {}
         for participant in participants:
-            warnings = await self.config.member(participant).warnings()
-            results[participant] = len(warnings)
+            warnings = 0
+            for channel in ctx.guild.text_channels:
+                async for message in channel.history(limit=None):
+                    if message.author == participant and "adwarn" in message.content:
+                        warnings += 1
+            results[participant] = warnings
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
