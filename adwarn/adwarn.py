@@ -10,7 +10,7 @@ class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120)
+        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120, timeout_duration=120, weekly_stats={}, monthly_stats={})
         self.config.register_member(warnings=[], untimeout_time=None)
 
     @commands.command()
@@ -103,28 +103,22 @@ class AdWarn(commands.Cog):
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
         softban_duration = await self.config.guild(ctx.guild).softban_duration()
+        timeout_duration = await self.config.guild(ctx.guild).timeout_duration()
 
         for threshold_id, threshold in tholds.items():
             if threshold["count"] == warning_count:
                 action = threshold["action"]
                 if action == "kick":
                     await ctx.guild.kick(user, reason="Reached warning threshold")
-                    await ctx.send(f"{user.mention} has been kicked for reaching {warning_count} warnings.")
                 elif action == "ban":
                     await ctx.guild.ban(user, reason="Reached warning threshold")
-                    await ctx.send(f"{user.mention} has been banned for reaching {warning_count} warnings.")
-                elif action.startswith("mute"):
-                    duration_str = action.split(" ")[1] if " " in action else None
-                    timeout_duration = self.parse_duration(duration_str) if duration_str else 120  # Default to 120 minutes (2 hours)
-
+                elif action == "timeout":
                     await self.timeout_user(ctx, user, timeout_duration)
-                    await ctx.send(f"{user.mention} has been timed out for reaching {warning_count} warnings.")
                     if timeout_duration:
                         await self.schedule_untimeout(ctx, user, timeout_duration)
                 elif action == "softban":
                     await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
                     await ctx.guild.unban(user, reason="Softban duration expired")
-                    await ctx.send(f"{user.mention} has been softbanned for reaching {warning_count} warnings and messages deleted for {softban_duration} days.")
 
     def parse_duration(self, duration_str):
         """Parse a duration string and return the duration in minutes."""
@@ -144,21 +138,9 @@ class AdWarn(commands.Cog):
             await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
             await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
 
-            # Create and send embed with timeout details
-            timeout_hours = duration / 60
-            embed = discord.Embed(
-                title="User Timed Out",
-                description=f"{user.mention} has been timed out for {timeout_hours:.2f} hours.",
-                color=discord.Color.orange()
-            )
-            await ctx.send(embed=embed)
-        else:
-            await user.edit(timed_out_until=None, reason="Reached warning threshold")
-
     async def schedule_untimeout(self, ctx, user, duration):
         untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
         await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
-        await ctx.send(f"{user.mention} will be untimed out in {duration / 60:.2f} hours.")
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -246,9 +228,9 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def clearwarns(self, ctx, user: discord.Member):
+    async def clearwarns(self, ctx, user: discord.User):
         """Clear all warnings for a user."""
-        await self.config.member(user).warnings.set([])
+        await self.config.member_from_ids(ctx.guild.id, user.id).warnings.set([])
         warn_channel_id = await self.config.guild(ctx.guild).warn_channel()
         if (warn_channel_id):
             warn_channel = self.bot.get_channel(warn_channel_id)
@@ -489,19 +471,12 @@ class AdWarn(commands.Cog):
         await ctx.send(embed=embed)
 
     @warnset.command()
-    async def threshold(self, ctx, warning_count: int, action: str, duration: str = None):
+    async def threshold(self, ctx, warning_count: int, action: str):
         """Set an action for a specific warning count threshold."""
-        valid_actions = ["kick", "ban", "mute", "softban"]  # Add more actions as needed
-        if action not in valid_actions and not action.startswith("mute"):
-            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)} or 'mute <duration>'")
+        valid_actions = ["kick", "ban", "timeout", "softban"]  # Add more actions as needed
+        if action not in valid_actions:
+            await ctx.send(f"Invalid action. Valid actions are: {', '.join(valid_actions)}")
             return
-
-        if action == "mute" and duration:
-            parsed_duration = self.parse_duration(duration)
-            if parsed_duration is None:
-                await ctx.send("Invalid duration format. Use 'Xm' for minutes or 'Xh' for hours.")
-                return
-            action = f"mute {parsed_duration}"
 
         tholds = await self.config.guild(ctx.guild).tholds()
         threshold_id = str(uuid.uuid4())
@@ -529,35 +504,67 @@ class AdWarn(commands.Cog):
         await self.config.guild(ctx.guild).softban_duration.set(days)
         await ctx.send(f"Softban message deletion duration set to {days} days.")
 
+    @warnset.command()
+    async def timeoutduration(self, ctx, minutes: int):
+        """Set the duration (in minutes) for timeouts."""
+        await self.config.guild(ctx.guild).timeout_duration.set(minutes)
+        await ctx.send(f"Timeout duration set to {minutes} minutes.")
+
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adrace(self, ctx, duration: int):
         """Start an adwarn race that lasts for a configurable amount of time."""
         join_message = await ctx.send(
-            "React with 🏁 to join the AdWarn race! You have 1 minute to join."
+            "React with  to join the AdWarn race! You have 1 minute to join."
         )
-        await join_message.add_reaction("🏁")
+        await join_message.add_reaction("")
 
         def check(reaction, user):
             return (
-                str(reaction.emoji) == "🏁"
+                str(reaction.emoji) == ""
                 and reaction.message.id == join_message.id
                 and user != self.bot.user
             )
 
         participants = []
 
+        embed = discord.Embed(
+            title="AdWarn Race Join",
+            description="React with  to join the AdWarn race! You have 1 minute to join.",
+            color=discord.Color.gold()
+        )
+        join_message = await ctx.send(embed=embed)
+
         try:
             while True:
                 reaction, user = await self.bot.wait_for("reaction_add", timeout=60.0, check=check)
                 if user not in participants:
                     participants.append(user)
+                    participants_mentions = ", ".join(user.mention for user in participants)
+                    embed.description = f"Participants: {participants_mentions}"
+                    await join_message.edit(embed=embed)
         except asyncio.TimeoutError:
             pass
 
         if not participants:
             await ctx.send("No one joined the race.")
             return
+
+        race_start_time = discord.utils.utcnow()
+        race_end_time = race_start_time + timedelta(minutes=duration)
+
+        participants_mentions = ", ".join(user.mention for user in participants)
+
+        embed = discord.Embed(
+            title="AdWarn Race Started",
+            color=discord.Color.gold()
+        )
+        embed.add_field(name="Starts", value=f"<t:{int(race_start_time.timestamp())}:R>", inline=True)
+        embed.add_field(name="Ends", value=f"<t:{int(race_end_time.timestamp())}:R>", inline=True)
+        embed.add_field(name="Participants", value=participants_mentions, inline=False)
+        await ctx.send(embed=embed)
+
+        await asyncio.sleep(duration * 60)
 
         results = {}
         for participant in participants:
@@ -576,3 +583,81 @@ class AdWarn(commands.Cog):
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
         await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def weeklystats(self, ctx):
+        """Send an embed with the weekly AdWarn stats sorted by per-issuer."""
+        weekly_stats = await self.config.guild(ctx.guild).weekly_stats()
+        sorted_stats = sorted(weekly_stats.items(), key=lambda item: item[1], reverse=True)
+
+        embed = discord.Embed(
+            title="Weekly AdWarn Stats",
+            color=discord.Color.blue()
+        )
+
+        if sorted_stats:
+            for rank, (user_id, count) in enumerate(sorted_stats, start=1):
+                user = self.bot.get_user(int(user_id))
+                embed.add_field(
+                    name=f"{rank}. {user} (ID: {user_id})",
+                    value=f"Warnings Issued: {count}",
+                    inline=False
+                )
+        else:
+            embed.add_field(name="No data available", value="No warnings have been issued this week.", inline=False)
+
+        await ctx.send(embed=embed)
+
+        # Reset weekly stats
+        await self.config.guild(ctx.guild).weekly_stats.set({})
+
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def monthlystats(self, ctx):
+        """Send an embed with the monthly AdWarn stats sorted by per-issuer."""
+        monthly_stats = await self.config.guild(ctx.guild).monthly_stats()
+        sorted_stats = sorted(monthly_stats.items(), key=lambda item: item[1], reverse=True)
+
+        embed = discord.Embed(
+            title="Monthly AdWarn Stats",
+            color=discord.Color.blue()
+        )
+
+        if sorted_stats:
+            for rank, (user_id, count) in enumerate(sorted_stats, start=1):
+                user = self.bot.get_user(int(user_id))
+                embed.add_field(
+                    name=f"{rank}. {user} (ID: {user_id})",
+                    value=f"Warnings Issued: {count}",
+                    inline=False
+                )
+        else:
+            embed.add_field(name="No data available", value="No warnings have been issued this month.", inline=False)
+
+        await ctx.send(embed=embed)
+
+        # Reset monthly stats
+        await self.config.guild(ctx.guild).monthly_stats.set({})
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        """Listener to update weekly and monthly stats."""
+        if message.author.bot:
+            return
+
+        if message.content.startswith("!adwarn"):
+            author_id = str(message.author.id)
+            weekly_stats = await self.config.guild(message.guild).weekly_stats()
+            monthly_stats = await self.config.guild(message.guild).monthly_stats()
+
+            if author_id not in weekly_stats:
+                weekly_stats[author_id] = 0
+            if author_id not in monthly_stats:
+                monthly_stats[author_id] = 0
+
+            weekly_stats[author_id] += 1
+            monthly_stats[author_id] += 1
+
+            await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
+            await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
