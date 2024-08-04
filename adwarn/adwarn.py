@@ -560,7 +560,7 @@ class AdWarn(commands.Cog):
         embed.add_field(name="Starts", value=f"<t:{int(race_start_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Ends", value=f"<t:{int(race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
-        await ctx.send(embed=embed)
+        race_message = await ctx.send(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
@@ -575,16 +575,14 @@ class AdWarn(commands.Cog):
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
-        embed = discord.Embed(
-            title="AdWarn Race Results",
-            description=f"The race lasted for {duration} minutes. Here are the results:",
-            color=discord.Color.gold()
-        )
+        embed.title = "AdWarn Race Results"
+        embed.description = f"The race lasted for {duration} minutes. Here are the results:"
+        embed.clear_fields()
 
         for rank, (user, count) in enumerate(sorted_results, start=1):
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await ctx.send(embed=embed)
+        await race_message.edit(embed=embed)
 
     @commands.command()
     @commands.has_permissions(administrator=True)
