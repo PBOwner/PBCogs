@@ -532,28 +532,34 @@ class AdWarn(commands.Cog):
             )
 
         participants = []
+        participants_mentions = ""
 
         # Countdown for 1 minute
-        for remaining in range(60, 0, -10):
+        join_end_time = discord.utils.utcnow() + timedelta(seconds=60)
+        while (discord.utils.utcnow() < join_end_time):
             try:
-                reaction, user = await self.bot.wait_for("reaction_add", timeout=10.0, check=check)
+                remaining = (join_end_time - discord.utils.utcnow()).total_seconds()
+                reaction, user = await self.bot.wait_for("reaction_add", timeout=remaining, check=check)
                 if user not in participants:
                     participants.append(user)
                     participants_mentions = ", ".join(user.mention for user in participants)
-                    embed.description = f"Participants: {participants_mentions}\nYou have {remaining} seconds to join."
+                    embed.description = f"Participants: {participants_mentions}\nYou have {int(remaining)} seconds to join."
                     await join_message.edit(embed=embed)
             except asyncio.TimeoutError:
-                embed.description = f"Participants: {participants_mentions}\nYou have {remaining} seconds to join."
-                await join_message.edit(embed=embed)
+                break
+
+        # Final update to the join message
+        if participants:
+            embed.description = f"Participants: {participants_mentions}\nTime's up! The race is starting now."
+        else:
+            embed.description = "No one joined the race. The race is cancelled."
+        await join_message.edit(embed=embed)
 
         if not participants:
-            await ctx.send("No one joined the race.")
             return
 
         race_start_time = discord.utils.utcnow()
         race_end_time = race_start_time + timedelta(minutes=duration)
-
-        participants_mentions = ", ".join(user.mention for user in participants)
 
         embed = discord.Embed(
             title="AdWarn Race Started",
@@ -585,7 +591,6 @@ class AdWarn(commands.Cog):
             embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
         await race_message.edit(embed=embed)
-
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def weeklystats(self, ctx):
