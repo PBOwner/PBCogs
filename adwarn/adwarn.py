@@ -108,8 +108,8 @@ class AdWarn(commands.Cog):
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
 
-        # Delete the command message after 3 seconds
-        await ctx.message.delete(delay=3)
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
@@ -200,21 +200,27 @@ class AdWarn(commands.Cog):
                         description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                         color=discord.Color.red()
                     )
-                    await ctx.send(embed=error_embed)
+                    error_message = await ctx.send(embed=error_embed)
+                    await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
                     description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await ctx.send(embed=error_embed)
+                error_message = await ctx.send(embed=error_embed)
+                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description=f"Warning with ID {warning_id} not found.",
                 color=discord.Color.red()
             )
-            await ctx.send(embed=error_embed)
+            error_message = await ctx.send(embed=error_embed)
+            await error_message.delete(delay=3)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -235,7 +241,11 @@ class AdWarn(commands.Cog):
                 inline=False
             )
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -260,14 +270,19 @@ class AdWarn(commands.Cog):
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await ctx.send(embed=error_embed)
+                error_message = await ctx.send(embed=error_embed)
+                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            await ctx.send(embed=error_embed)
+            error_message = await ctx.send(embed=error_embed)
+            await error_message.delete(delay=3)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -297,21 +312,27 @@ class AdWarn(commands.Cog):
                         description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                         color=discord.Color.red()
                     )
-                    await ctx.send(embed=error_embed)
+                    error_message = await ctx.send(embed=error_embed)
+                    await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
                     description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await ctx.send(embed=error_embed)
+                error_message = await ctx.send(embed=error_embed)
+                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description=f"{user.mention} has no warnings.",
                 color=discord.Color.red()
             )
-            await ctx.send(embed=error_embed)
+            error_message = await ctx.send(embed=error_embed)
+            await error_message.delete(delay=3)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -343,21 +364,27 @@ class AdWarn(commands.Cog):
                         description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                         color=discord.Color.red()
                     )
-                    await ctx.send(embed=error_embed)
+                    error_message = await ctx.send(embed=error_embed)
+                    await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
                     description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await ctx.send(embed=error_embed)
+                error_message = await ctx.send(embed=error_embed)
+                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description=f"Warning with ID {warning_id} not found.",
                 color=discord.Color.red()
             )
-            await ctx.send(embed=error_embed)
+            error_message = await ctx.send(embed=error_embed)
+            await error_message.delete(delay=3)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -382,7 +409,11 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -411,7 +442,11 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -436,7 +471,11 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
+
+        # Delete the command message immediately
+        await ctx.message.delete()
 
     @commands.group()
     @commands.guild_only()
@@ -454,7 +493,8 @@ class AdWarn(commands.Cog):
             description=f"Warning channel has been set to {channel.mention}",
             color=discord.Color.green()
         )
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
 
     @warnset.command()
     async def recentadwarnchannel(self, ctx, channel: discord.VoiceChannel):
@@ -465,7 +505,8 @@ class AdWarn(commands.Cog):
             description=f"Recent adwarn channel has been set to {channel.mention}",
             color=discord.Color.green()
         )
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
 
     @warnset.command()
     async def show(self, ctx):
@@ -497,7 +538,8 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
 
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str):
@@ -514,7 +556,8 @@ class AdWarn(commands.Cog):
             "action": action
         }
         await self.config.guild(ctx.guild).tholds.set(tholds)
-        await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
+        message = await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
+        await message.delete(delay=10)
 
     @warnset.command()
     async def delthreshold(self, ctx, threshold_id: str):
@@ -523,21 +566,25 @@ class AdWarn(commands.Cog):
         if threshold_id in tholds:
             del tholds[threshold_id]
             await self.config.guild(ctx.guild).tholds.set(tholds)
-            await ctx.send(f"Deleted threshold with ID {threshold_id}.")
+            message = await ctx.send(f"Deleted threshold with ID {threshold_id}.")
+            await message.delete(delay=10)
         else:
-            await ctx.send(f"No threshold set with ID {threshold_id}.")
+            message = await ctx.send(f"No threshold set with ID {threshold_id}.")
+            await message.delete(delay=10)
 
     @warnset.command()
     async def softbanduration(self, ctx, days: int):
         """Set the duration (in days) for message deletion during a softban."""
         await self.config.guild(ctx.guild).softban_duration.set(days)
-        await ctx.send(f"Softban message deletion duration set to {days} days.")
+        message = await ctx.send(f"Softban message deletion duration set to {days} days.")
+        await message.delete(delay=10)
 
     @warnset.command()
     async def timeoutduration(self, ctx, minutes: int):
         """Set the duration (in minutes) for timeouts."""
         await self.config.guild(ctx.guild).timeout_duration.set(minutes)
-        await ctx.send(f"Timeout duration set to {minutes} minutes.")
+        message = await ctx.send(f"Timeout duration set to {minutes} minutes.")
+        await message.delete(delay=10)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -664,7 +711,8 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this week.", inline=False)
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
 
         # Reset weekly stats
         await self.config.guild(ctx.guild).weekly_stats.set({})
@@ -692,7 +740,8 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this month.", inline=False)
 
-        await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed)
+        await message.delete(delay=10)
 
         # Reset monthly stats
         await self.config.guild(ctx.guild).monthly_stats.set({})
