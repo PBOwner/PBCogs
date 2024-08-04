@@ -563,38 +563,36 @@ class AdWarn(commands.Cog):
         race_start_time = discord.utils.utcnow()
         race_end_time = race_start_time + timedelta(minutes=duration)
 
-        embed = discord.Embed(
-            title="AdWarn Race Started",
-            color=discord.Color.gold()
-        )
+        embed.title = "AdWarn Race Started"
+        embed.clear_fields()
         embed.add_field(name="Starts", value=f"<t:{int(race_start_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Ends", value=f"<t:{int(race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
-        race_message = await ctx.send(embed=embed)
+        await join_message.edit(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
+        # Compile results as quickly as possible
         results = {}
         for participant in participants:
             warnings = 0
             for channel in ctx.guild.text_channels:
-                async for message in channel.history(limit=None):
+                async for message in channel.history(after=race_start_time, limit=None):
                     if message.author == participant and "adwarn" in message.content:
                         warnings += 1
             results[participant] = warnings
 
         sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
 
-        results_embed = discord.Embed(
-            title="AdWarn Race Results",
-            description=f"The race lasted for {duration} minutes. Here are the results:",
-            color=discord.Color.gold()
-        )
+        # Edit the initial start message to display the results
+        embed.title = "AdWarn Race Results"
+        embed.description = f"The race lasted for {duration} minutes. Here are the results:"
+        embed.clear_fields()
 
         for rank, (user, count) in enumerate(sorted_results, start=1):
-            results_embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
+            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
 
-        await ctx.send(embed=results_embed)
+        await join_message.edit(embed=embed)
 
     @commands.command()
     @commands.has_permissions(administrator=True)
