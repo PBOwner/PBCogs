@@ -533,16 +533,18 @@ class AdWarn(commands.Cog):
 
         participants = []
 
-        try:
-            while True:
-                reaction, user = await self.bot.wait_for("reaction_add", timeout=60.0, check=check)
+        # Countdown for 1 minute
+        for remaining in range(60, 0, -10):
+            try:
+                reaction, user = await self.bot.wait_for("reaction_add", timeout=10.0, check=check)
                 if user not in participants:
                     participants.append(user)
                     participants_mentions = ", ".join(user.mention for user in participants)
-                    embed.description = f"Participants: {participants_mentions}"
+                    embed.description = f"Participants: {participants_mentions}\nYou have {remaining} seconds to join."
                     await join_message.edit(embed=embed)
-        except asyncio.TimeoutError:
-            pass
+            except asyncio.TimeoutError:
+                embed.description = f"Participants: {participants_mentions}\nYou have {remaining} seconds to join."
+                await join_message.edit(embed=embed)
 
         if not participants:
             await ctx.send("No one joined the race.")
