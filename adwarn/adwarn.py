@@ -12,6 +12,9 @@ class AdWarn(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
         self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120, timeout_duration=120, weekly_stats={}, monthly_stats={}, recent_adwarn_channel=None)
         self.config.register_member(warnings=[], untimeout_time=None)
+        self.race_start_time = None
+        self.race_end_time = None
+        self.race_participants = []
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -87,6 +90,16 @@ class AdWarn(commands.Cog):
 
                 # Check thresholds and take action if necessary
                 await self.check_thresholds(ctx, user, len(warnings))
+
+                # Update race participants if the race is ongoing
+                if self.race_start_time and self.race_end_time and self.race_start_time <= warning_time <= self.race_end_time:
+                    for participant in self.race_participants:
+                        if participant["user"] == ctx.author.id:
+                            participant["warnings"] += 1
+                            break
+                    else:
+                        self.race_participants.append({"user": ctx.author.id, "warnings": 1})
+
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -586,39 +599,32 @@ class AdWarn(commands.Cog):
         if not participants:
             return
 
-        race_start_time = discord.utils.utcnow()
-        race_end_time = race_start_time + timedelta(minutes=duration)
+        self.race_start_time = discord.utils.utcnow()
+        self.race_end_time = self.race_start_time + timedelta(minutes=duration)
+        self.race_participants = [{"user": participant.id, "warnings": 0} for participant in participants]
 
         embed = discord.Embed(
             title="AdWarn Race Started",
             color=discord.Color.gold()
         )
-        embed.add_field(name="Starts", value=f"<t:{int(race_start_time.timestamp())}:R>", inline=True)
-        embed.add_field(name="Ends", value=f"<t:{int(race_end_time.timestamp())}:R>", inline=True)
+        embed.add_field(name="Starts", value=f"<t:{int(self.race_start_time.timestamp())}:R>", inline=True)
+        embed.add_field(name="Ends", value=f"<t:{int(self.race_end_time.timestamp())}:R>", inline=True)
         embed.add_field(name="Participants", value=participants_mentions, inline=False)
         race_message = await ctx.send(embed=embed)
 
         await asyncio.sleep(duration * 60)
 
         # Compile results as quickly as possible
-        results = {}
-        for participant in participants:
-            warnings = 0
-            for channel in ctx.guild.text_channels:
-                async for message in channel.history(after=race_start_time, limit=None):
-                    if message.author == participant and "adwarn" in message.content:
-                        warnings += 1
-            results[participant] = warnings
-
-        sorted_results = sorted(results.items(), key=lambda item: item[1], reverse=True)
+        sorted_results = sorted(self.race_participants, key=lambda item: item["warnings"], reverse=True)
 
         # Edit the race started message to display the results
         embed.title = "AdWarn Race Results"
         embed.description = f"The race lasted for {duration} minutes. Here are the results:"
         embed.clear_fields()
 
-        for rank, (user, count) in enumerate(sorted_results, start=1):
-            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {count}", inline=False)
+        for rank, participant in enumerate(sorted_results, start=1):
+            user = self.bot.get_user(participant["user"])
+            embed.add_field(name=f"{rank}. {user}", value=f"Warnings: {participant['warnings']}", inline=False)
 
         await race_message.edit(embed=embed)
 
@@ -699,6 +705,3 @@ class AdWarn(commands.Cog):
 
             await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
             await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
-
-def setup(bot):
-    bot.add_cog(AdWarn(bot))
