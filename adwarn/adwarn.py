@@ -521,7 +521,7 @@ class AdWarn(commands.Cog):
 
         def check(reaction, user):
             return (
-                str(reaction.emoji) == ""
+                str(reaction.emoji) == "<a:winner:1269746569872412785>"
                 and reaction.message.id == join_message.id
                 and user != self.bot.user
             )
