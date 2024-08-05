@@ -47,9 +47,9 @@ class COC(commands.Cog):
         for role in roles:
             members = [member.mention for member in role.members]
             if members:
-                embed.add_field(name=role.name, value="\n".join(members), inline=False)
+                embed.add_field(name=role.name, value="\n".join(members), inline=True)
             else:
-                embed.add_field(name=role.name, value="No members", inline=False)
+                embed.add_field(name=role.name, value="No members", inline=True)
 
         await ctx.send(embed=embed)
 
@@ -80,9 +80,9 @@ class COC(commands.Cog):
         for role in roles:
             members = [member.mention for member in role.members]
             if members:
-                embed.add_field(name=role.name, value="\n".join(members), inline=False)
+                embed.add_field(name=role.name, value="\n".join(members), inline=True)
             else:
-                embed.add_field(name=role.name, value="No members", inline=False)
+                embed.add_field(name=role.name, value="No members", inline=True)
 
         message = await channel.send(embed=embed)
         await self.config.guild(guild).message_id.set(message.id)
@@ -115,9 +115,9 @@ class COC(commands.Cog):
         for role in roles:
             members = [member.mention for member in role.members]
             if members:
-                embed.add_field(name=role.name, value="\n".join(members), inline=False)
+                embed.add_field(name=role.name, value="\n".join(members), inline=True)
             else:
-                embed.add_field(name=role.name, value="No members", inline=False)
+                embed.add_field(name=role.name, value="No members", inline=True)
 
         await message.edit(embed=embed)
         await ctx.send(embed=discord.Embed(title="Chain of Command Updated", description="The Chain of Command embed has been manually updated.", color=discord.Color.green()))
@@ -146,9 +146,9 @@ class COC(commands.Cog):
                 for role in roles:
                     members = [member.mention for member in role.members]
                     if members:
-                        embed.add_field(name=role.name, value="\n".join(members), inline=False)
+                        embed.add_field(name=role.name, value="\n".join(members), inline=True)
                     else:
-                        embed.add_field(name=role.name, value="No members", inline=False)
+                        embed.add_field(name=role.name, value="No members", inline=True)
 
                 channel_id = await self.config.guild(guild).channel_id()
                 message_id = await self.config.guild(guild).message_id()
