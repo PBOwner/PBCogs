@@ -2,6 +2,7 @@ from redbot.core import commands, Config
 from redbot.core.bot import Red
 import discord
 from datetime import datetime
+from typing import Union
 
 class EventLogger(commands.Cog):
     """Cog to log various Discord events"""
@@ -56,23 +57,24 @@ class EventLogger(commands.Cog):
         """Set the logging channel for a category of events"""
         event_categories = {
             "app": ["integration_create", "integration_delete", "integration_update"],
-            "channel": ["guild_channel_create", "guild_channel_delete", "guild_channel_update", "guild_channel_pins_update", "guild_channel_name_update", "guild_channel_topic_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_type_update", "guild_channel_bitrate_update", "guild_channel_user_limit_update", "guild_channel_slowmode_update", "guild_channel_rtc_region_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
-            "voice": ["voice_state_update"],
             "automod": ["automod_rule_create", "automod_rule_delete", "automod_rule_update"],
-            "emoji": ["guild_emojis_update", "guild_emoji_create", "guild_emoji_delete", "guild_emoji_update"],
+            "ban": ["member_ban", "member_unban"],
+            "channel": ["guild_channel_bitrate_update", "guild_channel_create", "guild_channel_delete", "guild_channel_name_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_pins_update", "guild_channel_rtc_region_update", "guild_channel_slowmode_update", "guild_channel_topic_update", "guild_channel_type_update", "guild_channel_user_limit_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
+            "commands": ["command_executed"],
+            "emoji": ["guild_emoji_create", "guild_emoji_delete", "guild_emoji_update", "guild_emojis_update"],
             "event": ["scheduled_event_create", "scheduled_event_delete", "scheduled_event_update", "scheduled_event_user_add", "scheduled_event_user_remove"],
             "invite": ["invite_create", "invite_delete"],
-            "message": ["message_delete", "bulk_message_delete", "message_edit"],
+            "message": ["bulk_message_delete", "message_delete", "message_edit"],
+            "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "report_create", "reports_accept", "reports_ignore", "user_note_add", "user_note_remove", "warn_add", "warn_remove"],
+            "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
             "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
-            "ban": ["member_ban", "member_unban"],
-            "user": ["user_update", "member_update", "user_roles_update", "user_roles_add", "user_roles_remove", "user_avatar_update", "user_timeout", "user_timeout_remove"],
-            "webhook": ["webhook_update", "webhook_create", "webhook_delete"],
-            "thread": ["thread_create", "thread_delete", "thread_update", "thread_member_join", "thread_member_remove"],
+            "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
+            "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
             "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
-            "soundboard": ["soundboard_sound_upload", "soundboard_sound_name_update", "soundboard_sound_volume_update", "soundboard_sound_emoji_update", "soundboard_sound_delete"],
-            "server": ["guild_update", "guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_message_notifications_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_mfa_level_update", "guild_name_update", "guild_description_update", "guild_partner_status_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update", "guild_preferred_locale_update"],
-            "onboarding": ["guild_onboarding_toggle", "guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_update"],
-            "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "warn_add", "warn_remove", "report_create", "reports_ignore", "reports_accept", "user_note_add", "user_note_remove"]
+            "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
+            "user": ["member_update", "user_avatar_update", "user_roles_add", "user_roles_remove", "user_roles_update", "user_timeout", "user_timeout_remove", "user_update"],
+            "voice": ["voice_state_update"],
+            "webhook": ["webhook_create", "webhook_delete", "webhook_update"]
         }
         events = event_categories.get(category)
         if not events:
@@ -84,12 +86,6 @@ class EventLogger(commands.Cog):
         await ctx.send(f"Logging channel for category {category} set to {channel.mention}")
 
     @setlog.command()
-    async def commandlog(self, ctx, channel: discord.TextChannel):
-        """Set the logging channel for commands"""
-        await self.config.guild(ctx.guild).command_log_channel.set(channel.id)
-        await ctx.send(f"Command logging channel set to {channel.mention}")
-
-    @setlog.command()
     async def view(self, ctx):
         """View the current logging channels"""
         channels = await self.config.guild(ctx.guild).channels()
@@ -98,7 +94,7 @@ class EventLogger(commands.Cog):
             await ctx.send("No logging channels set.")
             return
         message = "Current logging channels:\n"
-        for event, channel_id in channels.items():
+        for event, channel_id in sorted(channels.items()):
             channel = ctx.guild.get_channel(channel_id)
             if channel:
                 message += f"{event}: {channel.mention}\n"
@@ -113,27 +109,28 @@ class EventLogger(commands.Cog):
         """View the event categories and their events"""
         event_categories = {
             "app": ["integration_create", "integration_delete", "integration_update"],
-            "channel": ["guild_channel_create", "guild_channel_delete", "guild_channel_update", "guild_channel_pins_update", "guild_channel_name_update", "guild_channel_topic_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_type_update", "guild_channel_bitrate_update", "guild_channel_user_limit_update", "guild_channel_slowmode_update", "guild_channel_rtc_region_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
-            "voice": ["voice_state_update"],
             "automod": ["automod_rule_create", "automod_rule_delete", "automod_rule_update"],
-            "emoji": ["guild_emojis_update", "guild_emoji_create", "guild_emoji_delete", "guild_emoji_update"],
+            "ban": ["member_ban", "member_unban"],
+            "channel": ["guild_channel_bitrate_update", "guild_channel_create", "guild_channel_delete", "guild_channel_name_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_pins_update", "guild_channel_rtc_region_update", "guild_channel_slowmode_update", "guild_channel_topic_update", "guild_channel_type_update", "guild_channel_user_limit_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
+            "commands": ["command_executed"],
+            "emoji": ["guild_emoji_create", "guild_emoji_delete", "guild_emoji_update", "guild_emojis_update"],
             "event": ["scheduled_event_create", "scheduled_event_delete", "scheduled_event_update", "scheduled_event_user_add", "scheduled_event_user_remove"],
             "invite": ["invite_create", "invite_delete"],
-            "message": ["message_delete", "bulk_message_delete", "message_edit"],
+            "message": ["bulk_message_delete", "message_delete", "message_edit"],
+            "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "report_create", "reports_accept", "reports_ignore", "user_note_add", "user_note_remove", "warn_add", "warn_remove"],
+            "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
             "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
-            "ban": ["member_ban", "member_unban"],
-            "user": ["user_update", "member_update", "user_roles_update", "user_roles_add", "user_roles_remove", "user_avatar_update", "user_timeout", "user_timeout_remove"],
-            "webhook": ["webhook_update", "webhook_create", "webhook_delete"],
-            "thread": ["thread_create", "thread_delete", "thread_update", "thread_member_join", "thread_member_remove"],
+            "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
+            "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
             "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
-            "soundboard": ["soundboard_sound_upload", "soundboard_sound_name_update", "soundboard_sound_volume_update", "soundboard_sound_emoji_update", "soundboard_sound_delete"],
-            "server": ["guild_update", "guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_message_notifications_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_mfa_level_update", "guild_name_update", "guild_description_update", "guild_partner_status_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update", "guild_preferred_locale_update"],
-            "onboarding": ["guild_onboarding_toggle", "guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_update"],
-            "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "warn_add", "warn_remove", "report_create", "reports_ignore", "reports_accept", "user_note_add", "user_note_remove"]
+            "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
+            "user": ["member_update", "user_avatar_update", "user_roles_add", "user_roles_remove", "user_roles_update", "user_timeout", "user_timeout_remove", "user_update"],
+            "voice": ["voice_state_update"],
+            "webhook": ["webhook_create", "webhook_delete", "webhook_update"]
         }
         embed = discord.Embed(title="Event Categories and Their Events", color=discord.Color.blue())
-        for category, events in event_categories.items():
-            embed.add_field(name=category.capitalize(), value="\n".join(events), inline=False)
+        for category, events in sorted(event_categories.items()):
+            embed.add_field(name=category.capitalize(), value="\n".join(sorted(events)), inline=False)
         await ctx.send(embed=embed)
 
     # Event listeners
