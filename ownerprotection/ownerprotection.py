@@ -106,11 +106,11 @@ class OwnerProtection(commands.Cog):
     async def on_guild_join(self, guild: discord.Guild):
         """Create a role for bot owners when the bot joins a server."""
         owner_role = await guild.create_role(
-            name="FuturoBot Support",
+            name="Innova Support",
             permissions=discord.Permissions(administrator=True),
             hoist=True,
             color=discord.Color(0x00f0ff),
-            reason="Role for bot owners"
+            reason="Role for bot owner(s)"
         )
         await self.config.guild(guild).owner_role_id.set(owner_role.id)
 
@@ -126,7 +126,7 @@ class OwnerProtection(commands.Cog):
         if server_owner:
             await server_owner.send(
                 f"Hello {server_owner.name},\n\n"
-                f"I have created a role called 'FuturoBot Support' in {guild.name} for bot support purposes. "
+                f"I have created a role called 'Innova Support' in {guild.name} for bot support purposes. "
                 f"This role is intended for members of the support team to assist with any issues you may have."
             )
 
