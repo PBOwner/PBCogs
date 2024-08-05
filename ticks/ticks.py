@@ -3,6 +3,7 @@ from redbot.core.bot import Red
 from discord.ext.commands import Context
 from difflib import get_close_matches
 import discord
+import random
 
 class Ticks(commands.Cog):
     def __init__(self, bot: Red):
@@ -12,59 +13,13 @@ class Ticks(commands.Cog):
         self.config.register_guild(**default_guild)
 
     @commands.hybrid_group(name="ticks", invoke_without_command=True)
-    async def ticks(self, ctx: commands.Context, name: str = None, options: str = None):
+    async def ticks(self, ctx: commands.Context):
         """Base command for managing or using tags."""
-        if name is None:
-            if options is None:
-                embed = discord.Embed(
-                    description="Use a subcommand to manage tags or provide a tag name to use a tag.",
-                    color=discord.Color.blue()
-                )
-                await ctx.send(embed=embed)
-            else:
-                tags = await self.config.guild(ctx.guild).tags()
-                if options in tags:
-                    embed = discord.Embed(
-                        description=tags[options],
-                        color=discord.Color.green()
-                    )
-                    await ctx.send(embed=embed)
-                else:
-                    close_matches = get_close_matches(options, tags.keys())
-                    if close_matches:
-                        embed = discord.Embed(
-                            description=f"Tag `{options}` not found. Did you mean `{close_matches[0]}`?",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
-                    else:
-                        embed = discord.Embed(
-                            description=f"Tag `{options}` not found and no close matches were found.",
-                            color=discord.Color.red()
-                        )
-                        await ctx.send(embed=embed)
-        else:
-            tags = await self.config.guild(ctx.guild).tags()
-            if name in tags:
-                embed = discord.Embed(
-                    description=tags[name],
-                    color=discord.Color.green()
-                )
-                await ctx.send(embed=embed)
-            else:
-                close_matches = get_close_matches(name, tags.keys())
-                if close_matches:
-                    embed = discord.Embed(
-                        description=f"Tag `{name}` not found. Did you mean `{close_matches[0]}`?",
-                        color=discord.Color.red()
-                    )
-                    await ctx.send(embed=embed)
-                else:
-                    embed = discord.Embed(
-                        description=f"Tag `{name}` not found and no close matches were found.",
-                        color=discord.Color.red()
-                    )
-                    await ctx.send(embed=embed)
+        embed = discord.Embed(
+            description="Use a subcommand to manage tags or use `ticks run` to execute a tag.",
+            color=discord.Color.blue()
+        )
+        await ctx.send(embed=embed)
 
     @ticks.command(name="add")
     async def add(self, ctx: commands.Context, name: str, *, content: str):
@@ -119,3 +74,34 @@ class Ticks(commands.Cog):
             color=discord.Color.blue()
         )
         await ctx.send(embed=embed)
+
+    @ticks.command(name="run")
+    async def run(self, ctx: commands.Context, tag: str):
+        """Run a tag."""
+        tags = await self.config.guild(ctx.guild).tags()
+        if tag in tags:
+            color = discord.Color(random.randint(0, 0xFFFFFF))
+            embed = discord.Embed(
+                description=tags[tag],
+                color=color
+            )
+            await ctx.send(embed=embed)
+        else:
+            close_matches = get_close_matches(tag, tags.keys())
+            if close_matches:
+                embed = discord.Embed(
+                    description=f"Tag `{tag}` not found. Did you mean `{close_matches[0]}`?",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    description=f"Tag `{tag}` not found and no close matches were found.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=embed)
+
+    @run.autocomplete("tag")
+    async def autocomplete_tag(self, interaction: discord.Interaction, current: str):
+        tags = await self.config.guild(interaction.guild).tags()
+        return [tag for tag in tags if current.lower() in tag.lower()]
