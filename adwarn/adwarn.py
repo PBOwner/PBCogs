@@ -534,7 +534,7 @@ class AdWarn(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def adrace(self, ctx, duration: int):
         """Start an adwarn race that lasts for a configurable amount of time."""
-        custom_emoji = "<a:winner:1269746569872412785>"  # Custom emoji
+        custom_emoji = "<a:winner:1270075143049449522>"  # Custom emoji
         join_end_time = discord.utils.utcnow() + timedelta(seconds=60)
         join_end_timestamp = int(join_end_time.timestamp())
         embed = discord.Embed(
