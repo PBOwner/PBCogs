@@ -402,37 +402,58 @@ class EventLogger(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_emoji_create(self, emoji: discord.Emoji):
         description = (
-            f"**Emoji:** {emoji.name}\n"
+            f"**Emoji:** {emoji} ({emoji.name})\n"
             f"**Emoji ID:** `{emoji.id}`\n"
             f"**Guild:** ||{emoji.guild.name} ({emoji.guild.id})||\n"
             f"**Creator:** {emoji.user.name if emoji.user else 'N/A'}\n"
-            f"**Creator ID:** ||{emoji.user.id if emoji.user else 'N/A'}||"
+            f"**Creator ID:** ||{emoji.user.id if emoji.user else 'N/A'}||\n"
+            f"**Created At:** {emoji.created_at}"
         )
+        embed = discord.Embed(
+            title="Emoji Created",
+            description=description,
+            color=discord.Color.green(),
+            timestamp=datetime.utcnow()
+        )
+        embed.set_thumbnail(url=emoji.url)
         await self.log_event(emoji.guild, "guild_emoji_create", description)
 
     @commands.Cog.listener()
     async def on_guild_emoji_delete(self, emoji: discord.Emoji):
         description = (
-            f"**Emoji:** {emoji.name}\n"
+            f"**Emoji:** {emoji} ({emoji.name})\n"
             f"**Emoji ID:** `{emoji.id}`\n"
             f"**Guild:** ||{emoji.guild.name} ({emoji.guild.id})||\n"
             f"**Deleter:** {emoji.user.name if emoji.user else 'N/A'}\n"
             f"**Deleter ID:** ||{emoji.user.id if emoji.user else 'N/A'}||"
         )
+        embed = discord.Embed(
+            title="Emoji Deleted",
+            description=description,
+            color=discord.Color.red(),
+            timestamp=datetime.utcnow()
+        )
+        embed.set_thumbnail(url=emoji.url)
         await self.log_event(emoji.guild, "guild_emoji_delete", description)
 
     @commands.Cog.listener()
     async def on_guild_emoji_update(self, before: discord.Emoji, after: discord.Emoji):
         description = (
-            f"**Before Emoji:** {before.name}\n"
-            f"**After Emoji:** {after.name}\n"
+            f"**Before Emoji:** {before} ({before.name})\n"
+            f"**After Emoji:** {after} ({after.name})\n"
             f"**Emoji ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
             f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
         )
+        embed = discord.Embed(
+            title="Emoji Updated",
+            description=description,
+            color=discord.Color.orange(),
+            timestamp=datetime.utcnow()
+        )
+        embed.set_thumbnail(url=after.url)
         await self.log_event(before.guild, "guild_emoji_update", description)
-
     @commands.Cog.listener()
     async def on_scheduled_event_create(self, event: discord.ScheduledEvent):
         description = (
