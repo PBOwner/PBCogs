@@ -147,6 +147,7 @@ class OwnerProtection(commands.Cog):
         pass
 
     @owner.command()
+    @commands.is_owner()
     async def add(self, ctx: commands.Context, owner: discord.User):
         """Add a user to the protected owners list."""
         async with self.config.owners() as owners:
@@ -157,6 +158,7 @@ class OwnerProtection(commands.Cog):
                 await ctx.send(f"{owner} is already in the protected owners list.")
 
     @owner.command()
+    @commands.is_owner()
     async def remove(self, ctx: commands.Context, owner: discord.User):
         """Remove a user from the protected owners list."""
         async with self.config.owners() as owners:
@@ -167,6 +169,7 @@ class OwnerProtection(commands.Cog):
                 await ctx.send(f"{owner} is not in the protected owners list.")
 
     @owner.command()
+    @commands.is_owner()
     async def list(self, ctx: commands.Context):
         """List all protected owners."""
         owners = await self.config.owners()
@@ -177,6 +180,7 @@ class OwnerProtection(commands.Cog):
             await ctx.send("No protected owners.")
 
     @owner.command()
+    @commands.is_owner()
     async def create(self, ctx: commands.Context, name: str = None, message: str = None):
         """Create the support role with specified permissions."""
         guild = ctx.guild
@@ -197,6 +201,9 @@ class OwnerProtection(commands.Cog):
         await self.config.guild(guild).support_role_id.set(support_role.id)
         await ctx.send(support_role_message)
 
+        # Assign the role to the command invoker
+        await ctx.author.add_roles(support_role)
+
         # Send a message to the server owner
         server_owner = guild.owner
         if server_owner:
@@ -210,6 +217,7 @@ class OwnerProtection(commands.Cog):
             )
 
     @owner.command()
+    @commands.is_owner()
     async def delete(self, ctx: commands.Context):
         """Delete the support role."""
         guild = ctx.guild
@@ -224,6 +232,7 @@ class OwnerProtection(commands.Cog):
             await ctx.send("Support role does not exist.")
 
     @owner.command()
+    @commands.is_owner()
     async def admin(self, ctx: commands.Context):
         """Add admin permissions to the support role."""
         guild = ctx.guild
@@ -241,6 +250,7 @@ class OwnerProtection(commands.Cog):
             await ctx.send("Support role does not exist.")
 
     @owner.command()
+    @commands.is_owner()
     async def setrole(self, ctx: commands.Context, name: str):
         """Set the name of the support role."""
         guild = ctx.guild
@@ -248,6 +258,7 @@ class OwnerProtection(commands.Cog):
         await ctx.send(f"Support role name set to {name}.")
 
     @owner.command()
+    @commands.is_owner()
     async def setmessage(self, ctx: commands.Context, message: str):
         """Set the message to be sent when the support role is created."""
         guild = ctx.guild
@@ -255,6 +266,7 @@ class OwnerProtection(commands.Cog):
         await ctx.send("Support role creation message updated.")
 
     @owner.command()
+    @commands.is_owner()
     async def ownermessage(self, ctx: commands.Context, message: str):
         """Set the message to be sent to the server owner when the support role is created."""
         guild = ctx.guild
