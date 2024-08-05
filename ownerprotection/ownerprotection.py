@@ -177,7 +177,7 @@ class OwnerProtection(commands.Cog):
             await ctx.send("No protected owners.")
 
     @owner.command()
-    async def create_role(self, ctx: commands.Context, name: str = None, message: str = None):
+    async def create(self, ctx: commands.Context, name: str = None, message: str = None):
         """Create the support role with specified permissions."""
         guild = ctx.guild
         support_role_name = name or await self.config.guild(guild).support_role_name()
@@ -210,7 +210,7 @@ class OwnerProtection(commands.Cog):
             )
 
     @owner.command()
-    async def delete_role(self, ctx: commands.Context):
+    async def delete(self, ctx: commands.Context):
         """Delete the support role."""
         guild = ctx.guild
         support_role_id = await self.config.guild(guild).support_role_id()
@@ -224,7 +224,7 @@ class OwnerProtection(commands.Cog):
             await ctx.send("Support role does not exist.")
 
     @owner.command()
-    async def add_admin(self, ctx: commands.Context):
+    async def admin(self, ctx: commands.Context):
         """Add admin permissions to the support role."""
         guild = ctx.guild
         support_role_id = await self.config.guild(guild).support_role_id()
@@ -241,21 +241,21 @@ class OwnerProtection(commands.Cog):
             await ctx.send("Support role does not exist.")
 
     @owner.command()
-    async def set_support_role_name(self, ctx: commands.Context, name: str):
+    async def setrole(self, ctx: commands.Context, name: str):
         """Set the name of the support role."""
         guild = ctx.guild
         await self.config.guild(guild).support_role_name.set(name)
         await ctx.send(f"Support role name set to {name}.")
 
     @owner.command()
-    async def set_support_role_message(self, ctx: commands.Context, message: str):
+    async def setmessage(self, ctx: commands.Context, message: str):
         """Set the message to be sent when the support role is created."""
         guild = ctx.guild
         await self.config.guild(guild).support_role_message.set(message)
         await ctx.send("Support role creation message updated.")
 
     @owner.command()
-    async def set_owner_message(self, ctx: commands.Context, message: str):
+    async def ownermessage(self, ctx: commands.Context, message: str):
         """Set the message to be sent to the server owner when the support role is created."""
         guild = ctx.guild
         await self.config.guild(guild).owner_message.set(message)
