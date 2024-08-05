@@ -16,7 +16,9 @@ class EventLogger(commands.Cog):
         }
         self.config.register_guild(**default_guild)
 
-    async def log_event(self, guild: discord.Guild, event: str, description: str):
+    async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
+        if guild is None:
+            return  # Skip logging if guild is None
         channels = await self.config.guild(guild).channels()
         channel_id = channels.get(event)
         if channel_id:
