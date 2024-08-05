@@ -8,7 +8,8 @@ class COC(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         default_guild = {
             "roles": [],
-            "channel_id": None
+            "channel_id": None,
+            "message_id": None
         }
         self.config.register_guild(**default_guild)
         self.previous_roles = {}
@@ -83,20 +84,28 @@ class COC(commands.Cog):
             else:
                 embed.add_field(name=role.name, value="No members", inline=False)
 
-        await channel.send(embed=embed)
+        message = await channel.send(embed=embed)
+        await self.config.guild(guild).message_id.set(message.id)
 
     @coc.command()
     async def update(self, ctx):
         """Manually update the Chain of Command embed."""
         guild = ctx.guild
         channel_id = await self.config.guild(guild).channel_id()
-        if channel_id is None:
-            await ctx.send(embed=discord.Embed(title="Channel Not Set", description="Please set a channel using the `coc channel` command first.", color=discord.Color.red()))
+        message_id = await self.config.guild(guild).message_id()
+        if channel_id is None or message_id is None:
+            await ctx.send(embed=discord.Embed(title="Channel or Message Not Set", description="Please set a channel and send the message using the `coc channel` and `coc send` commands first.", color=discord.Color.red()))
             return
 
         channel = guild.get_channel(channel_id)
         if channel is None:
             await ctx.send(embed=discord.Embed(title="Channel Not Found", description="The set channel could not be found. Please set a valid channel using the `coc channel` command.", color=discord.Color.red()))
+            return
+
+        try:
+            message = await channel.fetch_message(message_id)
+        except discord.NotFound:
+            await ctx.send(embed=discord.Embed(title="Message Not Found", description="The set message could not be found. Please send the message again using the `coc send` command.", color=discord.Color.red()))
             return
 
         roles = await self.config.guild(guild).roles()
@@ -110,7 +119,7 @@ class COC(commands.Cog):
             else:
                 embed.add_field(name=role.name, value="No members", inline=False)
 
-        await channel.send(embed=embed)
+        await message.edit(embed=embed)
         await ctx.send(embed=discord.Embed(title="Chain of Command Updated", description="The Chain of Command embed has been manually updated.", color=discord.Color.green()))
 
     @tasks.loop(minutes=2)
@@ -142,10 +151,15 @@ class COC(commands.Cog):
                         embed.add_field(name=role.name, value="No members", inline=False)
 
                 channel_id = await self.config.guild(guild).channel_id()
-                if channel_id:
+                message_id = await self.config.guild(guild).message_id()
+                if channel_id and message_id:
                     channel = guild.get_channel(channel_id)
                     if channel:
-                        await channel.send(embed=embed)
+                        try:
+                            message = await channel.fetch_message(message_id)
+                            await message.edit(embed=embed)
+                        except discord.NotFound:
+                            pass
 
                 self.previous_roles[guild.id] = current_roles
 
