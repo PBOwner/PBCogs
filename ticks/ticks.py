@@ -6,7 +6,7 @@ from difflib import get_close_matches
 class Ticks(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
-        self.config = Config.get_conf(self, identifier: 1234567890)
+        self.config = Config.get_conf(self, identifier=1888291842)
         default_guild = {"tags": {}}
         self.config.register_guild(**default_guild)
 
