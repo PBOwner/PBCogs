@@ -689,7 +689,7 @@ class EventLogger(commands.Cog):
             f"**After Bot:** {after.bot}\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
-        await self.log_event(before.guild, "user_update", description)
+        await self.log_event(None, "user_update", description)
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
