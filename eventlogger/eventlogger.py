@@ -617,8 +617,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{before.id}`\n"
             f"**Before Discriminator:** {before.discriminator}\n"
             f"**After Discriminator:** {after.discriminator}\n"
-            f"**Before Avatar:** {str(before.avatar_url)}\n"
-            f"**After Avatar:** {str(after.avatar_url)}\n"
+            f"**Before Avatar:** {str(before.avatar.url)}\n"
+            f"**After Avatar:** {str(after.avatar.url)}\n"
             f"**Before Bot:** {before.bot}\n"
             f"**After Bot:** {after.bot}\n"
             f"**Before System:** {before.system}\n"
@@ -686,8 +686,8 @@ class EventLogger(commands.Cog):
         description = (
             f"**User:** {before.name}\n"
             f"**User ID:** `{before.id}`\n"
-            f"**Before Avatar:** {str(before.avatar_url)}\n"
-            f"**After Avatar:** {str(after.avatar_url)}\n"
+            f"**Before Avatar:** {str(before.avatar.url)}\n"
+            f"**After Avatar:** {str(after.avatar.url)}\n"
             f"**Guild:** ||{before.guild.name if before.guild else 'DM'} ({before.guild.id if before.guild else 'DM'})||"
         )
         await self.log_event(before.guild, "user_avatar_update", description)
