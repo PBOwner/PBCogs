@@ -67,11 +67,13 @@ class EventLogger(commands.Cog):
             "message": ["bulk_message_delete", "message_delete", "message_edit"],
             "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "report_create", "reports_accept", "reports_ignore", "user_note_add", "user_note_remove", "warn_add", "warn_remove"],
             "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
+            "reaction": ["reaction_add", "reaction_remove"],
             "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
             "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
             "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
             "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
             "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
+            "typing": ["typing"],
             "user": ["member_update", "user_avatar_update", "user_roles_add", "user_roles_remove", "user_roles_update", "user_timeout", "user_timeout_remove", "user_update"],
             "voice": ["voice_state_update"],
             "webhook": ["webhook_create", "webhook_delete", "webhook_update"]
@@ -119,11 +121,13 @@ class EventLogger(commands.Cog):
             "message": ["bulk_message_delete", "message_delete", "message_edit"],
             "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "report_create", "reports_accept", "reports_ignore", "user_note_add", "user_note_remove", "warn_add", "warn_remove"],
             "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
+            "reaction": ["reaction_add", "reaction_remove"],
             "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
             "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
             "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
             "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
             "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
+            "typing": ["typing"],
             "user": ["member_update", "user_avatar_update", "user_roles_add", "user_roles_remove", "user_roles_update", "user_timeout", "user_timeout_remove", "user_update"],
             "voice": ["voice_state_update"],
             "webhook": ["webhook_create", "webhook_delete", "webhook_update"]
@@ -139,7 +143,8 @@ class EventLogger(commands.Cog):
         description = (
             f"**Integration:** {integration.name}\n"
             f"**Integration ID:** `{integration.id}`\n"
-            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||"
+            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||\n"
+            f"**Timestamp:** <t:{int(integration.created_at.timestamp())}:F>"
         )
         await self.log_event(integration.guild, "integration_create", description)
 
@@ -148,7 +153,8 @@ class EventLogger(commands.Cog):
         description = (
             f"**Integration:** {integration.name}\n"
             f"**Integration ID:** `{integration.id}`\n"
-            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||"
+            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(integration.guild, "integration_delete", description)
 
@@ -157,7 +163,8 @@ class EventLogger(commands.Cog):
         description = (
             f"**Integration:** {integration.name}\n"
             f"**Integration ID:** `{integration.id}`\n"
-            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||"
+            f"**Guild:** ||{integration.guild.name} ({integration.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(integration.guild, "integration_update", description)
 
@@ -169,7 +176,8 @@ class EventLogger(commands.Cog):
             f"**Channel Type:** {str(channel.type)}\n"
             f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Creator:** {channel.guild.me.name if channel.guild.me else 'N/A'}\n"
-            f"**Creator ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||"
+            f"**Creator ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(channel.guild, "guild_channel_create", description)
 
@@ -181,7 +189,8 @@ class EventLogger(commands.Cog):
             f"**Channel Type:** {str(channel.type)}\n"
             f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Deleter:** {channel.guild.me.name if channel.guild.me else 'N/A'}\n"
-            f"**Deleter ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||"
+            f"**Deleter ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(channel.guild, "guild_channel_delete", description)
 
@@ -193,7 +202,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_update", description)
 
@@ -205,7 +215,8 @@ class EventLogger(commands.Cog):
             f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Last Pin:** {last_pin.content if last_pin else 'None'}\n"
             f"**Pinner:** {last_pin.author.name if last_pin else 'N/A'}\n"
-            f"**Pinner ID:** ||{last_pin.author.id if last_pin else 'N/A'}||"
+            f"**Pinner ID:** ||{last_pin.author.id if last_pin else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(channel.guild, "guild_channel_pins_update", description)
 
@@ -217,7 +228,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_name_update", description)
 
@@ -229,7 +241,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_topic_update", description)
 
@@ -241,7 +254,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_nsfw_update", description)
 
@@ -253,7 +267,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_parent_update", description)
 
@@ -265,7 +280,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_permissions_update", description)
 
@@ -277,7 +293,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_type_update", description)
 
@@ -289,7 +306,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_bitrate_update", description)
 
@@ -301,7 +319,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_user_limit_update", description)
 
@@ -313,7 +332,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_slowmode_update", description)
 
@@ -325,7 +345,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_rtc_region_update", description)
 
@@ -337,14 +358,15 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_channel_video_quality_update", description)
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member: discord.Member, before: discord.VoiceState, after: discord.VoiceState):
         description = (
-            f"**Member:** {member.name}\n"
+            f"**Member:** {member.name} ({member.mention})\n"
             f"**Member ID:** `{member.id}`\n"
             f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
             f"**Before Channel:** {str(before.channel) if before.channel else 'None'}\n"
@@ -352,7 +374,8 @@ class EventLogger(commands.Cog):
             f"**Before Mute:** {before.mute}\n"
             f"**After Mute:** {after.mute}\n"
             f"**Before Deaf:** {before.deaf}\n"
-            f"**After Deaf:** {after.deaf}"
+            f"**After Deaf:** {after.deaf}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "voice_state_update", description)
 
@@ -363,7 +386,8 @@ class EventLogger(commands.Cog):
             f"**Rule ID:** `{rule.id}`\n"
             f"**Guild:** ||{rule.guild.name} ({rule.guild.id})||\n"
             f"**Creator:** {rule.creator.name if rule.creator else 'N/A'}\n"
-            f"**Creator ID:** ||{rule.creator.id if rule.creator else 'N/A'}||"
+            f"**Creator ID:** ||{rule.creator.id if rule.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(rule.created_at.timestamp())}:F>"
         )
         await self.log_event(rule.guild, "automod_rule_create", description)
 
@@ -374,7 +398,8 @@ class EventLogger(commands.Cog):
             f"**Rule ID:** `{rule.id}`\n"
             f"**Guild:** ||{rule.guild.name} ({rule.guild.id})||\n"
             f"**Deleter:** {rule.creator.name if rule.creator else 'N/A'}\n"
-            f"**Deleter ID:** ||{rule.creator.id if rule.creator else 'N/A'}||"
+            f"**Deleter ID:** ||{rule.creator.id if rule.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(rule.guild, "automod_rule_delete", description)
 
@@ -386,7 +411,8 @@ class EventLogger(commands.Cog):
             f"**Rule ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.creator.name if before.creator else 'N/A'}\n"
-            f"**Updater ID:** ||{before.creator.id if before.creator else 'N/A'}||"
+            f"**Updater ID:** ||{before.creator.id if before.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "automod_rule_update", description)
 
@@ -395,7 +421,8 @@ class EventLogger(commands.Cog):
         description = (
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Before Emojis:** {', '.join([emoji.name for emoji in before])}\n"
-            f"**After Emojis:** {', '.join([emoji.name for emoji in after])}"
+            f"**After Emojis:** {', '.join([emoji.name for emoji in after])}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_emojis_update", description)
 
@@ -407,7 +434,7 @@ class EventLogger(commands.Cog):
             f"**Guild:** ||{emoji.guild.name} ({emoji.guild.id})||\n"
             f"**Creator:** {emoji.user.name if emoji.user else 'N/A'}\n"
             f"**Creator ID:** ||{emoji.user.id if emoji.user else 'N/A'}||\n"
-            f"**Created At:** {emoji.created_at}"
+            f"**Created At:** <t:{int(emoji.created_at.timestamp())}:F>"
         )
         embed = discord.Embed(
             title="Emoji Created",
@@ -425,7 +452,8 @@ class EventLogger(commands.Cog):
             f"**Emoji ID:** `{emoji.id}`\n"
             f"**Guild:** ||{emoji.guild.name} ({emoji.guild.id})||\n"
             f"**Deleter:** {emoji.user.name if emoji.user else 'N/A'}\n"
-            f"**Deleter ID:** ||{emoji.user.id if emoji.user else 'N/A'}||"
+            f"**Deleter ID:** ||{emoji.user.id if emoji.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         embed = discord.Embed(
             title="Emoji Deleted",
@@ -444,7 +472,8 @@ class EventLogger(commands.Cog):
             f"**Emoji ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
-            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
+            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         embed = discord.Embed(
             title="Emoji Updated",
@@ -454,6 +483,7 @@ class EventLogger(commands.Cog):
         )
         embed.set_thumbnail(url=after.url)
         await self.log_event(before.guild, "guild_emoji_update", description)
+
     @commands.Cog.listener()
     async def on_scheduled_event_create(self, event: discord.ScheduledEvent):
         description = (
@@ -461,7 +491,8 @@ class EventLogger(commands.Cog):
             f"**Event ID:** `{event.id}`\n"
             f"**Guild:** ||{event.guild.name} ({event.guild.id})||\n"
             f"**Creator:** {event.creator.name if event.creator else 'N/A'}\n"
-            f"**Creator ID:** ||{event.creator.id if event.creator else 'N/A'}||"
+            f"**Creator ID:** ||{event.creator.id if event.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(event.created_at.timestamp())}:F>"
         )
         await self.log_event(event.guild, "scheduled_event_create", description)
 
@@ -472,7 +503,8 @@ class EventLogger(commands.Cog):
             f"**Event ID:** `{event.id}`\n"
             f"**Guild:** ||{event.guild.name} ({event.guild.id})||\n"
             f"**Deleter:** {event.creator.name if event.creator else 'N/A'}\n"
-            f"**Deleter ID:** ||{event.creator.id if event.creator else 'N/A'}||"
+            f"**Deleter ID:** ||{event.creator.id if event.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(event.guild, "scheduled_event_delete", description)
 
@@ -484,7 +516,8 @@ class EventLogger(commands.Cog):
             f"**Event ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.creator.name if before.creator else 'N/A'}\n"
-            f"**Updater ID:** ||{before.creator.id if before.creator else 'N/A'}||"
+            f"**Updater ID:** ||{before.creator.id if before.creator else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "scheduled_event_update", description)
 
@@ -495,7 +528,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Event:** {event.name}\n"
             f"**Event ID:** `{event.id}`\n"
-            f"**Guild:** ||{event.guild.name} ({event.guild.id})||"
+            f"**Guild:** ||{event.guild.name} ({event.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(event.guild, "scheduled_event_user_add", description)
 
@@ -506,7 +540,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Event:** {event.name}\n"
             f"**Event ID:** `{event.id}`\n"
-            f"**Guild:** ||{event.guild.name} ({event.guild.id})||"
+            f"**Guild:** ||{event.guild.name} ({event.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(event.guild, "scheduled_event_user_remove", description)
 
@@ -519,7 +554,8 @@ class EventLogger(commands.Cog):
             f"**Channel:** {invite.channel.name}\n"
             f"**Channel ID:** `{invite.channel.id}`\n"
             f"**Creator:** {invite.inviter.name if invite.inviter else 'N/A'}\n"
-            f"**Creator ID:** ||{invite.inviter.id if invite.inviter else 'N/A'}||"
+            f"**Creator ID:** ||{invite.inviter.id if invite.inviter else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(invite.created_at.timestamp())}:F>"
         )
         await self.log_event(invite.guild, "invite_create", description)
 
@@ -532,7 +568,8 @@ class EventLogger(commands.Cog):
             f"**Channel:** {invite.channel.name}\n"
             f"**Channel ID:** `{invite.channel.id}`\n"
             f"**Deleter:** {invite.inviter.name if invite.inviter else 'N/A'}\n"
-            f"**Deleter ID:** ||{invite.inviter.id if invite.inviter else 'N/A'}||"
+            f"**Deleter ID:** ||{invite.inviter.id if invite.inviter else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(invite.guild, "invite_delete", description)
 
@@ -541,11 +578,12 @@ class EventLogger(commands.Cog):
         description = (
             f"**Message Content:** {message.content}\n"
             f"**Message ID:** `{message.id}`\n"
-            f"**Author:** {message.author.name}\n"
+            f"**Author:** {message.author.name} ({message.author.mention})\n"
             f"**Author ID:** `{message.author.id}`\n"
             f"**Channel:** {message.channel.name}\n"
             f"**Channel ID:** `{message.channel.id}`\n"
-            f"**Guild:** ||{message.guild.name} ({message.guild.id})||"
+            f"**Guild:** ||{message.guild.name} ({message.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(message.guild, "message_delete", description)
 
@@ -556,7 +594,8 @@ class EventLogger(commands.Cog):
             f"**Channel:** {messages[0].channel.name}\n"
             f"**Channel ID:** `{messages[0].channel.id}`\n"
             f"**Guild:** ||{messages[0].guild.name} ({messages[0].guild.id})||\n"
-            f"**Messages:** {', '.join([message.content for message in messages])}"
+            f"**Messages:** {', '.join([message.content for message in messages])}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(messages[0].guild, "bulk_message_delete", description)
 
@@ -566,11 +605,12 @@ class EventLogger(commands.Cog):
             f"**Before Content:** {before.content}\n"
             f"**After Content:** {after.content}\n"
             f"**Message ID:** `{before.id}`\n"
-            f"**Author:** {before.author.name}\n"
+            f"**Author:** {before.author.name} ({before.author.mention})\n"
             f"**Author ID:** `{before.author.id}`\n"
             f"**Channel:** {before.channel.name}\n"
             f"**Channel ID:** `{before.channel.id}`\n"
-            f"**Guild:** ||{before.guild.name} ({before.guild.id})||"
+            f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "message_edit", description)
 
@@ -581,7 +621,8 @@ class EventLogger(commands.Cog):
             f"**Role ID:** `{role.id}`\n"
             f"**Guild:** ||{role.guild.name} ({role.guild.id})||\n"
             f"**Creator:** {role.guild.me.name if role.guild.me else 'N/A'}\n"
-            f"**Creator ID:** ||{role.guild.me.id if role.guild.me else 'N/A'}||"
+            f"**Creator ID:** ||{role.guild.me.id if role.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(role.guild, "guild_role_create", description)
 
@@ -592,7 +633,8 @@ class EventLogger(commands.Cog):
             f"**Role ID:** `{role.id}`\n"
             f"**Guild:** ||{role.guild.name} ({role.guild.id})||\n"
             f"**Deleter:** {role.guild.me.name if role.guild.me else 'N/A'}\n"
-            f"**Deleter ID:** ||{role.guild.me.id if role.guild.me else 'N/A'}||"
+            f"**Deleter ID:** ||{role.guild.me.id if role.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(role.guild, "guild_role_delete", description)
 
@@ -604,29 +646,32 @@ class EventLogger(commands.Cog):
             f"**Role ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_role_update", description)
 
     @commands.Cog.listener()
     async def on_member_ban(self, guild: discord.Guild, user: discord.User):
         description = (
-            f"**User:** {user.name}\n"
+            f"**User:** {user.name} ({user.mention})\n"
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Banner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Banner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Banner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "member_ban", description)
 
     @commands.Cog.listener()
     async def on_member_unban(self, guild: discord.Guild, user: discord.User):
         description = (
-            f"**User:** {user.name}\n"
+            f"**User:** {user.name} ({user.mention})\n"
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Unbanner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unbanner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Unbanner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "member_unban", description)
 
@@ -642,6 +687,7 @@ class EventLogger(commands.Cog):
             f"**After Avatar:** {str(after.avatar.url)}\n"
             f"**Before Bot:** {before.bot}\n"
             f"**After Bot:** {after.bot}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "user_update", description)
 
@@ -659,7 +705,8 @@ class EventLogger(commands.Cog):
             f"**Before Status:** {str(before.status)}\n"
             f"**After Status:** {str(after.status)}\n"
             f"**Before Activity:** {str(before.activity)}\n"
-            f"**After Activity:** {str(after.activity)}"
+            f"**After Activity:** {str(after.activity)}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "member_update", description)
 
@@ -670,7 +717,8 @@ class EventLogger(commands.Cog):
             f"**Member ID:** `{before.id}`\n"
             f"**Before Roles:** {', '.join([role.name for role in before.roles])}\n"
             f"**After Roles:** {', '.join([role.name for role in after.roles])}\n"
-            f"**Guild:** ||{before.guild.name} ({before.guild.id})||"
+            f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "user_roles_update", description)
 
@@ -683,7 +731,8 @@ class EventLogger(commands.Cog):
             f"**Role ID:** `{role.id}`\n"
             f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
             f"**Adder:** {member.guild.me.name if member.guild.me else 'N/A'}\n"
-            f"**Adder ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||"
+            f"**Adder ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "user_roles_add", description)
 
@@ -696,7 +745,8 @@ class EventLogger(commands.Cog):
             f"**Role ID:** `{role.id}`\n"
             f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
             f"**Remover:** {member.guild.me.name if member.guild.me else 'N/A'}\n"
-            f"**Remover ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||"
+            f"**Remover ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "user_roles_remove", description)
 
@@ -707,7 +757,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{before.id}`\n"
             f"**Before Avatar:** {str(before.avatar.url)}\n"
             f"**After Avatar:** {str(after.avatar.url)}\n"
-            f"**Guild:** ||{before.guild.name if before.guild else 'DM'} ({before.guild.id if before.guild else 'DM'})||"
+            f"**Guild:** ||{before.guild.name if before.guild else 'DM'} ({before.guild.id if before.guild else 'DM'})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "user_avatar_update", description)
 
@@ -718,7 +769,8 @@ class EventLogger(commands.Cog):
             f"**Member ID:** `{member.id}`\n"
             f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
             f"**Timeout By:** {member.guild.me.name if member.guild.me else 'N/A'}\n"
-            f"**Timeout By ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||"
+            f"**Timeout By ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "user_timeout", description)
 
@@ -729,7 +781,8 @@ class EventLogger(commands.Cog):
             f"**Member ID:** `{member.id}`\n"
             f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
             f"**Timeout Removed By:** {member.guild.me.name if member.guild.me else 'N/A'}\n"
-            f"**Timeout Removed By ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||"
+            f"**Timeout Removed By ID:** ||{member.guild.me.id if member.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "user_timeout_remove", description)
 
@@ -740,7 +793,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{channel.id}`\n"
             f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Updater:** {channel.guild.me.name if channel.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{channel.guild.me.id if channel.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(channel.guild, "webhook_update", description)
 
@@ -753,7 +807,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{webhook.channel.id}`\n"
             f"**Guild:** ||{webhook.guild.name} ({webhook.guild.id})||\n"
             f"**Creator:** {webhook.user.name if webhook.user else 'N/A'}\n"
-            f"**Creator ID:** ||{webhook.user.id if webhook.user else 'N/A'}||"
+            f"**Creator ID:** ||{webhook.user.id if webhook.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(webhook.guild, "webhook_create", description)
 
@@ -766,7 +821,8 @@ class EventLogger(commands.Cog):
             f"**Channel ID:** `{webhook.channel.id}`\n"
             f"**Guild:** ||{webhook.guild.name} ({webhook.guild.id})||\n"
             f"**Deleter:** {webhook.user.name if webhook.user else 'N/A'}\n"
-            f"**Deleter ID:** ||{webhook.user.id if webhook.user else 'N/A'}||"
+            f"**Deleter ID:** ||{webhook.user.id if webhook.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(webhook.guild, "webhook_delete", description)
 
@@ -777,7 +833,8 @@ class EventLogger(commands.Cog):
             f"**Thread ID:** `{thread.id}`\n"
             f"**Guild:** ||{thread.guild.name} ({thread.guild.id})||\n"
             f"**Creator:** {thread.owner.name if thread.owner else 'N/A'}\n"
-            f"**Creator ID:** ||{thread.owner.id if thread.owner else 'N/A'}||"
+            f"**Creator ID:** ||{thread.owner.id if thread.owner else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(thread.created_at.timestamp())}:F>"
         )
         await self.log_event(thread.guild, "thread_create", description)
 
@@ -788,7 +845,8 @@ class EventLogger(commands.Cog):
             f"**Thread ID:** `{thread.id}`\n"
             f"**Guild:** ||{thread.guild.name} ({thread.guild.id})||\n"
             f"**Deleter:** {thread.owner.name if thread.owner else 'N/A'}\n"
-            f"**Deleter ID:** ||{thread.owner.id if thread.owner else 'N/A'}||"
+            f"**Deleter ID:** ||{thread.owner.id if thread.owner else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(thread.guild, "thread_delete", description)
 
@@ -800,7 +858,8 @@ class EventLogger(commands.Cog):
             f"**Thread ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.owner.name if before.owner else 'N/A'}\n"
-            f"**Updater ID:** ||{before.owner.id if before.owner else 'N/A'}||"
+            f"**Updater ID:** ||{before.owner.id if before.owner else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "thread_update", description)
 
@@ -811,7 +870,8 @@ class EventLogger(commands.Cog):
             f"**Member ID:** `{member.id}`\n"
             f"**Thread:** {member.thread.name}\n"
             f"**Thread ID:** `{member.thread.id}`\n"
-            f"**Guild:** ||{member.guild.name} ({member.guild.id})||"
+            f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "thread_member_join", description)
 
@@ -822,7 +882,8 @@ class EventLogger(commands.Cog):
             f"**Member ID:** `{member.id}`\n"
             f"**Thread:** {member.thread.name}\n"
             f"**Thread ID:** `{member.thread.id}`\n"
-            f"**Guild:** ||{member.guild.name} ({member.guild.id})||"
+            f"**Guild:** ||{member.guild.name} ({member.guild.id})||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(member.guild, "thread_member_remove", description)
 
@@ -833,7 +894,8 @@ class EventLogger(commands.Cog):
             f"**Sticker ID:** `{sticker.id}`\n"
             f"**Guild:** ||{sticker.guild.name} ({sticker.guild.id})||\n"
             f"**Creator:** {sticker.user.name if sticker.user else 'N/A'}\n"
-            f"**Creator ID:** ||{sticker.user.id if sticker.user else 'N/A'}||"
+            f"**Creator ID:** ||{sticker.user.id if sticker.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(sticker.created_at.timestamp())}:F>"
         )
         await self.log_event(sticker.guild, "guild_sticker_create", description)
 
@@ -844,7 +906,8 @@ class EventLogger(commands.Cog):
             f"**Sticker ID:** `{sticker.id}`\n"
             f"**Guild:** ||{sticker.guild.name} ({sticker.guild.id})||\n"
             f"**Deleter:** {sticker.user.name if sticker.user else 'N/A'}\n"
-            f"**Deleter ID:** ||{sticker.user.id if sticker.user else 'N/A'}||"
+            f"**Deleter ID:** ||{sticker.user.id if sticker.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(sticker.guild, "guild_sticker_delete", description)
 
@@ -856,7 +919,8 @@ class EventLogger(commands.Cog):
             f"**Sticker ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
-            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
+            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "guild_sticker_update", description)
 
@@ -867,7 +931,8 @@ class EventLogger(commands.Cog):
             f"**Sound ID:** `{sound.id}`\n"
             f"**Guild:** ||{sound.guild.name} ({sound.guild.id})||\n"
             f"**Uploader:** {sound.user.name if sound.user else 'N/A'}\n"
-            f"**Uploader ID:** ||{sound.user.id if sound.user else 'N/A'}||"
+            f"**Uploader ID:** ||{sound.user.id if sound.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(sound.guild, "soundboard_sound_upload", description)
 
@@ -879,7 +944,8 @@ class EventLogger(commands.Cog):
             f"**Sound ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
-            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
+            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "soundboard_sound_name_update", description)
 
@@ -891,7 +957,8 @@ class EventLogger(commands.Cog):
             f"**Sound ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
-            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
+            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "soundboard_sound_volume_update", description)
 
@@ -903,7 +970,8 @@ class EventLogger(commands.Cog):
             f"**Sound ID:** `{before.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.user.name if before.user else 'N/A'}\n"
-            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||"
+            f"**Updater ID:** ||{before.user.id if before.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "soundboard_sound_emoji_update", description)
 
@@ -914,7 +982,8 @@ class EventLogger(commands.Cog):
             f"**Sound ID:** `{sound.id}`\n"
             f"**Guild:** ||{sound.guild.name} ({sound.guild.id})||\n"
             f"**Deleter:** {sound.user.name if sound.user else 'N/A'}\n"
-            f"**Deleter ID:** ||{sound.user.id if sound.user else 'N/A'}||"
+            f"**Deleter ID:** ||{sound.user.id if sound.user else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(sound.guild, "soundboard_sound_delete", description)
 
@@ -961,7 +1030,8 @@ class EventLogger(commands.Cog):
             f"**Before Boost Progress Bar:** {before.premium_progress_bar_enabled}\n"
             f"**After Boost Progress Bar:** {after.premium_progress_bar_enabled}\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_update", description)
 
@@ -972,7 +1042,8 @@ class EventLogger(commands.Cog):
             f"**After AFK Channel:** {after.afk_channel}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_afk_channel_update", description)
 
@@ -983,7 +1054,8 @@ class EventLogger(commands.Cog):
             f"**After AFK Timeout:** {after.afk_timeout}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_afk_timeout_update", description)
 
@@ -994,7 +1066,8 @@ class EventLogger(commands.Cog):
             f"**After Banner:** {after.banner}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_banner_update", description)
 
@@ -1005,7 +1078,8 @@ class EventLogger(commands.Cog):
             f"**After Default Notifications:** {after.default_notifications}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_message_notifications_update", description)
 
@@ -1016,7 +1090,8 @@ class EventLogger(commands.Cog):
             f"**After Discovery Splash:** {after.discovery_splash}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_discovery_splash_update", description)
 
@@ -1027,7 +1102,8 @@ class EventLogger(commands.Cog):
             f"**After Explicit Content Filter:** {after.explicit_content_filter}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_explicit_content_filter_update", description)
 
@@ -1038,7 +1114,8 @@ class EventLogger(commands.Cog):
             f"**After Features:** {', '.join(after.features)}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_features_update", description)
 
@@ -1049,7 +1126,8 @@ class EventLogger(commands.Cog):
             f"**After Icon:** {after.icon}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_icon_update", description)
 
@@ -1060,7 +1138,8 @@ class EventLogger(commands.Cog):
             f"**After MFA Level:** {after.mfa_level}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_mfa_level_update", description)
 
@@ -1071,7 +1150,8 @@ class EventLogger(commands.Cog):
             f"**After Name:** {after.name}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_name_update", description)
 
@@ -1082,7 +1162,8 @@ class EventLogger(commands.Cog):
             f"**After Description:** {after.description}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_description_update", description)
 
@@ -1093,7 +1174,8 @@ class EventLogger(commands.Cog):
             f"**After Partner Status:** {after.partnered}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_partner_status_update", description)
 
@@ -1104,7 +1186,8 @@ class EventLogger(commands.Cog):
             f"**After Boost Level:** {after.premium_tier}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_boost_level_update", description)
 
@@ -1115,7 +1198,8 @@ class EventLogger(commands.Cog):
             f"**After Boost Progress Bar:** {after.premium_progress_bar_enabled}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_boost_progress_bar_update", description)
 
@@ -1126,7 +1210,8 @@ class EventLogger(commands.Cog):
             f"**After Public Updates Channel:** {after.public_updates_channel}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_public_updates_channel_update", description)
 
@@ -1137,7 +1222,8 @@ class EventLogger(commands.Cog):
             f"**After Rules Channel:** {after.rules_channel}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_rules_channel_update", description)
 
@@ -1148,7 +1234,8 @@ class EventLogger(commands.Cog):
             f"**After Splash:** {after.splash}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_splash_update", description)
 
@@ -1159,7 +1246,8 @@ class EventLogger(commands.Cog):
             f"**After System Channel:** {after.system_channel}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_system_channel_update", description)
 
@@ -1170,7 +1258,8 @@ class EventLogger(commands.Cog):
             f"**After Vanity URL Code:** {after.vanity_url_code}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_vanity_url_update", description)
 
@@ -1181,7 +1270,8 @@ class EventLogger(commands.Cog):
             f"**After Verification Level:** {after.verification_level}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_verification_level_update", description)
 
@@ -1192,7 +1282,8 @@ class EventLogger(commands.Cog):
             f"**After Verified Status:** {after.verified}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_verified_update", description)
 
@@ -1203,7 +1294,8 @@ class EventLogger(commands.Cog):
             f"**After Widget Enabled:** {after.widget_enabled}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_widget_update", description)
 
@@ -1214,7 +1306,8 @@ class EventLogger(commands.Cog):
             f"**After Preferred Locale:** {after.preferred_locale}\n"
             f"**Guild ID:** `{before.id}`\n"
             f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before, "guild_preferred_locale_update", description)
 
@@ -1224,7 +1317,8 @@ class EventLogger(commands.Cog):
             f"**Guild:** {guild.name}\n"
             f"**Guild ID:** `{guild.id}`\n"
             f"**Toggler:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Toggler ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Toggler ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_onboarding_toggle", description)
 
@@ -1236,7 +1330,8 @@ class EventLogger(commands.Cog):
             f"**Before Channels:** {before}\n"
             f"**After Channels:** {after}\n"
             f"**Updater:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_onboarding_channels_update", description)
 
@@ -1247,7 +1342,8 @@ class EventLogger(commands.Cog):
             f"**Guild ID:** `{guild.id}`\n"
             f"**Question Added:** {question}\n"
             f"**Adder:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Adder ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Adder ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_onboarding_question_add", description)
 
@@ -1258,7 +1354,8 @@ class EventLogger(commands.Cog):
             f"**Guild ID:** `{guild.id}`\n"
             f"**Question Removed:** {question}\n"
             f"**Remover:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Remover ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Remover ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_onboarding_question_remove", description)
 
@@ -1270,7 +1367,8 @@ class EventLogger(commands.Cog):
             f"**Before:** {before}\n"
             f"**After:** {after}\n"
             f"**Updater:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "guild_onboarding_update", description)
 
@@ -1281,7 +1379,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Banner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Banner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Banner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "ban_add", description)
 
@@ -1292,7 +1391,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Unbanner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unbanner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Unbanner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "ban_remove", description)
 
@@ -1302,7 +1402,8 @@ class EventLogger(commands.Cog):
             f"**Case ID:** `{case.id}`\n"
             f"**Guild:** ||{case.guild.name} ({case.guild.id})||\n"
             f"**Deleter:** {case.guild.me.name if case.guild.me else 'N/A'}\n"
-            f"**Deleter ID:** ||{case.guild.me.id if case.guild.me else 'N/A'}||"
+            f"**Deleter ID:** ||{case.guild.me.id if case.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(case.guild, "case_delete", description)
 
@@ -1313,7 +1414,8 @@ class EventLogger(commands.Cog):
             f"**After Case ID:** `{after.id}`\n"
             f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||"
+            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(before.guild, "case_update", description)
 
@@ -1324,7 +1426,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Kicker:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Kicker ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Kicker ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "kick_add", description)
 
@@ -1335,7 +1438,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Unkicker:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unkicker ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Unkicker ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "kick_remove", description)
 
@@ -1346,7 +1450,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Muter:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Muter ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Muter ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "mute_add", description)
 
@@ -1357,7 +1462,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Unmuter:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unmuter ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Unmuter ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "mute_remove", description)
 
@@ -1368,7 +1474,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Warner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Warner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Warner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "warn_add", description)
 
@@ -1379,7 +1486,8 @@ class EventLogger(commands.Cog):
             f"**User ID:** `{user.id}`\n"
             f"**Guild:** ||{guild.name} ({guild.id})||\n"
             f"**Unwarner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unwarner ID:** ||{guild.me.id if guild.me else 'N/A'}||"
+            f"**Unwarner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(guild, "warn_remove", description)
 
@@ -1389,7 +1497,8 @@ class EventLogger(commands.Cog):
             f"**Report ID:** `{report.id}`\n"
             f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
             f"**Reporter:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Reporter ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||"
+            f"**Reporter ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(report.guild, "report_create", description)
 
@@ -1399,7 +1508,8 @@ class EventLogger(commands.Cog):
             f"**Report ID:** `{report.id}`\n"
             f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
             f"**Ignorer:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Ignorer ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||"
+            f"**Ignorer ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(report.guild, "reports_ignore", description)
 
@@ -1409,7 +1519,8 @@ class EventLogger(commands.Cog):
             f"**Report ID:** `{report.id}`\n"
             f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
             f"**Acceptor:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Acceptor ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||"
+            f"**Acceptor ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(report.guild, "reports_accept", description)
 
@@ -1421,7 +1532,8 @@ class EventLogger(commands.Cog):
             f"**Note:** `{note}`\n"
             f"**Guild:** ||{user.guild.name if user.guild else 'DM'} ({user.guild.id if user.guild else 'DM'})||\n"
             f"**Adder:** {user.guild.me.name if user.guild.me else 'N/A'}\n"
-            f"**Adder ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||"
+            f"**Adder ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(user.guild, "user_note_add", description)
 
@@ -1433,6 +1545,47 @@ class EventLogger(commands.Cog):
             f"**Note:** `{note}`\n"
             f"**Guild:** ||{user.guild.name if user.guild else 'DM'} ({user.guild.id if user.guild else 'DM'})||\n"
             f"**Remover:** {user.guild.me.name if user.guild.me else 'N/A'}\n"
-            f"**Remover ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||"
+            f"**Remover ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
         )
         await self.log_event(user.guild, "user_note_remove", description)
+
+    @commands.Cog.listener()
+    async def on_typing(self, channel: discord.abc.Messageable, user: Union[discord.User, discord.Member], when: datetime):
+        description = (
+            f"**User:** {user.name} ({user.mention})\n"
+            f"**User ID:** `{user.id}`\n"
+            f"**Channel:** {channel.name if isinstance(channel, discord.TextChannel) else 'DM'}\n"
+            f"**Channel ID:** `{channel.id}`\n"
+            f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n" if isinstance(channel, discord.TextChannel) else ""
+            f"**Timestamp:** <t:{int(when.timestamp())}:F>"
+        )
+        await self.log_event(channel.guild if isinstance(channel, discord.TextChannel) else None, "typing", description)
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction: discord.Reaction, user: discord.User):
+        description = (
+            f"**User:** {user.name} ({user.mention})\n"
+            f"**User ID:** `{user.id}`\n"
+            f"**Message ID:** `{reaction.message.id}`\n"
+            f"**Channel:** {reaction.message.channel.name}\n"
+            f"**Channel ID:** `{reaction.message.channel.id}`\n"
+            f"**Guild:** ||{reaction.message.guild.name} ({reaction.message.guild.id})||\n"
+            f"**Emoji:** {reaction.emoji}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(reaction.message.guild, "reaction_add", description)
+
+    @commands.Cog.listener()
+    async def on_reaction_remove(self, reaction: discord.Reaction, user: discord.User):
+        description = (
+            f"**User:** {user.name} ({user.mention})\n"
+            f"**User ID:** `{user.id}`\n"
+            f"**Message ID:** `{reaction.message.id}`\n"
+            f"**Channel:** {reaction.message.channel.name}\n"
+            f"**Channel ID:** `{reaction.message.channel.id}`\n"
+            f"**Guild:** ||{reaction.message.guild.name} ({reaction.message.guild.id})||\n"
+            f"**Emoji:** {reaction.emoji}\n"
+            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
+        )
+        await self.log_event(reaction.message.guild, "reaction_remove", description)
