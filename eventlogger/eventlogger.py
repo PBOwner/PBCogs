@@ -621,8 +621,6 @@ class EventLogger(commands.Cog):
             f"**After Avatar:** {str(after.avatar.url)}\n"
             f"**Before Bot:** {before.bot}\n"
             f"**After Bot:** {after.bot}\n"
-            f"**Before System:** {before.system}\n"
-            f"**After System:** {after.system}"
         )
         await self.log_event(before.guild, "user_update", description)
 
