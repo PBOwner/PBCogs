@@ -234,16 +234,17 @@ class OwnerProtection(commands.Cog):
     @owner.command()
     @commands.is_owner()
     async def admin(self, ctx: commands.Context):
-        """Add admin permissions to the support role."""
+        """Toggle admin permissions for the support role."""
         guild = ctx.guild
         support_role_id = await self.config.guild(guild).support_role_id()
         if support_role_id:
             support_role = guild.get_role(support_role_id)
             if support_role:
                 permissions = support_role.permissions
-                permissions.administrator = True
-                await support_role.edit(permissions=permissions, reason="Added admin permissions to support role")
-                await ctx.send("Admin permissions added to the support role.")
+                permissions.administrator = not permissions.administrator
+                await support_role.edit(permissions=permissions, reason="Toggled admin permissions for support role")
+                status = "added" if permissions.administrator else "removed"
+                await ctx.send(f"Admin permissions {status} for the support role.")
             else:
                 await ctx.send("Support role does not exist.")
         else:
