@@ -1,4 +1,5 @@
 import discord
+from discord.ext import menus
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 
@@ -7,7 +8,9 @@ class LinkStorage(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
+        # Initialize the config with a unique identifier
         self.config = Config.get_conf(self, identifier=1234567891)
+        # Register the global configuration structure
         self.config.register_global(links={}, groups={}, allowed_users=[])
 
     @commands.group()
@@ -17,28 +20,45 @@ class LinkStorage(commands.Cog):
 
     @link.command()
     @commands.is_owner()
-    async def add(self, ctx: commands.Context, name: str, link: str, group: str = "default"):
+    async def add(self, ctx: commands.Context, *, name_link: str):
         """Add a link to the storage."""
-        async with self.config.groups() as groups:
-            if group not in groups:
-                await ctx.send(f"Group {group} does not exist. Please create it first.")
-                return
-            groups[group][name] = link
-        await ctx.send(f"Added link: {name} -> {link} to group {group}")
+        parts = name_link.split()
+        link = parts[-1] if parts[-1].startswith("https://") else None
+        name = " ".join(parts[:-1]) if link else name_link
+        group = "default"
+
+        if link:
+            async with self.config.groups() as groups:
+                if group not in groups:
+                    embed = discord.Embed(description=f"Group {group} does not exist. Please create it first.", color=discord.Color.red())
+                    await ctx.send(embed=embed)
+                    return
+                groups[group][name] = link
+            embed = discord.Embed(description=f"Added link: {name} -> {link} to group {group}", color=discord.Color.green())
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(description=f"Invalid link format. The link must start with https://", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
     @commands.is_owner()
-    async def remove(self, ctx: commands.Context, name: str, group: str = "default"):
+    async def remove(self, ctx: commands.Context, *, name_group: str):
         """Remove a link from the storage."""
+        parts = name_group.split()
+        group = parts[-1] if parts[-1].startswith("https://") else "default"
+        name = " ".join(parts[:-1]) if group != "default" else name_group
+
         async with self.config.groups() as groups:
             if group in groups and name in groups[group]:
                 del groups[group][name]
-                await ctx.send(f"Removed link: {name} from group {group}")
+                embed = discord.Embed(description=f"Removed link: {name} from group {group}", color=discord.Color.green())
+                await ctx.send(embed=embed)
             else:
-                await ctx.send(f"No link found with the name: {name} in group {group}")
+                embed = discord.Embed(description=f"No link found with the name: {name} in group {group}", color=discord.Color.red())
+                await ctx.send(embed=embed)
 
     @link.command()
-    async def get(self, ctx: commands.Context, name: str):
+    async def get(self, ctx: commands.Context, *, name: str):
         """Retrieve a link by name."""
         name_lower = name.lower()
         groups = await self.config.groups()
@@ -48,75 +68,110 @@ class LinkStorage(commands.Cog):
                 if link_name.lower() == name_lower:
                     results.append(f"{link_name} -> {link} (Group: {group})")
         if results:
-            await ctx.send("\n".join(results))
+            embed = discord.Embed(description="\n".join(results), color=discord.Color.blue())
+            await ctx.send(embed=embed)
         else:
-            await ctx.send(f"No link found with the name: {name}")
+            embed = discord.Embed(description=f"No link found with the name: {name}", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
     async def list(self, ctx: commands.Context):
-        """List all stored links."""
-        groups = await self.config.groups()
+        """List all stored links for the user."""
+        user_id = ctx.author.id
+        groups = await self.config.user(user_id).groups()
         if groups:
+            sorted_groups = sorted(groups.items())
+            pages = []
             description = ""
-            for group, links in groups.items():
+            for group, links in sorted_groups:
                 for name, link in links.items():
-                    description += f"{name} -> {link} (Group: {group})\n"
-            embed = discord.Embed(description=description, color=discord.Color.blue())
-            await ctx.send(embed=embed)
+                    entry = f"{name} -> {link} (Group: {group})\n"
+                    if len(description) + len(entry) > 6000 or len(description.split('\n')) > 25:
+                        pages.append(description)
+                        description = ""
+                    description += entry
+            if description:
+                pages.append(description)
+
+            embeds = [discord.Embed(description=page, color=discord.Color.blue()) for page in pages]
+            menu = menus.MenuPages(source=SimplePageSource(embeds), clear_reactions_after=True)
+            await menu.start(ctx)
         else:
-            await ctx.send("No links stored.")
+            embed = discord.Embed(description="No links stored.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
-    @commands.is_owner()
     async def allow(self, ctx: commands.Context, user: discord.User):
-        """Allow a user to add/remove links."""
+        """Allow a user to add/remove links and manage groups."""
         async with self.config.allowed_users() as allowed_users:
             if user.id not in allowed_users:
                 allowed_users.append(user.id)
-                await ctx.send(f"{user} is now allowed to add/remove links.")
+                embed = discord.Embed(description=f"{user} is now allowed to add/remove links and manage groups.", color=discord.Color.green())
+                await ctx.send(embed=embed)
             else:
-                await ctx.send(f"{user} is already allowed to add/remove links.")
+                embed = discord.Embed(description=f"{user} is already allowed to add/remove links and manage groups.", color=discord.Color.red())
+                await ctx.send(embed=embed)
 
     @link.command()
-    @commands.is_owner()
     async def disallow(self, ctx: commands.Context, user: discord.User):
-        """Disallow a user from adding/removing links."""
+        """Disallow a user from adding/removing links and managing groups."""
         async with self.config.allowed_users() as allowed_users:
             if user.id in allowed_users:
                 allowed_users.remove(user.id)
-                await ctx.send(f"{user} is no longer allowed to add/remove links.")
+                embed = discord.Embed(description=f"{user} is no longer allowed to add/remove links and manage groups.", color=discord.Color.green())
+                await ctx.send(embed=embed)
             else:
-                await ctx.send(f"{user} is not allowed to add/remove links.")
+                embed = discord.Embed(description=f"{user} is not allowed to add/remove links and manage groups.", color=discord.Color.red())
+                await ctx.send(embed=embed)
 
     @link.command()
-    async def useradd(self, ctx: commands.Context, name: str, link: str, group: str = "default"):
+    async def useradd(self, ctx: commands.Context, *, name_link: str):
         """Add a link to the user's storage."""
         user_id = ctx.author.id
         allowed_users = await self.config.allowed_users()
+        parts = name_link.split()
+        link = parts[-1] if parts[-1].startswith("https://") else None
+        name = " ".join(parts[:-1]) if link else name_link
+        group = "default"
+
         if user_id in allowed_users:
-            async with self.config.user(user_id).groups() as groups:
-                if group not in groups:
-                    await ctx.send(f"Group {group} does not exist. Please create it first.")
-                    return
-                groups[group][name] = link
-            await ctx.send(f"Added link: {name} -> {link} to group {group}")
+            if link:
+                async with self.config.user(user_id).groups() as groups:
+                    if group not in groups:
+                        embed = discord.Embed(description=f"Group {group} does not exist. Please create it first.", color=discord.Color.red())
+                        await ctx.send(embed=embed)
+                        return
+                    groups[group][name] = link
+                embed = discord.Embed(description=f"Added link: {name} -> {link} to group {group}", color=discord.Color.green())
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(description=f"Invalid link format. The link must start with https://", color=discord.Color.red())
+                await ctx.send(embed=embed)
         else:
-            await ctx.send("You are not allowed to add links.")
+            embed = discord.Embed(description="You are not allowed to add links.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
-    async def userremove(self, ctx: commands.Context, name: str, group: str = "default"):
+    async def userremove(self, ctx: commands.Context, *, name_group: str):
         """Remove a link from the user's storage."""
         user_id = ctx.author.id
         allowed_users = await self.config.allowed_users()
+        parts = name_group.split()
+        group = parts[-1] if parts[-1].startswith("https://") else "default"
+        name = " ".join(parts[:-1]) if group != "default" else name_group
+
         if user_id in allowed_users:
             async with self.config.user(user_id).groups() as groups:
                 if group in groups and name in groups[group]:
                     del groups[group][name]
-                    await ctx.send(f"Removed link: {name} from group {group}")
+                    embed = discord.Embed(description=f"Removed link: {name} from group {group}", color=discord.Color.green())
+                    await ctx.send(embed=embed)
                 else:
-                    await ctx.send(f"No link found with the name: {name} in group {group}")
+                    embed = discord.Embed(description=f"No link found with the name: {name} in group {group}", color=discord.Color.red())
+                    await ctx.send(embed=embed)
         else:
-            await ctx.send("You are not allowed to remove links.")
+            embed = discord.Embed(description="You are not allowed to remove links.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
     async def userlist(self, ctx: commands.Context):
@@ -126,45 +181,86 @@ class LinkStorage(commands.Cog):
         if user_id in allowed_users:
             groups = await self.config.user(user_id).groups()
             if groups:
+                sorted_groups = sorted(groups.items())
+                pages = []
                 description = ""
-                for group, links in groups.items():
+                for group, links in sorted_groups:
                     for name, link in links.items():
-                        description += f"{name} -> {link} (Group: {group})\n"
-                embed = discord.Embed(description=description, color=discord.Color.blue())
-                await ctx.send(embed=embed)
+                        entry = f"{name} -> {link} (Group: {group})\n"
+                        if len(description) + len(entry) > 6000 or len(description.split('\n')) > 25:
+                            pages.append(description)
+                            description = ""
+                        description += entry
+                if description:
+                    pages.append(description)
+
+                embeds = [discord.Embed(description=page, color=discord.Color.blue()) for page in pages]
+                menu = menus.MenuPages(source=SimplePageSource(embeds), clear_reactions_after=True)
+                await menu.start(ctx)
             else:
-                await ctx.send("No links stored.")
+                embed = discord.Embed(description="No links stored.", color=discord.Color.red())
+                await ctx.send(embed=embed)
         else:
-            await ctx.send("You are not allowed to list links.")
+            embed = discord.Embed(description="You are not allowed to list links.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
-    @commands.is_owner()
     async def creategroup(self, ctx: commands.Context, group: str):
         """Create a new group."""
-        async with self.config.groups() as groups:
-            if group in groups:
-                await ctx.send(f"Group {group} already exists.")
-            else:
-                groups[group] = {}
-                await ctx.send(f"Group {group} created.")
+        user_id = ctx.author.id
+        allowed_users = await self.config.allowed_users()
+        if user_id in allowed_users:
+            async with self.config.groups() as groups:
+                if group in groups:
+                    embed = discord.Embed(description=f"Group {group} already exists.", color=discord.Color.red())
+                    await ctx.send(embed=embed)
+                else:
+                    groups[group] = {}
+                    embed = discord.Embed(description=f"Group {group} created.", color=discord.Color.green())
+                    await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(description="You are not allowed to create groups.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
-    @commands.is_owner()
     async def deletegroup(self, ctx: commands.Context, group: str):
         """Delete a group."""
-        async with self.config.groups() as groups:
-            if group in groups:
-                del groups[group]
-                await ctx.send(f"Group {group} deleted.")
-            else:
-                await ctx.send(f"Group {group} does not exist.")
+        user_id = ctx.author.id
+        allowed_users = await self.config.allowed_users()
+        if user_id in allowed_users:
+            async with self.config.groups() as groups:
+                if group in groups:
+                    del groups[group]
+                    embed = discord.Embed(description=f"Group {group} deleted.", color=discord.Color.green())
+                    await ctx.send(embed=embed)
+                else:
+                    embed = discord.Embed(description=f"Group {group} does not exist.", color=discord.Color.red())
+                    await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(description="You are not allowed to delete groups.", color=discord.Color.red())
+            await ctx.send(embed=embed)
 
     @link.command()
     async def listgroups(self, ctx: commands.Context):
         """List all groups."""
-        groups = await self.config.groups()
-        if groups:
-            group_names = "\n".join(groups.keys())
-            await ctx.send(f"Groups:\n{group_names}")
+        user_id = ctx.author.id
+        allowed_users = await self.config.allowed_users()
+        if user_id in allowed_users:
+            groups = await self.config.groups()
+            if groups:
+                group_names = "\n".join(groups.keys())
+                embed = discord.Embed(description=f"Groups:\n{group_names}", color=discord.Color.blue())
+                await ctx.send(embed=embed)
+            else:
+                embed = discord.Embed(description="No groups available.", color=discord.Color.red())
+                await ctx.send(embed=embed)
         else:
-            await ctx.send("No groups available.")
+            embed = discord.Embed(description="You are not allowed to list groups.", color=discord.Color.red())
+            await ctx.send(embed=embed)
+
+class SimplePageSource(menus.ListPageSource):
+    def __init__(self, embeds):
+        super().__init__(embeds, per_page=1)
+
+    async def format_page(self, menu, embed):
+        return embed
