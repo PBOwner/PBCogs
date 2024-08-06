@@ -3,6 +3,7 @@ from redbot.core.bot import Red
 import discord
 from datetime import datetime
 from typing import Union
+import asyncio
 
 class EventLogger(commands.Cog):
     """Cog to log various Discord events"""
@@ -15,6 +16,8 @@ class EventLogger(commands.Cog):
             "command_log_channel": None
         }
         self.config.register_guild(**default_guild)
+        self.event_queue = asyncio.Queue()
+        self.bot.loop.create_task(self.process_event_queue())
 
     async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
         if guild is None:
@@ -25,7 +28,7 @@ class EventLogger(commands.Cog):
             channel = guild.get_channel(channel_id)
             if channel:
                 embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
-                await channel.send(embed=embed)
+                await self.event_queue.put((channel, embed))
 
     async def log_command(self, ctx, command_name: str):
         command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
@@ -39,7 +42,16 @@ class EventLogger(commands.Cog):
                     f"**Guild:** {ctx.guild.name} ({ctx.guild.id})"
                 )
                 embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
+                await self.event_queue.put((channel, embed))
+
+    async def process_event_queue(self):
+        while True:
+            events = []
+            while not self.event_queue.empty():
+                events.append(await self.event_queue.get())
+            for channel, embed in events:
                 await channel.send(embed=embed)
+            await asyncio.sleep(10)
 
     # Commands to configure logging channels
     @commands.group()
@@ -125,7 +137,7 @@ class EventLogger(commands.Cog):
             "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
             "reaction": ["reaction_add", "reaction_remove"],
             "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
-            "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
+            "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
             "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
             "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
             "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
@@ -198,6 +210,8 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_update(self, before: discord.abc.GuildChannel, after: discord.abc.GuildChannel):
+        if before.position != after.position:  # Ignore position updates
+            return
         description = (
             f"**Before Channel:** {before.name}\n"
             f"**After Channel:** {after.name}\n"
@@ -254,7 +268,7 @@ class EventLogger(commands.Cog):
             f"**Before NSFW:** {before.is_nsfw()}\n"
             f"**After NSFW:** {after.is_nsfw()}\n"
             f"**Channel ID:** `{before.id}`\n"
-            f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
+            f"**Guild:** ||{before.guild.name} ({before.guild.id} else `N/A`||\n"
             f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
             f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
             f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
@@ -577,6 +591,8 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_delete(self, message: discord.Message):
+        if message.guild is None:  # Ignore DMs
+            return
         description = (
             f"**Message Content:** {message.content}\n"
             f"**Message ID:** `{message.id}`\n"
@@ -591,6 +607,8 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_bulk_message_delete(self, messages: list[discord.Message]):
+        if messages[0].guild is None:  # Ignore DMs
+            return
         description = (
             f"**Message Count:** {len(messages)}\n"
             f"**Channel:** {messages[0].channel.name}\n"
@@ -603,6 +621,8 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, before: discord.Message, after: discord.Message):
+        if before.guild is None:  # Ignore DMs
+            return
         description = (
             f"**Before Content:** {before.content}\n"
             f"**After Content:** {after.content}\n"
@@ -990,582 +1010,23 @@ class EventLogger(commands.Cog):
         await self.log_event(sound.guild, "soundboard_sound_delete", description)
 
     @commands.Cog.listener()
-    async def on_guild_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Name:** {before.name}\n"
-            f"**After Name:** {after.name}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Before Description:** {before.description}\n"
-            f"**After Description:** {after.description}\n"
-            f"**Before Verification Level:** {before.verification_level}\n"
-            f"**After Verification Level:** {after.verification_level}\n"
-            f"**Before Default Message Notifications:** {before.default_notifications}\n"
-            f"**After Default Message Notifications:** {after.default_notifications}\n"
-            f"**Before Explicit Content Filter:** {before.explicit_content_filter}\n"
-            f"**After Explicit Content Filter:** {after.explicit_content_filter}\n"
-            f"**Before MFA Level:** {before.mfa_level}\n"
-            f"**After MFA Level:** {after.mfa_level}\n"
-            f"**Before System Channel:** {before.system_channel}\n"
-            f"**After System Channel:** {after.system_channel}\n"
-            f"**Before Rules Channel:** {before.rules_channel}\n"
-            f"**After Rules Channel:** {after.rules_channel}\n"
-            f"**Before Public Updates Channel:** {before.public_updates_channel}\n"
-            f"**After Public Updates Channel:** {after.public_updates_channel}\n"
-            f"**Before Preferred Locale:** {before.preferred_locale}\n"
-            f"**After Preferred Locale:** {after.preferred_locale}\n"
-            f"**Before AFK Channel:** {before.afk_channel}\n"
-            f"**After AFK Channel:** {after.afk_channel}\n"
-            f"**Before AFK Timeout:** {before.afk_timeout}\n"
-            f"**After AFK Timeout:** {after.afk_timeout}\n"
-            f"**Before Banner:** {before.banner}\n"
-            f"**After Banner:** {after.banner}\n"
-            f"**Before Splash:** {before.splash}\n"
-            f"**After Splash:** {after.splash}\n"
-            f"**Before Icon:** {before.icon}\n"
-            f"**After Icon:** {after.icon}\n"
-            f"**Before Vanity URL Code:** {before.vanity_url_code}\n"
-            f"**After Vanity URL Code:** {after.vanity_url_code}\n"
-            f"**Before Features:** {', '.join(before.features)}\n"
-            f"**After Features:** {', '.join(after.features)}\n"
-            f"**Before Boost Level:** {before.premium_tier}\n"
-            f"**After Boost Level:** {after.premium_tier}\n"
-            f"**Before Boost Progress Bar:** {before.premium_progress_bar_enabled}\n"
-            f"**After Boost Progress Bar:** {after.premium_progress_bar_enabled}\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_afk_channel_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before AFK Channel:** {before.afk_channel}\n"
-            f"**After AFK Channel:** {after.afk_channel}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_afk_channel_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_afk_timeout_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before AFK Timeout:** {before.afk_timeout}\n"
-            f"**After AFK Timeout:** {after.afk_timeout}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_afk_timeout_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_banner_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Banner:** {before.banner}\n"
-            f"**After Banner:** {after.banner}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_banner_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_message_notifications_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Default Notifications:** {before.default_notifications}\n"
-            f"**After Default Notifications:** {after.default_notifications}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_message_notifications_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_discovery_splash_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Discovery Splash:** {before.discovery_splash}\n"
-            f"**After Discovery Splash:** {after.discovery_splash}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_discovery_splash_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_explicit_content_filter_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Explicit Content Filter:** {before.explicit_content_filter}\n"
-            f"**After Explicit Content Filter:** {after.explicit_content_filter}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_explicit_content_filter_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_features_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Features:** {', '.join(before.features)}\n"
-            f"**After Features:** {', '.join(after.features)}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_features_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_icon_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Icon:** {before.icon}\n"
-            f"**After Icon:** {after.icon}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_icon_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_mfa_level_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before MFA Level:** {before.mfa_level}\n"
-            f"**After MFA Level:** {after.mfa_level}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_mfa_level_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_name_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Name:** {before.name}\n"
-            f"**After Name:** {after.name}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_name_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_description_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Description:** {before.description}\n"
-            f"**After Description:** {after.description}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_description_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_partner_status_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Partner Status:** {before.partnered}\n"
-            f"**After Partner Status:** {after.partnered}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_partner_status_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_boost_level_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Boost Level:** {before.premium_tier}\n"
-            f"**After Boost Level:** {after.premium_tier}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_boost_level_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_boost_progress_bar_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Boost Progress Bar:** {before.premium_progress_bar_enabled}\n"
-            f"**After Boost Progress Bar:** {after.premium_progress_bar_enabled}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_boost_progress_bar_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_public_updates_channel_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Public Updates Channel:** {before.public_updates_channel}\n"
-            f"**After Public Updates Channel:** {after.public_updates_channel}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_public_updates_channel_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_rules_channel_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Rules Channel:** {before.rules_channel}\n"
-            f"**After Rules Channel:** {after.rules_channel}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_rules_channel_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_splash_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Splash:** {before.splash}\n"
-            f"**After Splash:** {after.splash}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_splash_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_system_channel_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before System Channel:** {before.system_channel}\n"
-            f"**After System Channel:** {after.system_channel}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_system_channel_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_vanity_url_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Vanity URL Code:** {before.vanity_url_code}\n"
-            f"**After Vanity URL Code:** {after.vanity_url_code}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_vanity_url_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_verification_level_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Verification Level:** {before.verification_level}\n"
-            f"**After Verification Level:** {after.verification_level}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_verification_level_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_verified_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Verified Status:** {before.verified}\n"
-            f"**After Verified Status:** {after.verified}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_verified_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_widget_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Widget Enabled:** {before.widget_enabled}\n"
-            f"**After Widget Enabled:** {after.widget_enabled}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_widget_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_preferred_locale_update(self, before: discord.Guild, after: discord.Guild):
-        description = (
-            f"**Before Preferred Locale:** {before.preferred_locale}\n"
-            f"**After Preferred Locale:** {after.preferred_locale}\n"
-            f"**Guild ID:** `{before.id}`\n"
-            f"**Updater:** {before.me.name if before.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.me.id if before.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before, "guild_preferred_locale_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_onboarding_toggle(self, guild: discord.Guild):
-        description = (
-            f"**Guild:** {guild.name}\n"
-            f"**Guild ID:** `{guild.id}`\n"
-            f"**Toggler:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Toggler ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "guild_onboarding_toggle", description)
-
-    @commands.Cog.listener()
-    async def on_guild_onboarding_channels_update(self, guild: discord.Guild, before, after):
-        description = (
-            f"**Guild:** {guild.name}\n"
-            f"**Guild ID:** `{guild.id}`\n"
-            f"**Before Channels:** {before}\n"
-            f"**After Channels:** {after}\n"
-            f"**Updater:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "guild_onboarding_channels_update", description)
-
-    @commands.Cog.listener()
-    async def on_guild_onboarding_question_add(self, guild: discord.Guild, question):
-        description = (
-            f"**Guild:** {guild.name}\n"
-            f"**Guild ID:** `{guild.id}`\n"
-            f"**Question Added:** {question}\n"
-            f"**Adder:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Adder ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "guild_onboarding_question_add", description)
-
-    @commands.Cog.listener()
-    async def on_guild_onboarding_question_remove(self, guild: discord.Guild, question):
-        description = (
-            f"**Guild:** {guild.name}\n"
-            f"**Guild ID:** `{guild.id}`\n"
-            f"**Question Removed:** {question}\n"
-            f"**Remover:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Remover ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "guild_onboarding_question_remove", description)
-
-    @commands.Cog.listener()
-    async def on_guild_onboarding_update(self, guild: discord.Guild, before, after):
-        description = (
-            f"**Guild:** {guild.name}\n"
-            f"**Guild ID:** `{guild.id}`\n"
-            f"**Before:** {before}\n"
-            f"**After:** {after}\n"
-            f"**Updater:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "guild_onboarding_update", description)
-
-    @commands.Cog.listener()
-    async def on_ban_add(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Banner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Banner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "ban_add", description)
-
-    @commands.Cog.listener()
-    async def on_ban_remove(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Unbanner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unbanner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "ban_remove", description)
-
-    @commands.Cog.listener()
-    async def on_case_delete(self, case):
-        description = (
-            f"**Case ID:** `{case.id}`\n"
-            f"**Guild:** ||{case.guild.name} ({case.guild.id})||\n"
-            f"**Deleter:** {case.guild.me.name if case.guild.me else 'N/A'}\n"
-            f"**Deleter ID:** ||{case.guild.me.id if case.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(case.guild, "case_delete", description)
-
-    @commands.Cog.listener()
-    async def on_case_update(self, before, after):
-        description = (
-            f"**Before Case ID:** `{before.id}`\n"
-            f"**After Case ID:** `{after.id}`\n"
-            f"**Guild:** ||{before.guild.name} ({before.guild.id})||\n"
-            f"**Updater:** {before.guild.me.name if before.guild.me else 'N/A'}\n"
-            f"**Updater ID:** ||{before.guild.me.id if before.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(before.guild, "case_update", description)
-
-    @commands.Cog.listener()
-    async def on_kick_add(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Kicker:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Kicker ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "kick_add", description)
-
-    @commands.Cog.listener()
-    async def on_kick_remove(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Unkicker:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unkicker ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "kick_remove", description)
-
-    @commands.Cog.listener()
-    async def on_mute_add(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Muter:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Muter ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "mute_add", description)
-
-    @commands.Cog.listener()
-    async def on_mute_remove(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Unmuter:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unmuter ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "mute_remove", description)
-
-    @commands.Cog.listener()
-    async def on_warn_add(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Warner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Warner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "warn_add", description)
-
-    @commands.Cog.listener()
-    async def on_warn_remove(self, guild: discord.Guild, user: discord.User):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Guild:** ||{guild.name} ({guild.id})||\n"
-            f"**Unwarner:** {guild.me.name if guild.me else 'N/A'}\n"
-            f"**Unwarner ID:** ||{guild.me.id if guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(guild, "warn_remove", description)
-
-    @commands.Cog.listener()
-    async def on_report_create(self, report):
-        description = (
-            f"**Report ID:** `{report.id}`\n"
-            f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
-            f"**Reporter:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Reporter ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(report.guild, "report_create", description)
-
-    @commands.Cog.listener()
-    async def on_reports_ignore(self, report):
-        description = (
-            f"**Report ID:** `{report.id}`\n"
-            f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
-            f"**Ignorer:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Ignorer ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(report.guild, "reports_ignore", description)
-
-    @commands.Cog.listener()
-    async def on_reports_accept(self, report):
-        description = (
-            f"**Report ID:** `{report.id}`\n"
-            f"**Guild:** ||{report.guild.name} ({report.guild.id})||\n"
-            f"**Acceptor:** {report.guild.me.name if report.guild.me else 'N/A'}\n"
-            f"**Acceptor ID:** ||{report.guild.me.id if report.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(report.guild, "reports_accept", description)
-
-    @commands.Cog.listener()
-    async def on_user_note_add(self, user: discord.User, note):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Note:** `{note}`\n"
-            f"**Guild:** ||{user.guild.name if user.guild else 'DM'} ({user.guild.id if user.guild else 'DM'})||\n"
-            f"**Adder:** {user.guild.me.name if user.guild.me else 'N/A'}\n"
-            f"**Adder ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(user.guild, "user_note_add", description)
-
-    @commands.Cog.listener()
-    async def on_user_note_remove(self, user: discord.User, note):
-        description = (
-            f"**User:** {user.name}\n"
-            f"**User ID:** `{user.id}`\n"
-            f"**Note:** `{note}`\n"
-            f"**Guild:** ||{user.guild.name if user.guild else 'DM'} ({user.guild.id if user.guild else 'DM'})||\n"
-            f"**Remover:** {user.guild.me.name if user.guild.me else 'N/A'}\n"
-            f"**Remover ID:** ||{user.guild.me.id if user.guild.me else 'N/A'}||\n"
-            f"**Timestamp:** <t:{int(datetime.utcnow().timestamp())}:F>"
-        )
-        await self.log_event(user.guild, "user_note_remove", description)
-
-    @commands.Cog.listener()
     async def on_typing(self, channel: discord.abc.Messageable, user: Union[discord.User, discord.Member], when: datetime):
+        if isinstance(channel, discord.DMChannel):  # Ignore DMs
+            return
         description = (
             f"**User:** {user.name} ({user.mention})\n"
             f"**User ID:** `{user.id}`\n"
-            f"**Channel:** {channel.name if isinstance(channel, discord.TextChannel) else 'DM'}\n"
+            f"**Channel:** {channel.name}\n"
             f"**Channel ID:** `{channel.id}`\n"
-            f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n" if isinstance(channel, discord.TextChannel) else ""
+            f"**Guild:** ||{channel.guild.name} ({channel.guild.id})||\n"
             f"**Timestamp:** <t:{int(when.timestamp())}:F>"
         )
-        await self.log_event(channel.guild if isinstance(channel, discord.TextChannel) else None, "typing", description)
+        await self.log_event(channel.guild, "typing", description)
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction: discord.Reaction, user: discord.User):
+        if reaction.message.guild is None:  # Ignore DMs
+            return
         description = (
             f"**User:** {user.name} ({user.mention})\n"
             f"**User ID:** `{user.id}`\n"
@@ -1580,6 +1041,8 @@ class EventLogger(commands.Cog):
 
     @commands.Cog.listener()
     async def on_reaction_remove(self, reaction: discord.Reaction, user: discord.User):
+        if reaction.message.guild is None:  # Ignore DMs
+            return
         description = (
             f"**User:** {user.name} ({user.mention})\n"
             f"**User ID:** `{user.id}`\n"
