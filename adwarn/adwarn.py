@@ -692,7 +692,7 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
         """Listener to update weekly and monthly stats."""
         if message.author.bot:
             return
-        if message.content.startswith("!adwarn"):
+        if message.content.startswith(",adwarn"):
             author_id = str(message.author.id)
             weekly_stats = await self.config.guild(message.guild).weekly_stats()
             monthly_stats = await self.config.guild(message.guild).monthly_stats()
