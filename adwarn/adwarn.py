@@ -1,7 +1,6 @@
 import discord
 from redbot.core import commands, Config, app_commands
 from redbot.core.bot import Red  # isort:skip
-from redbot.core.i18n import cog_i18n
 from datetime import timedelta, datetime
 import re
 import uuid
@@ -12,7 +11,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-@cog_i18n(_)
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
@@ -23,6 +21,7 @@ class AdWarn(commands.Cog):
         self.race_end_time = None
         self.race_participants = []
 
+    @commands.cog
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, interaction: discord.Interaction, user: discord.User):
         await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
