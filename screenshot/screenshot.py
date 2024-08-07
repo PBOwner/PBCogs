@@ -1,7 +1,7 @@
 import discord
 from redbot.core import commands
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,12 +18,13 @@ class Screenshot(commands.Cog):
         await ctx.send("Taking screenshot...")
 
         # Set up Selenium WebDriver
-        options = webdriver.ChromeOptions()
+        options = webdriver.FirefoxOptions()
         options.add_argument("--headless")  # Run in headless mode
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
 
-        driver = webdriver.Chrome(service=ChromeService(), options=options)
+        # Specify the path to the GeckoDriver executable
+        gecko_driver_path = "/path/to/geckodriver"
+
+        driver = webdriver.Firefox(service=FirefoxService(executable_path=gecko_driver_path), options=options)
 
         try:
             driver.get(url)
