@@ -1,6 +1,7 @@
 import discord
 from redbot.core import commands, Config, app_commands
-from redbot.core.bot import Red
+from redbot.core.bot import Red  # isort:skip
+from redbot.core.i18n import cog_i18n
 from datetime import timedelta, datetime
 import re
 import uuid
@@ -11,6 +12,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
+@cog_i18n(_)
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
         self.bot = bot
@@ -343,13 +345,13 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
                     # Send the embed to the specified warning channel
                     await warn_channel.send(embed=embed)
                 else:
-                    error_embed = discord.Embed(
-                        title="Error 404",
-                        description="Warning channel not found. Please set it again using `[p]warnset channel`.",
-                        color=discord.Color.red()
-                    )
-                    error_message = await ctx.send(embed=error_embed)
-                    await error_message.delete(delay=3)
+                        error_embed = discord.Embed(
+                            title="Error 404",
+                            description="Warning channel not found. Please set it again using `[p]warnset channel`.",
+                            color=discord.Color.red()
+                        )
+                        error_message = await ctx.send(embed=error_embed)
+                        await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
