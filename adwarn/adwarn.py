@@ -21,7 +21,7 @@ class AdWarn(commands.Cog):
         self.race_end_time = None
         self.race_participants = []
 
-    @commands.cog
+    @commands.Command()
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, interaction: discord.Interaction, user: discord.User):
         await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
