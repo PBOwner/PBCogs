@@ -22,7 +22,7 @@ class Screenshot(commands.Cog):
         options.add_argument("--headless")  # Run in headless mode
 
         # Specify the path to the GeckoDriver executable
-        gecko_driver_path = "/path/to/geckodriver"
+        gecko_driver_path = "/usr/local/bin/geckodriver"
 
         driver = webdriver.Firefox(service=FirefoxService(executable_path=gecko_driver_path), options=options)
 
