@@ -6,7 +6,7 @@ import logging
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("ImgurUploader")
+logger = logging.getLogger("inn.imgur")
 
 class ImgurUploader(commands.Cog):
     def __init__(self, bot):
