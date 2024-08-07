@@ -286,18 +286,10 @@ class OwnerProtection(commands.Cog):
     async def cog_load(self) -> None:
         self.bot.tree.add_command(add_to_protected_owners)
         self.bot.tree.add_command(remove_from_protected_owners)
-        self.bot.tree.add_command(self.create_support_role)
-        self.bot.tree.add_command(self.delete_support_role)
-        self.bot.tree.add_command(self.toggle_admin_permissions)
-        self.bot.tree.add_command(self.list_protected_owners)
 
     async def cog_unload(self) -> None:
         self.bot.tree.remove_command(add_to_protected_owners.name)
         self.bot.tree.remove_command(remove_from_protected_owners.name)
-        self.bot.tree.remove_command(self.create_support_role.name)
-        self.bot.tree.remove_command(self.delete_support_role.name)
-        self.bot.tree.remove_command(self.toggle_admin_permissions.name)
-        self.bot.tree.remove_command(self.list_protected_owners.name)
 
 @app_commands.context_menu(name="Add to Protected Owners")
 async def add_to_protected_owners(interaction: discord.Interaction, user: discord.User):
