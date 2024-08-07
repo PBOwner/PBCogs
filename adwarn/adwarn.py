@@ -182,12 +182,6 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
 async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
     await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
 
-# Register the cog and context menu
-async def setup(bot: Red):
-    cog = AdWarn(bot)
-    bot.add_cog(cog)
-    bot.tree.add_command(adwarn_context_menu)
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
