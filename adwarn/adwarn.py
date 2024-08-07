@@ -704,3 +704,10 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
             monthly_stats[author_id] += 1
             await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
             await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
+
+
+# Register the cog and context menu
+async def setup(bot: Red):
+    cog = AdWarn(bot)
+    bot.add_cog(cog)
+    bot.tree.add_command(adwarn_context_menu)
