@@ -5,6 +5,11 @@ from datetime import timedelta, datetime
 import re
 import uuid
 import asyncio
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("AdWarn")
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -99,7 +104,11 @@ class AdWarn(commands.Cog):
             error_message = await ctx.send(embed=error_embed)
             await error_message.delete(delay=3)
         # Delete the command message immediately
-        await ctx.message.delete()
+        if ctx.message:
+            try:
+                await ctx.message.delete()
+            except discord.errors.NotFound:
+                logger.error("Failed to delete the command message: Message not found")
 
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
@@ -187,7 +196,6 @@ class AdWarn(commands.Cog):
                         color=discord.Color.red()
                     )
                     error_message = await ctx.send(embed=error_embed)
-                    await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -203,9 +211,12 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             error_message = await ctx.send(embed=error_embed)
-            await error_message.delete(delay=3)
         # Delete the command message immediately
-        await ctx.message.delete()
+        if ctx.message:
+            try:
+                await ctx.message.delete()
+            except discord.errors.NotFound:
+                logger.error("Failed to delete the command message: Message not found")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -225,7 +236,6 @@ class AdWarn(commands.Cog):
                 inline=False
             )
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -258,7 +268,6 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             error_message = await ctx.send(embed=error_embed)
-            await error_message.delete(delay=3)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -287,7 +296,6 @@ class AdWarn(commands.Cog):
                         color=discord.Color.red()
                     )
                     error_message = await ctx.send(embed=error_embed)
-                    await error_message.delete(delay=3)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -303,7 +311,6 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             error_message = await ctx.send(embed=error_embed)
-            await error_message.delete(delay=3)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -341,7 +348,6 @@ class AdWarn(commands.Cog):
                     color=discord.Color.red()
                 )
                 error_message = await ctx.send(embed=error_embed)
-                await error_message.delete(delay=3)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
@@ -349,7 +355,6 @@ class AdWarn(commands.Cog):
                 color=discord.Color.red()
             )
             error_message = await ctx.send(embed=error_embed)
-            await error_message.delete(delay=3)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -372,7 +377,6 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -401,8 +405,11 @@ class AdWarn(commands.Cog):
             )
         message = await ctx.send(embed=embed)
         await message.delete(delay=10)
-        # Delete the command message immediately
-        await ctx.message.delete()
+        if ctx.message:
+            try:
+                await ctx.message.delete()
+            except discord.errors.NotFound:
+                logger.error("Failed to delete the command message: Message not found")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -425,7 +432,6 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued yet.", inline=False)
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @commands.group()
     @commands.guild_only()
@@ -444,7 +450,6 @@ class AdWarn(commands.Cog):
             color=discord.Color.green()
         )
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @warnset.command()
     async def recentadwarnchannel(self, ctx, channel: discord.VoiceChannel):
@@ -456,7 +461,6 @@ class AdWarn(commands.Cog):
             color=discord.Color.green()
         )
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @warnset.command()
     async def show(self, ctx):
@@ -484,7 +488,6 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="Warning Thresholds", value="No thresholds set", inline=False)
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
 
     @warnset.command()
     async def threshold(self, ctx, warning_count: int, action: str):
@@ -501,7 +504,6 @@ class AdWarn(commands.Cog):
         }
         await self.config.guild(ctx.guild).tholds.set(tholds)
         message = await ctx.send(f"Set action '{action}' for reaching {warning_count} warnings.")
-        await message.delete(delay=10)
 
     @warnset.command()
     async def delthreshold(self, ctx, threshold_id: str):
@@ -511,24 +513,20 @@ class AdWarn(commands.Cog):
             del tholds[threshold_id]
             await self.config.guild(ctx.guild).tholds.set(tholds)
             message = await ctx.send(f"Deleted threshold with ID {threshold_id}.")
-            await message.delete(delay=10)
         else:
             message = await ctx.send(f"No threshold set with ID {threshold_id}.")
-            await message.delete(delay=10)
 
     @warnset.command()
     async def softbanduration(self, ctx, days: int):
         """Set the duration (in days) for message deletion during a softban."""
         await self.config.guild(ctx.guild).softban_duration.set(days)
         message = await ctx.send(f"Softban message deletion duration set to {days} days.")
-        await message.delete(delay=10)
 
     @warnset.command()
     async def timeoutduration(self, ctx, minutes: int):
         """Set the duration (in minutes) for timeouts."""
         await self.config.guild(ctx.guild).timeout_duration.set(minutes)
         message = await ctx.send(f"Timeout duration set to {minutes} minutes.")
-        await message.delete(delay=10)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -648,7 +646,6 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this week.", inline=False)
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
         # Reset weekly stats
         await self.config.guild(ctx.guild).weekly_stats.set({})
 
@@ -673,7 +670,6 @@ class AdWarn(commands.Cog):
         else:
             embed.add_field(name="No data available", value="No warnings have been issued this month.", inline=False)
         message = await ctx.send(embed=embed)
-        await message.delete(delay=10)
         # Reset monthly stats
         await self.config.guild(ctx.guild).monthly_stats.set({})
 
