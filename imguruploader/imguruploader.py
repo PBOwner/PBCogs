@@ -2,6 +2,11 @@ import discord
 from redbot.core import commands, Config
 import aiohttp
 import io
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("inn.imgur")
 
 class ImgurUploader(commands.Cog):
     def __init__(self, bot):
@@ -86,10 +91,12 @@ class ImgurUploader(commands.Cog):
         imgur_access_token = await self.config.imgur_access_token()
         if not imgur_client_id or not imgur_client_secret or not imgur_access_token:
             await ctx.send("Imgur client ID, secret, and access token are not set. Please set them using the `imgur setid`, `imgur setsecret`, and `imgur setaccess` commands.")
+            logger.error("Imgur credentials are not set.")
             return
 
         if not ctx.message.attachments:
             await ctx.send("Please attach images to upload.")
+            logger.error("No attachments found in the message.")
             return
 
         image_urls = []
@@ -103,12 +110,14 @@ class ImgurUploader(commands.Cog):
                     async with session.get(attachment.url) as resp:
                         if resp.status != 200:
                             await ctx.send(f"Failed to download file: {attachment.url}")
+                            logger.error(f"Failed to download file: {attachment.url}, Status code: {resp.status}")
                             return
                         data = io.BytesIO(await resp.read())
 
                     async with session.post("https://api.imgur.com/3/image", headers=headers, data={"image": data.read()}) as resp:
                         if resp.status != 200:
                             await ctx.send("Failed to upload file to Imgur.")
+                            logger.error(f"Failed to upload file to Imgur, Status code: {resp.status}")
                             return
                         imgur_response = await resp.json()
                         image_urls.append(imgur_response["data"]["link"])
@@ -124,6 +133,7 @@ class ImgurUploader(commands.Cog):
                 async with session.post(f"https://api.imgur.com/3/image/{imgur_image_ids[0]}", headers=headers, json=data) as resp:
                     if resp.status != 200:
                         await ctx.send("Failed to set title and description for the image on Imgur.")
+                        logger.error(f"Failed to set title and description for the image on Imgur, Status code: {resp.status}")
                         return
                     await ctx.send(f"File uploaded to Imgur: {image_urls[0]}")
         elif len(image_urls) > 1:
@@ -141,6 +151,7 @@ class ImgurUploader(commands.Cog):
                 async with session.post("https://api.imgur.com/3/album", headers=headers, json=data) as resp:
                     if resp.status != 200:
                         await ctx.send("Failed to create album on Imgur.")
+                        logger.error(f"Failed to create album on Imgur, Status code: {resp.status}")
                         return
                     album_response = await resp.json()
                     album_link = f"https://imgur.com/a/{album_response['data']['id']}"
