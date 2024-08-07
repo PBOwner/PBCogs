@@ -96,11 +96,12 @@ class WarningReasonModal(discord.ui.Modal):
             )
             error_message = await interaction.response.send_message(embed=error_embed)
             await error_message.delete(delay=3)
-        # Delete the original interaction message
-        try:
-            await interaction.message.delete()
-        except discord.errors.NotFound:
-            logger.error("Failed to delete the interaction message: Message not found")
+        # Delete the original interaction message if it exists
+        if interaction.message:
+            try:
+                await interaction.message.delete()
+            except discord.errors.NotFound:
+                logger.error("Failed to delete the interaction message: Message not found")
 
 # Add this line to register the command
 @app_commands.context_menu(name="AdWarn")
