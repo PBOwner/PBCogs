@@ -11,80 +11,10 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-class AdWarn(commands.Cog):
-    def __init__(self, bot: Red):
-        self.bot = bot
-        self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
-        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120, timeout_duration=120, weekly_stats={}, monthly_stats={}, recent_adwarn_channel=None)
-        self.config.register_member(warnings=[], untimeout_time=None)
-        self.race_start_time = None
-        self.race_end_time = None
-        self.race_participants = []
-
-    @commands.Command()
-    @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, interaction: discord.Interaction, user: discord.User):
-        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
-
-    async def check_thresholds(self, ctx, user, warning_count):
-        tholds = await self.config.guild(ctx.guild).tholds()
-        softban_duration = await self.config.guild(ctx.guild).softban_duration()
-        timeout_duration = await self.config.guild(ctx.guild).timeout_duration()
-        for threshold_id, threshold in tholds.items():
-            if threshold["count"] == warning_count:
-                action = threshold["action"]
-                if action == "kick":
-                    await ctx.guild.kick(user, reason="Reached warning threshold")
-                elif action == "ban":
-                    await ctx.guild.ban(user, reason="Reached warning threshold")
-                elif action == "timeout":
-                    await self.timeout_user(ctx, user, timeout_duration)
-                    if timeout_duration:
-                        await self.schedule_untimeout(ctx, user, timeout_duration)
-                elif action == "softban":
-                    await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
-                    await ctx.guild.unban(user, reason="Softban duration expired")
-
-    def parse_duration(self, duration_str):
-        """Parse a duration string and return the duration in minutes."""
-        match = re.match(r"(\d+)([mh])", duration_str)
-        if match:
-            value, unit = match.groups()
-            value = int(value)
-            if unit == "h":
-                return value * 60  # Convert hours to minutes
-            elif unit == "m":
-                return value  # Minutes
-        return None
-
-    async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
-        if duration:
-            timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
-            await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
-            await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
-
-    async def schedule_untimeout(self, ctx, user, duration):
-        untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
-        await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        await self.check_untimeout_times()
-
-    async def check_untimeout_times(self):
-        for guild in self.bot.guilds:
-            for member in guild.members:
-                untimeout_time = await self.config.member(member).untimeout_time()
-                if untimeout_time:
-                    untimeout_time = datetime.fromisoformat(untimeout_time)
-                    if discord.utils.utcnow() >= untimeout_time:
-                        await self.untimeout_user(member)
-                        await self.config.member(member).untimeout_time.clear()
-
-    async def untimeout_user(self, user: discord.Member):
-        await user.edit(timed_out_until=None, reason="Timeout duration expired")
-
-class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
+# Add this line to register the command
+@app_commands.context_menu(name="AdWarn")
+async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
+    modal = discord.ui.Modal, title='Provide Warning Reason'):
     reason = discord.ui.TextInput(label='Reason', style=discord.TextStyle.long)
 
     def __init__(self, bot, interaction, user):
@@ -176,7 +106,80 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
         try:
             await interaction.message.delete()
         except discord.errors.NotFound:
-            logger.error("Failed to delete the interaction message: Message not found")
+            logger.error("Failed to delete the interaction message: Message not found")    
+
+class AdWarn(commands.Cog):
+    def __init__(self, bot: Red):
+        self.bot = bot
+        self.config = Config.get_conf(self, identifier=1234567890)  # Replace with a unique identifier
+        self.config.register_guild(warn_channel=None, tholds={}, warnings_issued={}, mod_warnings={}, softban_duration=120, timeout_duration=120, weekly_stats={}, monthly_stats={}, recent_adwarn_channel=None)
+        self.config.register_member(warnings=[], untimeout_time=None)
+        self.race_start_time = None
+        self.race_end_time = None
+        self.race_participants = []
+
+    @commands.Command()
+    @commands.has_permissions(manage_messages=True)
+    async def adwarn(self, interaction: discord.Interaction, user: discord.User):
+        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
+
+    async def check_thresholds(self, ctx, user, warning_count):
+        tholds = await self.config.guild(ctx.guild).tholds()
+        softban_duration = await self.config.guild(ctx.guild).softban_duration()
+        timeout_duration = await self.config.guild(ctx.guild).timeout_duration()
+        for threshold_id, threshold in tholds.items():
+            if threshold["count"] == warning_count:
+                action = threshold["action"]
+                if action == "kick":
+                    await ctx.guild.kick(user, reason="Reached warning threshold")
+                elif action == "ban":
+                    await ctx.guild.ban(user, reason="Reached warning threshold")
+                elif action == "timeout":
+                    await self.timeout_user(ctx, user, timeout_duration)
+                    if timeout_duration:
+                        await self.schedule_untimeout(ctx, user, timeout_duration)
+                elif action == "softban":
+                    await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
+                    await ctx.guild.unban(user, reason="Softban duration expired")
+
+    def parse_duration(self, duration_str):
+        """Parse a duration string and return the duration in minutes."""
+        match = re.match(r"(\d+)([mh])", duration_str)
+        if match:
+            value, unit = match.groups()
+            value = int(value)
+            if unit == "h":
+                return value * 60  # Convert hours to minutes
+            elif unit == "m":
+                return value  # Minutes
+        return None
+
+    async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
+        if duration:
+            timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
+            await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
+            await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
+
+    async def schedule_untimeout(self, ctx, user, duration):
+        untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
+        await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.check_untimeout_times()
+
+    async def check_untimeout_times(self):
+        for guild in self.bot.guilds:
+            for member in guild.members:
+                untimeout_time = await self.config.member(member).untimeout_time()
+                if untimeout_time:
+                    untimeout_time = datetime.fromisoformat(untimeout_time)
+                    if discord.utils.utcnow() >= untimeout_time:
+                        await self.untimeout_user(member)
+                        await self.config.member(member).untimeout_time.clear()
+
+    async def untimeout_user(self, user: discord.Member):
+        await user.edit(timed_out_until=None, reason="Timeout duration expired")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -700,8 +703,3 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
             monthly_stats[author_id] += 1
             await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
             await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
-
-# Add this line to register the command
-@app_commands.context_menu(name="AdWarn")
-async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
-    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
