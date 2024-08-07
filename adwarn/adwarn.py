@@ -12,10 +12,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
 class WarningReasonModal(discord.ui.Modal):
-    def __init__(self, bot, interaction, user):
+    def __init__(self, bot, interaction, user, message):
         self.bot = bot
         self.interaction = interaction
         self.user = user
+        self.message = message
         super().__init__(title="Provide Warning Reason")
         self.reason = discord.ui.TextInput(label="Reason", style=discord.TextStyle.long)
         self.add_item(self.reason)
@@ -82,6 +83,11 @@ class WarningReasonModal(discord.ui.Modal):
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.user, len(warnings))
                 # Respond to the interaction to close the modal
                 await interaction.response.send_message("Warning recorded successfully.", ephemeral=True)
+                # Delete the message that triggered the modal
+                try:
+                    await self.message.delete()
+                except discord.errors.NotFound:
+                    logger.error("Failed to delete the message: Message not found")
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -96,19 +102,13 @@ class WarningReasonModal(discord.ui.Modal):
                 color=discord.Color.red()
             )
             await interaction.response.send_message(embed=error_embed, ephemeral=True)
-        # Delete the original interaction message if it exists
-        if interaction.message:
-            try:
-                await interaction.message.delete()
-            except discord.errors.NotFound:
-                logger.error("Failed to delete the interaction message: Message not found")
 
 # Add this line to register the command
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
     # Extract the user from the message
     user = message.author
-    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
+    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user, message))
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
