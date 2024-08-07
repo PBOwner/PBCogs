@@ -1,7 +1,11 @@
 from redbot.core.bot import Red
-
 from .ownerprotection import OwnerProtection
 
-async def setup(bot):
-    """Setup the OwnerProtection cog."""
-    await bot.add_cog(OwnerProtection(bot))
+__red_end_user_data_statement__ = (
+    "This cog does not store any end user data."
+)
+
+async def setup(bot: Red):
+    cog = OwnerProtection(bot)
+    await cog.cog_load()
+    bot.add_cog(cog)
