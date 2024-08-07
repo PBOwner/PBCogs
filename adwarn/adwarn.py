@@ -21,7 +21,6 @@ class AdWarn(commands.Cog):
         self.race_end_time = None
         self.race_participants = []
 
-    @app_commands.context_menu(name="AdWarn")
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, interaction: discord.Interaction, user: discord.User):
         await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
@@ -143,14 +142,6 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
                 await warn_channel.send(embed=embed)
                 # Send plain text message to the warning channel
                 await warn_channel.send(f"{self.user.mention}")
-                # Send confirmation embed to the command issuer
-                confirmation_embed = discord.Embed(
-                    title="Warning Issued",
-                    description=f"{self.user.mention} has been warned for: {reason} in {ctx.channel.mention}",
-                    color=discord.Color.green()
-                )
-                confirmation_message = await ctx.send(embed=confirmation_embed)
-                await confirmation_message.delete(delay=3)
                 # Update the recent adwarn voice channel
                 if recent_adwarn_channel_id:
                     recent_adwarn_channel = self.bot.get_channel(recent_adwarn_channel_id)
@@ -190,6 +181,12 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
     await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
+
+# Register the cog and context menu
+async def setup(bot: Red):
+    cog = AdWarn(bot)
+    bot.add_cog(cog)
+    bot.tree.add_command(adwarn_context_menu)
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
