@@ -116,8 +116,10 @@ class ImgurUploader(commands.Cog):
 
                     async with session.post("https://api.imgur.com/3/image", headers=headers, data={"image": data.read()}) as resp:
                         if resp.status != 200:
-                            await ctx.send("Failed to upload file to Imgur.")
-                            logger.error(f"Failed to upload file to Imgur, Status code: {resp.status}")
+                            imgur_response = await resp.json()
+                            error_message = imgur_response.get("data", {}).get("error", "Unknown error")
+                            await ctx.send(f"Failed to upload file to Imgur: {error_message}")
+                            logger.error(f"Failed to upload file to Imgur, Status code: {resp.status}, Error: {error_message}")
                             return
                         imgur_response = await resp.json()
                         image_urls.append(imgur_response["data"]["link"])
@@ -132,8 +134,10 @@ class ImgurUploader(commands.Cog):
                 }
                 async with session.post(f"https://api.imgur.com/3/image/{imgur_image_ids[0]}", headers=headers, json=data) as resp:
                     if resp.status != 200:
-                        await ctx.send("Failed to set title and description for the image on Imgur.")
-                        logger.error(f"Failed to set title and description for the image on Imgur, Status code: {resp.status}")
+                        imgur_response = await resp.json()
+                        error_message = imgur_response.get("data", {}).get("error", "Unknown error")
+                        await ctx.send(f"Failed to set title and description for the image on Imgur: {error_message}")
+                        logger.error(f"Failed to set title and description for the image on Imgur, Status code: {resp.status}, Error: {error_message}")
                         return
                     await ctx.send(f"File uploaded to Imgur: {image_urls[0]}")
         elif len(image_urls) > 1:
@@ -150,8 +154,10 @@ class ImgurUploader(commands.Cog):
             async with aiohttp.ClientSession() as session:
                 async with session.post("https://api.imgur.com/3/album", headers=headers, json=data) as resp:
                     if resp.status != 200:
-                        await ctx.send("Failed to create album on Imgur.")
-                        logger.error(f"Failed to create album on Imgur, Status code: {resp.status}")
+                        imgur_response = await resp.json()
+                        error_message = imgur_response.get("data", {}).get("error", "Unknown error")
+                        await ctx.send(f"Failed to create album on Imgur: {error_message}")
+                        logger.error(f"Failed to create album on Imgur, Status code: {resp.status}, Error: {error_message}")
                         return
                     album_response = await resp.json()
                     album_link = f"https://imgur.com/a/{album_response['data']['id']}"
