@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, Config app_commands
+from redbot.core import commands, Config, app_commands
 from redbot.core.bot import Red
 from datetime import timedelta, datetime
 import re
