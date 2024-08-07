@@ -186,21 +186,35 @@ class OwnerProtection(commands.Cog):
             else:
                 await ctx.send(f"{user} is not authorized.")
 
+    @app_commands.command(name="list_protected_owners")
+    async def list_protected_owners(self, interaction: discord.Interaction):
+        """Slash command to list all protected owners."""
+        authorized_users = await self.config.authorized_users()
+        if interaction.user.id not in authorized_users:
+            await interaction.response.send_message("You do not have permission to run this command.", ephemeral=True)
+            return
+        owners = await self.config.owners()
+        if owners:
+            owner_list = [f"{interaction.guild.get_member(owner_id).display_name} ({owner_id})" for owner_id in owners]
+            await interaction.response.send_message(f"Protected owners: {', '.join(owner_list)}", ephemeral=True)
+        else:
+            await interaction.response.send_message("No protected owners.", ephemeral=True)
+
     async def cog_load(self) -> None:
         self.bot.tree.add_command(add_to_protected_owners)
         self.bot.tree.add_command(remove_from_protected_owners)
-        self.bot.tree.add_command(list_protected_owners)
         self.bot.tree.add_command(create_support_role)
         self.bot.tree.add_command(delete_support_role)
         self.bot.tree.add_command(toggle_admin_permissions)
+        self.bot.tree.add_command(self.list_protected_owners)
 
     async def cog_unload(self) -> None:
         self.bot.tree.remove_command(add_to_protected_owners.name)
         self.bot.tree.remove_command(remove_from_protected_owners.name)
-        self.bot.tree.remove_command(list_protected_owners.name)
         self.bot.tree.remove_command(create_support_role.name)
         self.bot.tree.remove_command(delete_support_role.name)
         self.bot.tree.remove_command(toggle_admin_permissions.name)
+        self.bot.tree.remove_command(self.list_protected_owners.name)
 
 @app_commands.context_menu(name="Add to Protected Owners")
 async def add_to_protected_owners(interaction: discord.Interaction, user: discord.User):
@@ -235,19 +249,6 @@ async def remove_from_protected_owners(interaction: discord.Interaction, user: d
             await interaction.response.send_message(f"{user} has been removed from the protected owners list.", ephemeral=True)
         else:
             await interaction.response.send_message(f"{user} is not in the protected owners list.", ephemeral=True)
-
-@app_commands.context_menu(name="List Protected Owners")
-async def list_protected_owners(interaction: discord.Interaction):
-    """Context menu command to list all protected owners."""
-    cog = interaction.client.get_cog("OwnerProtection")
-    if not cog:
-        return
-    owners = await cog.config.owners()
-    if owners:
-        owner_list = [str(cog.bot.get_user(owner_id)) for owner_id in owners]
-        await interaction.response.send_message(f"Protected owners: {', '.join(owner_list)}", ephemeral=True)
-    else:
-        await interaction.response.send_message("No protected owners.", ephemeral=True)
 
 @app_commands.context_menu(name="Create Support Role")
 async def create_support_role(interaction: discord.Interaction):
