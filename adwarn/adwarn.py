@@ -709,5 +709,5 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
 # Register the cog and context menu
 async def setup(bot: Red):
     cog = AdWarn(bot)
-    bot.add_cog(cog)
+    await bot.add_cog(cog)
     bot.tree.add_command(adwarn_context_menu)
