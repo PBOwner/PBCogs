@@ -108,7 +108,7 @@ class WarningReasonModal(discord.ui.Modal):
 # Add this line to register the command
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
-    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
+    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, message))
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
