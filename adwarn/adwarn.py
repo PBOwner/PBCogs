@@ -11,17 +11,14 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-# Add this line to register the command
-@app_commands.context_menu(name="AdWarn")
-async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
-    modal = discord.ui.Modal(title='Provide Warning Reason')
-    reason = discord.ui.TextInput(label='Reason', style=discord.TextStyle.long)
-
+class WarningReasonModal(discord.ui.Modal):
     def __init__(self, bot, interaction, user):
         self.bot = bot
         self.interaction = interaction
         self.user = user
-        super().__init__()
+        super().__init__(title="Provide Warning Reason")
+        self.reason = discord.ui.TextInput(label="Reason", style=discord.TextStyle.long)
+        self.add_item(self.reason)
 
     async def on_submit(self, interaction: discord.Interaction):
         reason = self.reason.value
@@ -106,7 +103,12 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
         try:
             await interaction.message.delete()
         except discord.errors.NotFound:
-            logger.error("Failed to delete the interaction message: Message not found")    
+            logger.error("Failed to delete the interaction message: Message not found")
+
+# Add this line to register the command
+@app_commands.context_menu(name="AdWarn")
+async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
+    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -118,10 +120,10 @@ class AdWarn(commands.Cog):
         self.race_end_time = None
         self.race_participants = []
 
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, interaction: discord.Interaction, user: discord.User):
-        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.bot.tree.add_command(adwarn_context_menu)
+        await self.bot.tree.sync()
 
     async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
@@ -180,6 +182,11 @@ class AdWarn(commands.Cog):
 
     async def untimeout_user(self, user: discord.Member):
         await user.edit(timed_out_until=None, reason="Timeout duration expired")
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def adwarn(self, interaction: discord.Interaction, user: discord.User):
+        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, user))
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
