@@ -3,10 +3,6 @@ from .ownerprotection import (
     OwnerProtection,
     add_to_protected_owners,
     remove_from_protected_owners,
-    create_support_role,
-    delete_support_role,
-    toggle_admin_permissions,
-    list_protected_owners,
 )
 
 async def setup(bot: Red):
