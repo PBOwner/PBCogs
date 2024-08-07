@@ -14,7 +14,7 @@ logger = logging.getLogger("AdWarn")
 # Add this line to register the command
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
-    modal = discord.ui.Modal, title='Provide Warning Reason'):
+    modal = discord.ui.Modal(title='Provide Warning Reason')
     reason = discord.ui.TextInput(label='Reason', style=discord.TextStyle.long)
 
     def __init__(self, bot, interaction, user):
