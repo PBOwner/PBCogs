@@ -6,7 +6,7 @@ import logging
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("inn.imgur")
+logger = logging.getLogger("ImgurUploader")
 
 class ImgurUploader(commands.Cog):
     def __init__(self, bot):
@@ -101,12 +101,28 @@ class ImgurUploader(commands.Cog):
 
         image_urls = []
         imgur_image_ids = []
+        supported_mime_types = {
+            'image/jpeg',
+            'image/jpg',
+            'image/gif',
+            'image/png',
+            'image/apng',
+            'image/tiff',
+            'video/mp4',
+            'video/webm',
+            'video/x-matroska',
+            'video/quicktime',
+            'video/x-flv',
+            'video/x-msvideo',
+            'video/x-ms-wmv',
+            'video/mpeg'
+        }
 
         async with aiohttp.ClientSession() as session:
             headers = {"Authorization": f"Client-ID {imgur_client_id}"}
 
             for attachment in ctx.message.attachments:
-                if attachment.content_type.startswith('image/') or attachment.content_type.startswith('video/'):
+                if attachment.content_type in supported_mime_types:
                     async with session.get(attachment.url) as resp:
                         if resp.status != 200:
                             await ctx.send(f"Failed to download file: {attachment.url}")
