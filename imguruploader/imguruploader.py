@@ -2,6 +2,9 @@ import discord
 from redbot.core import commands, Config
 import aiohttp
 import io
+import http.client
+from codecs import encode
+import json
 
 class ImgurUploader(commands.Cog):
     def __init__(self, bot):
@@ -9,25 +12,85 @@ class ImgurUploader(commands.Cog):
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(
             imgur_client_id="",
+            imgur_client_secret="",
+            imgur_access_token="",
             upload_channel_id=None
         )
 
     @commands.group()
-    async def imguruploader(self, ctx):
+    async def imgur(self, ctx):
         """Manage Imgur Uploader settings."""
         pass
 
-    @imguruploader.command()
-    async def setclientid(self, ctx, client_id: str):
+    @imgur.command()
+    async def setid(self, ctx, client_id: str):
         """Set the Imgur client ID."""
         await self.config.imgur_client_id.set(client_id)
         await ctx.send("Imgur client ID has been set.")
 
-    @imguruploader.command()
+    @imgur.command()
+    async def setsecret(self, ctx, client_secret: str):
+        """Set the Imgur client secret."""
+        await self.config.imgur_client_secret.set(client_secret)
+        await ctx.send("Imgur client secret has been set.")
+
+    @imgur.command()
+    async def setaccess(self, ctx, access_token: str):
+        """Set the Imgur access token."""
+        await self.config.imgur_access_token.set(access_token)
+        await ctx.send("Imgur access token has been set.")
+
+    @imgur.command()
     async def setchannel(self, ctx, channel: discord.TextChannel):
         """Set the channel for automatic uploads."""
         await self.config.upload_channel_id.set(channel.id)
         await ctx.send(f"Channel {channel.mention} has been set for automatic uploads.")
+
+    @imgur.command()
+    async def help(self, ctx):
+        """Show help for setting up Imgur credentials."""
+        help_message = """
+        **Imgur Uploader Setup**
+
+        To use the Imgur uploader, you need to set the following credentials:
+
+        1. **Client ID**
+        2. **Client Secret**
+        3. **Access Token**
+        4. **Channel**
+
+        **Commands:**
+        - `imgur setid <client_id>`: Set the Imgur client ID.
+        - `imgur setsecret <client_secret>`: Set the Imgur client secret.
+        - `imgur setaccess <access_token>`: Set the Imgur access token.
+        - `imgur setchannel <#channel>`: Set the channel for automatic uploads.
+
+        **Getting Imgur Credentials:**
+
+        1. **Client ID and Client Secret:**
+           - Go to the [Imgur API](https://api.imgur.com/oauth2/addclient).
+           - Log in with your Imgur account.
+           - Fill out the form to register your application.
+           - After registration, you will receive your Client ID and Client Secret.
+
+        2. **Access Token:**
+           - Follow the [Imgur OAuth2 guide](https://apidocs.imgur.com/#authorization-and-oauth) to obtain an access token.
+           - Use the Client ID and Client Secret obtained from the previous step.
+
+        3. **Channel:**
+           - Use the command `imgur setchannel <#channel>` to set the channel where images will be automatically uploaded from.
+
+        Example:
+        ```
+        imgur setid YOUR_IMGUR_CLIENT_ID
+        imgur setsecret YOUR_IMGUR_CLIENT_SECRET
+        imgur setaccess YOUR_IMGUR_ACCESS_TOKEN
+        imgur setchannel #your-channel
+        ```
+
+        After setting these credentials, any images sent in the specified channel will be automatically uploaded to Imgur.
+        """
+        await ctx.send(help_message)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -39,17 +102,20 @@ class ImgurUploader(commands.Cog):
             return
 
         imgur_client_id = await self.config.imgur_client_id()
-        if not imgur_client_id:
-            await message.channel.send("Imgur client ID is not set. Please set it using the `imguruploader setclientid` command.")
+        imgur_client_secret = await self.config.imgur_client_secret()
+        imgur_access_token = await self.config.imgur_access_token()
+        if not imgur_client_id or not imgur_client_secret or not imgur_access_token:
+            await message.channel.send("Imgur client ID, secret, and access token are not set. Please set them using the `imgur setid`, `imgur setsecret`, and `imgur setaccess` commands.")
             return
 
         image_urls = []
+        imgur_image_ids = []
 
         async with aiohttp.ClientSession() as session:
             headers = {"Authorization": f"Client-ID {imgur_client_id}"}
 
             for attachment in message.attachments:
-                if attachment.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif', 'bmp', 'pdf')):
+                if attachment.content_type in ('image/jpeg', 'image/jpg', 'image/gif', 'image/png', 'image/apng', 'image/tiff', 'video/mp4', 'video/webm', 'video/x-matroska', 'video/quicktime', 'video/x-flv', 'video/x-msvideo', 'video/x-ms-wmv', 'video/mpeg'):
                     async with session.get(attachment.url) as resp:
                         if resp.status != 200:
                             await message.channel.send(f"Failed to download file: {attachment.url}")
@@ -62,18 +128,42 @@ class ImgurUploader(commands.Cog):
                             return
                         imgur_response = await resp.json()
                         image_urls.append(imgur_response["data"]["link"])
+                        imgur_image_ids.append(imgur_response["data"]["id"])
 
         if len(image_urls) == 1:
             await message.channel.send(f"File uploaded to Imgur: {image_urls[0]}")
         elif len(image_urls) > 1:
-            async with aiohttp.ClientSession() as session:
-                headers = {"Authorization": f"Client-ID {imgur_client_id}"}
-                data = {"ids": ",".join(image_urls)}
-                async with session.post("https://api.imgur.com/3/album", headers=headers, data=data) as resp:
-                    if resp.status != 200:
-                        await message.channel.send("Failed to create album on Imgur.")
-                        return
-                    album_response = await resp.json()
+            boundary = 'wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T'
+            dataList = []
+            dataList.append(encode('--' + boundary))
+            dataList.append(encode('Content-Disposition: form-data; name=ids[];'))
+            dataList.append(encode('Content-Type: {}'.format('text/plain')))
+            dataList.append(encode(''))
+            dataList.append(encode(",".join(imgur_image_ids)))
+            dataList.append(encode('--' + boundary))
+            dataList.append(encode('Content-Disposition: form-data; name=title;'))
+            dataList.append(encode('Content-Type: {}'.format('text/plain')))
+            dataList.append(encode(''))
+            dataList.append(encode("New confidential album"))
+            dataList.append(encode('--' + boundary))
+            dataList.append(encode('Content-Disposition: form-data; name=description;'))
+            dataList.append(encode('Content-Type: {}'.format('text/plain')))
+            dataList.append(encode(''))
+            dataList.append(encode("This album contains a lot of sensitive information."))
+            dataList.append(encode('--'+boundary+'--'))
+            dataList.append(encode(''))
+            body = b'\r\n'.join(dataList)
+            payload = body
+            headers = {
+              'Authorization': f'Bearer {imgur_access_token}',
+              'Content-type': 'multipart/form-data; boundary={}'.format(boundary)
+            }
+
+            conn = http.client.HTTPSConnection("api.imgur.com")
+            conn.request("POST", "/3/album", payload, headers)
+            res = conn.getresponse()
+            data = res.read()
+            album_response = json.loads(data.decode("utf-8"))
 
             album_link = f"https://imgur.com/a/{album_response['data']['id']}"
             await message.channel.send(f"Album created on Imgur: {album_link}")
