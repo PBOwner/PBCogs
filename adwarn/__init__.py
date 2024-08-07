@@ -1,5 +1,5 @@
 from redbot.core.bot import Red
-from .adwarn import AdWarn
+from .adwarn import AdWarn, adwarn_context_menu
 
 async def setup(bot):
     cog = AdWarn(bot)
