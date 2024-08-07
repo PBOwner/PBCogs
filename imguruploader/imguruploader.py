@@ -25,9 +25,9 @@ class ImgurUploader(commands.Cog):
 
     @imguruploader.command()
     async def setchannel(self, ctx, channel: discord.TextChannel):
-        """Set the channel for automatic image uploads."""
+        """Set the channel for automatic uploads."""
         await self.config.upload_channel_id.set(channel.id)
-        await ctx.send(f"Channel {channel.mention} has been set for automatic image uploads.")
+        await ctx.send(f"Channel {channel.mention} has been set for automatic uploads.")
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -45,38 +45,37 @@ class ImgurUploader(commands.Cog):
 
         image_urls = []
 
-        for attachment in message.attachments:
-            if attachment.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif', 'bmp')):
-                async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session:
+            headers = {"Authorization": f"Client-ID {imgur_client_id}"}
+
+            for attachment in message.attachments:
+                if attachment.filename.lower().endswith(('png', 'jpg', 'jpeg', 'gif', 'bmp', 'pdf')):
                     async with session.get(attachment.url) as resp:
                         if resp.status != 200:
-                            await message.channel.send(f"Failed to download image: {attachment.url}")
+                            await message.channel.send(f"Failed to download file: {attachment.url}")
                             return
                         data = io.BytesIO(await resp.read())
 
-                    headers = {"Authorization": f"Client-ID {imgur_client_id}"}
                     async with session.post("https://api.imgur.com/3/image", headers=headers, data={"image": data.read()}) as resp:
                         if resp.status != 200:
-                            await message.channel.send("Failed to upload image to Imgur.")
+                            await message.channel.send("Failed to upload file to Imgur.")
                             return
                         imgur_response = await resp.json()
+                        image_urls.append(imgur_response["data"]["link"])
 
-                image_urls.append(imgur_response["data"]["id"])
+        if len(image_urls) == 1:
+            await message.channel.send(f"File uploaded to Imgur: {image_urls[0]}")
+        elif len(image_urls) > 1:
+            async with aiohttp.ClientSession() as session:
+                headers = {"Authorization": f"Client-ID {imgur_client_id}"}
+                data = {"ids": ",".join(image_urls)}
+                async with session.post("https://api.imgur.com/3/album", headers=headers, data=data) as resp:
+                    if resp.status != 200:
+                        await message.channel.send("Failed to create album on Imgur.")
+                        return
+                    album_response = await resp.json()
 
-        if not image_urls:
-            return
-
-        async with aiohttp.ClientSession() as session:
-            headers = {"Authorization": f"Client-ID {imgur_client_id}"}
-            data = {"ids": ",".join(image_urls)}
-            async with session.post("https://api.imgur.com/3/album", headers=headers, data=data) as resp:
-                if resp.status != 200:
-                    await message.channel.send("Failed to create album on Imgur.")
-                    return
-                album_response = await resp.json()
-
-        album_link = f"https://imgur.com/a/{album_response['data']['id']}"
-        await message.channel.send(f"Album created on Imgur: {album_link}")
-
-def setup(bot):
-    bot.add_cog(ImgurUploader(bot))
+            album_link = f"https://imgur.com/a/{album_response['data']['id']}"
+            await message.channel.send(f"Album created on Imgur: {album_link}")
+        else:
+            await message.channel.send("No valid files were provided.")
