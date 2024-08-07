@@ -291,7 +291,7 @@ class OwnerProtection(commands.Cog):
         self.bot.tree.remove_command(add_to_protected_owners.name)
         self.bot.tree.remove_command(remove_from_protected_owners.name)
 
-@app_commands.context_menu(name="Add to Protected Owners")
+@app_commands.context_menu(name="Add to Protected Owners List")
 async def add_to_protected_owners(interaction: discord.Interaction, user: discord.User):
     """Context menu command to add a user to the protected owners list."""
     cog = interaction.client.get_cog("OwnerProtection")
@@ -308,7 +308,7 @@ async def add_to_protected_owners(interaction: discord.Interaction, user: discor
         else:
             await interaction.response.send_message(f"{user} is already in the protected owners list.", ephemeral=True)
 
-@app_commands.context_menu(name="Remove from Protected Owners")
+@app_commands.context_menu(name="Remove from Protected Owners List")
 async def remove_from_protected_owners(interaction: discord.Interaction, user: discord.User):
     """Context menu command to remove a user from the protected owners list."""
     cog = interaction.client.get_cog("OwnerProtection")
@@ -324,3 +324,8 @@ async def remove_from_protected_owners(interaction: discord.Interaction, user: d
             await interaction.response.send_message(f"{user} has been removed from the protected owners list.", ephemeral=True)
         else:
             await interaction.response.send_message(f"{user} is not in the protected owners list.", ephemeral=True)
+
+# Ensure you call setup function to add the cog to the bot
+async def setup(bot: Red):
+    cog = OwnerProtection(bot)
+    await bot.add_cog(cog)
