@@ -9,8 +9,8 @@ async def setup(bot: Red):
     cog = OwnerProtection(bot)
     await cog.cog_load()
     bot.add_cog(cog)
-    bot.tree.add_command(add_to_protected_owners)
-    bot.tree.add_command(remove_from_protected_owners)
+    bot.tree.add_command(add_to_protected_owners_list)
+    bot.tree.add_command(remove_from_protected_owners)list)
 
 async def teardown(bot: Red):
     bot.tree.remove_command("Add to Protected Owners", type=discord.AppCommandType.user)
