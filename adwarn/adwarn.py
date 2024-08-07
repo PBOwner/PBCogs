@@ -80,22 +80,22 @@ class WarningReasonModal(discord.ui.Modal):
                         await recent_adwarn_channel.edit(name=f"Recent Adwarn: {self.user.name}")
                 # Check thresholds and take action if necessary
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.user, len(warnings))
+                # Respond to the interaction to close the modal
+                await interaction.response.send_message("Warning recorded successfully.", ephemeral=True)
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                error_message = await interaction.response.send_message(embed=error_embed)
-                await error_message.delete(delay=3)
+                await interaction.response.send_message(embed=error_embed, ephemeral=True)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            error_message = await interaction.response.send_message(embed=error_embed)
-            await error_message.delete(delay=3)
+            await interaction.response.send_message(embed=error_embed, ephemeral=True)
         # Delete the original interaction message if it exists
         if interaction.message:
             try:
