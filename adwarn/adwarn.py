@@ -177,11 +177,6 @@ class WarningReasonModal(discord.ui.Modal, title='Provide Warning Reason'):
         except discord.errors.NotFound:
             logger.error("Failed to delete the interaction message: Message not found")
 
-# Add this line to register the command
-@app_commands.context_menu(name="AdWarn")
-async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
-    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
-
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
@@ -692,7 +687,7 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
         """Listener to update weekly and monthly stats."""
         if message.author.bot:
             return
-        if message.content.startswith(",adwarn"):
+        if message.content.startswith("!adwarn"):
             author_id = str(message.author.id)
             weekly_stats = await self.config.guild(message.guild).weekly_stats()
             monthly_stats = await self.config.guild(message.guild).monthly_stats()
@@ -705,9 +700,7 @@ async def adwarn_context_menu(interaction: discord.Interaction, user: discord.Us
             await self.config.guild(message.guild).weekly_stats.set(weekly_stats)
             await self.config.guild(message.guild).monthly_stats.set(monthly_stats)
 
-
-# Register the cog and context menu
-async def setup(bot: Red):
-    cog = AdWarn(bot)
-    await bot.add_cog(cog)
-    bot.tree.add_command(adwarn_context_menu)
+# Add this line to register the command
+@app_commands.context_menu(name="AdWarn")
+async def adwarn_context_menu(interaction: discord.Interaction, user: discord.User):
+    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user))
