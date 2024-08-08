@@ -85,7 +85,6 @@ class WarningReasonModal(discord.ui.Modal):
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.member, len(warnings))
                 # Close the modal
                 await interaction.response.send_message("Warning recorded.", ephemeral=True)
-                await interaction.delete_original_response()
                 # Delete the message that triggered the modal
                 try:
                     await self.message.delete()
@@ -104,14 +103,14 @@ class WarningReasonModal(discord.ui.Modal):
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=error_embed, ephemeral=True)
+                await interaction.followup.send(embed=error_embed, ephemeral=True)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            await interaction.response.send_message(embed=error_embed, ephemeral=True)
+            await interaction.followup.send(embed=error_embed, ephemeral=True)
 
 class WarningButton(discord.ui.Button):
     def __init__(self, bot, member, command_message, view_instance):
@@ -228,7 +227,7 @@ class AdWarn(commands.Cog):
         if members:
             view = WarningView(self.bot, members, ctx.message)
             response_message = await ctx.send(f"Click the button to warn the mentioned users.", view=view)
-            view.message = response_message 
+            view.message = response_message
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
