@@ -5,6 +5,3 @@ from .ownerprotection import OwnerProtection, add_to_protected_owners_list, remo
 async def setup(bot: Red):
     cog = OwnerProtection(bot)
     await bot.add_cog(cog)
-    bot.tree.add_command(add_to_protected_owners_list)
-    bot.tree.add_command(remove_from_protected_owners_list)
-    await bot.tree.sync()
