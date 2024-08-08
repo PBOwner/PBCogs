@@ -11,7 +11,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-class WarningReasonModal(discord.ui.Modal):
+class WarningReasonModal(Modal):
     def __init__(self, bot, interaction, user, message):
         self.bot = bot
         self.interaction = interaction
