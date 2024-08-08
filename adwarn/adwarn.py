@@ -228,7 +228,7 @@ class AdWarn(commands.Cog):
         if members:
             view = WarningView(self.bot, members, ctx.message)
             response_message = await ctx.send(f"Click the button to warn the mentioned users.", view=view)
-            view.message = response_message
+            view.message = response_message 
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
