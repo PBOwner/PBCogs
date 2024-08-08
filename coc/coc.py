@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands, tasks
 from redbot.core import commands, Config
+from .dashboard_integration import DashboardIntegration
 
-class COC(commands.Cog):
+class COC(DashboardIntegration, commands.Cog):  # Subclass ``DashboardIntegration``.
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
