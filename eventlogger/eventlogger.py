@@ -9,51 +9,46 @@ from .dashboard_integration import DashboardIntegration
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
-  def __init__(self, bot: Red):
-    super().__init__(bot)  # Call the parent class's __init__ method
-    self.bot = bot
-    self.config = Config.get_conf(self, identifier=1234567890)
-    default_guild = {
-      "channels": {},
-      "command_log_channel": None
+  def __init__(self, bot: Red) -> None:
+    super().__init__(bot=bot)
+
+    self.config: Config = Config.get_conf(
+      self,
+      identifier=1234567890,
+      force_registration=True,
+    )
+    self.config.register_guild(
+      channels={},
+      command_log_channel=None,
+    )
+
+    _settings: typing.Dict[
+      str, typing.Dict[str, typing.Union[typing.List[str], bool, str]]
+    ] = {
+      "channels": {
+        "converter": dict,
+        "description": "Mapping of events to channel IDs for logging.",
+      },
+      "command_log_channel": {
+        "converter": int,
+        "description": "Channel ID for logging commands.",
+      },
     }
-    self.config.register_guild(**default_guild)
-    self.event_queue = asyncio.Queue()
-    self.bot.loop.create_task(self.process_event_queue())
+    self.settings: Settings = Settings(
+      bot=self.bot,
+      cog=self,
+      config=self.config,
+      group=self.config.GUILD,
+      settings=_settings,
+      global_path=[],
+      use_profiles_system=False,
+      can_edit=True,
+      commands_group=self.configuration,
+    )
 
-  async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
-    if guild is None:
-      return
-    channels = await self.config.guild(guild).channels()
-    channel_id = channels.get(event)
-    if channel_id:
-      channel = guild.get_channel(channel_id)
-      if channel:
-        embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
-        await self.event_queue.put((channel, embed))
-
-  async def log_command(self, ctx, command_name: str):
-    command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
-    if command_log_channel_id:
-      channel = ctx.guild.get_channel(command_log_channel_id)
-      if channel:
-        description = (
-          f"**Command:** {command_name}\n"
-          f"**User:** {ctx.author} ({ctx.author.id})\n"
-          f"**Channel:** {ctx.channel} ({ctx.channel.id})\n"
-          f"**Guild:** {ctx.guild.name} ({ctx.guild.id})"
-        )
-        embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
-        await self.event_queue.put((channel, embed))
-
-  async def process_event_queue(self):
-    while True:
-      events = []
-      while not self.event_queue.empty():
-        events.append(await self.event_queue.get())
-      for channel, embed in events:
-        await channel.send(embed=embed)
-      await asyncio.sleep(10)
+  async def cog_load(self) -> None:
+    await super().cog_load()
+    await self.settings.add_commands()
 
   # Commands to configure logging channels
   @commands.group()
