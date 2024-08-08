@@ -127,6 +127,15 @@ class EventLogger(DashboardIntegration, commands.Cog):
                 message += f"Command Log: {command_log_channel.mention}\n"
         await ctx.send(message)
 
+  async def process_event_queue(self):
+    while True:
+      events = []
+      while not self.event_queue.empty():
+        events.append(await self.event_queue.get())
+      for channel, embed in events:
+        await channel.send(embed=embed)
+      await asyncio.sleep(10)
+
     @setlog.command()
     async def categories(self, ctx):
         """View the event categories and their events"""
