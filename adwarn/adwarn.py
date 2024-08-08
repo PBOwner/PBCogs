@@ -183,7 +183,15 @@ class AdWarn(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, ctx, user: discord.User):
-        await ctx.send_modal(WarningReasonModal(self.bot, ctx, user))
+        # Create a temporary message to trigger the modal
+        temp_message = await ctx.send("Please provide a reason for the warning:")
+        await ctx.send_modal(WarningReasonModal(self.bot, ctx, user, temp_message))
+        # Delete the command message after 30 seconds
+        await asyncio.sleep(30)
+        try:
+            await ctx.message.delete()
+        except discord.errors.NotFound:
+            logger.error("Failed to delete the command message: Message not found")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
