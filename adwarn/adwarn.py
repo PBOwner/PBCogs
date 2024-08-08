@@ -11,6 +11,22 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
+class DeleteButton(discord.ui.Button):
+    def __init__(self, command_message, response_message):
+        super().__init__(label="Delete", style=discord.ButtonStyle.danger)
+        self.command_message = command_message
+        self.response_message = response_message
+
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            await self.command_message.delete()
+        except discord.errors.NotFound:
+            logger.error("Failed to delete the command message: Message not found")
+        try:
+            await self.response_message.delete()
+        except discord.errors.NotFound:
+            logger.error("Failed to delete the response message: Message not found")
+
 class WarningReasonModal(discord.ui.Modal):
     def __init__(self, bot, interaction, member, message, command_message, view):
         self.bot = bot
@@ -87,30 +103,16 @@ class WarningReasonModal(discord.ui.Modal):
                 # Check thresholds and take action if necessary
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.member, len(warnings))
                 # Respond to the interaction to close the modal
-                await interaction.followup.send("Warning recorded successfully.", ephemeral=True)
+                response_message = await interaction.followup.send("Warning recorded successfully.", ephemeral=True)
+                # Add the delete button to the response
+                view = discord.ui.View()
+                view.add_item(DeleteButton(self.command_message, response_message))
+                await interaction.followup.edit_message(response_message.id, view=view)
                 # Delete the message that triggered the modal
                 try:
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Disable the button for this user and edit the message simultaneously
-                for item in self.view.children:
-                    if item.label == f"Warn {self.member}":
-                        item.disabled = True
-                try:
-                    await self.view.message.edit(view=self.view)
-                except discord.errors.NotFound:
-                    logger.error("Failed to edit the message: Message not found")
-                # Check if all buttons are disabled, then delete the command and response
-                if all(item.disabled for item in self.view.children):
-                    try:
-                        await self.command_message.delete()
-                    except discord.errors.NotFound:
-                        logger.error("Failed to delete the command message: Message not found")
-                    try:
-                        await self.view.message.delete()
-                    except discord.errors.NotFound:
-                        logger.error("Failed to delete the response message: Message not found")
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -135,11 +137,6 @@ class WarningButton(discord.ui.Button):
         self.view_instance = view_instance
 
     async def callback(self, interaction: discord.Interaction):
-        # Check if the button is already disabled
-        if self.disabled:
-            await interaction.response.send_message("You already issued a warning for this user. Try again later.", ephemeral=True)
-            return
-
         await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view_instance))
 
 class WarningView(discord.ui.View):
