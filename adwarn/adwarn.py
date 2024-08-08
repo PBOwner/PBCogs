@@ -91,8 +91,8 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Check if this is the last button interaction
-                if all(item.disabled for item in self.view.children if isinstance(item, WarningButton)):
+                # Check if this is the rightmost button interaction
+                if self.view.children[-1] == self.view.get_item_by_label(f"Warn {self.member}"):
                     try:
                         await self.command_message.delete()
                         await self.view.message.delete()
