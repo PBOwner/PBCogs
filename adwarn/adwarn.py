@@ -11,22 +11,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-class DeleteButton(discord.ui.Button):
-    def __init__(self, command_message, response_message):
-        super().__init__(label="Delete", style=discord.ButtonStyle.danger, row=1)
-        self.command_message = command_message
-        self.response_message = response_message
-
-    async def callback(self, interaction: discord.Interaction):
-        try:
-            await self.command_message.delete()
-        except discord.errors.NotFound:
-            logger.error("Failed to delete the command message: Message not found")
-        try:
-            await self.response_message.delete()
-        except discord.errors.NotFound:
-            logger.error("Failed to delete the response message: Message not found")
-
 class WarningReasonModal(discord.ui.Modal):
     def __init__(self, bot, interaction, member, message, command_message, view):
         self.bot = bot
@@ -107,6 +91,13 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
+                # Check if this is the last button interaction
+                if all(item.disabled for item in self.view.children if isinstance(item, WarningButton)):
+                    try:
+                        await self.command_message.delete()
+                        await self.view.message.delete()
+                    except discord.errors.NotFound:
+                        logger.error("Failed to delete the command or response message: Message not found")
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -139,7 +130,6 @@ class WarningView(discord.ui.View):
         self.message = None
         for member in members:
             self.add_item(WarningButton(bot, member, command_message, self))
-        self.add_item(DeleteButton(command_message, self.message))
 
     def get_item_by_label(self, label):
         for item in self.children:
