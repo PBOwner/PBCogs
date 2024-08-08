@@ -1,5 +1,5 @@
 from redbot.core import commands, Config  # isort:skip
-from redbot.core.bot import Red  # isort:skip
+from redbot.core.bot import Red
 from redbot.core.i18n import Translator, cog_i18n  # isort:skip
 import discord  # isort:skip
 import typing  # isort:skip
@@ -15,7 +15,7 @@ _: Translator = Translator("EventLogger", __file__)
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
-  def __init__(self, bot: Red) -> None:
+  def __init__(self, bot: Red, *args, **kwargs):
     super().__init__(bot)
     self.config: Config = Config.get_conf(
       self,
