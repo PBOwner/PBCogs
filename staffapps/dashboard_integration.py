@@ -20,10 +20,12 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_questions", description="Manage the questions for staff applications.", methods=("GET", "POST"), is_owner=True)
     async def manage_questions_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        roles = [(role.id, role.name) for role in guild.roles]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_questions_form_")
-                self.role.choices = [(role.id, role.name) for role in guild.roles]
+                self.role.choices = roles
 
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             question: wtforms.StringField = wtforms.StringField("Question:", validators=[validators.InputRequired()])
@@ -74,11 +76,14 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_roles_categories", description="Manage roles and categories.", methods=("GET", "POST"), is_owner=True)
     async def manage_roles_categories_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        roles = [(role.id, role.name) for role in guild.roles]
+        role_categories = await self.config.guild(guild).role_categories()
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_roles_categories_form_")
-                self.role.choices = [(role.id, role.name) for role in guild.roles]
-                self.category.choices = [(category, category) for category in (await self.config.guild(guild).role_categories()).keys()]
+                self.role.choices = roles
+                self.category.choices = [(category, category) for category in role_categories.keys()]
 
             category: wtforms.SelectField = wtforms.SelectField("Category:", validators=[validators.InputRequired()])
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
@@ -171,10 +176,12 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_applications", description="View and manage applications.", methods=("GET", "POST"), is_owner=False)
     async def view_applications_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        roles = [(role.id, role.name) for role in guild.roles]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_applications_form_")
-                self.role.choices = [(role.id, role.name) for role in guild.roles]
+                self.role.choices = roles
 
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
@@ -271,10 +278,12 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_staff", description="Manage staff members.", methods=("GET", "POST"), is_owner=False)
     async def manage_staff_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        roles = [(role.id, role.name) for role in guild.roles]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_staff_form_")
-                self.role.choices = [(role.id, role.name) for role in guild.roles]
+                self.role.choices = roles
 
             member: wtforms.IntegerField = wtforms.IntegerField("Member ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Member)])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("promote", "Promote"), ("demote", "Demote"), ("fire", "Fire")])
@@ -379,6 +388,7 @@ class DashboardIntegration:
 
         if not member_roles:
             return
+
         current_role = sorted(member_roles, key=lambda r: r.position, reverse=True)[0]
         category_name = next((cat for cat, roles in role_categories.items() if str(current_role.id) in roles), None)
         if not category_name:
