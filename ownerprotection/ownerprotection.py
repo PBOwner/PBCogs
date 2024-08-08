@@ -157,7 +157,7 @@ class OwnerProtection(commands.Cog):
         else:
             raise Exception("No text channels available to create an invite.")
 
-    @commands.group()
+    @commands.hybrid_group()
     @commands.is_owner()
     async def owner(self, ctx: commands.Context):
         """Group command for owner protection settings."""
@@ -286,10 +286,12 @@ class OwnerProtection(commands.Cog):
     async def cog_load(self) -> None:
         self.bot.tree.add_command(add_to_protected_owners_list)
         self.bot.tree.add_command(remove_from_protected_owners_list)
+        await self.bot.tree.sync()
 
     async def cog_unload(self) -> None:
         self.bot.tree.remove_command(add_to_protected_owners_list.name)
         self.bot.tree.remove_command(remove_from_protected_owners_list.name)
+        await self.bot.tree.sync()
 
 @app_commands.context_menu(name="Add to Owners List")
 async def add_to_protected_owners_list(interaction: discord.Interaction, user: discord.User):
