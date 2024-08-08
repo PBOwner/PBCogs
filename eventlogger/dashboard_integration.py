@@ -9,12 +9,22 @@ def dashboard_page(*args, **kwargs):
         return func
     return decorator
 
-class DashboardIntegration(commands.Cog):
+class DashboardIntegration(commands.Cog):  # Inherit from commands.Cog
     bot: Red
+
+    def __init__(self, bot: Red):
+        self.bot = bot
+        self._registered = False
 
     @commands.Cog.listener()
     async def on_dashboard_cog_add(self, dashboard_cog: commands.Cog) -> None:
-        dashboard_cog.rpc.third_parties_handler.add_third_party(self)
+        if not self._registered:
+            try:
+                dashboard_cog.rpc.third_parties_handler.add_third_party(self)
+                self._registered = True
+            except RuntimeError as e:
+                # Log the error if needed
+                print(f"Failed to register third party: {e}")
 
     @dashboard_page(name=None, description="Configure Event Logging", methods=("GET", "POST"), is_owner=True)
     async def configure_logging(self, user: discord.User, **kwargs) -> typing.Dict[str, typing.Any]:
