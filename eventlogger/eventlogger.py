@@ -7,66 +7,66 @@ import asyncio
 from .dashboard_integration import DashboardIntegration
 
 class EventLogger(DashboardIntegration, commands.Cog):
-    """Cog to log various Discord events"""
+  """Cog to log various Discord events"""
 
-    def __init__(self, bot: Red):
-        super().__init__(bot)  # Call the parent class's __init__ method
-        self.bot = bot
-        self.config = Config.get_conf(self, identifier=1234567890)
-        default_guild = {
-            "channels": {},
-            "command_log_channel": None
-        }
-        self.config.register_guild(**default_guild)
-        self.event_queue = asyncio.Queue()
-        self.bot.loop.create_task(self.process_event_queue())
+  def __init__(self, bot: Red):
+    super().__init__(bot)  # Call the parent class's __init__ method
+    self.bot = bot
+    self.config = Config.get_conf(self, identifier=1234567890)
+    default_guild = {
+      "channels": {},
+      "command_log_channel": None
+    }
+    self.config.register_guild(**default_guild)
+    self.event_queue = asyncio.Queue()
+    self.bot.loop.create_task(self.process_event_queue())
 
-    async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
-        if guild is None:
-            return
-        channels = await self.config.guild(guild).channels()
-        channel_id = channels.get(event)
-        if channel_id:
-            channel = guild.get_channel(channel_id)
-            if channel:
-                embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
-                await self.event_queue.put((channel, embed))
+  async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
+    if guild is None:
+      return
+    channels = await self.config.guild(guild).channels()
+    channel_id = channels.get(event)
+    if channel_id:
+      channel = guild.get_channel(channel_id)
+      if channel:
+        embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
+        await self.event_queue.put((channel, embed))
 
-    async def log_command(self, ctx, command_name: str):
-        command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
-        if command_log_channel_id:
-            channel = ctx.guild.get_channel(command_log_channel_id)
-            if channel:
-                description = (
-                    f"**Command:** {command_name}\n"
-                    f"**User:** {ctx.author} ({ctx.author.id})\n"
-                    f"**Channel:** {ctx.channel} ({ctx.channel.id})\n"
-                    f"**Guild:** {ctx.guild.name} ({ctx.guild.id})"
-                )
-                embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
-                await self.event_queue.put((channel, embed))
+  async def log_command(self, ctx, command_name: str):
+    command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
+    if command_log_channel_id:
+      channel = ctx.guild.get_channel(command_log_channel_id)
+      if channel:
+        description = (
+          f"**Command:** {command_name}\n"
+          f"**User:** {ctx.author} ({ctx.author.id})\n"
+          f"**Channel:** {ctx.channel} ({ctx.channel.id})\n"
+          f"**Guild:** {ctx.guild.name} ({ctx.guild.id})"
+        )
+        embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
+        await self.event_queue.put((channel, embed))
 
-    async def process_event_queue(self):
-        while True:
-            events = []
-            while not self.event_queue.empty():
-                events.append(await self.event_queue.get())
-            for channel, embed in events:
-                await channel.send(embed=embed)
-            await asyncio.sleep(10)
+  async def process_event_queue(self):
+    while True:
+      events = []
+      while not self.event_queue.empty():
+        events.append(await self.event_queue.get())
+      for channel, embed in events:
+        await channel.send(embed=embed)
+      await asyncio.sleep(10)
 
-    # Commands to configure logging channels
-    @commands.group()
-    async def setlog(self, ctx):
-        """Configure logging channels for events"""
-        pass
+  # Commands to configure logging channels
+  @commands.group()
+  async def setlog(self, ctx):
+    """Configure logging channels for events"""
+    pass
 
-    @setlog.command()
-    async def event(self, ctx, event: str, channel: discord.TextChannel):
-        """Set the logging channel for a specific event"""
-        async with self.config.guild(ctx.guild).channels() as channels:
-            channels[event] = channel.id
-        await ctx.send(f"Logging channel for {event} set to {channel.mention}") 
+  @setlog.command()
+  async def event(self, ctx, event: str, channel: discord.TextChannel):
+    """Set the logging channel for a specific event"""
+    async with self.config.guild(ctx.guild).channels() as channels:
+      channels[event] = channel.id
+    await ctx.send(f"Logging channel for {event} set to {channel.mention}")
 
     @setlog.command()
     async def category(self, ctx, category: str, channel: discord.TextChannel):
