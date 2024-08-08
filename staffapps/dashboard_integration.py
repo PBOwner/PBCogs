@@ -2,6 +2,8 @@ from redbot.core import commands
 from redbot.core.bot import Red
 import discord
 import typing
+import wtforms
+from wtforms import validators
 
 def dashboard_page(*args, **kwargs):  # This decorator is required because the cog Dashboard may load after the third party when the bot is started.
     def decorator(func: typing.Callable):
@@ -18,15 +20,13 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_questions", description="Manage the questions for staff applications.", methods=("GET", "POST"), is_owner=True)
     async def manage_questions_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
-
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_questions_form_")
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[wtforms.validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
-            question: wtforms.StringField = wtforms.StringField("Question:", validators=[wtforms.validators.InputRequired()])
+            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
+            question: wtforms.StringField = wtforms.StringField("Question:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add"), ("remove", "Remove"), ("clear", "Clear All")])
-            index: wtforms.IntegerField = wtforms.IntegerField("Index (for remove action):", validators=[wtforms.validators.Optional()])
+            index: wtforms.IntegerField = wtforms.IntegerField("Index (for remove action):", validators=[validators.Optional()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Questions")
 
         form: Form = Form()
@@ -71,11 +71,10 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_channel", description="Set the application channel.", methods=("GET", "POST"), is_owner=True)
     async def manage_channel_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_channel_form_")
-            channel: wtforms.IntegerField = wtforms.IntegerField("Channel ID:", validators=[wtforms.validators.InputRequired(), kwargs["DpyObjectConverter"](discord.TextChannel)])
+            channel: wtforms.IntegerField = wtforms.IntegerField("Channel ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.TextChannel)])
             submit: wtforms.SubmitField = wtforms.SubmitField("Set Channel")
 
         form: Form = Form()
@@ -97,13 +96,12 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_applications", description="View and manage applications.", methods=("GET", "POST"), is_owner=False)
     async def view_applications_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_applications_form_")
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[wtforms.validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
+            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[wtforms.validators.InputRequired()])
+            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Application")
 
         form: Form = Form()
@@ -195,13 +193,12 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_staff", description="Manage staff members.", methods=("GET", "POST"), is_owner=False)
     async def manage_staff_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_staff_form_")
-            member: wtforms.IntegerField = wtforms.IntegerField("Member ID:", validators=[wtforms.validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Member)])
+            member: wtforms.IntegerField = wtforms.IntegerField("Member ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Member)])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("promote", "Promote"), ("demote", "Demote"), ("fire", "Fire")])
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[wtforms.validators.Optional(), kwargs["DpyObjectConverter"](discord.Role)])
+            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.Optional(), kwargs["DpyObjectConverter"](discord.Role)])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Staff")
 
         form: Form = Form()
@@ -361,12 +358,11 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_loa_requests", description="View and manage LOA requests.", methods=("GET", "POST"), is_owner=False)
     async def view_loa_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_loa_requests_form_")
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[wtforms.validators.InputRequired()])
+            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update LOA Request")
 
         form: Form = Form()
@@ -455,12 +451,11 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_resignation_requests", description="View and manage resignation requests.", methods=("GET", "POST"), is_owner=False)
     async def view_resignation_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_resignation_requests_form_")
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[wtforms.validators.InputRequired()])
+            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Resignation Request")
 
         form: Form = Form()
