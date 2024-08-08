@@ -1,11 +1,11 @@
 from redbot.core import commands, Config  # isort:skip
-from redbot.core.bot import Red
+from redbot.core.bot import Red  # isort:skip
 from redbot.core.i18n import Translator, cog_i18n  # isort:skip
 import discord  # isort:skip
 import typing  # isort:skip
 
-from .dashboard_integration import DashboardIntegration
 from AAA3A_utils.settings import Settings  # Import the Settings class
+from .dashboard_integration import DashboardIntegration
 
 # Credits:
 # General repo credits.
@@ -16,9 +16,9 @@ _: Translator = Translator("EventLogger", __file__)
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
-  def __init__(self, bot: Red, *args, **kwargs):
-    super().__init__(*args, **kwargs)
-    self.bot = bot
+  def __init__(self, bot: Red) -> None:
+    super().__init__(bot)
+    self.bot = bot  # Explicitly set the bot attribute
     self.config: Config = Config.get_conf(
       self,
       identifier=1234567890,
@@ -59,7 +59,6 @@ class EventLogger(DashboardIntegration, commands.Cog):
   async def cog_load(self) -> None:
     await super().cog_load()
     await self.settings.add_commands()
-
   # Commands to configure logging channels
   @commands.group()
   async def setlog(self, ctx):
