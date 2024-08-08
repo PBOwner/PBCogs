@@ -293,7 +293,7 @@ class OwnerProtection(commands.Cog):
         self.bot.tree.remove_command(remove_from_protected_owners_list.name)
         await self.bot.tree.sync()
 
-@app_commands.context_menu(name="Add to Owners List")
+@app_commands.context_menu(name="Add to Owners")
 async def add_to_protected_owners_list(interaction: discord.Interaction, user: discord.User):
     """Context menu command to add a user to the protected owners list."""
     cog = interaction.client.get_cog("OwnerProtection")
@@ -310,7 +310,7 @@ async def add_to_protected_owners_list(interaction: discord.Interaction, user: d
         else:
             await interaction.response.send_message(f"{user} is already in the protected owners list.", ephemeral=True)
 
-@app_commands.context_menu(name="Remove from Owners List")
+@app_commands.context_menu(name="Remove from Owners")
 async def remove_from_protected_owners_list(interaction: discord.Interaction, user: discord.User):
     """Context menu command to remove a user from the protected owners list."""
     cog = interaction.client.get_cog("OwnerProtection")
