@@ -223,6 +223,55 @@ class DashboardIntegration:
             "web_content": {"source": source, "form": form},
         }
 
+    @dashboard_page(name="manage_blacklist", description="Manage the staff blacklist.", methods=("GET", "POST"), is_owner=True)
+    async def manage_blacklist_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        users = [(member.id, member.display_name) for member in guild.members]
+
+        class Form(kwargs["Form"]):
+            def __init__(self):
+                super().__init__(prefix="manage_blacklist_form_")
+                self.user.choices = users
+
+            user: wtforms.SelectField = wtforms.SelectField("User:", validators=[validators.InputRequired()])
+            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add to Blacklist"), ("remove", "Remove from Blacklist")])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Update Blacklist")
+
+        form: Form = Form()
+        if form.validate_on_submit() and await form.validate_dpy_converters():
+            user_id = int(form.user.data)
+            action = form.action.data
+
+            async with self.config.guild(guild).blacklist() as blacklist:
+                if action == "add":
+                    if user_id not in blacklist:
+                        blacklist.append(user_id)
+                        message = f"User {guild.get_member(user_id).display_name} has been added to the blacklist."
+                        category = "success"
+                    else:
+                        message = "User is already blacklisted."
+                        category = "error"
+                elif action == "remove":
+                    if user_id in blacklist:
+                        blacklist.remove(user_id)
+                        message = f"User {guild.get_member(user_id).display_name} has been removed from the blacklist."
+                        category = "success"
+                    else:
+                        message = "User is not in the blacklist."
+                        category = "error"
+
+            return {
+                "status": 0,
+                "notifications": [{"message": message, "category": category}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        source = "{{ form|safe }}"
+
+        return {
+            "status": 0,
+            "web_content": {"source": source, "form": form},
+        }
+
     @dashboard_page(name="view_applications", description="View and manage applications.", methods=("GET", "POST"), is_owner=False)
     async def view_applications_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
         roles = [(role.id, role.name) for role in guild.roles]
@@ -334,7 +383,6 @@ class DashboardIntegration:
         members_with_base_role = [(member.id, member.display_name) for member in base_role.members] if base_role else []
 
         roles = [(role.id, role.name) for role in guild.roles]
-
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_staff_form_")
@@ -363,7 +411,7 @@ class DashboardIntegration:
                 message = f"Demoted {member.display_name} to {role.name}."
                 category = "success"
             elif action == "fire":
-                await self.fire_member(guild, member, role, user)
+                await self.fire_member(guild, member, user)
                 message = f"Fired {member.display_name}."
                 category = "success"
             else:
