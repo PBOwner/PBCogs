@@ -16,9 +16,9 @@ _: Translator = Translator("EventLogger", __file__)
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
-  def __init__(self, bot: Red) -> None:
-    super().__init__(bot)
-    self.bot = bot  # Explicitly set the bot attribute
+  def __init__(self, bot: Red, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.bot = bot
     self.config: Config = Config.get_conf(
       self,
       identifier=1234567890,
@@ -50,7 +50,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
       global_path=[],
       use_profiles_system=False,
       can_edit=True,
-      commands_group=self.configuration,
+      commands_group=self.config,
     )
 
     self.event_queue = asyncio.Queue()
