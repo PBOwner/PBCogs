@@ -23,7 +23,9 @@ class DashboardIntegration:
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_questions_form_")
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
+                self.role.choices = [(role.id, role.name) for role in guild.roles]
+
+            role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             question: wtforms.StringField = wtforms.StringField("Question:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add"), ("remove", "Remove"), ("clear", "Clear All")])
             index: wtforms.IntegerField = wtforms.IntegerField("Index (for remove action):", validators=[validators.Optional()])
@@ -31,7 +33,8 @@ class DashboardIntegration:
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
-            role = form.role.data
+            role_id = int(form.role.data)
+            role = guild.get_role(role_id)
             question = form.question.data
             action = form.action.data
             index = form.index.data
@@ -56,6 +59,78 @@ class DashboardIntegration:
                     else:
                         message = "No questions set for this role."
                         category = "error"
+            return {
+                "status": 0,
+                "notifications": [{"message": message, "category": category}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        source = "{{ form|safe }}"
+
+        return {
+            "status": 0,
+            "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="manage_roles_categories", description="Manage roles and categories.", methods=("GET", "POST"), is_owner=True)
+    async def manage_roles_categories_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        class Form(kwargs["Form"]):
+            def __init__(self):
+                super().__init__(prefix="manage_roles_categories_form_")
+                self.role.choices = [(role.id, role.name) for role in guild.roles]
+                self.category.choices = [(category, category) for category in (await self.config.guild(guild).role_categories()).keys()]
+
+            category: wtforms.SelectField = wtforms.SelectField("Category:", validators=[validators.InputRequired()])
+            role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
+            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add"), ("remove", "Remove"), ("create", "Create Category"), ("delete", "Delete Category")])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Update Roles/Categories")
+
+        form: Form = Form()
+        if form.validate_on_submit() and await form.validate_dpy_converters():
+            category_name = form.category.data
+            role_id = int(form.role.data)
+            role = guild.get_role(role_id)
+            action = form.action.data
+
+            async with self.config.guild(guild).role_categories() as role_categories:
+                if action == "add":
+                    if category_name not in role_categories:
+                        message = f"Category '{category_name}' does not exist."
+                        category = "error"
+                    elif str(role.id) in role_categories[category_name]:
+                        message = f"Role {role.mention} is already in category '{category_name}'."
+                        category = "error"
+                    else:
+                        role_categories[category_name].append(str(role.id))
+                        message = f"Role {role.mention} added to category '{category_name}'."
+                        category = "success"
+                elif action == "remove":
+                    if category_name not in role_categories:
+                        message = f"Category '{category_name}' does not exist."
+                        category = "error"
+                    elif str(role.id) not in role_categories[category_name]:
+                        message = f"Role {role.mention} is not in category '{category_name}'."
+                        category = "error"
+                    else:
+                        role_categories[category_name].remove(str(role.id))
+                        message = f"Role {role.mention} removed from category '{category_name}'."
+                        category = "success"
+                elif action == "create":
+                    if category_name in role_categories:
+                        message = f"Category '{category_name}' already exists."
+                        category = "error"
+                    else:
+                        role_categories[category_name] = []
+                        message = f"Category '{category_name}' created."
+                        category = "success"
+                elif action == "delete":
+                    if category_name not in role_categories:
+                        message = f"Category '{category_name}' does not exist."
+                        category = "error"
+                    else:
+                        del role_categories[category_name]
+                        message = f"Category '{category_name}' deleted."
+                        category = "success"
             return {
                 "status": 0,
                 "notifications": [{"message": message, "category": category}],
@@ -99,14 +174,17 @@ class DashboardIntegration:
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_applications_form_")
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Role)])
+                self.role.choices = [(role.id, role.name) for role in guild.roles]
+
+            role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
             user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Application")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
-            role = form.role.data
+            role_id = int(form.role.data)
+            role = guild.get_role(role_id)
             action = form.action.data
             user_id = form.user_id.data
             member = guild.get_member(user_id)
@@ -196,16 +274,19 @@ class DashboardIntegration:
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_staff_form_")
+                self.role.choices = [(role.id, role.name) for role in guild.roles]
+
             member: wtforms.IntegerField = wtforms.IntegerField("Member ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Member)])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("promote", "Promote"), ("demote", "Demote"), ("fire", "Fire")])
-            role: wtforms.IntegerField = wtforms.IntegerField("Role ID:", validators=[validators.Optional(), kwargs["DpyObjectConverter"](discord.Role)])
+            role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.Optional()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Staff")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
             member = form.member.data
             action = form.action.data
-            role = form.role.data
+            role_id = int(form.role.data)
+            role = guild.get_role(role_id)
 
             if action == "promote":
                 await self.promote_member(guild, member, role, user)
@@ -298,7 +379,6 @@ class DashboardIntegration:
 
         if not member_roles:
             return
-
         current_role = sorted(member_roles, key=lambda r: r.position, reverse=True)[0]
         category_name = next((cat for cat, roles in role_categories.items() if str(current_role.id) in roles), None)
         if not category_name:
