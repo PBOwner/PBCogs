@@ -93,7 +93,7 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Disable the button for this user
+                # Disable the button for this user and edit the message simultaneously
                 for item in self.view.children:
                     if item.label == f"Warn {self.member}":
                         item.disabled = True
