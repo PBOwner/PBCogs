@@ -182,18 +182,87 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx: commands.Context, user: discord.User):
-        # Create a temporary message to trigger the modal
-        temp_message = await ctx.send("Please provide a reason for the warning:")
-        # Use interaction to send the modal
-        await ctx.interaction.response.send_modal(WarningReasonModal(self.bot, ctx.interaction, user, temp_message))
-        # Delete the command message after 30 seconds
-        await asyncio.sleep(30)
-        try:
-            await ctx.message.delete()
-        except discord.errors.NotFound:
-            logger.error("Failed to delete the command message: Message not found")
+    async def adwarn(self, ctx: commands.Context, user: discord.User, *, reason: str):
+        guild = ctx.guild
+        author = ctx.author
+        channel = ctx.channel
 
+        warn_channel_id = await self.config.guild(guild).warn_channel()
+        recent_adwarn_channel_id = await self.config.guild(guild).recent_adwarn_channel()
+        if warn_channel_id:
+            warn_channel = self.bot.get_channel(warn_channel_id)
+            if warn_channel:
+                # Store the warning with a UUID
+                warnings = await self.config.member(user).warnings()
+                warning_time = discord.utils.utcnow()
+                warning_id = str(uuid.uuid4())
+                warnings.append({
+                    "id": warning_id,
+                    "reason": reason,
+                    "moderator": author.id,
+                    "time": warning_time.isoformat(),
+                    "channel": channel.id
+                })
+                await self.config.member(user).warnings.set(warnings)
+                # Increment the count of warnings issued by the moderator for the current server
+                warnings_issued = await self.config.guild(guild).warnings_issued()
+                if str(author.id) not in warnings_issued:
+                    warnings_issued[str(author.id)] = 0
+                warnings_issued[str(author.id)] += 1
+                await self.config.guild(guild).warnings_issued.set(warnings_issued)
+                # Store the details of the warning issued by the moderator
+                mod_warnings = await self.config.guild(guild).mod_warnings()
+                if str(author.id) not in mod_warnings:
+                    mod_warnings[str(author.id)] = []
+                mod_warnings[str(author.id)].append({
+                    "user": user.id,
+                    "reason": reason,
+                    "time": warning_time.isoformat(),
+                    "channel": channel.id
+                })
+                await self.config.guild(guild).mod_warnings.set(mod_warnings)
+                # Create the embed message
+                timestamp = int(warning_time.timestamp())
+                embed = discord.Embed(title="New AdWarn", color=discord.Color.red())
+                embed.add_field(name="User", value=user.mention, inline=True)
+                embed.add_field(name="Warned In", value=channel.mention, inline=True)
+                embed.add_field(name="Reason", value=reason, inline=False)
+                embed.add_field(name="Moderator", value=author.mention, inline=True)
+                embed.add_field(name="Time", value=f"<t:{timestamp}:F>", inline=False)
+                embed.set_footer(text=f"Total warnings: {len(warnings)}")
+                # Send the embed to the specified warning channel
+                await warn_channel.send(embed=embed)
+                # Send plain text message to the warning channel
+                await warn_channel.send(f"{user.mention}")
+                # Update the recent adwarn voice channel
+                if recent_adwarn_channel_id:
+                    recent_adwarn_channel = self.bot.get_channel(recent_adwarn_channel_id)
+                    if recent_adwarn_channel:
+                        await recent_adwarn_channel.edit(name=f"Recent Adwarn: {user.name}")
+                # Check thresholds and take action if necessary
+                await self.check_thresholds(ctx, user, len(warnings))
+                # Respond to the interaction to close the modal
+                await ctx.send("Warning recorded successfully.", delete_after=10)
+                # Delete the command message after 30 seconds
+                await asyncio.sleep(30)
+                try:
+                    await ctx.message.delete()
+                except discord.errors.NotFound:
+                    logger.error("Failed to delete the command message: Message not found")
+            else:
+                error_embed = discord.Embed(
+                    title="Error 404",
+                    description="Warning channel not found. Please set it again using `[p]warnset channel`.",
+                    color=discord.Color.red()
+                )
+                await ctx.send(embed=error_embed, delete_after=10)
+        else:
+            error_embed = discord.Embed(
+                title="Error 404",
+                description="No warning channel has been set. Please set it using `[p]warnset channel`.",
+                color=discord.Color.red()
+            )
+            await ctx.send(embed=error_embed, delete_after=10)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
