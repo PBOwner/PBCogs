@@ -94,7 +94,10 @@ class WarningReasonModal(discord.ui.Modal):
                 for item in self.view.children:
                     if item.label == f"Warn {self.member}":
                         item.disabled = True
-                await self.view.message.edit(view=self.view)
+                try:
+                    await self.view.message.edit(view=self.view)
+                except discord.errors.NotFound:
+                    logger.error("Failed to edit the message: Message not found")
                 # Check if all buttons are disabled, then delete the command and response
                 if all(item.disabled for item in self.view.children):
                     try:
