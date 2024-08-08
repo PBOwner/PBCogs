@@ -136,6 +136,11 @@ class WarningButton(discord.ui.Button):
         self.view_instance = view_instance
 
     async def callback(self, interaction: discord.Interaction):
+        # Check if the button is already disabled
+        if self.disabled:
+            await interaction.response.send_message("You already issued a warning for this user. Try again later.", ephemeral=True)
+            return
+
         await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view_instance))
 
 class WarningView(discord.ui.View):
