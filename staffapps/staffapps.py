@@ -1,8 +1,9 @@
 import discord
 import asyncio
 from redbot.core import commands, Config
+from .dashboard_integration import DashboardIntegration
 
-class StaffApps(commands.Cog):
+class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardIntegration``.
     """Cog for handling applications and managing staff members."""
 
     def __init__(self, bot):
@@ -22,7 +23,6 @@ class StaffApps(commands.Cog):
             "role_categories": {},
             "base_role": None,
             "auto_role": None
-        }
         self.config.register_guild(**default_guild)
 
     # Application Commands
