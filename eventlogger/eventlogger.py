@@ -4,8 +4,9 @@ import discord
 from datetime import datetime
 from typing import Union
 import asyncio
+from .dashboard_integration import DashboardIntegration
 
-class EventLogger(commands.Cog):
+class EventLogger(DashboardIntegration, commands.Cog):
     """Cog to log various Discord events"""
 
     def __init__(self, bot: Red):
