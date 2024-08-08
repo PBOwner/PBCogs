@@ -226,15 +226,17 @@ class DashboardIntegration:
     @dashboard_page(name="view_applications", description="View and manage applications.", methods=("GET", "POST"), is_owner=False)
     async def view_applications_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
         roles = [(role.id, role.name) for role in guild.roles]
+        users = [(member.id, member.display_name) for member in guild.members]
 
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_applications_form_")
                 self.role.choices = roles
+                self.user.choices = users
 
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
+            user: wtforms.SelectField = wtforms.SelectField("User:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Application")
 
         form: Form = Form()
@@ -242,7 +244,7 @@ class DashboardIntegration:
             role_id = int(form.role.data)
             role = guild.get_role(role_id)
             action = form.action.data
-            user_id = form.user_id.data
+            user_id = int(form.user.data)
             member = guild.get_member(user_id)
             if not member:
                 return {
@@ -316,7 +318,7 @@ class DashboardIntegration:
             for user_id, app in role_apps.items():
                 member = guild.get_member(int(user_id))
                 if member:
-                    application_list.append(f"{member.display_name} ({member.id}) - {role.name}")
+                    application_list.append(f"Application for {role.name} from {member.display_name} ({member.id})")
 
         source = f"<h4>Applications:</h4><ul>{''.join([f'<li>{app}</li>' for app in application_list])}</ul>{{{{ form|safe }}}}"
 
@@ -362,7 +364,7 @@ class DashboardIntegration:
                 category = "success"
             elif action == "fire":
                 await self.fire_member(guild, member, role, user)
-                message = f"Fired {member.display_name} from {role.name}."
+                message = f"Fired {member.display_name}."
                 category = "success"
             else:
                 message = "Invalid action."
@@ -370,7 +372,7 @@ class DashboardIntegration:
 
             return {
                 "status": 0,
-                "notifications": [{"message": message, "category": category}],
+                "notifications": [{"message": message, "category": category}]
                 "redirect_url": kwargs["request_url"],
             }
 
@@ -379,6 +381,7 @@ class DashboardIntegration:
             member = guild.get_member(member_id)
             if member:
                 staff_list.append(f"{member.display_name} ({member.id})")
+
         source = f"<h4>Staff Members:</h4><ul>{''.join([f'<li>{staff}</li>' for staff in staff_list])}</ul>{{{{ form|safe }}}}"
 
         return {
@@ -480,17 +483,21 @@ class DashboardIntegration:
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
 
-    async def fire_member(self, guild, member, role, issuer):
-        await member.remove_roles(role)
-        auto_role_id = await self.config.guild(guild).auto_role()
-        if auto_role_id:
-            auto_role = guild.get_role(auto_role_id)
-            if auto_role:
-                await member.remove_roles(auto_role)
+    async def fire_member(self, guild, member, issuer):
+        base_role_id = await self.config.guild(guild).base_role()
+        base_role = guild.get_role(base_role_id)
+        role_categories = await self.config.guild(guild).role_categories()
+        member_roles = [role for role in member.roles if role.id in [int(role_id) for roles in role_categories.values() for role_id in roles]]
+
+        if base_role in member.roles:
+            await member.remove_roles(base_role)
+
+        for role in member_roles:
+            await member.remove_roles(role)
+
         embed = discord.Embed(title="Staff Fired", color=discord.Color.red())
         embed.add_field(name="Username", value=member.name, inline=False)
         embed.add_field(name="User ID", value=member.id, inline=False)
-        embed.add_field(name="Position", value=role.mention, inline=False)
         embed.add_field(name="Issuer", value=issuer.name, inline=False)
         staff_updates_channel_id = await self.config.guild(guild).staff_updates_channel()
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
@@ -499,17 +506,21 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_loa_requests", description="View and manage LOA requests.", methods=("GET", "POST"), is_owner=False)
     async def view_loa_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        users = [(member.id, member.display_name) for member in guild.members]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_loa_requests_form_")
+                self.user.choices = users
+
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
+            user: wtforms.SelectField = wtforms.SelectField("User:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update LOA Request")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
             action = form.action.data
-            user_id = form.user_id.data
+            user_id = int(form.user.data)
 
             loa_requests = await self.config.guild(guild).loa_requests()
             if str(user_id) not in loa_requests:
@@ -581,7 +592,7 @@ class DashboardIntegration:
         for user_id, loa_request in loa_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                loa_list.append(f"{user.display_name} ({user.id}) - {loa_request['duration']} - {loa_request['reason']}")
+                loa_list.append(f"LOA request from {user.display_name} for {loa_request['reason']}")
 
         source = f"<h4>LOA Requests:</h4><ul>{''.join([f'<li>{loa}</li>' for loa in loa_list])}</ul>{{{{ form|safe }}}}"
 
@@ -592,17 +603,21 @@ class DashboardIntegration:
 
     @dashboard_page(name="view_resignation_requests", description="View and manage resignation requests.", methods=("GET", "POST"), is_owner=False)
     async def view_resignation_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        users = [(member.id, member.display_name) for member in guild.members]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="view_resignation_requests_form_")
+                self.user.choices = users
+
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
-            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[validators.InputRequired()])
+            user: wtforms.SelectField = wtforms.SelectField("User:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Resignation Request")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
             action = form.action.data
-            user_id = form.user_id.data
+            user_id = int(form.user.data)
 
             resignation_requests = await self.config.guild(guild).resignation_requests()
             if str(user_id) not in resignation_requests:
@@ -669,7 +684,7 @@ class DashboardIntegration:
         for user_id, resignation_request in resignation_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                resignation_list.append(f"{user.display_name} ({user.id}) - {resignation_request['reason']}")
+                resignation_list.append(f"Resignation for position from {user.display_name}")
 
         source = f"<h4>Resignation Requests:</h4><ul>{''.join([f'<li>{resignation}</li>' for resignation in resignation_list])}</ul>{{{{ form|safe }}}}"
 
