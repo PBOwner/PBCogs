@@ -11,7 +11,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
-class WarningReasonModal(Modal):
+class WarningReasonModal(discord.ui.Modal):
     def __init__(self, bot, interaction, user, message):
         self.bot = bot
         self.interaction = interaction
@@ -182,10 +182,11 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, user: discord.User):
+    async def adwarn(self, ctx: commands.Context, user: discord.User):
         # Create a temporary message to trigger the modal
         temp_message = await ctx.send("Please provide a reason for the warning:")
-        await ctx.send_modal(WarningReasonModal(self.bot, ctx, user, temp_message))
+        # Use interaction to send the modal
+        await ctx.interaction.response.send_modal(WarningReasonModal(self.bot, ctx.interaction, user, temp_message))
         # Delete the command message after 30 seconds
         await asyncio.sleep(30)
         try:
