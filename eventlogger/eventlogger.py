@@ -66,7 +66,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
         """Set the logging channel for a specific event"""
         async with self.config.guild(ctx.guild).channels() as channels:
             channels[event] = channel.id
-        await ctx.send(f"Logging channel for {event} set to {channel.mention}")
+        await ctx.send(f"Logging channel for {event} set to {channel.mention}") 
 
     @setlog.command()
     async def category(self, ctx, category: str, channel: discord.TextChannel):
