@@ -121,15 +121,15 @@ class WarningReasonModal(discord.ui.Modal):
             await interaction.response.send_message(embed=error_embed, ephemeral=True)
 
 class WarningButton(discord.ui.Button):
-    def __init__(self, bot, member, command_message, view):
+    def __init__(self, bot, member, command_message, view_instance):
         super().__init__(label=f"Warn {member}", style=discord.ButtonStyle.danger)
         self.bot = bot
         self.member = member
         self.command_message = command_message
-        self.view = view
+        self.view_instance = view_instance
 
     async def callback(self, interaction: discord.Interaction):
-        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view))
+        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view_instance))
 
 class WarningView(discord.ui.View):
     def __init__(self, bot, members, command_message):
