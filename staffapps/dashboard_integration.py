@@ -85,7 +85,7 @@ class DashboardIntegration:
                 self.role.choices = roles
                 self.category.choices = [(category, category) for category in role_categories.keys()]
 
-            category: wtforms.SelectField = wtforms.SelectField("Category:", validators=[validators.InputRequired()])
+            category: wtforms.StringField = wtforms.StringField("Category:", validators=[validators.InputRequired()])
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add Role"), ("remove", "Remove Role"), ("create", "Create Category"), ("delete", "Delete Category")])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Roles/Categories")
@@ -149,26 +149,70 @@ class DashboardIntegration:
             "web_content": {"source": source, "form": form},
         }
 
-    @dashboard_page(name="manage_channel", description="Set the application channel.", methods=("GET", "POST"), is_owner=True)
-    async def manage_channel_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+    @dashboard_page(name="manage_channels", description="Set the application, staff updates, blacklist, LOA, and resignation channels.", methods=("GET", "POST"), is_owner=True)
+    async def manage_channels_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
         channels = [(channel.id, channel.name) for channel in guild.text_channels]
 
         class Form(kwargs["Form"]):
             def __init__(self):
-                super().__init__(prefix="manage_channel_form_")
-                self.channel.choices = channels
+                super().__init__(prefix="manage_channels_form_")
+                self.application_channel.choices = channels
+                self.staff_updates_channel.choices = channels
+                self.blacklist_channel.choices = channels
+                self.loa_requests_channel.choices = channels
+                self.resignation_requests_channel.choices = channels
 
-            channel: wtforms.SelectField = wtforms.SelectField("Channel:", validators=[validators.InputRequired()])
-            submit: wtforms.SubmitField = wtforms.SubmitField("Set Channel")
+            application_channel: wtforms.SelectField = wtforms.SelectField("Application Channel:", validators=[validators.InputRequired()])
+            staff_updates_channel: wtforms.SelectField = wtforms.SelectField("Staff Updates Channel:", validators=[validators.InputRequired()])
+            blacklist_channel: wtforms.SelectField = wtforms.SelectField("Blacklist Channel:", validators=[validators.InputRequired()])
+            loa_requests_channel: wtforms.SelectField = wtforms.SelectField("LOA Requests Channel:", validators=[validators.InputRequired()])
+            resignation_requests_channel: wtforms.SelectField = wtforms.SelectField("Resignation Requests Channel:", validators=[validators.InputRequired()])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Set Channels")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
-            channel_id = int(form.channel.data)
-            channel = guild.get_channel(channel_id)
-            await self.config.guild(guild).application_channel.set(channel.id)
+            application_channel_id = int(form.application_channel.data)
+            staff_updates_channel_id = int(form.staff_updates_channel.data)
+            blacklist_channel_id = int(form.blacklist_channel.data)
+            loa_requests_channel_id = int(form.loa_requests_channel.data)
+            resignation_requests_channel_id = int(form.resignation_requests_channel.data)
+            await self.config.guild(guild).application_channel.set(application_channel_id)
+            await self.config.guild(guild).staff_updates_channel.set(staff_updates_channel_id)
+            await self.config.guild(guild).blacklist_channel.set(blacklist_channel_id)
+            await self.config.guild(guild).loa_requests_channel.set(loa_requests_channel_id)
+            await self.config.guild(guild).resignation_requests_channel.set(resignation_requests_channel_id)
             return {
                 "status": 0,
-                "notifications": [{"message": f"The application channel has been set to {channel.mention}.", "category": "success"}],
+                "notifications": [{"message": "Channels have been set successfully.", "category": "success"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        source = "{{ form|safe }}"
+
+        return {
+            "status": 0,
+            "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="set_base_role", description="Set the base role for staff members.", methods=("GET", "POST"), is_owner=True)
+    async def set_base_role_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        roles = [(role.id, role.name) for role in guild.roles]
+
+        class Form(kwargs["Form"]):
+            def __init__(self):
+                super().__init__(prefix="set_base_role_form_")
+                self.base_role.choices = roles
+
+            base_role: wtforms.SelectField = wtforms.SelectField("Base Role:", validators=[validators.InputRequired()])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Set Base Role")
+
+        form: Form = Form()
+        if form.validate_on_submit() and await form.validate_dpy_converters():
+            base_role_id = int(form.base_role.data)
+            await self.config.guild(guild).base_role.set(base_role_id)
+            return {
+                "status": 0,
+                "notifications": [{"message": f"Base role has been set successfully.", "category": "success"}],
                 "redirect_url": kwargs["request_url"],
             }
 
@@ -312,21 +356,26 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_staff", description="Manage staff members.", methods=("GET", "POST"), is_owner=False)
     async def manage_staff_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        base_role_id = await self.config.guild(guild).base_role()
+        base_role = guild.get_role(base_role_id)
+        members_with_base_role = [(member.id, member.display_name) for member in base_role.members] if base_role else []
+
         roles = [(role.id, role.name) for role in guild.roles]
 
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_staff_form_")
+                self.member.choices = members_with_base_role
                 self.role.choices = roles
 
-            member: wtforms.IntegerField = wtforms.IntegerField("Member ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.Member)])
+            member: wtforms.SelectField = wtforms.SelectField("Member:", validators=[validators.InputRequired()])
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("promote", "Promote"), ("demote", "Demote"), ("fire", "Fire")])
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.Optional()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Staff")
-
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
-            member = form.member.data
+            member_id = int(form.member.data)
+            member = guild.get_member(member_id)
             action = form.action.data
             role_id = int(form.role.data)
             role = guild.get_role(role_id)
@@ -354,13 +403,10 @@ class DashboardIntegration:
             }
 
         staff_list = []
-        role_categories = await self.config.guild(guild).role_categories()
-        for category, roles in role_categories.items():
-            for role_id in roles:
-                role = guild.get_role(int(role_id))
-                if role:
-                    for member in role.members:
-                        staff_list.append(f"{member.display_name} ({member.id}) - {role.name}")
+        for member_id, member_name in members_with_base_role:
+            member = guild.get_member(member_id)
+            if member:
+                staff_list.append(f"{member.display_name} ({member.id})")
 
         source = f"<h4>Staff Members:</h4><ul>{''.join([f'<li>{staff}</li>' for staff in staff_list])}</ul>{{{{ form|safe }}}}"
 
@@ -394,6 +440,7 @@ class DashboardIntegration:
 
         await member.remove_roles(current_role)
         await member.add_roles(new_role)
+
         # Handle category role switch
         new_category_name = next((cat for cat, roles in role_categories.items() if str(new_role.id) in roles), None)
         if new_category_name and new_category_name != category_name:
@@ -563,13 +610,38 @@ class DashboardIntegration:
         for user_id, loa_request in loa_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                loa_list.append(f"{user.display_name} ({user.id}) - {loa_request['duration']} - {loa_request['reason']}")
+                loa_list.append(f"<a href='/dashboard/view_loa_request_details?user_id={user_id}'>{user.display_name} ({user.id}) - {loa_request['duration']}</a>")
 
         source = f"<h4>LOA Requests:</h4><ul>{''.join([f'<li>{loa}</li>' for loa in loa_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="view_loa_request_details", description="View LOA request details.", methods=("GET",), is_owner=False)
+    async def view_loa_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
+        loa_requests = await self.config.guild(guild).loa_requests()
+        user = guild.get_member(user_id)
+        if not user or str(user.id) not in loa_requests:
+            return {
+                "status": 0,
+                "notifications": [{"message": "LOA request not found.", "category": "error"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        loa_request = loa_requests[str(user.id)]
+        source = f"""
+        <h4>LOA Request Details for {user.display_name}</h4>
+        <p><strong>Duration:</strong> {loa_request['duration']}</p>
+        <p><strong>Reason:</strong> {loa_request['reason']}</p>
+        <p><strong>Approved by:</strong> {loa_request.get('approved_by', 'Pending')}</p>
+        <a href='/dashboard/view_loa_requests'>Back to LOA Requests</a>
+        """
+
+        return {
+            "status": 0,
+            "web_content": {"source": source},
         }
 
     @dashboard_page(name="view_resignation_requests", description="View and manage resignation requests.", methods=("GET", "POST"), is_owner=False)
@@ -651,11 +723,84 @@ class DashboardIntegration:
         for user_id, resignation_request in resignation_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                resignation_list.append(f"{user.display_name} ({user.id}) - {resignation_request['reason']}")
+                resignation_list.append(f"<a href='/dashboard/view_resignation_request_details?user_id={user_id}'>{user.display_name} ({user.id}) - {resignation_request['reason']}</a>")
 
         source = f"<h4>Resignation Requests:</h4><ul>{''.join([f'<li>{resignation}</li>' for resignation in resignation_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="view_resignation_request_details", description="View resignation request details.", methods=("GET",), is_owner=False)
+    async def view_resignation_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
+        resignation_requests = await self.config.guild(guild).resignation_requests()
+        user = guild.get_member(user_id)
+        if not user or str(user.id) not in resignation_requests:
+            return {
+                "status": 0,
+                "notifications": [{"message": "Resignation request not found.", "category": "error"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        resignation_request = resignation_requests[str(user.id)]
+        source = f"""
+        <h4>Resignation Request Details for {user.display_name}</h4>
+        <p><strong>Reason:</strong> {resignation_request['reason']}</p>
+        <p><strong>Approved by:</strong> {resignation_request.get('approved_by', 'Pending')}</p>
+        <a href='/dashboard/view_resignation_requests'>Back to Resignation Requests</a>
+        """
+
+        return {
+            "status": 0,
+            "web_content": {"source": source},
+        }
+
+    @dashboard_page(name="view_loa_request_details", description="View LOA request details.", methods=("GET",), is_owner=False)
+    async def view_loa_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
+        loa_requests = await self.config.guild(guild).loa_requests()
+        user = guild.get_member(user_id)
+        if not user or str(user.id) not in loa_requests:
+            return {
+                "status": 0,
+                "notifications": [{"message": "LOA request not found.", "category": "error"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        loa_request = loa_requests[str(user.id)]
+        source = f"""
+        <h4>LOA Request Details for {user.display_name}</h4>
+        <p><strong>Duration:</strong> {loa_request['duration']}</p>
+        <p><strong>Reason:</strong> {loa_request['reason']}</p>
+        <p><strong>Approved by:</strong> {loa_request.get('approved_by', 'Pending')}</p>
+        <a href='/dashboard/view_loa_requests'>Back to LOA Requests</a>
+        """
+
+        return {
+            "status": 0,
+            "web_content": {"source": source},
+        }
+
+    @dashboard_page(name="view_resignation_request_details", description="View resignation request details.", methods=("GET",), is_owner=False)
+    async def view_resignation_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
+        resignation_requests = await self.config.guild(guild).resignation_requests()
+        user = guild.get_member(user_id)
+        if not user or str(user.id) not in resignation_requests:
+            return {
+                "status": 0,
+                "notifications": [{"message": "Resignation request not found.", "category": "error"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        resignation_request = resignation_requests[str(user.id)]
+        source = f"""
+        <h4>Resignation Request Details for {user.display_name}</h4>
+        <p><strong>Reason:</strong> {resignation_request['reason']}</p>
+        <p><strong>Approved by:</strong> {resignation_request.get('approved_by', 'Pending')}</p>
+        <a href='/dashboard/view_resignation_requests'>Back to Resignation Requests</a>
+        """
+
+        return {
+            "status": 0,
+            "web_content": {"source": source},
         }
