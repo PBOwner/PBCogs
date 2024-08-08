@@ -87,7 +87,7 @@ class DashboardIntegration:
 
             category: wtforms.SelectField = wtforms.SelectField("Category:", validators=[validators.InputRequired()])
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.InputRequired()])
-            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add"), ("remove", "Remove"), ("create", "Create Category"), ("delete", "Delete Category")])
+            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("add", "Add Role"), ("remove", "Remove Role"), ("create", "Create Category"), ("delete", "Delete Category")])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Roles/Categories")
 
         form: Form = Form()
@@ -151,15 +151,20 @@ class DashboardIntegration:
 
     @dashboard_page(name="manage_channel", description="Set the application channel.", methods=("GET", "POST"), is_owner=True)
     async def manage_channel_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        channels = [(channel.id, channel.name) for channel in guild.text_channels]
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_channel_form_")
-            channel: wtforms.IntegerField = wtforms.IntegerField("Channel ID:", validators=[validators.InputRequired(), kwargs["DpyObjectConverter"](discord.TextChannel)])
+                self.channel.choices = channels
+
+            channel: wtforms.SelectField = wtforms.SelectField("Channel:", validators=[validators.InputRequired()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Set Channel")
 
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
-            channel = form.channel.data
+            channel_id = int(form.channel.data)
+            channel = guild.get_channel(channel_id)
             await self.config.guild(guild).application_channel.set(channel.id)
             return {
                 "status": 0,
@@ -267,13 +272,42 @@ class DashboardIntegration:
             for user_id, app in role_apps.items():
                 member = guild.get_member(int(user_id))
                 if member:
-                    application_list.append(f"{member.display_name} ({member.id}) - {role.name}")
+                    application_list.append(f"<a href='/dashboard/view_application_details?role_id={role_id}&user_id={user_id}'>{member.display_name} ({member.id}) - {role.name}</a>")
 
         source = f"<h4>Applications:</h4><ul>{''.join([f'<li>{app}</li>' for app in application_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="view_application_details", description="View application details.", methods=("GET",), is_owner=False)
+    async def view_application_details_page(self, user: discord.User, guild: discord.Guild, role_id: int, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
+        applications = await self.config.guild(guild).applications()
+        role = guild.get_role(role_id)
+        member = guild.get_member(user_id)
+        if not role or not member or str(role.id) not in applications or str(user_id) not in applications[str(role.id)]:
+            return {
+                "status": 0,
+                "notifications": [{"message": "Application not found.", "category": "error"}],
+                "redirect_url": kwargs["request_url"],
+            }
+
+        app_data = applications[str(role.id)][str(user_id)]
+        questions_and_answers = ""
+        for question, answer in app_data.items():
+            if question != "message_id":
+                questions_and_answers += f"<p><strong>Question:</strong> {question}</p><p><strong>Answer:</strong> {answer}</p>"
+
+        source = f"""
+        <h4>Application Details for {member.display_name} - {role.name}</h4>
+        {questions_and_answers}
+        <a href='/dashboard/view_applications'>Back to Applications</a>
+        """
+
+        return {
+            "status": 0,
+            "web_content": {"source": source},
         }
 
     @dashboard_page(name="manage_staff", description="Manage staff members.", methods=("GET", "POST"), is_owner=False)
@@ -360,7 +394,6 @@ class DashboardIntegration:
 
         await member.remove_roles(current_role)
         await member.add_roles(new_role)
-
         # Handle category role switch
         new_category_name = next((cat for cat, roles in role_categories.items() if str(new_role.id) in roles), None)
         if new_category_name and new_category_name != category_name:
