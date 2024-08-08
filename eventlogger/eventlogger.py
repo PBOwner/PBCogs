@@ -9,8 +9,8 @@ from .dashboard_integration import DashboardIntegration
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
-    def __init__(self, bot: Red) -> None:
-        super().__init__(bot=bot)
+  def __init__(self, bot: Red) -> None:
+    super().__init__(bot)  # Call the parent class's __init__ method
     self.config: Config = Config.get_conf(
       self,
       identifier=1234567890,
