@@ -215,7 +215,7 @@ class DashboardIntegration:
             "status": 0,
             "web_content": {{"source": source, "form": form}},
         }}
-"""
+        """
         return integration_code
 
     async def regenerate_dashboard_integrations(self):
@@ -226,7 +226,12 @@ class DashboardIntegration:
             file_path = os.path.join(cog_dir, "dashboard_integration.py")
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(integration_code)
-            await self.bot.reload_extension(cog.__module__)
+
+            # Reload the cog if it's loaded
+            try:
+                await self.bot.reload_extension(cog.__module__)
+            except discord.ext.commands.errors.ExtensionNotLoaded:
+                log.warning(f"Extension {cog.__module__} is not loaded and cannot be reloaded.")
 
     @commands.hybrid_command(name="regenerate_dashboard", description=_("Regenerate dashboard_integration.py for all cogs"))
     @commands.is_owner()
