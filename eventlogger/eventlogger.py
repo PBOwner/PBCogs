@@ -5,6 +5,7 @@ import discord  # isort:skip
 import typing  # isort:skip
 
 from .dashboard_integration import DashboardIntegration
+from AAA3A_utils.settings import Settings  # Import the Settings class
 
 # Credits:
 # General repo credits.
