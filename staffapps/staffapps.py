@@ -23,6 +23,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
             "role_categories": {},
             "base_role": None,
             "auto_role": None
+        }
         self.config.register_guild(**default_guild)
 
     # Application Commands
