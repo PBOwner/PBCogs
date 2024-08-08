@@ -12,14 +12,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
 class WarningReasonModal(discord.ui.Modal):
-    def __init__(self, bot, interaction, member, message, command_message, view):
+    def __init__(self, bot, interaction, user, message):
         self.bot = bot
         self.interaction = interaction
-        self.member = member
+        self.user = user
         self.message = message
-        self.command_message = command_message
-        self.view = view
-        super().__init__(title=f"Provide Warning Reason for {member.display_name}")
+        super().__init__(title="Provide Warning Reason")
         self.reason = discord.ui.TextInput(label="Reason", style=discord.TextStyle.long)
         self.add_item(self.reason)
 
@@ -35,7 +33,7 @@ class WarningReasonModal(discord.ui.Modal):
             warn_channel = self.bot.get_channel(warn_channel_id)
             if warn_channel:
                 # Store the warning with a UUID
-                warnings = await self.bot.get_cog("AdWarn").config.member(self.member).warnings()
+                warnings = await self.bot.get_cog("AdWarn").config.member(self.user).warnings()
                 warning_time = discord.utils.utcnow()
                 warning_id = str(uuid.uuid4())
                 warnings.append({
@@ -45,7 +43,7 @@ class WarningReasonModal(discord.ui.Modal):
                     "time": warning_time.isoformat(),
                     "channel": channel.id
                 })
-                await self.bot.get_cog("AdWarn").config.member(self.member).warnings.set(warnings)
+                await self.bot.get_cog("AdWarn").config.member(self.user).warnings.set(warnings)
                 # Increment the count of warnings issued by the moderator for the current server
                 warnings_issued = await self.bot.get_cog("AdWarn").config.guild(guild).warnings_issued()
                 if str(author.id) not in warnings_issued:
@@ -57,7 +55,7 @@ class WarningReasonModal(discord.ui.Modal):
                 if str(author.id) not in mod_warnings:
                     mod_warnings[str(author.id)] = []
                 mod_warnings[str(author.id)].append({
-                    "user": self.member.id,
+                    "user": self.user.id,
                     "reason": reason,
                     "time": warning_time.isoformat(),
                     "channel": channel.id
@@ -66,7 +64,7 @@ class WarningReasonModal(discord.ui.Modal):
                 # Create the embed message
                 timestamp = int(warning_time.timestamp())
                 embed = discord.Embed(title="New AdWarn", color=discord.Color.red())
-                embed.add_field(name="User", value=self.member.mention, inline=True)
+                embed.add_field(name="User", value=self.user.mention, inline=True)
                 embed.add_field(name="Warned In", value=channel.mention, inline=True)
                 embed.add_field(name="Reason", value=reason, inline=False)
                 embed.add_field(name="Moderator", value=author.mention, inline=True)
@@ -75,77 +73,40 @@ class WarningReasonModal(discord.ui.Modal):
                 # Send the embed to the specified warning channel
                 await warn_channel.send(embed=embed)
                 # Send plain text message to the warning channel
-                await warn_channel.send(f"{self.member.mention}")
+                await warn_channel.send(f"{self.user.mention}")
                 # Update the recent adwarn voice channel
                 if recent_adwarn_channel_id:
                     recent_adwarn_channel = self.bot.get_channel(recent_adwarn_channel_id)
                     if recent_adwarn_channel:
-                        await recent_adwarn_channel.edit(name=f"Recent Adwarn: {self.member.name}")
+                        await recent_adwarn_channel.edit(name=f"Recent Adwarn: {self.user.name}")
                 # Check thresholds and take action if necessary
-                await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.member, len(warnings))
-                # Close the modal
-                await interaction.response.send_message("Warning recorded.", ephemeral=True)
+                await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.user, len(warnings))
+                # Respond to the interaction to close the modal
+                await interaction.response.send_message("Warning recorded successfully.", ephemeral=True)
                 # Delete the message that triggered the modal
                 try:
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Check if this is the rightmost button interaction
-                if self.view.children[-1] == self.view.get_item_by_label(f"Warn {self.member}"):
-                    try:
-                        await self.command_message.delete()
-                        await self.view.message.delete()
-                    except discord.errors.NotFound:
-                        logger.error("Failed to delete the command or response message: Message not found")
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await interaction.followup.send(embed=error_embed, ephemeral=True)
+                await interaction.response.send_message(embed=error_embed, ephemeral=True)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            await interaction.followup.send(embed=error_embed, ephemeral=True)
-
-class WarningButton(discord.ui.Button):
-    def __init__(self, bot, member, command_message, view_instance):
-        super().__init__(label=f"Warn {member}", style=discord.ButtonStyle.danger)
-        self.bot = bot
-        self.member = member
-        self.command_message = command_message
-        self.view_instance = view_instance
-
-    async def callback(self, interaction: discord.Interaction):
-        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view_instance))
-
-class WarningView(discord.ui.View):
-    def __init__(self, bot, members, command_message):
-        super().__init__(timeout=None)
-        self.message = None
-        for member in members:
-            self.add_item(WarningButton(bot, member, command_message, self))
-
-    def get_item_by_label(self, label):
-        for item in self.children:
-            if item.label == label:
-                return item
-        return None
-
-    def remove_item(self, item):
-        if item:
-            self.children.remove(item)
+            await interaction.response.send_message(embed=error_embed, ephemeral=True)
 
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
-    guild = interaction.guild
-    member = guild.get_member(message.author.id)
-    if member:
-        await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, member, message, interaction.message, None))
+    user = message.author
+    await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, user, message))
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -162,7 +123,7 @@ class AdWarn(commands.Cog):
         self.bot.tree.add_command(adwarn_context_menu)
         await self.bot.tree.sync()
 
-    async def check_thresholds(self, ctx, member, warning_count):
+    async def check_thresholds(self, ctx, user, warning_count):
         tholds = await self.config.guild(ctx.guild).tholds()
         softban_duration = await self.config.guild(ctx.guild).softban_duration()
         timeout_duration = await self.config.guild(ctx.guild).timeout_duration()
@@ -170,16 +131,16 @@ class AdWarn(commands.Cog):
             if threshold["count"] == warning_count:
                 action = threshold["action"]
                 if action == "kick":
-                    await ctx.guild.kick(member, reason="Reached warning threshold")
+                    await ctx.guild.kick(user, reason="Reached warning threshold")
                 elif action == "ban":
-                    await ctx.guild.ban(member, reason="Reached warning threshold")
+                    await ctx.guild.ban(user, reason="Reached warning threshold")
                 elif action == "timeout":
-                    await self.timeout_user(ctx, member, timeout_duration)
+                    await self.timeout_user(ctx, user, timeout_duration)
                     if timeout_duration:
-                        await self.schedule_untimeout(ctx, member, timeout_duration)
+                        await self.schedule_untimeout(ctx, user, timeout_duration)
                 elif action == "softban":
-                    await ctx.guild.ban(member, reason="Reached warning threshold", delete_message_days=softban_duration)
-                    await ctx.guild.unban(member, reason="Softban duration expired")
+                    await ctx.guild.ban(user, reason="Reached warning threshold", delete_message_days=softban_duration)
+                    await ctx.guild.unban(user, reason="Softban duration expired")
 
     def parse_duration(self, duration_str):
         match = re.match(r"(\d+)([mh])", duration_str)
@@ -192,15 +153,15 @@ class AdWarn(commands.Cog):
                 return value  # Minutes
         return None
 
-    async def timeout_user(self, ctx, member: discord.Member, duration: int = 120):
+    async def timeout_user(self, ctx, user: discord.Member, duration: int = 120):
         if duration:
             timeout_until = discord.utils.utcnow() + timedelta(minutes=duration)
-            await member.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
-            await self.config.member(member).untimeout_time.set(timeout_until.isoformat())
+            await user.edit(timed_out_until=timeout_until, reason="Reached warning threshold")
+            await self.config.member(user).untimeout_time.set(timeout_until.isoformat())
 
-    async def schedule_untimeout(self, ctx, member, duration):
+    async def schedule_untimeout(self, ctx, user, duration):
         untimeout_time = discord.utils.utcnow() + timedelta(minutes=duration)
-        await self.config.member(member).untimeout_time.set(untimeout_time.isoformat())
+        await self.config.member(user).untimeout_time.set(untimeout_time.isoformat())
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -216,18 +177,13 @@ class AdWarn(commands.Cog):
                         await self.untimeout_user(member)
                         await self.config.member(member).untimeout_time.clear()
 
-    async def untimeout_user(self, member: discord.Member):
-        await member.edit(timed_out_until=None, reason="Timeout duration expired")
+    async def untimeout_user(self, user: discord.Member):
+        await user.edit(timed_out_until=None, reason="Timeout duration expired")
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, *users: discord.User):
-        guild = ctx.guild
-        members = [guild.get_member(user.id) for user in users if guild.get_member(user.id)]
-        if members:
-            view = WarningView(self.bot, members, ctx.message)
-            response_message = await ctx.send(f"Click the button to warn the mentioned users.", view=view)
-            view.message = response_message
+    async def adwarn(self, ctx, user: discord.User):
+        await ctx.send_modal(WarningReasonModal(self.bot, ctx, user))
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
