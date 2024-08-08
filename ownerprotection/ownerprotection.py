@@ -163,7 +163,7 @@ class OwnerProtection(commands.Cog):
         """Group command for owner protection settings."""
         pass
 
-    @owner.hybrid_command()
+    @owner.command()
     @commands.is_owner()
     async def authorize(self, ctx: commands.Context, user: discord.User):
         """Authorize a user to use the context menu commands."""
@@ -174,7 +174,7 @@ class OwnerProtection(commands.Cog):
             else:
                 await ctx.send(f"{user} is already authorized.")
 
-    @owner.hybrid_command()
+    @owner.command()
     @commands.is_owner()
     async def unauthorize(self, ctx: commands.Context, user: discord.User):
         """Unauthorize a user from using the context menu commands."""
@@ -185,8 +185,8 @@ class OwnerProtection(commands.Cog):
             else:
                 await ctx.send(f"{user} is not authorized.")
 
-    @owner.hybrid_command(name="create", description="Create the support role")
-    @app_commands.describe(create="Create the support role")
+    @commands.hybrid_command(name="create_support_role", description="Create the support role")
+    @commands.is_owner()
     async def create_support_role(self, ctx: commands.Context):
         """Slash command to create the support role with specified permissions."""
         authorized_users = await self.config.authorized_users()
@@ -226,8 +226,8 @@ class OwnerProtection(commands.Cog):
                 )
             )
 
-    @owner.hybrid_command(name="delete", description="Delete the support role")
-    @app_commands.describe(delete="Delete the support role")
+    @commands.hybrid_command(name="delete_support_role", description="Delete the support role")
+    @commands.is_owner()
     async def delete_support_role(self, ctx: commands.Context):
         """Slash command to delete the support role."""
         authorized_users = await self.config.authorized_users()
@@ -245,8 +245,8 @@ class OwnerProtection(commands.Cog):
         else:
             await ctx.send("Support role does not exist.", ephemeral=True)
 
-    @owner.hybrid_command(name="admin", description="Toggle on admin permissions")
-    @app_commands.describe(admin="Toggle admin permissions on the role")
+    @commands.hybrid_command(name="toggle_admin_permissions", description="Toggle on admin permissions")
+    @commands.is_owner()
     async def toggle_admin_permissions(self, ctx: commands.Context):
         """Slash command to toggle admin permissions for the support role."""
         authorized_users = await self.config.authorized_users()
@@ -268,8 +268,8 @@ class OwnerProtection(commands.Cog):
         else:
             await ctx.send("Support role does not exist.", ephemeral=True)
 
-    @owner.hybrid_command(name="list", description="List the protected owners")
-    @app_commands.describe(list="List the protected owners")
+    @commands.hybrid_command(name="list_protected_owners", description="List the protected owners")
+    @commands.is_owner()
     async def list_protected_owners(self, ctx: commands.Context):
         """Slash command to list all protected owners."""
         authorized_users = await self.config.authorized_users()
