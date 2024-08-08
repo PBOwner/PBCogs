@@ -372,7 +372,7 @@ class DashboardIntegration:
 
             return {
                 "status": 0,
-                "notifications": [{"message": message, "category": category}]
+                "notifications": [{"message": message, "category": category}],
                 "redirect_url": kwargs["request_url"],
             }
 
