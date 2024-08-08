@@ -182,7 +182,7 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx: commands.Context, user: discord.User, *, reason: str):
+    async def adwarn(self, ctx: commands.Context, user: discord.Member, *, reason: str):
         guild = ctx.guild
         author = ctx.author
         channel = ctx.channel
