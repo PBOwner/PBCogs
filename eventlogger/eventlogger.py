@@ -10,7 +10,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
   def __init__(self, bot: Red) -> None:
-    super().__init__(bot=bot)
+    super().__init__(bot)
 
     self.config: Config = Config.get_conf(
       self,
