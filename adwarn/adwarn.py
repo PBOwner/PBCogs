@@ -90,13 +90,11 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Disable the button for this user
-                for item in self.view.children:
-                    if item.label == f"Warn {self.member}":
-                        item.disabled = True
+                # Remove the button for this user
+                self.view.remove_item(self.view.get_item_by_label(f"Warn {self.member}"))
                 await self.view.message.edit(view=self.view)
-                # Check if all buttons are disabled, then delete the command and response
-                if all(item.disabled for item in self.view.children):
+                # Check if all buttons are removed, then delete the command and response
+                if not self.view.children:
                     try:
                         await self.command_message.delete()
                     except discord.errors.NotFound:
@@ -137,6 +135,16 @@ class WarningView(discord.ui.View):
         self.message = None
         for member in members:
             self.add_item(WarningButton(bot, member, command_message, self))
+
+    def get_item_by_label(self, label):
+        for item in self.children:
+            if item.label == label:
+                return item
+        return None
+
+    def remove_item(self, item):
+        if item:
+            self.children.remove(item)
 
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
