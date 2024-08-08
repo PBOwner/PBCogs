@@ -103,6 +103,20 @@ class WarningReasonModal(discord.ui.Modal):
             )
             await interaction.response.send_message(embed=error_embed, ephemeral=True)
 
+class WarningButton(discord.ui.Button):
+    def __init__(self, bot, user):
+        super().__init__(label="Warn", style=discord.ButtonStyle.danger)
+        self.bot = bot
+        self.user = user
+
+    async def callback(self, interaction: discord.Interaction):
+        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.user, interaction.message))
+
+class WarningView(discord.ui.View):
+    def __init__(self, bot, user):
+        super().__init__(timeout=None)
+        self.add_item(WarningButton(bot, user))
+
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
     user = message.author
@@ -183,8 +197,8 @@ class AdWarn(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def adwarn(self, ctx, user: discord.User):
-        await ctx.send_modal(WarningReasonModal(self.bot, ctx, user))
-
+        view = WarningView(self.bot, user)
+        await ctx.send(f"Click the button to warn {user.mention}.", view=view)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def removewarn(self, ctx, user: discord.Member, warning_id: str):
