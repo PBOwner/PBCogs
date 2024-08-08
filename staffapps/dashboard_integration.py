@@ -316,42 +316,13 @@ class DashboardIntegration:
             for user_id, app in role_apps.items():
                 member = guild.get_member(int(user_id))
                 if member:
-                    application_list.append(f"<a href='/dashboard/view_application_details?role_id={role_id}&user_id={user_id}'>{member.display_name} ({member.id}) - {role.name}</a>")
+                    application_list.append(f"{member.display_name} ({member.id}) - {role.name}")
 
         source = f"<h4>Applications:</h4><ul>{''.join([f'<li>{app}</li>' for app in application_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
-        }
-
-    @dashboard_page(name="view_application_details", description="View application details.", methods=("GET",), is_owner=False)
-    async def view_application_details_page(self, user: discord.User, guild: discord.Guild, role_id: int, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
-        applications = await self.config.guild(guild).applications()
-        role = guild.get_role(role_id)
-        member = guild.get_member(user_id)
-        if not role or not member or str(role.id) not in applications or str(user_id) not in applications[str(role.id)]:
-            return {
-                "status": 0,
-                "notifications": [{"message": "Application not found.", "category": "error"}],
-                "redirect_url": kwargs["request_url"],
-            }
-
-        app_data = applications[str(role.id)][str(user_id)]
-        questions_and_answers = ""
-        for question, answer in app_data.items():
-            if question != "message_id":
-                questions_and_answers += f"<p><strong>Question:</strong> {question}</p><p><strong>Answer:</strong> {answer}</p>"
-
-        source = f"""
-        <h4>Application Details for {member.display_name} - {role.name}</h4>
-        {questions_and_answers}
-        <a href='/dashboard/view_applications'>Back to Applications</a>
-        """
-
-        return {
-            "status": 0,
-            "web_content": {"source": source},
         }
 
     @dashboard_page(name="manage_staff", description="Manage staff members.", methods=("GET", "POST"), is_owner=False)
@@ -372,6 +343,7 @@ class DashboardIntegration:
             action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("promote", "Promote"), ("demote", "Demote"), ("fire", "Fire")])
             role: wtforms.SelectField = wtforms.SelectField("Role:", validators=[validators.Optional()])
             submit: wtforms.SubmitField = wtforms.SubmitField("Update Staff")
+
         form: Form = Form()
         if form.validate_on_submit() and await form.validate_dpy_converters():
             member_id = int(form.member.data)
@@ -407,7 +379,6 @@ class DashboardIntegration:
             member = guild.get_member(member_id)
             if member:
                 staff_list.append(f"{member.display_name} ({member.id})")
-
         source = f"<h4>Staff Members:</h4><ul>{''.join([f'<li>{staff}</li>' for staff in staff_list])}</ul>{{{{ form|safe }}}}"
 
         return {
@@ -610,38 +581,13 @@ class DashboardIntegration:
         for user_id, loa_request in loa_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                loa_list.append(f"<a href='/dashboard/view_loa_request_details?user_id={user_id}'>{user.display_name} ({user.id}) - {loa_request['duration']}</a>")
+                loa_list.append(f"{user.display_name} ({user.id}) - {loa_request['duration']} - {loa_request['reason']}")
 
         source = f"<h4>LOA Requests:</h4><ul>{''.join([f'<li>{loa}</li>' for loa in loa_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
-        }
-
-    @dashboard_page(name="view_loa_request_details", description="View LOA request details.", methods=("GET",), is_owner=False)
-    async def view_loa_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
-        loa_requests = await self.config.guild(guild).loa_requests()
-        user = guild.get_member(user_id)
-        if not user or str(user.id) not in loa_requests:
-            return {
-                "status": 0,
-                "notifications": [{"message": "LOA request not found.", "category": "error"}],
-                "redirect_url": kwargs["request_url"],
-            }
-
-        loa_request = loa_requests[str(user.id)]
-        source = f"""
-        <h4>LOA Request Details for {user.display_name}</h4>
-        <p><strong>Duration:</strong> {loa_request['duration']}</p>
-        <p><strong>Reason:</strong> {loa_request['reason']}</p>
-        <p><strong>Approved by:</strong> {loa_request.get('approved_by', 'Pending')}</p>
-        <a href='/dashboard/view_loa_requests'>Back to LOA Requests</a>
-        """
-
-        return {
-            "status": 0,
-            "web_content": {"source": source},
         }
 
     @dashboard_page(name="view_resignation_requests", description="View and manage resignation requests.", methods=("GET", "POST"), is_owner=False)
@@ -723,84 +669,11 @@ class DashboardIntegration:
         for user_id, resignation_request in resignation_requests.items():
             user = guild.get_member(int(user_id))
             if user:
-                resignation_list.append(f"<a href='/dashboard/view_resignation_request_details?user_id={user_id}'>{user.display_name} ({user.id}) - {resignation_request['reason']}</a>")
+                resignation_list.append(f"{user.display_name} ({user.id}) - {resignation_request['reason']}")
 
         source = f"<h4>Resignation Requests:</h4><ul>{''.join([f'<li>{resignation}</li>' for resignation in resignation_list])}</ul>{{{{ form|safe }}}}"
 
         return {
             "status": 0,
             "web_content": {"source": source, "form": form},
-        }
-
-    @dashboard_page(name="view_resignation_request_details", description="View resignation request details.", methods=("GET",), is_owner=False)
-    async def view_resignation_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
-        resignation_requests = await self.config.guild(guild).resignation_requests()
-        user = guild.get_member(user_id)
-        if not user or str(user.id) not in resignation_requests:
-            return {
-                "status": 0,
-                "notifications": [{"message": "Resignation request not found.", "category": "error"}],
-                "redirect_url": kwargs["request_url"],
-            }
-
-        resignation_request = resignation_requests[str(user.id)]
-        source = f"""
-        <h4>Resignation Request Details for {user.display_name}</h4>
-        <p><strong>Reason:</strong> {resignation_request['reason']}</p>
-        <p><strong>Approved by:</strong> {resignation_request.get('approved_by', 'Pending')}</p>
-        <a href='/dashboard/view_resignation_requests'>Back to Resignation Requests</a>
-        """
-
-        return {
-            "status": 0,
-            "web_content": {"source": source},
-        }
-
-    @dashboard_page(name="view_loa_request_details", description="View LOA request details.", methods=("GET",), is_owner=False)
-    async def view_loa_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
-        loa_requests = await self.config.guild(guild).loa_requests()
-        user = guild.get_member(user_id)
-        if not user or str(user.id) not in loa_requests:
-            return {
-                "status": 0,
-                "notifications": [{"message": "LOA request not found.", "category": "error"}],
-                "redirect_url": kwargs["request_url"],
-            }
-
-        loa_request = loa_requests[str(user.id)]
-        source = f"""
-        <h4>LOA Request Details for {user.display_name}</h4>
-        <p><strong>Duration:</strong> {loa_request['duration']}</p>
-        <p><strong>Reason:</strong> {loa_request['reason']}</p>
-        <p><strong>Approved by:</strong> {loa_request.get('approved_by', 'Pending')}</p>
-        <a href='/dashboard/view_loa_requests'>Back to LOA Requests</a>
-        """
-
-        return {
-            "status": 0,
-            "web_content": {"source": source},
-        }
-
-    @dashboard_page(name="view_resignation_request_details", description="View resignation request details.", methods=("GET",), is_owner=False)
-    async def view_resignation_request_details_page(self, user: discord.User, guild: discord.Guild, user_id: int, **kwargs) -> typing.Dict[str, typing.Any]:
-        resignation_requests = await self.config.guild(guild).resignation_requests()
-        user = guild.get_member(user_id)
-        if not user or str(user.id) not in resignation_requests:
-            return {
-                "status": 0,
-                "notifications": [{"message": "Resignation request not found.", "category": "error"}],
-                "redirect_url": kwargs["request_url"],
-            }
-
-        resignation_request = resignation_requests[str(user.id)]
-        source = f"""
-        <h4>Resignation Request Details for {user.display_name}</h4>
-        <p><strong>Reason:</strong> {resignation_request['reason']}</p>
-        <p><strong>Approved by:</strong> {resignation_request.get('approved_by', 'Pending')}</p>
-        <a href='/dashboard/view_resignation_requests'>Back to Resignation Requests</a>
-        """
-
-        return {
-            "status": 0,
-            "web_content": {"source": source},
         }
