@@ -19,6 +19,7 @@ class DashboardIntegration:
     @dashboard_page(name="manage_questions", description="Manage the questions for staff applications.", methods=("GET", "POST"), is_owner=True)
     async def manage_questions_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
         import wtforms
+
         class Form(kwargs["Form"]):
             def __init__(self):
                 super().__init__(prefix="manage_questions_form_")
