@@ -22,6 +22,8 @@ class Counter(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command(self, ctx):
+        if ctx.guild is None:
+            return  # Ignore commands executed in DMs
         async with self.config.guild(ctx.guild).all() as guild_data:
             guild_data["command_count"] += 1
 
@@ -143,4 +145,3 @@ class Counter(commands.Cog):
             embed.add_field(name="Total Servers", value=server_count, inline=True)
             embed.add_field(name="Total Commands", value=total_commands, inline=True)
             embed.add_field(name="Total Cogs", value=cog_count, inline=True)
-            await ctx.send(embed=embed)
