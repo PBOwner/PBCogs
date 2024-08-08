@@ -24,6 +24,9 @@ class WarningReasonModal(discord.ui.Modal):
         self.add_item(self.reason)
 
     async def on_submit(self, interaction: discord.Interaction):
+        # Respond to the interaction to acknowledge it
+        await interaction.response.defer(ephemeral=True)
+
         reason = self.reason.value
         guild = interaction.guild
         author = interaction.user
@@ -84,7 +87,7 @@ class WarningReasonModal(discord.ui.Modal):
                 # Check thresholds and take action if necessary
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.member, len(warnings))
                 # Respond to the interaction to close the modal
-                await interaction.response.send_message("Warning recorded successfully.", ephemeral=True)
+                await interaction.followup.send("Warning recorded successfully.", ephemeral=True)
                 # Delete the message that triggered the modal
                 try:
                     await self.message.delete()
@@ -114,14 +117,14 @@ class WarningReasonModal(discord.ui.Modal):
                     description="Warning channel not found. Please set it again using `[p]warnset channel`.",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=error_embed, ephemeral=True)
+                await interaction.followup.send(embed=error_embed, ephemeral=True)
         else:
             error_embed = discord.Embed(
                 title="Error 404",
                 description="No warning channel has been set. Please set it using `[p]warnset channel`.",
                 color=discord.Color.red()
             )
-            await interaction.response.send_message(embed=error_embed, ephemeral=True)
+            await interaction.followup.send(embed=error_embed, ephemeral=True)
 
 class WarningButton(discord.ui.Button):
     def __init__(self, bot, member, command_message, view_instance):
