@@ -12,13 +12,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("AdWarn")
 
 class WarningReasonModal(discord.ui.Modal):
-    def __init__(self, bot, interaction, member, message, command_message):
+    def __init__(self, bot, interaction, member, message, command_message, view):
         self.bot = bot
         self.interaction = interaction
         self.member = member
         self.message = message
         self.command_message = command_message
-        super().__init__(title="Provide Warning Reason")
+        self.view = view
+        super().__init__(title=f"Provide Warning Reason for {member.display_name}")
         self.reason = discord.ui.TextInput(label="Reason", style=discord.TextStyle.long)
         self.add_item(self.reason)
 
@@ -89,11 +90,21 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.message.delete()
                 except discord.errors.NotFound:
                     logger.error("Failed to delete the message: Message not found")
-                # Delete the original command message
-                try:
-                    await self.command_message.delete()
-                except discord.errors.NotFound:
-                    logger.error("Failed to delete the command message: Message not found")
+                # Disable the button for this user
+                for item in self.view.children:
+                    if item.label == f"Warn {self.member}":
+                        item.disabled = True
+                await self.view.message.edit(view=self.view)
+                # Check if all buttons are disabled, then delete the command and response
+                if all(item.disabled for item in self.view.children):
+                    try:
+                        await self.command_message.delete()
+                    except discord.errors.NotFound:
+                        logger.error("Failed to delete the command message: Message not found")
+                    try:
+                        await self.view.message.delete()
+                    except discord.errors.NotFound:
+                        logger.error("Failed to delete the response message: Message not found")
             else:
                 error_embed = discord.Embed(
                     title="Error 404",
@@ -110,26 +121,29 @@ class WarningReasonModal(discord.ui.Modal):
             await interaction.response.send_message(embed=error_embed, ephemeral=True)
 
 class WarningButton(discord.ui.Button):
-    def __init__(self, bot, member, command_message):
-        super().__init__(label="Warn", style=discord.ButtonStyle.danger)
+    def __init__(self, bot, member, command_message, view):
+        super().__init__(label=f"Warn {member}", style=discord.ButtonStyle.danger)
         self.bot = bot
         self.member = member
         self.command_message = command_message
+        self.view = view
 
     async def callback(self, interaction: discord.Interaction):
-        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message))
+        await interaction.response.send_modal(WarningReasonModal(self.bot, interaction, self.member, interaction.message, self.command_message, self.view))
 
 class WarningView(discord.ui.View):
-    def __init__(self, bot, member, command_message):
+    def __init__(self, bot, members, command_message):
         super().__init__(timeout=None)
-        self.add_item(WarningButton(bot, member, command_message))
+        self.message = None
+        for member in members:
+            self.add_item(WarningButton(bot, member, command_message, self))
 
 @app_commands.context_menu(name="AdWarn")
 async def adwarn_context_menu(interaction: discord.Interaction, message: discord.Message):
     guild = interaction.guild
     member = guild.get_member(message.author.id)
     if member:
-        await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, member, message, interaction.message))
+        await interaction.response.send_modal(WarningReasonModal(interaction.client, interaction, member, message, interaction.message, None))
 
 class AdWarn(commands.Cog):
     def __init__(self, bot: Red):
@@ -205,12 +219,13 @@ class AdWarn(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def adwarn(self, ctx, user: discord.User):
+    async def adwarn(self, ctx, *users: discord.User):
         guild = ctx.guild
-        member = guild.get_member(user.id)
-        if member:
-            view = WarningView(self.bot, member, ctx.message)
-            await ctx.send(f"Click the button to warn {member.mention}.", view=view)
+        members = [guild.get_member(user.id) for user in users if guild.get_member(user.id)]
+        if members:
+            view = WarningView(self.bot, members, ctx.message)
+            response_message = await ctx.send(f"Click the button to warn the mentioned users.", view=view)
+            view.message = response_message
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
