@@ -1,16 +1,22 @@
-from redbot.core import commands, Config
-from redbot.core.bot import Red
-import discord
-from datetime import datetime
-from typing import Union
-import asyncio
+from redbot.core import commands, Config  # isort:skip
+from redbot.core.bot import Red  # isort:skip
+from redbot.core.i18n import Translator, cog_i18n  # isort:skip
+import discord  # isort:skip
+import typing  # isort:skip
+
 from .dashboard_integration import DashboardIntegration
 
+# Credits:
+# General repo credits.
+
+_: Translator = Translator("EventLogger", __file__)
+
+@cog_i18n(_)
 class EventLogger(DashboardIntegration, commands.Cog):
   """Cog to log various Discord events"""
 
   def __init__(self, bot: Red) -> None:
-    super().__init__(bot)  # Call the parent class's __init__ method
+    super().__init__(bot)
     self.config: Config = Config.get_conf(
       self,
       identifier=1234567890,
@@ -44,6 +50,9 @@ class EventLogger(DashboardIntegration, commands.Cog):
       can_edit=True,
       commands_group=self.configuration,
     )
+
+    self.event_queue = asyncio.Queue()
+    self.bot.loop.create_task(self.process_event_queue())
 
   async def cog_load(self) -> None:
     await super().cog_load()
