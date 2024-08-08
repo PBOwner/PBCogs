@@ -11,5 +11,5 @@ async def setup(bot: Red):
     await bot.add_cog(cog)
 
     # Register the context menu commands
-    bot.tree.add_command(cog.add_to_protected_owners_list)
-    bot.tree.add_command(cog.remove_from_protected_owners_list)
+    bot.tree.add_command(add_to_protected_owners_list)
+    bot.tree.add_command(remove_from_protected_owners_list)
