@@ -1,3 +1,4 @@
+
 import os
 import shutil
 import logging
@@ -6,7 +7,6 @@ from typing import List, Literal, Optional, Tuple
 from zipfile import ZIP_DEFLATED, ZipFile
 import yaml
 import random
-import importlib
 
 import discord
 import pandas as pd
@@ -165,82 +165,6 @@ class AutoDocs(commands.Cog):
             rows.append([csv_name, f"{csv_name}\n{doc}"])
         df = pd.DataFrame(rows, columns=columns)
         return docs, df
-
-    def generate_dashboard_integration(self, cog: commands.Cog):
-        cog_name = cog.qualified_name
-        integration_code = f"""
-from redbot.core import commands
-from redbot.core.bot import Red
-import discord
-import typing
-
-def dashboard_page(*args, **kwargs):
-    def decorator(func: typing.Callable):
-        func.__dashboard_decorator_params__ = (args, kwargs)
-        return func
-    return decorator
-
-class DashboardIntegration:
-    bot: Red
-
-    @commands.Cog.listener()
-    async def on_dashboard_cog_add(self, dashboard_cog: commands.Cog) -> None:
-        dashboard_cog.rpc.third_parties_handler.add_third_party(self)
-
-    @dashboard_page(name="manage_{cog_name.lower()}", description="Manage {cog_name} settings.", methods=("GET", "POST"), is_owner=True)
-    async def manage_{cog_name.lower()}_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
-        import wtforms
-
-        class Form(kwargs["Form"]):
-            def __init__(self):
-                super().__init__(prefix="manage_{cog_name.lower()}_form_")
-            setting: wtforms.StringField = wtforms.StringField("Setting:", validators=[wtforms.validators.InputRequired()])
-            value: wtforms.StringField = wtforms.StringField("Value:", validators=[wtforms.validators.InputRequired()])
-            submit: wtforms.SubmitField = wtforms.SubmitField("Update {cog_name} Settings")
-
-        form: Form = Form()
-        if form.validate_on_submit() and await form.validate_dpy_converters():
-            setting = form.setting.data
-            value = form.value.data
-            await self.config.guild(guild).{cog_name.lower()}_settings.set_raw(setting, value=value)
-            return {{
-                "status": 0,
-                "notifications": [{{"message": f"{cog_name} settings updated.", "category": "success"}}],
-                "redirect_url": kwargs["request_url"],
-            }}
-
-        source = "{{{{ form|safe }}}}"
-
-        return {{
-            "status": 0,
-            "web_content": {{"source": source, "form": form}},
-        }}
-        """
-        return integration_code
-
-    async def regenerate_dashboard_integrations(self):
-        for cog_name, cog in self.bot.cogs.items():
-            integration_code = self.generate_dashboard_integration(cog)
-            cog_module = importlib.import_module(cog.__module__)
-            cog_dir = os.path.dirname(cog_module.__file__)
-            file_path = os.path.join(cog_dir, "dashboard_integration.py")
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(integration_code)
-
-            # Reload the cog if it's loaded
-            try:
-                await self.bot.reload_extension(cog.__module__)
-            except discord.ext.commands.errors.ExtensionNotLoaded:
-                log.warning(f"Extension {cog.__module__} is not loaded and cannot be reloaded.")
-
-    @commands.hybrid_command(name="regenerate_dashboard", description=_("Regenerate dashboard_integration.py for all cogs"))
-    @commands.is_owner()
-    async def regenerate_dashboard_command(self, ctx: commands.Context):
-        """
-        Regenerate the dashboard_integration.py file for all cogs.
-        """
-        await self.regenerate_dashboard_integrations()
-        await ctx.send("Dashboard integration files have been regenerated and cogs reloaded for all cogs.")
 
     @commands.hybrid_command(name="makedocs", description=_("Create docs for a cog"))
     @app_commands.describe(
