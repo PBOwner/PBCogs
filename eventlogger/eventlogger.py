@@ -10,6 +10,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
     """Cog to log various Discord events"""
 
     def __init__(self, bot: Red):
+        super().__init__(bot)  # Call the parent class's __init__ method
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         default_guild = {
@@ -22,7 +23,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
 
     async def log_event(self, guild: Union[discord.Guild, None], event: str, description: str):
         if guild is None:
-            return  # Skip logging if guild is None
+            return
         channels = await self.config.guild(guild).channels()
         channel_id = channels.get(event)
         if channel_id:
