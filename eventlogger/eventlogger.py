@@ -51,7 +51,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
       global_path=[],
       use_profiles_system=False,
       can_edit=True,
-      commands_group=self.config,
+      commands_group=self.configuration,
     )
 
     self.event_queue = asyncio.Queue()
@@ -60,72 +60,49 @@ class EventLogger(DashboardIntegration, commands.Cog):
   async def cog_load(self) -> None:
     await super().cog_load()
     await self.settings.add_commands()
-  # Commands to configure logging channels
-  @commands.group()
-  async def setlog(self, ctx):
-    """Configure logging channels for events"""
-    pass
 
-  @setlog.command()
-  async def event(self, ctx, event: str, channel: discord.TextChannel):
+  @commands.guild_only()
+  @commands.is_owner()
+  @commands.bot_has_permissions(manage_channels=True)
+  @commands.hybrid_command(name="setlog")
+  async def setlog(self, ctx: commands.Context, event: str, channel: discord.TextChannel) -> None:
     """Set the logging channel for a specific event"""
     async with self.config.guild(ctx.guild).channels() as channels:
       channels[event] = channel.id
     await ctx.send(f"Logging channel for {event} set to {channel.mention}")
 
-    @setlog.command()
-    async def category(self, ctx, category: str, channel: discord.TextChannel):
-        """Set the logging channel for a category of events"""
-        event_categories = {
-            "app": ["integration_create", "integration_delete", "integration_update"],
-            "automod": ["automod_rule_create", "automod_rule_delete", "automod_rule_update"],
-            "ban": ["member_ban", "member_unban"],
-            "channel": ["guild_channel_bitrate_update", "guild_channel_create", "guild_channel_delete", "guild_channel_name_update", "guild_channel_nsfw_update", "guild_channel_parent_update", "guild_channel_permissions_update", "guild_channel_pins_update", "guild_channel_rtc_region_update", "guild_channel_slowmode_update", "guild_channel_topic_update", "guild_channel_type_update", "guild_channel_user_limit_update", "guild_channel_video_quality_update", "guild_channel_default_archive_duration_update", "guild_channel_default_thread_slowmode_update", "guild_channel_default_reaction_emoji_update", "guild_channel_default_sort_order_update", "guild_channel_forum_tags_update", "guild_channel_forum_layout_update"],
-            "commands": ["command_executed"],
-            "emoji": ["guild_emoji_create", "guild_emoji_delete", "guild_emoji_update", "guild_emojis_update"],
-            "event": ["scheduled_event_create", "scheduled_event_delete", "scheduled_event_update", "scheduled_event_user_add", "scheduled_event_user_remove"],
-            "invite": ["invite_create", "invite_delete"],
-            "message": ["bulk_message_delete", "message_delete", "message_edit"],
-            "moderation": ["ban_add", "ban_remove", "case_delete", "case_update", "kick_add", "kick_remove", "mute_add", "mute_remove", "report_create", "reports_accept", "reports_ignore", "user_note_add", "user_note_remove", "warn_add", "warn_remove"],
-            "onboarding": ["guild_onboarding_channels_update", "guild_onboarding_question_add", "guild_onboarding_question_remove", "guild_onboarding_toggle", "guild_onboarding_update"],
-            "reaction": ["reaction_add", "reaction_remove"],
-            "role": ["guild_role_create", "guild_role_delete", "guild_role_update"],
-            "server": ["guild_afk_channel_update", "guild_afk_timeout_update", "guild_banner_update", "guild_boost_level_update", "guild_boost_progress_bar_update", "guild_description_update", "guild_discovery_splash_update", "guild_explicit_content_filter_update", "guild_features_update", "guild_icon_update", "guild_message_notifications_update", "guild_mfa_level_update", "guild_name_update", "guild_partner_status_update", "guild_preferred_locale_update", "guild_public_updates_channel_update", "guild_rules_channel_update", "guild_splash_update", "guild_system_channel_update", "guild_update", "guild_vanity_url_update", "guild_verification_level_update", "guild_verified_update", "guild_widget_update"],
-            "soundboard": ["soundboard_sound_delete", "soundboard_sound_emoji_update", "soundboard_sound_name_update", "soundboard_sound_upload", "soundboard_sound_volume_update"],
-            "sticker": ["guild_sticker_create", "guild_sticker_delete", "guild_sticker_update"],
-            "thread": ["thread_create", "thread_delete", "thread_member_join", "thread_member_remove", "thread_update"],
-            "typing": ["typing"],
-            "user": ["member_update", "user_avatar_update", "user_roles_add", "user_roles_remove", "user_roles_update", "user_timeout", "user_timeout_remove", "user_update"],
-            "voice": ["voice_state_update"],
-            "webhook": ["webhook_create", "webhook_delete", "webhook_update"]
-        }
-        events = event_categories.get(category)
-        if not events:
-            await ctx.send(f"Invalid category: {category}")
-            return
-        async with self.config.guild(ctx.guild).channels() as channels:
-            for event in events:
-                channels[event] = channel.id
-        await ctx.send(f"Logging channel for category {category} set to {channel.mention}")
+  @commands.guild_only()
+  @commands.is_owner()
+  @commands.bot_has_permissions(manage_channels=True)
+  @commands.hybrid_group(name="seteventlogger")
+  async def configuration(self, ctx: commands.Context) -> None:
+    """Configure EventLogger for your server."""
+    pass
 
-    @setlog.command()
-    async def view(self, ctx):
-        """View the current logging channels"""
-        channels = await self.config.guild(ctx.guild).channels()
-        command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
-        if not channels and not command_log_channel_id:
-            await ctx.send("No logging channels set.")
-            return
-        message = "Current logging channels:\n"
-        for event, channel_id in sorted(channels.items()):
-            channel = ctx.guild.get_channel(channel_id)
-            if channel:
-                message += f"{event}: {channel.mention}\n"
-        if command_log_channel_id:
-            command_log_channel = ctx.guild.get_channel(command_log_channel_id)
-            if command_log_channel:
-                message += f"Command Log: {command_log_channel.mention}\n"
-        await ctx.send(message)
+  async def log_event(self, guild: typing.Union[discord.Guild, None], event: str, description: str):
+    if guild is None:
+      return
+    channels = await self.config.guild(guild).channels()
+    channel_id = channels.get(event)
+    if channel_id:
+      channel = guild.get_channel(channel_id)
+      if channel:
+        embed = discord.Embed(title=event.replace("_", " ").title(), description=description, color=discord.Color.blue(), timestamp=datetime.utcnow())
+        await self.event_queue.put((channel, embed))
+
+  async def log_command(self, ctx, command_name: str):
+    command_log_channel_id = await self.config.guild(ctx.guild).command_log_channel()
+    if command_log_channel_id:
+      channel = ctx.guild.get_channel(command_log_channel_id)
+      if channel:
+        description = (
+          f"**Command:** {command_name}\n"
+          f"**User:** {ctx.author} ({ctx.author.id})\n"
+          f"**Channel:** {ctx.channel} ({ctx.channel.id})\n"
+          f"**Guild:** {ctx.guild.name} ({ctx.guild.id})"
+        )
+        embed = discord.Embed(title="Command Executed", description=description, color=discord.Color.green(), timestamp=datetime.utcnow())
+        await self.event_queue.put((channel, embed))
 
   async def process_event_queue(self):
     while True:
