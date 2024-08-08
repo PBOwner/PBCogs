@@ -101,8 +101,9 @@ class WarningReasonModal(discord.ui.Modal):
                     await self.view.message.edit(view=self.view)
                 except discord.errors.NotFound:
                     logger.error("Failed to edit the message: Message not found")
-                # Check if all buttons are disabled, then delete the command and response
-                if all(item.disabled for item in self.view.children):
+                # Check if the rightmost button is disabled, then delete the command and response
+                rightmost_button = self.view.children[-1]
+                if rightmost_button.disabled:
                     try:
                         await self.command_message.delete()
                     except discord.errors.NotFound:
