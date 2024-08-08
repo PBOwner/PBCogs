@@ -29,6 +29,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
     # Application Commands
     @commands.guild_only()
     @commands.command()
+    @commands.has_permissions(manage_roles=True)
     async def addq(self, ctx, role: discord.Role, *, question: str):
         """Add a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -37,6 +38,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     @commands.guild_only()
     @commands.command()
+    @commands.has_permissions(manage_channels=True)
     async def setappchannel(self, ctx, channel: discord.TextChannel):
         """Set the application channel."""
         await self.config.guild(ctx.guild).application_channel.set(channel.id)
@@ -97,6 +99,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     @commands.guild_only()
     @commands.command()
+    @commands.has_permissions(manage_roles=True)
     async def remq(self, ctx, role: discord.Role, *, question: str):
         """Remove a question for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -108,6 +111,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     @commands.guild_only()
     @commands.command()
+    @commands.has_permissions(manage_roles=True)
     async def clearqs(self, ctx, role: discord.Role):
         """Clear all questions for a specific role."""
         async with self.config.guild(ctx.guild).questions() as questions:
@@ -294,13 +298,6 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def setbaserole(self, ctx, role: discord.Role):
-        """Set the base role given to each staff member."""
-        await self.config.guild(ctx.guild).base_role.set(role.id)
-        await ctx.send(f"Base role set to {role.mention}.")
-
-    @commands.command()
-    @commands.has_permissions(manage_roles=True)
     async def setautorole(self, ctx, role: discord.Role):
         """Set the automatically configured role given upon hiring."""
         await self.config.guild(ctx.guild).auto_role.set(role.id)
@@ -308,7 +305,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     # LOA Commands
     @commands.group()
-    @commands.has_permissions(manage_roles=True)
+    @commands.has_permissions(send_messages=True)
     async def loa(self, ctx):
         """Group command for managing leave of absence requests."""
         pass
@@ -380,7 +377,7 @@ class StaffApps(DashboardIntegration, commands.Cog):  # Subclass ``DashboardInte
 
     # Resignation Commands
     @commands.group()
-    @commands.has_permissions(manage_roles=True)
+    @commands.has_permissions(send_messages=True)
     async def resign(self, ctx):
         """Group command for managing resignation requests."""
         pass
