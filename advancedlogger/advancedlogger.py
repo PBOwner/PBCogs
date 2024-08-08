@@ -1,13 +1,14 @@
-import discord
 from redbot.core import commands, Config
 from redbot.core.bot import Red
 from datetime import datetime
+import discord
+from .dashboard_integration import DashboardIntegration
 
-class AdvancedLogger(commands.Cog):
+class AdvancedLogger(DashboardIntegration, commands.Cog):  # Subclass ``DashboardIntegration``.
     """A cog for advanced logging of various actions in a server"""
 
     def __init__(self, bot: Red):
-        self.bot = bot
+        self.bot: Red = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         default_guild = {
             "member_log_channel": None,
