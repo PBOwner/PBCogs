@@ -18,6 +18,7 @@ class EventLogger(DashboardIntegration, commands.Cog):
 
   def __init__(self, bot: Red, *args, **kwargs):
     super().__init__(*args, **kwargs)
+    self.bot = bot
     self.config: Config = Config.get_conf(
       self,
       identifier=1234567890,
