@@ -99,8 +99,9 @@ class WarningReasonModal(discord.ui.Modal):
                         await recent_adwarn_channel.edit(name=f"Recent Adwarn: {self.member.name}")
                 # Check thresholds and take action if necessary
                 await self.bot.get_cog("AdWarn").check_thresholds(interaction, self.member, len(warnings))
-                # Respond to the interaction to close the modal
-                await interaction.response.send_message("Warning recorded successfully.", ephemeral=True)
+                # Close the modal
+                await interaction.response.send_message("Warning recorded.", ephemeral=True)
+                await interaction.delete_original_response()
                 # Delete the message that triggered the modal
                 try:
                     await self.message.delete()
