@@ -357,3 +357,186 @@ class DashboardIntegration:
         staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
         if staff_updates_channel:
             await staff_updates_channel.send(embed=embed)
+
+    @dashboard_page(name="view_loa_requests", description="View and manage LOA requests.", methods=("GET", "POST"), is_owner=False)
+    async def view_loa_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        import wtforms
+        class Form(kwargs["Form"]):
+            def __init__(self):
+                super().__init__(prefix="view_loa_requests_form_")
+            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
+            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[wtforms.validators.InputRequired()])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Update LOA Request")
+
+        form: Form = Form()
+        if form.validate_on_submit() and await form.validate_dpy_converters():
+            action = form.action.data
+            user_id = form.user_id.data
+
+            loa_requests = await self.config.guild(guild).loa_requests()
+            if str(user_id) not in loa_requests:
+                return {
+                    "status": 0,
+                    "notifications": [{"message": "LOA request not found.", "category": "error"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+            loa_request = loa_requests[str(user_id)]
+            user = guild.get_member(user_id)
+            if not user:
+                return {
+                    "status": 0,
+                    "notifications": [{"message": "User not found.", "category": "error"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+            if action == "accept":
+                loa_request["approved_by"] = user.id
+                loa_role_id = await self.config.guild(guild).loa_role()
+                loa_role = guild.get_role(loa_role_id)
+                if loa_role:
+                    await user.add_roles(loa_role)
+                embed = discord.Embed(title="Leave of Absence", color=discord.Color.green())
+                embed.add_field(name="User", value=user.name, inline=False)
+                embed.add_field(name="Duration", value=loa_request["duration"], inline=False)
+                embed.add_field(name="Reason", value=loa_request["reason"], inline=False)
+                embed.add_field(name="Approved by", value=user.name, inline=False)
+                embed.add_field(name="Status", value="Approved", inline=False)
+                staff_updates_channel_id = await self.config.guild(guild).staff_updates_channel()
+                staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+                if staff_updates_channel:
+                    await staff_updates_channel.send(embed=embed)
+                message_id = loa_request.get("message_id")
+                if message_id:
+                    loa_requests_channel_id = await self.config.guild(guild).loa_requests_channel()
+                    loa_requests_channel = self.bot.get_channel(loa_requests_channel_id)
+                    message = await loa_requests_channel.fetch_message(message_id)
+                    if message:
+                        embed = message.embeds[0]
+                        embed.set_field_at(-1, name="Status", value="Approved", inline=False)
+                        await message.edit(embed=embed)
+                return {
+                    "status": 0,
+                    "notifications": [{"message": f"Accepted LOA request for {user.name}.", "category": "success"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+            elif action == "deny":
+                message_id = loa_request.get("message_id")
+                if message_id:
+                    loa_requests_channel_id = await self.config.guild(guild).loa_requests_channel()
+                    loa_requests_channel = self.bot.get_channel(loa_requests_channel_id)
+                    message = await loa_requests_channel.fetch_message(message_id)
+                    if message:
+                        embed = message.embeds[0]
+                        embed.set_field_at(-1, name="Status", value="Denied", inline=False)
+                        await message.edit(embed=embed)
+                del loa_requests[str(user_id)]
+                await self.config.guild(guild).loa_requests.set(loa_requests)
+                return {
+                    "status": 0,
+                    "notifications": [{"message": f"Denied LOA request for {user.name}.", "category": "success"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+        loa_requests = await self.config.guild(guild).loa_requests()
+        loa_list = []
+        for user_id, loa_request in loa_requests.items():
+            user = guild.get_member(int(user_id))
+            if user:
+                loa_list.append(f"{user.display_name} ({user.id}) - {loa_request['duration']} - {loa_request['reason']}")
+
+        source = f"<h4>LOA Requests:</h4><ul>{''.join([f'<li>{loa}</li>' for loa in loa_list])}</ul>{{{{ form|safe }}}}"
+
+        return {
+            "status": 0,
+            "web_content": {"source": source, "form": form},
+        }
+
+    @dashboard_page(name="view_resignation_requests", description="View and manage resignation requests.", methods=("GET", "POST"), is_owner=False)
+    async def view_resignation_requests_page(self, user: discord.User, guild: discord.Guild, **kwargs) -> typing.Dict[str, typing.Any]:
+        import wtforms
+        class Form(kwargs["Form"]):
+            def __init__(self):
+                super().__init__(prefix="view_resignation_requests_form_")
+            action: wtforms.SelectField = wtforms.SelectField("Action:", choices=[("accept", "Accept"), ("deny", "Deny")])
+            user_id: wtforms.IntegerField = wtforms.IntegerField("User ID:", validators=[wtforms.validators.InputRequired()])
+            submit: wtforms.SubmitField = wtforms.SubmitField("Update Resignation Request")
+
+        form: Form = Form()
+        if form.validate_on_submit() and await form.validate_dpy_converters():
+            action = form.action.data
+            user_id = form.user_id.data
+
+            resignation_requests = await self.config.guild(guild).resignation_requests()
+            if str(user_id) not in resignation_requests:
+                return {
+                    "status": 0,
+                    "notifications": [{"message": "Resignation request not found.", "category": "error"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+            resignation_request = resignation_requests[str(user_id)]
+            user = guild.get_member(user_id)
+            if not user:
+                return {
+                    "status": 0,
+                    "notifications": [{"message": "User not found.", "category": "error"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+            if action == "accept":
+                resignation_request["approved_by"] = user.id
+                embed = discord.Embed(title="Staff Member Resigned", color=discord.Color.red())
+                embed.add_field(name="Former Staff", value=user.name, inline=False)
+                embed.add_field(name="Reason", value=resignation_request["reason"], inline=False)
+                embed.add_field(name="Approved by", value=user.name, inline=False)
+                embed.add_field(name="Status", value="Approved", inline=False)
+                staff_updates_channel_id = await self.config.guild(guild).staff_updates_channel()
+                staff_updates_channel = self.bot.get_channel(staff_updates_channel_id)
+                if staff_updates_channel:
+                    await staff_updates_channel.send(embed=embed)
+                message_id = resignation_request.get("message_id")
+                if message_id:
+                    resignation_requests_channel_id = await self.config.guild(guild).resignation_requests_channel()
+                    resignation_requests_channel = self.bot.get_channel(resignation_requests_channel_id)
+                    message = await resignation_requests_channel.fetch_message(message_id)
+                    if message:
+                        embed = message.embeds[0]
+                        embed.set_field_at(-1, name="Status", value="Approved", inline=False)
+                        await message.edit(embed=embed)
+                return {
+                    "status": 0,
+                    "notifications": [{"message": f"Accepted resignation request for {user.name}.", "category": "success"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+            elif action == "deny":
+                message_id = resignation_request.get("message_id")
+                if message_id:
+                    resignation_requests_channel_id = await self.config.guild(guild).resignation_requests_channel()
+                    resignation_requests_channel = self.bot.get_channel(resignation_requests_channel_id)
+                    message = await resignation_requests_channel.fetch_message(message_id)
+                    if message:
+                        embed = message.embeds[0]
+                        embed.set_field_at(-1, name="Status", value="Denied", inline=False)
+                        await message.edit(embed=embed)
+                del resignation_requests[str(user_id)]
+                await self.config.guild(guild).resignation_requests.set(resignation_requests)
+                return {
+                    "status": 0,
+                    "notifications": [{"message": f"Denied resignation request for {user.name}.", "category": "success"}],
+                    "redirect_url": kwargs["request_url"],
+                }
+
+        resignation_requests = await self.config.guild(guild).resignation_requests()
+        resignation_list = []
+        for user_id, resignation_request in resignation_requests.items():
+            user = guild.get_member(int(user_id))
+            if user:
+                resignation_list.append(f"{user.display_name} ({user.id}) - {resignation_request['reason']}")
+
+        source = f"<h4>Resignation Requests:</h4><ul>{''.join([f'<li>{resignation}</li>' for resignation in resignation_list])}</ul>{{{{ form|safe }}}}"
+
+        return {
+            "status": 0,
+            "web_content": {"source": source, "form": form},
+        }
