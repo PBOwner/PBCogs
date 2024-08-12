@@ -122,10 +122,12 @@ class OwnerProtection(commands.Cog):
         else:
             raise Exception("No text channels available to create an invite.")
     @commands.group()
+    @commands.guild_only()
     @commands.is_owner()
     async def owner(self, ctx: commands.Context):
         """Group command for owner protection settings."""
         pass
+        
     @owner.command()
     @commands.is_owner()
     async def add(self, ctx: commands.Context, owner: discord.User):
