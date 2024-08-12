@@ -1,6 +1,6 @@
 import asyncio
 from redbot.core.bot import Red
-from .ownerprotection import OwnerProtection, add_to_protected_owners_list, remove_from_protected_owners_list
+from .ownerprotection import OwnerProtection
 
 async def setup(bot: Red):
     cog = OwnerProtection(bot)
