@@ -52,7 +52,7 @@ class AdWarn(commands.Cog):
                 # Create the embed message
                 timestamp = int(warning_time.timestamp())
                 embed = discord.Embed(title="New AdWarn", color=discord.Color.red())
-                embed.add_field(name="<:user:1268083437768671303> | User", value=user.mention, inline=True)
+                embed.add_field(name="<:user:1270075210216902677> | User", value=user.mention, inline=True)
                 embed.add_field(name="<:channel:1270075226566295623> | Warned In", value=ctx.channel.mention, inline=True)
                 embed.add_field(name="<:reason:1270075201694203956> | Reason", value=reason, inline=False)
                 embed.add_field(name="<:mod:1270075235785506847> | Moderator", value=ctx.author.mention, inline=True)
