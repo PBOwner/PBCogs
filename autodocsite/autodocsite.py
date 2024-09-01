@@ -650,7 +650,7 @@ Thank you for using **{self.config['site_name']}**! We hope you enjoy all the fe
             # Change to the repository directory
             os.chdir(self.config["repo_dir"])
 
-            mkdocs_path = "/root/fb/bin/mkdocs"  # Replace with the actual path to mkdocs if needed
+            mkdocs_path = "/root/innova/bin/mkdocs"  # Replace with the actual path to mkdocs if needed
 
             # Pull the latest changes before pushing
             os.system("git pull origin gh-pages")
