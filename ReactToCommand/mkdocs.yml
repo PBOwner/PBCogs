@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- ReactToCommand: ReactToCommand.md
+site_name: ReactToCommand's Documentation
+site_url: https://docs.prismbot.icu/ReactToCommand/
+theme:
+  name: dracula
+use_directory_urls: false

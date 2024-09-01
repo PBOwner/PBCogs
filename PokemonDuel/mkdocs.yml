@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- PokemonDuel: PokemonDuel.md
+site_name: PokemonDuel's Documentation
+site_url: https://docs.prismbot.icu/PokemonDuel/
+theme:
+  name: dracula
+use_directory_urls: false

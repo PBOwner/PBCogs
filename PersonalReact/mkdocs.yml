@@ -1,0 +1,10 @@
+extra:
+  footer: Created by [Rosie](https://github.com/PBOwner) with <3
+nav:
+- Home: index.md
+- PersonalReact: PersonalReact.md
+site_name: PersonalReact's Documentation
+site_url: https://docs.prismbot.icu/PersonalReact/
+theme:
+  name: dracula
+use_directory_urls: false
