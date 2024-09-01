@@ -48,9 +48,10 @@ class AutoDocs(commands.Cog):
         super().__init__(*args, **kwargs)
         self.bot = bot
         self.config = {
-            "repo_dir": "/root/PBCogs",  # Add this line to ensure repo_dir is defined
-            "custom_domain": "docs.prismbot.icu"  # Add default value or load from a config file
+            "repo_dir": "/root/PBCogs",
+            "custom_domain": "docs.prismbot.icu"
         }
+        self.cog_description = "This is a helpful description of the cog."  # Use a different attribute
         self.bot.add_listener(self.on_cog_load, "on_cog_load")
         self.bot.add_listener(self.on_cog_unload, "on_cog_unload")
 
@@ -95,7 +96,7 @@ class AutoDocs(commands.Cog):
         if include_help:
             helptxt = _("Help")
             docs = f"# {cog_name} {helptxt}\n\n"
-            cog_help = cog.help if cog.help else None
+            cog_help = getattr(cog, 'cog_description', None)  # Use cog_description instead
             if not embedding_style and cog_help:
                 cog_help = cog_help.replace("\n", "<br/>")
             if cog_help:
@@ -716,7 +717,7 @@ Thank you for using **{self.config['site_name']}**! We hope you enjoy all the fe
         if include_help:
             helptxt = _("Help")
             docs = f"# {cog_name} {helptxt}\n\n"
-            cog_help = cog.help if cog.help else None
+            cog_help = getattr(cog, 'cog_description', None)  # Use cog_description instead
             if not embedding_style and cog_help:
                 cog_help = cog_help.replace("\n", "<br/>")
             if cog_help:
